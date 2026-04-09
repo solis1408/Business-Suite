@@ -10,26 +10,27 @@ Este repositorio es **exclusivo para documentación** (sin código fuente). Agru
 
 ```
 Business-Suite/
-├── index.md                                          ← Página de inicio del sitio
-├── Catalogos/
-│   └── Gestion-TI/
-│       └── documentacion/
-│           ├── index.md
-│           ├── BRD.md
-│           └── FSD.md
-├── Procesos/
-│   └── Gestion-TI/
-│       └── documentacion/
-│           ├── index.md
-│           ├── BRD.md
-│           └── FSD.md
-├── Consultas/
-│   └── Gestion-TI/
-│       └── ReporteForecast/
-│           └── documentacion/
-│               ├── index.md
-│               ├── BRD.md
-│               └── FSD.md
+├── docs/
+│   ├── index.md                                      ← Página de inicio del sitio
+│   ├── Catalogos/
+│   │   └── Gestion-TI/
+│   │       └── documentacion/
+│   │           ├── index.md
+│   │           ├── BRD.md
+│   │           └── FSD.md
+│   ├── Procesos/
+│   │   └── Gestion-TI/
+│   │       └── documentacion/
+│   │           ├── index.md
+│   │           ├── BRD.md
+│   │           └── FSD.md
+│   └── Consultas/
+│       └── Gestion-TI/
+│           └── ReporteForecast/
+│               └── documentacion/
+│                   ├── index.md
+│                   ├── BRD.md
+│                   └── FSD.md
 ├── mkdocs.yml                                        ← Configuración de MkDocs
 ├── README.md
 └── .github/
@@ -76,6 +77,19 @@ Cada módulo tiene su propia carpeta `documentacion/` con tres archivos:
 ## Sitio de documentación
 
 El sitio publicado está disponible en: [https://solis1408.github.io/Business-Suite/](https://solis1408.github.io/Business-Suite/)
+
+### ⚙️ Activar GitHub Pages (solo una vez)
+
+Para que el sitio sea visible, debes habilitar GitHub Pages en la configuración del repositorio:
+
+1. Ve a **Settings** → **Pages** en este repositorio.
+2. En **Source**, selecciona **Deploy from a branch**.
+3. En **Branch**, selecciona `gh-pages` y carpeta `/ (root)`.
+4. Haz clic en **Save**.
+
+El sitio estará disponible en `https://solis1408.github.io/Business-Suite/` en 1–2 minutos.
+
+> **Nota:** El workflow `.github/workflows/docs.yml` despliega automáticamente el sitio a la rama `gh-pages` en cada push a `main`. Solo necesitas activar GitHub Pages una vez.
 
 ## Convenciones de nomenclatura
 
