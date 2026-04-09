@@ -27,6 +27,11 @@ nav:
       - Gestión TI:
           - BRD: Procesos/Gestion-TI/documentacion/BRD.md
           - FSD: Procesos/Gestion-TI/documentacion/FSD.md
+      - Gestión Financiera:
+          - Programaciones de Pago por Prorrateo:
+              - Inicio: Procesos/Gestion-Financiera/ProgramacionesPagoProrrateo/documentacion/index.md
+              - BRD: Procesos/Gestion-Financiera/ProgramacionesPagoProrrateo/documentacion/BRD.md
+              - FSD: Procesos/Gestion-Financiera/ProgramacionesPagoProrrateo/documentacion/FSD.md
   - Consultas:
       - Gestión TI:
           - ReporteForecast:
