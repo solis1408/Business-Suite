@@ -1,0 +1,1997 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentación BRD y FSD - Business Suite">
+      
+      
+        <meta name="author" content="solis1408">
+      
+      
+        <link rel="canonical" href="https://solis1408.github.io/Business-Suite/Procesos/Gestion-Financiera/ProgramacionesPagoProrrateo/documentacion/FSD/">
+      
+      
+        <link rel="prev" href="../BRD/">
+      
+      
+        <link rel="next" href="../../../../../Consultas/Gestion-TI/ReporteForecast/documentacion/BRD/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>FSD - Business Suite - Documentación</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#fsd-procesos-gestion-financiera-programaciones-de-pago-por-prorrateo" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../../../../.." title="Business Suite - Documentación" class="md-header__button md-logo" aria-label="Business Suite - Documentación" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Business Suite - Documentación
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              FSD
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Pestañas" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Inicio
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../Catalogos/Gestion-TI/documentacion/BRD/" class="md-tabs__link">
+          
+  
+  
+  Catálogos
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../../Gestion-TI/documentacion/BRD/" class="md-tabs__link">
+          
+  
+  
+  Procesos
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../Consultas/Gestion-TI/ReporteForecast/documentacion/BRD/" class="md-tabs__link">
+          
+  
+  
+  Consultas
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Business Suite - Documentación" class="md-nav__button md-logo" aria-label="Business Suite - Documentación" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Business Suite - Documentación
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Catálogos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Catálogos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gestión TI
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gestión TI
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Catalogos/Gestion-TI/documentacion/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Catalogos/Gestion-TI/documentacion/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Procesos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Procesos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gestión TI
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gestión TI
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Gestion-TI/documentacion/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Gestion-TI/documentacion/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gestión Financiera
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gestión Financiera
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_1" id="__nav_3_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Programaciones de Pago por Prorrateo
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_2_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Programaciones de Pago por Prorrateo
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-funcionalidad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 📖 Funcionalidad
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 📖 Funcionalidad">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-generacion-en-contrato-nuevo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Generación en contrato nuevo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-generacion-por-servicio-automatico-background-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Generación por servicio automático (Background Service)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-generacion-manual" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 Generación manual
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-no-regeneracion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 No regeneración
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-cambios-al-modelo-de-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 📐 Cambios al modelo de Datos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-historias-de-usuario-y-criterios-de-aceptacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 📋 Historias de Usuario y Criterios de Aceptación
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 📋 Historias de Usuario y Criterios de Aceptación">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hu-01-configuracion-de-prorrateo-en-contrato" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HU-01 — Configuración de prorrateo en contrato
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hu-02-registro-de-cambios-en-configuracion-de-prorrateo-bitacora" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HU-02 — Registro de cambios en configuración de prorrateo (Bitácora)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hu-03-generacion-automatica-de-programaciones-en-primer-guardado-de-contrato" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HU-03 — Generación automática de programaciones en primer guardado de contrato
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hu-04-generacion-automatica-de-programaciones-por-background-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HU-04 — Generación automática de programaciones por Background Service
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hu-05-generacion-manual-de-programaciones-con-prorrateo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HU-05 — Generación manual de programaciones con prorrateo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hu-06-trazabilidad-del-origen-en-programaciones-con-prorrateo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HU-06 — Trazabilidad del origen en programaciones con prorrateo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hu-07-independencia-de-programaciones-existentes-ante-cambios-en-prorrateo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HU-07 — Independencia de programaciones existentes ante cambios en prorrateo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hu-08-cambios-al-modelo-de-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HU-08 — Cambios al modelo de datos
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-control-de-cambios-del-documento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 🗂️ Control de Cambios del Documento
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Consultas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Consultas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gestión TI
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gestión TI
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_1_1" id="__nav_4_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ReporteForecast
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ReporteForecast
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Consultas/Gestion-TI/ReporteForecast/documentacion/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Consultas/Gestion-TI/ReporteForecast/documentacion/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="fsd-procesos-gestion-financiera-programaciones-de-pago-por-prorrateo">📘 FSD — Procesos / Gestión Financiera / Programaciones de Pago por Prorrateo<a class="headerlink" href="#fsd-procesos-gestion-financiera-programaciones-de-pago-por-prorrateo" title="Permanent link">&para;</a></h1>
+<p><strong>Functional Specification Document</strong></p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Área</td>
+<td>Procesos</td>
+</tr>
+<tr>
+<td>Módulo</td>
+<td>Gestión Financiera - Programaciones de Pago</td>
+</tr>
+<tr>
+<td>Versión</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>Fecha</td>
+<td>08-04-2026</td>
+</tr>
+<tr>
+<td>Autor</td>
+<td>José Antonio Solis</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Inicial</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1-funcionalidad">1. 📖 Funcionalidad<a class="headerlink" href="#1-funcionalidad" title="Permanent link">&para;</a></h2>
+<h3 id="11-generacion-en-contrato-nuevo">1.1 Generación en contrato nuevo<a class="headerlink" href="#11-generacion-en-contrato-nuevo" title="Permanent link">&para;</a></h3>
+<p><strong>Evento:</strong> Primer guardado persistido en base de datos.</p>
+<p><strong>Restricción de periodicidad:</strong> Solo aplica para contratos con periodo de pago mensual.</p>
+<p><strong>Condición de fecha:</strong> Se aplica la misma lógica existente de DiasAnticipacion + fechaProyeccion basada en la fecha aniversario del contrato, para determinar si corresponde generar la programación en el mes actual.</p>
+<p><strong>Flujo</strong></p>
+<ul>
+<li>Si existen registros de prorrateo activos:</li>
+<li>Se genera una programación por cada registro, con:<ul>
+<li>Importe = TotalContrato × (Porcentaje / 100)</li>
+<li>CentroTrabajo = del registro de prorrateo</li>
+<li>ProrrateoOrigen = referencia al registro de prorrateo</li>
+<li>PorcentajeAplicado = porcentaje del registro</li>
+<li>EsAutomatico = false</li>
+</ul>
+</li>
+<li>Si no existen:</li>
+<li>Se ejecuta flujo estándar</li>
+</ul>
+<p><strong>Restricción:</strong></p>
+<ul>
+<li>Solo ocurre una vez (primer guardado)</li>
+</ul>
+<hr />
+<h3 id="12-generacion-por-servicio-automatico-background-service">1.2 Generación por servicio automático (Background Service)<a class="headerlink" href="#12-generacion-por-servicio-automatico-background-service" title="Permanent link">&para;</a></h3>
+<p><strong>Condición de fecha:</strong> Se aplica la lógica existente de DiasAnticipacion + fechaProyeccion para determinar si corresponde generar la programación en el periodo actual.</p>
+<p><strong>Validación de duplicidad:</strong> Incluye CentroTrabajo en la combinación de verificación.</p>
+<p><strong>Flujo</strong></p>
+<ul>
+<li>Para cada contrato activo:</li>
+<li>Si tiene prorrateo activo y no existe programación:<ul>
+<li>Generar programaciones correspondientes con:</li>
+<li>Importe = TotalContrato × (Porcentaje / 100)</li>
+<li>CentroTrabajo = del registro de prorrateo</li>
+<li>ProrrateoOrigen = referencia al registro de prorrateo</li>
+<li>PorcentajeAplicado = porcentaje del registro</li>
+<li>EsAutomatico = true</li>
+</ul>
+</li>
+<li>
+<p>Si no existe prorateo y no existe programación:</p>
+<ul>
+<li>Se ejecuta flujo estándar</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="13-generacion-manual">1.3 Generación manual<a class="headerlink" href="#13-generacion-manual" title="Permanent link">&para;</a></h3>
+<p><strong>Flujo</strong></p>
+<ul>
+<li>Al crear una programación manual:</li>
+<li>Si hay prorrateo activo:<ul>
+<li>Generar una programación por cada registro de prorrateo, con:</li>
+<li>Importe = TotalContrato × (Porcentaje / 100)</li>
+<li>CentroTrabajo = del registro de prorrateo</li>
+<li>ProrrateoOrigen = referencia al registro de prorrateo</li>
+<li>PorcentajeAplicado = porcentaje del registro</li>
+<li>EsAutomatico = false</li>
+</ul>
+</li>
+<li>Si no existen:<ul>
+<li>Se ejecuta flujo estándar</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="14-no-regeneracion">1.4 No regeneración<a class="headerlink" href="#14-no-regeneracion" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Cambios en prorrateo NO afectan programaciones existentes</li>
+</ul>
+<hr />
+<h2 id="2-cambios-al-modelo-de-datos">2. 📐 Cambios al modelo de Datos<a class="headerlink" href="#2-cambios-al-modelo-de-datos" title="Permanent link">&para;</a></h2>
+<p><strong>Tabla:</strong> ga_tr_programaciones_pagos</p>
+<p>Los siguientes campos son nuevos y deben agregarse:</p>
+<ul>
+<li>fk_contrato_prorrateo_gasto</li>
+<li>porcentaje_aplicado</li>
+</ul>
+<hr />
+<h2 id="3-historias-de-usuario-y-criterios-de-aceptacion">3. 📋 Historias de Usuario y Criterios de Aceptación<a class="headerlink" href="#3-historias-de-usuario-y-criterios-de-aceptacion" title="Permanent link">&para;</a></h2>
+<hr />
+<h3 id="hu-01-configuracion-de-prorrateo-en-contrato">HU-01 — Configuración de prorrateo en contrato<a class="headerlink" href="#hu-01-configuracion-de-prorrateo-en-contrato" title="Permanent link">&para;</a></h3>
+<p><strong>Como</strong> usuario administrativo,
+<strong>quiero</strong> configurar registros de prorrateo de gasto en un contrato asignando un centro de trabajo y un porcentaje a cada uno,
+<strong>para</strong> distribuir el gasto del contrato entre diferentes unidades organizacionales.</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Criterio de Aceptación</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CA-01.1</td>
+<td>Al guardar un registro de prorrateo, si la suma de porcentajes de los registros activos no es igual a 100%, el sistema bloquea el guardado y muestra: <em>"La sumatoria de los porcentajes en el Prorrateo de Gasto debe ser exactamente 100%."</em></td>
+</tr>
+<tr>
+<td>CA-01.2</td>
+<td>No es posible guardar un registro de prorrateo sin centro de trabajo asignado.</td>
+</tr>
+<tr>
+<td>CA-01.3</td>
+<td>No es posible asignar el mismo centro de trabajo a dos registros de prorrateo activos del mismo contrato. El lookup excluye los centros ya asignados en registros.</td>
+</tr>
+<tr>
+<td>CA-01.4</td>
+<td>Un registro de prorrateo puede cancelarse (baja lógica). Al cancelarse, queda excluido del cálculo de suma de porcentajes.</td>
+</tr>
+<tr>
+<td>CA-01.5</td>
+<td>El porcentaje de cada registro debe ser mayor que 0.</td>
+</tr>
+<tr>
+<td>CA-01.6</td>
+<td>Un registro cancelado no puede editarse en sus campos de datos (centro de trabajo, porcentaje). Solo permite la acción de reactivación</td>
+</tr>
+<tr>
+<td>CA-01.7</td>
+<td>Un registro cancelado puede ser reactivado (volver a Activo).</td>
+</tr>
+<tr>
+<td>CA-01.8</td>
+<td>Al reactivar, si el centro de trabajo ya está asignado en otro registro activo del mismo contrato, el sistema bloquea la reactivación con mensaje de error.</td>
+</tr>
+<tr>
+<td>CA-01.9</td>
+<td>Al reactivar, si la suma de porcentajes de los registros activos resultante no es 100%, el sistema bloquea la reactivación con mensaje de error.</td>
+</tr>
+<tr>
+<td>CA-01.10</td>
+<td>La reactivación queda registrada en bitácora indicando el cambio de estatus y el valor anterior.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="hu-02-registro-de-cambios-en-configuracion-de-prorrateo-bitacora">HU-02 — Registro de cambios en configuración de prorrateo (Bitácora)<a class="headerlink" href="#hu-02-registro-de-cambios-en-configuracion-de-prorrateo-bitacora" title="Permanent link">&para;</a></h3>
+<p><strong>Como</strong> auditor o usuario administrativo,
+<strong>quiero</strong> que el sistema registre automáticamente cualquier modificación en los registros de prorrateo,
+<strong>para</strong> contar con trazabilidad completa de los cambios realizados.</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Criterio de Aceptación</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CA-02.1</td>
+<td>Al modificar el porcentaje, el sistema registra en bitácora el campo modificado y el valor anterior.</td>
+</tr>
+<tr>
+<td>CA-02.2</td>
+<td>Al modificar el centro de trabajo, el sistema registra en bitácora el campo modificado y el valor anterior.</td>
+</tr>
+<tr>
+<td>CA-02.3</td>
+<td>Al cancelar un registro, el sistema registra en bitácora el cambio de estatus y el valor anterior.</td>
+</tr>
+<tr>
+<td>CA-02.4</td>
+<td>Cada entrada de bitácora incluye el usuario que realizó el cambio y la fecha/hora del evento.</td>
+</tr>
+<tr>
+<td>CA-02.5</td>
+<td>La creación de un nuevo registro de prorrateo <strong>no</strong> genera entrada en bitácora.</td>
+</tr>
+<tr>
+<td>CA-02.6</td>
+<td>La bitácora es visible desde la pantalla de detalle del registro de prorrateo.</td>
+</tr>
+<tr>
+<td>CA-02.7</td>
+<td>Al reactivar un registro cancelado, el sistema registra en bitácora el cambio de estatus y el valor anterior (Cancelado).</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="hu-03-generacion-automatica-de-programaciones-en-primer-guardado-de-contrato">HU-03 — Generación automática de programaciones en primer guardado de contrato<a class="headerlink" href="#hu-03-generacion-automatica-de-programaciones-en-primer-guardado-de-contrato" title="Permanent link">&para;</a></h3>
+<p><strong>Como</strong> sistema,
+<strong>quiero</strong> generar automáticamente las programaciones de pago al crear un contrato mensual,
+<strong>para</strong> iniciar el ciclo de pagos desde el primer guardado sin intervención del usuario.</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Criterio de Aceptación</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CA-03.1</td>
+<td>La generación automática en primer guardado aplica <strong>únicamente</strong> a contratos con periodo de pago mensual.</td>
+</tr>
+<tr>
+<td>CA-03.2</td>
+<td>Solo se genera si, conforme a la fecha aniversario y la lógica de <code>DiasAnticipacion</code> + <code>fechaProyeccion</code>, <strong>corresponde realizar el pago en el periodo actual</strong>.</td>
+</tr>
+<tr>
+<td>CA-03.3</td>
+<td>Si el contrato tiene prorrateo activo, se genera <strong>una programación por cada registro de prorrateo activo</strong>.</td>
+</tr>
+<tr>
+<td>CA-03.4</td>
+<td>Cada programación generada tiene: <code>Importe = TotalContrato × (Porcentaje / 100)</code>, redondeado a 2 decimales.</td>
+</tr>
+<tr>
+<td>CA-03.5</td>
+<td>Cada programación generada tiene asignado el <code>CentroTrabajo</code> del registro de prorrateo correspondiente.</td>
+</tr>
+<tr>
+<td>CA-03.6</td>
+<td>Cada programación generada almacena <code>ProrrateoOrigen</code> y <code>PorcentajeAplicado</code>.</td>
+</tr>
+<tr>
+<td>CA-03.7</td>
+<td>El campo <code>EsAutomatico</code> de cada programación generada es <code>false</code>.</td>
+</tr>
+<tr>
+<td>CA-03.8</td>
+<td>Si el contrato <strong>no tiene</strong> prorrateo activo, se ejecuta el flujo estándar actual sin cambios.</td>
+</tr>
+<tr>
+<td>CA-03.9</td>
+<td>La generación ocurre <strong>una sola vez</strong> (primer guardado). Si el contrato ya tiene programaciones, no se genera ninguna adicional.</td>
+</tr>
+<tr>
+<td>CA-03.10</td>
+<td>Si no corresponde generar en el periodo actual, no se crea ninguna programación y no se muestra error.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="hu-04-generacion-automatica-de-programaciones-por-background-service">HU-04 — Generación automática de programaciones por Background Service<a class="headerlink" href="#hu-04-generacion-automatica-de-programaciones-por-background-service" title="Permanent link">&para;</a></h3>
+<p><strong>Como</strong> sistema,
+<strong>quiero</strong> generar programaciones de pago de forma automática y periódica para los contratos activos con prorrateo configurado,
+<strong>para</strong> asegurar que los pagos sean calendarizados sin intervención manual en cada periodo.</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Criterio de Aceptación</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CA-04.1</td>
+<td>El servicio evalúa todos los contratos activos con fecha aniversario válida y que no sean de pago perpetuo.</td>
+</tr>
+<tr>
+<td>CA-04.2</td>
+<td>Solo genera programaciones cuando <code>fechaProyeccion - DiasAnticipacion &lt;= fechaActual</code>.</td>
+</tr>
+<tr>
+<td>CA-04.3</td>
+<td>Si el contrato tiene prorrateo activo, se genera <strong>una programación por cada registro de prorrateo activo</strong>.</td>
+</tr>
+<tr>
+<td>CA-04.4</td>
+<td>Antes de generar, el servicio valida que no exista ya una programación para la combinación: <strong>Contrato + FechaAniversario + CentroTrabajo</strong>. Si existe, omite ese registro.</td>
+</tr>
+<tr>
+<td>CA-04.5</td>
+<td>Cada programación generada tiene: <code>Importe = TotalContrato × (Porcentaje / 100)</code>, redondeado a 2 decimales.</td>
+</tr>
+<tr>
+<td>CA-04.6</td>
+<td>Cada programación generada tiene asignado el <code>CentroTrabajo</code> del registro de prorrateo.</td>
+</tr>
+<tr>
+<td>CA-04.7</td>
+<td>Cada programación generada almacena <code>ProrrateoOrigen</code> y <code>PorcentajeAplicado</code>.</td>
+</tr>
+<tr>
+<td>CA-04.8</td>
+<td>El campo <code>EsAutomatico</code> de cada programación generada es <code>true</code>.</td>
+</tr>
+<tr>
+<td>CA-04.9</td>
+<td>Si el contrato <strong>no tiene</strong> prorrateo activo, se ejecuta el flujo estándar actual sin cambios.</td>
+</tr>
+<tr>
+<td>CA-04.10</td>
+<td>Si ocurre un error durante la generación de un contrato, el servicio registra el error en el log(seq) y <strong>continúa</strong> con el siguiente contrato.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="hu-05-generacion-manual-de-programaciones-con-prorrateo">HU-05 — Generación manual de programaciones con prorrateo<a class="headerlink" href="#hu-05-generacion-manual-de-programaciones-con-prorrateo" title="Permanent link">&para;</a></h3>
+<p><strong>Como</strong> usuario operativo,
+<strong>quiero</strong> que al crear manualmente una programación de pago para un contrato con prorrateo activo, el sistema genere automáticamente una programación por cada registro de prorrateo,
+<strong>para</strong> no tener que crear cada programación de forma individual.</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Criterio de Aceptación</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CA-05.1</td>
+<td>Al crear una programación manualmente para un contrato con prorrateo activo, el sistema genera <strong>una programación por cada registro de prorrateo activo</strong> sin requerir confirmación.</td>
+</tr>
+<tr>
+<td>CA-05.2</td>
+<td>Cada programación generada tiene: <code>Importe = TotalContrato × (Porcentaje / 100)</code>, redondeado a 2 decimales.</td>
+</tr>
+<tr>
+<td>CA-05.3</td>
+<td>Cada programación generada tiene asignado el <code>CentroTrabajo</code> del registro de prorrateo.</td>
+</tr>
+<tr>
+<td>CA-05.4</td>
+<td>Todas las programaciones generadas comparten la misma <code>FechaAniversario</code> calculada.</td>
+</tr>
+<tr>
+<td>CA-05.5</td>
+<td>Cada programación generada almacena <code>ProrrateoOrigen</code> y <code>PorcentajeAplicado</code>.</td>
+</tr>
+<tr>
+<td>CA-05.6</td>
+<td>El campo <code>EsAutomatico</code> de cada programación generada es <code>false</code>.</td>
+</tr>
+<tr>
+<td>CA-05.7</td>
+<td>No aplica restricción de duplicidad en generación manual.</td>
+</tr>
+<tr>
+<td>CA-05.8</td>
+<td>Si el contrato <strong>no tiene</strong> prorrateo activo, se ejecuta el flujo estándar actual sin cambios.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="hu-06-trazabilidad-del-origen-en-programaciones-con-prorrateo">HU-06 — Trazabilidad del origen en programaciones con prorrateo<a class="headerlink" href="#hu-06-trazabilidad-del-origen-en-programaciones-con-prorrateo" title="Permanent link">&para;</a></h3>
+<p><strong>Como</strong> usuario administrativo o auditor,
+<strong>quiero</strong> que cada programación de pago generada por prorrateo almacene el registro de origen y el porcentaje aplicado,
+<strong>para</strong> poder identificar de dónde proviene cada programación y verificar el cálculo del importe.</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Criterio de Aceptación</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CA-06.1</td>
+<td>Las programaciones generadas por prorrateo almacenan en <code>ProrrateoOrigen</code> la referencia al <code>ContratoProrrateoGasto</code> que las originó.</td>
+</tr>
+<tr>
+<td>CA-06.2</td>
+<td>Las programaciones generadas por prorrateo almacenan en <code>PorcentajeAplicado</code> el porcentaje utilizado en el cálculo.</td>
+</tr>
+<tr>
+<td>CA-06.3</td>
+<td>Los campos <code>ProrrateoOrigen</code> y <code>PorcentajeAplicado</code> son opcionales. Las programaciones sin prorrateo los tienen en <code>NULL</code>.</td>
+</tr>
+<tr>
+<td>CA-06.4</td>
+<td>El campo <code>EsAutomatico</code> indica <code>true</code> si fue generada por el Background Service, o <code>false</code> si fue generada manualmente o en el primer guardado.</td>
+</tr>
+<tr>
+<td>CA-06.5</td>
+<td>Los campos <code>ProrrateoOrigen</code> y <code>PorcentajeAplicado</code> son de <strong>solo lectura</strong> una vez que la programación ha sido guardada.</td>
+</tr>
+<tr>
+<td>CA-06.6</td>
+<td>La programación muestra en pantalla: centro de trabajo, importe, fecha, estatus, porcentaje aplicado y origen.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="hu-07-independencia-de-programaciones-existentes-ante-cambios-en-prorrateo">HU-07 — Independencia de programaciones existentes ante cambios en prorrateo<a class="headerlink" href="#hu-07-independencia-de-programaciones-existentes-ante-cambios-en-prorrateo" title="Permanent link">&para;</a></h3>
+<p><strong>Como</strong> usuario administrativo,
+<strong>quiero</strong> que los cambios en la configuración de prorrateo de un contrato no afecten las programaciones de pago ya generadas,
+<strong>para</strong> mantener la integridad de los registros financieros históricos.</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Criterio de Aceptación</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CA-07.1</td>
+<td>Al modificar el porcentaje de un registro de prorrateo, las programaciones existentes <strong>mantienen</strong> su importe original.</td>
+</tr>
+<tr>
+<td>CA-07.2</td>
+<td>Al cancelar un registro de prorrateo, las programaciones generadas a partir de ese registro <strong>no se cancelan</strong> ni modifican.</td>
+</tr>
+<tr>
+<td>CA-07.3</td>
+<td>Al agregar un nuevo registro de prorrateo, no se generan retroactivamente programaciones adicionales.</td>
+</tr>
+<tr>
+<td>CA-07.4</td>
+<td>Al modificar el centro de trabajo de un registro de prorrateo, el centro de trabajo de las programaciones ya generadas <strong>no cambia</strong>.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="hu-08-cambios-al-modelo-de-datos">HU-08 — Cambios al modelo de datos<a class="headerlink" href="#hu-08-cambios-al-modelo-de-datos" title="Permanent link">&para;</a></h3>
+<p><strong>Como</strong> equipo técnico,
+<strong>quiero</strong> incorporar los campos necesarios en la tabla de programaciones de pago,
+<strong>para</strong> soportar la trazabilidad requerida por las historias de usuario anteriores.</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Criterio de Aceptación</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CA-08.1</td>
+<td>La tabla <code>ga_tr_programaciones_pagos</code> incluye el campo <code>fk_contrato_prorrateo_gasto</code> (<code>uniqueidentifier</code>, FK nullable) que referencia a <code>ga_tr_contrato_prorrateo_gasto</code>.</td>
+</tr>
+<tr>
+<td>CA-08.2</td>
+<td>La tabla <code>ga_tr_programaciones_pagos</code> incluye el campo <code>porcentaje_aplicado</code> (<code>decimal(5,2)</code>, nullable).</td>
+</tr>
+<tr>
+<td>CA-08.3</td>
+<td>Ambos campos son opcionales y no afectan registros existentes (valor <code>NULL</code> por defecto).</td>
+</tr>
+<tr>
+<td>CA-08.4</td>
+<td>Los campos nuevos no generan errores en programaciones existentes sin prorrateo asociado.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4-control-de-cambios-del-documento">4. 🗂️ Control de Cambios del Documento<a class="headerlink" href="#4-control-de-cambios-del-documento" title="Permanent link">&para;</a></h2>
+<p>El presente documento deberá mantener un historial de modificaciones con el objetivo de asegurar trazabilidad, control de versiones y claridad en la evolución funcional.</p>
+<table>
+<thead>
+<tr>
+<th>Versión</th>
+<th>Fecha</th>
+<th>Autor</th>
+<th>Descripción del Cambio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.0</td>
+<td>08-04-2026</td>
+<td>José Antonio Solis</td>
+<td>Versión inicial del documento</td>
+</tr>
+<tr>
+<td>1.1</td>
+<td>DD-MM-YYYY</td>
+<td>Nombre</td>
+<td>Ajustes en criterios de aceptación (HU-XX)</td>
+</tr>
+<tr>
+<td>1.2</td>
+<td>DD-MM-YYYY</td>
+<td>Nombre</td>
+<td>Inclusión de nueva funcionalidad</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "toc.integrate"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
