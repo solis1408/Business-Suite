@@ -1,0 +1,42 @@
+site_name: "Business Suite - Documentación"
+site_description: "Documentación BRD y FSD - Business Suite"
+site_author: "solis1408"
+site_url: "https://solis1408.github.io/Business-Suite/"
+
+docs_dir: .
+
+theme:
+  name: material
+  language: es
+  palette:
+    primary: indigo
+    accent: indigo
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - toc.integrate
+
+nav:
+  - Inicio: index.md
+  - Catálogos:
+      - Gestión TI:
+          - BRD: Catalogos/Gestion-TI/documentacion/BRD.md
+          - FSD: Catalogos/Gestion-TI/documentacion/FSD.md
+  - Procesos:
+      - Gestión TI:
+          - BRD: Procesos/Gestion-TI/documentacion/BRD.md
+          - FSD: Procesos/Gestion-TI/documentacion/FSD.md
+  - Consultas:
+      - Gestión TI:
+          - ReporteForecast:
+              - BRD: Consultas/Gestion-TI/ReporteForecast/documentacion/BRD.md
+              - FSD: Consultas/Gestion-TI/ReporteForecast/documentacion/FSD.md
+
+markdown_extensions:
+  - tables
+  - toc:
+      permalink: true
+  - admonition
+  - pymdownx.highlight
+  - pymdownx.superfences
