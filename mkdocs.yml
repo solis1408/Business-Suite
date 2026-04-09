@@ -3,7 +3,7 @@ site_description: "Documentación BRD y FSD - Business Suite"
 site_author: "solis1408"
 site_url: "https://solis1408.github.io/Business-Suite/"
 
-docs_dir: .
+docs_dir: docs
 
 theme:
   name: material
