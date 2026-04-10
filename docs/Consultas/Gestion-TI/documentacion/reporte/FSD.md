@@ -246,14 +246,3 @@ Los siguientes campos son nuevos y deben agregarse:
 | CA-08.3 | Ambos campos son opcionales y no afectan registros existentes (valor `NULL` por defecto). |
 | CA-08.4 | Los campos nuevos no generan errores en programaciones existentes sin prorrateo asociado. |
 
----
-
-## 4. 🗂️ Control de Cambios del Documento
-
-El presente documento deberá mantener un historial de modificaciones con el objetivo de asegurar trazabilidad, control de versiones y claridad en la evolución funcional.
-
-| Versión | Fecha      | Autor              | Descripción del Cambio                         |
-| ------- | ---------- | ------------------ | ---------------------------------------------- |
-| 1.0     | 08-04-2026 | José Antonio Solis | Versión inicial del documento                  |
-| 1.1     | DD-MM-YYYY | Nombre             | Ajustes en criterios de aceptación (HU-XX)     |
-| 1.2     | DD-MM-YYYY | Nombre             | Inclusión de nueva funcionalidad               |

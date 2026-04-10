@@ -122,5 +122,3 @@ Cada registro de bitácora debe incluir:
 - Al reactivar, el sistema valida que la suma de porcentajes de los registros activos (incluyendo el reactivado) sea igual a 100%.
 - Si alguna validación falla, el sistema bloquea la reactivación y muestra mensaje de error.
 - La reactivación queda registrada en bitácora con el valor anterior del estatus.
-
----
