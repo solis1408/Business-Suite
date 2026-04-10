@@ -1,11 +1,11 @@
-# 📘 FSD — Procesos / Gestión Financiera / Programaciones de Pago por Prorrateo
+# 📘 FSD — Consultas / Reporte / Forecast
 
 **Functional Specification Document**
 
 | Campo   | Valor                                           |
 | ------- | ----------------------------------------------- |
 | Área    | Procesos                                        |
-| Módulo  | Gestión Financiera - Programaciones de Pago     |
+| Módulo  | Consultas - Reporte - Forecast                  |
 | Versión | 1.0                                             |
 | Fecha   | 08-04-2026                                      |
 | Autor   | José Antonio Solis                              |

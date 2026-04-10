@@ -30,6 +30,7 @@ nav:
   - Consultas:
       - Gestión TI:
           - ReporteForecast:
+              - Inicio: Consultas/Gestion-TI/documentacion/reporte/index.md
               - BRD: Consultas/Gestion-TI/documentacion/reporte/BRD.md
               - FSD: Consultas/Gestion-TI/documentacion/reporte/FSD.md
 

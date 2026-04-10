@@ -1,25 +1,11 @@
-# Programaciones de Pago por Prorrateo
+# Consultas - Gestión TI - ReporteForecast
 
-## Descripción
+Bienvenido a la documentación del módulo **ReporteForecast** del área de **Consultas / Gestión TI**.
 
-Este módulo define la funcionalidad para la generación, distribución y control de programaciones de pago con base en configuraciones de prorrateo en contratos.
+## Documentos disponibles
 
-## Documentación
+| Documento | Descripción |
+|-----------|-------------|
+| [BRD](BRD.md) | Business Requirements Document — Requerimientos de negocio |
+| [FSD](FSD.md) | Functional Specification Document — Especificación funcional |
 
-- [BRD - Business Requirements Document](documentacion/BRD.md): Reglas de negocio, definiciones y objetivos.
-- [FSD - Functional Specification Document](documentacion/FSD.md): Especificaciones funcionales, historias de usuario y criterios de aceptación.
-
-## Características principales
-
-- Configuración de prorrateo de gasto por contrato
-- Generación automática de programaciones en primer guardado
-- Generación por Background Service
-- Generación manual con distribución automática
-- Bitácora de cambios para auditoría
-- Trazabilidad completa del origen de programaciones
-
-## Versión
-
-| Versión | Fecha      | Estado  |
-| ------- | ---------- | ------- |
-| 1.0     | 08-04-2026 | Inicial |
