@@ -12,27 +12,33 @@ theme:
     primary: indigo
     accent: indigo
   features:
-    - navigation.tabs
     - navigation.sections
-    - navigation.expand
-    - toc.integrate
+    - navigation.indexes
+
+extra_css:
+  - assets/stylesheets/main-nav.css
+
+extra_javascript:
+  - assets/javascripts/main-nav.js
 
 nav:
   - Inicio: index.md
   - Catálogos:
-      - Gestión TI:
-          - BRD: Catalogos/Gestion-TI/documentacion/BRD.md
-          - FSD: Catalogos/Gestion-TI/documentacion/FSD.md
+    - Gestión TI:
+      - Inicio: Catalogos/Gestion-TI/documentacion/index.md
+      - BRD: Catalogos/Gestion-TI/documentacion/BRD.md
+      - FSD: Catalogos/Gestion-TI/documentacion/FSD.md
   - Procesos:
-      - Gestión TI:
-          - BRD: Procesos/Gestion-TI/documentacion/BRD.md
-          - FSD: Procesos/Gestion-TI/documentacion/FSD.md
+    - Gestión TI:
+      - Inicio: Procesos/Gestion-TI/documentacion/index.md
+      - BRD: Procesos/Gestion-TI/documentacion/BRD.md
+      - FSD: Procesos/Gestion-TI/documentacion/FSD.md
   - Consultas:
-      - Gestión TI:
-          - ReporteForecast:
-              - Inicio: Consultas/Gestion-TI/documentacion/reporte/index.md
-              - BRD: Consultas/Gestion-TI/documentacion/reporte/BRD.md
-              - FSD: Consultas/Gestion-TI/documentacion/reporte/FSD.md
+    - Gestión TI:
+      - ReporteForecast:
+        - Inicio: Consultas/Gestion-TI/documentacion/reporte/index.md
+        - BRD: Consultas/Gestion-TI/documentacion/reporte/BRD.md
+        - FSD: Consultas/Gestion-TI/documentacion/reporte/FSD.md
 
 markdown_extensions:
   - tables
