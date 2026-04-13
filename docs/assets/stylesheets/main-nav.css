@@ -7,6 +7,22 @@
   overflow: visible;
 }
 
+.bs-main-nav--search-active {
+  display: none;
+}
+
+.bs-main-nav--search-active .bs-main-nav__content,
+.bs-main-nav--search-active .bs-main-nav__subcontent {
+  display: none;
+}
+
+.md-search,
+.md-search__inner,
+.md-search__output {
+  position: relative;
+  z-index: 60;
+}
+
 .bs-main-nav__inner {
   max-width: 61rem;
   margin: 0 auto;
