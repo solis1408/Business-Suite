@@ -11,11 +11,6 @@
   z-index: 1;
 }
 
-.bs-main-nav--search-active .bs-main-nav__content,
-.bs-main-nav--search-active .bs-main-nav__subcontent {
-  display: none;
-}
-
 .md-search {
   position: relative;
   z-index: 60;
