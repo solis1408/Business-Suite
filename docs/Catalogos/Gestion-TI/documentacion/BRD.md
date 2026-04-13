@@ -62,3 +62,5 @@ _Condiciones que deben cumplirse para que el módulo sea considerado completo y 
 |----|----------|
 | CA-01 | |
 | CA-02 | |
+
+CAMBIO TRUJILLO

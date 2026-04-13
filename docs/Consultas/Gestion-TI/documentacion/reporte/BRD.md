@@ -1,4 +1,4 @@
-# 📘 BRD — Procesos / Gestión Financiera / Programaciones de Pago por Prorrateo
+# 📘 BRD — Procesos / Gestión TI / Licencias Servicios / Programaciones de Pago
 
 **Business Requirements Document**
 
