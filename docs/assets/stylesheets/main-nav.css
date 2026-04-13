@@ -1,6 +1,6 @@
 .bs-main-nav {
   position: sticky;
-  top: 0;
+  top: var(--md-header-height);
   z-index: 20;
   background: var(--md-primary-fg-color);
   box-shadow: 0 0.05rem 0 rgba(255, 255, 255, 0.08) inset;
@@ -8,7 +8,7 @@
 }
 
 .bs-main-nav--search-active {
-  display: none;
+  z-index: 1;
 }
 
 .bs-main-nav--search-active .bs-main-nav__content,
@@ -16,11 +16,18 @@
   display: none;
 }
 
-.md-search,
-.md-search__inner,
-.md-search__output {
+.md-search {
   position: relative;
   z-index: 60;
+}
+
+.md-search__inner {
+  z-index: 60;
+}
+
+.md-search__output {
+  position: absolute;
+  z-index: 70;
 }
 
 .bs-main-nav__inner {
