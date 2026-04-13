@@ -124,6 +124,7 @@
 
   function setupMainNavInteractions(container) {
     var topLevelDetails = Array.from(container.querySelectorAll(".bs-main-nav__item > .bs-main-nav__details"));
+    var searchToggle = document.querySelector("#__search");
 
     function closeInactiveMenus() {
       topLevelDetails.forEach(function (details) {
@@ -139,6 +140,41 @@
           other.open = false;
         }
       });
+    }
+
+    function getSearchRoot() {
+      return document.querySelector('[data-md-component="search"]');
+    }
+
+    function getSearchInput() {
+      var root = getSearchRoot();
+      return root ? root.querySelector("input.md-search__input") : null;
+    }
+
+    function getSearchResults() {
+      return document.querySelector(".md-search-result__list");
+    }
+
+    function setSearchActive(active) {
+      container.classList.toggle("bs-main-nav--search-active", !!active);
+
+      if (active) {
+        topLevelDetails.forEach(function (details) {
+          details.open = false;
+        });
+      }
+    }
+
+    function syncSearchState() {
+      var searchRoot = getSearchRoot();
+      var searchInput = getSearchInput();
+      var searchResults = getSearchResults();
+      var hasVisibleResults = !!(searchResults && searchResults.children.length > 0);
+      var hasSearchFocus = !!(searchRoot && searchRoot.contains(document.activeElement));
+      var hasSearchText = !!(searchInput && (searchInput.value || "").trim().length > 0);
+      var searchActive = !!((searchToggle && searchToggle.checked) || hasSearchFocus || hasSearchText || hasVisibleResults);
+
+      setSearchActive(searchActive);
     }
 
     topLevelDetails.forEach(function (details) {
@@ -181,6 +217,45 @@
         closeInactiveMenus();
       }
     });
+
+    if (searchToggle) {
+      searchToggle.addEventListener("change", syncSearchState);
+    }
+
+    document.addEventListener("focusin", function (event) {
+      if (event.target.closest('[data-md-component="search"]')) {
+        setSearchActive(true);
+      }
+    });
+
+    document.addEventListener("focusout", function () {
+      window.setTimeout(syncSearchState, 0);
+    });
+
+    document.addEventListener("input", function (event) {
+      if (event.target.matches("input.md-search__input")) {
+        syncSearchState();
+      }
+    });
+
+    document.addEventListener("click", function (event) {
+      if (event.target.closest('[data-md-component="search"]')) {
+        setSearchActive(true);
+        return;
+      }
+
+      if (event.target.closest('.md-search__overlay, button[title="Limpiar"], button[aria-label="Limpiar"]')) {
+        window.setTimeout(syncSearchState, 0);
+      }
+    });
+
+    var resultsObserver = new MutationObserver(syncSearchState);
+    var resultsList = getSearchResults();
+    if (resultsList) {
+      resultsObserver.observe(resultsList, { childList: true, subtree: false });
+    }
+
+    syncSearchState();
   }
 
   function buildMainNav() {
