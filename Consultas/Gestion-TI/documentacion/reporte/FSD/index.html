@@ -953,6 +953,50 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#15-gestion-de-registros-de-prorrateo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5 Gestión de registros de prorrateo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#16-trazabilidad-bitacora-de-prorrateo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6 Trazabilidad / Bitácora de prorrateo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#17-marcado-de-programaciones-extraordinarias" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.7 — Marcado de programaciones extraordinarias
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#18-control-de-prorrateo-por-variable-de-sistema-en-la-consulta-de-servicios-reporte-financiero" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.8 — Control de prorrateo por variable de sistema en la consulta de servicios. (Reporte Financiero)
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1063,6 +1107,28 @@
     <span class="md-ellipsis">
       
         HU-08 — Cambios al modelo de datos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hu-09-marcado-automatico-de-programaciones-extraordinarias" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HU-09 — Marcado automático de programaciones extraordinarias
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hu-10-control-de-prorrateo-por-variable-de-sistema-en-la-consulta-de-servicios-reporte-financiero" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HU-10 — Control de prorrateo por variable de sistema en la consulta de servicios (Reporte Financiero)
       
     </span>
   </a>
@@ -1188,6 +1254,50 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#15-gestion-de-registros-de-prorrateo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5 Gestión de registros de prorrateo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#16-trazabilidad-bitacora-de-prorrateo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6 Trazabilidad / Bitácora de prorrateo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#17-marcado-de-programaciones-extraordinarias" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.7 — Marcado de programaciones extraordinarias
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#18-control-de-prorrateo-por-variable-de-sistema-en-la-consulta-de-servicios-reporte-financiero" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.8 — Control de prorrateo por variable de sistema en la consulta de servicios. (Reporte Financiero)
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1304,6 +1414,28 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#hu-09-marcado-automatico-de-programaciones-extraordinarias" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HU-09 — Marcado automático de programaciones extraordinarias
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hu-10-control-de-prorrateo-por-variable-de-sistema-en-la-consulta-de-servicios-reporte-financiero" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HU-10 — Control de prorrateo por variable de sistema en la consulta de servicios (Reporte Financiero)
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1413,7 +1545,32 @@
 <h3 id="13-generacion-manual">1.3 Generación manual<a class="headerlink" href="#13-generacion-manual" title="Permanent link">&para;</a></h3>
 <p><strong>Flujo</strong></p>
 <ul>
-<li>Al crear una programación manual:</li>
+<li>Al crear una programación manual, el sistema registra <strong>una única programación</strong>, El flujo de creación es el <strong>estándar actual</strong> en todos los casos.</li>
+<li><strong>Acción bajo demanda — "Aplicar Prorrateo"</strong></li>
+<li>La acción se muestra <strong>únicamente en la lista de programaciones</strong> y solo cuando el contrato asociado tiene registros de prorrateo activos. Si no los tiene, la acción no es visible.</li>
+<li>La acción solo puede ejecutarse <strong>una única vez</strong> por programación. Una vez aplicada, deja de estar disponible para esa programación.</li>
+<li>Al ejecutar la acción, el sistema:</li>
+<li><strong>Actualiza</strong> la programación original con los datos del <strong>primer</strong> registro de prorrateo activo:<ul>
+<li>Importe = TotalContrato × (Porcentaje / 100)</li>
+<li>CentroTrabajo = del registro de prorrateo</li>
+<li>ProrrateoOrigen = referencia al registro de prorrateo</li>
+<li>PorcentajeAplicado = porcentaje del registro</li>
+<li>EsAutomatico = false</li>
+</ul>
+</li>
+<li>
+<p><strong>Crea</strong> una nueva programación por cada registro de prorrateo activo restante (2°, 3°, ...), con:</p>
+<ul>
+<li>Importe = TotalContrato × (Porcentaje / 100)</li>
+<li>CentroTrabajo = del registro de prorrateo</li>
+<li>ProrrateoOrigen = referencia al registro de prorrateo</li>
+<li>PorcentajeAplicado = porcentaje del registro</li>
+<li>EsAutomatico = false</li>
+</ul>
+</li>
+<li>
+<p>Al crear una programación manual</p>
+</li>
 <li>Si hay prorrateo activo:<ul>
 <li>Generar una programación por cada registro de prorrateo, con:</li>
 <li>Importe = TotalContrato × (Porcentaje / 100)</li>
@@ -1423,16 +1580,144 @@
 <li>EsAutomatico = false</li>
 </ul>
 </li>
-<li>Si no existen:<ul>
-<li>Se ejecuta flujo estándar</li>
-</ul>
-</li>
 </ul>
 <hr />
 <h3 id="14-no-regeneracion">1.4 No regeneración<a class="headerlink" href="#14-no-regeneracion" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Cambios en prorrateo NO afectan programaciones existentes</li>
 </ul>
+<hr />
+<h3 id="15-gestion-de-registros-de-prorrateo">1.5 Gestión de registros de prorrateo<a class="headerlink" href="#15-gestion-de-registros-de-prorrateo" title="Permanent link">&para;</a></h3>
+<p><strong>Operación:</strong> Creación de registro</p>
+<p><strong>Restricción:</strong> El porcentaje debe ser mayor a 0. No se permite asignar un centro de trabajo ya asignado en otro registro activo del mismo contrato.</p>
+<p><strong>Flujo</strong></p>
+<ul>
+<li>El usuario asigna un centro de trabajo y un porcentaje al registro.</li>
+<li>Al guardar, si la suma de porcentajes de los registros activos no es exactamente 100%, el sistema bloquea el guardado y muestra: <em>"La sumatoria de los porcentajes en el Prorrateo de Gasto debe ser exactamente 100%."</em></li>
+<li>La creación no genera entrada en bitácora.</li>
+</ul>
+<hr />
+<p><strong>Operación:</strong> Edición de registro activo</p>
+<p><strong>Flujo</strong></p>
+<ul>
+<li>Se permite modificar el porcentaje y/o el centro de trabajo.</li>
+<li>Se aplican las mismas validaciones de unicidad de centro de trabajo y suma de 100%.</li>
+<li>Los cambios quedan registrados en bitácora.</li>
+</ul>
+<hr />
+<p><strong>Operación:</strong> Cancelación (baja lógica)</p>
+<p><strong>Flujo</strong></p>
+<ul>
+<li>Un registro activo puede cancelarse.</li>
+<li>Al cancelarse, queda excluido del cálculo de suma de porcentajes.</li>
+<li>Un registro cancelado no puede editarse en sus campos de datos (centro de trabajo, porcentaje).</li>
+<li>El cambio de estatus queda registrado en bitácora.</li>
+</ul>
+<hr />
+<p><strong>Operación:</strong> Reactivación</p>
+<p><strong>Flujo</strong></p>
+<ul>
+<li>Un registro cancelado puede reactivarse (volver a estado Activo).</li>
+<li>Si el centro de trabajo ya está asignado en otro registro activo del mismo contrato, el sistema bloquea la operación con mensaje de error.</li>
+<li>Si la suma de porcentajes de los registros activos resultante no es exactamente 100%, el sistema bloquea la operación con mensaje de error.</li>
+<li>El cambio de estatus queda registrado en bitácora.</li>
+</ul>
+<hr />
+<h3 id="16-trazabilidad-bitacora-de-prorrateo">1.6 Trazabilidad / Bitácora de prorrateo<a class="headerlink" href="#16-trazabilidad-bitacora-de-prorrateo" title="Permanent link">&para;</a></h3>
+<p><strong>Evento:</strong> Cambio en la configuración de un registro de prorrateo (modificación, cancelación o reactivación).</p>
+<p><strong>Condición:</strong> Solo aplica para modificaciones, cancelaciones y reactivaciones. La creación de un nuevo registro no genera entrada en bitácora.</p>
+<p><strong>Flujo</strong></p>
+<ul>
+<li>Al detectar un cambio aplicable, el sistema registra automáticamente en bitácora:</li>
+<li>Campo modificado y valor anterior.</li>
+<li>Cambio de estatus y valor anterior (en cancelaciones y reactivaciones).</li>
+<li>Usuario que realizó el cambio.</li>
+<li>Fecha y hora del evento.</li>
+<li>La bitácora es visible desde la pantalla de detalle del registro de prorrateo.</li>
+</ul>
+<p><strong>Restricción:</strong></p>
+<ul>
+<li>La creación de un nuevo registro de prorrateo <strong>no</strong> genera entrada en bitácora.</li>
+</ul>
+<hr />
+<h3 id="17-marcado-de-programaciones-extraordinarias">1.7 — Marcado de programaciones extraordinarias<a class="headerlink" href="#17-marcado-de-programaciones-extraordinarias" title="Permanent link">&para;</a></h3>
+<p>Una programación de pago se considera <strong>extraordinaria</strong> cuando fue generada a partir de un registro de prorrateo de gasto específico, o cuando su fecha de aniversario no coincide con el ciclo proyectado del contrato. El indicador de programación extraordinaria es de uso interno (no visible al usuario) y se asigna automáticamente; nunca se edita manualmente.</p>
+<p><strong>Condiciones que activan el marcado:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Condición</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A — Prorrateo aplicado</strong></td>
+<td>La programación tiene asignado un registro de prorrateo de gasto, es decir, fue generada como parte de un prorrateo de gasto.</td>
+</tr>
+<tr>
+<td><strong>B — Fecha fuera de ciclo</strong></td>
+<td>La programación es de tipo renovación o adquisición, y el día del mes de su fecha de aniversario difiere del día del mes de la fecha de aniversario del contrato.</td>
+</tr>
+</tbody>
+</table>
+<p>Ambas condiciones son independientes; basta con que se cumpla cualquiera de las dos.</p>
+<hr />
+<h3 id="18-control-de-prorrateo-por-variable-de-sistema-en-la-consulta-de-servicios-reporte-financiero">1.8 — Control de prorrateo por variable de sistema en la consulta de servicios. (Reporte Financiero)<a class="headerlink" href="#18-control-de-prorrateo-por-variable-de-sistema-en-la-consulta-de-servicios-reporte-financiero" title="Permanent link">&para;</a></h3>
+<p>El <strong>Reporte Financiero</strong> utiliza una variable de sistema para determinar si la lógica de distribución por tabla de configuración debe aplicarse al generar la consulta de pagos de servicios (contratos).</p>
+<p><strong>Variable de sistema:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Nombre</th>
+<th>Tipo</th>
+<th>Valor predeterminado</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fecha de transición del esquema de prorrateo</td>
+<td>Fecha</td>
+<td>10-04-2026</td>
+<td>Fecha a partir de la cual <strong>no</strong> se aplica la lógica de distribución por tabla de configuración en la consulta. Representa la fecha de transición al nuevo esquema donde el prorrateo queda registrado directamente en las programaciones de pago.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Regla de evaluación:</strong></p>
+<p>Si la Fecha de Inicio del filtro del reporte es menor o igual a la fecha de transición, se activa la lógica de distribución por tabla de configuración de prorrateo. De lo contrario, se utiliza el flujo estándar sin distribución.</p>
+<p><strong>Comportamiento de las consultas según el estado del indicador:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Consulta</th>
+<th>Indicador activo (aplica prorrateo)</th>
+<th>Indicador inactivo (no aplica prorrateo)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Consulta de pagos de servicios</td>
+<td>Se ejecuta <strong>excluyendo</strong> los contratos que tienen prorrateo activo con pagos en el rango desde la Fecha de Inicio hasta la fecha de transición, para evitar doble conteo.</td>
+<td>Se ejecuta <strong>sin exclusiones</strong>; todos los contratos aparecen bajo el flujo estándar.</td>
+</tr>
+<tr>
+<td>Consulta de pagos de servicios con distribución por prorrateo</td>
+<td>Se ejecuta para el rango desde la Fecha de Inicio hasta la fecha de transición, aplicando la distribución por porcentaje y centro de trabajo.</td>
+<td><strong>No se ejecuta.</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Manejo de rangos que cruzan la fecha de corte:</strong></p>
+<p>Cuando el rango del reporte comprende tanto el periodo anterior como el posterior a la fecha de transición, el reporte cubre ambos tramos:</p>
+<ul>
+<li><strong>Tramo con prorrateo</strong> (desde la Fecha de Inicio hasta la fecha de transición): cubierto por la consulta de pagos con distribución por centro de trabajo.</li>
+<li><strong>Tramo posterior</strong> (desde la fecha de transición hasta la Fecha de Fin): cubierto por la consulta estándar sin exclusión, como pago estándar del contrato.</li>
+</ul>
+<p><strong>Protección contra doble conteo:</strong></p>
+<p>La condición de exclusión en la consulta estándar (cuando el indicador está activo) evalúa si el contrato tiene configuración de prorrateo activa <strong>y además</strong> tiene pagos registrados dentro del tramo anterior a la fecha de transición. Si el contrato tiene prorrateo configurado pero <strong>no tiene pagos</strong> en ese tramo, la exclusión no aplica y el contrato aparece en el flujo estándar, evitando que quede sin representación en el reporte.</p>
+<p><strong>Acotamiento intencional de la consulta de prorrateo:</strong></p>
+<p>La consulta de pagos con distribución por prorrateo utiliza la fecha de transición como límite superior del rango de fechas, independientemente de la Fecha de Fin seleccionada por el usuario. Esto es intencional: se asume que después de la fecha de corte no existirán pagos bajo el esquema de distribución por tabla de configuración, ya que el nuevo esquema registra el prorrateo directamente en las programaciones.</p>
 <hr />
 <h2 id="2-cambios-al-modelo-de-datos">2. 📐 Cambios al modelo de Datos<a class="headerlink" href="#2-cambios-al-modelo-de-datos" title="Permanent link">&para;</a></h2>
 <p><strong>Tabla:</strong> ga_tr_programaciones_pagos</p>
@@ -1666,41 +1951,49 @@
 <tbody>
 <tr>
 <td>CA-05.1</td>
-<td>Al crear una programación manualmente para un contrato con prorrateo activo, el sistema genera <strong>una programación por cada registro de prorrateo activo</strong> sin requerir confirmación.</td>
+<td>Al crear manualmente una programación, el sistema registra <strong>una sola programación</strong> con el total del contrato como importe, sin centro de trabajo, referencia al prorrateo de origen ni porcentaje aplicado (sin valor asignado), independientemente de si el contrato tiene prorrateo activo.</td>
 </tr>
 <tr>
 <td>CA-05.2</td>
-<td>Cada programación generada tiene: <code>Importe = TotalContrato × (Porcentaje / 100)</code>, redondeado a 2 decimales.</td>
+<td>El flujo de creación manual es el <strong>estándar actual</strong> en todos los casos.</td>
 </tr>
 <tr>
 <td>CA-05.3</td>
-<td>Cada programación generada tiene asignado el <code>CentroTrabajo</code> del registro de prorrateo.</td>
+<td>La acción <strong>"Aplicar Prorrateo"</strong> se muestra en la lista de programaciones <strong>únicamente</strong> cuando el contrato asociado tiene registros de prorrateo activos. Si no los tiene, la acción no es visible.</td>
 </tr>
 <tr>
 <td>CA-05.4</td>
-<td>Todas las programaciones generadas comparten la misma <code>FechaAniversario</code> calculada.</td>
+<td>La acción <strong>"Aplicar Prorrateo"</strong> solo puede ejecutarse <strong>una única vez</strong> por programación. Una vez aplicada, la acción deja de estar disponible para esa programación.</td>
 </tr>
 <tr>
 <td>CA-05.5</td>
-<td>Cada programación generada almacena <code>ProrrateoOrigen</code> y <code>PorcentajeAplicado</code>.</td>
+<td>Al ejecutar la acción, la programación original se <strong>actualiza</strong> con los datos del primer registro de prorrateo activo: importe igual al total del contrato multiplicado por el porcentaje, redondeado a 2 decimales; centro de trabajo, referencia al registro de prorrateo de origen y porcentaje aplicado en el cálculo.</td>
 </tr>
 <tr>
 <td>CA-05.6</td>
-<td>El campo <code>EsAutomatico</code> de cada programación generada es <code>false</code>.</td>
+<td>Al ejecutar la acción, se <strong>crea una nueva programación</strong> por cada registro de prorrateo activo restante (2°, 3°, ...), con importe, centro de trabajo, referencia al registro de prorrateo de origen y porcentaje aplicado correspondientes, redondeado a 2 decimales.</td>
 </tr>
 <tr>
 <td>CA-05.7</td>
-<td>No aplica restricción de duplicidad en generación manual.</td>
+<td>Todas las programaciones resultantes de la acción quedan marcadas como generadas manualmente (no por el servicio automático).</td>
 </tr>
 <tr>
 <td>CA-05.8</td>
-<td>Si el contrato <strong>no tiene</strong> prorrateo activo, se ejecuta el flujo estándar actual sin cambios.</td>
+<td>Todas las programaciones resultantes de la acción comparten la misma fecha de aniversario de la programación original.</td>
+</tr>
+<tr>
+<td>CA-05.9</td>
+<td>No aplica restricción de duplicidad al ejecutar la acción.</td>
+</tr>
+<tr>
+<td>CA-05.10</td>
+<td>Si el contrato <strong>no tiene</strong> prorrateo activo, el flujo de creación manual sigue el comportamiento estándar actual sin cambios y la acción no es visible.</td>
 </tr>
 </tbody>
 </table>
 <hr />
 <h3 id="hu-06-trazabilidad-del-origen-en-programaciones-con-prorrateo">HU-06 — Trazabilidad del origen en programaciones con prorrateo<a class="headerlink" href="#hu-06-trazabilidad-del-origen-en-programaciones-con-prorrateo" title="Permanent link">&para;</a></h3>
-<p><strong>Como</strong> usuario administrativo o auditor,
+<p><strong>Como</strong> usuario administrativo,
 <strong>quiero</strong> que cada programación de pago generada por prorrateo almacene el registro de origen y el porcentaje aplicado,
 <strong>para</strong> poder identificar de dónde proviene cada programación y verificar el cálculo del importe.</p>
 <table>
@@ -1721,7 +2014,7 @@
 </tr>
 <tr>
 <td>CA-06.3</td>
-<td>Los campos <code>ProrrateoOrigen</code> y <code>PorcentajeAplicado</code> son opcionales. Las programaciones sin prorrateo los tienen en <code>NULL</code>.</td>
+<td>Los campos <code>ProrrateoOrigen</code> y <code>PorcentajeAplicado</code> son opcionales. Las programaciones sin prorrateo no tienen valor asignado en estos campos.</td>
 </tr>
 <tr>
 <td>CA-06.4</td>
@@ -1756,7 +2049,7 @@
 </tr>
 <tr>
 <td>CA-07.2</td>
-<td>Al cancelar un registro de prorrateo, las programaciones generadas a partir de ese registro <strong>no se cancelan</strong> ni modifican.</td>
+<td>Al cancelar un registro de prorrateo, las programaciones generadas a partir de ese registro <strong>no se cancelan</strong>.</td>
 </tr>
 <tr>
 <td>CA-07.3</td>
@@ -1796,6 +2089,112 @@
 <tr>
 <td>CA-08.4</td>
 <td>Los campos nuevos no generan errores en programaciones existentes sin prorrateo asociado.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="hu-09-marcado-automatico-de-programaciones-extraordinarias">HU-09 — Marcado automático de programaciones extraordinarias<a class="headerlink" href="#hu-09-marcado-automatico-de-programaciones-extraordinarias" title="Permanent link">&para;</a></h3>
+<p><strong>Como</strong> sistema,
+<strong>quiero</strong> marcar automáticamente una programación de pago como extraordinaria cuando corresponda,
+<strong>para</strong> facilitar la identificación y el filtrado de programaciones fuera del ciclo normal o generadas por prorrateo.</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Criterio de Aceptación</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CA-09.1</td>
+<td>Al guardar una programación de pago, el sistema revisa si cumple condiciones para marcarse como extraordinaria antes de confirmar el registro.</td>
+</tr>
+<tr>
+<td>CA-09.2</td>
+<td>Si la programación proviene de un prorrateo de gasto, se marca como extraordinaria (condición A).</td>
+</tr>
+<tr>
+<td>CA-09.3</td>
+<td>Si la programación no proviene de un prorrateo, la condición A no aplica y no se marca por ese motivo.</td>
+</tr>
+<tr>
+<td>CA-09.4</td>
+<td>Si la programación es de renovación o adquisición y su día de aniversario no coincide con el día de aniversario del contrato, se marca como extraordinaria (condición B).</td>
+</tr>
+<tr>
+<td>CA-09.5</td>
+<td>Si no se cumple ninguna condición (A o B), la programación se mantiene como no extraordinaria.</td>
+</tr>
+<tr>
+<td>CA-09.6</td>
+<td>Esta marca no puede ser editada manualmente por el usuario.</td>
+</tr>
+<tr>
+<td>CA-09.7</td>
+<td>Las programaciones creadas automáticamente a partir de prorrateo se registran directamente como extraordinarias, en línea con la condición A.</td>
+</tr>
+<tr>
+<td>CA-09.8</td>
+<td>Esta validación no altera programaciones ya existentes; solo aplica cuando se crea una nueva.</td>
+</tr>
+<tr>
+<td>CA-09.9</td>
+<td>Los reportes y consultas pueden filtrar las programaciones extraordinarias para identificarlas fácilmente.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="hu-10-control-de-prorrateo-por-variable-de-sistema-en-la-consulta-de-servicios-reporte-financiero">HU-10 — Control de prorrateo por variable de sistema en la consulta de servicios (Reporte Financiero)<a class="headerlink" href="#hu-10-control-de-prorrateo-por-variable-de-sistema-en-la-consulta-de-servicios-reporte-financiero" title="Permanent link">&para;</a></h3>
+<p><strong>Como</strong> sistema,
+<strong>quiero</strong> decidir automáticamente cuándo aplicar la distribución por prorrateo en los pagos de servicios,
+<strong>para</strong> que el Reporte Financiero muestre información correcta según el periodo consultado.</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Criterio de Aceptación</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CA-10.1</td>
+<td>Al ejecutar el reporte, el sistema toma una fecha de corte desde la configuración general. Si no existe una fecha configurada, usa una fecha predeterminada.</td>
+</tr>
+<tr>
+<td>CA-10.2</td>
+<td>Si la fecha inicial del reporte es igual o anterior a la fecha de corte, se activa la lógica de prorrateo; si es posterior, se usa el flujo estándar.</td>
+</tr>
+<tr>
+<td>CA-10.3</td>
+<td>Cuando la lógica de prorrateo está activa, la consulta estándar excluye contratos con prorrateo activo que ya tienen pagos dentro del tramo previo a la fecha de corte, para evitar duplicidades.</td>
+</tr>
+<tr>
+<td>CA-10.4</td>
+<td>Cuando la lógica de prorrateo está activa, se ejecuta una consulta específica para distribuir los importes por porcentaje y centro de trabajo en el tramo previo a la fecha de corte.</td>
+</tr>
+<tr>
+<td>CA-10.5</td>
+<td>Cuando la lógica de prorrateo no está activa, solo se ejecuta la consulta estándar y no se aplica la consulta de distribución.</td>
+</tr>
+<tr>
+<td>CA-10.6</td>
+<td>Si el rango consultado cruza la fecha de corte, el tramo anterior se procesa con prorrateo y el posterior con el flujo estándar, sin duplicar registros.</td>
+</tr>
+<tr>
+<td>CA-10.7</td>
+<td>Si un contrato tiene prorrateo configurado pero no tiene pagos en el tramo previo a la fecha de corte, no debe excluirse de la consulta estándar, para que sí aparezca en el reporte.</td>
+</tr>
+<tr>
+<td>CA-10.8</td>
+<td>La consulta de prorrateo usa la fecha de corte como límite final del tramo a distribuir, aunque el usuario seleccione una fecha final mayor.</td>
+</tr>
+<tr>
+<td>CA-10.9</td>
+<td>La fecha de corte puede ajustarse desde configuración, sin requerir cambios técnicos.</td>
+</tr>
+<tr>
+<td>CA-10.10</td>
+<td>Los resultados del flujo estándar y del flujo con prorrateo se integran en un único conjunto de datos antes de mostrarse en el reporte.</td>
 </tr>
 </tbody>
 </table>
