@@ -404,8 +404,6 @@ Los siguientes campos son nuevos y deben agregarse:
 | CA-09.5 | Si no se cumple ninguna condición (A o B), la programación se mantiene como no extraordinaria. |
 | CA-09.6 | Esta marca no puede ser editada manualmente por el usuario.  |
 | CA-09.7 | Las programaciones creadas automáticamente a partir de prorrateo se registran directamente como extraordinarias, en línea con la condición A. |
-| CA-09.8 | Esta validación no altera programaciones ya existentes; solo aplica cuando se crea una nueva. |
-| CA-09.9 | Los reportes y consultas pueden filtrar las programaciones extraordinarias para identificarlas fácilmente. |
 
 ---
 
