@@ -171,7 +171,7 @@
 
 ### 1.7 — Marcado de programaciones extraordinarias
 
-Una programación de pago se considera **extraordinaria** cuando fue generada a partir de un registro de prorrateo de gasto específico, o cuando su fecha de aniversario no coincide con el ciclo proyectado del contrato. El indicador de programación extraordinaria es de uso interno (no visible al usuario) y se asigna automáticamente; nunca se edita manualmente.
+Una programación de pago se considera **extraordinaria** cuando fue generada a partir de un registro de prorrateo de gasto específico, o cuando la programación es de tipo renovación o adquisición y su fecha de aniversario no coincide con el ciclo proyectado del contrato. El indicador de programación extraordinaria es de uso interno (no visible al usuario) y se asigna automáticamente; nunca se edita manualmente.
 
 **Condiciones que activan el marcado:**
 
@@ -196,14 +196,8 @@ El **Reporte Financiero** utiliza una variable de sistema para determinar si la 
 
 **Regla de evaluación:**
 
-Si la Fecha de Inicio del filtro del reporte es menor o igual a la fecha de transición, se activa la lógica de distribución por tabla de configuración de prorrateo. De lo contrario, se utiliza el flujo estándar sin distribución.
-
-**Comportamiento de las consultas según el estado del indicador:**
-
-| Consulta                                                     | Indicador activo (aplica prorrateo)                          | Indicador inactivo (no aplica prorrateo)                     |
-| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| Consulta de pagos de servicios                               | Se ejecuta **excluyendo** los contratos que tienen prorrateo activo con pagos en el rango desde la Fecha de Inicio hasta la fecha de transición, para evitar doble conteo. | Se ejecuta **sin exclusiones**; todos los contratos aparecen bajo el flujo estándar. |
-| Consulta de pagos de servicios con distribución por prorrateo | Se ejecuta para el rango desde la Fecha de Inicio hasta la fecha de transición, aplicando la distribución por porcentaje y centro de trabajo. | **No se ejecuta.**                                           |
+Si la Fecha de Fin del filtro del reporte es menor o igual a la fecha de transición, se activa la lógica de distribución 
+por tabla de configuración de prorrateo. De lo contrario, si la Fecha de Inicio del filtro del reporte es mayor o igual a la fecha de transición, no se aplica la lógica de prorrateo y se utiliza el flujo estándar.
 
 **Manejo de rangos que cruzan la fecha de corte:**
 
@@ -212,9 +206,18 @@ Cuando el rango del reporte comprende tanto el periodo anterior como el posterio
 - **Tramo con prorrateo** (desde la Fecha de Inicio hasta la fecha de transición): cubierto por la consulta de pagos con distribución por centro de trabajo.
 - **Tramo posterior** (desde la fecha de transición hasta la Fecha de Fin): cubierto por la consulta estándar sin exclusión, como pago estándar del contrato.
 
+
 **Protección contra doble conteo:**
 
-La condición de exclusión en la consulta estándar (cuando el indicador está activo) evalúa si el contrato tiene configuración de prorrateo activa **y además** tiene pagos registrados dentro del tramo anterior a la fecha de transición. Si el contrato tiene prorrateo configurado pero **no tiene pagos** en ese tramo, la exclusión no aplica y el contrato aparece en el flujo estándar, evitando que quede sin representación en el reporte.
+Cuando el indicador de exclusión está activo y existe una fecha de transición de prorrateo, el sistema divide el periodo de análisis en dos tramos:
+
+- Para el tramo anterior a la fecha de transición, los pagos se consideran bajo el esquema de prorrateo vigente en ese periodo.
+- Para el tramo posterior a la fecha de transición, los pagos ya no se distribuyen por prorrateo, sino que se procesan bajo la lógica estándar o la nueva configuración, según corresponda.
+
+De este modo, el sistema asegura que:
+- Los pagos previos a la transición se reportan conforme al prorrateo activo en ese momento.
+- Los pagos posteriores a la transición no se duplican ni quedan sin representación, ya que se procesan bajo la lógica vigente después de la transición.
+- Si el contrato tiene prorrateo configurado pero no existen pagos en el tramo anterior a la fecha de transición, el contrato se procesa por el flujo estándar para evitar omisiones en el reporte.
 
 **Acotamiento intencional de la consulta de prorrateo:**
 
