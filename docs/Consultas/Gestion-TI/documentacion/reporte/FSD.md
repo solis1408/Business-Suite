@@ -421,8 +421,7 @@ Los siguientes campos son nuevos y deben agregarse:
 | CA-10.4  | Cuando la lógica de prorrateo está activa, se ejecuta una consulta específica para distribuir los importes por porcentaje y centro de trabajo en el tramo previo a la fecha de corte. |
 | CA-10.5  | Cuando la lógica de prorrateo no está activa, solo se ejecuta la consulta estándar y no se aplica la consulta de distribución. |
 | CA-10.6  | Si el rango consultado cruza la fecha de corte, el tramo anterior se procesa con prorrateo y el posterior con el flujo estándar, sin duplicar registros. |
-| CA-10.7  | Si un contrato tiene prorrateo configurado pero no tiene pagos en el tramo previo a la fecha de corte, no debe excluirse de la consulta estándar, para que sí aparezca en el reporte. |
-| CA-10.8  | La consulta de prorrateo usa la fecha de corte como límite final del tramo a distribuir, aunque el usuario seleccione una fecha final mayor. |
-| CA-10.9  | La fecha de corte puede ajustarse desde configuración, sin requerir cambios técnicos. |
-| CA-10.10 | Los resultados del flujo estándar y del flujo con prorrateo se integran en un único conjunto de datos antes de mostrarse en el reporte. |
+| CA-10.7  | La consulta de prorrateo usa la fecha de corte como límite final del tramo a distribuir, aunque el usuario seleccione una fecha final mayor. |
+| CA-10.8  | La fecha de corte puede ajustarse desde configuración, sin requerir cambios técnicos. |
+| CA-10.9 | Los resultados del flujo estándar y del flujo con prorrateo se integran en un único conjunto de datos antes de mostrarse en el reporte. |
 
