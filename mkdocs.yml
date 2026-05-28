@@ -18,6 +18,7 @@ extra_css:
 
 extra_javascript:
   - assets/javascripts/main-nav.js
+  - https://unpkg.com/mermaid/dist/mermaid.min.js
 
 nav:
   - Inicio: index.md
@@ -82,5 +83,9 @@ markdown_extensions:
       permalink: true
   - admonition
   - pymdownx.highlight
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - attr_list

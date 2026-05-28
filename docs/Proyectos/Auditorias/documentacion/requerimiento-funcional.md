@@ -64,6 +64,7 @@ Registrar y versionar los requerimientos funcionales del módulo de Auditorías,
 | RF-28        | Clasificación de Tipo de Hallazgo como alto impacto          | Definición            | Por definir | 04/06/2026 |
 | RF-29        | Auditoría de validación del ciclo PDCA                       | Definición            | Por definir | Por definir |
 | RF-30        | Configuración de días límite para registro de acciones correctivas | Definición       | Por definir | Por definir |
+| RF-31        | Firma móvil del listado de hallazgos                         | Pendiente de definición | Por definir | Por definir |
 
 ---
 
@@ -82,7 +83,7 @@ La siguiente tabla relaciona los requerimientos acordados con el cliente (numera
 | RF22 | Reporte resumen de auditorías en sustitución del reporte actual | RF-07 |
 | RF23 | Seguimiento de acciones correctivas asociadas a hallazgos | RF-15, RF-18 |
 | RF24 | Limitar cierre de auditoría hasta hallazgos y ACs finalizados | RF-14, RF-15 |
-| RF25 | Sistema móvil — firma del listado de hallazgos en finalización | Pendiente de definición |
+| RF25 | Sistema móvil — firma del listado de hallazgos en finalización | RF-31 |
 | RF26 | Monitor consolidado: auditorías + hallazgos + ACs + estados | RF-17, RF-18 |
 | RF27 | Monitor de ACs por auditoría, área y responsable | RF-18 |
 
@@ -3020,3 +3021,19 @@ Entonces omite la nota de tiempo límite sin mostrar error ni bloquear el envío
 
 **Regla transversal:**
 El ContenedorCatalogo de días límite PDCA es la única fuente de verdad para el plazo de registro de ACs. La clave de búsqueda es Char1 del detalle, que debe coincidir exactamente con la clave del AreaAuditable de la Auditoría. Numerico1 debe ser siempre un entero mayor a cero; los valores nulos o no positivos son inválidos. Si no existe configuración para un departamento, el sistema omite la nota en el correo sin bloquear ninguna operación.
+
+---
+
+---
+
+# RF-31 — Firma móvil del listado de hallazgos
+
+| Campo          | Valor                    |
+|----------------|--------------------------|
+| Prioridad      | Alta                     |
+| Estado         | Pendiente de definición  |
+| Dependencias   | RF-14                    |
+
+**Descripción:** El sistema móvil debe permitir firmar el listado de hallazgos detectados durante la finalización de la auditoría. Esta firma representa la aceptación formal del Auditado o del Auditor sobre los hallazgos registrados y queda asociada al registro de la auditoría como evidencia del proceso.
+
+> **Nota:** Los User Stories, Criterios de Aceptación, mecanismo de firma (trazo digital, biométrico, aceptación explícita), actor responsable de firmar (Auditado, Auditor o ambos), plataforma móvil soportada e integración con el flujo de estados requieren análisis y definición con el cliente antes de documentarse.
