@@ -26,6 +26,9 @@ nav:
     - Expediente de Personal (EDC):
       - Requerimiento Cliente: Proyectos/EDC/documentacion/requerimiento-cliente.md
       - Requerimiento Funcional: Proyectos/EDC/documentacion/requerimiento-funcional.md
+      - RouteMap:
+        - RouteMap: Proyectos/EDC/documentacion/routemap/Roadmap Estratégico — Expediente Digital del Colaborador.md
+        - Diagrama HTML: Proyectos/EDC/documentacion/routemap/roadmap-diagrama.md
       - Diagramas:
         - Contexto: Proyectos/EDC/documentacion/diagramas/contexto.md
         - Mapa de estados: Proyectos/EDC/documentacion/diagramas/mapa-de-estados.md
