@@ -1,0 +1,1639 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Acciones Correctivas</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    font-family: 'Inter', sans-serif;
+    background: #f4f6f9;
+    color: #1a1a2e;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: clamp(16px, 3vw, 36px) clamp(12px, 3vw, 40px);
+    gap: 0;
+  }
+
+  /* ── Header ── */
+  .page-header { margin-bottom: clamp(16px,2vw,28px); }
+  .page-header h1 { font-size: clamp(20px,3vw,28px); font-weight: 700; color: #111827; letter-spacing: -.3px; }
+  .page-header p  { font-size: 13px; color: #6b7280; margin-top: 4px; }
+
+  /* ── KPI Grid ── */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: clamp(10px,1.5vw,16px);
+    margin-bottom: clamp(16px,2vw,28px);
+  }
+  @media (max-width: 1100px) { .kpi-grid { grid-template-columns: repeat(3,1fr); } }
+  @media (max-width: 700px)  { .kpi-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 480px)  { .kpi-grid { grid-template-columns: 1fr; } }
+
+  .kpi-card { background: white; border-radius: 14px; padding: clamp(14px,2vw,22px) clamp(14px,2vw,24px); box-shadow: 0 1px 4px rgba(0,0,0,.06),0 0 0 1px rgba(0,0,0,.04); display: flex; flex-direction: column; gap: 10px; transition: box-shadow .2s, transform .15s; cursor: pointer; user-select: none; }
+  .kpi-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.12); transform: translateY(-1px); }
+  .kpi-card.kpi-active { box-shadow: 0 0 0 2px #3b82f6, 0 4px 16px rgba(59,130,246,.2); transform: translateY(-1px); }
+  .kpi-card.kpi-active::after { content: '▼ Filtrando'; font-size: 10px; font-weight: 600; color: #3b82f6; letter-spacing: .3px; }
+  .kpi-top { display: flex; justify-content: space-between; align-items: center; }
+  .kpi-label { font-size: clamp(11px,1.1vw,13px); font-weight: 500; color: #6b7280; }
+  .kpi-icon { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+  .icon-orange { background: #fff7ed; color: #f97316; }
+  .icon-blue   { background: #eff6ff; color: #3b82f6; }
+  .icon-green  { background: #f0fdf4; color: #22c55e; }
+  .icon-purple { background: #faf5ff; color: #a855f7; }
+  .icon-red    { background: #fef2f2; color: #ef4444; }
+
+  /* KPI card accent variants */
+  .kpi-card-danger  { border-left: 3px solid #ef4444; }
+  .kpi-card-success { border-left: 3px solid #22c55e; }
+  .kpi-card-warn    { border-left: 3px solid #f97316; }
+  .kpi-card-purple  { border-left: 3px solid #a855f7; }
+  .kpi-card-blue    { border-left: 3px solid #3b82f6; }
+  .kpi-card-danger  .kpi-value { color: #dc2626; }
+  .kpi-card-success .kpi-value { color: #16a34a; }
+  .kpi-card-warn    .kpi-value { color: #ea580c; }
+  .kpi-card-purple  .kpi-value { color: #9333ea; }
+  .kpi-card-blue    .kpi-value { color: #2563eb; }
+
+  /* Row chips */
+  .chip { display: inline-flex; align-items: center; gap: 3px; padding: 2px 7px; border-radius: 20px; font-size: 10px; font-weight: 600; white-space: nowrap; margin-left: 4px; vertical-align: middle; }
+  .chip-red    { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+  .chip-purple { background: #faf5ff; color: #9333ea; border: 1px solid #e9d5ff; }
+  .kpi-value { font-size: clamp(24px,3vw,32px); font-weight: 700; color: #111827; line-height: 1; transition: all .3s; }
+  .kpi-value.updated { transform: scale(1.1); color: #3b82f6; }
+  .kpi-sub { font-size: 11.5px; color: #9ca3af; }
+
+  /* ── Card ── */
+  .card {
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06),0 0 0 1px rgba(0,0,0,.04);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .card-header { padding: 16px 20px; border-bottom: 1px solid #f3f4f6; display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  .card-title { font-size: 14px; font-weight: 600; color: #111827; }
+
+  /* ── Toolbar ── */
+  .card-toolbar {
+    padding: 10px 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    border-bottom: 1px solid #f3f4f6;
+    background: #fafafa;
+    flex-shrink: 0;
+  }
+  .search-wrap { display: flex; align-items: center; gap: 6px; background: white; border: 1px solid #e5e7eb; border-radius: 8px; padding: 6px 10px; min-width: 160px; flex: 1; max-width: 240px; }
+  .search-wrap input { border: none; outline: none; font-size: 12.5px; font-family: 'Inter',sans-serif; width: 100%; color: #374151; }
+  .search-wrap span { color: #9ca3af; font-size: 13px; flex-shrink:0; }
+  .filter-select { border: 1px solid #e5e7eb; border-radius: 8px; padding: 6px 8px; font-size: 12px; font-family: 'Inter',sans-serif; background: white; color: #374151; cursor: pointer; max-width: 180px; }
+  .toolbar-btn { border: 1px solid #e5e7eb; border-radius: 8px; padding: 6px 12px; font-size: 12px; background: white; color: #6b7280; cursor: pointer; transition: all .15s; white-space: nowrap; display: inline-flex; align-items: center; gap: 5px; font-family: 'Inter',sans-serif; }
+  .toolbar-btn:hover { border-color: #d1d5db; color: #374151; }
+  .rec-count { margin-left: auto; font-size: 12px; color: #9ca3af; white-space: nowrap; }
+
+  /* Export dropdown */
+  .export-wrap { position: relative; }
+  .export-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.1);
+    z-index: 50;
+    min-width: 160px;
+    overflow: hidden;
+  }
+  .export-menu.open { display: block; }
+  .export-item { display: flex; align-items: center; gap: 8px; padding: 10px 14px; font-size: 13px; color: #374151; cursor: pointer; transition: background .12s; border: none; background: none; width: 100%; text-align: left; font-family: 'Inter',sans-serif; }
+  .export-item:hover { background: #f9fafb; color: #111827; }
+
+  /* ── Table scroll container ── */
+  .table-wrap {
+    flex: 1;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+
+  thead { position: sticky; top: 0; z-index: 10; }
+  thead th { padding: 10px 12px; text-align: left; font-size: 11px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: .5px; border-bottom: 1px solid #f3f4f6; white-space: nowrap; cursor: pointer; user-select: none; background: white; }
+  thead th:hover { color: #374151; }
+  thead th.col-center { text-align: center; }
+
+  thead tr.filter-row th { background: #f8fafc; padding: 4px 6px; border-bottom: 2px solid #e5e7eb; cursor: default; }
+  .col-filter { width: 100%; border: 1px solid #e5e7eb; border-radius: 6px; padding: 4px 7px; font-size: 11px; font-family: 'Inter',sans-serif; color: #374151; background: white; outline: none; transition: border-color .15s; }
+  .col-filter:focus { border-color: #3b82f6; }
+  .col-filter::placeholder { color: #c0c4cc; }
+
+  tbody tr { border-bottom: 1px solid #f3f4f6; transition: background .1s; cursor: pointer; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: #f0f7ff; }
+  tbody tr.selected { background: #dbeafe; }
+
+  td { padding: 10px 12px; color: #374151; white-space: nowrap; vertical-align: middle; }
+  td.col-folio   { font-weight: 600; color: #111827; }
+  td.col-objetivo{ max-width: 160px; overflow: hidden; text-overflow: ellipsis; }
+  td.col-fecha   { color: #6b7280; }
+  td.col-depto   { color: #6b7280; max-width: 140px; overflow: hidden; text-overflow: ellipsis; }
+  td.col-num     { text-align: center; font-weight: 500; }
+  td.col-actions { text-align: right; white-space: nowrap; }
+
+  .ratio-good { color: #22c55e; }
+  .ratio-warn { color: #f59e0b; }
+  .ratio-bad  { color: #ef4444; }
+  .ratio-sep  { color: #d1d5db; margin: 0 2px; }
+
+  .badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 500; white-space: nowrap; }
+  .badge-ejecucion  { background: #f3f4f6; color: #374151; border: 1px solid #e5e7eb; }
+  .badge-completado { background: #111827; color: white; }
+  .badge-registro   { background: #f3f4f6; color: #374151; border: 1px solid #e5e7eb; }
+  .badge-finalizado { background: #111827; color: white; }
+  .badge-validacion { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+
+  .btn-action { display: inline-flex; align-items: center; gap: 4px; background: none; border: none; color: #6b7280; font-size: 11.5px; font-family: 'Inter',sans-serif; cursor: pointer; padding: 4px 8px; border-radius: 6px; transition: all .15s; white-space: nowrap; }
+  .btn-action:hover { background: #f3f4f6; color: #111827; }
+  .btn-action.btn-seg:hover { background: #eff6ff; color: #2563eb; }
+
+  /* ── Footer ── */
+  .card-footer { padding: 10px 16px; border-top: 1px solid #f3f4f6; display: flex; align-items: center; gap: 6px; background: #fafafa; font-size: 12px; color: #6b7280; flex-wrap: wrap; flex-shrink: 0; }
+  .pager-btn { border: 1px solid #e5e7eb; background: white; border-radius: 6px; padding: 3px 9px; font-size: 12px; cursor: pointer; color: #374151; transition: all .12s; }
+  .pager-btn:hover:not(:disabled) { border-color: #3b82f6; color: #3b82f6; }
+  .pager-btn:disabled { opacity: .4; cursor: default; }
+  .page-info { margin: 0 8px; }
+  .pager-right { margin-left: auto; display: flex; align-items: center; gap: 6px; }
+  .pager-right select { border: 1px solid #e5e7eb; border-radius: 6px; padding: 3px 5px; font-size: 12px; }
+
+  /* ── Drawer ── */
+  .drawer-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.35); z-index: 100; opacity: 0; pointer-events: none; transition: opacity .25s; }
+  .drawer-overlay.open { opacity: 1; pointer-events: all; }
+  .drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(460px, 100vw); background: white; z-index: 101; display: flex; flex-direction: column; box-shadow: -4px 0 28px rgba(0,0,0,.14); transform: translateX(100%); transition: transform .28s cubic-bezier(.4,0,.2,1); }
+  .drawer.open { transform: translateX(0); }
+
+  .drawer-header { padding: 16px 18px 12px; border-bottom: 1px solid #f3f4f6; display: flex; align-items: flex-start; gap: 10px; flex-shrink: 0; }
+  .drawer-header-info { flex: 1; min-width: 0; }
+  .drawer-header-info h2 { font-size: 14px; font-weight: 700; color: #111827; }
+  .drawer-header-info p  { font-size: 11.5px; color: #6b7280; margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .drawer-close { border: none; background: none; cursor: pointer; color: #9ca3af; font-size: 18px; padding: 2px 6px; border-radius: 6px; line-height: 1; transition: all .15s; flex-shrink: 0; }
+  .drawer-close:hover { background: #f3f4f6; color: #374151; }
+
+  .drawer-body { flex: 1; overflow-y: auto; padding: 18px; display: flex; flex-direction: column; }
+  .timeline-empty { text-align: center; padding: 40px 16px; color: #9ca3af; font-size: 13px; }
+  .timeline-empty .t-icon { font-size: 34px; margin-bottom: 10px; }
+
+  .timeline-item { display: flex; gap: 12px; padding-bottom: 20px; position: relative; }
+  .timeline-item:not(:last-child)::before { content: ''; position: absolute; left: 15px; top: 32px; bottom: 0; width: 2px; background: #f3f4f6; }
+  .tl-avatar { width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg,#3b82f6,#6366f1); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: white; flex-shrink: 0; margin-top: 2px; position: relative; z-index: 1; }
+  .tl-content { flex: 1; min-width: 0; }
+  .tl-meta { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; margin-bottom: 6px; }
+  .tl-user { font-size: 12.5px; font-weight: 600; color: #111827; }
+  .tl-date { font-size: 11px; color: #9ca3af; }
+  .tl-comment { font-size: 12.5px; color: #374151; line-height: 1.55; background: #f9fafb; border-radius: 10px; padding: 10px 13px; border: 1px solid #f3f4f6; margin-bottom: 8px; }
+  .tl-file { display: inline-flex; align-items: center; gap: 5px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 7px; padding: 4px 10px; font-size: 11.5px; color: #15803d; cursor: pointer; text-decoration: none; transition: background .15s; }
+  .tl-file:hover { background: #dcfce7; }
+
+  .drawer-form { border-top: 2px solid #f3f4f6; padding: 14px 18px 18px; flex-shrink: 0; background: #fafafa; }
+  .drawer-form h3 { font-size: 12.5px; font-weight: 600; color: #374151; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+  .form-row { margin-bottom: 10px; }
+  .form-label { font-size: 11px; font-weight: 500; color: #6b7280; margin-bottom: 4px; display: block; }
+  .form-textarea { width: 100%; border: 1px solid #e5e7eb; border-radius: 8px; padding: 8px 10px; font-size: 12.5px; font-family: 'Inter',sans-serif; color: #374151; background: white; outline: none; resize: vertical; min-height: 68px; transition: border-color .15s, box-shadow .15s; }
+  .form-textarea:focus { border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59,130,246,.12); }
+  .form-textarea.error { border-color: #ef4444; box-shadow: 0 0 0 2px rgba(239,68,68,.12); }
+  .file-upload { border: 1.5px dashed #d1d5db; border-radius: 8px; padding: 10px 13px; cursor: pointer; transition: all .15s; font-size: 12px; color: #9ca3af; background: white; display: flex; align-items: center; gap: 8px; }
+  .file-upload:hover { border-color: #3b82f6; color: #3b82f6; background: #eff6ff; }
+  .file-name { font-size: 11px; color: #22c55e; margin-top: 4px; display: flex; align-items: center; gap: 5px; }
+  .file-name button { border: none; background: none; color: #ef4444; cursor: pointer; font-size: 12px; padding: 0 2px; }
+  .btn-submit { width: 100%; background: linear-gradient(135deg,#3b82f6,#6366f1); border: none; color: white; border-radius: 8px; padding: 10px; font-size: 13px; font-weight: 600; font-family: 'Inter',sans-serif; cursor: pointer; margin-top: 10px; transition: opacity .15s; display: flex; align-items: center; justify-content: center; gap: 6px; }
+  .btn-submit:hover { opacity: .88; }
+
+  /* ── Detalle Modal ── */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,.45);
+    z-index: 200; display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity .22s;
+    padding: 16px;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+  .modal {
+    background: white; border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.2);
+    width: 100%; max-width: 820px;
+    max-height: 90vh; display: flex; flex-direction: column;
+    transform: scale(.96) translateY(8px);
+    transition: transform .22s cubic-bezier(.4,0,.2,1);
+    overflow: hidden;
+  }
+  .modal-overlay.open .modal { transform: scale(1) translateY(0); }
+
+  .modal-header {
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid #f3f4f6;
+    display: flex; align-items: flex-start; gap: 12px;
+    flex-shrink: 0;
+  }
+  .modal-header-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: linear-gradient(135deg,#3b82f6,#6366f1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0; color: white;
+  }
+  .modal-header-info { flex: 1; min-width: 0; }
+  .modal-header-info h2 { font-size: 16px; font-weight: 700; color: #111827; }
+  .modal-header-info p  { font-size: 12px; color: #6b7280; margin-top: 3px; }
+  .modal-close { border: none; background: none; cursor: pointer; color: #9ca3af; font-size: 20px; padding: 2px 6px; border-radius: 8px; line-height: 1; transition: all .15s; flex-shrink: 0; margin-top: -2px; }
+  .modal-close:hover { background: #f3f4f6; color: #374151; }
+
+  .modal-body { flex: 1; overflow-y: auto; padding: 20px 24px; }
+
+  /* Info grid */
+  .detail-section { margin-bottom: 20px; }
+  .detail-section-title { font-size: 11px; font-weight: 700; color: #9ca3af; text-transform: uppercase; letter-spacing: .8px; margin-bottom: 10px; }
+  .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 480px) { .detail-grid { grid-template-columns: 1fr; } }
+  .detail-field { display: flex; flex-direction: column; gap: 3px; }
+  .detail-field.full { grid-column: 1 / -1; }
+  .detail-label { font-size: 11px; font-weight: 500; color: #9ca3af; text-transform: uppercase; letter-spacing: .5px; }
+  .detail-value { font-size: 13px; color: #111827; font-weight: 500; }
+  .detail-value.muted { color: #6b7280; font-weight: 400; }
+
+  /* AC progress */
+  .ac-summary {
+    display: grid; grid-template-columns: repeat(3,1fr); gap: 10px;
+    margin-bottom: 16px;
+  }
+  .ac-stat { background: #f9fafb; border-radius: 10px; padding: 12px 14px; text-align: center; border: 1px solid #f3f4f6; }
+  .ac-stat-num { font-size: 22px; font-weight: 700; color: #111827; line-height: 1; margin-bottom: 4px; }
+  .ac-stat-num.clr-green  { color: #22c55e; }
+  .ac-stat-num.clr-orange { color: #f97316; }
+  .ac-stat-num.clr-blue   { color: #3b82f6; }
+  .ac-stat-label { font-size: 11px; color: #6b7280; }
+
+  .progress-wrap { margin-top: 4px; }
+  .progress-label { display: flex; justify-content: space-between; font-size: 11.5px; color: #6b7280; margin-bottom: 5px; }
+  .progress-bar { height: 8px; background: #f3f4f6; border-radius: 4px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg,#22c55e,#16a34a); transition: width .5s; }
+  .progress-fill.warn { background: linear-gradient(90deg,#f59e0b,#d97706); }
+  .progress-fill.bad  { background: linear-gradient(90deg,#ef4444,#dc2626); }
+
+  /* Detalle: tabla hallazgo ↔ AC */
+  .detail-meta-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px 18px; }
+  @media (max-width: 520px) { .detail-meta-grid { grid-template-columns: 1fr; } }
+  .detail-meta-grid .detail-field.full { grid-column: 1 / -1; }
+  .detail-criterios { display: flex; flex-direction: column; gap: 6px; margin-top: 6px; }
+  .crit-item { display: flex; gap: 10px; padding: 8px 12px; background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 12px; color: #374151; line-height: 1.45; }
+  .crit-num  { flex-shrink: 0; font-weight: 700; color: #1d4ed8; min-width: 28px; }
+  .crit-text { flex: 1; }
+
+  .detalle-table-wrap { border: 1px solid #f3f4f6; border-radius: 10px; overflow: hidden; }
+  .detalle-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  .detalle-table thead th { background: #f8fafc; color: #6b7280; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; padding: 9px 12px; text-align: left; border-bottom: 1px solid #e5e7eb; white-space: nowrap; }
+  .detalle-table tbody td { padding: 11px 12px; border-bottom: 1px solid #f3f4f6; color: #374151; vertical-align: top; line-height: 1.45; }
+  .detalle-table tbody tr:last-child td { border-bottom: none; }
+  .detalle-table tbody tr:hover { background: #fafbfc; }
+  .detalle-table .col-num-cell { width: 36px; font-weight: 600; color: #111827; text-align: center; }
+  .detalle-table .col-hallazgo { width: 36%; }
+  .detalle-table .col-accion   { width: 36%; color: #4b5563; }
+  .detalle-table .col-est-h    { width: auto; white-space: nowrap; }
+  .detalle-table .col-estatus  { width: auto; white-space: nowrap; }
+
+  .badge-ac { display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px; border-radius: 20px; font-size: 10.5px; font-weight: 600; white-space: nowrap; border: 1px solid transparent; }
+  .badge-ac-pendiente  { background: #fff7ed; color: #c2410c; border-color: #fed7aa; }
+  .badge-ac-ejecucion  { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+  .badge-ac-validacion { background: #faf5ff; color: #7e22ce; border-color: #e9d5ff; }
+  .badge-ac-finalizada { background: #f0fdf4; color: #15803d; border-color: #bbf7d0; }
+  .badge-ac-cancelada  { background: #f3f4f6; color: #6b7280; border-color: #e5e7eb; }
+  .badge-ac-sinac      { background: #f9fafb; color: #9ca3af; border-color: #f3f4f6; }
+  .badge-h-corregido { background: #f0fdf4; color: #15803d; border-color: #bbf7d0; }
+  .badge-h-pendiente { background: #fef2f2; color: #b91c1c; border-color: #fecaca; }
+
+  /* === Detalle por criterio (rediseno US-23) === */
+  .detalle-hero { padding: 16px 0 14px; border-bottom: 1px solid #f3f4f6; margin-bottom: 18px; display: flex; flex-direction: column; gap: 12px; }
+  .detalle-hero-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+  .detalle-depto { font-size: 16px; font-weight: 700; color: #111827; letter-spacing: .3px; text-transform: uppercase; }
+  .detalle-fecha { font-size: 14px; color: #374151; font-weight: 500; }
+  .detalle-label-up { font-size: 10.5px; font-weight: 700; color: #9ca3af; text-transform: uppercase; letter-spacing: .8px; margin-bottom: 5px; }
+
+  .detalle-meta-extra { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px 24px; margin-bottom: 14px; }
+  @media (max-width: 560px) { .detalle-meta-extra { grid-template-columns: 1fr; } }
+  .detalle-meta-extra .meta-item .meta-val { font-size: 13px; color: #374151; font-weight: 500; }
+  .detalle-meta-extra .meta-item .meta-val.muted { color: #6b7280; font-weight: 400; }
+
+  .criterios-section-title { font-size: 10.5px; font-weight: 700; color: #9ca3af; text-transform: uppercase; letter-spacing: .9px; margin: 6px 0 12px; }
+
+  .criterio-card { background: white; border: 1px solid #e5e7eb; border-radius: 12px; margin-bottom: 12px; overflow: hidden; }
+  .criterio-head { display: flex; align-items: center; gap: 14px; padding: 14px 18px; background: #f9fafb; flex-wrap: wrap; }
+  .crit-num-badge { font-family: 'JetBrains Mono', 'Menlo', monospace; font-size: 14px; font-weight: 700; color: #2563eb; letter-spacing: .3px; flex-shrink: 0; min-width: 34px; }
+  .crit-question { flex: 1; font-size: 14px; color: #111827; font-weight: 500; line-height: 1.5; min-width: 200px; }
+  .crit-score { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 20px; font-size: 12.5px; font-weight: 700; border: 1.5px solid; white-space: nowrap; }
+  .crit-score::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+  .crit-score.score-bad   { color: #dc2626; background: #fef2f2; border-color: #fecaca; }
+  .crit-score.score-warn  { color: #f97316; background: #fff7ed; border-color: #fed7aa; }
+  .crit-score.score-mid   { color: #ca8a04; background: #fefce8; border-color: #fde68a; }
+  .crit-score.score-good  { color: #16a34a; background: #f0fdf4; border-color: #bbf7d0; }
+
+  .crit-counts { padding: 10px 18px; background: #fffaf2; border-top: 1px solid #fde6c0; border-bottom: 1px solid #fde6c0; font-size: 11.5px; font-weight: 700; color: #c2410c; text-transform: uppercase; letter-spacing: .5px; }
+  .crit-counts.empty { background: #f9fafb; border-color: #f3f4f6; color: #9ca3af; }
+
+  .hallazgo-list { padding: 12px 18px 16px; display: flex; flex-direction: column; gap: 12px; }
+  .hallazgo-card { border: 1px solid #f3f4f6; border-radius: 10px; padding: 12px 14px; background: white; }
+  .hallazgo-row { display: flex; align-items: flex-start; gap: 12px; }
+  .hallazgo-tag { flex-shrink: 0; font-family: 'JetBrains Mono', 'Menlo', monospace; font-size: 11px; font-weight: 700; background: #fef3c7; color: #92400e; border: 1px solid #fde68a; padding: 4px 9px; border-radius: 6px; letter-spacing: .3px; }
+  .hallazgo-body { flex: 1; min-width: 0; }
+  .hallazgo-text { font-size: 13px; color: #111827; font-weight: 600; line-height: 1.45; margin-bottom: 4px; }
+  .hallazgo-sub  { font-size: 10.5px; font-weight: 700; color: #9ca3af; text-transform: uppercase; letter-spacing: .5px; }
+  .estatus-dot { display: inline-flex; align-items: center; gap: 6px; padding: 4px 11px; border-radius: 20px; font-size: 11.5px; font-weight: 600; white-space: nowrap; border: 1px solid; flex-shrink: 0; }
+  .estatus-dot::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .est-activo     { color: #2563eb; background: #eff6ff; border-color: #bfdbfe; }
+  .est-finalizado { color: #16a34a; background: #f0fdf4; border-color: #bbf7d0; }
+  .est-pendiente  { color: #c2410c; background: #fff7ed; border-color: #fed7aa; }
+  .est-ejecucion  { color: #2563eb; background: #eff6ff; border-color: #bfdbfe; }
+  .est-validacion { color: #be185d; background: #fdf2f8; border-color: #fbcfe8; }
+  .est-cancelada  { color: #6b7280; background: #f3f4f6; border-color: #e5e7eb; }
+
+  .accion-list { margin-top: 10px; padding-top: 10px; border-top: 1px dashed #f3f4f6; display: flex; flex-direction: column; gap: 10px; }
+  .accion-row { display: flex; align-items: flex-start; gap: 12px; }
+  .accion-row::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #d1d5db; flex-shrink: 0; margin-top: 8px; }
+  .accion-tag { flex-shrink: 0; font-family: 'JetBrains Mono', 'Menlo', monospace; font-size: 10.5px; font-weight: 700; background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; padding: 3px 8px; border-radius: 5px; letter-spacing: .3px; }
+  .accion-body { flex: 1; min-width: 0; }
+  .accion-text { font-size: 12.5px; color: #374151; line-height: 1.45; margin-bottom: 5px; }
+  .accion-meta { display: flex; flex-wrap: wrap; gap: 14px; font-size: 11px; color: #6b7280; }
+  .accion-meta strong { color: #9ca3af; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; font-size: 10px; margin-right: 4px; }
+
+  /* === US-19.1 Finalizar hallazgo === */
+  .hallazgo-actions-row { margin-top: 10px; padding-top: 10px; border-top: 1px dashed #f3f4f6; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+  .hallazgo-actions-row .hist-link { font-size: 11.5px; color: #6b7280; cursor: pointer; background: none; border: none; padding: 4px 6px; border-radius: 6px; font-family: 'Inter',sans-serif; transition: all .15s; display: inline-flex; align-items: center; gap: 4px; }
+  .hallazgo-actions-row .hist-link:hover { background: #f3f4f6; color: #374151; }
+  .btn-finalizar-h { display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(135deg,#4f46e5,#6366f1); color: white; border: 1px solid transparent; padding: 6px 13px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'Inter',sans-serif; transition: all .15s; box-shadow: 0 1px 2px rgba(79,70,229,.25); }
+  .btn-finalizar-h:hover { background: linear-gradient(135deg,#4338ca,#4f46e5); box-shadow: 0 2px 6px rgba(79,70,229,.35); }
+
+  .confirm-inline { margin-top: 10px; padding: 12px 14px; background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; }
+  .confirm-inline .confirm-msg { font-size: 12.5px; color: #92400e; margin-bottom: 10px; line-height: 1.4; }
+  .confirm-inline .confirm-actions { display: flex; gap: 8px; justify-content: flex-end; }
+  .confirm-inline button { font-family: 'Inter',sans-serif; font-size: 12px; padding: 6px 14px; border-radius: 7px; cursor: pointer; border: 1px solid transparent; font-weight: 600; }
+  .confirm-inline .btn-cancel { background: white; color: #6b7280; border-color: #e5e7eb; }
+  .confirm-inline .btn-cancel:hover { background: #f9fafb; color: #374151; }
+  .confirm-inline .btn-confirm { background: linear-gradient(135deg,#16a34a,#15803d); color: white; }
+  .confirm-inline .btn-confirm:hover { opacity: .9; }
+
+  .concurr-alert { margin-top: 10px; padding: 10px 14px; background: #fef2f2; border: 1px solid #fecaca; border-radius: 10px; font-size: 12px; color: #b91c1c; line-height: 1.4; display: flex; gap: 8px; align-items: flex-start; }
+  .concurr-alert .alert-icon { flex-shrink: 0; font-size: 14px; }
+
+  .hist-panel { margin-top: 10px; padding: 10px 14px; background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 10px; font-size: 11.5px; color: #374151; }
+  .hist-panel .hist-title { font-size: 10.5px; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; }
+  .hist-panel .hist-empty { color: #9ca3af; font-style: italic; font-size: 11.5px; }
+  .hist-row { display: flex; gap: 10px; padding: 6px 0; border-bottom: 1px solid #eef2f7; }
+  .hist-row:last-child { border-bottom: none; }
+  .hist-row .hist-when { flex-shrink: 0; color: #9ca3af; font-size: 11px; white-space: nowrap; }
+  .hist-row .hist-body { flex: 1; color: #374151; line-height: 1.45; }
+  .hist-row .hist-body strong { color: #111827; }
+  .hist-row .hist-origin { color: #6b7280; font-size: 11px; margin-top: 2px; }
+
+  .sim-toggle { font-size: 11px; color: #6b7280; cursor: pointer; background: none; border: 1px dashed #d1d5db; padding: 5px 10px; border-radius: 7px; font-family: 'Inter',sans-serif; transition: all .15s; display: inline-flex; align-items: center; gap: 5px; }
+  .sim-toggle:hover { border-color: #9ca3af; color: #374151; }
+  .sim-toggle.armed { background: #fef2f2; border-color: #fca5a5; border-style: solid; color: #b91c1c; font-weight: 600; }
+
+  .modal-footer {
+    padding: 14px 24px;
+    border-top: 1px solid #f3f4f6;
+    display: flex; align-items: center; gap: 8px;
+    flex-shrink: 0; background: #fafafa;
+  }
+  .btn-modal { border: 1px solid #e5e7eb; border-radius: 8px; padding: 8px 16px; font-size: 13px; font-family: 'Inter',sans-serif; cursor: pointer; transition: all .15s; }
+  .btn-modal-secondary { background: white; color: #374151; }
+  .btn-modal-secondary:hover { border-color: #d1d5db; background: #f9fafb; }
+  .btn-modal-primary { background: linear-gradient(135deg,#3b82f6,#6366f1); border-color: transparent; color: white; font-weight: 600; }
+  .btn-modal-primary:hover { opacity: .88; }
+
+  /* toast */
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px); background: #111827; color: white; padding: 10px 20px; border-radius: 10px; font-size: 13px; opacity: 0; transition: all .3s; z-index: 200; pointer-events: none; }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+    <div>
+      <h1>Monitor de Acciones Correctivas</h1>
+      <p>Tablero ejecutivo &nbsp;·&nbsp; Programa Anual 2026 &nbsp;·&nbsp; Actualizado al 19/05/2026</p>
+    </div>
+    <div id="kpi-filter-badge" style="display:none;align-items:center;gap:6px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:5px 12px;font-size:12px;color:#1d4ed8;font-weight:500;">
+      <span id="kpi-filter-label"></span>
+      <button onclick="clearKpiFilter()" style="border:none;background:none;cursor:pointer;color:#1d4ed8;font-size:14px;line-height:1;padding:0 0 0 4px;">✕</button>
+    </div>
+  </div>
+</div>
+
+<div class="kpi-grid">
+  <!-- 1. Hallazgos activos -->
+  <div class="kpi-card kpi-card-danger" data-kpi="h-activos" onclick="toggleKpiFilter(this)">
+    <div class="kpi-top">
+      <span class="kpi-label">Hallazgos Activos</span>
+      <div class="kpi-icon icon-red">⚠</div>
+    </div>
+    <div class="kpi-value" id="kpi-h-activos">—</div>
+    <div class="kpi-sub"   id="kpi-h-activos-sub">sin corregir</div>
+  </div>
+  <!-- 2. Hallazgos de alto impacto abiertos -->
+  <div class="kpi-card kpi-card-purple" data-kpi="altoImpacto" onclick="toggleKpiFilter(this)">
+    <div class="kpi-top">
+      <span class="kpi-label">Hallazgos de Alto Impacto Abiertos</span>
+      <div class="kpi-icon icon-purple">⚡</div>
+    </div>
+    <div class="kpi-value" id="kpi-altoImpacto">—</div>
+    <div class="kpi-sub"   id="kpi-altoImpacto-sub">requieren atención prioritaria</div>
+  </div>
+  <!-- 3. Acciones vencidas -->
+  <div class="kpi-card kpi-card-warn" data-kpi="vencidas" onclick="toggleKpiFilter(this)">
+    <div class="kpi-top">
+      <span class="kpi-label">Acciones Vencidas</span>
+      <div class="kpi-icon icon-orange">📅</div>
+    </div>
+    <div class="kpi-value" id="kpi-vencidas">—</div>
+    <div class="kpi-sub"   id="kpi-vencidas-sub">fuera de fecha compromiso</div>
+  </div>
+  <!-- 4. Eficacia de cierre en tiempo -->
+  <div class="kpi-card kpi-card-success" data-kpi="eficacia" onclick="toggleKpiFilter(this)">
+    <div class="kpi-top">
+      <span class="kpi-label">Eficacia de Cierre en Tiempo</span>
+      <div class="kpi-icon icon-green">✓</div>
+    </div>
+    <div class="kpi-value" id="kpi-eficacia">—</div>
+    <div class="kpi-sub"   id="kpi-eficacia-sub">cerradas en fecha compromiso</div>
+  </div>
+  <!-- 5. Verificaciones pendientes -->
+  <div class="kpi-card kpi-card-blue" data-kpi="verif" onclick="toggleKpiFilter(this)">
+    <div class="kpi-top">
+      <span class="kpi-label">Verificaciones Pendientes</span>
+      <div class="kpi-icon icon-blue">🔍</div>
+    </div>
+    <div class="kpi-value" id="kpi-verif">—</div>
+    <div class="kpi-sub"   id="kpi-verif-sub">ejecutadas sin verificar</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <span style="font-size:15px;color:#6b7280">↗</span>
+    <span class="card-title">Registro de Acciones Correctivas</span>
+  </div>
+
+  <div class="card-toolbar">
+    <div class="search-wrap">
+      <span>🔍</span>
+      <input type="text" id="searchInput" placeholder="Buscar..." oninput="applyFilters()">
+    </div>
+    <select class="filter-select" id="statusFilter" onchange="applyFilters()">
+      <option value="">Todos los estatus</option>
+      <option>En ejecucion PDCA</option>
+      <option>Completado</option>
+      <option>Registro PDCA</option>
+      <option>PDCA Finalizado</option>
+      <option>PDCA_Validacion</option>
+    </select>
+    <button class="toolbar-btn" onclick="clearFilters()">✕ Limpiar</button>
+    <div class="export-wrap">
+      <button class="toolbar-btn" onclick="toggleExportMenu(event)">
+        ⬇ Exportar ▾
+      </button>
+      <div class="export-menu" id="exportMenu">
+        <button class="export-item" onclick="exportCSV()">📄 CSV</button>
+        <button class="export-item" onclick="exportExcel()">📊 Excel (XLSX)</button>
+      </div>
+    </div>
+    <span class="rec-count" id="recCount">15 registros</span>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th onclick="sortTable(0)">Folio <span id="s0"></span></th>
+          <th onclick="sortTable(1)">Objetivo <span id="s1"></span></th>
+          <th onclick="sortTable(2)">Fecha Fin <span id="s2"></span></th>
+          <th onclick="sortTable(3)">Auditado <span id="s3"></span></th>
+          <th onclick="sortTable(4)">Departamento <span id="s4"></span></th>
+          <th class="col-center" onclick="sortTable(5)">No. Hallazgos <span id="s5"></span></th>
+          <th class="col-center" onclick="sortTable(6)">Hallazgos Corregidos <span id="s6"></span></th>
+          <th class="col-center" onclick="sortTable(7)">Total AC <span id="s7"></span></th>
+          <th class="col-center" onclick="sortTable(8)">AC en Ejecución <span id="s8"></span></th>
+          <th class="col-center" onclick="sortTable(9)">AC Finalizadas <span id="s9"></span></th>
+          <th class="col-center" onclick="sortTable(10)">PDCA En Tiempo <span id="s10"></span></th>
+          <th onclick="sortTable(11)">Estatus <span id="s11"></span></th>
+          <th class="col-center" onclick="sortTable(12)">Recurrente <span id="s12"></span></th>
+          <th style="text-align:right">Acciones</th>
+        </tr>
+        <tr class="filter-row">
+          <th><input class="col-filter" id="cf0" placeholder="Filtrar..." oninput="applyFilters()"></th>
+          <th><input class="col-filter" id="cf1" placeholder="Filtrar..." oninput="applyFilters()"></th>
+          <th><input class="col-filter" id="cf2" placeholder="dd/mm/aa" oninput="applyFilters()"></th>
+          <th><input class="col-filter" id="cf3" placeholder="Filtrar..." oninput="applyFilters()"></th>
+          <th><input class="col-filter" id="cf4" placeholder="Filtrar..." oninput="applyFilters()"></th>
+          <th><input class="col-filter" id="cf5" placeholder="0" oninput="applyFilters()" style="text-align:center"></th>
+          <th><input class="col-filter" id="cf6" placeholder="0" oninput="applyFilters()" style="text-align:center"></th>
+          <th><input class="col-filter" id="cf7" placeholder="0" oninput="applyFilters()" style="text-align:center"></th>
+          <th><input class="col-filter" id="cf8" placeholder="0" oninput="applyFilters()" style="text-align:center"></th>
+          <th><input class="col-filter" id="cf9" placeholder="0" oninput="applyFilters()" style="text-align:center"></th>
+          <th>
+            <select class="col-filter" id="cf10" onchange="applyFilters()">
+              <option value="">Todos</option>
+              <option value="si">✓ Sí</option>
+              <option value="no">✗ No</option>
+            </select>
+          </th>
+          <th>
+            <select class="col-filter" id="cf11" onchange="applyFilters()">
+              <option value="">Todos</option>
+              <option>En ejecucion PDCA</option>
+              <option>Completado</option>
+              <option>Registro PDCA</option>
+              <option>PDCA Finalizado</option>
+              <option>PDCA_Validacion</option>
+            </select>
+          </th>
+          <th>
+            <select class="col-filter" id="cf12" onchange="applyFilters()">
+              <option value="">Todos</option>
+              <option value="si">✓ Sí</option>
+              <option value="no">✗ No</option>
+            </select>
+          </th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <div class="card-footer">
+    <button class="pager-btn" disabled>«</button>
+    <button class="pager-btn" disabled>‹</button>
+    <span class="page-info">Página <strong>1</strong> de <strong>1</strong></span>
+    <button class="pager-btn" disabled>›</button>
+    <button class="pager-btn" disabled>»</button>
+    <div class="pager-right">Mostrar <select><option>25</option><option>50</option><option>100</option></select> registros</div>
+  </div>
+</div>
+
+<!-- ── Detalle Modal ── -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeDetalle(event)">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <div class="modal-header-icon">📋</div>
+      <div class="modal-header-info">
+        <h2 id="modalFolio">Detalle de Auditoría</h2>
+        <p id="modalBreadcrumb">Auditorías › Ver Detalle</p>
+      </div>
+      <button class="modal-close" onclick="closeDetalle()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-footer">
+      <button class="sim-toggle" id="simToggle" onclick="toggleSimConcurrency()" title="Simula que otro usuario modificó el hallazgo antes de tu confirmación">🧪 Simular cambio externo</button>
+      <div style="flex:1"></div>
+      <button class="btn-modal btn-modal-secondary" onclick="closeDetalle()">Cerrar</button>
+      <button class="btn-modal btn-modal-primary" onclick="openDetalleToSeguimiento()">📋 Ver Seguimiento</button>
+    </div>
+  </div>
+</div>
+
+
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <div class="drawer-header-info">
+      <h2 id="drawerTitle">Seguimiento</h2>
+      <p id="drawerSubtitle"></p>
+    </div>
+    <button class="drawer-close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="drawer-body" id="drawerBody"></div>
+  <div class="drawer-form">
+    <h3>✏ Nuevo seguimiento</h3>
+    <div class="form-row">
+      <label class="form-label">Comentario *</label>
+      <textarea class="form-textarea" id="fComentario" placeholder="Describe el avance o acción tomada..."></textarea>
+    </div>
+    <div class="form-row">
+      <label class="form-label">Evidencia (opcional)</label>
+      <div class="file-upload" onclick="document.getElementById('fFile').click()">
+        📎 <span id="fFileLabel">Adjuntar archivo (PDF, imagen...)</span>
+        <input type="file" id="fFile" accept=".pdf,.jpg,.jpeg,.png,.gif,.webp" style="display:none" onchange="showFileName(this)">
+      </div>
+      <div class="file-name" id="fFileName"></div>
+    </div>
+    <button class="btn-submit" onclick="submitSeguimiento()">✔ Registrar seguimiento</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var rows = [
+  { folio:"AUD000003", objetivo:"EJERICIO CONTENIDOS",                                             fecha:"13/03/2026", auditado:"GABRIEL ESPINOZA TORRES",          depto:"ADMINISTRACION I&N",    h:5,  hc:2, acFin:2, acTot:5,  pdcaT:false, vencida:true,  severidad:"mayor",      status:"En ejecucion PDCA" },
+  { folio:"AUD000004", objetivo:"EJERCICIO GENERAL",                                               fecha:"14/03/2026", auditado:"GABRIEL ESPINOZA TORRES",          depto:"ADMINISTRACION I&N",    h:8,  hc:5, acFin:0, acTot:5,  pdcaT:false, vencida:false, severidad:"menor",      status:"Completado"        },
+  { folio:"AUD000005", objetivo:"REQUISITOS DE AUDITORIA CORPORATIVO DE OPERACIONES DEVOLUCIONES", fecha:"15/03/2026", auditado:"JOSE DE JESUS SILVA RAMIREZ",     depto:"LOGISTICA",             h:12, hc:0, acFin:1, acTot:4,  pdcaT:false, vencida:true,  severidad:"recurrente", status:"En ejecucion PDCA" },
+  { folio:"AUD000010", objetivo:"VERIFICACION DE EJECUCION DE MANUALES PRUEBAS DE CALIDAD",       fecha:"16/03/2026", auditado:"AARON HERNANDEZ SILVA",           depto:"CALIDAD",               h:3,  hc:2, acFin:0, acTot:3,  pdcaT:false, vencida:false, severidad:"menor",      status:"Registro PDCA"     },
+  { folio:"AUD000011", objetivo:"JMKYH",                                                           fecha:"17/03/2026", auditado:"HECTOR EDUARDO CANCHOLA BALDERAS",depto:"ADMINISTRACION I&N",    h:7,  hc:7, acFin:7, acTot:7,  pdcaT:true,  vencida:false, severidad:"mayor",      status:"PDCA_Validacion"  },
+  { folio:"AUD000013", objetivo:"E-LEARNING EJERCICIOS PARA GRABACION 28/04/26",                  fecha:"22/04/2026", auditado:"VICTOR HUGO REYES GARCIA",        depto:"CONTENIDO",             h:4,  hc:4, acFin:4, acTot:4,  pdcaT:true,  vencida:false, severidad:"menor",      status:"PDCA_Validacion"  },
+  { folio:"AUD000014", objetivo:"AUDITORIA BOLSA II BAJA",                                         fecha:"28/04/2026", auditado:"MARCO ANTONIO SOTELO PEREZ",      depto:"BOLSA 2",               h:6,  hc:3, acFin:0, acTot:3,  pdcaT:false, vencida:true,  severidad:"mayor",      status:"Registro PDCA"     },
+  { folio:"AUD000015", objetivo:"NUEVA AUDITORIA",                                                 fecha:"28/04/2026", auditado:"AARON HERNANDEZ SILVA",           depto:"BOLSA 2",               h:4,  hc:0, acFin:0, acTot:2,  pdcaT:false, vencida:false, severidad:"recurrente", status:"Registro PDCA"     },
+  { folio:"AUD000016", objetivo:"NUEVA AUDITORIA PRUEBA",                                          fecha:"29/04/2026", auditado:"AARON DAVID ESCOBEDO SUNZA",      depto:"FUELLE",                h:6,  hc:6, acFin:0, acTot:6,  pdcaT:false, vencida:false, severidad:"menor",      status:"Completado"        },
+  { folio:"AUD000017", objetivo:"NUEVO SOLIS",                                                     fecha:"29/04/2026", auditado:"JIRI KARELL VILLAGOMEZ GALVAN",   depto:"COMPRAS",               h:5,  hc:1, acFin:1, acTot:3,  pdcaT:false, vencida:true,  severidad:"recurrente", status:"En ejecucion PDCA" },
+  { folio:"AUD000019", objetivo:"REVISION SISTEMA",                                                fecha:"29/04/2026", auditado:"ABISAI ROMAN HERNANDEZ",          depto:"ALMACEN",               h:7,  hc:2, acFin:0, acTot:4,  pdcaT:false, vencida:false, severidad:"mayor",      status:"En ejecucion PDCA" },
+  { folio:"AUD000020", objetivo:"REGISTRO DE PRUEBA PARA PROBAR EL PLAN DE AUDITORIAS",            fecha:"15/05/2026", auditado:"AARON JAZIEL MEDEL MUNOZ",       depto:"BOLSA 1",               h:3,  hc:0, acFin:0, acTot:2,  pdcaT:false, vencida:false, severidad:"recurrente", status:"En ejecucion PDCA" },
+  { folio:"AUD000021", objetivo:"PRUEBA",                                                          fecha:"07/05/2026", auditado:"JOSE DE JESUS SILVA RAMIREZ",     depto:"RECEPCION DE MATERIAL", h:2,  hc:1, acFin:1, acTot:1,  pdcaT:false, vencida:false, severidad:"menor",      status:"En ejecucion PDCA" },
+  { folio:"AUD000022", objetivo:"AUDITORIA QA-01",                                                 fecha:"12/05/2026", auditado:"ELEAZAR ROSAS CENTENO",           depto:"CALIDAD",               h:4,  hc:4, acFin:0, acTot:4,  pdcaT:false, vencida:false, severidad:"menor",      status:"Completado"        },
+  { folio:"AUD000023", objetivo:"AUDITORIA QA-02 OFFLINE",                                         fecha:"13/05/2026", auditado:"JOSE ANTONIO SOLIS",              depto:"CALIDAD",               h:5,  hc:3, acFin:5, acTot:5,  pdcaT:true,  vencida:false, severidad:"mayor",      status:"PDCA Finalizado"   },
+];
+
+// Auditor y criterios evaluados por folio (cabecera del detalle, US-23 CA-23.2)
+// Criterios en formato de checklist de auditoría (preguntas verificables)
+var auditoriaMeta = {
+  "AUD000003": { auditor: "LAURA MENDEZ HERRERA",  criterios: [
+    "1.1 ¿Coincide el contenido del ejercicio con el procedimiento P-ADM-01 vigente?",
+    "1.2 ¿Los documentos de referencia están actualizados y disponibles?",
+    "1.3 ¿Se encuentra registrado el responsable de la actualización?",
+    "1.4 ¿El personal involucrado ha sido capacitado en los contenidos del ejercicio?",
+    "1.5 ¿Se le da seguimiento documental a los cambios realizados?"
+  ]},
+  "AUD000004": { auditor: "LAURA MENDEZ HERRERA",  criterios: [
+    "1.1 ¿Está realizado el ejercicio general conforme al cronograma?",
+    "1.2 ¿Se ingresan los resultados en el sistema de gestión?",
+    "1.3 ¿Se entrega evidencia de inducción al personal de nuevo ingreso?",
+    "1.4 ¿Se describe el alcance del ejercicio en la minuta de apertura?"
+  ]},
+  "AUD000005": { auditor: "CARLOS VEGA RAMIREZ",   criterios: [
+    "1.1 ¿Los formatos corporativos de devoluciones cumplen con la política vigente?",
+    "1.2 ¿Se encuentra trazabilidad por folio en el ERP para cada devolución?",
+    "2.1 ¿Se están realizando las inspecciones de calidad previo al re-ingreso?",
+    "2.2 ¿Coincide el inventario físico con el sistema de devoluciones?",
+    "2.3 ¿Se completa el reporte de tiempos de respuesta dentro del SLA?"
+  ]},
+  "AUD000010": { auditor: "DIANA PEREZ LOPEZ",     criterios: [
+    "1.1 ¿Se cuenta con manuales de pruebas de calidad vigentes en piso?",
+    "1.2 ¿Los equipos de medición tienen etiqueta de calibración vigente?",
+    "1.3 ¿Se revisa el cumplimiento normativo cada periodo?",
+    "1.4 ¿Permite el equipo recopilar evidencia digital de cada inspección?"
+  ]},
+  "AUD000011": { auditor: "CARLOS VEGA RAMIREZ",   criterios: [
+    "1.1 ¿Se completó la capacitación del equipo en el nuevo proceso administrativo?",
+    "1.2 ¿Se entregan los acuses firmados de difusión?",
+    "2.1 ¿Se encuentra publicado el tablero mensual de indicadores?",
+    "2.2 ¿Revisando el manual interno, cumple con la versión vigente?",
+    "2.3 ¿Se le da seguimiento al cierre de las auditorías previas?"
+  ]},
+  "AUD000013": { auditor: "DIANA PEREZ LOPEZ",     criterios: [
+    "1.1 ¿Se describe el guión y la rúbrica del ejercicio e-learning?",
+    "1.2 ¿Los metadatos SCORM están cargados conforme al estándar LMS?",
+    "1.3 ¿Se documentan pruebas cross-browser para la grabación?",
+    "1.4 ¿El detalle del cronograma de grabación está aprobado?"
+  ]},
+  "AUD000014": { auditor: "LAURA MENDEZ HERRERA",  criterios: [
+    "1.1 ¿Está firmada la política de baja de bolsa por la autoridad correspondiente?",
+    "1.2 ¿Se encuentra segregado físicamente el producto no conforme?",
+    "2.1 ¿Se entrega el reporte mensual de producción en tiempo?",
+    "2.2 ¿Los operadores cuentan con capacitación vigente del procedimiento?",
+    "2.3 ¿La producción cumple con los indicadores de merma establecidos?"
+  ]},
+  "AUD000015": { auditor: "CARLOS VEGA RAMIREZ",   criterios: [
+    "1.1 ¿Se ingresó el plan de auditoría en el sistema con aprobación?",
+    "1.2 ¿Permite el sistema seleccionar criterios de evaluación preconfigurados?",
+    "1.3 ¿Se describe el cronograma de actividades para los involucrados?"
+  ]},
+  "AUD000016": { auditor: "DIANA PEREZ LOPEZ",     criterios: [
+    "1.1 ¿Coincide el procedimiento de fuelle con la versión vigente publicada?",
+    "1.2 ¿Se cuenta con bitácora de mantenimiento preventivo del equipo?",
+    "1.3 ¿Los operadores tienen certificación vigente del proceso?",
+    "2.1 ¿Están etiquetados los productos no conformes con identificación visible?",
+    "2.2 ¿Se integran los indicadores del área al reporte ejecutivo?"
+  ]},
+  "AUD000017": { auditor: "LAURA MENDEZ HERRERA",  criterios: [
+    "1.1 ¿Las cotizaciones cumplen con la política de tres opciones mínimo?",
+    "1.2 ¿Se encuentran firmadas las órdenes de compra por autoridad competente?",
+    "1.3 ¿Se realiza la evaluación trimestral de proveedores?",
+    "1.4 ¿El detalle del workflow de autorización está configurado en el ERP?"
+  ]},
+  "AUD000019": { auditor: "CARLOS VEGA RAMIREZ",   criterios: [
+    "1.1 ¿Coincide el inventario físico con el sistema WMS dentro del 2% de tolerancia?",
+    "1.2 ¿Las ubicaciones del almacén están etiquetadas con código único?",
+    "2.1 ¿Revisando el procedimiento P-ALM-01, está actualizado conforme a 2026?",
+    "2.2 ¿El personal cuenta con capacitación del sistema WMS vigente?",
+    "2.3 ¿Se encuentra publicada la política de ajustes de inventario?"
+  ]},
+  "AUD000020": { auditor: "DIANA PEREZ LOPEZ",     criterios: [
+    "1.1 ¿Está aprobado el plan anual de auditorías por la dirección?",
+    "1.2 ¿Se describe el cronograma con los responsables asignados?",
+    "1.3 ¿Permite el módulo recopilar evidencia digital por cada hallazgo?"
+  ]},
+  "AUD000021": { auditor: "LAURA MENDEZ HERRERA",  criterios: [
+    "1.1 ¿Se verifica la cantidad recibida contra la orden de compra?",
+    "1.2 ¿Se registran los pesos en el sistema digital al momento de recepción?",
+    "1.3 ¿Se le da seguimiento a las no conformidades detectadas en recepción?"
+  ]},
+  "AUD000022": { auditor: "DIANA PEREZ LOPEZ",     criterios: [
+    "1.1 ¿Se cuenta con verificación trimestral de equipos de medición?",
+    "1.2 ¿La bitácora de inspección está completa al término del turno?",
+    "1.3 ¿El personal de QA tiene recertificación vigente?",
+    "1.4 ¿Se entrega el reporte mensual de calidad en la fecha comprometida?",
+    "1.5 ¿Coincide el nivel de calidad reportado con el verificado en piso?"
+  ]},
+  "AUD000023": { auditor: "CARLOS VEGA RAMIREZ",   criterios: [
+    "1.1 ¿La inspección offline cumple con el formato controlado FQA-07?",
+    "1.2 ¿Se sincronizan automáticamente los registros al sistema central?",
+    "1.3 ¿Los operadores tienen capacitación vigente del modo offline?",
+    "1.4 ¿Se encuentran firmados los reportes generados por QA-02?",
+    "1.5 ¿Se integran los indicadores al tablero ejecutivo mensual?"
+  ]},
+};
+
+// Tabla única Hallazgo ↔ Acción Correctiva (US-23 CA-23.3)
+// Estatus AC: pendiente | ejecucion | validacion | finalizada | cancelada | sin_ac
+var detalleDB = {
+  "AUD000003": [
+    { hallazgo: "Formato de contrataci\u00f3n desactualizado en expediente de personal.",            accion: "Actualizar formato F-RH-01 conforme a la pol\u00edtica vigente.",         estAC: "finalizada" },
+    { hallazgo: "Falta evidencia de capacitaci\u00f3n del personal nuevo.",                          accion: "Programar y documentar capacitaci\u00f3n trimestral.",                    estAC: "finalizada" },
+    { hallazgo: "Lista de proveedores sin firma del responsable.",                                   accion: "Recabar firmas y publicar versi\u00f3n controlada.",                      estAC: "ejecucion" },
+    { hallazgo: "No se cuenta con bit\u00e1cora de mantenimiento del equipo de c\u00f3mputo.",       accion: "Implementar bit\u00e1cora digital con periodicidad mensual.",            estAC: "ejecucion" },
+    { hallazgo: "Procedimiento P-ADM-01 sin actualizar desde 2023.",                                 accion: "Revisi\u00f3n y reedici\u00f3n del procedimiento.",                       estAC: "pendiente" },
+  ],
+  "AUD000004": [
+    { hallazgo: "Falta evidencia de inducci\u00f3n a personal de nuevo ingreso (3 casos).",          accion: "Reforzar control de inducci\u00f3n y archivar evidencia firmada.",        estAC: "ejecucion" },
+    { hallazgo: "Formatos de evaluaci\u00f3n de desempe\u00f1o sin completar.",                      accion: "Aplicar evaluaciones pendientes antes del cierre de mes.",                estAC: "pendiente" },
+    { hallazgo: "No se evidencia revisi\u00f3n por la direcci\u00f3n del a\u00f1o en curso.",        accion: "Programar reuni\u00f3n de revisi\u00f3n por la direcci\u00f3n.",          estAC: "pendiente" },
+    { hallazgo: "Pol\u00edtica de RH no difundida al personal.",                                     accion: "Realizar campa\u00f1a de difusi\u00f3n y evidenciar acuses.",             estAC: "pendiente" },
+    { hallazgo: "Indicadores de RH no reportados en el tablero mensual.",                            accion: "Integrar indicadores al reporte de direcci\u00f3n.",                      estAC: "pendiente" },
+  ],
+  "AUD000005": [
+    { hallazgo: "Devoluciones sin folio de trazabilidad en sistema.",                                accion: "Configurar generaci\u00f3n autom\u00e1tica de folio en ERP.",             estAC: "ejecucion" },
+    { hallazgo: "Producto en \u00e1rea de devoluci\u00f3n sin identificaci\u00f3n.",                 accion: "Implementar etiquetas de estatus por color.",                             estAC: "finalizada" },
+    { hallazgo: "Tiempos de respuesta a cliente fuera de SLA (5 casos).",                            accion: "Definir y publicar SLA interno con responsables.",                        estAC: "pendiente" },
+    { hallazgo: "Falta validaci\u00f3n de calidad antes de re-ingreso a inventario.",                accion: "Establecer checkpoint obligatorio en P-LOG-04.",                          estAC: "pendiente" },
+  ],
+  "AUD000010": [
+    { hallazgo: "Pruebas de calidad sin firma del inspector.",                                       accion: "Reforzar firma de inspecci\u00f3n en F-QA-03.",                           estAC: "ejecucion" },
+    { hallazgo: "Equipos de medici\u00f3n sin etiqueta de calibraci\u00f3n vigente.",                accion: "Reetiquetar y actualizar plan de calibraci\u00f3n.",                      estAC: "pendiente" },
+    { hallazgo: "Manual de pruebas no disponible en piso.",                                          accion: "Imprimir y colocar versi\u00f3n controlada en la estaci\u00f3n.",          estAC: "pendiente" },
+  ],
+  "AUD000011": [
+    { hallazgo: "Procedimiento administrativo sin difusi\u00f3n.",                                   accion: "Capacitar al equipo y recabar acuses.",                                   estAC: "finalizada" },
+    { hallazgo: "Bit\u00e1cora de control sin actualizaci\u00f3n diaria.",                           accion: "Asignar responsable diario y supervisi\u00f3n semanal.",                  estAC: "finalizada" },
+    { hallazgo: "Indicadores no publicados en tablero.",                                             accion: "Publicar tablero mensual con KPIs.",                                      estAC: "finalizada" },
+    { hallazgo: "Manual interno desactualizado.",                                                    accion: "Reeditar manual versi\u00f3n 3.",                                         estAC: "finalizada" },
+    { hallazgo: "Reuniones de seguimiento sin minuta.",                                              accion: "Implementar plantilla de minuta y archivo.",                              estAC: "finalizada" },
+    { hallazgo: "Formatos obsoletos en uso.",                                                        accion: "Retirar formatos obsoletos y publicar vigentes.",                         estAC: "finalizada" },
+    { hallazgo: "Auditor\u00edas previas sin verificaci\u00f3n de cierre.",                          accion: "Implementar verificaci\u00f3n trimestral de cierre.",                     estAC: "validacion" },
+  ],
+  "AUD000013": [
+    { hallazgo: "Faltan gui\u00f3n y rubrica del ejercicio.",                                        accion: "Elaborar gui\u00f3n y rubrica versi\u00f3n 1.",                           estAC: "finalizada" },
+    { hallazgo: "Ejercicios sin metadatos para LMS.",                                                accion: "Cargar metadatos est\u00e1ndar SCORM.",                                   estAC: "finalizada" },
+    { hallazgo: "No se evidencian pruebas en navegador objetivo.",                                   accion: "Documentar pruebas cross-browser.",                                       estAC: "finalizada" },
+    { hallazgo: "Falta plan de grabaci\u00f3n.",                                                     accion: "Definir cronograma y responsables de grabaci\u00f3n.",                    estAC: "validacion" },
+  ],
+  "AUD000014": [
+    { hallazgo: "Pol\u00edtica de baja de bolsa sin firma de aprobaci\u00f3n.",                      accion: "Recabar firmas y publicar.",                                              estAC: "ejecucion" },
+    { hallazgo: "Producto no conforme sin segregaci\u00f3n adecuada.",                               accion: "Definir \u00e1rea f\u00edsica para producto no conforme.",                estAC: "ejecucion" },
+    { hallazgo: "Reporte mensual sin entregar a la fecha.",                                          accion: "Entregar reporte y establecer recordatorio autom\u00e1tico.",             estAC: "ejecucion" },
+    { hallazgo: "Operadores sin capacitaci\u00f3n de nuevo procedimiento.",                          accion: "Programar capacitaci\u00f3n y evaluar comprensi\u00f3n.",                 estAC: "pendiente" },
+    { hallazgo: "Indicadores de merma fuera de meta.",                                               accion: "Plan de acci\u00f3n para reducci\u00f3n de merma.",                       estAC: "pendiente" },
+    { hallazgo: "Inspecci\u00f3n visual sin registro digital.",                                      accion: "Implementar registro digital en l\u00ednea.",                             estAC: "pendiente" },
+  ],
+  "AUD000015": [
+    { hallazgo: "Plan de auditor\u00eda en borrador.",                                               accion: "Aprobar y publicar plan v1.",                                             estAC: "pendiente" },
+    { hallazgo: "Falta lista de verificaci\u00f3n.",                                                 accion: "Elaborar lista de verificaci\u00f3n.",                                    estAC: "pendiente" },
+    { hallazgo: "Cronograma sin difundir.",                                                          accion: "Difundir a involucrados.",                                                estAC: "sin_ac" },
+    { hallazgo: "Criterios de evaluaci\u00f3n incompletos.",                                         accion: "Definir criterios y baseline.",                                           estAC: "sin_ac" },
+  ],
+  "AUD000016": [
+    { hallazgo: "Procedimiento de fuelle sin actualizar.",                                           accion: "Actualizar y publicar versi\u00f3n vigente.",                              estAC: "ejecucion" },
+    { hallazgo: "Falta registro de mantenimiento preventivo.",                                       accion: "Implementar bit\u00e1cora de mantenimiento.",                              estAC: "ejecucion" },
+    { hallazgo: "Operadores sin certificaci\u00f3n vigente.",                                        accion: "Recertificar y archivar evidencia.",                                      estAC: "ejecucion" },
+    { hallazgo: "Producto no conforme sin etiqueta.",                                                accion: "Implementar etiqueta de no conformidad.",                                  estAC: "ejecucion" },
+    { hallazgo: "Indicadores no reportados a direcci\u00f3n.",                                       accion: "Integrar al reporte mensual.",                                            estAC: "ejecucion" },
+    { hallazgo: "Falta auditor\u00eda interna del periodo.",                                         accion: "Programar y ejecutar auditor\u00eda interna.",                            estAC: "ejecucion" },
+  ],
+  "AUD000017": [
+    { hallazgo: "Cotizaciones sin tres opciones.",                                                   accion: "Reforzar pol\u00edtica de 3 cotizaciones m\u00ednimo.",                    estAC: "finalizada" },
+    { hallazgo: "\u00d3rdenes de compra sin firma autorizada.",                                      accion: "Configurar workflow de autorizaci\u00f3n.",                                estAC: "ejecucion" },
+    { hallazgo: "Evaluaci\u00f3n de proveedores fuera de fecha.",                                    accion: "Ejecutar evaluaci\u00f3n trimestral.",                                    estAC: "pendiente" },
+  ],
+  "AUD000019": [
+    { hallazgo: "Inventario f\u00edsico no coincide con sistema (diferencia 3%).",                   accion: "Realizar conciliaci\u00f3n y ajuste documentado.",                         estAC: "ejecucion" },
+    { hallazgo: "Falta etiquetado por ubicaci\u00f3n.",                                              accion: "Implementar c\u00f3digo de ubicaciones.",                                   estAC: "ejecucion" },
+    { hallazgo: "Procedimiento P-ALM-01 desactualizado.",                                            accion: "Actualizar procedimiento.",                                                 estAC: "pendiente" },
+    { hallazgo: "Personal sin capacitaci\u00f3n del sistema WMS.",                                   accion: "Capacitar y documentar.",                                                  estAC: "pendiente" },
+  ],
+  "AUD000020": [
+    { hallazgo: "Plan anual sin aprobaci\u00f3n de direcci\u00f3n.",                                 accion: "Obtener firma de aprobaci\u00f3n.",                                         estAC: "pendiente" },
+    { hallazgo: "Cronograma desactualizado.",                                                        accion: "Actualizar y republicar.",                                                  estAC: "pendiente" },
+    { hallazgo: "Falta integraci\u00f3n con sistema de auditor\u00edas.",                            accion: "Configurar integraci\u00f3n con m\u00f3dulo.",                              estAC: "sin_ac" },
+  ],
+  "AUD000021": [
+    { hallazgo: "Recepci\u00f3n de material sin verificaci\u00f3n de cantidad.",                     accion: "Reforzar control de recepci\u00f3n.",                                       estAC: "finalizada" },
+    { hallazgo: "Pesado de material sin registro digital.",                                          accion: "Implementar registro digital.",                                             estAC: "ejecucion" },
+  ],
+  "AUD000022": [
+    { hallazgo: "Equipos de medici\u00f3n sin verificaci\u00f3n trimestral.",                        accion: "Programar verificaciones trimestrales.",                                    estAC: "ejecucion" },
+    { hallazgo: "Bit\u00e1cora de inspecci\u00f3n incompleta.",                                      accion: "Reforzar completitud diaria.",                                              estAC: "ejecucion" },
+    { hallazgo: "Personal de QA sin recertificaci\u00f3n vigente.",                                  accion: "Recertificar al personal de QA.",                                           estAC: "ejecucion" },
+    { hallazgo: "Reporte mensual de calidad sin entregar.",                                          accion: "Entregar reporte y autom\u00e1tizar recordatorio.",                          estAC: "ejecucion" },
+  ],
+  "AUD000023": [
+    { hallazgo: "Inspecci\u00f3n offline sin formato controlado.",                                   accion: "Liberar formato controlado FQA-07.",                                        estAC: "finalizada" },
+    { hallazgo: "Falta sincronizaci\u00f3n al sistema central.",                                     accion: "Programar sincronizaci\u00f3n autom\u00e1tica.",                            estAC: "finalizada" },
+    { hallazgo: "Operadores sin capacitaci\u00f3n offline.",                                         accion: "Capacitar al personal y evaluar.",                                          estAC: "finalizada" },
+    { hallazgo: "Reportes de QA-02 sin firma.",                                                      accion: "Recabar firmas pendientes.",                                                estAC: "finalizada" },
+    { hallazgo: "Indicadores fuera del tablero ejecutivo.",                                          accion: "Integrar al tablero ejecutivo.",                                            estAC: "finalizada" },
+  ],
+};
+
+// === US-19.1: Inicialización de estado por hallazgo (estatusH desacoplado de estAC) ===
+Object.keys(detalleDB).forEach(function(folio){
+  detalleDB[folio].forEach(function(d, i){
+    if (!d._id)        d._id      = folio + '-' + i;
+    if (d.estatusH == null) d.estatusH = 'activo';   // por defecto, los hallazgos nacen Activos
+    if (d.version == null)  d.version  = 0;          // control de concurrencia (CA-19.1.7)
+  });
+});
+
+var hallazgoHistory   = {}; // { _id: [{ when, user, action, origin, fromTo }] }
+var currentUser       = 'Usuario Actual';
+var simConcurrency    = false;   // simula que otro usuario modificó el registro
+var pendingConfirmId  = null;    // _id del hallazgo cuyo confirm está abierto
+var concurrAlertId    = null;    // _id donde mostrar alerta de concurrencia
+
+function toggleSimConcurrency() {
+  simConcurrency = !simConcurrency;
+  var b = document.getElementById('simToggle');
+  if (b) {
+    b.classList.toggle('armed', simConcurrency);
+    b.textContent = simConcurrency ? '⚠ Simulación armada (siguiente intento)' : '🧪 Simular cambio externo';
+  }
+}
+
+var expandedHistory = {}; // { _id: true }
+
+// US-19.1 CA-19.1.1: regla de elegibilidad
+function canFinalizarHallazgo(hItem) {
+  if (hItem.estatusH !== 'activo') return false;
+  // En este dataset hay 1 AC por hallazgo; el propio item representa la AC.
+  var acs   = [hItem];
+  var allOk = acs.every(function(a){ return a.estAC === 'finalizada' || a.estAC === 'cancelada'; });
+  var hasFin= acs.some(function(a){  return a.estAC === 'finalizada'; });
+  return allOk && hasFin;
+}
+
+function requestFinalizarH(id) {
+  pendingConfirmId = id;
+  concurrAlertId   = null;
+  rerenderDetalle();
+}
+function cancelFinalizarH() {
+  pendingConfirmId = null;
+  rerenderDetalle();
+}
+function confirmFinalizarH(id) {
+  var item = findHallazgoById(id);
+  if (!item) return;
+  var prevVersion = item.version;
+
+  // CA-19.1.7: control de concurrencia
+  if (simConcurrency) {
+    item.version = prevVersion + 1;  // simula cambio externo
+    simConcurrency = false;
+    var b = document.getElementById('simToggle');
+    if (b) { b.classList.remove('armed'); b.textContent = '🧪 Simular cambio externo'; }
+    pendingConfirmId = null;
+    concurrAlertId   = id;
+    rerenderDetalle();
+    return;
+  }
+
+  // CA-19.1.4: cambio de estado único a Finalizado
+  item.estatusH = 'finalizado';
+  item.version  = prevVersion + 1;
+
+  // CA-19.1.5: trazabilidad
+  var now    = new Date();
+  var pad    = function(n){ return String(n).padStart(2,'0'); };
+  var when   = pad(now.getDate()) + '/' + pad(now.getMonth()+1) + '/' + now.getFullYear()
+             + ' ' + pad(now.getHours()) + ':' + pad(now.getMinutes());
+  var entry  = {
+    when:   when,
+    user:   currentUser,
+    action: 'Finalización de hallazgo',
+    fromTo: 'Activo → Finalizado',
+    origin: 'Monitor de Hallazgos/Acciones Correctivas - Popup de Detalles'
+  };
+  (hallazgoHistory[id] = hallazgoHistory[id] || []).push(entry);
+  expandedHistory[id] = true;
+
+  pendingConfirmId = null;
+  concurrAlertId   = null;
+  rerenderDetalle();
+  showToast('Hallazgo finalizado');
+}
+
+function findHallazgoById(id) {
+  var match = null;
+  Object.keys(detalleDB).some(function(f){
+    var hit = detalleDB[f].filter(function(d){ return d._id === id; })[0];
+    if (hit) { match = hit; return true; }
+  });
+  return match;
+}
+
+function toggleHist(id) {
+  expandedHistory[id] = !expandedHistory[id];
+  rerenderDetalle();
+}
+
+function rerenderDetalle() {
+  if (currentDetalleFolio) {
+    openDetalle(currentDetalleFolio);
+    // CA-19.1.6: la tabla detrás conserva filtros/orden, sólo refrescamos su render
+    applyFilters();
+  }
+}
+
+var estatusACMeta = {
+  "pendiente":  { label: "Pendiente",      cls: "badge-ac-pendiente",  icon: "\u25cb" },
+  "ejecucion":  { label: "En ejecuci\u00f3n", cls: "badge-ac-ejecucion",  icon: "\u25d0" },
+  "validacion": { label: "En validaci\u00f3n", cls: "badge-ac-validacion", icon: "\u25d1" },
+  "finalizada": { label: "Finalizada",     cls: "badge-ac-finalizada", icon: "\u2713" },
+  "cancelada":  { label: "Cancelada",      cls: "badge-ac-cancelada",  icon: "\u2715" },
+  "sin_ac":     { label: "Sin AC asignada",cls: "badge-ac-sinac",      icon: "\u2014" },
+};
+
+var badgeClass = {
+  "En ejecucion PDCA": "badge-ejecucion",
+  "Completado":        "badge-completado",
+  "Registro PDCA":     "badge-registro",
+  "PDCA Finalizado":   "badge-finalizado",
+  "PDCA_Validacion":   "badge-validacion",
+};
+
+function acColor(fin, tot) {
+  if (tot === 0) return "ratio-bad";
+  var p = fin / tot;
+  if (p >= 1) return "ratio-good";
+  if (p >= 0.5) return "ratio-warn";
+  return "ratio-bad";
+}
+
+// ── KPIs ──
+function animateKPI(id) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  el.classList.add('updated');
+  setTimeout(function(){ el.classList.remove('updated'); }, 400);
+}
+
+function updateKPIs(data) {
+  // 1. Hallazgos activos: hallazgos de auditorías con estatus != Cancelado ni PDCA Finalizado
+  var activosRows = data.filter(function(r){ return r.status !== 'PDCA Finalizado' && r.status !== 'PDCA_Validacion' && r.status !== 'Cancelado'; });
+  var hActivos    = activosRows.reduce(function(s,r){ return s + r.h; }, 0);
+  var hTotal      = data.reduce(function(s,r){ return s + r.h; }, 0);
+
+  // 2. Hallazgos de alto impacto abiertos: severidad mayor y no finalizado
+  var aiAbiertos = data.filter(function(r){ return r.severidad === 'mayor' && r.status !== 'PDCA Finalizado' && r.status !== 'PDCA_Validacion'; }).length;
+  var aiTot      = data.filter(function(r){ return r.severidad === 'mayor'; }).length;
+
+  // 3. Acciones vencidas (sin criticidad)
+  var vencidas    = data.filter(function(r){ return r.vencida; }).length;
+  var vencTot     = data.length;
+
+  // 4. Eficacia de cierre en tiempo (%): PDCA entregado en tiempo / total con PDCA activo
+  var conPDCA     = data.filter(function(r){ return r.status !== 'Completado' && r.status !== 'Registro PDCA'; });
+  var enTiempo    = conPDCA.filter(function(r){ return r.pdcaT; }).length;
+  var eficacia    = conPDCA.length > 0 ? Math.round(enTiempo / conPDCA.length * 100) : 0;
+
+  var set = function(id, val, subId, sub) {
+    var el = document.getElementById(id);
+    if (el && el.textContent !== String(val)) { el.textContent = val; animateKPI(id); }
+    else if (el) el.textContent = val;
+    var se = document.getElementById(subId);
+    if (se) se.textContent = sub;
+  };
+
+  set('kpi-h-activos',   hActivos,       'kpi-h-activos-sub',   'de ' + hTotal + ' hallazgos totales — ' + activosRows.length + ' auditorias activas');
+  set('kpi-altoImpacto', aiAbiertos,    'kpi-altoImpacto-sub', aiTot + ' de alto impacto en total');
+  set('kpi-vencidas',    vencidas,       'kpi-vencidas-sub',    'de ' + vencTot + ' auditorias');
+  set('kpi-eficacia',    eficacia + '%', 'kpi-eficacia-sub',    enTiempo + ' de ' + conPDCA.length + ' cerradas en tiempo');
+
+  // 5. Verificaciones pendientes: auditorías en estatus PDCA_Validacion
+  var verificPend = data.filter(function(r){ return r.status === 'PDCA_Validacion'; }).length;
+  set('kpi-verif', verificPend, 'kpi-verif-sub', 'esperando validacion de cierre');
+}
+
+// ── Render ──
+var currentFiltered = rows.slice();
+
+function renderRows(data) {
+  currentFiltered = data;
+  var tbody = document.getElementById('tbody');
+  tbody.innerHTML = '';
+  data.forEach(function(r) {
+    var tr = document.createElement('tr');
+    tr.addEventListener('click', function() {
+      document.querySelectorAll('tbody tr').forEach(function(x){ x.classList.remove('selected'); });
+      tr.classList.add('selected');
+    });
+
+    var noAC = (r.status === 'Completado' || r.status === 'Registro PDCA');
+    var acCell = noAC
+      ? '<span style="color:#d1d5db">—</span>'
+      : '<span class="' + acColor(r.acFin,r.acTot) + '">' + r.acFin + '</span><span class="ratio-sep">/</span><span style="color:#374151">' + r.acTot + '</span>';
+    var pdcaCell = noAC
+      ? '<span style="color:#d1d5db">—</span>'
+      : (r.pdcaT ? '<span style="color:#22c55e;font-weight:600">✓ Si</span>' : '<span style="color:#9ca3af">✗ No</span>');
+    var hcColor = (r.hc === r.h) ? 'ratio-good' : (r.hc > 0 ? 'ratio-warn' : 'ratio-bad');
+    var acEjecCell = noAC
+      ? '<span style="color:#d1d5db">—</span>'
+      : (r.status === 'En ejecucion PDCA'
+          ? '<span style="color:#f97316;font-weight:600">' + (r.acTot - r.acFin) + '</span>'
+          : '<span style="color:#9ca3af">0</span>');
+    var obj = r.objetivo.length > 28 ? r.objetivo.slice(0,28) + '...' : r.objetivo;
+    var recCell = r.severidad === 'recurrente'
+      ? '<span class="chip chip-purple" style="margin:0">↺ Sí</span>'
+      : '<span style="color:#d1d5db;font-size:12px">—</span>';
+
+    tr.innerHTML =
+      '<td class="col-folio">'   + r.folio + '</td>' +
+      '<td class="col-objetivo" title="' + r.objetivo + '">' + obj + '</td>' +
+      '<td class="col-fecha">'   + r.fecha + '</td>' +
+      '<td>'                     + r.auditado + '</td>' +
+      '<td class="col-depto">'   + r.depto + '</td>' +
+      '<td class="col-num">'     + r.h + '</td>' +
+      '<td class="col-num"><span class="' + hcColor + '">' + r.hc + '</span><span class="ratio-sep">/</span><span style="color:#374151">' + r.h + '</span></td>' +
+      '<td class="col-num">'     + r.acTot + '</td>' +
+      '<td class="col-num">'     + acEjecCell + '</td>' +
+      '<td class="col-num">'     + acCell + '</td>' +
+      '<td class="col-num">'     + pdcaCell + '</td>' +
+      '<td><span class="badge '  + (badgeClass[r.status]||'') + '">' + r.status + '</span></td>' +
+      '<td class="col-num">'     + recCell + '</td>' +
+      '<td class="col-actions">' +
+        '<button class="btn-action btn-seg" data-folio="' + r.folio + '">📋 Seguimiento</button>' +
+        '<button class="btn-action btn-det" data-folio="' + r.folio + '">👁 Ver Detalles</button>' +
+      '</td>';
+
+    tbody.appendChild(tr);
+  });
+
+  tbody.querySelectorAll('.btn-seg').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      openDrawer(btn.getAttribute('data-folio'));
+    });
+  });
+  tbody.querySelectorAll('.btn-det').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      openDetalle(btn.getAttribute('data-folio'));
+    });
+  });
+
+  document.getElementById('recCount').textContent = data.length + ' registros';
+  updateKPIs(data);
+}
+
+// ── KPI ↔ Grid bidirectional filter ──
+var activeKpi = null;
+
+var kpiMeta = {
+  'h-activos':   { label: 'Hallazgos Activos',              fn: function(r){ return r.status !== 'PDCA Finalizado' && r.status !== 'PDCA_Validacion' && r.status !== 'Cancelado'; } },
+  'altoImpacto': { label: 'Hallazgos de Alto Impacto Abiertos', fn: function(r){ return r.severidad === 'mayor' && r.status !== 'PDCA Finalizado' && r.status !== 'PDCA_Validacion'; } },
+  'vencidas':    { label: 'Acciones Vencidas',              fn: function(r){ return r.vencida; } },
+  'eficacia':    { label: 'Eficacia — Cerradas en Tiempo',  fn: function(r){ return r.pdcaT && r.status !== 'Completado' && r.status !== 'Registro PDCA'; } },
+  'verif':       { label: 'Verificaciones Pendientes',      fn: function(r){ return r.status === 'PDCA_Validacion'; } },
+};
+
+function toggleKpiFilter(card) {
+  var kpi = card.getAttribute('data-kpi');
+  if (activeKpi === kpi) {
+    clearKpiFilter();
+    return;
+  }
+  activeKpi = kpi;
+  document.querySelectorAll('.kpi-card').forEach(function(c){ c.classList.remove('kpi-active'); });
+  card.classList.add('kpi-active');
+  var badge = document.getElementById('kpi-filter-badge');
+  badge.style.display = 'flex';
+  document.getElementById('kpi-filter-label').textContent = '▼ ' + kpiMeta[kpi].label;
+  applyFilters();
+}
+
+function clearKpiFilter() {
+  activeKpi = null;
+  document.querySelectorAll('.kpi-card').forEach(function(c){ c.classList.remove('kpi-active'); });
+  document.getElementById('kpi-filter-badge').style.display = 'none';
+  applyFilters();
+}
+
+// ── Sort ──
+var sortDir = {};
+function sortTable(col) {
+  var keys = ['folio','objetivo','fecha','auditado','depto','h','hc','acTot','acTot','acFin','pdcaT','status','severidad'];
+  var k = keys[col];
+  sortDir[col] = !sortDir[col];
+  for (var i = 0; i < 13; i++) { var sp = document.getElementById('s'+i); if(sp) sp.textContent=''; }
+  var ar = document.getElementById('s'+col);
+  if (ar) ar.textContent = sortDir[col] ? ' ▲' : ' ▼';
+  var sorted = rows.slice().sort(function(a,b){
+    var va = String(a[k]), vb = String(b[k]);
+    return sortDir[col] ? va.localeCompare(vb,'es',{numeric:true}) : vb.localeCompare(va,'es',{numeric:true});
+  });
+  renderRows(sorted);
+}
+
+// ── Filters ──
+function getFiltered() {
+  var s  = document.getElementById('searchInput').value.toLowerCase();
+  var st = document.getElementById('statusFilter').value;
+  var cf = [0,1,2,3,4,5,6,7,8,9,10,11,12].map(function(i){
+    var el = document.getElementById('cf'+i); return el ? el.value.toLowerCase().trim() : '';
+  });
+  return rows.filter(function(r) {
+    var pdcaStr = r.pdcaT ? 'si' : 'no';
+    var acEjec  = (r.status === 'En ejecucion PDCA') ? String(r.acTot - r.acFin) : '0';
+    var recStr  = r.severidad === 'recurrente' ? 'si' : 'no';
+    var vals = [r.folio, r.objetivo, r.fecha, r.auditado, r.depto, String(r.h), String(r.hc), String(r.acTot), acEjec, String(r.acFin), pdcaStr, r.status, recStr];
+    var mc = cf.every(function(v,i){ return !v || vals[i].toLowerCase().indexOf(v) >= 0; });
+    var ms = !s  || [r.folio,r.objetivo,r.auditado,r.depto,r.status,r.severidad].some(function(v){ return v.toLowerCase().indexOf(s) >= 0; });
+    var mx = !st || r.status === st;
+    var mk = !activeKpi || kpiMeta[activeKpi].fn(r);
+    return mc && ms && mx && mk;
+  });
+}
+function applyFilters() { renderRows(getFiltered()); }
+function clearFilters() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('statusFilter').value = '';
+  [0,1,2,3,4,5,6,7,8,9,10,11,12].forEach(function(i){ var el=document.getElementById('cf'+i); if(el) el.value=''; });
+  activeKpi = null;
+  document.querySelectorAll('.kpi-card').forEach(function(c){ c.classList.remove('kpi-active'); });
+  document.getElementById('kpi-filter-badge').style.display = 'none';
+  renderRows(rows);
+}
+
+// ── Export ──
+function toggleExportMenu(e) {
+  e.stopPropagation();
+  document.getElementById('exportMenu').classList.toggle('open');
+}
+document.addEventListener('click', function(){ document.getElementById('exportMenu').classList.remove('open'); });
+
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2500);
+}
+
+var HEADERS_GRID = ['Folio','Objetivo','Fecha Fin','Auditado','Departamento','No. Hallazgos','Hallazgos Corregidos','Total AC','AC en Ejecucion','AC Finalizadas','PDCA En Tiempo','Estatus','Recurrente','Vencida','Severidad','Seguimiento'];
+
+function rowToArr(r) {
+  var noAC   = (r.status === 'Completado' || r.status === 'Registro PDCA');
+  var acEjec = noAC ? 0 : (r.acTot - r.acFin);
+  var entries = seguimientoDB[r.folio] || [];
+  var seg = entries.length === 0
+    ? ''
+    : entries.map(function(e) {
+        return '[' + e.fecha + ' ' + e.hora + ' - ' + e.usuario + '] ' + e.comentario;
+      }).join(' | ');
+  return [
+    r.folio, r.objetivo, r.fecha, r.auditado, r.depto,
+    r.h, r.hc,
+    r.acTot, acEjec, r.acFin,
+    r.pdcaT ? 'Si' : 'No',
+    r.status,
+    r.severidad === 'recurrente' ? 'Si' : 'No',
+    r.vencida ? 'Si' : 'No',
+    r.severidad,
+    seg
+  ];
+}
+
+function csvEsc(v) {
+  var s = String(v);
+  return (s.indexOf(',') >= 0 || s.indexOf('"') >= 0 || s.indexOf('\n') >= 0)
+    ? '"' + s.replace(/"/g, '""') + '"' : s;
+}
+
+function exportCSV() {
+  document.getElementById('exportMenu').classList.remove('open');
+  var lines = [HEADERS_GRID.map(csvEsc).join(',')];
+  currentFiltered.forEach(function(r) {
+    lines.push(rowToArr(r).map(csvEsc).join(','));
+  });
+  var blob = new Blob(['\uFEFF' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8;' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a'); a.href = url; a.download = 'acciones_correctivas.csv'; a.click();
+  URL.revokeObjectURL(url);
+  showToast('CSV exportado (' + currentFiltered.length + ' registros)');
+}
+
+function exportExcel() {
+  document.getElementById('exportMenu').classList.remove('open');
+  var xml = '<?xml version="1.0" encoding="UTF-8"?>\n' +
+    '<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" ' +
+    'xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">\n' +
+    '<Styles>' +
+    '<Style ss:ID="H"><Font ss:Bold="1" ss:Color="#FFFFFF"/><Interior ss:Color="#1e3a5f" ss:Pattern="Solid"/></Style>' +
+    '<Style ss:ID="S"><Interior ss:Color="#f0f4ff" ss:Pattern="Solid"/></Style>' +
+    '<Style ss:ID="W"><Alignment ss:WrapText="1"/></Style>' +
+    '</Styles>\n' +
+    '<Worksheet ss:Name="Acciones Correctivas"><Table>\n';
+
+  // Column widths: first 15 cols = 110px, Seguimiento col = 400px
+  for (var ci = 0; ci < 15; ci++) { xml += '<Column ss:AutoFitWidth="0" ss:Width="110"/>\n'; }
+  xml += '<Column ss:AutoFitWidth="0" ss:Width="400"/>\n';
+
+  xml += '<Row>';
+  HEADERS_GRID.forEach(function(h){ xml += '<Cell ss:StyleID="H"><Data ss:Type="String">' + esc(h) + '</Data></Cell>'; });
+  xml += '</Row>\n';
+
+  currentFiltered.forEach(function(r, ri) {
+    var arr  = rowToArr(r);
+    var base = ri % 2 === 1 ? 'S' : '';
+    xml += '<Row>';
+    arr.forEach(function(v, i) {
+      var isNum  = (i >= 5 && i <= 9);
+      var isSeg  = (i === arr.length - 1);
+      var style  = isSeg ? 'W' : (base ? base : '');
+      var styleAttr = style ? ' ss:StyleID="' + style + '"' : '';
+      xml += '<Cell' + styleAttr + '><Data ss:Type="' + (isNum ? 'Number' : 'String') + '">' + esc(String(v)) + '</Data></Cell>';
+    });
+    xml += '</Row>\n';
+  });
+
+  xml += '</Table></Worksheet></Workbook>';
+
+  var blob = new Blob([xml], { type: 'application/vnd.ms-excel;charset=utf-8;' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a'); a.href = url; a.download = 'acciones_correctivas.xls'; a.click();
+  URL.revokeObjectURL(url);
+  showToast('Excel exportado (' + currentFiltered.length + ' registros + seguimiento)');
+}
+
+function esc(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ── Seguimiento ──
+var seguimientoDB = {
+  "AUD000004": [
+    { fecha:"10/03/2026", hora:"09:14", usuario:"Laura Mendez",    comentario:"Se reviso el procedimiento de contratacion. Se detectaron 2 formatos desactualizados que deben corregirse.", evidencia:"Reporte_revision_v1.pdf" },
+    { fecha:"18/03/2026", hora:"16:45", usuario:"Carlos Vega",     comentario:"Formatos actualizados y publicados en SharePoint. Pendiente validacion del area.", evidencia:"Formatos_v2.zip" }
+  ],
+  "AUD000011": [
+    { fecha:"05/03/2026", hora:"11:00", usuario:"Hector Canchola", comentario:"Capacitacion impartida al equipo sobre el nuevo proceso. Asistencia del 90%.", evidencia:"Lista_asistencia.pdf" },
+    { fecha:"06/03/2026", hora:"13:30", usuario:"Hector Canchola", comentario:"Actualizacion de manual completada y aprobada por direccion.", evidencia:"Manual_v3.pdf" },
+    { fecha:"10/03/2026", hora:"08:50", usuario:"Laura Mendez",    comentario:"Verificacion de cumplimiento normativo realizada. Sin observaciones adicionales.", evidencia:"" }
+  ]
+};
+
+var currentFolio = null;
+
+function initials(name) {
+  return name.split(' ').slice(0,2).map(function(w){ return w[0]; }).join('').toUpperCase();
+}
+
+function openDrawer(folio) {
+  currentFolio = folio;
+  var row = rows.filter(function(r){ return r.folio === folio; })[0];
+  document.getElementById('drawerTitle').textContent = 'Seguimiento — ' + folio;
+  document.getElementById('drawerSubtitle').textContent = row ? row.objetivo : '';
+  renderTimeline();
+  resetForm();
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('drawerOverlay').classList.add('open');
+}
+
+function closeDrawer() {
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('drawerOverlay').classList.remove('open');
+}
+
+function renderTimeline() {
+  var body = document.getElementById('drawerBody');
+  var entries = seguimientoDB[currentFolio] || [];
+  if (entries.length === 0) {
+    body.innerHTML = '<div class="timeline-empty"><div class="t-icon">📋</div>Sin seguimientos registrados.<br>Usa el formulario para agregar el primero.</div>';
+    return;
+  }
+  body.innerHTML = '';
+  entries.slice().reverse().forEach(function(e) {
+    var item = document.createElement('div');
+    item.className = 'timeline-item';
+    var fileHtml = e.evidencia ? '<div><a class="tl-file" href="#" onclick="return false">📎 ' + e.evidencia + '</a></div>' : '';
+    item.innerHTML =
+      '<div class="tl-avatar">' + initials(e.usuario) + '</div>' +
+      '<div class="tl-content">' +
+        '<div class="tl-meta">' +
+          '<span class="tl-user">' + e.usuario + '</span>' +
+          '<span class="tl-date">' + e.fecha + ' · ' + e.hora + '</span>' +
+        '</div>' +
+        '<div class="tl-comment">' + e.comentario + '</div>' +
+        fileHtml +
+      '</div>';
+    body.appendChild(item);
+  });
+}
+
+function resetForm() {
+  document.getElementById('fComentario').value = '';
+  document.getElementById('fComentario').classList.remove('error');
+  document.getElementById('fFile').value = '';
+  document.getElementById('fFileName').innerHTML = '';
+  document.getElementById('fFileLabel').textContent = 'Adjuntar archivo (PDF, imagen...)';
+}
+
+function showFileName(input) {
+  var name = input.files[0] ? input.files[0].name : '';
+  document.getElementById('fFileName').innerHTML = name ? '📎 ' + name + ' <button onclick="clearFile()">✕</button>' : '';
+  document.getElementById('fFileLabel').textContent = name ? 'Cambiar archivo' : 'Adjuntar archivo (PDF, imagen...)';
+}
+
+function clearFile() {
+  document.getElementById('fFile').value = '';
+  document.getElementById('fFileName').innerHTML = '';
+  document.getElementById('fFileLabel').textContent = 'Adjuntar archivo (PDF, imagen...)';
+}
+
+function submitSeguimiento() {
+  var ta = document.getElementById('fComentario');
+  var comentario = ta.value.trim();
+  if (!comentario) {
+    ta.classList.add('error'); ta.focus();
+    setTimeout(function(){ ta.classList.remove('error'); }, 1800);
+    return;
+  }
+  var now   = new Date();
+  var fecha = now.toLocaleDateString('es-MX', { day:'2-digit', month:'2-digit', year:'numeric' });
+  var hora  = now.toLocaleTimeString('es-MX', { hour:'2-digit', minute:'2-digit' });
+  var fileEl = document.getElementById('fFile');
+  var entry = { fecha:fecha, hora:hora, usuario:'Usuario Actual', comentario:comentario, evidencia: fileEl.files[0] ? fileEl.files[0].name : '' };
+  if (!seguimientoDB[currentFolio]) seguimientoDB[currentFolio] = [];
+  seguimientoDB[currentFolio].push(entry);
+  renderTimeline();
+  resetForm();
+  document.getElementById('drawerBody').scrollTop = 0;
+  showToast('Seguimiento registrado');
+}
+
+// ── Detalle Modal ──
+var currentDetalleFolio = null;
+
+function openDetalle(folio) {
+  currentDetalleFolio = folio;
+  var r = rows.filter(function(x){ return x.folio === folio; })[0];
+  if (!r) return;
+
+  var meta      = auditoriaMeta[folio] || { auditor: '—', criterios: [] };
+  var detalle   = detalleDB[folio] || [];
+  var badge     = '<span class="badge ' + (badgeClass[r.status]||'') + '">' + r.status + '</span>';
+
+  document.getElementById('modalFolio').textContent      = r.folio + ' — ' + r.objetivo;
+  document.getElementById('modalBreadcrumb').textContent = 'Auditorías > ' + r.depto + ' > Ver Detalle';
+
+  // Distribuir hallazgos por criterio (round-robin sobre los criterios definidos)
+  var critList = meta.criterios.length ? meta.criterios : [];
+  var pool = { /* idx criterio -> [hallazgos] */ };
+  if (critList.length === 0) {
+    pool[0] = detalle.slice();
+  } else {
+    detalle.forEach(function(d, i){
+      var k = i % critList.length;
+      (pool[k] = pool[k] || []).push(d);
+    });
+  }
+
+  // Pool deterministico de responsables
+  var responsables = ['María López R.', 'Juan Pérez M.', 'Ana García L.', 'Roberto Sánchez', 'Carmen Ruiz', 'Luis Hernández', 'Patricia Torres', 'Jorge Castillo'];
+
+  // Score por estatus AC (para calificacion por criterio)
+  var scoreMap = { finalizada: 100, validacion: 85, ejecucion: 60, pendiente: 30, cancelada: 0, sin_ac: 0 };
+
+  function parseFecha(f) { var p = f.split('/'); return new Date(+('20'+p[2].slice(-2)), +p[1]-1, +p[0]); }
+  function fmtFecha(d) {
+    var dd = String(d.getDate()).padStart(2,'0');
+    var mm = String(d.getMonth()+1).padStart(2,'0');
+    var yy = d.getFullYear();
+    return dd + '/' + mm + '/' + yy;
+  }
+  function compromiso(folio, hIdx, aIdx) {
+    var base = parseFecha(r.fecha);
+    var offset = ((hIdx * 7) + (aIdx * 3)) % 30 - 15;
+    base.setDate(base.getDate() + offset);
+    return fmtFecha(base);
+  }
+
+  function hashIdx(s, n) {
+    var h = 0; for (var i = 0; i < s.length; i++) h = (h*31 + s.charCodeAt(i)) | 0;
+    return Math.abs(h) % n;
+  }
+
+  function estatusHallazgo(h) {
+    // El estatus del hallazgo es independiente del estatus de la AC (US-19.1).
+    if (h && h.estatusH === 'finalizado') return { label: 'Finalizado', cls: 'est-finalizado' };
+    if (h && h.estatusH === 'cancelado')  return { label: 'Cancelado',  cls: 'est-cancelada'  };
+    return { label: 'Activo', cls: 'est-activo' };
+  }
+  function estatusAccion(estAC) {
+    var map = {
+      pendiente:  { label: 'Pendiente',     cls: 'est-pendiente'  },
+      ejecucion:  { label: 'En ejecución',  cls: 'est-ejecucion'  },
+      validacion: { label: 'Validación PDCA',cls: 'est-validacion' },
+      finalizada: { label: 'Finalizado',    cls: 'est-finalizado' },
+      cancelada:  { label: 'Cancelada',     cls: 'est-cancelada'  },
+      sin_ac:     { label: 'Sin acción',     cls: 'est-cancelada'  }
+    };
+    return map[estAC] || map.pendiente;
+  }
+
+  var hCounter = 0;
+
+  var criteriosHTML = critList.length
+    ? critList.map(function(crit, ci){
+        var match  = crit.match(/^(\d+(?:\.\d+)?)\s+(.+)$/);
+        var num    = match ? match[1] : ((ci+1)+'.0');
+        var preg   = match ? match[2] : crit;
+        var halls  = pool[ci] || [];
+
+        // Calificacion: promedio de scores de todas las AC dentro del criterio
+        var allScores = halls.map(function(h){ return scoreMap[h.estAC] != null ? scoreMap[h.estAC] : 0; });
+        var calif = allScores.length ? Math.round(allScores.reduce(function(s,x){return s+x;},0) / allScores.length) : 0;
+        var scoreCls = calif >= 90 ? 'score-good' : calif >= 70 ? 'score-warn' : calif >= 50 ? 'score-mid' : 'score-bad';
+
+        // Conteo
+        var totalAC = halls.length;  // 1 accion por hallazgo en el dataset
+        var countTxt = halls.length === 0
+          ? 'SIN HALLAZGOS RELACIONADOS'
+          : halls.length + ' HALLAZGO' + (halls.length !== 1 ? 'S' : '') + ' · ' + totalAC + ' ACCIÓN' + (totalAC !== 1 ? 'ES' : '') + ' CORRECTIVA' + (totalAC !== 1 ? 'S' : '');
+
+        var hallazgosHTML = halls.map(function(h, hi){
+          hCounter++;
+          var hTag     = 'H' + hCounter;
+          var hEst     = estatusHallazgo(h);
+          var aEst     = estatusAccion(h.estAC);
+          var resp     = responsables[hashIdx(folio + num + hi, responsables.length)];
+          var comp     = compromiso(folio, hCounter, 1);
+          var acTag    = 'AC ' + num + '.' + (hi+1);
+          var eligible = canFinalizarHallazgo(h);
+          var hist     = hallazgoHistory[h._id] || [];
+          var showHist = !!expandedHistory[h._id];
+          var showConf = pendingConfirmId === h._id;
+          var showAlert= concurrAlertId   === h._id;
+
+          // Botón Finalizar (CA-19.1.1/19.1.2)
+          var btnHTML = eligible
+            ? '<button class="btn-finalizar-h" onclick="requestFinalizarH(\''+ h._id +'\')">✓ Finalizar Hallazgo</button>'
+            : '';
+
+          // Historial link
+          var histLinkHTML = hist.length
+            ? '<button class="hist-link" onclick="toggleHist(\''+ h._id +'\')">' + (showHist ? '▲' : '▼') + ' Historial (' + hist.length + ')</button>'
+            : '';
+
+          // Acciones row (botón + historial) solo si hay algo que mostrar
+          var actionsRowHTML = (btnHTML || histLinkHTML)
+            ? '<div class="hallazgo-actions-row">' + (histLinkHTML || '<span></span>') + (btnHTML || '<span></span>') + '</div>'
+            : '';
+
+          // Panel de historial
+          var histPanelHTML = '';
+          if (showHist) {
+            var rowsH = hist.length
+              ? hist.map(function(e){
+                  return '<div class="hist-row">' +
+                    '<span class="hist-when">' + e.when + '</span>' +
+                    '<div class="hist-body"><strong>' + e.action + '</strong> · ' + e.fromTo + ' · por ' + e.user +
+                      '<div class="hist-origin">Origen: ' + e.origin + '</div>' +
+                    '</div>' +
+                  '</div>';
+                }).join('')
+              : '<div class="hist-empty">Sin eventos registrados.</div>';
+            histPanelHTML = '<div class="hist-panel"><div class="hist-title">Historial del hallazgo</div>' + rowsH + '</div>';
+          }
+
+          // Confirmación inline (CA-19.1.3)
+          var confirmHTML = showConf
+            ? '<div class="confirm-inline">' +
+                '<div class="confirm-msg">¿Finalizar el hallazgo <strong>' + hTag + '</strong>? ' +
+                'Sus acciones correctivas ya están cerradas. Esta operación quedará registrada en el historial y no se puede deshacer.</div>' +
+                '<div class="confirm-actions">' +
+                  '<button class="btn-cancel" onclick="cancelFinalizarH()">Cancelar</button>' +
+                  '<button class="btn-confirm" onclick="confirmFinalizarH(\''+ h._id +'\')">Sí, finalizar</button>' +
+                '</div>' +
+              '</div>'
+            : '';
+
+          // Alerta de concurrencia (CA-19.1.7)
+          var alertHTML = showAlert
+            ? '<div class="concurr-alert">' +
+                '<span class="alert-icon">⚠</span>' +
+                '<span>El registro fue actualizado por otro usuario antes de tu confirmación. La operación fue rechazada y los datos visibles se han refrescado. Intenta nuevamente.</span>' +
+              '</div>'
+            : '';
+
+          return '<div class="hallazgo-card">' +
+            '<div class="hallazgo-row">' +
+              '<span class="hallazgo-tag">' + hTag + '</span>' +
+              '<div class="hallazgo-body">' +
+                '<div class="hallazgo-text">' + h.hallazgo + '</div>' +
+                '<div class="hallazgo-sub">1 ACCIÓN CORRECTIVA</div>' +
+              '</div>' +
+              '<span class="estatus-dot ' + hEst.cls + '">' + hEst.label + '</span>' +
+            '</div>' +
+            '<div class="accion-list">' +
+              '<div class="accion-row">' +
+                '<span class="accion-tag">' + acTag + '</span>' +
+                '<div class="accion-body">' +
+                  '<div class="accion-text">' + h.accion + '</div>' +
+                  '<div class="accion-meta">' +
+                    '<span><strong>Responsable</strong>' + resp + '</span>' +
+                    '<span><strong>Compromiso</strong>' + comp + '</span>' +
+                  '</div>' +
+                '</div>' +
+                '<span class="estatus-dot ' + aEst.cls + '">' + aEst.label + '</span>' +
+              '</div>' +
+            '</div>' +
+            actionsRowHTML +
+            confirmHTML +
+            alertHTML +
+            histPanelHTML +
+          '</div>';
+        }).join('');
+
+        return '<div class="criterio-card">' +
+          '<div class="criterio-head">' +
+            '<span class="crit-num-badge">' + num + '</span>' +
+            '<span class="crit-question">' + preg + '</span>' +
+            '<span class="crit-score ' + scoreCls + '">' + calif + '%</span>' +
+          '</div>' +
+          '<div class="crit-counts ' + (halls.length === 0 ? 'empty' : '') + '">' + countTxt + '</div>' +
+          (halls.length ? '<div class="hallazgo-list">' + hallazgosHTML + '</div>' : '') +
+        '</div>';
+      }).join('')
+    : '<div style="text-align:center;padding:32px;color:#9ca3af;font-size:13px">Sin criterios evaluados registrados.</div>';
+
+  document.getElementById('modalBody').innerHTML =
+    '<div class="detalle-hero">' +
+      '<div class="detalle-hero-row">' +
+        '<div class="detalle-depto">' + r.depto + '</div>' +
+        '<div class="detalle-fecha">' + r.fecha + '</div>' +
+      '</div>' +
+      '<div>' +
+        '<div class="detalle-label-up">Estatus</div>' +
+        badge +
+      '</div>' +
+    '</div>' +
+    '<div class="detalle-meta-extra">' +
+      '<div class="meta-item"><div class="detalle-label-up">Auditor</div><div class="meta-val">' + meta.auditor + '</div></div>' +
+      '<div class="meta-item"><div class="detalle-label-up">Auditado</div><div class="meta-val muted">' + r.auditado + '</div></div>' +
+      '<div class="meta-item" style="grid-column:1/-1"><div class="detalle-label-up">Objetivo</div><div class="meta-val muted">' + r.objetivo + '</div></div>' +
+    '</div>' +
+    '<div class="criterios-section-title">Criterios Evaluados · Calificación · Hallazgos Relacionados</div>' +
+    criteriosHTML;
+
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function closeDetalle(e) {
+  // Called directly (no event) or from overlay click
+  if (e && e.target && e.target !== document.getElementById('modalOverlay')) return;
+  var overlay = document.getElementById('modalOverlay');
+  if (overlay) overlay.classList.remove('open');
+}
+
+function openDetalleToSeguimiento() {
+  var folio = currentDetalleFolio;
+  closeDetalle();
+  setTimeout(function(){ if (folio) openDrawer(folio); }, 120);
+}
+
+renderRows(rows);
+</script>
+</body>
+</html>

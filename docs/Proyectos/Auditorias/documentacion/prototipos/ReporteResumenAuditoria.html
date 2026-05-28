@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>RF-06 — Reporte Resumen de Auditoría por Criterio</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', Arial, sans-serif;
+      background: #e8edf2;
+      padding: 24px;
+      color: #1a2332;
+      font-size: 13px;
+    }
+
+    /* ── Controles de prototipo ───────────────────────────── */
+    .proto-bar {
+      background: #1d3557;
+      color: #fff;
+      border-radius: 8px;
+      padding: 10px 18px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+    }
+    .proto-bar span { opacity: .7; }
+    .proto-bar strong { font-size: 13px; }
+    .badge-rf {
+      background: #e63946;
+      color: #fff;
+      border-radius: 4px;
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .5px;
+    }
+
+    /* ── Hoja del reporte ─────────────────────────────────── */
+    .report-page {
+      background: #fff;
+      max-width: 900px;
+      margin: 0 auto;
+      border-radius: 4px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.15);
+      overflow: hidden;
+    }
+
+    /* ── Encabezado / Header ──────────────────────────────── */
+    .report-header {
+      background: #153d6f;
+      color: #fff;
+      padding: 20px 28px 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+    }
+    .report-header .logo-placeholder {
+      width: 64px;
+      height: 64px;
+      background: rgba(255,255,255,.18);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: rgba(255,255,255,.6);
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .report-header-info { flex: 1; }
+    .report-header-info .report-title {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: .3px;
+      line-height: 1.2;
+    }
+    .report-header-info .report-subtitle {
+      font-size: 11px;
+      opacity: .75;
+      margin-top: 3px;
+    }
+    .report-header-folio {
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .report-header-folio .folio-label {
+      font-size: 10px;
+      opacity: .65;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+    }
+    .report-header-folio .folio-value {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+    .report-header-folio .estatus-badge {
+      display: inline-block;
+      margin-top: 4px;
+      background: #27ae60;
+      color: #fff;
+      border-radius: 20px;
+      padding: 2px 10px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .4px;
+      text-transform: uppercase;
+    }
+    .estatus-badge.en-ejecucion { background: #e67e22; }
+    .estatus-badge.cancelado    { background: #c0392b; }
+    .estatus-badge.activo       { background: #2980b9; }
+
+    /* ── Datos generales ──────────────────────────────────── */
+    .datos-generales {
+      background: #f0f4f9;
+      border-bottom: 1px solid #d5dde8;
+      padding: 14px 28px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px 20px;
+    }
+    .dato-item .dato-label {
+      font-size: 9.5px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      color: #6b7fa3;
+    }
+    .dato-item .dato-value {
+      font-size: 12.5px;
+      font-weight: 500;
+      color: #1a2332;
+      margin-top: 1px;
+    }
+
+    /* ── Secciones del reporte ────────────────────────────── */
+    .section {
+      padding: 20px 28px;
+    }
+    .section + .section {
+      border-top: 1px solid #e8edf2;
+    }
+    .section-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      color: #153d6f;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #d0d9e8;
+    }
+
+    /* ── Resumen ejecutivo ────────────────────────────────── */
+    .resumen-ejecutivo {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .kpi-card {
+      background: #f0f4f9;
+      border: 1px solid #d5dde8;
+      border-radius: 6px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .kpi-card .kpi-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: #153d6f;
+      line-height: 1;
+    }
+    .kpi-card .kpi-label {
+      font-size: 10px;
+      color: #6b7fa3;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      margin-top: 4px;
+    }
+    .kpi-card.kpi-highlight { background: #153d6f; border-color: #153d6f; }
+    .kpi-card.kpi-highlight .kpi-value,
+    .kpi-card.kpi-highlight .kpi-label { color: #fff; }
+    .kpi-card.kpi-highlight .kpi-label { opacity: .75; }
+
+    /* ── Tabla de criterios ───────────────────────────────── */
+    .table-criterios {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    .table-criterios thead tr {
+      background: #153d6f;
+      color: #fff;
+    }
+    .table-criterios thead th {
+      padding: 9px 12px;
+      text-align: left;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .table-criterios thead th:not(:first-child) { text-align: center; }
+
+    .table-criterios tbody tr:nth-child(even) { background: #f7f9fc; }
+    .table-criterios tbody tr:hover           { background: #eaf0f8; }
+
+    .table-criterios td {
+      padding: 9px 12px;
+      vertical-align: top;
+      border-bottom: 1px solid #e8edf2;
+    }
+    .table-criterios td:not(:first-child) { text-align: center; }
+
+    .criterio-nombre { font-weight: 500; color: #1a2332; }
+    .criterio-grupo  {
+      display: inline-block;
+      font-size: 9.5px;
+      color: #6b7fa3;
+      margin-top: 2px;
+    }
+    .criterio-obs {
+      font-size: 11px;
+      color: #5a6a83;
+      margin-top: 3px;
+      font-style: italic;
+    }
+
+    .calificacion-chip {
+      display: inline-block;
+      border-radius: 4px;
+      padding: 3px 10px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .cal-alta   { background: #d5f5e3; color: #1e8449; }
+    .cal-media  { background: #fef9e7; color: #b7950b; }
+    .cal-baja   { background: #fde8e8; color: #c0392b; }
+
+    .hallazgos-count {
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .hallazgos-count.count-zero  { color: #27ae60; }
+    .hallazgos-count.count-some  { color: #e67e22; }
+    .hallazgos-count.count-many  { color: #c0392b; }
+
+    .estatus-criterio {
+      display: inline-block;
+      border-radius: 20px;
+      padding: 2px 9px;
+      font-size: 9.5px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .3px;
+    }
+    .ec-finalizado { background: #d5f5e3; color: #1e8449; }
+    .ec-activo     { background: #d6eaf8; color: #1a5276; }
+    .ec-cancelado  { background: #f5d6d6; color: #922b21; }
+
+    /* ── Sección de firmas ────────────────────────────────── */
+    .firmas-section {
+      padding: 24px 28px 28px;
+      border-top: 1px solid #e8edf2;
+    }
+    .firmas-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 12px;
+    }
+    .firma-card {
+      text-align: center;
+    }
+    .firma-linea {
+      border-bottom: 1.5px solid #1a2332;
+      margin: 0 12px 6px;
+      height: 44px;
+    }
+    .firma-nombre {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #1a2332;
+    }
+    .firma-rol {
+      font-size: 10px;
+      color: #6b7fa3;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      margin-top: 2px;
+    }
+    .firma-fecha-label {
+      font-size: 9.5px;
+      color: #9aacbf;
+      margin-top: 4px;
+    }
+
+    /* ── Pie de página ────────────────────────────────────── */
+    .report-footer {
+      background: #f0f4f9;
+      border-top: 2px solid #153d6f;
+      padding: 10px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 10px;
+      color: #6b7fa3;
+    }
+
+    /* ── Nota de prototipo ────────────────────────────────── */
+    .proto-note {
+      max-width: 900px;
+      margin: 16px auto 0;
+      background: #fff8e1;
+      border: 1px solid #ffe082;
+      border-radius: 6px;
+      padding: 10px 16px;
+      font-size: 11px;
+      color: #7b5e00;
+    }
+    .proto-note strong { color: #5d4400; }
+
+    @media print {
+      body { background: #fff; padding: 0; }
+      .proto-bar, .proto-note { display: none; }
+      .report-page { box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Barra de prototipo ── -->
+<div class="proto-bar">
+  <span class="badge-rf">RF-06</span>
+  <strong>Prototipo — Reporte Resumen de Auditoría por Criterio</strong>
+  <span style="margin-left:auto">Datos de ejemplo · Solo visualización</span>
+</div>
+
+<!-- ── Página del reporte ── -->
+<div class="report-page">
+
+  <!-- ENCABEZADO -->
+  <div class="report-header">
+    <div class="logo-placeholder">LOGO<br>EMPRESA</div>
+    <div class="report-header-info">
+      <div class="report-title">Reporte de Auditoría por Criterio</div>
+      <div class="report-subtitle">Sistema de Gestión de Calidad · REYMA</div>
+    </div>
+    <div class="report-header-folio">
+      <div class="folio-label">Folio</div>
+      <div class="folio-value">AUD-2025-0042</div>
+      <div class="estatus-badge finalizado">Finalizado</div>
+    </div>
+  </div>
+
+  <!-- DATOS GENERALES (CA-06.1.2) -->
+  <div class="datos-generales">
+    <div class="dato-item">
+      <div class="dato-label">Fecha</div>
+      <div class="dato-value">15/05/2025 – 16/05/2025</div>
+    </div>
+    <div class="dato-item">
+      <div class="dato-label">Proceso / Objetivo</div>
+      <div class="dato-value">Verificación SGC Producción</div>
+    </div>
+    <div class="dato-item">
+      <div class="dato-label">Área Auditada</div>
+      <div class="dato-value">Manufactura</div>
+    </div>
+    <div class="dato-item">
+      <div class="dato-label">Responsable del Área</div>
+      <div class="dato-value">Carlos Ramírez Flores</div>
+    </div>
+    <div class="dato-item">
+      <div class="dato-label">Auditor</div>
+      <div class="dato-value">Laura Méndez Solís</div>
+    </div>
+    <div class="dato-item">
+      <div class="dato-label">Sucursal</div>
+      <div class="dato-value">Planta Norte — Monterrey</div>
+    </div>
+    <div class="dato-item">
+      <div class="dato-label">Checklist utilizado</div>
+      <div class="dato-value">ISO 9001:2015 v3</div>
+    </div>
+    <div class="dato-item">
+      <div class="dato-label">Estatus</div>
+      <div class="dato-value">
+        <span class="estatus-badge" style="font-size:11px;padding:2px 10px;">Finalizado</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESUMEN EJECUTIVO (US-06.3 / CA-06.3.x) -->
+  <div class="section">
+    <div class="section-title">Resumen ejecutivo</div>
+    <div class="resumen-ejecutivo">
+      <div class="kpi-card">
+        <div class="kpi-value">8</div>
+        <div class="kpi-label">Total criterios evaluados</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-value">5</div>
+        <div class="kpi-label">Total hallazgos detectados</div>
+      </div>
+      <div class="kpi-card kpi-highlight">
+        <div class="kpi-value">78.4%</div>
+        <div class="kpi-label">Calificación global</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABLA DE DETALLE POR CRITERIO (US-06.2 / CA-06.2.x) -->
+  <div class="section">
+    <div class="section-title">Detalle por criterio evaluado</div>
+    <table class="table-criterios">
+      <thead>
+        <tr>
+          <th style="width:40%">Criterio</th>
+          <th style="width:14%">Calificación</th>
+          <th style="width:12%">Hallazgos</th>
+          <th style="width:20%">Observaciones</th>
+          <th style="width:14%">Estatus</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <!-- Grupo 1 -->
+        <tr>
+          <td colspan="5" style="background:#e8edf2;padding:6px 12px;font-size:10px;font-weight:700;color:#153d6f;text-transform:uppercase;letter-spacing:.6px;">
+            Grupo: Liderazgo y Compromiso
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="criterio-nombre">Compromiso de la alta dirección con el SGC</div>
+            <div class="criterio-obs">Evidencia documentada de participación activa.</div>
+          </td>
+          <td><span class="calificacion-chip cal-alta">95%</span></td>
+          <td><span class="hallazgos-count count-zero">0</span></td>
+          <td style="font-size:11px;color:#5a6a83;">Sin observaciones relevantes.</td>
+          <td><span class="estatus-criterio ec-finalizado">Finalizado</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="criterio-nombre">Política de calidad comunicada y actualizada</div>
+            <div class="criterio-obs">Verificar carteleras y capacitación reciente.</div>
+          </td>
+          <td><span class="calificacion-chip cal-media">70%</span></td>
+          <td><span class="hallazgos-count count-some">2</span></td>
+          <td style="font-size:11px;color:#5a6a83;">Política desactualizada en 2 áreas de planta.</td>
+          <td><span class="estatus-criterio ec-finalizado">Finalizado</span></td>
+        </tr>
+
+        <!-- Grupo 2 -->
+        <tr>
+          <td colspan="5" style="background:#e8edf2;padding:6px 12px;font-size:10px;font-weight:700;color:#153d6f;text-transform:uppercase;letter-spacing:.6px;">
+            Grupo: Gestión de Recursos
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="criterio-nombre">Competencia y formación del personal operativo</div>
+            <div class="criterio-obs">Revisar registros de capacitación del último trimestre.</div>
+          </td>
+          <td><span class="calificacion-chip cal-alta">88%</span></td>
+          <td><span class="hallazgos-count count-zero">0</span></td>
+          <td style="font-size:11px;color:#5a6a83;">Registros completos y actualizados.</td>
+          <td><span class="estatus-criterio ec-finalizado">Finalizado</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="criterio-nombre">Infraestructura y ambiente de trabajo adecuado</div>
+          </td>
+          <td><span class="calificacion-chip cal-baja">55%</span></td>
+          <td><span class="hallazgos-count count-many">3</span></td>
+          <td style="font-size:11px;color:#5a6a83;">Equipos sin calibración vigente. Iluminación deficiente en sector 4.</td>
+          <td><span class="estatus-criterio ec-finalizado">Finalizado</span></td>
+        </tr>
+
+        <!-- Grupo 3 -->
+        <tr>
+          <td colspan="5" style="background:#e8edf2;padding:6px 12px;font-size:10px;font-weight:700;color:#153d6f;text-transform:uppercase;letter-spacing:.6px;">
+            Grupo: Operación y Control
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="criterio-nombre">Planificación y control de procesos productivos</div>
+          </td>
+          <td><span class="calificacion-chip cal-alta">92%</span></td>
+          <td><span class="hallazgos-count count-zero">0</span></td>
+          <td style="font-size:11px;color:#5a6a83;">Procedimientos documentados y accesibles.</td>
+          <td><span class="estatus-criterio ec-finalizado">Finalizado</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="criterio-nombre">Control de productos y servicios no conformes</div>
+          </td>
+          <td><span class="calificacion-chip cal-media">75%</span></td>
+          <td><span class="hallazgos-count count-zero">0</span></td>
+          <td style="font-size:11px;color:#5a6a83;">Proceso en implementación. Sin hallazgos formales.</td>
+          <td><span class="estatus-criterio ec-finalizado">Finalizado</span></td>
+        </tr>
+
+        <!-- Grupo 4 -->
+        <tr>
+          <td colspan="5" style="background:#e8edf2;padding:6px 12px;font-size:10px;font-weight:700;color:#153d6f;text-transform:uppercase;letter-spacing:.6px;">
+            Grupo: Mejora Continua
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="criterio-nombre">Seguimiento a acciones correctivas anteriores</div>
+          </td>
+          <td><span class="calificacion-chip cal-media">68%</span></td>
+          <td><span class="hallazgos-count count-zero">0</span></td>
+          <td style="font-size:11px;color:#5a6a83;">3 de 7 acciones pendientes de cierre.</td>
+          <td><span class="estatus-criterio ec-finalizado">Finalizado</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="criterio-nombre">Análisis de datos y resultados de auditorías previas</div>
+          </td>
+          <td><span class="calificacion-chip cal-alta">84%</span></td>
+          <td><span class="hallazgos-count count-zero">0</span></td>
+          <td style="font-size:11px;color:#5a6a83;">Indicadores de proceso revisados en reunión mensual.</td>
+          <td><span class="estatus-criterio ec-finalizado">Finalizado</span></td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECCIÓN DE FIRMAS -->
+  <div class="firmas-section">
+    <div class="section-title">Firmas de conformidad</div>
+    <div class="firmas-grid" style="grid-template-columns: 1fr 2fr 1fr;">
+
+      <div></div>
+
+      <div class="firma-card">
+        <div class="firma-linea"></div>
+        <div class="firma-nombre">Carlos Ramírez Flores</div>
+        <div class="firma-rol">Responsable del Área Auditada</div>
+        <div class="firma-fecha-label">Fecha: _____ / _____ / _________</div>
+      </div>
+
+      <div></div>
+
+    </div>
+  </div>
+
+  <!-- PIE DE PÁGINA -->
+  <div class="report-footer">
+    <span>Generado el 21/05/2026 · Sistema BusinessSuite XAF</span>
+    <span>AUD-2025-0042 &nbsp;·&nbsp; Auditor: Laura Méndez Solís</span>
+    <span>Página 1 de 1</span>
+  </div>
+
+</div>
+
+<!-- NOTA DE PROTOTIPO -->
+<div class="proto-note">
+  <strong>Prototipo RF-06 — Solo para validación visual.</strong>
+  Los datos son de ejemplo. Las columnas, agrupaciones por grupo de criterio y métricas del resumen ejecutivo
+  se derivarán de <code>AuditoriaResultado</code>, <code>AuditoriaResultadoHallazgo</code> y
+  <code>ChecklistCriterioGrupoCriterio</code>. La calificación global usa <code>CalcularCalificacionAuditoria()</code>.
+</div>
+
+</body>
+</html>

@@ -11,9 +11,7 @@ theme:
   palette:
     primary: indigo
     accent: indigo
-  features:
-    - navigation.sections
-    - navigation.indexes
+  features: []
 
 extra_css:
   - assets/stylesheets/main-nav.css
@@ -23,22 +21,60 @@ extra_javascript:
 
 nav:
   - Inicio: index.md
-  - Catálogos:
-    - Gestión TI:
-      - Inicio: Catalogos/Gestion-TI/documentacion/index.md
-      - BRD: Catalogos/Gestion-TI/documentacion/BRD.md
-      - FSD: Catalogos/Gestion-TI/documentacion/FSD.md
-  - Procesos:
-    - Gestión TI:
-      - Inicio: Procesos/Gestion-TI/documentacion/index.md
-      - BRD: Procesos/Gestion-TI/documentacion/BRD.md
-      - FSD: Procesos/Gestion-TI/documentacion/FSD.md
-  - Consultas:
-    - Gestión TI:
-      - ReporteForecast:
-        - Inicio: Consultas/Gestion-TI/documentacion/reporte/index.md
-        - BRD: Consultas/Gestion-TI/documentacion/reporte/BRD.md
-        - FSD: Consultas/Gestion-TI/documentacion/reporte/FSD.md
+  - Proyectos:
+    - Expediente de Personal (EDC):
+      - Requerimiento Cliente: Proyectos/EDC/documentacion/requerimiento-cliente.md
+      - Requerimiento Funcional: Proyectos/EDC/documentacion/requerimiento-funcional.md
+      - Diagramas:
+        - Contexto: Proyectos/EDC/documentacion/diagramas/contexto.md
+        - Mapa de estados: Proyectos/EDC/documentacion/diagramas/mapa-de-estados.md
+      - Prototipos:
+        - Prototipo 1: Proyectos/EDC/documentacion/prototipos/prototipo-1.md
+        - Prototipo 2: Proyectos/EDC/documentacion/prototipos/prototipo-2.md
+        - Prototipo 3: Proyectos/EDC/documentacion/prototipos/prototipo-3.md
+    - Auditorias:
+      - Requerimiento Cliente: Proyectos/Auditorias/documentacion/requerimiento-cliente.md
+      - Requerimiento Funcional: Proyectos/Auditorias/documentacion/requerimiento-funcional.md
+      - Diagramas:
+        - Contexto: Proyectos/Auditorias/documentacion/diagramas/contexto.md
+        - Mapa de estados: Proyectos/Auditorias/documentacion/diagramas/mapa-de-estados.md
+      - Prototipos:
+        - Monitor Acciones Correctivas: Proyectos/Auditorias/documentacion/prototipos/prototipo-1.md
+        - Monitor Auditorias: Proyectos/Auditorias/documentacion/prototipos/prototipo-2.md
+        - Reporte Resumen: Proyectos/Auditorias/documentacion/prototipos/prototipo-3.md
+  - Documentación BSuite:
+    - Catálogos:
+      - Gestión TI:
+        - Inicio: BSuite/Catalogos/Gestion-TI/documentacion/index.md
+        - BRD: BSuite/Catalogos/Gestion-TI/documentacion/BRD.md
+        - FSD: BSuite/Catalogos/Gestion-TI/documentacion/FSD.md
+      - Compras:
+        - Inicio: BSuite/Catalogos/Compras/documentacion/index.md
+        - BRD: BSuite/Catalogos/Compras/documentacion/BRD.md
+        - FSD: BSuite/Catalogos/Compras/documentacion/FSD.md
+    - Procesos:
+      - Gestión TI:
+        - Inicio: BSuite/Procesos/Gestion-TI/documentacion/index.md
+        - BRD: BSuite/Procesos/Gestion-TI/documentacion/BRD.md
+        - FSD: BSuite/Procesos/Gestion-TI/documentacion/FSD.md
+      - Compras:
+        - Inicio: BSuite/Procesos/Compras/documentacion/index.md
+        - BRD: BSuite/Procesos/Compras/documentacion/BRD.md
+        - FSD: BSuite/Procesos/Compras/documentacion/FSD.md
+    - Consultas:
+      - Gestión TI:
+        - Reporte Forecast:
+          - Inicio: BSuite/Consultas/Gestion-TI/documentacion/reporte-forecast/index.md
+          - BRD: BSuite/Consultas/Gestion-TI/documentacion/reporte-forecast/BRD.md
+          - FSD: BSuite/Consultas/Gestion-TI/documentacion/reporte-forecast/FSD.md
+        - Reporte Financiero:
+          - Inicio: BSuite/Consultas/Gestion-TI/documentacion/reporte-financiero/index.md
+          - BRD: BSuite/Consultas/Gestion-TI/documentacion/reporte-financiero/BRD.md
+          - FSD: BSuite/Consultas/Gestion-TI/documentacion/reporte-financiero/FSD.md
+      - Compras:
+        - Inicio: BSuite/Consultas/Compras/documentacion/index.md
+        - BRD: BSuite/Consultas/Compras/documentacion/BRD.md
+        - FSD: BSuite/Consultas/Compras/documentacion/FSD.md
 
 markdown_extensions:
   - tables
@@ -47,3 +83,4 @@ markdown_extensions:
   - admonition
   - pymdownx.highlight
   - pymdownx.superfences
+  - attr_list
