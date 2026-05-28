@@ -188,6 +188,81 @@
   background: rgba(63, 81, 181, 0.08);
 }
 
+/* Oculta tabla de contenidos (sidebar derecho) */
+.md-sidebar--secondary {
+  display: none !important;
+}
+
+/* ════════════════════════════════════════
+   SIDEBAR — mismo estilo que el menú custom
+   ════════════════════════════════════════ */
+
+/* Oculta título "Business Suite - Documentación" */
+.md-nav--primary > .md-nav__title {
+  display: none !important;
+}
+
+/* Transición suave del ícono */
+.md-nav--primary .md-nav__icon {
+  transition: transform 0.16s ease !important;
+  width: 0.85rem;
+  height: 0.85rem;
+}
+
+/* Guía de indentación sutil */
+.md-nav--primary .md-nav__item--nested > .md-nav {
+  border-left: 1px solid rgba(63, 81, 181, 0.1);
+  margin-left: 0.85rem;
+}
+
+/* ── Secciones expandibles — todos los niveles ── */
+.md-nav--primary .md-nav__item--nested > label.md-nav__link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.38rem 0.65rem;
+  margin: 0.04rem 0;
+  border-radius: 0.7rem;
+  background: transparent !important;
+  font-size: 0.68rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.md-nav--primary .md-nav__item--nested > label.md-nav__link:hover {
+  background: rgba(63, 81, 181, 0.08) !important;
+}
+
+/* Sección abierta */
+.md-nav--primary .md-nav__item--nested > input:checked ~ label.md-nav__link {
+  color: var(--md-primary-fg-color);
+  background: rgba(63, 81, 181, 0.08) !important;
+}
+
+/* ── Links de página (hojas) ── */
+.md-nav--primary a.md-nav__link {
+  display: block;
+  padding: 0.38rem 0.65rem;
+  margin: 0.04rem 0;
+  border-radius: 0.7rem;
+  font-size: 0.68rem;
+  font-weight: 400;
+  transition: background 0.15s;
+}
+
+.md-nav--primary a.md-nav__link:hover {
+  background: rgba(63, 81, 181, 0.08) !important;
+}
+
+/* Página activa */
+.md-nav--primary .md-nav__link--active {
+  color: var(--md-primary-fg-color) !important;
+  font-weight: 600;
+  background: rgba(63, 81, 181, 0.12) !important;
+  border-radius: 0.7rem !important;
+}
+
 @media screen and (max-width: 76.1875em) {
   .bs-main-nav__inner {
     padding: 0.35rem 0.6rem;
