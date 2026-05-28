@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roadmap — Expediente Digital del Colaborador</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07070f;--surface:#0e0e1c;--surface2:#13132200;
+  --glass:rgba(255,255,255,0.04);--glass2:rgba(255,255,255,0.07);
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);
+  --text:#e4e4f0;--muted:#5a5a7a;--muted2:#8888aa;
+  --new:#4ade80;--evo:#f59e0b;--exist:#60a5fa;
+}
+html,body{height:100%}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+
+/* ── Ambient ── */
+.ambient{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.ambient::before{content:'';position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(99,102,241,.1) 0%,transparent 70%);top:-250px;left:-150px;animation:d1 22s ease-in-out infinite alternate}
+.ambient::after{content:'';position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(168,85,247,.07) 0%,transparent 70%);bottom:-200px;right:-150px;animation:d2 28s ease-in-out infinite alternate}
+@keyframes d1{from{transform:translate(0,0)}to{transform:translate(70px,50px)}}
+@keyframes d2{from{transform:translate(0,0)}to{transform:translate(-60px,-40px)}}
+
+/* ── Layout ── */
+.app{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column}
+
+/* ── Header ── */
+header{padding:28px 36px 0;display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap}
+.hd-left h1{font-size:1.5rem;font-weight:800;letter-spacing:-.03em;background:linear-gradient(135deg,#e4e4f0 0%,#a5b4fc 55%,#c084fc 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.2}
+.hd-left p{font-size:.75rem;color:var(--muted2);margin-top:4px}
+.hd-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+
+/* ── Stat pills ── */
+.pill{background:var(--glass);border:1px solid var(--border2);border-radius:20px;padding:5px 13px;font-size:.72rem;color:var(--muted2);font-weight:500;white-space:nowrap;display:flex;align-items:center;gap:5px}
+.pill strong{color:var(--text);font-weight:700}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex-shrink:0}
+
+/* ── Toolbar ── */
+.toolbar{padding:16px 36px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.filter-btn{padding:5px 13px;border-radius:20px;border:1px solid var(--border2);background:var(--glass);color:var(--muted2);font-family:inherit;font-size:.72rem;font-weight:500;cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:5px}
+.filter-btn:hover{background:var(--glass2);color:var(--text)}
+.filter-btn.on{color:#fff;border-color:transparent}
+.sep{width:1px;height:20px;background:var(--border2);margin:0 4px}
+.search-wrap{position:relative;margin-left:auto}
+.search-wrap input{background:var(--glass);border:1px solid var(--border2);border-radius:20px;padding:7px 14px 7px 34px;color:var(--text);font-family:inherit;font-size:.73rem;outline:none;width:210px;transition:border-color .2s,width .3s}
+.search-wrap input:focus{border-color:rgba(165,180,252,.4);width:260px}
+.search-wrap input::placeholder{color:var(--muted)}
+.search-wrap svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:14px;height:14px;stroke:var(--muted);fill:none;stroke-width:2;stroke-linecap:round}
+
+/* ── Timeline scroll wrapper ── */
+.timeline-area{padding:10px 36px 24px;overflow-x:auto;overflow-y:visible;scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
+.timeline-area::-webkit-scrollbar{height:4px}
+.timeline-area::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
+
+/* ── Timeline track ── */
+.timeline{display:flex;gap:0;position:relative;min-width:max-content;padding:12px 0 8px}
+.timeline::before{content:'';position:absolute;top:50px;left:70px;right:70px;height:2px;background:linear-gradient(90deg,rgba(165,180,252,.15),rgba(165,180,252,.35),rgba(192,132,252,.15));z-index:0}
+
+/* ── Phase column ── */
+.phase-col{display:flex;flex-direction:column;align-items:center;width:220px;flex-shrink:0;position:relative;z-index:1;cursor:pointer}
+.phase-col:last-child{width:200px}
+
+/* Phase node */
+.phase-node{width:76px;height:76px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px solid transparent;transition:all .25s cubic-bezier(.34,1.46,.64,1);position:relative;flex-shrink:0}
+.phase-node .phase-num{font-size:.6rem;font-weight:700;letter-spacing:.06em;opacity:.7;text-transform:uppercase}
+.phase-node .phase-icon{font-size:1.45rem;line-height:1}
+.phase-col:hover .phase-node{transform:scale(1.1)}
+.phase-col.active .phase-node{transform:scale(1.15);box-shadow:0 0 0 4px rgba(255,255,255,.06),0 8px 28px rgba(0,0,0,.5)}
+.phase-col.dimmed{opacity:.3}
+
+/* Phase label */
+.phase-label{margin-top:10px;text-align:center;padding:0 6px}
+.phase-label .ph-title{font-size:.72rem;font-weight:700;color:var(--text);line-height:1.25;margin-bottom:3px}
+.phase-label .ph-type{font-size:.6rem;font-weight:500;color:var(--muted2);line-height:1.2}
+
+/* Phase mini-stats */
+.phase-mini{display:flex;gap:4px;margin-top:8px;justify-content:center;flex-wrap:wrap}
+.mini-chip{font-size:.6rem;font-weight:600;padding:2px 7px;border-radius:10px;border:1px solid transparent}
+
+/* Connector dot */
+.conn{position:absolute;top:49px;width:8px;height:8px;border-radius:50%;background:var(--border2);right:-4px;z-index:2}
+.phase-col.active .conn{background:currentColor}
+
+/* ── Detail panel ── */
+.detail-wrap{padding:0 36px 36px;flex:1}
+.detail-panel{background:var(--surface);border:1px solid var(--border);border-radius:22px;overflow:hidden;transition:border-color .3s;min-height:340px;display:flex;flex-direction:column}
+
+/* Empty */
+.empty-state{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:40px;text-align:center;color:var(--muted2)}
+.empty-icon{font-size:2.5rem;opacity:.35}
+.empty-state p{font-size:.78rem;line-height:1.5}
+
+/* Panel inner */
+.panel-inner{display:none;flex:1;flex-direction:column}
+.panel-inner.show{display:flex}
+
+/* Panel top strip */
+.panel-top{padding:22px 28px 20px;border-bottom:1px solid var(--border);display:flex;gap:18px;align-items:flex-start;position:relative;overflow:hidden}
+.panel-top::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 0 0,var(--ph-glow,transparent) 0%,transparent 55%);pointer-events:none}
+.pt-icon{width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;flex-shrink:0;border:1px solid transparent;position:relative}
+.pt-meta{flex:1}
+.pt-meta h2{font-size:1.1rem;font-weight:800;letter-spacing:-.02em;margin-bottom:2px}
+.pt-meta .pt-sub{font-size:.75rem;color:var(--muted2);line-height:1.4;margin-bottom:8px}
+.pt-badges{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.type-badge{padding:3px 11px;border-radius:20px;font-size:.65rem;font-weight:700;border:1px solid transparent;letter-spacing:.02em}
+.stat-badge{padding:4px 10px;border-radius:10px;font-size:.65rem;font-weight:600;border:1px solid transparent;display:flex;align-items:center;gap:4px;cursor:pointer;transition:all .18s;user-select:none}
+.stat-badge:hover{filter:brightness(1.25);transform:translateY(-1px)}
+.stat-badge.active{box-shadow:0 0 0 2px currentColor;filter:brightness(1.2)}
+.stat-badge.inactive{opacity:.38}
+.type-badge.active-all{box-shadow:0 0 0 2px currentColor;cursor:pointer}
+.type-badge{cursor:pointer;transition:all .18s}
+.type-badge:hover{filter:brightness(1.2)}
+
+/* Value strip */
+.value-strip{display:flex;gap:8px;padding:12px 28px;border-bottom:1px solid var(--border);background:rgba(0,0,0,.15);flex-wrap:wrap}
+.value-item{font-size:.68rem;color:var(--muted2);display:flex;align-items:center;gap:5px}
+.value-item::before{content:'✓';color:var(--new);font-weight:700;font-size:.65rem}
+
+/* Domain grid */
+.domains-area{padding:20px 28px 28px;overflow-y:auto;max-height:420px;scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
+.domains-area::-webkit-scrollbar{width:4px}
+.domains-area::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
+.domains-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+
+/* Domain card */
+.domain-card{background:var(--glass);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color .2s}
+.domain-card:hover{border-color:var(--border2)}
+.domain-header{padding:11px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border)}
+.domain-header h3{font-size:.75rem;font-weight:700;color:var(--text);flex:1}
+.domain-count{font-size:.62rem;color:var(--muted2);background:var(--glass2);padding:2px 7px;border-radius:8px}
+.features-list{padding:8px 6px 10px}
+.feat{display:flex;align-items:flex-start;gap:7px;padding:5px 8px;border-radius:8px;transition:background .15s;cursor:default}
+.feat:hover{background:var(--glass2)}
+.feat.hidden{display:none}
+.feat-badge{font-size:.68rem;width:18px;text-align:center;flex-shrink:0;margin-top:1px}
+.feat-name{font-size:.72rem;color:var(--text);line-height:1.3}
+.feat.s-new .feat-name{color:var(--new)}
+.feat.s-evo .feat-name{color:var(--evo)}
+.feat.s-exist .feat-name{color:var(--exist)}
+.feat-tag{font-size:.58rem;font-weight:600;padding:1px 6px;border-radius:6px;flex-shrink:0;margin-top:2px}
+
+/* Navigation */
+.panel-nav{padding:12px 28px;border-top:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.nav-info{font-size:.68rem;color:var(--muted2)}
+.nav-progress{flex:1;height:3px;background:var(--glass2);border-radius:3px;overflow:hidden}
+.nav-fill{height:100%;border-radius:3px;transition:width .4s ease}
+.nav-arrows{display:flex;gap:6px}
+.nav-btn{width:30px;height:30px;border-radius:9px;border:1px solid var(--border2);background:var(--glass);color:var(--muted2);cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;transition:all .15s;font-family:inherit}
+.nav-btn:hover{background:var(--glass2);color:var(--text)}
+
+/* Legend */
+.legend{display:flex;gap:14px;margin-left:auto;align-items:center}
+.leg-item{display:flex;align-items:center;gap:5px;font-size:.65rem;color:var(--muted2)}
+
+/* Animations */
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.panel-top,.domains-grid,.value-strip{animation:fadeUp .22s ease both}
+
+/* ── Radial / General view ── */
+.radial-panel{display:none;flex:1;flex-direction:column}
+.radial-panel.show{display:flex}
+.radial-layout{display:grid;grid-template-columns:1fr 290px;flex:1;min-height:0;overflow:hidden}
+.radial-diagram{position:relative;display:flex;align-items:center;justify-content:center;padding:16px;min-height:480px}
+.radial-detail{border-left:1px solid var(--border);padding:20px 18px;display:flex;flex-direction:column;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
+.radial-detail::-webkit-scrollbar{width:4px}
+.radial-detail::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
+/* orbit nodes */
+.rnode{position:absolute;width:66px;height:66px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;cursor:pointer;border:2.5px solid transparent;transition:transform .22s cubic-bezier(.34,1.46,.64,1),box-shadow .22s,opacity .2s;transform:translate(-50%,-50%);z-index:5}
+.rnode:hover{transform:translate(-50%,-50%) scale(1.18);z-index:20}
+.rnode.active{transform:translate(-50%,-50%) scale(1.22);z-index:20}
+.rnode.dimmed{opacity:.22}
+.rlabel{position:absolute;font-size:.58rem;font-weight:600;text-align:center;width:80px;transform:translate(-50%,-50%);pointer-events:none;text-shadow:0 1px 5px rgba(0,0,0,.95);line-height:1.25;z-index:6}
+.rcenter{position:absolute;width:96px;height:96px;border-radius:50%;background:#10102a;border:2px solid rgba(255,255,255,.12);display:flex;flex-direction:column;align-items:center;justify-content:center;left:50%;top:50%;transform:translate(-50%,-50%);font-size:1.55rem;z-index:10;box-shadow:0 0 50px rgba(130,100,255,.18);cursor:default}
+.rcenter-lbl{font-size:.54rem;color:var(--muted2);margin-top:2px;text-align:center;line-height:1.3;padding:0 6px}
+/* detail side */
+.rd-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--muted);font-size:.74rem;text-align:center;opacity:.7}
+.rd-card{animation:fadeUp .2s ease both}
+.rd-icon-big{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.45rem;margin-bottom:8px;border:1px solid transparent}
+.rd-name{font-size:.95rem;font-weight:700;margin-bottom:3px}
+.rd-desc{font-size:.72rem;color:var(--muted2);line-height:1.45;margin-bottom:10px}
+.rd-section{font-size:.62rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:10px 0 6px;font-weight:600}
+.rd-phase-list{display:flex;flex-direction:column;gap:5px}
+.rd-phase-item{background:var(--glass);border:1px solid var(--border2);border-radius:9px;padding:7px 10px;font-size:.7rem;cursor:pointer;transition:background .15s;display:flex;align-items:center;gap:8px}
+.rd-phase-item:hover{background:var(--glass2)}
+.rd-phase-item .rp-num{font-size:.6rem;font-weight:700;padding:2px 7px;border-radius:8px;border:1px solid transparent;white-space:nowrap}
+.rd-phase-item .rp-name{color:var(--text);flex:1;font-weight:500}
+
+/* ── Fullscreen ── */
+.fs-btn{position:absolute;top:12px;right:12px;z-index:50;width:32px;height:32px;border-radius:9px;border:1px solid var(--border2);background:var(--glass);color:var(--muted2);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .18s;font-size:.85rem;flex-shrink:0}
+.fs-btn:hover{background:var(--glass2);color:var(--text);border-color:rgba(165,180,252,.35)}
+.detail-wrap{position:relative}
+.detail-panel{position:relative}
+.detail-panel.fullscreen{position:fixed;inset:0;z-index:200;border-radius:0!important;border:none!important;min-height:100vh}
+.detail-panel.fullscreen .radial-diagram{min-height:calc(100vh - 50px)}
+.detail-panel.fullscreen .domains-area{max-height:calc(100vh - 200px)}
+
+/* Footer */
+footer{text-align:center;font-size:.63rem;color:var(--muted);padding:0 36px 20px;position:relative;z-index:1}
+</style>
+</head>
+<body>
+<div class="ambient"></div>
+<div class="app">
+
+<!-- HEADER -->
+<header>
+  <div class="hd-left">
+    <h1>📂 Roadmap Estratégico · Expediente Digital del Colaborador</h1>
+    <p>6 fases de implementación · Funcionalidades nuevas, evolutivas y existentes</p>
+  </div>
+  <div class="hd-right" id="globalStats"></div>
+</header>
+
+<!-- TOOLBAR -->
+<div class="toolbar">
+  <button class="filter-btn on" data-filter="all" style="background:rgba(165,180,252,.12);border-color:rgba(165,180,252,.3);color:#a5b4fc">Todos</button>
+  <button class="filter-btn" data-filter="new"  style="--on-bg:rgba(74,222,128,.12);--on-bc:rgba(74,222,128,.3);--on-c:#4ade80"><span class="dot" style="background:var(--new)"></span>🆕 Nuevas</button>
+  <button class="filter-btn" data-filter="evo"  style="--on-bg:rgba(245,158,11,.12);--on-bc:rgba(245,158,11,.3);--on-c:#f59e0b"><span class="dot" style="background:var(--evo)"></span>🔄 Evolutivas</button>
+  <button class="filter-btn" data-filter="exist"style="--on-bg:rgba(96,165,250,.12);--on-bc:rgba(96,165,250,.3);--on-c:#60a5fa"><span class="dot" style="background:var(--exist)"></span>✅ Existentes</button>
+  <div class="sep"></div>
+  <div class="legend">
+    <span class="leg-item"><span class="dot" style="background:var(--new)"></span>Nueva</span>
+    <span class="leg-item"><span class="dot" style="background:var(--evo)"></span>Evolutiva</span>
+    <span class="leg-item"><span class="dot" style="background:var(--exist)"></span>Existente</span>
+  </div>
+  <div class="search-wrap">
+    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" id="search" placeholder="Buscar funcionalidad…" autocomplete="off" spellcheck="false">
+  </div>
+</div>
+
+<!-- TIMELINE -->
+<div class="timeline-area">
+  <div class="timeline" id="timeline"></div>
+</div>
+
+<!-- DETAIL -->
+<div class="detail-wrap">
+  <div class="detail-panel" id="detailPanel">
+    <button class="fs-btn" id="fsBtn" title="Pantalla completa (F)"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg></button>
+    <div class="empty-state" id="emptyState">
+      <div class="empty-icon">🗺️</div>
+      <p>Selecciona una fase del roadmap para explorar sus dominios y funcionalidades</p>
+    </div>
+    <!-- Radial / General view -->
+    <div class="radial-panel" id="radialPanel">
+      <div class="radial-layout">
+        <div class="radial-diagram" id="radialDiagram">
+          <svg id="radialSvg" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible"><defs id="radialDefs"></defs></svg>
+          <div class="rcenter"><span>🗂️</span><span class="rcenter-lbl">Expediente<br>Digital</span></div>
+        </div>
+        <div class="radial-detail" id="radialDetail">
+          <div class="rd-empty"><div style="font-size:2rem;opacity:.3">🔍</div><p>Haz clic en un módulo del diagrama</p></div>
+        </div>
+      </div>
+      <div class="panel-nav">
+        <span class="nav-info" id="navInfoR">Vista General · 19 dominios funcionales</span>
+        <div class="nav-progress"><div class="nav-fill" id="navFillR" style="width:100%;background:#a5b4fc"></div></div>
+        <div class="nav-arrows">
+          <button class="nav-btn" id="prevBtn">‹</button>
+          <button class="nav-btn" id="nextBtn">›</button>
+        </div>
+      </div>
+    </div>
+    <!-- Phase detail view -->
+    <div class="panel-inner" id="panelInner">
+      <div class="panel-top" id="panelTop"></div>
+      <div class="value-strip" id="valueStrip"></div>
+      <div class="domains-area"><div class="domains-grid" id="domainsGrid"></div></div>
+      <div class="panel-nav">
+        <span class="nav-info" id="navInfo"></span>
+        <div class="nav-progress"><div class="nav-fill" id="navFill"></div></div>
+        <div class="nav-arrows">
+          <button class="nav-btn" id="prevBtnP">‹</button>
+          <button class="nav-btn" id="nextBtnP">›</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>Roadmap Estratégico · Expediente Digital del Colaborador · Generado con Claude Cowork</footer>
+</div>
+
+<script>
+/* ═══════════════════════════════════════
+   DATA
+═══════════════════════════════════════ */
+const PHASES = [
+  {
+    id: 1,
+    title: 'Core Expediente\nDigital',
+    icon: '🏗️',
+    type: 'Core Platform',
+    color: '#818cf8',
+    objective: 'Construir la base central del expediente digital del colaborador y la administración documental inicial.',
+    value: ['Centralización del expediente del colaborador','Eliminación de expedientes físicos','Control documental centralizado','Base estructural del sistema','Trazabilidad documental inicial'],
+    domains: [
+      { name: 'Gestión del Colaborador', features: [
+        {name:'Información personal',s:'new'},{name:'Información laboral',s:'new'},{name:'Datos de dirección',s:'new'},
+        {name:'Datos de contacto',s:'new'},{name:'Historial de movimientos internos',s:'new'},
+        {name:'Datos biométricos',s:'evo'},{name:'Fotografía del colaborador',s:'new'},
+      ]},
+      { name: 'Gestión Documental', features: [
+        {name:'Bóveda documental',s:'new'},{name:'Categorización documental',s:'new'},
+        {name:'Versionado documental',s:'new'},{name:'Consulta documental',s:'new'},
+        {name:'Carga y descarga de archivos',s:'new'},{name:'Historial documental',s:'new'},
+        {name:'Validación documental',s:'new'},
+      ]},
+      { name: 'Seguridad Base', features: [
+        {name:'Roles y accesos',s:'evo'},{name:'Auditoría inicial',s:'evo'},
+        {name:'Control de visualización documental',s:'evo'},
+      ]},
+    ]
+  },
+  {
+    id: 2,
+    title: 'Pre-ingreso y\nRRHH Operativo',
+    icon: '⚙️',
+    type: 'Operational Automation',
+    color: '#34d399',
+    objective: 'Digitalizar procesos operativos relacionados con el ciclo de vida administrativo del colaborador.',
+    value: ['Automatización operativa de RRHH','Reducción de procesos manuales','Mayor trazabilidad administrativa','Control del ciclo de vida laboral','Disminución de operación fuera de sistema'],
+    domains: [
+      { name: 'Pre-ingreso de Candidatos', features: [
+        {name:'Registro de candidato',s:'new'},{name:'Carga documental inicial',s:'new'},
+        {name:'Validación documental',s:'new'},{name:'Seguimiento de estatus',s:'new'},
+        {name:'Programación de examen médico',s:'new'},{name:'Conversión candidato → colaborador',s:'new'},
+      ]},
+      { name: 'Onboarding', features: [
+        {name:'Checklist de ingreso',s:'new'},{name:'Validación de requisitos',s:'new'},
+        {name:'Asignación inicial de activos',s:'evo'},{name:'Habilitación de accesos',s:'evo'},
+        {name:'Confirmación documental',s:'new'},
+      ]},
+      { name: 'Offboarding', features: [
+        {name:'Checklist de baja',s:'new'},{name:'Validación devolución de activos',s:'evo'},
+        {name:'Revocación de accesos',s:'evo'},{name:'Cierre administrativo',s:'new'},
+        {name:'Validación de pendientes',s:'new'},
+      ]},
+      { name: 'Vacaciones y Ausencias', features: [
+        {name:'Saldo disponible',s:'new'},{name:'Solicitud de vacaciones',s:'new'},
+        {name:'Aprobación y rechazo',s:'new'},{name:'Historial vacacional',s:'new'},
+        {name:'Cálculo proporcional',s:'new'},{name:'Incapacidades',s:'new'},
+        {name:'Permisos especiales',s:'new'},{name:'Permisos con/sin goce',s:'new'},
+        {name:'Ausencias injustificadas',s:'new'},{name:'Adjuntar justificantes',s:'new'},
+      ]},
+    ]
+  },
+  {
+    id: 3,
+    title: 'Compliance y\nEvidencia Laboral',
+    icon: '⚖️',
+    type: 'Compliance & Governance',
+    color: '#f472b6',
+    objective: 'Fortalecer el cumplimiento regulatorio, médico y legal del expediente digital.',
+    value: ['Cumplimiento normativo','Evidencia legal digital','Mayor trazabilidad jurídica','Reducción de riesgos laborales','Centralización de información regulatoria'],
+    domains: [
+      { name: 'Firma Digital y Evidencia', features: [
+        {name:'Firma digital de documentos',s:'new'},{name:'Autorizaciones digitales',s:'exist'},
+        {name:'Validación de firmas',s:'new'},{name:'Historial de firmas',s:'new'},
+      ]},
+      { name: 'Salud Ocupacional', features: [
+        {name:'Exámenes médicos de ingreso',s:'new'},{name:'Exámenes periódicos',s:'new'},
+        {name:'Exámenes de egreso',s:'new'},{name:'Exámenes especiales',s:'new'},
+        {name:'Resultados médicos',s:'new'},{name:'Certificados médicos',s:'new'},
+        {name:'Dictámenes de aptitud laboral',s:'new'},{name:'Restricciones laborales',s:'new'},
+        {name:'Alertas de vencimiento',s:'new'},{name:'Seguimiento de incidentes',s:'new'},
+      ]},
+      { name: 'Expediente Disciplinario', features: [
+        {name:'Amonestaciones',s:'new'},{name:'Sanciones',s:'new'},
+        {name:'Actas administrativas',s:'new'},{name:'Evidencia documental',s:'new'},
+        {name:'Historial disciplinario',s:'new'},
+      ]},
+    ]
+  },
+  {
+    id: 4,
+    title: 'Patrimonio,\nAccesos y Seguridad',
+    icon: '🔐',
+    type: 'Asset & Security Management',
+    color: '#fbbf24',
+    objective: 'Centralizar el control patrimonial, tecnológico y físico asociado al colaborador.',
+    value: ['Trazabilidad patrimonial','Mayor control de accesos','Integración de seguridad física y tecnológica','Centralización de activos del colaborador','Disminución de riesgos operativos'],
+    domains: [
+      { name: 'Gestión de Activos', features: [
+        {name:'Catálogo de activos de cómputo',s:'evo'},{name:'Asignación de activos',s:'evo'},
+        {name:'Devolución de activos',s:'evo'},{name:'Actas entrega-recepción',s:'new'},
+        {name:'Estado del activo',s:'new'},{name:'Historial de asignaciones',s:'new'},
+      ]},
+      { name: 'Accesos Tecnológicos', features: [
+        {name:'Cuentas de correo electrónico',s:'exist'},{name:'Usuarios en sistemas corporativos',s:'exist'},
+        {name:'Cuentas VPN',s:'exist'},{name:'Directorio Activo',s:'exist'},
+        {name:'Remote App',s:'exist'},{name:'Recursos compartidos',s:'exist'},
+      ]},
+      { name: 'Seguridad Física y Monitoreo', features: [
+        {name:'Ubicaciones cámaras',s:'exist'},{name:'Colaborador con acceso a plataformas/cámaras',s:'exist'},
+        {name:'Consulta de CMR por colaborador',s:'exist'},{name:'Ubicaciones biométricos',s:'exist'},
+        {name:'Colaborador con accesos a sites/biométricos',s:'exist'},{name:'Consulta de accesos a sites',s:'exist'},
+      ]},
+      { name: 'Vehículos Utilitarios', features: [
+        {name:'Asignación de vehículos',s:'new'},{name:'Bitácora de uso',s:'new'},
+        {name:'Control de licencias',s:'new'},{name:'Gestión de seguros',s:'new'},
+        {name:'Gestión de verificaciones',s:'new'},{name:'Registro de incidentes y multas',s:'new'},
+      ]},
+    ]
+  },
+  {
+    id: 5,
+    title: 'Desarrollo y\nExperiencia',
+    icon: '🌱',
+    type: 'Employee Experience',
+    color: '#a78bfa',
+    objective: 'Incorporar capacidades enfocadas en experiencia, autoservicio y desarrollo del colaborador.',
+    value: ['Mejor experiencia del colaborador','Autoservicio operativo','Historial integral centralizado','Mayor visibilidad del ciclo de vida laboral','Reducción de solicitudes manuales a RRHH'],
+    domains: [
+      { name: 'Capacitación y Certificaciones', features: [
+        {name:'Registro de cursos internos',s:'exist'},{name:'Historial de capacitación',s:'exist'},
+        {name:'Diplomas y certificados',s:'new'},{name:'Vigencia de certificaciones',s:'new'},
+        {name:'Evidencia documental',s:'new'},
+      ]},
+      { name: 'Portal del Colaborador', features: [
+        {name:'Consulta de expediente',s:'new'},{name:'Consulta documental',s:'new'},
+        {name:'Actualización de información personal',s:'new'},{name:'Consulta de activos asignados',s:'evo'},
+        {name:'Seguimiento de solicitudes',s:'new'},{name:'Consulta de historial laboral',s:'new'},
+        {name:'Alertas y notificaciones',s:'new'},
+      ]},
+      { name: 'Timeline Integral', features: [
+        {name:'Movimientos laborales',s:'new'},{name:'Capacitaciones',s:'new'},
+        {name:'Exámenes médicos',s:'new'},{name:'Asignación de activos',s:'evo'},
+        {name:'Incidencias operativas',s:'new'},{name:'Consulta historial vacacional',s:'evo'},
+      ]},
+    ]
+  },
+  {
+    id: 6,
+    title: 'Integraciones y\nEcosistema',
+    icon: '🔗',
+    type: 'Enterprise Integration',
+    color: '#38bdf8',
+    objective: 'Conectar el expediente digital con plataformas corporativas y consolidar el ecosistema operativo empresarial.',
+    value: ['Ecosistema corporativo conectado','Eliminación de duplicidad operativa','Integración organizacional','Sincronización de información','Plataforma empresarial centralizada'],
+    domains: [
+      { name: 'Integraciones Corporativas', features: [
+        {name:'Integración Nómina',s:'exist'},{name:'Integración Control de Asistencia',s:'new'},
+        {name:'Integración Active Directory',s:'evo'},
+      ]},
+      { name: 'Integración Operativa', features: [
+        {name:'Sincronización de usuarios',s:'exist'},{name:'Automatización intersistemas',s:'exist'},
+      ]},
+    ]
+  },
+];
+
+/* ═══════════════════════════════════════
+   GENERAL MODULES (radial view)
+═══════════════════════════════════════ */
+// 19 dominios funcionales · ángulos distribuidos uniformemente (360/19 ≈ 18.95°)
+const GENERAL_MODULES = [
+  // ── Fase 1: Core Platform (#818cf8) ──
+  { name:'Gestión del\nColaborador',      icon:'👤', color:'#818cf8', angle:-90,
+    desc:'Información personal, laboral, biométrica y fotográfica del colaborador. Base de datos central del expediente.',
+    phases:[{id:1,name:'Core Expediente Digital'}] },
+  { name:'Gestión\nDocumental',           icon:'📁', color:'#818cf8', angle:-71,
+    desc:'Bóveda documental con carga, descarga, versiones, historial, categorización y validación de documentos.',
+    phases:[{id:1,name:'Core Expediente Digital'}] },
+  { name:'Seguridad\nBase',               icon:'🛡️', color:'#818cf8', angle:-52,
+    desc:'Roles, accesos y auditoría inicial. Control de visualización documental por perfil de usuario.',
+    phases:[{id:1,name:'Core Expediente Digital'}] },
+
+  // ── Fase 2: Operational Automation (#34d399) ──
+  { name:'Pre-ingreso de\nCandidatos',    icon:'🤝', color:'#34d399', angle:-33,
+    desc:'Registro, carga documental, validación, seguimiento de estatus, examen médico y conversión a colaborador.',
+    phases:[{id:2,name:'Pre-ingreso y RRHH Operativo'}] },
+  { name:'Onboarding',                    icon:'🚀', color:'#34d399', angle:-14,
+    desc:'Checklist de ingreso, validación de requisitos, asignación inicial de activos, habilitación de accesos y confirmación documental.',
+    phases:[{id:2,name:'Pre-ingreso y RRHH Operativo'}] },
+  { name:'Offboarding',                   icon:'🚪', color:'#34d399', angle:5,
+    desc:'Checklist de baja, validación de devolución de activos, revocación de accesos, cierre administrativo y validación de pendientes.',
+    phases:[{id:2,name:'Pre-ingreso y RRHH Operativo'}] },
+  { name:'Vacaciones y\nAusencias',       icon:'🌴', color:'#34d399', angle:24,
+    desc:'Saldo vacacional, solicitudes, aprobaciones, cálculo proporcional, incapacidades, permisos especiales y ausencias injustificadas.',
+    phases:[{id:2,name:'Pre-ingreso y RRHH Operativo'}] },
+
+  // ── Fase 3: Compliance & Governance (#f472b6) ──
+  { name:'Firma Digital y\nEvidencia',    icon:'✍️', color:'#f472b6', angle:43,
+    desc:'Firma digital de documentos, autorizaciones digitales, validación e historial de firmas electrónicas.',
+    phases:[{id:3,name:'Compliance y Evidencia Laboral'}] },
+  { name:'Salud\nOcupacional',            icon:'🏥', color:'#f472b6', angle:62,
+    desc:'Exámenes médicos de ingreso, periódicos, egreso y especiales. Resultados, certificados, dictámenes y alertas de vencimiento.',
+    phases:[{id:3,name:'Compliance y Evidencia Laboral'}] },
+  { name:'Expediente\nDisciplinario',     icon:'⚖️', color:'#f472b6', angle:81,
+    desc:'Amonestaciones, sanciones, actas administrativas, evidencia documental e historial disciplinario del colaborador.',
+    phases:[{id:3,name:'Compliance y Evidencia Laboral'}] },
+
+  // ── Fase 4: Asset & Security Management (#fbbf24) ──
+  { name:'Gestión de\nActivos',           icon:'💻', color:'#fbbf24', angle:100,
+    desc:'Catálogo de activos de cómputo, asignación, devolución, actas entrega-recepción, estado e historial de asignaciones.',
+    phases:[{id:4,name:'Patrimonio, Accesos y Seguridad'}] },
+  { name:'Accesos\nTecnológicos',         icon:'🔑', color:'#fbbf24', angle:119,
+    desc:'Cuentas de correo, usuarios en sistemas corporativos, VPN, Directorio Activo, Remote App y recursos compartidos.',
+    phases:[{id:4,name:'Patrimonio, Accesos y Seguridad'}] },
+  { name:'Seguridad Física\ny Monitoreo', icon:'📹', color:'#fbbf24', angle:138,
+    desc:'Ubicaciones de cámaras, biométricos, accesos a sites y plataformas de monitoreo asociadas al colaborador.',
+    phases:[{id:4,name:'Patrimonio, Accesos y Seguridad'}] },
+  { name:'Vehículos\nUtilitarios',        icon:'🚗', color:'#fbbf24', angle:157,
+    desc:'Asignación de vehículos, bitácora de uso, control de licencias, seguros, verificaciones e incidentes.',
+    phases:[{id:4,name:'Patrimonio, Accesos y Seguridad'}] },
+
+  // ── Fase 5: Employee Experience (#a78bfa) ──
+  { name:'Capacitación y\nCertificaciones',icon:'🎓',color:'#a78bfa', angle:176,
+    desc:'Registro de cursos internos, historial de capacitación, diplomas, vigencia de certificaciones y evidencia documental.',
+    phases:[{id:5,name:'Desarrollo y Experiencia'}] },
+  { name:'Portal del\nColaborador',       icon:'🖥️', color:'#a78bfa', angle:-166,
+    desc:'Autoservicio: consulta de expediente, documentos, activos, solicitudes, historial laboral y notificaciones.',
+    phases:[{id:5,name:'Desarrollo y Experiencia'}] },
+  { name:'Timeline\nIntegral',            icon:'📅', color:'#a78bfa', angle:-147,
+    desc:'Línea de tiempo del colaborador: movimientos laborales, capacitaciones, exámenes, activos e incidencias.',
+    phases:[{id:5,name:'Desarrollo y Experiencia'}] },
+
+  // ── Fase 6: Enterprise Integration (#38bdf8) ──
+  { name:'Integraciones\nCorporativas',   icon:'🔗', color:'#38bdf8', angle:-128,
+    desc:'Integración con Nómina, Control de Asistencia y Active Directory para sincronización de datos.',
+    phases:[{id:6,name:'Integraciones y Ecosistema'}] },
+  { name:'Integración\nOperativa',        icon:'⚡', color:'#38bdf8', angle:-109,
+    desc:'Sincronización de usuarios y automatización intersistemas para eliminar duplicidad operativa.',
+    phases:[{id:6,name:'Integraciones y Ecosistema'}] },
+];
+
+const PHASE_COLORS = {1:'#818cf8',2:'#34d399',3:'#f472b6',4:'#fbbf24',5:'#a78bfa',6:'#38bdf8'};
+
+/* ── helpers ── */
+const LABEL = {new:{icon:'🆕',label:'Nueva',color:'var(--new)'},evo:{icon:'🔄',label:'Evolutiva',color:'var(--evo)'},exist:{icon:'✅',label:'Existente',color:'var(--exist)'}};
+function count(phase,s){return phase.domains.flatMap(d=>d.features).filter(f=>s==='all'||f.s===s).length}
+function allFeats(phase){return phase.domains.flatMap(d=>d.features)}
+
+/* ── global stats ── */
+const allFeatures=PHASES.flatMap(p=>allFeats(p));
+const nNew=allFeatures.filter(f=>f.s==='new').length;
+const nEvo=allFeatures.filter(f=>f.s==='evo').length;
+const nExist=allFeatures.filter(f=>f.s==='exist').length;
+document.getElementById('globalStats').innerHTML=`
+  <div class="pill"><strong>${allFeatures.length}</strong>&nbsp;funcionalidades</div>
+  <div class="pill"><span class="dot" style="background:var(--new)"></span><strong>${nNew}</strong>&nbsp;nuevas</div>
+  <div class="pill"><span class="dot" style="background:var(--evo)"></span><strong>${nEvo}</strong>&nbsp;evolutivas</div>
+  <div class="pill"><span class="dot" style="background:var(--exist)"></span><strong>${nExist}</strong>&nbsp;existentes</div>
+`;
+
+/* ── state ── */
+let activePhase=null;
+let activeFilter='all';
+let searchQ='';
+
+/* ── build timeline: General node first ── */
+const timeline=document.getElementById('timeline');
+(function(){
+  const col=document.createElement('div');
+  col.className='phase-col';
+  col.dataset.id='general';
+  col.style.color='#a5b4fc';
+  col.innerHTML=`
+    <div class="phase-node" style="background:rgba(165,180,252,.12);border-color:rgba(165,180,252,.3)">
+      <span class="phase-num" style="opacity:.7">Vista</span>
+      <span class="phase-icon">🗂️</span>
+    </div>
+    <div class="conn"></div>
+    <div class="phase-label">
+      <div class="ph-title">General</div>
+      <div class="ph-type">Módulos del Expediente</div>
+    </div>
+    <div class="phase-mini">
+      <span class="mini-chip" style="background:rgba(165,180,252,.12);border-color:rgba(165,180,252,.25);color:#a5b4fc">⬤ 19 dominios</span>
+    </div>
+  `;
+  col.addEventListener('click',()=>selectGeneral());
+  timeline.appendChild(col);
+})();
+
+PHASES.forEach((ph,i)=>{
+  const nw=count(ph,'new'),ev=count(ph,'evo'),ex=count(ph,'exist');
+  const col=document.createElement('div');
+  col.className='phase-col';
+  col.dataset.id=ph.id;
+  col.style.color=ph.color;
+  col.innerHTML=`
+    <div class="phase-node" style="background:${ph.color}18;border-color:${ph.color}44">
+      <span class="phase-num">Fase ${ph.id}</span>
+      <span class="phase-icon">${ph.icon}</span>
+    </div>
+    ${i<PHASES.length-1?'<div class="conn"></div>':''}
+    <div class="phase-label">
+      <div class="ph-title">${ph.title.replace('\n','<br>')}</div>
+      <div class="ph-type">${ph.type}</div>
+    </div>
+    <div class="phase-mini">
+      ${nw?`<span class="mini-chip" style="background:rgba(74,222,128,.12);border-color:rgba(74,222,128,.25);color:var(--new)">🆕${nw}</span>`:''}
+      ${ev?`<span class="mini-chip" style="background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.25);color:var(--evo)">🔄${ev}</span>`:''}
+      ${ex?`<span class="mini-chip" style="background:rgba(96,165,250,.12);border-color:rgba(96,165,250,.25);color:var(--exist)">✅${ex}</span>`:''}
+    </div>
+  `;
+  col.addEventListener('click',()=>selectPhase(ph.id));
+  timeline.appendChild(col);
+});
+
+/* ═══════════════════════════════════════
+   GENERAL / RADIAL VIEW
+═══════════════════════════════════════ */
+let activeRadialNode = null;
+
+function selectGeneral(){
+  if(activePhase==='general'){clearPhase();return;}
+  activePhase='general';
+
+  document.querySelectorAll('.phase-col').forEach(c=>{
+    const isActive=c.dataset.id==='general';
+    c.classList.toggle('active',isActive);
+    c.classList.toggle('dimmed',!isActive);
+  });
+
+  document.getElementById('detailPanel').style.borderColor='rgba(165,180,252,.4)';
+  document.getElementById('emptyState').style.display='none';
+  document.getElementById('panelInner').classList.remove('show');
+  document.getElementById('radialPanel').classList.add('show');
+
+  activeRadialNode=null;
+  buildRadial();
+}
+
+function buildRadial(){
+  const diag=document.getElementById('radialDiagram');
+  const svg=document.getElementById('radialSvg');
+  const defs=document.getElementById('radialDefs');
+
+  // remove old nodes/labels (keep svg and center)
+  diag.querySelectorAll('.rnode,.rlabel').forEach(el=>el.remove());
+  while(svg.firstChild)svg.removeChild(svg.firstChild);
+  // re-add defs
+  svg.appendChild(defs);
+
+  const W=diag.offsetWidth||600, H=diag.offsetHeight||480;
+  const cx=W/2, cy=H/2;
+  const R=Math.min(W,H)*0.38;
+
+  GENERAL_MODULES.forEach((mod,i)=>{
+    const rad=mod.angle*Math.PI/180;
+    const nx=cx+R*Math.cos(rad), ny=cy+R*Math.sin(rad);
+
+    // Arrow marker
+    const marker=document.createElementNS('http://www.w3.org/2000/svg','marker');
+    marker.setAttribute('id',`rm-${i}`);
+    marker.setAttribute('markerWidth','7');marker.setAttribute('markerHeight','7');
+    marker.setAttribute('refX','5');marker.setAttribute('refY','3.5');
+    marker.setAttribute('orient','auto');
+    const mp=document.createElementNS('http://www.w3.org/2000/svg','path');
+    mp.setAttribute('d','M0,0 L0,7 L7,3.5 z');
+    mp.setAttribute('fill',mod.color);
+    marker.appendChild(mp);
+    defs.appendChild(marker);
+
+    // Line
+    const ux=Math.cos(rad),uy=Math.sin(rad);
+    const x1=cx+ux*52,y1=cy+uy*52;
+    const x2=nx-ux*35,y2=ny-uy*35;
+    const line=document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1',x1);line.setAttribute('y1',y1);
+    line.setAttribute('x2',x2);line.setAttribute('y2',y2);
+    line.setAttribute('stroke',mod.color);
+    line.setAttribute('stroke-width','1.8');
+    line.setAttribute('marker-end',`url(#rm-${i})`);
+    line.setAttribute('opacity','0.5');
+    line.id=`rline-${i}`;
+    svg.appendChild(line);
+
+    // Node
+    const node=document.createElement('div');
+    node.className='rnode';
+    node.style.cssText=`left:${nx}px;top:${ny}px;background:${mod.color}18;border-color:${mod.color};`;
+    node.innerHTML=mod.icon;
+    node.dataset.idx=i;
+
+    node.addEventListener('click',()=>selectRadialNode(i));
+    diag.appendChild(node);
+
+    // Label — position further out
+    const labelR=R+46;
+    const lx=cx+labelR*Math.cos(rad), ly=cy+labelR*Math.sin(rad);
+    const lbl=document.createElement('div');
+    lbl.className='rlabel';
+    lbl.style.cssText=`left:${lx}px;top:${ly}px;color:${mod.color};`;
+    lbl.innerHTML=mod.name.replace('\n','<br>');
+    diag.appendChild(lbl);
+  });
+}
+
+function selectRadialNode(idx){
+  if(activeRadialNode===idx){
+    // deselect
+    activeRadialNode=null;
+    document.querySelectorAll('.rnode').forEach(n=>n.classList.remove('active','dimmed'));
+    document.querySelectorAll(`[id^="rline-"]`).forEach(l=>l.setAttribute('opacity','0.5'));
+    document.getElementById('radialDetail').innerHTML='<div class="rd-empty"><div style="font-size:2rem;opacity:.3">🔍</div><p>Haz clic en un módulo del diagrama</p></div>';
+    return;
+  }
+  activeRadialNode=idx;
+  const mod=GENERAL_MODULES[idx];
+
+  // Style nodes
+  document.querySelectorAll('.rnode').forEach(n=>{
+    const isActive=parseInt(n.dataset.idx)===idx;
+    n.classList.toggle('active',isActive);
+    n.classList.toggle('dimmed',!isActive);
+  });
+
+  // Style lines
+  GENERAL_MODULES.forEach((_,i)=>{
+    const l=document.getElementById(`rline-${i}`);
+    if(l){l.setAttribute('opacity',i===idx?'1':'0.15');l.setAttribute('stroke-width',i===idx?'2.5':'1.8');}
+  });
+
+  // Detail panel
+  const phaseItems=mod.phases.map(p=>`
+    <div class="rd-phase-item" onclick="selectPhase(${p.id})">
+      <span class="rp-num" style="background:${PHASE_COLORS[p.id]}22;border-color:${PHASE_COLORS[p.id]}44;color:${PHASE_COLORS[p.id]}">F${p.id}</span>
+      <span class="rp-name">${p.name}</span>
+      <span style="color:var(--muted);font-size:.7rem">›</span>
+    </div>
+  `).join('');
+
+  document.getElementById('radialDetail').innerHTML=`
+    <div class="rd-card">
+      <div class="rd-icon-big" style="background:${mod.color}18;border-color:${mod.color}33">${mod.icon}</div>
+      <div class="rd-name" style="color:${mod.color}">${mod.name.replace('\n',' ')}</div>
+      <div class="rd-desc">${mod.desc}</div>
+      <div class="rd-section">Fase(s) donde aparece</div>
+      <div class="rd-phase-list">${phaseItems}</div>
+    </div>
+  `;
+}
+
+/* ── select phase ── */
+function selectPhase(id){
+  if(activePhase===id){clearPhase();return;}
+  activePhase=id;
+  const ph=PHASES.find(p=>p.id===id);
+
+  document.querySelectorAll('.phase-col').forEach(c=>{
+    const cid=c.dataset.id==='general'?'general':parseInt(c.dataset.id);
+    const isActive=cid===id;
+    c.classList.toggle('active',isActive);
+    c.classList.toggle('dimmed',!isActive);
+  });
+
+  document.getElementById('detailPanel').style.borderColor=ph.color+'55';
+  document.getElementById('emptyState').style.display='none';
+  document.getElementById('radialPanel').classList.remove('show');
+  document.getElementById('panelInner').classList.add('show');
+
+  renderPanel(ph);
+}
+
+function clearPhase(){
+  activePhase=null;
+  document.querySelectorAll('.phase-col').forEach(c=>{c.classList.remove('active','dimmed')});
+  document.getElementById('detailPanel').style.borderColor='var(--border)';
+  document.getElementById('emptyState').style.display='';
+  document.getElementById('panelInner').classList.remove('show');
+  document.getElementById('radialPanel').classList.remove('show');
+}
+
+function renderPanel(ph){
+  const nw=count(ph,'new'),ev=count(ph,'evo'),ex=count(ph,'exist'),tot=nw+ev+ex;
+
+  // top
+  const top=document.getElementById('panelTop');
+  top.style.setProperty('--ph-glow',ph.color+'28');
+  top.innerHTML=`
+    <div class="pt-icon" style="background:${ph.color}18;border-color:${ph.color}33">${ph.icon}</div>
+    <div class="pt-meta">
+      <h2 style="color:${ph.color}">Fase ${ph.id} · ${ph.title.replace('\n',' ')}</h2>
+      <div class="pt-sub">${ph.objective}</div>
+      <div class="pt-badges" id="ptBadges">
+        <span class="type-badge" data-filter="all" style="background:${ph.color}18;border-color:${ph.color}44;color:${ph.color}">${ph.type}</span>
+        ${nw?`<span class="stat-badge" data-filter="new" style="background:rgba(74,222,128,.1);border-color:rgba(74,222,128,.25);color:var(--new)"><span class="dot" style="background:var(--new)"></span>${nw} nuevas</span>`:''}
+        ${ev?`<span class="stat-badge" data-filter="evo" style="background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.25);color:var(--evo)"><span class="dot" style="background:var(--evo)"></span>${ev} evolutivas</span>`:''}
+        ${ex?`<span class="stat-badge" data-filter="exist" style="background:rgba(96,165,250,.1);border-color:rgba(96,165,250,.25);color:var(--exist)"><span class="dot" style="background:var(--exist)"></span>${ex} existentes</span>`:''}
+      </div>
+    </div>
+  `;
+
+  // Wire badge click handlers
+  top.querySelectorAll('[data-filter]').forEach(badge=>{
+    badge.addEventListener('click',()=>{
+      const f=badge.dataset.filter;
+      applyFilter(f);
+      updateBadgeStates();
+    });
+  });
+
+  // value strip
+  document.getElementById('valueStrip').innerHTML=ph.value.map(v=>`<div class="value-item">${v}</div>`).join('');
+
+  // domains
+  renderDomains(ph);
+  updateBadgeStates();
+
+  // nav
+  document.getElementById('navInfo').textContent=`Fase ${ph.id} de ${PHASES.length} · ${tot} funcionalidades`;
+  document.getElementById('navFill').style.width=((ph.id/PHASES.length)*100)+'%';
+  document.getElementById('navFill').style.background=ph.color;
+}
+
+function renderDomains(ph){
+  const grid=document.getElementById('domainsGrid');
+  grid.innerHTML='';
+  ph.domains.forEach(dom=>{
+    const visible=dom.features.filter(f=>{
+      const filterOk=activeFilter==='all'||f.s===activeFilter;
+      const searchOk=!searchQ||f.name.toLowerCase().includes(searchQ)||dom.name.toLowerCase().includes(searchQ);
+      return filterOk&&searchOk;
+    });
+    if(!visible.length&&(activeFilter!=='all'||searchQ)) return; // hide empty domains when filtering
+
+    const card=document.createElement('div');
+    card.className='domain-card';
+    const featHtml=dom.features.map(f=>{
+      const L=LABEL[f.s];
+      const filterOk=activeFilter==='all'||f.s===activeFilter;
+      const searchOk=!searchQ||f.name.toLowerCase().includes(searchQ)||dom.name.toLowerCase().includes(searchQ);
+      const hide=(!filterOk||!searchOk)?'hidden':'';
+      return `<div class="feat s-${f.s} ${hide}">
+        <span class="feat-badge">${L.icon}</span>
+        <span class="feat-name">${f.name}</span>
+      </div>`;
+    }).join('');
+    const visCount=dom.features.filter(f=>{
+      const fo=activeFilter==='all'||f.s===activeFilter;
+      const so=!searchQ||f.name.toLowerCase().includes(searchQ)||dom.name.toLowerCase().includes(searchQ);
+      return fo&&so;
+    }).length;
+    card.innerHTML=`
+      <div class="domain-header" style="border-bottom-color:${ph.color}22">
+        <h3>${dom.name}</h3>
+        <span class="domain-count">${visCount} de ${dom.features.length}</span>
+      </div>
+      <div class="features-list">${featHtml}</div>
+    `;
+    grid.appendChild(card);
+  });
+  if(!grid.children.length){
+    grid.innerHTML=`<div style="color:var(--muted2);font-size:.78rem;grid-column:1/-1;padding:10px 0">No hay funcionalidades que coincidan con el filtro aplicado.</div>`;
+  }
+}
+
+/* ── shared filter logic ── */
+function applyFilter(f){
+  activeFilter=f;
+  // sync toolbar buttons
+  document.querySelectorAll('.filter-btn').forEach(b=>{
+    const isOn=b.dataset.filter===f;
+    b.classList.toggle('on',isOn);
+    if(isOn){
+      b.style.background=b.style.getPropertyValue('--on-bg')||'rgba(165,180,252,.12)';
+      b.style.borderColor=b.style.getPropertyValue('--on-bc')||'rgba(165,180,252,.3)';
+      b.style.color=b.style.getPropertyValue('--on-c')||'#a5b4fc';
+    } else {
+      b.style.background='';b.style.borderColor='';b.style.color='';
+    }
+  });
+  if(activePhase && activePhase!=='general'){
+    const ph=PHASES.find(p=>p.id===activePhase);
+    renderDomains(ph);
+  }
+}
+
+function updateBadgeStates(){
+  document.querySelectorAll('#ptBadges [data-filter]').forEach(b=>{
+    const isActive=b.dataset.filter===activeFilter;
+    b.classList.toggle('active',isActive);
+    b.classList.toggle('inactive',!isActive && activeFilter!=='all');
+  });
+}
+
+/* ── filter buttons (toolbar) ── */
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    applyFilter(btn.dataset.filter);
+    updateBadgeStates();
+  });
+});
+
+/* ── search ── */
+document.getElementById('search').addEventListener('input',e=>{
+  searchQ=e.target.value.trim().toLowerCase();
+  if(searchQ && !activePhase){
+    // auto-select first matching phase
+    const match=PHASES.find(ph=>ph.domains.some(d=>d.features.some(f=>f.name.toLowerCase().includes(searchQ))||d.name.toLowerCase().includes(searchQ)));
+    if(match)selectPhase(match.id);
+  } else if(activePhase){
+    const ph=PHASES.find(p=>p.id===activePhase);renderDomains(ph);
+  }
+});
+
+/* ── keyboard nav ── */
+function navigate(dir){
+  // all navigable items: general + 6 phases
+  const items=['general',...PHASES.map(p=>p.id)];
+  const idx=items.indexOf(activePhase??items[0]);
+  const next=items[(idx+dir+items.length)%items.length];
+  if(next==='general') selectGeneral(); else selectPhase(next);
+}
+
+document.getElementById('prevBtn').addEventListener('click',()=>navigate(-1));
+document.getElementById('nextBtn').addEventListener('click',()=>navigate(1));
+document.getElementById('prevBtnP').addEventListener('click',()=>navigate(-1));
+document.getElementById('nextBtnP').addEventListener('click',()=>navigate(1));
+
+document.addEventListener('keydown',e=>{
+  if(e.target.tagName==='INPUT')return;
+  if(e.key==='ArrowRight')navigate(1);
+  if(e.key==='ArrowLeft')navigate(-1);
+  if(e.key==='Escape')clearPhase();
+});
+
+// ── Fullscreen ──
+const fsBtn=document.getElementById('fsBtn');
+const detailPanel=document.getElementById('detailPanel');
+let isFullscreen=false;
+
+function toggleFullscreen(){
+  isFullscreen=!isFullscreen;
+  detailPanel.classList.toggle('fullscreen',isFullscreen);
+  fsBtn.textContent=isFullscreen?'⛶':'⛶';
+  fsBtn.title=isFullscreen?'Salir de pantalla completa (F)':'Pantalla completa (F)';
+  fsBtn.style.color=isFullscreen?'#a5b4fc':'';
+  // Update icon clearly
+  fsBtn.innerHTML=isFullscreen
+    ?'<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>'
+    :'<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>';
+  setTimeout(()=>{if(activePhase==='general')buildRadial();},50);
+}
+
+fsBtn.addEventListener('click',toggleFullscreen);
+
+// Keyboard shortcut F
+document.addEventListener('keydown',e=>{
+  if(e.target.tagName==='INPUT')return;
+  if(e.key==='f'||e.key==='F')toggleFullscreen();
+  if(e.key==='Escape'&&isFullscreen){isFullscreen=false;detailPanel.classList.remove('fullscreen');fsBtn.innerHTML='<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>';setTimeout(()=>{if(activePhase==='general')buildRadial();},50);return;}
+},true);
+
+// Also use native Fullscreen API if available
+fsBtn.addEventListener('dblclick',()=>{
+  if(!document.fullscreenElement){
+    detailPanel.requestFullscreen?.();
+  } else {
+    document.exitFullscreen?.();
+  }
+});
+
+// Rebuild radial on resize
+window.addEventListener('resize',()=>{if(activePhase==='general')buildRadial();});
+
+// Auto-select General on load
+selectGeneral();
+</script>
+</body>
+</html>
