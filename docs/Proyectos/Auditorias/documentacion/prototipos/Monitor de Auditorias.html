@@ -1,0 +1,2242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monitor de Auditorías</title>
+<template id="__bundler_thumbnail">
+  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100" height="100" rx="14" fill="#1e3a5f"/>
+    <rect x="22" y="26" width="24" height="14" rx="3" fill="#22c55e" opacity=".9"/>
+    <rect x="52" y="26" width="24" height="14" rx="3" fill="#f59e0b" opacity=".9"/>
+    <rect x="22" y="46" width="24" height="14" rx="3" fill="#ef4444" opacity=".9"/>
+    <rect x="52" y="46" width="24" height="14" rx="3" fill="#3b82f6" opacity=".9"/>
+    <rect x="22" y="66" width="54" height="3" rx="1.5" fill="white" opacity=".4"/>
+    <rect x="22" y="73" width="54" height="3" rx="1.5" fill="white" opacity=".25"/>
+    <rect x="22" y="80" width="38" height="3" rx="1.5" fill="white" opacity=".25"/>
+  </svg>
+</template>
+<style>
+/* ============================================================
+   Monitor de Auditorías — estilos
+   Vanilla CSS (sin frameworks). Apto para integrar en XAF Blazor.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #f4f6f9;
+  color: #1a1a2e;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body { height: 100vh; overflow: hidden; }
+
+body {
+  padding: clamp(16px, 2.4vw, 32px) clamp(12px, 2.4vw, 36px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(14px, 1.8vw, 22px);
+  overflow: hidden;
+}
+
+/* ── Header ────────────────────────────────────────────────── */
+.page-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.page-header-text h1 { font-size: clamp(20px, 2.4vw, 26px); font-weight: 700; color: #111827; letter-spacing: -.3px; }
+.page-header-text p { font-size: 13px; color: #6b7280; margin-top: 3px; }
+.page-header-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+.period-tabs { display: inline-flex; background: white; border: 1px solid #e5e7eb; border-radius: 10px; padding: 3px; gap: 2px; }
+.period-tab { border: none; background: none; padding: 6px 14px; font-size: 12.5px; font-weight: 500; color: #6b7280; cursor: pointer; border-radius: 7px; transition: all .15s; font-family: inherit; }
+.period-tab:hover { color: #374151; }
+.period-tab.active { background: #1e3a5f; color: white; }
+
+.header-btn { border: 1px solid #e5e7eb; background: white; color: #374151; border-radius: 10px; padding: 8px 14px; font-size: 12.5px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: all .15s; font-family: inherit; }
+.header-btn:hover { border-color: #1e3a5f; color: #1e3a5f; }
+
+/* ── KPI grid: 3 en una fila ──────────────────────────────── */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(12px, 1.4vw, 18px);
+}
+@media (max-width: 1100px) { .kpi-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 780px)  { .kpi-grid { grid-template-columns: 1fr; } }
+
+.kpi-card {
+  background: white;
+  border-radius: 14px;
+  padding: clamp(14px, 1.6vw, 20px) clamp(16px, 1.8vw, 22px);
+  box-shadow: 0 1px 4px rgba(0,0,0,.06), 0 0 0 1px rgba(0,0,0,.04);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  cursor: pointer;
+  position: relative;
+  transition: box-shadow .2s, transform .15s;
+  border-left: 3px solid #e5e7eb;
+  overflow: hidden;
+}
+.kpi-card:hover { box-shadow: 0 6px 22px rgba(0,0,0,.09); transform: translateY(-1px); }
+.kpi-card { --accent: #1e3a5f; --accent-soft: rgba(30,58,95,.12); }
+.kpi-card-success { border-left-color: #22c55e; --accent: #16a34a; --accent-soft: rgba(34,197,94,.14); }
+.kpi-card-warn    { border-left-color: #f97316; --accent: #ea580c; --accent-soft: rgba(249,115,22,.14); }
+.kpi-card-danger  { border-left-color: #ef4444; --accent: #dc2626; --accent-soft: rgba(239,68,68,.14); }
+.kpi-card-info    { border-left-color: #3b82f6; --accent: #2563eb; --accent-soft: rgba(59,130,246,.14); }
+
+.kpi-card.active {
+  background: white;
+  box-shadow:
+    0 0 0 2px #3b82f6,
+    0 6px 18px rgba(59,130,246,.22);
+  transform: translateY(-1px);
+}
+.kpi-card.active::after {
+  content: '▼ Filtrando';
+  position: absolute;
+  top: 10px; right: 12px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #3b82f6;
+  letter-spacing: .3px;
+}
+.kpi-card.active .kpi-icon { display: none; }
+
+.kpi-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.kpi-label { font-size: clamp(11.5px, 1vw, 13px); font-weight: 500; color: #6b7280; line-height: 1.3; letter-spacing: .1px; }
+
+.kpi-icon {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+.icon-success { background: #f0fdf4; color: #22c55e; }
+.icon-warn    { background: #fff7ed; color: #f97316; }
+.icon-danger  { background: #fef2f2; color: #ef4444; }
+.icon-info    { background: #eff6ff; color: #3b82f6; }
+
+.kpi-value-row { display: flex; align-items: baseline; gap: 6px; }
+.kpi-value {
+  font-size: clamp(26px, 3vw, 34px);
+  font-weight: 700;
+  color: #111827;
+  line-height: 1;
+  letter-spacing: -.5px;
+  display: inline-block;
+  transform-origin: left center;
+  transition: color .3s;
+}
+@keyframes kpi-bump {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.22); }
+  100% { transform: scale(1); }
+}
+.kpi-card .kpi-value.updated {
+  animation: kpi-bump .55s cubic-bezier(.34,1.56,.64,1);
+  color: #3b82f6;
+}
+.kpi-value-suffix { font-size: 16px; font-weight: 600; color: #9ca3af; }
+.kpi-card-success .kpi-value { color: #16a34a; }
+.kpi-card-warn    .kpi-value { color: #ea580c; }
+.kpi-card-danger  .kpi-value { color: #dc2626; }
+.kpi-card-info    .kpi-value { color: #2563eb; }
+
+.kpi-sub { font-size: 11.5px; color: #9ca3af; line-height: 1.4; }
+.kpi-sub b { font-weight: 600; color: #6b7280; }
+
+/* ── Main card containing the grid ─────────────────────────── */
+.main-card {
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.06), 0 0 0 1px rgba(0,0,0,.04);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.card-header {
+  padding: 14px 20px;
+  border-bottom: 1px solid #f3f4f6;
+  display: flex; align-items: center; gap: 10px;
+  flex-shrink: 0;
+}
+.card-title { font-size: 14px; font-weight: 600; color: #111827; }
+.card-title-icon { color: #6b7280; font-size: 14px; }
+.card-header-spacer { flex: 1; }
+.filter-pill {
+  display: none;
+  align-items: center; gap: 6px;
+  background: #eff6ff; color: #1e40af;
+  border: 1px solid #bfdbfe;
+  border-radius: 20px; padding: 3px 10px 3px 12px;
+  font-size: 11.5px; font-weight: 500;
+}
+.filter-pill.show { display: inline-flex; }
+.filter-pill button { border: none; background: none; color: #1e40af; cursor: pointer; font-size: 13px; padding: 0 0 0 2px; line-height: 1; }
+.filter-pill button:hover { color: #1e3a5f; }
+
+/* ── Toolbar ───────────────────────────────────────────────── */
+.card-toolbar {
+  padding: 10px 16px;
+  display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+  border-bottom: 1px solid #f3f4f6;
+  background: #fafbfc;
+  flex-shrink: 0;
+}
+.search-wrap { display: flex; align-items: center; gap: 6px; background: white; border: 1px solid #e5e7eb; border-radius: 8px; padding: 6px 10px; min-width: 200px; flex: 1; max-width: 280px; }
+.search-wrap input { border: none; outline: none; font-size: 12.5px; font-family: inherit; width: 100%; color: #374151; background: transparent; }
+.search-wrap span { color: #9ca3af; font-size: 13px; flex-shrink: 0; }
+.filter-select { border: 1px solid #e5e7eb; border-radius: 8px; padding: 6px 8px; font-size: 12px; font-family: inherit; background: white; color: #374151; cursor: pointer; max-width: 180px; }
+.toolbar-btn { border: 1px solid #e5e7eb; border-radius: 8px; padding: 6px 12px; font-size: 12px; background: white; color: #6b7280; cursor: pointer; transition: all .15s; white-space: nowrap; display: inline-flex; align-items: center; gap: 5px; font-family: inherit; }
+.toolbar-btn:hover { border-color: #d1d5db; color: #374151; }
+.toolbar-btn.primary { background: #1e3a5f; color: white; border-color: #1e3a5f; font-weight: 500; }
+.toolbar-btn.primary:hover { background: #2a4d7a; }
+.rec-count { margin-left: auto; font-size: 12px; color: #6b7280; white-space: nowrap; padding: 4px 10px; background: white; border: 1px solid #e5e7eb; border-radius: 20px; font-weight: 500; }
+.rec-count b { color: #111827; font-weight: 700; }
+
+.export-wrap { position: relative; }
+.export-menu {
+  display: none; position: absolute; top: calc(100% + 6px); right: 0;
+  background: white; border: 1px solid #e5e7eb; border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.1); z-index: 50;
+  min-width: 180px; overflow: hidden;
+}
+.export-menu.open { display: block; }
+.export-item { display: flex; align-items: center; gap: 8px; padding: 10px 14px; font-size: 13px; color: #374151; cursor: pointer; transition: background .12s; border: none; background: none; width: 100%; text-align: left; font-family: inherit; }
+.export-item:hover { background: #f9fafb; color: #111827; }
+.export-item-icon { width: 24px; height: 24px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: white; }
+.export-item-icon.xls { background: #16a34a; }
+.export-item-icon.csv { background: #6b7280; }
+
+/* ── Table ─────────────────────────────────────────────────── */
+.table-wrap {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+}
+
+table { width: 100%; border-collapse: collapse; font-size: 12.5px; table-layout: auto; min-width: 2075px; }
+
+thead { position: sticky; top: 0; z-index: 10; background: white; }
+thead th { padding: 10px 8px; text-align: left; font-size: 10.5px; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: .4px; border-bottom: 1px solid #e5e7eb; white-space: nowrap; cursor: pointer; user-select: none; background: white; overflow: hidden; text-overflow: ellipsis; }
+thead th:hover { color: #1e3a5f; }
+thead th.col-center { text-align: center; }
+thead th.col-right { text-align: right; }
+thead th .sort-ind { color: #1e3a5f; margin-left: 3px; }
+
+thead tr.filter-row th { background: #f8fafc; padding: 5px 6px; border-bottom: 2px solid #e5e7eb; cursor: default; position: sticky; top: 36px; z-index: 9; }
+.col-filter { width: 100%; border: 1px solid #e5e7eb; border-radius: 6px; padding: 4px 7px; font-size: 11px; font-family: inherit; color: #374151; background: white; outline: none; transition: border-color .15s, box-shadow .15s; }
+.col-filter:focus { border-color: #1e3a5f; box-shadow: 0 0 0 2px rgba(30,58,95,.1); }
+.col-filter::placeholder { color: #c0c4cc; }
+.col-filter.num-filter { text-align: center; font-variant-numeric: tabular-nums; letter-spacing: .1px; }
+.col-filter.num-filter::placeholder { letter-spacing: 0; }
+
+tbody tr { border-bottom: 1px solid #f3f4f6; transition: background .1s; cursor: pointer; }
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: #f0f7ff; }
+tbody tr.selected { background: #dbeafe; }
+tbody tr.row-warning { box-shadow: inset 3px 0 0 #f59e0b; }
+tbody tr.row-critical { box-shadow: inset 3px 0 0 #ef4444; }
+
+td { padding: 9px 10px; color: #374151; white-space: nowrap; vertical-align: middle; text-transform: uppercase; overflow: hidden; text-overflow: ellipsis; }
+td.col-folio { font-weight: 700; color: #1e3a5f; font-family: 'JetBrains Mono', 'SF Mono', monospace; font-size: 11.5px; letter-spacing: .2px; text-transform: none; }
+td.col-objetivo { }
+td.col-fecha { color: #6b7280; font-variant-numeric: tabular-nums; text-transform: none; }
+td.col-fecha.overdue { color: #dc2626; font-weight: 600; }
+td.col-num { text-align: center; font-weight: 500; font-variant-numeric: tabular-nums; overflow: visible; }
+td.col-actions { text-align: right; white-space: nowrap; overflow: visible; }
+td.col-area { color: #6b7280; }
+td.col-auditor { font-weight: 500; }
+td.col-auditado { }
+
+/* ── Avance bar (inline) ───────────────────────────────────── */
+.avance-cell { display: flex; align-items: center; gap: 6px; min-width: 90px; }
+.avance-bar { flex: 1; height: 6px; background: #f3f4f6; border-radius: 3px; overflow: hidden; min-width: 40px; }
+.avance-fill { height: 100%; border-radius: 3px; }
+.avance-fill.good { background: #22c55e; }
+.avance-fill.warn { background: #f59e0b; }
+.avance-fill.bad  { background: #ef4444; }
+.avance-num { font-size: 11.5px; font-weight: 600; color: #374151; min-width: 32px; text-align: right; font-variant-numeric: tabular-nums; }
+
+/* ── % Cierre semaforo ─────────────────────────────────────── */
+.cierre-cell { display: inline-flex; align-items: center; gap: 5px; font-weight: 600; }
+.cierre-dot { width: 7px; height: 7px; border-radius: 50%; }
+.cierre-cell.good { color: #16a34a; }
+.cierre-cell.warn { color: #d97706; }
+.cierre-cell.bad  { color: #dc2626; }
+.cierre-cell.good .cierre-dot { background: #22c55e; }
+.cierre-cell.warn .cierre-dot { background: #f59e0b; }
+.cierre-cell.bad  .cierre-dot { background: #ef4444; }
+
+/* AC counts */
+.ac-pill { display: inline-flex; align-items: center; min-width: 26px; padding: 1px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; justify-content: center; }
+.ac-pill.neutral { background: #f3f4f6; color: #374151; }
+.ac-pill.warn    { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+.ac-pill.bad     { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+.ac-pill.zero    { color: #d1d5db; background: transparent; }
+
+/* Calificación cell: letra + número */
+.calif-cell { display: inline-flex; align-items: center; gap: 6px; }
+.calif-letter {
+  width: 22px; height: 22px; border-radius: 6px;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 11px; color: white;
+}
+.calif-num { font-weight: 600; font-size: 12px; font-variant-numeric: tabular-nums; }
+.calif-cell.good .calif-letter { background: #16a34a; }
+.calif-cell.warn .calif-letter { background: #f59e0b; }
+.calif-cell.bad  .calif-letter { background: #ef4444; }
+.calif-cell.good .calif-num { color: #16a34a; }
+.calif-cell.warn .calif-num { color: #b45309; }
+.calif-cell.bad  .calif-num { color: #b91c1c; }
+
+/* Antigüedad: días con color */
+.antig-cell { display: inline-flex; align-items: baseline; gap: 2px; padding: 1px 8px; border-radius: 20px; font-size: 11.5px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.antig-cell .antig-d { font-size: 9.5px; font-weight: 500; opacity: .7; margin-left: 1px; }
+.antig-cell.good { background: #f0fdf4; color: #16a34a; }
+.antig-cell.warn { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+.antig-cell.bad  { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+.antig-cell.none { color: #d1d5db; background: transparent; }
+
+/* N° Reprogramaciones */
+.reprog-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 9px;
+  border-radius: 20px;
+  font-size: 11.5px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.6;
+}
+.reprog-cell .reprog-ico {
+  font-size: 12px;
+  line-height: 1;
+  opacity: .85;
+  font-weight: 700;
+}
+.reprog-cell .reprog-zero { color: #cbd5e1; font-weight: 500; }
+.reprog-cell.zero { background: transparent; color: #cbd5e1; padding: 1px 4px; }
+.reprog-cell.good { background: #eff6ff; color: #1d4ed8; border: 1px solid #dbeafe; }
+.reprog-cell.warn { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+.reprog-cell.bad  { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+
+/* ── Status badges ─────────────────────────────────────────── */
+.badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px; border-radius: 20px; font-size: 10.5px; font-weight: 600; white-space: nowrap; letter-spacing: .2px; }
+.badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; }
+.badge-activa     { background: #eff6ff; color: #1d4ed8; }
+.badge-activa::before { background: #3b82f6; }
+.badge-iniciada   { background: #fefce8; color: #854d0e; }
+.badge-iniciada::before { background: #eab308; }
+.badge-ejecucion  { background: #faf5ff; color: #7e22ce; }
+.badge-ejecucion::before { background: #a855f7; }
+.badge-finalizada { background: #f0fdf4; color: #15803d; }
+.badge-finalizada::before { background: #22c55e; }
+.badge-cancelada  { background: #fef2f2; color: #b91c1c; }
+.badge-cancelada::before { background: #ef4444; }
+.badge-completado { background: #ecfeff; color: #0e7490; }
+.badge-completado::before { background: #06b6d4; }
+.badge-pdca-ejec  { background: #eef2ff; color: #4338ca; }
+.badge-pdca-ejec::before { background: #6366f1; }
+.badge-pdca-val   { background: #fdf2f8; color: #9d174d; }
+.badge-pdca-val::before { background: #ec4899; }
+
+/* ── Completado en Tiempo · pill (Sí / No / N/A) ───────────── */
+.tiempo-pill { display: inline-flex; align-items: center; gap: 5px; padding: 2px 9px; border-radius: 20px; font-size: 11px; font-weight: 600; letter-spacing: .2px; }
+.tiempo-pill::before { content: ''; width: 6px; height: 6px; border-radius: 50%; }
+.tiempo-pill.good { background: #f0fdf4; color: #15803d; }
+.tiempo-pill.good::before { background: #22c55e; }
+.tiempo-pill.bad  { background: #fef2f2; color: #b91c1c; }
+.tiempo-pill.bad::before  { background: #ef4444; }
+.tiempo-pill.na   { background: #f3f4f6; color: #6b7280; }
+.tiempo-pill.na::before   { background: #9ca3af; }
+
+/* ── Semáforo operativo · luz + etiqueta ───────────────────── */
+.semaforo-cell { display: inline-flex; align-items: center; gap: 6px; padding: 2px 9px 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; letter-spacing: .2px; }
+.semaforo-cell .semaforo-light { width: 9px; height: 9px; border-radius: 50%; box-shadow: 0 0 0 2px rgba(255,255,255,.6) inset; }
+.semaforo-cell.verde    { background: #f0fdf4; color: #15803d; }
+.semaforo-cell.verde    .semaforo-light { background: #22c55e; box-shadow: 0 0 0 2px #bbf7d0 inset, 0 0 6px rgba(34,197,94,.55); }
+.semaforo-cell.amarillo { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+.semaforo-cell.amarillo .semaforo-light { background: #f59e0b; box-shadow: 0 0 0 2px #fde68a inset, 0 0 6px rgba(245,158,11,.55); }
+.semaforo-cell.rojo     { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+.semaforo-cell.rojo     .semaforo-light { background: #ef4444; box-shadow: 0 0 0 2px #fecaca inset, 0 0 6px rgba(239,68,68,.6); }
+
+.tipo-chip { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 6px; font-size: 10.5px; font-weight: 600; letter-spacing: .2px; border: 1px solid; }
+.tipo-programada    { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+.tipo-no-programada { background: #fdf4ff; color: #86198f; border-color: #f5d0fe; }
+.tipo-especial      { background: #fefce8; color: #854d0e; border-color: #fde68a; }
+
+/* Row action buttons */
+.btn-action { display: inline-flex; align-items: center; gap: 4px; background: none; border: none; color: #6b7280; font-size: 11.5px; font-family: inherit; cursor: pointer; padding: 4px 8px; border-radius: 6px; transition: all .15s; white-space: nowrap; }
+.btn-action:hover { background: #eff6ff; color: #1e3a5f; }
+
+/* ── Footer / pagination ───────────────────────────────────── */
+.card-footer {
+  padding: 10px 16px;
+  border-top: 1px solid #f3f4f6;
+  display: flex; align-items: center; gap: 6px;
+  background: #fafbfc;
+  font-size: 12px; color: #6b7280;
+  flex-wrap: wrap; flex-shrink: 0;
+}
+.pager-btn { border: 1px solid #e5e7eb; background: white; border-radius: 6px; padding: 4px 9px; font-size: 12px; cursor: pointer; color: #374151; transition: all .12s; font-family: inherit; }
+.pager-btn:hover:not(:disabled) { border-color: #1e3a5f; color: #1e3a5f; }
+.pager-btn:disabled { opacity: .4; cursor: default; }
+.pager-btn.active { background: #1e3a5f; color: white; border-color: #1e3a5f; font-weight: 600; }
+.page-info { margin: 0 8px; }
+.page-info b { color: #111827; }
+.pager-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+.pager-right select { border: 1px solid #e5e7eb; border-radius: 6px; padding: 3px 6px; font-size: 12px; font-family: inherit; cursor: pointer; }
+
+/* ── Modal ─────────────────────────────────────────────────── */
+.modal-overlay { position: fixed; inset: 0; background: rgba(15,23,42,.5); backdrop-filter: blur(2px); z-index: 200; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity .22s; padding: 16px; }
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal { background: white; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,.25); width: 100%; max-width: 720px; max-height: 90vh; display: flex; flex-direction: column; transform: scale(.96) translateY(8px); transition: transform .22s cubic-bezier(.4,0,.2,1); overflow: hidden; }
+.modal.modal-detalle { max-width: 880px; }
+.modal-overlay.open .modal { transform: scale(1) translateY(0); }
+
+.modal-header { padding: 20px 24px 16px; border-bottom: 1px solid #f3f4f6; display: flex; align-items: flex-start; gap: 14px; flex-shrink: 0; background: linear-gradient(180deg, #f8fafc 0%, white 100%); }
+.modal-header-icon { width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, #1e3a5f, #2a4d7a); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; color: white; }
+.modal-header-info { flex: 1; min-width: 0; }
+.modal-header-info h2 { font-size: 16px; font-weight: 700; color: #111827; }
+.modal-header-info .folio-mono { font-family: 'JetBrains Mono', monospace; color: #1e3a5f; font-size: 13px; margin-right: 6px; }
+.modal-header-info p { font-size: 12px; color: #6b7280; margin-top: 3px; }
+.modal-close { border: none; background: none; cursor: pointer; color: #9ca3af; font-size: 20px; padding: 4px 8px; border-radius: 8px; line-height: 1; transition: all .15s; flex-shrink: 0; font-family: inherit; }
+.modal-close:hover { background: #f3f4f6; color: #374151; }
+
+.modal-body { flex: 1; overflow-y: auto; padding: 20px 24px; }
+
+.detail-section { margin-bottom: 22px; }
+.detail-section:last-child { margin-bottom: 0; }
+.detail-section-title { font-size: 10.5px; font-weight: 700; color: #1e3a5f; text-transform: uppercase; letter-spacing: .9px; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+.detail-section-title::before { content: ''; width: 3px; height: 12px; background: #1e3a5f; border-radius: 2px; }
+
+.detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 18px; }
+@media (max-width: 540px) { .detail-grid { grid-template-columns: 1fr; } }
+.detail-field { display: flex; flex-direction: column; gap: 3px; }
+.detail-field.full { grid-column: 1 / -1; }
+.detail-label { font-size: 10.5px; font-weight: 600; color: #9ca3af; text-transform: uppercase; letter-spacing: .5px; }
+.detail-value { font-size: 13.5px; color: #111827; font-weight: 500; }
+
+.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+@media (max-width: 540px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
+.stat-box { background: #f9fafb; border: 1px solid #f3f4f6; border-radius: 10px; padding: 12px 14px; text-align: center; }
+.stat-box.success { background: #f0fdf4; border-color: #bbf7d0; }
+.stat-box.warn { background: #fffbeb; border-color: #fde68a; }
+.stat-box.danger { background: #fef2f2; border-color: #fecaca; }
+.stat-box-num { font-size: 22px; font-weight: 700; color: #111827; line-height: 1; }
+.stat-box.success .stat-box-num { color: #16a34a; }
+.stat-box.warn .stat-box-num { color: #d97706; }
+.stat-box.danger .stat-box-num { color: #dc2626; }
+.stat-box-label { font-size: 10.5px; color: #6b7280; margin-top: 5px; font-weight: 500; }
+
+.progress-wrap { margin-top: 6px; }
+.progress-label { display: flex; justify-content: space-between; font-size: 11.5px; color: #6b7280; margin-bottom: 6px; }
+.progress-label b { color: #111827; font-weight: 600; }
+.progress-bar { height: 10px; background: #f3f4f6; border-radius: 5px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 5px; transition: width .6s; }
+.progress-fill.good { background: linear-gradient(90deg, #22c55e, #16a34a); }
+.progress-fill.warn { background: linear-gradient(90deg, #f59e0b, #d97706); }
+.progress-fill.bad  { background: linear-gradient(90deg, #ef4444, #dc2626); }
+
+.modal-footer { padding: 14px 24px; border-top: 1px solid #f3f4f6; display: flex; justify-content: flex-end; gap: 8px; flex-shrink: 0; background: #fafbfc; }
+.btn-modal { border: 1px solid #e5e7eb; border-radius: 8px; padding: 8px 16px; font-size: 13px; font-family: inherit; cursor: pointer; transition: all .15s; font-weight: 500; }
+.btn-modal-secondary { background: white; color: #374151; }
+.btn-modal-secondary:hover { border-color: #d1d5db; background: #f9fafb; }
+.btn-modal-primary { background: #1e3a5f; border-color: #1e3a5f; color: white; font-weight: 600; }
+.btn-modal-primary:hover { background: #2a4d7a; }
+
+/* ── Toast ─────────────────────────────────────────────────── */
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px); background: #111827; color: white; padding: 10px 20px; border-radius: 10px; font-size: 13px; opacity: 0; transition: all .3s; z-index: 300; pointer-events: none; box-shadow: 0 10px 30px rgba(0,0,0,.25); display: flex; align-items: center; gap: 8px; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast-icon { width: 18px; height: 18px; border-radius: 50%; background: #22c55e; display: inline-flex; align-items: center; justify-content: center; font-size: 11px; color: white; font-weight: 700; }
+
+/* ════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ════════════════════════════════════════════════════════════ */
+
+/* Tablet ──────────────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  body { padding: 18px; gap: 16px; }
+  .page-header-text h1 { font-size: 22px; }
+  .kpi-value { font-size: clamp(24px, 4vw, 30px); }
+  .rec-count { margin-left: 0; }
+}
+
+/* Mobile landscape / small tablet ─────────────────────────── */
+@media (max-width: 720px) {
+  /* On mobile, let the page scroll naturally — the grid is too tight to fit in viewport */
+  html, body { height: auto; overflow: visible; }
+  body { padding: 14px 12px; gap: 12px; }
+  .main-card { flex: none; }
+  .table-wrap { min-height: 360px; max-height: 70vh; }
+
+  /* Header stacks; period tabs scale down */
+  .page-header { flex-direction: column; align-items: stretch; gap: 10px; }
+  .page-header-text h1 { font-size: 20px; }
+  .page-header-text p { font-size: 12px; }
+  .page-header-actions { justify-content: space-between; width: 100%; }
+  .period-tab { padding: 5px 10px; font-size: 11.5px; }
+  .header-btn { padding: 6px 10px; font-size: 12px; }
+
+  /* Card chrome */
+  .card-header { padding: 12px 14px; }
+  .card-toolbar { padding: 10px 12px; gap: 6px; }
+  .search-wrap { min-width: 0; max-width: none; flex: 1 1 100%; order: -1; }
+  .rec-count { margin-left: auto; order: 5; }
+
+  /* Table: keep horizontal scroll, with visual hint */
+  .table-wrap::after {
+    content: '◂ desliza para ver más columnas ▸';
+    display: block;
+    position: sticky;
+    bottom: 0; left: 0; right: 0;
+    text-align: center;
+    font-size: 10px;
+    color: #9ca3af;
+    background: linear-gradient(180deg, transparent, #fafbfc 60%);
+    padding: 14px 0 4px;
+    pointer-events: none;
+  }
+  table { font-size: 12px; }
+  thead th { padding: 9px 8px; font-size: 10px; }
+  td { padding: 8px 8px; }
+
+  /* Pagination wraps cleaner */
+  .card-footer { padding: 10px 12px; font-size: 11.5px; }
+  .pager-right { width: 100%; margin-left: 0; justify-content: flex-end; }
+  .page-info { width: 100%; text-align: center; margin: 4px 0; order: 10; }
+
+  /* Modal padding */
+  .modal-header { padding: 16px 18px 12px; gap: 10px; }
+  .modal-header-icon { width: 38px; height: 38px; font-size: 17px; }
+  .modal-header-info h2 { font-size: 14px; }
+  .modal-body { padding: 16px 18px; }
+  .modal-footer { padding: 12px 18px; }
+  .btn-modal { padding: 7px 12px; font-size: 12.5px; }
+}
+
+/* Mobile portrait ─────────────────────────────────────────── */
+@media (max-width: 540px) {
+  body { padding: 12px 10px; gap: 10px; }
+
+  /* KPI cards: 1 column, 4 rows; compact */
+  .kpi-card { padding: 14px 16px; gap: 8px; }
+  .kpi-label { font-size: 12px; }
+  .kpi-icon { width: 30px; height: 30px; font-size: 14px; }
+  .kpi-value { font-size: 26px; }
+  .kpi-value-suffix { font-size: 14px; }
+  .kpi-sub { font-size: 11px; }
+
+  /* Toolbar more compact */
+  .toolbar-btn { padding: 6px 10px; font-size: 11.5px; }
+  .filter-pill { font-size: 11px; padding: 3px 9px 3px 10px; }
+
+  /* Modal full-width */
+  .modal { max-height: 95vh; border-radius: 12px; }
+  .detail-grid { grid-template-columns: 1fr; }
+  .stat-grid { grid-template-columns: repeat(2, 1fr); }
+  .det-grid { grid-template-columns: 1fr !important; }
+  .crit-block-body { padding: 8px; gap: 8px; }
+  .hh-card-header { padding: 9px 10px; gap: 8px; }
+  .hh-card-text { font-size: 12.5px; }
+  .ac-item { padding: 8px 10px 8px 16px; gap: 8px; }
+  .ac-desc { font-size: 12px; }
+  .ac-meta { gap: 2px 12px; font-size: 10.5px; }
+
+  /* Pagination: hide first/last buttons on tiny screens */
+  #pageFirst, #pageLast { display: none; }
+}
+
+/* ── Modal Ver Detalle (US-23) ───────────────────────────────── */
+.modal-detalle .modal-header-info h2 {
+  font-size: 19px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -.2px;
+  line-height: 1.25;
+}
+.modal-detalle .modal-header-info .folio-mono {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  color: #0f172a;
+  font-size: 19px;
+  font-weight: 800;
+  margin-right: 6px;
+  letter-spacing: 0;
+}
+.modal-detalle .modal-title-name {
+  text-transform: uppercase;
+  letter-spacing: .2px;
+}
+.modal-detalle .modal-header-info p {
+  font-size: 12px;
+  color: #9ca3af;
+  margin-top: 4px;
+  font-weight: 500;
+}
+.modal-detalle .bc-sep {
+  color: #cbd5e1;
+  margin: 0 2px;
+  font-weight: 400;
+}
+
+.det-objetivo {
+  font-size: 13px;
+  font-weight: 700;
+  color: #94a3b8;
+  letter-spacing: .6px;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.det-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 32px;
+  margin-bottom: 22px;
+}
+.det-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.det-field.det-field-full { grid-column: 1 / -1; }
+.det-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #9ca3af;
+  letter-spacing: .9px;
+  text-transform: uppercase;
+}
+.det-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: .2px;
+  word-break: break-word;
+}
+
+.det-section-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #9ca3af;
+  letter-spacing: .9px;
+  text-transform: uppercase;
+  margin: 4px 0 10px;
+}
+
+.crit-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0 0 22px;
+  padding: 0;
+}
+.crit-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f8fafc;
+  border: 1px solid #eef2f7;
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+.crit-num {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: #2563eb;
+  min-width: 28px;
+  flex-shrink: 0;
+}
+.crit-text {
+  font-size: 13px;
+  color: #1f2937;
+  line-height: 1.4;
+}
+
+/* Bloque agrupado: criterio + calificación + hallazgos asociados */
+.crit-blocks {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 4px;
+}
+.crit-block {
+  border: 1px solid #eef2f7;
+  border-radius: 10px;
+  background: white;
+  overflow: hidden;
+}
+.crit-block-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: #f8fafc;
+  padding: 12px 14px;
+  border-bottom: 1px solid #eef2f7;
+}
+.crit-block-header .crit-num {
+  margin-top: 1px;
+}
+.crit-block-header .crit-text {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1f2937;
+  line-height: 1.4;
+}
+.crit-cal {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  padding: 4px 10px;
+  border-radius: 20px;
+  flex-shrink: 0;
+  margin-top: -1px;
+}
+.crit-cal-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+.crit-cal.good { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+.crit-cal.good .crit-cal-dot { background: #16a34a; }
+.crit-cal.warn { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+.crit-cal.warn .crit-cal-dot { background: #f59e0b; }
+.crit-cal.bad  { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+.crit-cal.bad  .crit-cal-dot { background: #ef4444; }
+
+.crit-block-meta {
+  padding: 8px 14px;
+  font-size: 11px;
+  color: #6b7280;
+  background: #fcfcfd;
+  border-bottom: 1px solid #f3f4f6;
+  letter-spacing: .3px;
+}
+.crit-block:has(.crit-block-body) .crit-block-meta { color: #1e3a5f; font-weight: 600; }
+.crit-conforme { color: #16a34a; font-weight: 600; }
+.crit-hallcount { color: #b45309; font-weight: 600; text-transform: uppercase; letter-spacing: .6px; }
+
+/* ── Lista de hallazgos dentro de cada criterio ──────────── */
+.crit-block-body {
+  padding: 12px;
+  background: #fafbfc;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.hh-card {
+  background: white;
+  border: 1px solid #eef2f7;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.hh-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  background: linear-gradient(180deg, #fffdf5, #ffffff);
+  border-bottom: 1px solid #f3f4f6;
+}
+.hh-chip {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+  height: 22px;
+  padding: 0 7px;
+  border-radius: 6px;
+  background: #fef3c7;
+  color: #92400e;
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .3px;
+  margin-top: 1px;
+}
+.hh-card-title { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.hh-card-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: #0f172a;
+  line-height: 1.4;
+  word-break: break-word;
+}
+.hh-card-sub {
+  font-size: 10.5px;
+  color: #9ca3af;
+  font-weight: 600;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+.hh-card-status { flex-shrink: 0; margin-top: 1px; }
+
+/* Acciones correctivas anidadas */
+.hh-card-body { padding: 4px 0 6px; }
+
+.ac-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+.ac-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 9px 14px 9px 18px;
+  border-top: 1px dashed #eef2f7;
+  position: relative;
+}
+.ac-item:first-child { border-top: none; }
+.ac-item::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 16px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #cbd5e1;
+}
+.ac-num {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  padding: 0 8px;
+  border-radius: 5px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .3px;
+  margin-top: 1px;
+  white-space: nowrap;
+}
+.ac-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.ac-desc {
+  font-size: 12.5px;
+  color: #1f2937;
+  line-height: 1.45;
+  word-break: break-word;
+}
+.ac-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  font-size: 11px;
+  color: #475569;
+}
+.ac-meta-item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  font-weight: 500;
+}
+.ac-meta-k {
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  font-weight: 700;
+  color: #9ca3af;
+}
+.ac-status { flex-shrink: 0; margin-top: 1px; }
+.ac-status .badge { font-size: 10px; padding: 2px 8px; }
+
+.ac-empty {
+  padding: 10px 14px 12px;
+  font-size: 11.5px;
+  color: #9ca3af;
+  font-style: italic;
+}
+
+.hh-table-wrap {
+  border: 1px solid #eef2f7;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+.hh-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.hh-table thead th {
+  background: #f8fafc;
+  color: #6b7280;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .9px;
+  text-transform: uppercase;
+  text-align: left;
+  padding: 10px 14px;
+  border-bottom: 1px solid #eef2f7;
+  white-space: nowrap;
+}
+.hh-table tbody td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #f3f4f6;
+  vertical-align: top;
+  color: #1f2937;
+  line-height: 1.45;
+}
+.hh-table tbody tr:last-child td { border-bottom: none; }
+.hh-table .hh-num { width: 44px; font-weight: 700; color: #0f172a; }
+.hh-table .hh-status-col { width: 150px; }
+.hh-table .hh-hallazgo { width: 38%; }
+.hh-table .hh-accion { width: 38%; color: #374151; }
+.hh-table .hh-status { white-space: nowrap; }
+.hh-empty {
+  text-align: center;
+  color: #9ca3af;
+  font-style: italic;
+  padding: 24px 12px !important;
+}
+
+</style>
+</head>
+<body>
+
+<!-- ── Header ── -->
+<header class="page-header" data-screen-label="Header">
+  <div class="page-header-text">
+    <h1>Monitor de Auditorías</h1>
+    <p>Tablero ejecutivo · Actualizado al <span id="headerFecha">—</span></p>
+  </div>
+  <div class="page-header-actions">
+    <div class="period-tabs" role="tablist">
+      <button class="period-tab" type="button" data-period="mes">Mes</button>
+      <button class="period-tab" type="button" data-period="trim">Trimestre</button>
+      <button class="period-tab" type="button" data-period="ano">Año</button>
+      <button class="period-tab active" type="button" data-period="todas">Todas</button>
+    </div>
+    <button class="header-btn" type="button" title="Actualizar datos">↻ Actualizar</button>
+  </div>
+</header>
+
+<!-- ── KPIs 2×2 con drill-down ── -->
+<section class="kpi-grid" aria-label="Indicadores clave" data-screen-label="KPIs">
+
+  <article id="kpi1" class="kpi-card kpi-card-success" data-filter-key="programadas" tabindex="0" role="button">
+    <div class="kpi-top">
+      <span class="kpi-label">Auditorías Programadas</span>
+      <div class="kpi-icon icon-success">▣</div>
+    </div>
+    <div class="kpi-value-row">
+      <span class="kpi-value">—</span>
+      <span class="kpi-value-suffix">/ —</span>
+    </div>
+    <p class="kpi-sub">Cargando…</p>
+  </article>
+
+  <article id="kpi2" class="kpi-card kpi-card-success" data-filter-key="reprogramadas" tabindex="0" role="button">
+    <div class="kpi-top">
+      <span class="kpi-label">Auditorías Reprogramadas</span>
+      <div class="kpi-icon icon-success">↻</div>
+    </div>
+    <div class="kpi-value-row">
+      <span class="kpi-value">—</span>
+      <span class="kpi-value-suffix" style="display:none"></span>
+    </div>
+    <p class="kpi-sub">Cargando…</p>
+  </article>
+
+  <article id="kpi3" class="kpi-card kpi-card-success" data-filter-key="enTiempo" tabindex="0" role="button">
+    <div class="kpi-top">
+      <span class="kpi-label">Completadas en Tiempo</span>
+      <div class="kpi-icon icon-success">⏱</div>
+    </div>
+    <div class="kpi-value-row">
+      <span class="kpi-value">—</span>
+      <span class="kpi-value-suffix" style="display:none"></span>
+    </div>
+    <p class="kpi-sub">Cargando…</p>
+  </article>
+
+</section>
+
+<!-- ── Card principal con grid ── -->
+<section class="main-card" data-screen-label="Grid Auditorias">
+
+  <div class="card-header">
+    <span class="card-title-icon">▦</span>
+    <span class="card-title">Registro de Auditorías · Programa 2026</span>
+    <span class="filter-pill" id="filterPill">
+      <span id="filterPillText">KPI: —</span>
+      <button id="filterPillClear" type="button" aria-label="Quitar filtro">✕</button>
+    </span>
+    <div class="card-header-spacer"></div>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="card-toolbar">
+    <div class="search-wrap">
+      <span>🔍</span>
+      <input type="text" id="searchInput" placeholder="Buscar folio, objetivo, auditor, área…" aria-label="Búsqueda global">
+    </div>
+    <button class="toolbar-btn" id="btnClearFilters" type="button">✕ Limpiar filtros</button>
+    <div class="export-wrap">
+      <button class="toolbar-btn primary" id="btnExport" type="button">⬇ Exportar ▾</button>
+      <div class="export-menu" id="exportMenu">
+        <button class="export-item" id="exportXLS" type="button"><span class="export-item-icon xls">X</span>Excel (XLSX)</button>
+        <button class="export-item" id="exportCSV" type="button"><span class="export-item-icon csv">C</span>CSV (.csv)</button>
+      </div>
+    </div>
+    <span class="rec-count" id="recCount"><b>0</b> registros</span>
+  </div>
+
+  <!-- Table -->
+  <div class="table-wrap">
+    <table>
+      <colgroup>
+        <col style="width:95px">
+        <col style="width:230px">
+        <col style="width:115px">
+        <col style="width:130px">
+        <col style="width:130px">
+        <col style="width:125px">
+        <col style="width:130px">
+        <col style="width:110px">
+        <col style="width:115px">
+        <col style="width:115px">
+        <col style="width:125px">
+        <col style="width:125px">
+        <col style="width:135px">
+        <col style="width:115px">
+        <col style="width:100px">
+      </colgroup>
+      <thead>
+        <tr>
+          <th data-sort="folio">Folio <span class="sort-ind"></span></th>
+          <th data-sort="objetivo">Objetivo <span class="sort-ind"></span></th>
+          <th data-sort="tipo">Tipo <span class="sort-ind"></span></th>
+          <th data-sort="auditor">Auditor <span class="sort-ind"></span></th>
+          <th data-sort="area">Área Auditable <span class="sort-ind"></span></th>
+          <th data-sort="auditado">Auditado <span class="sort-ind"></span></th>
+          <th data-sort="status">Estatus <span class="sort-ind"></span></th>
+          <th class="col-center" data-sort="totalHallazgos">Total Hallazgos <span class="sort-ind"></span></th>
+          <th class="col-center" data-sort="totalAcciones">Total Acciones Correctivas <span class="sort-ind"></span></th>
+          <th class="col-center" data-sort="calificacion">Calificación / Resultado <span class="sort-ind"></span></th>
+          <th data-sort="fechaCompromiso">Fecha Compromiso <span class="sort-ind"></span></th>
+          <th data-sort="fechaCompletado">Fecha Completado <span class="sort-ind"></span></th>
+          <th class="col-center" data-sort="completadoEnTiempoOrd">Completado en Tiempo <span class="sort-ind"></span></th>
+          <th class="col-center" data-sort="nReprogramaciones">N° Reprogramaciones <span class="sort-ind"></span></th>
+          <th class="col-right">Acciones</th>
+        </tr>
+        <tr class="filter-row">
+          <th><input class="col-filter" data-key="folio" type="text" placeholder="AUD…" aria-label="Filtrar folio"></th>
+          <th><input class="col-filter" data-key="objetivo" type="text" placeholder="contiene…" aria-label="Filtrar objetivo"></th>
+          <th>
+            <select class="col-filter" data-key="tipo" aria-label="Filtrar tipo">
+              <option value="">Todos</option>
+              <option>Especial</option>
+              <option>Programada</option>
+              <option>No Programada</option>
+            </select>
+          </th>
+          <th><input class="col-filter" data-key="auditor" type="text" placeholder="contiene…" aria-label="Filtrar auditor"></th>
+          <th><input class="col-filter" data-key="area" type="text" placeholder="contiene…" aria-label="Filtrar área"></th>
+          <th><input class="col-filter" data-key="auditado" type="text" placeholder="contiene…" aria-label="Filtrar auditado"></th>
+          <th>
+            <select class="col-filter" data-key="status" aria-label="Filtrar estatus">
+              <option value="">Todos</option>
+              <option>Activa</option>
+              <option>En Ejecución</option>
+              <option>Completado</option>
+              <option>PDCA En Ejecución</option>
+              <option>PDCA Validación</option>
+              <option>Finalizada</option>
+              <option>Cancelada</option>
+            </select>
+          </th>
+          <th><input class="col-filter num-filter" data-key="totalHallazgos" type="text" placeholder="0  >5  1-3" aria-label="Filtrar total hallazgos"></th>
+          <th><input class="col-filter num-filter" data-key="totalAcciones" type="text" placeholder="0  >5  1-3" aria-label="Filtrar total acciones"></th>
+          <th><input class="col-filter num-filter" data-key="calificacion" type="text" placeholder=">=70  <85" aria-label="Filtrar calificación"></th>
+          <th><input class="col-filter" data-key="fechaCompromiso" type="text" placeholder="dd/mm/aaaa" aria-label="Filtrar fecha compromiso"></th>
+          <th><input class="col-filter" data-key="fechaCompletado" type="text" placeholder="dd/mm/aaaa" aria-label="Filtrar fecha completado"></th>
+          <th>
+            <select class="col-filter" data-key="completadoEnTiempo" aria-label="Filtrar completado en tiempo">
+              <option value="">Todos</option>
+              <option>Sí</option>
+              <option>No</option>
+              <option>N/A</option>
+            </select>
+          </th>
+          <th><input class="col-filter num-filter" data-key="nReprogramaciones" type="text" placeholder="0  >=1  1-2" aria-label="Filtrar reprogramaciones"></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <!-- Footer / Pagination -->
+  <div class="card-footer">
+    <button class="pager-btn" id="pageFirst" type="button" title="Primera">«</button>
+    <button class="pager-btn" id="pagePrev" type="button" title="Anterior">‹</button>
+    <span class="page-nums" id="pageNums" style="display:inline-flex;gap:4px"></span>
+    <button class="pager-btn" id="pageNext" type="button" title="Siguiente">›</button>
+    <button class="pager-btn" id="pageLast" type="button" title="Última">»</button>
+    <span class="page-info" id="pageInfo">—</span>
+    <div class="pager-right">
+      Mostrar
+      <select id="pageSize" aria-label="Tamaño de página">
+        <option value="10">10</option>
+        <option value="25" selected>25</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+      por página
+    </div>
+  </div>
+</section>
+
+<!-- ── Modal de detalle (US-23) ── -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal modal-detalle" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-header">
+      <div class="modal-header-icon">📋</div>
+      <div class="modal-header-info">
+        <h2 id="modalTitle">Ver Detalle</h2>
+        <p id="modalSubtitle"></p>
+      </div>
+      <button class="modal-close" type="button" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-footer">
+      <button class="btn-modal btn-modal-secondary" type="button">Cerrar</button>
+      <button class="btn-modal btn-modal-primary" type="button">📋 Ver Seguimiento</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Toast ── -->
+<div class="toast" id="toast">
+  <span class="toast-icon">✓</span>
+  <span class="toast-text">Listo</span>
+</div>
+
+<script>
+/* ============================================================
+   Monitor de Auditorías — datos demo + lógica
+   Alineado al Requerimiento Funcional del Tablero Ejecutivo
+   (US-01 … US-09 + CA correspondientes, columnas 1..14).
+   ============================================================ */
+
+/* ---------- Fecha de corte / RNG determinístico ---------- */
+var TODAY = new Date(2026, 4, 19); // 19 may 2026 — fecha de corte del tablero
+function mulberry32(seed) {
+  return function() {
+    var t = seed += 0x6D2B79F5;
+    t = Math.imul(t ^ t >>> 15, t | 1);
+    t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+var rng = mulberry32(42);
+function pick(arr) { return arr[Math.floor(rng() * arr.length)]; }
+function rint(min, max) { return Math.floor(rng() * (max - min + 1)) + min; }
+
+/* ---------- Catálogos ---------- */
+var TIPOS = ['Especial', 'Programada', 'No Programada'];
+var AREAS = [
+  'Producción', 'Calidad', 'Logística', 'Almacén', 'Compras', 'Recursos Humanos',
+  'Finanzas', 'TI', 'Mantenimiento', 'Comercial', 'Ingeniería', 'Seguridad',
+  'Administración', 'Control de Producción', 'Aseguramiento de Calidad', 'Servicio al Cliente'
+];
+var AUDITORES = [
+  'Gabriel Espinoza T.', 'María López R.', 'Carlos Vega H.', 'Laura Méndez P.',
+  'José Silva R.', 'Aaron Hernández S.', 'Héctor Canchola B.', 'Víctor Reyes G.',
+  'Marco Sotelo P.', 'Jiri Villagómez G.', 'Abisai Román H.', 'Eleazar Rosas C.'
+];
+var AUDITADOS = [
+  'Roberto Méndez', 'Patricia Núñez', 'Sergio Domínguez', 'Mónica Castillo',
+  'Andrés Rivera', 'Verónica Ramos', 'Luis Aguilar', 'Karla Solano',
+  'Daniel Ortega', 'Sofía Carrillo', 'Raúl Beltrán', 'Diana Pacheco',
+  'Mauricio Cervantes', 'Gabriela Tovar', 'Iván Cordero', 'Adriana Peña'
+];
+var OBJETIVOS = [
+  'Verificar cumplimiento del procedimiento de control de calidad',
+  'Evaluar eficacia del sistema de gestión documental',
+  'Auditar el proceso de recepción y resguardo de materiales',
+  'Revisar controles de acceso y seguridad informática',
+  'Validar registros del programa de mantenimiento preventivo',
+  'Comprobar cumplimiento de políticas de compras y proveedores',
+  'Evaluar control interno del proceso de nómina',
+  'Auditar manejo de inventarios y conciliaciones físicas',
+  'Revisar cumplimiento normativo ISO 9001:2015',
+  'Verificar trazabilidad del producto terminado',
+  'Auditar gestión de no conformidades y acciones correctivas',
+  'Evaluar control de procesos críticos de manufactura',
+  'Revisar cumplimiento de requisitos del cliente',
+  'Auditar el programa de capacitación del personal',
+  'Verificar cumplimiento de medidas de seguridad e higiene',
+  'Validar cierre de hallazgos del ciclo anterior'
+];
+
+/* ---------- Catálogo de criterios evaluados ---------- */
+var CRITERIOS_CAT = [
+  '¿Coincide el contenido del ejercicio con el procedimiento P-ADM-01 vigente?',
+  '¿Los documentos de referencia están actualizados y disponibles?',
+  '¿Se encuentra registrado el responsable de la actualización?',
+  '¿El personal involucrado ha sido capacitado en los contenidos del ejercicio?',
+  '¿Se le da seguimiento documental a los cambios realizados?',
+  '¿Los formatos utilizados cumplen con la norma vigente?',
+  '¿Coinciden los datos del sistema con los registros físicos?',
+  '¿Se entregan en tiempo los informes mensuales del proceso?',
+  '¿Existe evidencia de la revisión periódica del documento?',
+  '¿Se identifican y mitigan los riesgos asociados al proceso?',
+  '¿Se conservan los registros conforme al tiempo establecido?'
+];
+
+/* ---------- Catálogo de hallazgos / acciones correctivas ----------
+   Cada hallazgo puede tener 1..N acciones correctivas (ver acciones extra abajo) */
+var HALLAZGOS_CAT = [
+  ['Formato de contratación desactualizado en expediente de personal.', 'Actualizar formato F-RH-01 conforme a la política vigente.'],
+  ['Falta evidencia de capacitación del personal nuevo.',              'Programar y documentar capacitación trimestral.'],
+  ['Lista de proveedores sin firma del responsable.',                  'Recabar firmas y publicar versión controlada.'],
+  ['No se cuenta con bitácora de mantenimiento del equipo de cómputo.', 'Implementar bitácora digital con periodicidad mensual.'],
+  ['Documentos de referencia no se encuentran en la última revisión.',  'Sustituir copias obsoletas y notificar al responsable de control documental.'],
+  ['Registros de salida de almacén sin firma de autorización.',         'Reforzar control de firmas en formato F-ALM-04 y capacitar al personal.'],
+  ['Falta evidencia de la revisión por la Dirección del trimestre.',    'Programar reunión y levantar minuta firmada antes del próximo corte.'],
+  ['Indicadores del proceso no se calculan con la fórmula vigente.',    'Actualizar plantilla de indicadores y revisar tres ciclos previos.'],
+  ['Procedimiento sin la última firma de aprobación.',                  'Iniciar flujo de aprobación con responsable del proceso y SGI.'],
+  ['No se evidencia seguimiento a hallazgos del ciclo anterior.',       'Recuperar tablero PDCA y dar cierre formal a los pendientes.']
+];
+
+/* Acciones "complementarias" — usadas cuando un hallazgo requiere más de 1 acción */
+var ACCIONES_EXTRA = [
+  'Difundir el cambio en reunión semanal del área y dejar minuta.',
+  'Establecer indicador mensual para verificar adherencia al control.',
+  'Capacitar al personal involucrado y registrar evidencia (DC-CAP-02).',
+  'Programar auditoría de seguimiento al cierre del próximo trimestre.',
+  'Actualizar matriz de riesgos y plan de control asociado.',
+  'Notificar a las áreas usuarias y publicar en el repositorio controlado.',
+  'Revisar y firmar registros pendientes en los próximos 15 días hábiles.',
+  'Solicitar validación del SGI y dejar constancia de aprobación.',
+  'Incorporar el punto al checklist de revisión por dirección.',
+  'Realizar muestreo aleatorio al cierre de mes para validar el cumplimiento.'
+];
+
+var RESPONSABLES_AC = [
+  'María López R.', 'Carlos Vega H.', 'Laura Méndez P.', 'José Silva R.',
+  'Patricia Núñez', 'Sergio Domínguez', 'Verónica Ramos', 'Daniel Ortega'
+];
+
+var ESTATUS_ACCION = ['Pendiente', 'En Ejecución', 'En ejecucion PDCA', 'Validación PDCA', 'Cerrada'];
+var ESTATUS_ACCION_WEIGHTS = [0.18, 0.30, 0.22, 0.15, 0.15];
+var ESTATUS_ACCION_BADGE = {
+  'Pendiente':        'badge-activa',
+  'En Ejecución':     'badge-ejecucion',
+  'En ejecucion PDCA':'badge-pdca-ejec',
+  'Validación PDCA':  'badge-pdca-val',
+  'Cerrada':          'badge-finalizada'
+};
+
+/* ---------- Estatus del Hallazgo ----------
+   SupportedEstatus: Activo, Ejecución, Finalizado, Cancelado */
+var ESTATUS_HALLAZGO = ['Activo', 'Ejecución', 'Finalizado', 'Cancelado'];
+var ESTATUS_HALLAZGO_WEIGHTS = [0.30, 0.35, 0.30, 0.05];
+var ESTATUS_HALLAZGO_BADGE = {
+  'Activo':     'badge-activa',
+  'Ejecución':  'badge-ejecucion',
+  'Finalizado': 'badge-finalizada',
+  'Cancelado':  'badge-cancelada'
+};
+
+/* ---------- Estatus alineados al documento ----------
+   EstadosAbiertos (numerador KPI-1 + base de "estancadas"):
+     Activa, En Ejecución, Completado, Registro PDCA,
+     PDCA En Ejecución, PDCA Finalizado, PDCA Validación
+   Vigentes = todas excepto Cancelada
+   EstadosPreviosCompletado (para Vencidas): Activa, En Ejecución
+*/
+var ESTATUS = [
+  'Activa', 'En Ejecución', 'Completado',
+  'PDCA En Ejecución', 'PDCA Validación',
+  'Finalizada', 'Cancelada'
+];
+var ESTATUS_WEIGHTS = [0.16, 0.20, 0.12, 0.12, 0.08, 0.27, 0.05];
+
+var ESTADOS_ABIERTOS = {
+  'Activa': 1, 'En Ejecución': 1, 'Completado': 1,
+  'PDCA En Ejecución': 1, 'PDCA Validación': 1
+};
+var ESTADOS_PREVIOS_COMPLETADO = { 'Activa': 1, 'En Ejecución': 1 };
+
+// US-17.1.2 — auditorías "realizadas" para Tarjeta de Programadas
+var ESTADOS_REALIZADOS = {
+  'Completado': 1, 'PDCA En Ejecución': 1, 'PDCA Validación': 1, 'Finalizada': 1
+};
+// US-17.3 — Completadas con compromiso (Completado o posterior con fechaCompromiso definida)
+var ESTADOS_COMPLETADO_O_POSTERIOR = {
+  'Completado': 1, 'PDCA En Ejecución': 1, 'PDCA Validación': 1, 'Finalizada': 1
+};
+
+var UMBRAL_ESTANCAMIENTO_DIAS = 15; // configurable (doc: valor inicial)
+
+function weightedPick(arr, weights) {
+  var r = rng();
+  var acc = 0;
+  for (var i = 0; i < arr.length; i++) {
+    acc += weights[i];
+    if (r <= acc) return arr[i];
+  }
+  return arr[arr.length - 1];
+}
+
+function fmtDate(d) {
+  if (!d) return '—';
+  var dd = String(d.getDate()).padStart(2, '0');
+  var mm = String(d.getMonth() + 1).padStart(2, '0');
+  var yy = String(d.getFullYear());
+  return dd + '/' + mm + '/' + yy;
+}
+function diffDays(a, b) { return Math.floor((a.getTime() - b.getTime()) / 86400000); }
+
+/* ---------- Generador de filas ---------- */
+function generateRows(count) {
+  var out = [];
+  var start = new Date(2026, 0, 5);    // 5 ene 2026
+  var today = TODAY;
+
+  for (var i = 0; i < count; i++) {
+    var folio = 'AUD' + String(1000 + i + 1).padStart(6, '0');
+    var tipo = weightedPick(TIPOS, [0.20, 0.55, 0.25]);
+    var auditor = pick(AUDITORES);
+    var auditado = pick(AUDITADOS);
+    var area = pick(AREAS);
+    var objetivo = pick(OBJETIVOS);
+    var status = weightedPick(ESTATUS, ESTATUS_WEIGHTS);
+
+    // Fecha de inicio + fecha compromiso de cierre
+    var diasDesdeInicio = rint(0, 130);
+    var fechaInicioObj = new Date(start.getTime() + diasDesdeInicio * 86400000);
+    var duracionPlan = rint(20, 55);
+    var fechaCompromisoObj = new Date(fechaInicioObj.getTime() + duracionPlan * 86400000);
+
+    // Fecha completado (sólo aplica a estados de cierre / posteriores a Completado)
+    var fechaCompletadoObj = null;
+    var fechaCompletadoStr = '';
+    var alcanzoCompletado = (status === 'Completado' || status === 'PDCA En Ejecución' ||
+                             status === 'PDCA Validación' || status === 'Finalizada');
+    if (alcanzoCompletado || status === 'Cancelada') {
+      // 65% en tiempo, 35% fuera de tiempo (variedad para el KPI 3)
+      var offset = rng() < 0.65 ? -rint(0, 12) : rint(1, 25);
+      fechaCompletadoObj = new Date(fechaCompromisoObj.getTime() + offset * 86400000);
+      if (fechaCompletadoObj > today) {
+        fechaCompletadoObj = new Date(today.getTime() - rint(1, 18) * 86400000);
+      }
+      fechaCompletadoStr = fmtDate(fechaCompletadoObj);
+    }
+
+    // Última actualización -> días sin avance
+    var diasSinAvance;
+    if (status === 'Cancelada')         diasSinAvance = rint(20, 120);
+    else if (status === 'Finalizada')   diasSinAvance = rint(5, 60);
+    else if (status === 'Activa')       diasSinAvance = rint(0, 22);
+    else if (status === 'Completado')   diasSinAvance = rint(0, 14);
+    else                                diasSinAvance = rint(0, 25); // En Ejecución / PDCA*
+    var ultActObj = new Date(today.getTime() - diasSinAvance * 86400000 - rint(0, 23) * 3600000);
+
+    // Hallazgos
+    var totalHallazgos;
+    if (status === 'Activa') totalHallazgos = rint(0, 2);
+    else if (status === 'En Ejecución') totalHallazgos = rint(0, 8);
+    else totalHallazgos = rint(1, 18);
+
+    // NOTA: totalAcciones se calcula más abajo a partir de las acciones reales
+    // generadas por hallazgo (cada hallazgo lleva su propio arreglo h.acciones).
+
+    // Calificación / resultado
+    var calif;
+    if (status === 'Cancelada' || status === 'Activa') {
+      calif = null; // no aplica
+    } else {
+      var base = 70 + rint(-12, 25);
+      if (status === 'Finalizada') base = Math.max(base, rint(72, 98));
+      calif = Math.max(40, Math.min(100, base));
+    }
+
+    // Completado en tiempo (Sí / No / N/A)
+    var completadoEnTiempo;
+    if (!alcanzoCompletado || !fechaCompletadoObj) completadoEnTiempo = 'N/A';
+    else completadoEnTiempo = (fechaCompletadoObj <= fechaCompromisoObj) ? 'Sí' : 'No';
+
+    // ¿Vencida? (CA-02.1 / 02.2)
+    var vencida = ESTADOS_PREVIOS_COMPLETADO[status] === 1 && fechaCompromisoObj < today;
+
+    // ¿Reprogramada? (US-17.2 / CA-17.2.x) — ~18% del universo; programadas con mayor probabilidad
+    var probRepro = (tipo === 'Programada') ? 0.25 : 0.08;
+    var reprogramada = status !== 'Cancelada' && rng() < probRepro;
+    var fechaOriginalObj = null;
+    var nReprogramaciones = 0;
+    if (reprogramada) {
+      // Fecha original: entre 7 y 45 días antes de la fecha compromiso actual
+      fechaOriginalObj = new Date(fechaCompromisoObj.getTime() - rint(7, 45) * 86400000);
+      // CA-17.2.4 — puede haber más de una reprogramación, pero cuenta 1 vez
+      nReprogramaciones = rng() < 0.25 ? rint(2, 3) : 1;
+    }
+
+    // ¿Estancada? (CA-04.1 / 04.2)
+    var estancada = ESTADOS_ABIERTOS[status] === 1 && diasSinAvance > UMBRAL_ESTANCAMIENTO_DIAS;
+
+    // Semáforo operativo (regla de negocio del doc, sección 9):
+    //   Rojo: vencida, estancada o fuera de tiempo
+    //   Amarillo: próxima a vencer o días sin avance cercanos al umbral
+    //   Verde: en tiempo y con avance adecuado
+    var semaforo;
+    if (status === 'Cancelada') {
+      semaforo = 'rojo';
+    } else if (vencida || estancada || completadoEnTiempo === 'No') {
+      semaforo = 'rojo';
+    } else {
+      var diasParaCompromiso = ESTADOS_ABIERTOS[status] === 1 ? diffDays(fechaCompromisoObj, today) : 999;
+      var cercaUmbralAvance = ESTADOS_ABIERTOS[status] === 1 && diasSinAvance >= UMBRAL_ESTANCAMIENTO_DIAS - 5;
+      var proximaAVencer = ESTADOS_ABIERTOS[status] === 1 && diasParaCompromiso >= 0 && diasParaCompromiso <= 7;
+      if (proximaAVencer || cercaUmbralAvance) semaforo = 'amarillo';
+      else semaforo = 'verde';
+    }
+
+    // Criterios evaluados (3 a 7 por auditoría, numerados 1.1, 1.2, …)
+    var nCrit = rint(3, 7);
+    var critPool = CRITERIOS_CAT.slice();
+    var criterios = [];
+    for (var ci = 0; ci < nCrit && critPool.length; ci++) {
+      var cidx = Math.floor(rng() * critPool.length);
+      criterios.push({
+        num: '1.' + (ci + 1),
+        texto: critPool.splice(cidx, 1)[0],
+        hallazgos: []
+      });
+    }
+
+    // Distribuir hallazgos entre criterios y construir detalle
+    var hallazgosDetalle = [];
+    var totalAcciones = 0;
+    if (totalHallazgos > 0) {
+      var hPool = HALLAZGOS_CAT.slice();
+      var accExtraPool = ACCIONES_EXTRA.slice();
+      for (var hi = 0; hi < totalHallazgos; hi++) {
+        var pair = hPool.length ? hPool.splice(Math.floor(rng() * hPool.length), 1)[0]
+                                : HALLAZGOS_CAT[Math.floor(rng() * HALLAZGOS_CAT.length)];
+        // Estatus del hallazgo (Activo, Ejecución, Finalizado, Cancelado)
+        var estHallazgo;
+        if (status === 'Activa' || status === 'En Ejecución') {
+          estHallazgo = rng() < 0.55 ? 'Activo' : 'Ejecución';
+        } else if (status === 'Finalizada') {
+          estHallazgo = rng() < 0.9 ? 'Finalizado' : 'Ejecución';
+        } else if (status === 'Cancelada') {
+          estHallazgo = rng() < 0.7 ? 'Cancelado' : 'Activo';
+        } else {
+          estHallazgo = weightedPick(ESTATUS_HALLAZGO, ESTATUS_HALLAZGO_WEIGHTS);
+        }
+
+        // Cuántas acciones correctivas tiene este hallazgo (1..N)
+        var nAcc;
+        if (status === 'Activa') {
+          // hallazgo recién levantado, aún no se definen acciones
+          nAcc = rng() < 0.7 ? 0 : 1;
+        } else if (status === 'En Ejecución') {
+          nAcc = weightedPick([1, 2, 3], [0.55, 0.30, 0.15]);
+        } else if (status === 'Cancelada') {
+          nAcc = rng() < 0.6 ? 1 : 0;
+        } else {
+          // Completado / PDCA* / Finalizada — típicamente más acciones
+          nAcc = weightedPick([1, 2, 3, 4], [0.30, 0.35, 0.25, 0.10]);
+        }
+        if (estHallazgo === 'Cancelado') nAcc = Math.min(nAcc, 1);
+
+        // Generar las acciones
+        var acciones = [];
+        for (var ai = 0; ai < nAcc; ai++) {
+          var descAccion;
+          if (ai === 0) {
+            descAccion = pair[1]; // la primera acción usa la sugerida por el catálogo
+          } else if (accExtraPool.length) {
+            descAccion = accExtraPool.splice(Math.floor(rng() * accExtraPool.length), 1)[0];
+          } else {
+            descAccion = ACCIONES_EXTRA[Math.floor(rng() * ACCIONES_EXTRA.length)];
+          }
+
+          // Estatus por acción (puede variar dentro del mismo hallazgo)
+          var estAccion;
+          if (status === 'Activa' || status === 'En Ejecución') {
+            estAccion = rng() < 0.55 ? 'Pendiente' : 'En Ejecución';
+          } else if (status === 'Finalizada' || estHallazgo === 'Finalizado') {
+            estAccion = rng() < 0.85 ? 'Cerrada' : 'Validación PDCA';
+          } else if (status === 'Cancelada' || estHallazgo === 'Cancelado') {
+            estAccion = 'Pendiente';
+          } else {
+            estAccion = weightedPick(ESTATUS_ACCION, ESTATUS_ACCION_WEIGHTS);
+          }
+
+          // Fecha compromiso de la acción (entre inicio y compromiso de la auditoría +/- 10 días)
+          var fechaAcc = new Date(fechaCompromisoObj.getTime() + rint(-20, 12) * 86400000);
+
+          acciones.push({
+            num: (hi + 1) + '.' + (ai + 1),  // p.ej. "3.2" = AC #2 del hallazgo #3
+            descripcion: descAccion,
+            estatus: estAccion,
+            responsable: pick(RESPONSABLES_AC),
+            fechaCompromiso: fmtDate(fechaAcc)
+          });
+        }
+        totalAcciones += acciones.length;
+
+        // Asociar al criterio: los primeros se reparten 1:1, los demás aleatorio
+        var critIdx = hi < criterios.length ? hi : Math.floor(rng() * criterios.length);
+        var h = {
+          n: hi + 1,
+          hallazgo: pair[0],
+          acciones: acciones,                          // 0..N acciones correctivas
+          estatusHallazgo: estHallazgo,                // estatus del hallazgo
+          criterioNum: criterios[critIdx].num
+        };
+        criterios[critIdx].hallazgos.push(h);
+        hallazgosDetalle.push(h);
+      }
+    }
+
+    // Calificación por criterio (en %, basada en cantidad de hallazgos)
+    criterios.forEach(function(c) {
+      var nh = c.hallazgos.length;
+      var base;
+      if (nh === 0)      base = rint(90, 100); // Conforme
+      else if (nh === 1) base = rint(72, 85);
+      else if (nh === 2) base = rint(60, 75);
+      else               base = rint(40, 65);
+      c.calificacion = base;
+    });
+
+    out.push({
+      idx: i,
+      folio: folio,
+      criterios: criterios,
+      hallazgosDetalle: hallazgosDetalle,
+      reprogramada: reprogramada,
+      nReprogramaciones: nReprogramaciones,
+      fechaOriginalObj: fechaOriginalObj,
+      fechaOriginal: fechaOriginalObj ? fmtDate(fechaOriginalObj) : '—',
+      objetivo: objetivo,
+      tipo: tipo,
+      auditor: auditor,
+      area: area,
+      auditado: auditado,
+      status: status,
+
+      // fechas
+      fechaCompromisoObj: fechaCompromisoObj,
+      fechaCompromiso: fmtDate(fechaCompromisoObj),
+      fechaCompletadoObj: fechaCompletadoObj,
+      fechaCompletado: fechaCompletadoStr || '—',
+      ultActObj: ultActObj,
+
+      // métricas
+      totalHallazgos: totalHallazgos,
+      totalAcciones: totalAcciones,
+      calificacion: calif,                 // null si N/A
+      completadoEnTiempo: completadoEnTiempo, // 'Sí' | 'No' | 'N/A'
+      diasSinAvance: diasSinAvance,
+
+      // derivados
+      vencida: vencida,
+      estancada: estancada,
+      semaforo: semaforo,
+
+      // claves para ordenamiento
+      completadoEnTiempoOrd: completadoEnTiempo === 'Sí' ? 0 : completadoEnTiempo === 'No' ? 1 : 2,
+      semaforoOrd: semaforo === 'verde' ? 0 : semaforo === 'amarillo' ? 1 : 2
+    });
+  }
+  return out;
+}
+
+var ALL_ROWS = generateRows(140);
+
+/* ---------- Mapeos de presentación ---------- */
+var STATUS_BADGE = {
+  'Activa':            'badge-activa',
+  'En Ejecución':      'badge-ejecucion',
+  'Completado':        'badge-completado',
+  'PDCA En Ejecución': 'badge-pdca-ejec',
+  'PDCA Validación':   'badge-pdca-val',
+  'Finalizada':        'badge-finalizada',
+  'Cancelada':         'badge-cancelada'
+};
+var TIPO_CLASS = {
+  'Especial': 'tipo-especial',
+  'Programada': 'tipo-programada',
+  'No Programada': 'tipo-no-programada'
+};
+var SEMAFORO_LABEL = { verde: 'Verde', amarillo: 'Amarillo', rojo: 'Rojo' };
+
+function califClass(c) {
+  if (c == null) return 'none';
+  if (c >= 85) return 'good';
+  if (c >= 70) return 'warn';
+  return 'bad';
+}
+function diasSinAvanceClass(d) {
+  if (d <= 7) return 'good';
+  if (d <= UMBRAL_ESTANCAMIENTO_DIAS) return 'warn';
+  return 'bad';
+}
+function reprogramacionesClass(n) {
+  if (!n) return 'zero';
+  if (n <= 2) return 'good';
+  if (n <= 5) return 'warn';
+  return 'bad';
+}
+
+/* ---------- Estado global ---------- */
+var state = {
+  page: 1,
+  pageSize: 25,
+  sortKey: null,
+  sortDir: 1,
+  search: '',
+  kpiFilter: null,   // 'activas' | 'vencidas' | 'enTiempo' | 'estancadas' | null
+  period: 'todas',   // 'mes' | 'trim' | 'ano' | 'todas'
+  colFilters: {}
+};
+
+/* ---------- Filtro de período ---------- */
+function matchesPeriod(r) {
+  if (state.period === 'todas') return true;
+  // Referencia: fecha compromiso (criterio operativo del programa)
+  var d = r.fechaCompromisoObj;
+  if (!d) return false;
+  if (state.period === 'ano') return d.getFullYear() === TODAY.getFullYear();
+  if (state.period === 'mes') return d.getFullYear() === TODAY.getFullYear() && d.getMonth() === TODAY.getMonth();
+  if (state.period === 'trim') {
+    var q = Math.floor(d.getMonth() / 3);
+    var qT = Math.floor(TODAY.getMonth() / 3);
+    return d.getFullYear() === TODAY.getFullYear() && q === qT;
+  }
+  return true;
+}
+
+/* ---------- Drill-down KPI (CA-10.1 / CA-17.x.4) ---------- */
+function matchesKpiFilter(r) {
+  switch (state.kpiFilter) {
+    case 'programadas':   return r.tipo === 'Programada' && r.status !== 'Cancelada';
+    case 'reprogramadas': return r.reprogramada;
+    case 'enTiempo':      return ESTADOS_COMPLETADO_O_POSTERIOR[r.status] === 1 && r.completadoEnTiempo !== 'N/A';
+    default: return true;
+  }
+}
+
+/* ---------- Parser de filtro numérico (acepta: 5, >5, <10, >=5, <=10, 1-3) ---------- */
+function matchesNumFilter(value, expr) {
+  if (!expr || expr.trim() === '') return true;
+  if (value == null) return false;
+  expr = expr.trim().replace(/\s+/g, '');
+  var m;
+  if ((m = expr.match(/^>=(-?\d+(\.\d+)?)$/))) return value >= parseFloat(m[1]);
+  if ((m = expr.match(/^<=(-?\d+(\.\d+)?)$/))) return value <= parseFloat(m[1]);
+  if ((m = expr.match(/^>(-?\d+(\.\d+)?)$/)))  return value > parseFloat(m[1]);
+  if ((m = expr.match(/^<(-?\d+(\.\d+)?)$/)))  return value < parseFloat(m[1]);
+  if ((m = expr.match(/^(-?\d+(\.\d+)?)-(-?\d+(\.\d+)?)$/))) {
+    var a = parseFloat(m[1]), b = parseFloat(m[3]);
+    var lo = Math.min(a, b), hi = Math.max(a, b);
+    return value >= lo && value <= hi;
+  }
+  if ((m = expr.match(/^=?(-?\d+(\.\d+)?)$/))) return value === parseFloat(m[1]);
+  return true; // expresión no reconocida → no filtra (evita resultados vacíos confusos)
+}
+
+function matchesColFilters(r) {
+  var f = state.colFilters;
+  if (f.folio && r.folio.toLowerCase().indexOf(f.folio.toLowerCase()) < 0) return false;
+  if (f.objetivo && r.objetivo.toLowerCase().indexOf(f.objetivo.toLowerCase()) < 0) return false;
+  if (f.tipo && r.tipo !== f.tipo) return false;
+  if (f.auditor && r.auditor.toLowerCase().indexOf(f.auditor.toLowerCase()) < 0) return false;
+  if (f.area && r.area.toLowerCase().indexOf(f.area.toLowerCase()) < 0) return false;
+  if (f.auditado && r.auditado.toLowerCase().indexOf(f.auditado.toLowerCase()) < 0) return false;
+  if (f.status && r.status !== f.status) return false;
+  if (!matchesNumFilter(r.totalHallazgos, f.totalHallazgos)) return false;
+  if (!matchesNumFilter(r.totalAcciones, f.totalAcciones)) return false;
+  if (!matchesNumFilter(r.calificacion, f.calificacion)) return false;
+  if (f.fechaCompromiso && r.fechaCompromiso.indexOf(f.fechaCompromiso) < 0) return false;
+  if (f.fechaCompletado && r.fechaCompletado.indexOf(f.fechaCompletado) < 0) return false;
+  if (f.completadoEnTiempo && r.completadoEnTiempo !== f.completadoEnTiempo) return false;
+  if (!matchesNumFilter(r.nReprogramaciones, f.nReprogramaciones)) return false;
+  return true;
+}
+
+function matchesSearch(r) {
+  if (!state.search) return true;
+  var q = state.search.toLowerCase();
+  return [r.folio, r.objetivo, r.tipo, r.auditor, r.area, r.auditado, r.status]
+    .some(function(v) { return v.toLowerCase().indexOf(q) >= 0; });
+}
+
+function getFiltered() {
+  return ALL_ROWS.filter(function(r) {
+    return matchesPeriod(r) && matchesKpiFilter(r) && matchesColFilters(r) && matchesSearch(r);
+  });
+}
+function getSorted(rows) {
+  if (!state.sortKey) return rows;
+  var k = state.sortKey;
+  var d = state.sortDir;
+  return rows.slice().sort(function(a, b) {
+    var va = a[k], vb = b[k];
+    if (va == null && vb == null) return 0;
+    if (va == null) return 1;
+    if (vb == null) return -1;
+    if (typeof va === 'number') return (va - vb) * d;
+    return String(va).localeCompare(String(vb), 'es', { numeric: true }) * d;
+  });
+}
+
+/* ---------- KPIs (US-17.1 / US-17.2 / US-17.3) ---------- */
+function computeKPIs(data) {
+  // KPI-1 — Auditorías Programadas (Realizadas / Programadas) — US-17.1
+  // Denominador: tipo Programada AND estatus != Cancelada
+  // Numerador: tipo Programada AND estatus in EstadosRealizados
+  var programadasDenom = data.filter(function(r) { return r.tipo === 'Programada' && r.status !== 'Cancelada'; }).length;
+  var programadasNum   = data.filter(function(r) { return r.tipo === 'Programada' && ESTADOS_REALIZADOS[r.status] === 1; }).length;
+  var programadasPct   = programadasDenom === 0 ? 0 : Math.round((programadasNum / programadasDenom) * 100); // CA-17.1.3
+
+  // KPI-2 — Auditorías Reprogramadas — US-17.2 (CA-17.2.4: una sola vez por auditoría)
+  var reprogramadas = data.filter(function(r) { return r.reprogramada; }).length;
+
+  // KPI-3 — Completadas en Tiempo (%) — US-17.3
+  // Denominador: estatus Completado o posterior AND fechaCompromiso definida
+  // Numerador: del denominador, fechaCompletado <= fechaCompromiso
+  var completadasConCompromiso = data.filter(function(r) {
+    return ESTADOS_COMPLETADO_O_POSTERIOR[r.status] === 1 && r.fechaCompromisoObj;
+  });
+  var enTiempo = completadasConCompromiso.filter(function(r) { return r.completadoEnTiempo === 'Sí'; }).length;
+  var cierreEnTiempoPct = completadasConCompromiso.length === 0
+      ? null  // CA-17.3.3 — N/A
+      : Math.round((enTiempo / completadasConCompromiso.length) * 100);
+
+  return {
+    programadasNum: programadasNum, programadasDenom: programadasDenom, programadasPct: programadasPct,
+    reprogramadas: reprogramadas,
+    cierreEnTiempoPct: cierreEnTiempoPct,
+    enTiempoN: enTiempo, completadasN: completadasConCompromiso.length
+  };
+}
+
+// Semáforos sugeridos por tarjeta (cumplimiento del documento US-17.x)
+// US-17.1: Verde >=80%, Amarillo >=60 y <80, Rojo <60
+function lightK1(pct) { if (pct >= 80) return 'good'; if (pct >= 60) return 'warn'; return 'bad'; }
+// US-17.2: Verde 0-2, Amarillo 3-5, Rojo >=6
+function lightK2(n)   { if (n <= 2) return 'good'; if (n <= 5) return 'warn'; return 'bad'; }
+// US-17.3: Verde >=85%, Amarillo >=70 y <85, Rojo <70
+function lightK3(pct) { if (pct == null) return 'good'; if (pct >= 85) return 'good'; if (pct >= 70) return 'warn'; return 'bad'; }
+
+function renderKPIs(data) {
+  var k = computeKPIs(data);
+
+  // KPI-1 — Auditorías Programadas (Realizadas / Programadas)
+  setKPI('kpi1', k.programadasNum, k.programadasDenom, lightK1(k.programadasPct),
+    k.programadasDenom === 0
+      ? 'sin auditorías programadas en el alcance'   // CA-17.1.3
+      : '<b>' + k.programadasPct + '%</b> de cumplimiento del plan · base ' + k.programadasDenom);
+
+  // KPI-2 — Auditorías Reprogramadas (entero)
+  setKPI('kpi2', k.reprogramadas, null, lightK2(k.reprogramadas),
+    k.reprogramadas === 0
+      ? 'sin reprogramaciones registradas'           // CA-17.2.2
+      : 'auditorías con al menos un cambio de fecha de programación');
+
+  // KPI-3 — Completadas en Tiempo (%)
+  if (k.cierreEnTiempoPct == null) {
+    setKPI('kpi3', 'N/A', null, 'good', 'sin auditorías completadas con fecha compromiso'); // CA-17.3.3
+  } else {
+    setKPI('kpi3', k.cierreEnTiempoPct + '%', null, lightK3(k.cierreEnTiempoPct),
+      '<b>' + k.enTiempoN + '</b> de <b>' + k.completadasN + '</b> completadas en tiempo');
+  }
+}
+
+function setKPI(id, value, suffix, light, subHtml) {
+  var card = document.getElementById(id);
+  if (!card) return;
+  card.className = 'kpi-card kpi-card-' + (light === 'good' ? 'success' : light === 'warn' ? 'warn' : 'danger');
+  if (state.kpiFilter === card.dataset.filterKey) card.classList.add('active');
+
+  var valEl = card.querySelector('.kpi-value');
+  var newVal = String(value);
+  if (valEl.textContent !== newVal) {
+    valEl.textContent = newVal;
+    valEl.classList.remove('updated');
+    void valEl.offsetWidth;
+    valEl.classList.add('updated');
+    setTimeout(function(){ valEl.classList.remove('updated'); }, 600);
+  }
+
+  var sufEl = card.querySelector('.kpi-value-suffix');
+  if (suffix !== null && suffix !== undefined) { sufEl.textContent = '/ ' + suffix; sufEl.style.display = ''; }
+  else { sufEl.style.display = 'none'; }
+
+  var iconEl = card.querySelector('.kpi-icon');
+  var glyph = iconEl.textContent;
+  iconEl.className = 'kpi-icon icon-' + (light === 'good' ? 'success' : light === 'warn' ? 'warn' : 'danger');
+  iconEl.textContent = glyph;
+
+  var subEl = card.querySelector('.kpi-sub');
+  subEl.innerHTML = subHtml;
+}
+
+/* ---------- Render tabla ---------- */
+function renderTable() {
+  var filtered = getFiltered();
+  var sorted = getSorted(filtered);
+
+  var total = sorted.length;
+  var totalPages = Math.max(1, Math.ceil(total / state.pageSize));
+  if (state.page > totalPages) state.page = totalPages;
+  var startIdx = (state.page - 1) * state.pageSize;
+  var pageRows = sorted.slice(startIdx, startIdx + state.pageSize);
+
+  var tbody = document.getElementById('tbody');
+  tbody.innerHTML = '';
+
+  if (pageRows.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="15" style="text-align:center;padding:60px 20px;color:#9ca3af;font-size:13px;">Sin registros que coincidan con los filtros aplicados.</td></tr>';
+  } else {
+    pageRows.forEach(function(r) {
+      var tr = document.createElement('tr');
+      if (r.semaforo === 'rojo') tr.classList.add('row-critical');
+      else if (r.semaforo === 'amarillo') tr.classList.add('row-warning');
+
+      tr.addEventListener('click', function() {
+        document.querySelectorAll('tbody tr').forEach(function(x) { x.classList.remove('selected'); });
+        tr.classList.add('selected');
+      });
+
+      var caC = califClass(r.calificacion);
+      var repC = reprogramacionesClass(r.nReprogramaciones);
+      var objetivoShort = r.objetivo.length > 42 ? r.objetivo.slice(0, 42) + '…' : r.objetivo;
+      var dash = '<span style="color:#d1d5db">—</span>';
+
+      var tiempoCell;
+      if (r.completadoEnTiempo === 'Sí')      tiempoCell = '<span class="tiempo-pill good">Sí</span>';
+      else if (r.completadoEnTiempo === 'No') tiempoCell = '<span class="tiempo-pill bad">No</span>';
+      else                                    tiempoCell = '<span class="tiempo-pill na">N/A</span>';
+
+      tr.innerHTML =
+        '<td class="col-folio">' + r.folio + '</td>' +
+        '<td class="col-objetivo" title="' + escapeHtml(r.objetivo) + '">' + escapeHtml(objetivoShort) + '</td>' +
+        '<td><span class="tipo-chip ' + TIPO_CLASS[r.tipo] + '">' + r.tipo + '</span></td>' +
+        '<td class="col-auditor" title="' + escapeHtml(r.auditor) + '">' + r.auditor + '</td>' +
+        '<td class="col-area" title="' + escapeHtml(r.area) + '">' + r.area + '</td>' +
+        '<td class="col-auditado" title="' + escapeHtml(r.auditado) + '">' + r.auditado + '</td>' +
+        '<td><span class="badge ' + STATUS_BADGE[r.status] + '">' + r.status + '</span></td>' +
+        '<td class="col-num">' + (r.totalHallazgos === 0 ? dash : r.totalHallazgos) + '</td>' +
+        '<td class="col-num">' + (r.totalAcciones === 0
+            ? '<span class="ac-pill zero">—</span>'
+            : '<span class="ac-pill neutral">' + r.totalAcciones + '</span>') + '</td>' +
+        '<td class="col-num">' + (r.calificacion == null
+            ? dash
+            : '<span class="cierre-cell ' + caC + '"><span class="cierre-dot"></span>' + r.calificacion + '%</span>') + '</td>' +
+        '<td class="col-fecha">' + r.fechaCompromiso + '</td>' +
+        '<td class="col-fecha">' + r.fechaCompletado + '</td>' +
+        '<td class="col-num">' + tiempoCell + '</td>' +
+        '<td class="col-num"><span class="reprog-cell ' + repC + '">' +
+          (r.nReprogramaciones === 0 ? '<span class="reprog-zero">0</span>'
+             : '<span class="reprog-ico">↻</span>' + r.nReprogramaciones) +
+          '</span></td>' +
+        '<td class="col-actions">' +
+          '<button class="btn-action" data-folio="' + r.folio + '" data-act="detail" title="Ver detalle">👁 Ver Detalle</button>' +
+        '</td>';
+      tbody.appendChild(tr);
+    });
+
+    tbody.querySelectorAll('.btn-action').forEach(function(b) {
+      b.addEventListener('click', function(e) {
+        e.stopPropagation();
+        openDetalle(b.getAttribute('data-folio'));
+      });
+    });
+  }
+
+  document.getElementById('recCount').innerHTML = '<b>' + total + '</b> ' + (total === 1 ? 'registro' : 'registros');
+  renderPagination(total, totalPages);
+
+  // CA-10.2 — los KPI se recalculan con el alcance filtrado (sin aplicar kpiFilter sobre sí mismos)
+  var kpiBase = ALL_ROWS.filter(function(r) { return matchesPeriod(r) && matchesColFilters(r) && matchesSearch(r); });
+  renderKPIs(kpiBase);
+}
+
+function renderPagination(total, totalPages) {
+  var info = document.getElementById('pageInfo');
+  var startIdx = (state.page - 1) * state.pageSize + 1;
+  var endIdx = Math.min(state.page * state.pageSize, total);
+  info.innerHTML = total === 0 ? '0 de 0' : (startIdx + '-' + endIdx + ' de <b>' + total + '</b>');
+
+  var pageNumsHost = document.getElementById('pageNums');
+  pageNumsHost.innerHTML = '';
+  var maxBtns = 5;
+  var startP = Math.max(1, state.page - 2);
+  var endP = Math.min(totalPages, startP + maxBtns - 1);
+  startP = Math.max(1, endP - maxBtns + 1);
+  for (var p = startP; p <= endP; p++) {
+    var b = document.createElement('button');
+    b.className = 'pager-btn' + (p === state.page ? ' active' : '');
+    b.textContent = p;
+    (function(pp) { b.addEventListener('click', function() { state.page = pp; renderTable(); }); })(p);
+    pageNumsHost.appendChild(b);
+  }
+
+  document.getElementById('pageFirst').disabled = state.page === 1;
+  document.getElementById('pagePrev').disabled = state.page === 1;
+  document.getElementById('pageNext').disabled = state.page === totalPages;
+  document.getElementById('pageLast').disabled = state.page === totalPages;
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+/* ---------- Sort ---------- */
+function toggleSort(key) {
+  if (state.sortKey === key) state.sortDir *= -1;
+  else { state.sortKey = key; state.sortDir = 1; }
+  document.querySelectorAll('thead th[data-sort]').forEach(function(th) {
+    var ind = th.querySelector('.sort-ind');
+    if (ind) ind.textContent = '';
+  });
+  var th = document.querySelector('thead th[data-sort="' + key + '"]');
+  if (th) {
+    var ind = th.querySelector('.sort-ind');
+    if (ind) ind.textContent = state.sortDir === 1 ? ' ▲' : ' ▼';
+  }
+  renderTable();
+}
+
+/* ---------- KPI drill-down ---------- */
+var KPI_LABELS = {
+  programadas:   'Auditorías Programadas (vigentes)',
+  reprogramadas: 'Auditorías Reprogramadas',
+  enTiempo:      'Auditorías Completadas (en tiempo / fuera de tiempo)'
+};
+
+function toggleKpiFilter(key) {
+  state.kpiFilter = (state.kpiFilter === key) ? null : key;
+  state.page = 1;
+  updateKpiActiveStates();
+  updateFilterPill();
+  renderTable();
+}
+function updateKpiActiveStates() {
+  document.querySelectorAll('.kpi-card').forEach(function(c) {
+    if (c.dataset.filterKey === state.kpiFilter) c.classList.add('active');
+    else c.classList.remove('active');
+  });
+}
+function updateFilterPill() {
+  var pill = document.getElementById('filterPill');
+  if (state.kpiFilter) {
+    pill.classList.add('show');
+    document.getElementById('filterPillText').textContent = 'KPI: ' + KPI_LABELS[state.kpiFilter];
+  } else {
+    pill.classList.remove('show');
+  }
+}
+
+/* ---------- Limpiar filtros (CA-10.3) ---------- */
+function clearAllFilters() {
+  state.search = '';
+  state.kpiFilter = null;
+  state.colFilters = {};
+  state.page = 1;
+  document.getElementById('searchInput').value = '';
+  document.querySelectorAll('.col-filter').forEach(function(el) { el.value = ''; });
+  updateKpiActiveStates();
+  updateFilterPill();
+  renderTable();
+}
+
+/* ---------- Exportación (CA-10.4) ---------- */
+function toggleExportMenu(e) {
+  e.stopPropagation();
+  document.getElementById('exportMenu').classList.toggle('open');
+}
+
+var EXPORT_HEADERS = [
+  'Folio', 'Objetivo', 'Tipo', 'Auditor', 'Área Auditable', 'Auditado',
+  'Estatus', 'Total Hallazgos', 'Total Acciones Correctivas',
+  'Calificación / Resultado', 'Fecha Compromiso', 'Fecha Completado',
+  'Completado en Tiempo', 'N° Reprogramaciones'
+];
+function rowArr(r) {
+  return [
+    r.folio, r.objetivo, r.tipo, r.auditor, r.area, r.auditado,
+    r.status, r.totalHallazgos, r.totalAcciones,
+    r.calificacion == null ? '' : r.calificacion,
+    r.fechaCompromiso, r.fechaCompletado,
+    r.completadoEnTiempo, r.nReprogramaciones
+  ];
+}
+function csvEsc(v) {
+  var s = String(v);
+  return (s.indexOf(',') >= 0 || s.indexOf('"') >= 0 || s.indexOf('\n') >= 0)
+    ? '"' + s.replace(/"/g, '""') + '"' : s;
+}
+function exportCSV() {
+  document.getElementById('exportMenu').classList.remove('open');
+  var rows = getSorted(getFiltered());
+  var lines = [EXPORT_HEADERS.map(csvEsc).join(',')];
+  rows.forEach(function(r) { lines.push(rowArr(r).map(csvEsc).join(',')); });
+  var blob = new Blob(['\uFEFF' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8;' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a'); a.href = url; a.download = 'auditorias.csv'; a.click();
+  URL.revokeObjectURL(url);
+  showToast('CSV exportado (' + rows.length + ' registros)');
+}
+function exportExcel() {
+  document.getElementById('exportMenu').classList.remove('open');
+  var rows = getSorted(getFiltered());
+  var esc = function(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); };
+  var xml = '<?xml version="1.0" encoding="UTF-8"?>\n' +
+    '<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">\n' +
+    '<Styles>' +
+      '<Style ss:ID="H"><Font ss:Bold="1" ss:Color="#FFFFFF" ss:Size="11"/><Interior ss:Color="#1e3a5f" ss:Pattern="Solid"/><Alignment ss:Vertical="Center" ss:Horizontal="Center"/></Style>' +
+      '<Style ss:ID="S"><Interior ss:Color="#f8fafc" ss:Pattern="Solid"/></Style>' +
+    '</Styles>\n' +
+    '<Worksheet ss:Name="Auditorias"><Table>\n';
+  for (var c = 0; c < EXPORT_HEADERS.length; c++) {
+    xml += '<Column ss:AutoFitWidth="0" ss:Width="' + (c === 1 ? 280 : 120) + '"/>\n';
+  }
+  xml += '<Row>';
+  EXPORT_HEADERS.forEach(function(h) { xml += '<Cell ss:StyleID="H"><Data ss:Type="String">' + esc(h) + '</Data></Cell>'; });
+  xml += '</Row>\n';
+  rows.forEach(function(r, ri) {
+    var arr = rowArr(r);
+    var styleAttr = ri % 2 === 1 ? ' ss:StyleID="S"' : '';
+    xml += '<Row>';
+    arr.forEach(function(v, i) {
+      var isNum = (i === 7 || i === 8 || i === 9 || i === 13); // hallazgos, acciones, calificación, días
+      var t = (isNum && v !== '' ) ? 'Number' : 'String';
+      xml += '<Cell' + styleAttr + '><Data ss:Type="' + t + '">' + esc(String(v)) + '</Data></Cell>';
+    });
+    xml += '</Row>\n';
+  });
+  xml += '</Table></Worksheet></Workbook>';
+  var blob = new Blob([xml], { type: 'application/vnd.ms-excel;charset=utf-8;' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a'); a.href = url; a.download = 'auditorias.xls'; a.click();
+  URL.revokeObjectURL(url);
+  showToast('Excel exportado (' + rows.length + ' registros)');
+}
+
+/* ---------- Toast ---------- */
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.querySelector('.toast-text').textContent = msg;
+  t.classList.add('show');
+  setTimeout(function() { t.classList.remove('show'); }, 2400);
+}
+
+/* ---------- Modal detalle (US-23) ---------- */
+function openDetalle(folio) {
+  var r = ALL_ROWS.filter(function(x) { return x.folio === folio; })[0];
+  if (!r) return;
+
+  // CA-23.2 — cabecera: folio + nombre corto + breadcrumb
+  document.getElementById('modalTitle').innerHTML =
+    '<span class="folio-mono">' + r.folio + '</span> — <span class="modal-title-name">' + escapeHtml(shortName(r.objetivo)) + '</span>';
+  document.getElementById('modalSubtitle').innerHTML =
+    'Auditorías <span class="bc-sep">›</span> ' + escapeHtml(r.area.toUpperCase()) +
+    ' <span class="bc-sep">›</span> Ver Detalle';
+
+  // Cuerpo: criterios agrupando sus hallazgos, y cada hallazgo con sus acciones correctivas
+  var critBlocks = r.criterios.map(function(c) {
+    var clsCal = c.calificacion >= 85 ? 'good' : c.calificacion >= 70 ? 'warn' : 'bad';
+    var totalAccCrit = c.hallazgos.reduce(function(s, h) { return s + h.acciones.length; }, 0);
+    var headerMeta = c.hallazgos.length === 0
+      ? '<span class="crit-conforme">✓ Sin hallazgos · Conforme</span>'
+      : '<span class="crit-hallcount">' + c.hallazgos.length +
+          ' hallazgo' + (c.hallazgos.length === 1 ? '' : 's') +
+          ' · ' + totalAccCrit + ' acción' + (totalAccCrit === 1 ? '' : 'es') + ' correctiva' + (totalAccCrit === 1 ? '' : 's') +
+        '</span>';
+
+    var hallazgoCards = c.hallazgos.map(function(h) {
+      var accBody;
+      if (h.acciones.length === 0) {
+        accBody = '<div class="ac-empty">Sin acciones correctivas registradas</div>';
+      } else {
+        accBody = '<ol class="ac-list">' +
+          h.acciones.map(function(a) {
+            return '<li class="ac-item">' +
+                     '<span class="ac-num">AC&nbsp;' + a.num + '</span>' +
+                     '<div class="ac-main">' +
+                       '<div class="ac-desc">' + escapeHtml(a.descripcion) + '</div>' +
+                       '<div class="ac-meta">' +
+                         '<span class="ac-meta-item"><span class="ac-meta-k">Responsable</span>' + escapeHtml(a.responsable) + '</span>' +
+                         '<span class="ac-meta-item"><span class="ac-meta-k">Compromiso</span>' + a.fechaCompromiso + '</span>' +
+                       '</div>' +
+                     '</div>' +
+                     '<span class="ac-status"><span class="badge ' + ESTATUS_ACCION_BADGE[a.estatus] + '">' + a.estatus + '</span></span>' +
+                   '</li>';
+          }).join('') +
+        '</ol>';
+      }
+
+      var accCountLabel = h.acciones.length === 0
+        ? 'Sin acciones'
+        : h.acciones.length + ' acción' + (h.acciones.length === 1 ? '' : 'es') + ' correctiva' + (h.acciones.length === 1 ? '' : 's');
+
+      return '<article class="hh-card">' +
+               '<header class="hh-card-header">' +
+                 '<span class="hh-chip">H' + h.n + '</span>' +
+                 '<div class="hh-card-title">' +
+                   '<div class="hh-card-text">' + escapeHtml(h.hallazgo) + '</div>' +
+                   '<div class="hh-card-sub">' + accCountLabel + '</div>' +
+                 '</div>' +
+                 '<span class="hh-card-status"><span class="badge ' + ESTATUS_HALLAZGO_BADGE[h.estatusHallazgo] + '">' + h.estatusHallazgo + '</span></span>' +
+               '</header>' +
+               '<div class="hh-card-body">' + accBody + '</div>' +
+             '</article>';
+    }).join('');
+
+    return '<div class="crit-block">' +
+             '<div class="crit-block-header">' +
+               '<span class="crit-num">' + c.num + '</span>' +
+               '<span class="crit-text">' + escapeHtml(c.texto) + '</span>' +
+               '<span class="crit-cal ' + clsCal + '"><span class="crit-cal-dot"></span>' + c.calificacion + '%</span>' +
+             '</div>' +
+             '<div class="crit-block-meta">' + headerMeta + '</div>' +
+             (c.hallazgos.length ? '<div class="crit-block-body">' + hallazgoCards + '</div>' : '') +
+           '</div>';
+  }).join('');
+
+  document.getElementById('modalBody').innerHTML =
+    '<div class="det-objetivo">' + escapeHtml(shortName(r.objetivo).toUpperCase()) + '</div>' +
+    '<div class="det-grid">' +
+      '<div class="det-field"><span class="det-label">AUDITOR</span><span class="det-value">' + escapeHtml(r.auditor.toUpperCase()) + '</span></div>' +
+      '<div class="det-field"><span class="det-label">AUDITADO</span><span class="det-value">' + escapeHtml(r.auditado.toUpperCase()) + '</span></div>' +
+      '<div class="det-field"><span class="det-label">DEPARTAMENTO</span><span class="det-value">' + escapeHtml(r.area.toUpperCase()) + '</span></div>' +
+      '<div class="det-field"><span class="det-label">FECHA FIN</span><span class="det-value">' + r.fechaCompromiso + '</span></div>' +
+      '<div class="det-field det-field-full"><span class="det-label">ESTATUS</span>' +
+        '<span class="det-value"><span class="badge ' + STATUS_BADGE[r.status] + '">' + r.status + '</span></span>' +
+      '</div>' +
+    '</div>' +
+    '<div class="det-section-label">CRITERIOS EVALUADOS · CALIFICACIÓN · HALLAZGOS RELACIONADOS</div>' +
+    '<div class="crit-blocks">' + critBlocks + '</div>';
+
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function shortName(s) {
+  // Reduce objetivos largos a un nombre corto tipo "EJERCICIO CONTENIDOS"
+  if (!s) return '';
+  return s.length > 60 ? s.slice(0, 60) + '…' : s;
+}
+
+function closeDetalle(e) {
+  if (e && e.target.id !== 'modalOverlay' && !e.target.classList.contains('modal-close') && !e.target.classList.contains('btn-modal-secondary')) return;
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+
+/* ---------- Init ---------- */
+function init() {
+  // Fecha del header — siempre la del día (tiempo real)
+  (function() {
+    var el = document.getElementById('headerFecha');
+    if (!el) return;
+    var update = function() {
+      var hoy = new Date();
+      el.textContent = fmtDate(hoy);
+    };
+    update();
+    // Re-evaluar cada minuto por si el tablero queda abierto cruzando la medianoche
+    setInterval(update, 60000);
+  })();
+
+  document.getElementById('searchInput').addEventListener('input', function(e) {
+    state.search = e.target.value; state.page = 1; renderTable();
+  });
+  document.getElementById('btnClearFilters').addEventListener('click', clearAllFilters);
+
+  document.getElementById('btnExport').addEventListener('click', toggleExportMenu);
+  document.getElementById('exportCSV').addEventListener('click', exportCSV);
+  document.getElementById('exportXLS').addEventListener('click', exportExcel);
+  document.addEventListener('click', function() { document.getElementById('exportMenu').classList.remove('open'); });
+
+  document.querySelectorAll('thead th[data-sort]').forEach(function(th) {
+    th.addEventListener('click', function() { toggleSort(th.getAttribute('data-sort')); });
+  });
+
+  document.querySelectorAll('.col-filter').forEach(function(el) {
+    var key = el.getAttribute('data-key');
+    var handler = function() { state.colFilters[key] = el.value; state.page = 1; renderTable(); };
+    el.addEventListener('input', handler);
+    el.addEventListener('change', handler);
+  });
+
+  document.querySelectorAll('.kpi-card').forEach(function(c) {
+    c.addEventListener('click', function() { toggleKpiFilter(c.dataset.filterKey); });
+  });
+  document.getElementById('filterPillClear').addEventListener('click', function() {
+    state.kpiFilter = null;
+    updateKpiActiveStates(); updateFilterPill(); renderTable();
+  });
+
+  document.getElementById('pageFirst').addEventListener('click', function() { state.page = 1; renderTable(); });
+  document.getElementById('pagePrev').addEventListener('click',  function() { state.page = Math.max(1, state.page - 1); renderTable(); });
+  document.getElementById('pageNext').addEventListener('click',  function() { state.page = state.page + 1; renderTable(); });
+  document.getElementById('pageLast').addEventListener('click',  function() {
+    var total = getFiltered().length;
+    state.page = Math.max(1, Math.ceil(total / state.pageSize));
+    renderTable();
+  });
+  document.getElementById('pageSize').addEventListener('change', function(e) {
+    state.pageSize = parseInt(e.target.value, 10); state.page = 1; renderTable();
+  });
+
+  document.querySelectorAll('.period-tab').forEach(function(t) {
+    t.addEventListener('click', function() {
+      document.querySelectorAll('.period-tab').forEach(function(x) { x.classList.remove('active'); });
+      t.classList.add('active');
+      state.period = t.getAttribute('data-period') || 'todas';
+      state.page = 1; renderTable();
+    });
+  });
+
+  document.getElementById('modalOverlay').addEventListener('click', closeDetalle);
+  document.querySelector('.modal-close').addEventListener('click', closeDetalle);
+  document.querySelector('.btn-modal-secondary').addEventListener('click', closeDetalle);
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') document.getElementById('modalOverlay').classList.remove('open');
+  });
+
+  renderTable();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+
+</script>
+</body>
+</html>
