@@ -2701,6 +2701,13 @@
 <td>Por definir</td>
 <td>Por definir</td>
 </tr>
+<tr>
+<td>RF-31</td>
+<td>Firma móvil del listado de hallazgos</td>
+<td>Pendiente de definición</td>
+<td>Por definir</td>
+<td>Por definir</td>
+</tr>
 </tbody>
 </table>
 <hr />
@@ -2763,7 +2770,7 @@
 <tr>
 <td>RF25</td>
 <td>Sistema móvil — firma del listado de hallazgos en finalización</td>
-<td>Pendiente de definición</td>
+<td>RF-31</td>
 </tr>
 <tr>
 <td>RF26</td>
@@ -5578,6 +5585,35 @@ Entonces omite la nota de tiempo límite sin mostrar error ni bloquear el envío
 <hr />
 <p><strong>Regla transversal:</strong>
 El ContenedorCatalogo de días límite PDCA es la única fuente de verdad para el plazo de registro de ACs. La clave de búsqueda es Char1 del detalle, que debe coincidir exactamente con la clave del AreaAuditable de la Auditoría. Numerico1 debe ser siempre un entero mayor a cero; los valores nulos o no positivos son inválidos. Si no existe configuración para un departamento, el sistema omite la nota en el correo sin bloquear ninguna operación.</p>
+<hr />
+<hr />
+<h1 id="rf-31-firma-movil-del-listado-de-hallazgos">RF-31 — Firma móvil del listado de hallazgos<a class="headerlink" href="#rf-31-firma-movil-del-listado-de-hallazgos" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Alta</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Pendiente de definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>RF-14</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Descripción:</strong> El sistema móvil debe permitir firmar el listado de hallazgos detectados durante la finalización de la auditoría. Esta firma representa la aceptación formal del Auditado o del Auditor sobre los hallazgos registrados y queda asociada al registro de la auditoría como evidencia del proceso.</p>
+<blockquote>
+<p><strong>Nota:</strong> Los User Stories, Criterios de Aceptación, mecanismo de firma (trazo digital, biométrico, aceptación explícita), actor responsable de firmar (Auditado, Auditor o ambos), plataforma móvil soportada e integración con el flujo de estados requieren análisis y definición con el cliente antes de documentarse.</p>
+</blockquote>
 
 
 
@@ -5633,6 +5669,8 @@ El ContenedorCatalogo de días límite PDCA es la única fuente de verdad para e
       <script src="../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
         <script src="../../../../assets/javascripts/main-nav.js"></script>
+      
+        <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
       
     
   </body>

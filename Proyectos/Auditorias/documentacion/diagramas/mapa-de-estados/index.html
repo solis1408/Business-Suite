@@ -2307,6 +2307,93 @@
 
 
 <h1 id="mapa-de-estados">Mapa de Estados<a class="headerlink" href="#mapa-de-estados" title="Permanent link">&para;</a></h1>
+<pre class="mermaid"><code>stateDiagram-v2
+
+%% =====================================================
+%% FLUJO DE AUDITORÍA
+%% =====================================================
+
+[*] --&gt; Activo
+
+Activo --&gt; Cancelado : Manual
+Abierta --&gt; Cancelado : Manual
+En_Ejecucion --&gt; Cancelado : Manual
+Completado --&gt; Cancelado : Manual
+
+Activo --&gt; Abierta : Manual
+Abierta --&gt; En_Ejecucion : Manual
+
+En_Ejecucion --&gt; Completado : Manual
+
+%% Flujo sin hallazgos
+Completado --&gt; Finalizado : Sin Hallazgos (Automatico)
+
+%% Flujo con PDCA
+Completado --&gt; Registro_PDCA : Con Hallazgos (Automatico)
+
+Registro_PDCA --&gt; Entregado_PDCA : Manual
+
+Entregado_PDCA --&gt; PDCA_En_Ejecucion : Automatico
+
+PDCA_En_Ejecucion --&gt; PDCA_Finalizado : Todas las AC finalizadas (Automatico)
+PDCA_Finalizado --&gt; PDCA_Validación : Automatico
+
+PDCA_Validación --&gt; Registro_PDCA : Manual
+PDCA_Validación --&gt; Finalizado : Manual
+
+%% =====================================================
+%% ESTADOS Y NOTAS
+%% =====================================================
+state Activo
+note right of Activo
+    Auditoria Vigente
+end note
+
+state Cancelado
+note right of Cancelado
+    Auditoria Cancelada
+end note
+
+state Abierta
+note right of Abierta
+    Auditoría disponible para
+    InnoVapp
+end note
+
+state En_Ejecucion
+note right of En_Ejecucion
+    Auditoría en ejecución.
+end note
+
+state Completado
+note right of Completado
+    Auditoría concluyó su ejecución.
+end note
+
+state Registro_PDCA
+note right of Registro_PDCA
+    Registro de al menos una A.C. en la auditoría
+end note
+
+state PDCA_En_Ejecucion
+note right of PDCA_En_Ejecucion
+    Ejecución de al menos una A.C de la auditoría
+end note
+
+state PDCA_Finalizado
+note right of PDCA_Finalizado
+    Finalización de todas las A.C de la auditoría
+end note
+
+state PDCA_Validación
+note right of PDCA_Validación
+    Nueva auditoría de validación para Hallazgos
+end note
+
+state Finalizado
+note right of Finalizado
+    Auditoría finalizo AC y Hallagos.
+end note</code></pre>
 
 
 
@@ -2362,6 +2449,8 @@
       <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
         <script src="../../../../../assets/javascripts/main-nav.js"></script>
+      
+        <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
       
     
   </body>
