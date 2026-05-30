@@ -54,7 +54,7 @@ Registrar y versionar los requerimientos funcionales del módulo de Auditorías,
 | [RF-18](#rf-18--monitor-de-hallazgosacciones-correctivas) | Monitor de Hallazgos/Acciones Correctivas              | Definición            | Por definir | 27/06/2026     |
 | [RF-19](#rf-19--finalización-de-hallazgos-desde-el-monitor-de-acciones-correctivas) | Finalización de hallazgos desde el monitor de acciones correctivas | Definición | Por definir | 04/07/2026 |
 | [RF-20](#rf-20--registro-de-seguimiento-de-acciones-correctivas) | Registro de seguimiento de acciones correctivas | Definición          | Por definir | 11/07/2026     |
-| [RF-21](#rf-21--catálogo-de-semaforización-de-resultados-de-auditoría) | Catálogo de semaforización de resultados de Auditoría | Falcón               | Falcón | 02/06/2026 |
+| [RF-21](#rf-21--catálogo-de-colores-para-porcentajes-de-resultados) | Catálogo de colores para porcentajes de resultados | Falcón               | Falcón | 02/06/2026 |
 | [RF-22](#rf-22--configuración-de-departamento-del-auditado-para-gestión-de-hallazgos-y-acciones-correctivas) | Configuración de departamento del Auditado para gestión de hallazgos y acciones correctivas | Falcón               | Por definir | 02/06/2026     |
 | [RF-23](#rf-23--limitar-grid-de-hallazgos-y-acciones-correctivas) | Limitar grid de hallazgos y acciones correctivas | Falcón   | Por definir | 02/06/2026     |
 | [RF-24](#rf-24--reapertura-de-acciones-correctivas) | Reapertura de Acciones Correctivas           | Falcón      | Por definir | 03/06/2026     |
@@ -1592,7 +1592,6 @@ Semaforo sugerido:
 
 ---
 
-
 ## Reglas transversales (RT)
 
 RT-01 Filtros
@@ -1760,10 +1759,45 @@ Dado un escenario de operación normal
 Cuando se carga o recalcula el tablero
 Entonces se cumple: carga inicial ≤ 3 segundos y refresco ≤ 2 segundos.
 
-**CA-17.8.7**
-Dado que el usuario consulta el detalle de un registro del monitor
-Cuando abre la vista de detalle
-Entonces el sistema muestra una ventana flotante con datos generales de la auditoría y una única tabla que relaciona Hallazgo, Acción Correctiva y Estatus de la acción, conservando los filtros activos al cerrar.
+---
+
+## Detalle de Auditoría
+
+### US-17.9 — Ver detalle de auditoría desde el monitor
+
+Como Auditor
+Quiero abrir una ventana flotante con el detalle completo de una auditoría desde el monitor consolidado
+Para consultar criterios evaluados, hallazgos y acciones correctivas asociadas sin salir del monitor.
+
+**CA-17.9.1 — Apertura de la ventana flotante**
+Dado que el usuario hace clic en el botón "Detalles" de una fila del grid
+Cuando se ejecuta la acción
+Entonces se abre una ventana flotante sin salir del monitor ni perder los filtros activos.
+
+**CA-17.9.2 — Cabecera de la ventana**
+Dado que la ventana de detalle está abierta
+Cuando se muestra la cabecera
+Entonces se visualizan el Folio y Objetivo de la auditoría como título y el botón de cierre.
+
+**CA-17.9.3 — Datos generales de la auditoría**
+Dado que la ventana de detalle está abierta
+Cuando se muestra la sección de datos generales
+Entonces se visualizan: Auditor, Auditado, Departamento, Fecha Fin y Estatus como badge con el color correspondiente al estado.
+
+**CA-17.9.4 — Sección de criterios evaluados**
+Dado que la ventana de detalle está abierta
+Cuando se carga la sección principal bajo el encabezado "Criterios Evaluados · Calificación · Hallazgos Relacionados"
+Entonces se muestra un bloque por cada criterio evaluado con su número, enunciado, calificación porcentual con badge de color y el resumen de hallazgos y acciones correctivas asociados.
+
+**CA-17.9.5 — Hallazgos y acciones correctivas por criterio**
+Dado que el criterio evaluado tiene hallazgos asociados
+Cuando se despliega su contenido
+Entonces se muestra cada hallazgo con su identificador, descripción y estatus, y por cada hallazgo sus acciones correctivas con identificador, descripción, responsable, fecha compromiso y estatus.
+
+**CA-17.9.6 — Cierre y conservación de contexto**
+Dado que el usuario cierra la ventana mediante "Cerrar" o el botón X
+Cuando regresa al monitor
+Entonces se conservan búsqueda, filtros y ordenamiento aplicados previamente.
 
 ---
 
@@ -1888,18 +1922,18 @@ Entonces se muestra "esperando validación de cierre".
 
 ---
 
-### US-18.18 — Leyenda de contexto: KPIs por Auditado
+### US-18.6 — Leyenda de contexto: KPIs por Auditado
 
 Como Auditor
 Quiero que la sección de KPIs muestre una leyenda fija que indique que los indicadores corresponden al auditado
 Para interpretar correctamente el alcance de los datos visualizados sin ambigüedad.
 
-**CA-18.18.1**
+**CA-18.6.1**
 Dado que el usuario accede al monitor
 Cuando se visualizan las tarjetas KPI
 Entonces se muestra una leyenda estática y siempre visible con el texto: "Los indicadores corresponden al Auditado".
 
-**CA-18.18.2**
+**CA-18.6.2**
 Dado que la leyenda está visible
 Cuando se visualiza en cualquier tamaño de pantalla
 Entonces mantiene legibilidad y posición coherente respecto a las tarjetas KPI, tanto en escritorio como en móvil.
@@ -1908,13 +1942,13 @@ Entonces mantiene legibilidad y posición coherente respecto a las tarjetas KPI,
 
 ## Tabla y Filtros — Registro de Acciones Correctivas
 
-### US-18.6 — Visualizar tabla principal de Acciones Correctivas
+### US-18.7 — Visualizar tabla principal de Acciones Correctivas
 
 Como Auditor
 Quiero consultar el listado consolidado de auditorías con columnas de hallazgos y acciones
 Para realizar el seguimiento operativo del estado de cada auditoría.
 
-**CA-18.6.1**
+**CA-18.7.1**
 Dado que existen auditorías con hallazgos y acciones correctivas
 Cuando el usuario accede a la tabla
 Entonces se muestran las 14 columnas definidas a continuación.
@@ -1942,48 +1976,48 @@ Reglas funcionales de llenado:
 - Las columnas Total AC, AC en Ejecución y AC Finalizadas muestran "—" cuando la auditoría está en estatus Completado o Registro PDCA.
 - Cuando un dato no aplica, se muestra vacío controlado.
 
-**CA-18.6.2**
+**CA-18.7.2**
 Dado que una auditoría tiene estatus "Completado" o "Registro PDCA"
 Cuando el usuario la visualiza
 Entonces Total AC, AC en Ejecución y AC Finalizadas muestran "—" y no se interpretan como 0.
 
-**CA-18.6.3**
+**CA-18.7.3**
 Dado que la tabla ya está cargada
 Cuando cambia el conjunto de filas visibles (por búsqueda, filtros o limpieza de filtros)
 Entonces el contador muestra exactamente la cantidad de filas visibles en formato "N registros" y se actualiza automáticamente sin recargar la pantalla.
 
 ---
 
-### US-18.7 — Búsqueda global en la tabla
+### US-18.8 — Búsqueda global en la tabla
 
 Como cualquier usuario del monitor
 Quiero buscar registros con un campo de texto global
 Para localizar auditorías por folio, objetivo, auditado, departamento o estatus.
 
-**CA-18.7.1**
+**CA-18.8.1**
 Dado que el usuario escribe un término en el campo de búsqueda global
 Cuando la búsqueda se ejecuta
 Entonces la tabla muestra solo registros con el término en campos buscables.
 
 ---
 
-### US-18.8 — Filtros por columna
+### US-18.9 — Filtros por columna
 
 Como Auditor
 Quiero aplicar filtros por columna desde la fila bajo los encabezados
 Para acotar registros por fecha, departamento, rangos numéricos u otros criterios.
 
-**CA-18.8.1**
+**CA-18.9.1**
 Dado que el usuario escribe "GABRIEL" en el filtro de columna "Auditado"
 Cuando el filtro se aplica
 Entonces la tabla muestra solo registros cuyo Auditado contiene "GABRIEL".
 
-**CA-18.8.2**
+**CA-18.9.2**
 Dado que el usuario ingresa "5" en el filtro de "No. Hallazgos"
 Cuando el filtro se aplica
 Entonces la tabla muestra solo registros con No. Hallazgos = 5.
 
-**CA-18.8.3**
+**CA-18.9.3**
 Dado que el usuario selecciona "Sí" en el filtro de "PDCA En Tiempo"
 Cuando aplica la selección
 Entonces solo se muestran auditorías con PDCA entregado en tiempo.
@@ -1992,18 +2026,18 @@ Nota técnica: Tipos de filtro — Texto: Folio, Objetivo, Fecha Fin, Auditado, 
 
 ---
 
-### US-18.9 — Ordenar tabla por columna
+### US-18.10 — Ordenar tabla por columna
 
 Como cualquier usuario del monitor
 Quiero ordenar la tabla haciendo clic en cualquier encabezado
 Para organizar registros ascendente o descendentemente.
 
-**CA-18.9.1**
+**CA-18.10.1**
 Dado que el usuario hace clic en el encabezado "Fecha Fin"
 Cuando el orden se aplica
 Entonces la tabla se ordena ascendente y el encabezado muestra (↑).
 
-**CA-18.9.2**
+**CA-18.10.2**
 Dado que "Fecha Fin" está en orden ascendente
 Cuando el usuario hace clic nuevamente
 Entonces la tabla se ordena descendente y el encabezado muestra (↓).
@@ -2012,36 +2046,36 @@ Nota técnica: Toggle: sin orden → ascendente → descendente → sin orden. S
 
 ---
 
-### US-18.10 — Selección visual de fila
+### US-18.11 — Selección visual de fila
 
 Como cualquier usuario del monitor
 Quiero que al hacer clic en una fila ésta se resalte
 Para identificar el registro que reviso antes de abrir detalles.
 
-**CA-18.10.1**
+**CA-18.11.1**
 Dado que el usuario hace clic en una fila
 Cuando la selección se aplica
 Entonces la fila se resalta con fondo diferenciado hasta clic en otra.
 
-**CA-18.10.2**
+**CA-18.11.2**
 Dado que hay una fila seleccionada
 Cuando el usuario hace clic en otra
 Entonces la selección anterior se quita y la nueva queda resaltada.
 
 ---
 
-### US-18.11 — Limpiar todos los filtros
+### US-18.12 — Limpiar todos los filtros
 
 Como cualquier usuario del monitor
 Quiero limpiar todos los filtros con un solo botón
 Para regresar a la vista global sin borrar filtro por filtro.
 
-**CA-18.11.1**
+**CA-18.12.1**
 Dado que hay filtros de búsqueda, columna y estatus activos simultáneamente
 Cuando el usuario hace clic en "✕ Limpiar"
 Entonces búsqueda vacía, filtros de columna limpios, selector en "Todos" y la tabla muestra todos los registros.
 
-**CA-18.11.2**
+**CA-18.12.2**
 Dado que no hay ningún filtro activo
 Cuando el usuario hace clic en "✕ Limpiar"
 Entonces no ocurre ningún cambio visible.
@@ -2050,124 +2084,203 @@ Entonces no ocurre ningún cambio visible.
 
 ## Detalle y Seguimiento
 
-US-18.12 — Ver detalle integral de auditoría (ventana flotante)
+**US-18.13 — Ver detalle integral de auditoría (ventana flotante)**
 
 Como Auditor Líder
-Quiero abrir una ventana flotante desde el botón "Detalles"
-Para consultar en una sola vista los datos generales de la auditoría, sus hallazgos y las acciones correctivas relacionadas con su estatus.
+Quiero abrir una ventana flotante con el detalle completo de una auditoría desde el monitor de hallazgos y acciones correctivas
+Para consultar criterios evaluados, hallazgos y acciones correctivas asociadas, y finalizar hallazgos elegibles sin salir del monitor.
 
-CA-18.12.1
+**CA-18.13.1 — Apertura de la ventana flotante**
 Dado que el usuario hace clic en el botón "Detalles" de una fila
 Cuando se ejecuta la acción
-Entonces se abre una ventana flotante sin salir del monitor ni perder filtros activos.
+Entonces se abre una ventana flotante sin salir del monitor ni perder los filtros activos.
 
-CA-18.12.2
+**CA-18.13.2 — Cabecera de la ventana**
 Dado que la ventana de detalle está abierta
 Cuando se muestra la cabecera
-Entonces se visualizan datos generales de la auditoría: Folio, Objetivo, Fecha Fin, Auditor, Auditado, Departamento, Criterios Evaluados en la auditoría y Estatus.
+Entonces se visualizan el Folio y Objetivo de la auditoría como título y el botón de cierre.
 
-CA-18.12.3
+**CA-18.13.3 — Datos generales de la auditoría**
 Dado que la ventana de detalle está abierta
-Cuando se carga la sección de detalle
-Entonces se muestra una única tabla que relaciona cada Hallazgo con su Acción Correctiva y el Estatus actual de la acción.
+Cuando se muestra la sección de datos generales
+Entonces se visualizan: Auditor, Auditado, Departamento, Fecha Fin y Estatus como badge con el color correspondiente al estado.
 
-CA-18.12.4
+**CA-18.13.4 — Sección de criterios evaluados**
 Dado que la ventana de detalle está abierta
-Cuando el usuario la cierra
-Entonces regresa al monitor conservando búsqueda, filtros y ordenamiento aplicados.
+Cuando se carga la sección principal bajo el encabezado "Criterios Evaluados · Calificación · Hallazgos Relacionados"
+Entonces se muestra un bloque por cada criterio evaluado con su número, enunciado, calificación porcentual con badge de color y el resumen de hallazgos y acciones correctivas asociados.
+
+**CA-18.13.5 — Hallazgos y acciones correctivas por criterio**
+Dado que el criterio evaluado tiene hallazgos asociados
+Cuando se despliega su contenido
+Entonces se muestra cada hallazgo con su identificador, descripción y estatus, y por cada hallazgo sus acciones correctivas con identificador, descripción, responsable, fecha compromiso y estatus.
+
+**CA-18.13.6 — Finalización de hallazgos elegibles**
+Dado que un hallazgo cumple las reglas de elegibilidad definidas en RF-19
+Cuando se renderiza dentro de la ventana
+Entonces se muestra la acción "Finalizar Hallazgo" y su ejecución sigue el comportamiento completo especificado en US-19.1.
+
+**CA-18.13.7 — Cierre y conservación de contexto**
+Dado que el usuario cierra la ventana mediante "Cerrar" o el botón X
+Cuando regresa al monitor
+Entonces se conservan búsqueda, filtros y ordenamiento aplicados, reflejando cualquier cambio de estatus ocurrido dentro de la ventana.
+
+---
+
+## Seguimiento
+
+### US-18.14 — Consultar historial de seguimientos desde el monitor
+
+Como Auditor o Coordinador
+Quiero abrir el panel de seguimientos de una auditoría directamente desde el monitor
+Para revisar el historial de avances documentados sin salir del contexto del monitor.
+
+**CA-18.14.1 — Apertura del panel**
+Dado que el usuario hace clic en la acción de seguimiento de una fila del grid
+Cuando se ejecuta la acción
+Entonces se abre un panel lateral con el folio y objetivo de la auditoría como encabezado de contexto, sin perder filtros ni posición en el monitor.
+
+**CA-18.14.2 — Visualización del historial**
+Dado que la auditoría tiene registros de seguimiento previos
+Cuando se carga el panel
+Entonces se muestran en orden cronológico descendente con usuario, fecha y hora y comentario.
+
+**CA-18.14.3 — Estado vacío controlado**
+Dado que la auditoría no tiene registros de seguimiento
+Cuando se carga el panel
+Entonces el sistema muestra un estado vacío con mensaje informativo y el formulario de nuevo seguimiento disponible.
+
+**CA-18.14.4 — Cierre sin pérdida de contexto**
+Dado que el usuario cierra el panel
+Cuando regresa al monitor
+Entonces se conservan búsqueda, filtros y ordenamiento activos.
+
+---
+
+### US-18.15 — Registrar nuevo seguimiento desde el panel
+
+Como Auditor o Coordinador
+Quiero registrar un avance con comentario y evidencia opcional desde el panel de seguimiento
+Para documentar el estado de las acciones correctivas en el momento en que ocurre.
+
+**CA-18.15.1 — Registro exitoso**
+Dado que el usuario escribe un comentario válido y hace clic en "Registrar seguimiento"
+Cuando el sistema procesa la solicitud
+Entonces el nuevo registro aparece al inicio del historial con fecha-hora actual, nombre del usuario autenticado y el comentario capturado.
+
+**CA-18.15.2 — Limpieza del formulario**
+Dado que el registro fue exitoso
+Cuando se confirma la operación
+Entonces el formulario se limpia y queda disponible para un nuevo registro.
+
+**CA-18.15.3 — Validación de comentario vacío**
+Dado que el campo comentario está vacío
+Cuando el usuario intenta registrar
+Entonces el sistema muestra mensaje de validación y no registra nada.
+
 
 ---
 
 ## Exportación
 
-### US-18.13 — Exportar tabla a Excel (XLSX)
+### US-18.16 — Exportar tabla a Excel (XLSX)
 
 Como Coordinador de Calidad o Dirección
 Quiero exportar los registros visibles en formato Excel
 Para generar reportes formales con formato enriquecido respetando los filtros activos.
 
-**CA-18.13.1**
+**CA-18.16.1**
 Dado que hay filtros activos
 Cuando el usuario selecciona "Excel (XLSX)"
 Entonces descarga .xlsx con los registros visibles, columna "Seguimiento" incluida.
 
-**CA-18.13.2**
+**CA-18.16.2**
 Dado que el archivo se genera exitosamente
 Cuando se exporta
 Entonces se muestra toast "N registros exportados" que desaparece en ~2.5 seg.
 
-**CA-18.13.3**
+**CA-18.16.3**
 Dado que no hay filtros activos
 Cuando el usuario selecciona "Excel (XLSX)"
 Entonces el archivo contiene todos los registros del monitor.
 
-**CA-18.13.4**
+**CA-18.16.4**
 Dado que la tabla está en estado vacío
 Cuando el usuario intenta exportar
 Entonces muestra "No hay registros para exportar" y no genera archivo.
+
+**CA-18.16.5 — Formato de la columna Seguimiento**
+Dado que el archivo Excel incluye registros con seguimientos registrados
+Cuando el sistema construye la columna "Seguimiento"
+Entonces cada entrada se representa con el formato `[DD/MM/YYYY HH:MM - Nombre Usuario] Comentario`, las entradas múltiples se separan con " | " y se ordenan cronológicamente de forma ascendente en una sola celda.
+
+**CA-18.16.6 — Celda vacía cuando no hay seguimientos**
+Dado que un registro no tiene seguimientos registrados
+Cuando se incluye en el archivo Excel
+Entonces la celda de la columna "Seguimiento" queda vacía para ese registro.
 
 ---
 
 ## Calidad Transversal
 
-### US-18.15 — Filtro bidireccional KPI-Grid
+### US-18.17 — Filtro bidireccional KPI-Grid
 
 Como Auditor
 Quiero que los KPIs se comporten como filtros clicables y que los filtros de tabla recalculen los KPIs
 Para analizar el comportamiento del subconjunto de registros dinámicamente.
 
-**CA-18.15.1**
+**CA-18.17.1**
 Dado que el usuario hace clic en una tarjeta KPI
 Cuando el clic se ejecuta
 Entonces la tabla muestra únicamente los registros que explican ese indicador.
 
-**CA-18.15.2**
+**CA-18.17.2**
 Dado que existe un filtro KPI activo
 Cuando el usuario visualiza la tabla
 Entonces la tarjeta se resalta (borde azul) y un badge muestra el nombre del KPI con botón "✕" para limpiar.
 
-**CA-18.15.3**
+**CA-18.17.3**
 Dado que el usuario aplica un filtro en la tabla
 Cuando el filtro se ejecuta
 Entonces los 5 KPIs se recalculan considerando únicamente los registros visibles.
 
-**CA-18.15.4**
+**CA-18.17.4**
 Dado que hay filtros activos
 Cuando el usuario hace clic en "✕ Limpiar"
 Entonces los KPIs regresan a valores globales y la tabla muestra todos los registros.
 
 ---
 
-### US-18.16 — Comportamiento responsivo del monitor
+### US-18.18 — Comportamiento responsivo del monitor
 
 Como usuario de escritorio o dispositivo móvil
 Quiero que el monitor sea funcional en distintos tamaños de pantalla
 Para consultar el estado desde cualquier dispositivo.
 
-**CA-18.16.1**
+**CA-18.18.1**
 Dado que el usuario accede desde escritorio (>= 1024px)
 Cuando la pantalla carga
 Entonces los 5 KPIs se muestran en fila horizontal y la tabla es visible con scroll horizontal si se requiere.
 
-**CA-18.16.2**
+**CA-18.18.2**
 Dado que el usuario accede desde móvil (< 768px)
 Cuando la pantalla carga
 Entonces los KPIs se adaptan en layout de 2-3 por fila, la tabla tiene scroll horizontal habilitado y modales/drawers ocupan el ancho completo.
 
 ---
 
-### US-18.17 — Animación de valores en KPIs
+### US-18.19 — Animación de valores en KPIs
 
 Como Auditor
 Quiero que los valores de KPIs se animen al cambiar
 Para percibir claramente cuándo los indicadores se actualizan.
 
-**CA-18.17.1**
+**CA-18.19.1**
 Dado que un filtro modifica el valor de un KPI
 Cuando los KPIs se recalculan
 Entonces los valores se animan con efecto contador (< 500 ms).
 
-**CA-18.17.2**
+**CA-18.19.2**
 Dado que un filtro no modifica ningún KPI
 Cuando se verifica
 Entonces los valores permanecen estáticos.
