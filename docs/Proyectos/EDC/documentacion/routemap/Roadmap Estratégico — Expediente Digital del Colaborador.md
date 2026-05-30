@@ -12,7 +12,7 @@ Construir la base central del expediente digital del colaborador y la administra
 
 ### Gestión del Colaborador
 
-- 🆕 Información personal
+- 🔄 Información personal
 - 🆕 Información laboral
 - 🆕 Datos de dirección
 - 🆕 Datos de contacto

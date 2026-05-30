@@ -188,6 +188,16 @@
   background: rgba(63, 81, 181, 0.08);
 }
 
+/* Compensa la segunda barra sticky (bs-main-nav) en la navegación por anchors */
+.md-content h1,
+.md-content h2,
+.md-content h3,
+.md-content h4,
+.md-content h5,
+.md-content h6 {
+  scroll-margin-top: calc(var(--md-header-height) + 3.5rem);
+}
+
 /* Oculta tabla de contenidos (sidebar derecho) */
 .md-sidebar--secondary {
   display: none !important;

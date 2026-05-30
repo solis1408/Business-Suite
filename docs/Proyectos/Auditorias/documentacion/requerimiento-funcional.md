@@ -34,37 +34,37 @@ Registrar y versionar los requerimientos funcionales del módulo de Auditorías,
 
 | RF           | Título                                       | Estado                | Asignado | Fecha estimada |
 |--------------|----------------------------------------------|-----------------------|----------|----------------|
-| RF-01        | Esquema de colores por estatus               | Completado            | Jiri Karell | N/A |
-| RF-02        | Gestión de fechas en Auditoría               | Completado            | Jiri Karell | N/A |
-| RF-03        | Generación automática de Plan al crear Auditoría | Completado        | Jiri Karell | N/A |
-| RF-04        | Reprogramación de Auditoría                  | Completado            | Jiri Karell | N/A |
-| RF-05        | Sincronización de estatus Plan ↔ Auditoría  | Completado            | Jiri Karell | N/A |
-| RF-06        | Calendario de planes en detalle de Auditoría | Completado            | Jiri Karell | N/A |
-| RF-07        | Reporte Resumen de Auditoría por Criterio   | En Proceso           | Falcon | Por definir |
-| RF-08        | Vista calendario multi-mes                  | Pendiente             | Por definir | Por definir |
-| RF-09        | Hallazgos con ítems expandidos              | Completado            | Jiri Karell | N/A |
-| RF-10        | Histórico de reprogramaciones en calendario  | Completado            | Jiri Karell | N/A |
-| RF-11        | Notificación por correo electrónico con resumen de auditoría | Pendiente | Falcon | 30/06/2026     |
-| RF-12        | Gestión del catálogo de Grupos de Criterios  | Completado            | Jiri Karell | N/A |
-| RF-13        | Segmentación por departamento en catálogos, procesos y monitores | Completado | Jiri Karell | N/A |
-| RF-14        | Flujo base de estados de Auditoría           | En Proceso            | Jiri Karell | 29/06/2026 |
-| RF-15        | Ciclo PDCA — Seguimiento y cierre de hallazgos | En Proceso | Jiri Karell | 29/06/2026     |
-| RF-16        | Bitácora de estados de Auditoría             | En Proceso  | Jiri Karell | 29/06/2026 |
-| RF-17        | Monitor consolidado de Auditorías            | Validación funcional  | Por definir | 15/06/2026     |
-| RF-18        | Monitor de Hallazgos/Acciones Correctivas              | Definición            | Por definir | 27/06/2026     |
-| RF-19        | Finalización de hallazgos desde el monitor de acciones correctivas | Definición | Por definir | 04/07/2026 |
-| RF-20        | Registro de seguimiento de acciones correctivas | Definición          | Por definir | 11/07/2026     |
-| RF-21        | Catálogo de colores para porcentajes de resultados | Falcón               | Falcón | 02/06/2026 |
-| RF-22        | Configuración de departamento del Auditado para gestión de hallazgos y acciones correctivas | Falcón               | Por definir | 02/06/2026     |
-| RF-23        | Limitar grid de hallazgos y acciones correctivas | Falcón   | Por definir | 02/06/2026     |
-| RF-24        | Reapertura de Acciones Correctivas           | Falcón      | Por definir | 03/06/2026     |
-| RF-25        | Aplicación del catálogo de colores en resultados de Auditoría | Definición | Por definir | Por definir |
-| RF-26        | Aplicación del catálogo de colores en monitores de Auditoría y Acciones Correctivas | Definición | Por definir | Por definir |
-| RF-27        | Clasificación de Tipo de Auditoría como programada           | Definición            | Por definir | 04/06/2026     |
-| RF-28        | Clasificación de Tipo de Hallazgo como alto impacto          | Definición            | Por definir | 04/06/2026 |
-| RF-29        | Auditoría de validación del ciclo PDCA                       | Definición            | Por definir | Por definir |
-| RF-30        | Configuración de días límite para registro de acciones correctivas | Definición       | Por definir | Por definir |
-| RF-31        | Firma móvil del listado de hallazgos                         | Pendiente de definición | Por definir | Por definir |
+| [RF-01](#rf-01--esquema-de-colores-por-estatus) | Esquema de colores por estatus               | Completado            | Jiri Karell | N/A |
+| [RF-02](#rf-02--gestión-de-fechas-en-auditoría) | Gestión de fechas en Auditoría               | Completado            | Jiri Karell | N/A |
+| [RF-03](#rf-03--generación-automática-de-plan-al-crear-auditoría) | Generación automática de Plan al crear Auditoría | Completado        | Jiri Karell | N/A |
+| [RF-04](#rf-04--reprogramación-de-auditoría) | Reprogramación de Auditoría                  | Completado            | Jiri Karell | N/A |
+| [RF-05](#rf-05--sincronización-de-estatus-plan--auditoría) | Sincronización de estatus Plan ↔ Auditoría  | Completado            | Jiri Karell | N/A |
+| [RF-06](#rf-06--calendario-de-planes-en-detalle-de-auditoría) | Calendario de planes en detalle de Auditoría | Completado            | Jiri Karell | N/A |
+| [RF-07](#rf-07--reporte-resumen-de-auditoría-por-criterio) | Reporte Resumen de Auditoría por Criterio   | En Proceso           | Falcon | Por definir |
+| [RF-08](#rf-08--vista-calendario-multi-mes) | Vista calendario multi-mes                  | Pendiente             | Por definir | Por definir |
+| [RF-09](#rf-09--hallazgos-con-ítems-expandidos) | Hallazgos con ítems expandidos              | Completado            | Jiri Karell | N/A |
+| [RF-10](#rf-10--histórico-de-reprogramaciones-en-calendario) | Histórico de reprogramaciones en calendario  | Completado            | Jiri Karell | N/A |
+| [RF-11](#rf-11--notificación-por-correo-electrónico-con-resumen-de-auditoría) | Notificación por correo electrónico con resumen de auditoría | Pendiente | Falcon | 30/06/2026     |
+| [RF-12](#rf-12--gestión-del-catálogo-de-grupos-de-criterios) | Gestión del catálogo de Grupos de Criterios  | Completado            | Jiri Karell | N/A |
+| [RF-13](#rf-13--segmentación-por-departamento-en-catálogos-procesos-y-monitores) | Segmentación por departamento en catálogos, procesos y monitores | Completado | Jiri Karell | N/A |
+| [RF-14](#rf-14--flujo-base-de-estados-de-auditoría) | Flujo base de estados de Auditoría           | En Proceso            | Jiri Karell | 29/06/2026 |
+| [RF-15](#rf-15--ciclo-pdca--seguimiento-y-cierre-de-hallazgos) | Ciclo PDCA — Seguimiento y cierre de hallazgos | En Proceso | Jiri Karell | 29/06/2026     |
+| [RF-16](#rf-16--bitácora-de-estados-de-auditoría) | Bitácora de estados de Auditoría             | En Proceso  | Jiri Karell | 29/06/2026 |
+| [RF-17](#rf-17--monitor-consolidado-de-auditorías) | Monitor consolidado de Auditorías            | Validación funcional  | Por definir | 15/06/2026     |
+| [RF-18](#rf-18--monitor-de-hallazgosacciones-correctivas) | Monitor de Hallazgos/Acciones Correctivas              | Definición            | Por definir | 27/06/2026     |
+| [RF-19](#rf-19--finalización-de-hallazgos-desde-el-monitor-de-acciones-correctivas) | Finalización de hallazgos desde el monitor de acciones correctivas | Definición | Por definir | 04/07/2026 |
+| [RF-20](#rf-20--registro-de-seguimiento-de-acciones-correctivas) | Registro de seguimiento de acciones correctivas | Definición          | Por definir | 11/07/2026     |
+| [RF-21](#rf-21--catálogo-de-semaforización-de-resultados-de-auditoría) | Catálogo de semaforización de resultados de Auditoría | Falcón               | Falcón | 02/06/2026 |
+| [RF-22](#rf-22--configuración-de-departamento-del-auditado-para-gestión-de-hallazgos-y-acciones-correctivas) | Configuración de departamento del Auditado para gestión de hallazgos y acciones correctivas | Falcón               | Por definir | 02/06/2026     |
+| [RF-23](#rf-23--limitar-grid-de-hallazgos-y-acciones-correctivas) | Limitar grid de hallazgos y acciones correctivas | Falcón   | Por definir | 02/06/2026     |
+| [RF-24](#rf-24--reapertura-de-acciones-correctivas) | Reapertura de Acciones Correctivas           | Falcón      | Por definir | 03/06/2026     |
+| [RF-25](#rf-25--aplicación-del-catálogo-de-colores-en-resultados-de-auditoría) | Aplicación del catálogo de colores en resultados de Auditoría | Definición | Por definir | Por definir |
+| [RF-26](#rf-26--aplicación-del-catálogo-de-colores-en-monitores-de-auditoría-y-acciones-correctivas) | Aplicación del catálogo de colores en monitores de Auditoría y Acciones Correctivas | Definición | Por definir | Por definir |
+| [RF-27](#rf-27--clasificación-de-tipo-de-auditoría-como-programada) | Clasificación de Tipo de Auditoría como programada           | Definición            | Por definir | 04/06/2026     |
+| [RF-28](#rf-28--clasificación-de-tipo-de-hallazgo-como-alto-impacto) | Clasificación de Tipo de Hallazgo como alto impacto          | Definición            | Por definir | 04/06/2026 |
+| [RF-29](#rf-29--auditoría-de-validación-del-ciclo-pdca) | Auditoría de validación del ciclo PDCA                       | Definición            | Por definir | Por definir |
+| [RF-30](#rf-30--configuración-de-días-límite-para-registro-de-acciones-correctivas) | Configuración de días límite para registro de acciones correctivas | Definición       | Por definir | Por definir |
+| [RF-31](#rf-31--firma-móvil-del-listado-de-hallazgos) | Firma móvil del listado de hallazgos                         | Pendiente de definición | Por definir | Por definir |
 
 ---
 
@@ -2341,7 +2341,7 @@ Entonces muestra únicamente los seguimientos de ese folio.
 
 ---
 
-# RF-21 — Catálogo de colores para porcentajes de resultados
+# RF-21 — Catálogo de semaforización de resultados de Auditoría
 
 | Campo          | Valor                    |
 |----------------|--------------------------|
@@ -2349,63 +2349,30 @@ Entonces muestra únicamente los seguimientos de ese folio.
 | Estado         | Definición               |
 | Dependencias   | RF-13                    |
 
-**Descripción:** El sistema debe permitir administrar un catálogo de colores por rango porcentual de resultado, segmentado por departamento, para definir de forma parametrizable la semaforización visual de cumplimiento usada en auditorías y monitores.
+**Descripción:** El sistema debe permitir registrar un ContenedorCatalogo destinado a parametrizar la semaforización visual de resultados de auditoría por departamento, para que el administrador pueda configurar los criterios de color sin necesidad de modificar código.
 
 ---
 
-## US-21.1 — Registrar contenedor de catálogo de colores por departamento
+## US-21.1 — Registro del ContenedorCatalogo de semaforización
 
 Como administrador funcional del módulo
-Quiero registrar un contenedor de catálogo de colores por departamento
-Para parametrizar los rangos y colores de evaluación sin depender de valores hardcodeados.
+Quiero registrar el ContenedorCatalogo de semaforización de resultados
+Para disponer de una fuente de configuración administrable que el sistema consuma al evaluar resultados de auditoría.
 
 **CA-21.1.1**
-Dado que el usuario crea un contenedor de catálogo de colores
-Cuando captura la clave y descripción
-Entonces el sistema valida que ambos datos sean obligatorios y que la clave no se repita.
+Dado que el administrador accede al catálogo de semaforización
+Cuando registra el contenedor
+Entonces el sistema permite capturar los datos del ContenedorCatalogo y asociarle al menos un detalle antes de guardar.
 
 **CA-21.1.2**
-Dado que el usuario define el contenedor
-Cuando selecciona la propiedad de visualización del detalle
-Entonces el sistema permite configurar el campo de despliegue para los elementos del catálogo.
-
-**CA-21.1.3**
-Dado que el usuario guarda el contenedor
-Cuando no existe al menos un detalle asociado
-Entonces el sistema no permite guardar y muestra validación de captura mínima.
-
----
-
-## US-21.2 — Registrar detalle de rangos y color
-
-Como administrador funcional del módulo
-Quiero registrar renglones de detalle con límites porcentuales y color
-Para clasificar resultados por rangos de cumplimiento.
-
-**CA-21.2.1**
-Dado que el usuario registra un detalle
-Cuando captura el rango porcentual
-Entonces el sistema valida límite inferior y superior dentro de 0 a 100.
-
-**CA-21.2.2**
-Dado que el usuario registra varios rangos en el mismo departamento
-Cuando guarda el detalle
-Entonces el sistema valida que no existan traslapes entre rangos activos.
-
-**CA-21.2.3**
-Dado que el usuario define un detalle
-Cuando captura el color a aplicar
-Entonces el sistema exige un identificador de color válido (nombre o código hexadecimal).
-
-**CA-21.2.4**
-Dado que el usuario consulta el catálogo
-Cuando visualiza los detalles registrados
-Entonces observa rango, color y descripción de forma legible y consistente.
+Dado que el administrador intenta guardar el ContenedorCatalogo sin detalles asociados
+Cuando el sistema valida
+Entonces rechaza el guardado y muestra mensaje de captura mínima requerida.
 
 ---
 
 **Regla transversal:**
-La parametrización del catálogo de colores es dato maestro. Su administración se realiza por departamento y su consumo funcional se define en RF-25 (auditoría) y RF-26 (monitores). El sistema recupera únicamente la configuración vigente del departamento del usuario; si no existe configuración para ese departamento, aplica comportamiento controlado (sin color o color neutro) sin bloquear la operación. No se permite lógica de color fija cuando exista configuración vigente.
+RF-21 cubre únicamente el registro del contenedor de configuración. La aplicación de la semaforización en resultados de auditoría se define en RF-25 y en monitores en RF-26.
 
 ---
 
