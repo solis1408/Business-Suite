@@ -18,7 +18,6 @@ extra_css:
 
 extra_javascript:
   - assets/javascripts/main-nav.js
-  - https://unpkg.com/mermaid/dist/mermaid.min.js
 
 nav:
   - Inicio: index.md
