@@ -45,6 +45,12 @@ nav:
         - Monitor Acciones Correctivas: Proyectos/Auditorias/documentacion/prototipos/prototipo-1.md
         - Monitor Auditorias: Proyectos/Auditorias/documentacion/prototipos/prototipo-2.md
         - Reporte Resumen: Proyectos/Auditorias/documentacion/prototipos/prototipo-3.md
+    - Estatus de Tickets:
+      - Requerimiento Cliente: Proyectos/EstatusTickets/documentacion/requerimiento-cliente.md
+      - Requerimiento Funcional: Proyectos/EstatusTickets/documentacion/requerimiento-funcional.md
+      - Diagramas:
+        - Contexto: Proyectos/EstatusTickets/documentacion/diagramas/contexto.md
+        - Mapa de estados: Proyectos/EstatusTickets/documentacion/diagramas/mapa-de-estados.md
   - Documentación BSuite:
     - Catálogos:
       - Gestión TI:
