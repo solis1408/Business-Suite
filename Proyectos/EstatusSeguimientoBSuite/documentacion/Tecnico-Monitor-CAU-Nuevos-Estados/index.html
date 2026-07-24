@@ -1,0 +1,4228 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentación BRD y FSD - Business Suite">
+      
+      
+        <meta name="author" content="solis1408">
+      
+      
+        <link rel="canonical" href="https://solis1408.github.io/Business-Suite/Proyectos/EstatusSeguimientoBSuite/documentacion/Tecnico-Monitor-CAU-Nuevos-Estados/">
+      
+      
+        <link rel="prev" href="../Funcionales-Monitor-CAU-Nuevos-Estados/">
+      
+      
+        <link rel="next" href="../../../../BSuite/Catalogos/Gestion-TI/documentacion/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Técnico - Business Suite - Documentación</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main-nav.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#documento-técnico--monitor-cau-nuevos-estados" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../../../.." title="Business Suite - Documentación" class="md-header__button md-logo" aria-label="Business Suite - Documentación" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Business Suite - Documentación
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Técnico
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Business Suite - Documentación" class="md-nav__button md-logo" aria-label="Business Suite - Documentación" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Business Suite - Documentación
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Proyectos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Proyectos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Expediente de Personal (EDC)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Expediente de Personal (EDC)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../EDC/documentacion/requerimiento-cliente/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requerimiento Cliente
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../EDC/documentacion/requerimiento-funcional/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requerimiento Funcional
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1_3" id="__nav_2_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RouteMap
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    RouteMap
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../EDC/documentacion/routemap/Roadmap%20Estrat%C3%A9gico%20%E2%80%94%20Expediente%20Digital%20del%20Colaborador/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RouteMap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../EDC/documentacion/routemap/roadmap-diagrama/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diagrama HTML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1_4" id="__nav_2_1_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diagramas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Diagramas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../EDC/documentacion/diagramas/contexto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contexto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../EDC/documentacion/diagramas/mapa-de-estados/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mapa de estados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1_5" id="__nav_2_1_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prototipos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Prototipos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../EDC/documentacion/prototipos/prototipo-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prototipo 1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../EDC/documentacion/prototipos/prototipo-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prototipo 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../EDC/documentacion/prototipos/prototipo-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prototipo 3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Auditorias
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Auditorias
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Auditorias/documentacion/requerimiento-cliente/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requerimiento Cliente
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Auditorias/documentacion/requerimiento-funcional/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requerimiento Funcional
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3" id="__nav_2_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diagramas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Diagramas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Auditorias/documentacion/diagramas/contexto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contexto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Auditorias/documentacion/diagramas/mapa-de-estados/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mapa de estados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_4" id="__nav_2_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prototipos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Prototipos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Auditorias/documentacion/prototipos/prototipo-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monitor Acciones Correctivas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Auditorias/documentacion/prototipos/prototipo-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monitor Auditorias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Auditorias/documentacion/prototipos/prototipo-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reporte Resumen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estatus de Tickets
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Estatus de Tickets
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../EstatusTickets/documentacion/requerimiento-cliente/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requerimiento Cliente
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../EstatusTickets/documentacion/requerimiento-funcional/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requerimiento Funcional
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_3" id="__nav_2_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diagramas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Diagramas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../EstatusTickets/documentacion/diagramas/contexto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contexto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../EstatusTickets/documentacion/diagramas/mapa-de-estados/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mapa de estados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estatus de Seguimiento BSuite
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Estatus de Seguimiento BSuite
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4_1" id="__nav_2_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diagramas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Diagramas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../diagramas/contexto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contexto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../diagramas/mapa-de-estados/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mapa de estados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Ejercicios%20de%20Estados%20Tickets.pdf" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejercicios de Estados Tickets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Funcionales-Monitor-CAU-Nuevos-Estados/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Funcionales
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Técnico
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Técnico
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-propósito" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Propósito
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-índice-de-tablas-por-requerimiento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Índice de tablas por requerimiento
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-modelo-e-r-general" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Modelo E-R general
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-rf-01--administración-de-grupos-de-estados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. RF-01 — Administración de Grupos de Estados
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. RF-01 — Administración de Grupos de Estados">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-diccionario-de-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Diccionario de datos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-script-de-creación-solo-objetos-nuevos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Script de creación (solo objetos nuevos)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-rf-02--administración-de-estados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. RF-02 — Administración de Estados
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. RF-02 — Administración de Estados">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-diccionario-de-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Diccionario de datos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-script-de-creación-solo-objetos-nuevos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Script de creación (solo objetos nuevos)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-rf-03--administración-de-motivos-de-cancelación" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. RF-03 — Administración de Motivos de Cancelación
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. RF-03 — Administración de Motivos de Cancelación">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-diccionario-de-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Diccionario de datos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-script-de-creación-solo-objetos-nuevos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Script de creación (solo objetos nuevos)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-rf-04--importación-de-los-estados-existentes-al-catálogo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. RF-04 — Importación de los Estados existentes al catálogo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. RF-04 — Importación de los Estados existentes al catálogo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-alcance-de-la-carga" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 Alcance de la carga
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-script-de-creación-solo-objetos-nuevos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 Script de creación (solo objetos nuevos)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-rf-05--bitácora-del-servicio-cliente-con-catálogo-de-estados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. RF-05 — Bitácora del Servicio Cliente con catálogo de Estados
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. RF-05 — Bitácora del Servicio Cliente con catálogo de Estados">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-diccionario-de-datos-solo-columna-nueva" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 Diccionario de datos (solo columna nueva)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-script-de-creación-solo-objetos-nuevos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 Script de creación (solo objetos nuevos)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-rf-11--cancelación-del-servicio-desde-el-wizard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. RF-11 — Cancelación del Servicio desde el wizard
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. RF-11 — Cancelación del Servicio desde el wizard">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91-diccionario-de-datos-solo-columnas-nuevas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 Diccionario de datos (solo columnas nuevas)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92-script-de-creación-solo-objetos-nuevos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 Script de creación (solo objetos nuevos)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Documentación BSuite
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Documentación BSuite
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Catálogos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Catálogos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1_1" id="__nav_3_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gestión TI
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gestión TI
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Catalogos/Gestion-TI/documentacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Catalogos/Gestion-TI/documentacion/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Catalogos/Gestion-TI/documentacion/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1_2" id="__nav_3_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compras
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Compras
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Catalogos/Compras/documentacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Catalogos/Compras/documentacion/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Catalogos/Compras/documentacion/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Procesos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Procesos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_1" id="__nav_3_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gestión TI
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gestión TI
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Procesos/Gestion-TI/documentacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Procesos/Gestion-TI/documentacion/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Procesos/Gestion-TI/documentacion/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_2" id="__nav_3_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compras
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Compras
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Procesos/Compras/documentacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Procesos/Compras/documentacion/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Procesos/Compras/documentacion/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Consultas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Consultas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3_1" id="__nav_3_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gestión TI
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gestión TI
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3_1_1" id="__nav_3_3_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reporte Forecast
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_3_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reporte Forecast
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Consultas/Gestion-TI/documentacion/reporte-forecast/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Consultas/Gestion-TI/documentacion/reporte-forecast/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Consultas/Gestion-TI/documentacion/reporte-forecast/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3_1_2" id="__nav_3_3_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reporte Financiero
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_3_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reporte Financiero
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Consultas/Gestion-TI/documentacion/reporte-financiero/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Consultas/Gestion-TI/documentacion/reporte-financiero/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Consultas/Gestion-TI/documentacion/reporte-financiero/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3_2" id="__nav_3_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compras
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Compras
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Consultas/Compras/documentacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Consultas/Compras/documentacion/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Consultas/Compras/documentacion/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-propósito" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Propósito
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-índice-de-tablas-por-requerimiento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Índice de tablas por requerimiento
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-modelo-e-r-general" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Modelo E-R general
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-rf-01--administración-de-grupos-de-estados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. RF-01 — Administración de Grupos de Estados
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. RF-01 — Administración de Grupos de Estados">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-diccionario-de-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Diccionario de datos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-script-de-creación-solo-objetos-nuevos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Script de creación (solo objetos nuevos)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-rf-02--administración-de-estados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. RF-02 — Administración de Estados
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. RF-02 — Administración de Estados">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-diccionario-de-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Diccionario de datos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-script-de-creación-solo-objetos-nuevos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Script de creación (solo objetos nuevos)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-rf-03--administración-de-motivos-de-cancelación" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. RF-03 — Administración de Motivos de Cancelación
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. RF-03 — Administración de Motivos de Cancelación">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-diccionario-de-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Diccionario de datos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-script-de-creación-solo-objetos-nuevos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Script de creación (solo objetos nuevos)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-rf-04--importación-de-los-estados-existentes-al-catálogo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. RF-04 — Importación de los Estados existentes al catálogo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. RF-04 — Importación de los Estados existentes al catálogo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-alcance-de-la-carga" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 Alcance de la carga
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-script-de-creación-solo-objetos-nuevos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 Script de creación (solo objetos nuevos)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-rf-05--bitácora-del-servicio-cliente-con-catálogo-de-estados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. RF-05 — Bitácora del Servicio Cliente con catálogo de Estados
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. RF-05 — Bitácora del Servicio Cliente con catálogo de Estados">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-diccionario-de-datos-solo-columna-nueva" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 Diccionario de datos (solo columna nueva)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-script-de-creación-solo-objetos-nuevos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 Script de creación (solo objetos nuevos)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-rf-11--cancelación-del-servicio-desde-el-wizard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. RF-11 — Cancelación del Servicio desde el wizard
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. RF-11 — Cancelación del Servicio desde el wizard">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91-diccionario-de-datos-solo-columnas-nuevas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 Diccionario de datos (solo columnas nuevas)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92-script-de-creación-solo-objetos-nuevos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 Script de creación (solo objetos nuevos)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="documento-técnico--monitor-cau-nuevos-estados">Documento Técnico — Monitor CAU, Nuevos Estados<a class="headerlink" href="#documento-técnico--monitor-cau-nuevos-estados" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Versión</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>Fecha</td>
+<td>2026-07-22</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Soporta a</td>
+<td>"Funcionales-Monitor-CAU-Nuevos-Estados.md"</td>
+</tr>
+<tr>
+<td>Motor BD</td>
+<td>PostgreSQL</td>
+</tr>
+<tr>
+<td>Autor</td>
+<td>Análisis de Negocio</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1-propósito">1. Propósito<a class="headerlink" href="#1-propósito" title="Permanent link">&para;</a></h2>
+<p>Este documento define el soporte técnico (modelo E-R y scripts de creación) de los requerimientos funcionales descritos en "Funcionales-Monitor-CAU-Nuevos-Estados.md". Incluye <strong>únicamente</strong> las tablas y campos <strong>nuevos</strong> necesarios para cubrir dichos requerimientos; no reproduce el script de tablas ya existentes en el sistema.</p>
+<p>Este documento se irá ampliando conforme se agreguen nuevos RF al documento funcional que soporta.</p>
+<p><strong>Nota sobre nulabilidad de campos <code>varchar</code>:</strong> las tablas de este documento se implementan como clases persistentes de XPO, cuyo esquema se autogenera a partir de las propiedades de la clase. En XPO, las propiedades de tipo <code>string</code> generan siempre columnas <code>NULL</code>, sin importar si tienen una regla <code>RuleRequiredField</code>: dicha obligatoriedad se valida a nivel de aplicación (XAF), no se traduce en un <code>NOT NULL</code> de base de datos. Por ello, todo campo <code>varchar</code> en los scripts de esta sección se declara <code>NULL</code>, aun cuando el documento funcional lo marque como obligatorio; solo los campos de tipo valor no-nullable (<code>int4</code>, <code>bool</code>, <code>timestamp</code>, y el <code>oid</code> como llave primaria) se declaran <code>NOT NULL</code>.</p>
+<hr />
+<h2 id="2-índice-de-tablas-por-requerimiento">2. Índice de tablas por requerimiento<a class="headerlink" href="#2-índice-de-tablas-por-requerimiento" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>RF</th>
+<th>Tabla</th>
+<th>Sección</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RF-01</td>
+<td><code>bb_ct_grupos_estados</code></td>
+<td><a href="#3-rf-01--administración-de-grupos-de-estados">3. RF-01 — Administración de Grupos de Estados</a></td>
+</tr>
+<tr>
+<td>RF-02</td>
+<td><code>bb_ct_estados_procesos</code></td>
+<td><a href="#4-rf-02--administración-de-estados">4. RF-02 — Administración de Estados</a></td>
+</tr>
+<tr>
+<td>RF-03</td>
+<td><code>bb_ct_motivos_cancelacion</code></td>
+<td><a href="#5-rf-03--administración-de-motivos-de-cancelación">5. RF-03 — Administración de Motivos de Cancelación</a></td>
+</tr>
+<tr>
+<td>RF-04</td>
+<td><code>bb_ct_estados_procesos</code> (carga de datos inicial)</td>
+<td><a href="#6-rf-04--importación-de-los-estados-existentes-al-catálogo">6. RF-04 — Importación de los Estados existentes al catálogo</a></td>
+</tr>
+<tr>
+<td>RF-05</td>
+<td><code>ga_tr_servicios_clientes_auditorias_estados</code> (columna nueva)</td>
+<td><a href="#7-rf-05--bitácora-del-servicio-cliente-con-catálogo-de-estados">7. RF-05 — Bitácora del Servicio Cliente con catálogo de Estados</a></td>
+</tr>
+<tr>
+<td>RF-11</td>
+<td><code>ga_tr_servicios_clientes_auditorias_estados</code> (columna nueva)</td>
+<td><a href="#9-rf-11--cancelación-del-servicio-desde-el-wizard">9. RF-11 — Cancelación del Servicio desde el wizard</a></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-modelo-e-r-general">3. Modelo E-R general<a class="headerlink" href="#3-modelo-e-r-general" title="Permanent link">&para;</a></h2>
+<p>El siguiente diagrama consolida <strong>todas</strong> las tablas y columnas nuevas descritas en este documento, junto con sus relaciones. Las secciones siguientes detallan cada tabla (diccionario de datos y script de creación) sin repetir el diagrama.</p>
+<pre class="mermaid"><code>erDiagram
+    bb_ct_grupos_estados ||--o{ bb_ct_estados_procesos : "fk_grupo_estado"
+    bb_ct_estados_procesos ||--o{ ga_tr_servicios_clientes_auditorias_estados : "fk_estado_proceso"
+    bb_ct_motivos_cancelacion ||--o{ ga_tr_servicios_clientes_auditorias_estados : "fk_motivo_cancelacion"
+
+    bb_ct_grupos_estados {
+        char_36 oid PK "Identificador único (XPO Oid)"
+        varchar_30 clave UK "Clave única (RN-1.1)"
+        varchar_50 nombre UK "Nombre único, sin distinguir mayúsc/minúsc ni espacios (RN-1.2)"
+        varchar_255 descripcion "Descripción (RN-1.3)"
+        int4 estado "Estado del Registro: 0=Activo, 1=Cancelado (RN-1.4, RN-1.10)"
+        int4 estatus_nuevo "Último Estado del Registro aplicado (auditoría)"
+        timestamp_6 estatusfecha "Fecha del último cambio de Estado del Registro"
+        timestamp au_fecha_hora_mod "Fecha/hora de última modificación"
+        varchar_30 au_terminal "Terminal de la última modificación"
+        varchar_18 au_usuario "Usuario de la última modificación"
+    }
+    bb_ct_estados_procesos {
+        char_36 oid PK "Identificador único (XPO Oid)"
+        varchar_30 clave UK "Clave única (RN-2.1)"
+        varchar_255 nombre UK "Nombre único, sin distinguir mayúsc/minúsc ni espacios (RN-2.2)"
+        char_36 fk_grupo_estado FK "Grupo de Estados asociado, opcional; si se define, debe estar Activo (RN-2.3)"
+        varchar_25 mensaje_corto "Mensaje corto opcional (RN-2.7)"
+        varchar_20 color "Color opcional (RN-2.20)"
+        varchar_50 icono "Ícono opcional (RN-2.21)"
+        int4 estado "Estado del Registro: 0=Activo, 1=Cancelado (RN-2.5, RN-2.14)"
+        int4 estatus_nuevo "Último Estado del Registro aplicado (auditoría)"
+        timestamp_6 estatusfecha "Fecha del último cambio de Estado del Registro"
+        timestamp au_fecha_hora_mod "Fecha/hora de última modificación"
+        varchar_30 au_terminal "Terminal de la última modificación"
+        varchar_18 au_usuario "Usuario de la última modificación"
+    }
+    bb_ct_motivos_cancelacion {
+        char_36 oid PK "Identificador único (XPO Oid)"
+        varchar_30 clave UK "Clave única (RN-3.1)"
+        varchar_100 nombre UK "Nombre único, sin distinguir mayúsc/minúsc ni espacios (RN-3.2)"
+        varchar_255 descripcion "Descripción (RN-3.3)"
+        bool requiere_especificar "Requiere Especificar, opcional, default false (RN-3.15, RN-3.16)"
+        int4 estado "Estado del Registro: 0=Activo, 1=Cancelado (RN-3.4, RN-3.10)"
+        int4 estatus_nuevo "Último Estado del Registro aplicado (auditoría)"
+        timestamp_6 estatusfecha "Fecha del último cambio de Estado del Registro"
+        timestamp au_fecha_hora_mod "Fecha/hora de última modificación"
+        varchar_30 au_terminal "Terminal de la última modificación"
+        varchar_18 au_usuario "Usuario de la última modificación"
+    }
+    ga_tr_servicios_clientes_auditorias_estados {
+        char_36 oid PK "Ya existente"
+        char_36 fk_servicio_cliente FK "Ya existente"
+        timestamp fecha "Ya existente"
+        int4 estado "Ya existente (valor interno de estatus)"
+        varchar_3000 descripcion "Ya existente"
+        char_36 fk_generada_por FK "Ya existente"
+        char_36 fk_estado_proceso FK "NUEVO: referencia a bb_ct_estados_procesos (RF-05; RN-5.1, RN-5.4)"
+        char_36 fk_motivo_cancelacion FK "NUEVO: referencia a bb_ct_motivos_cancelacion (RF-11; RN-11.2, RN-11.6)"
+        varchar_500 motivo_cancelacion_detalle "NUEVO: detalle en texto libre cuando el motivo lo requiere (RF-11; RN-11.8, RN-11.10)"
+    }</code></pre>
+<hr />
+<h2 id="4-rf-01--administración-de-grupos-de-estados">4. RF-01 — Administración de Grupos de Estados<a class="headerlink" href="#4-rf-01--administración-de-grupos-de-estados" title="Permanent link">&para;</a></h2>
+<h3 id="41-diccionario-de-datos">4.1 Diccionario de datos<a class="headerlink" href="#41-diccionario-de-datos" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Columna</th>
+<th>Tipo</th>
+<th>Nulo</th>
+<th>Descripción</th>
+<th>Regla de negocio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>oid</code></td>
+<td><code>char(36)</code></td>
+<td>No</td>
+<td>Identificador único del registro (PK)</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>clave</code></td>
+<td><code>varchar(30)</code></td>
+<td>Sí¹</td>
+<td>Clave única del Grupo de Estados</td>
+<td>RN-1.1</td>
+</tr>
+<tr>
+<td><code>nombre</code></td>
+<td><code>varchar(50)</code></td>
+<td>Sí¹</td>
+<td>Nombre único del Grupo de Estados (comparación sin distinguir mayúsculas/minúsculas ni espacios al inicio/final)</td>
+<td>RN-1.2</td>
+</tr>
+<tr>
+<td><code>descripcion</code></td>
+<td><code>varchar(255)</code></td>
+<td>Sí¹</td>
+<td>Descripción del Grupo de Estados</td>
+<td>RN-1.3</td>
+</tr>
+<tr>
+<td><code>estado</code></td>
+<td><code>int4</code></td>
+<td>No</td>
+<td>Estado del Registro: <code>0</code> = Activo, <code>1</code> = Cancelado</td>
+<td>RN-1.4, RN-1.10, RN-1.13</td>
+</tr>
+<tr>
+<td><code>estatus_nuevo</code></td>
+<td><code>int4</code></td>
+<td>Sí</td>
+<td>Último Estado del Registro aplicado; soporta la auditoría de cancelación/reactivación</td>
+<td>RN-1.5, RN-1.10</td>
+</tr>
+<tr>
+<td><code>estatusfecha</code></td>
+<td><code>timestamp(6)</code></td>
+<td>Sí</td>
+<td>Fecha en la que se aplicó el último cambio de Estado del Registro</td>
+<td>RN-1.5</td>
+</tr>
+<tr>
+<td><code>au_fecha_hora_mod</code></td>
+<td><code>timestamp</code></td>
+<td>Sí</td>
+<td>Fecha y hora de la última modificación del registro</td>
+<td>RN-1.5</td>
+</tr>
+<tr>
+<td><code>au_terminal</code></td>
+<td><code>varchar(30)</code></td>
+<td>Sí</td>
+<td>Terminal desde la que se realizó la última modificación</td>
+<td>RN-1.5</td>
+</tr>
+<tr>
+<td><code>au_usuario</code></td>
+<td><code>varchar(18)</code></td>
+<td>Sí</td>
+<td>Usuario que realizó la última modificación</td>
+<td>RN-1.5</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Llaves y restricciones:</strong>
+- PK: <code>oid</code>.
+- Única: <code>clave</code> (RN-1.1). No distingue entre grupos Activos y Cancelados: la restricción aplica sobre toda la tabla.
+- Única (case-insensitive, sin espacios al inicio/final): <code>nombre</code> (RN-1.2), implementada mediante índice funcional sobre <code>lower(btrim(nombre))</code>. Tampoco distingue entre grupos Activos y Cancelados.
+- ¹ <code>clave</code>, <code>nombre</code> y <code>descripcion</code> son <code>NULL</code> en el esquema (comportamiento estándar de XPO para propiedades <code>string</code>); su obligatoriedad (RN-1.1, RN-1.2, RN-1.3) se valida a nivel de aplicación, no como constraint de base de datos.</p>
+<h3 id="42-script-de-creación-solo-objetos-nuevos">4.2 Script de creación (solo objetos nuevos)<a class="headerlink" href="#42-script-de-creación-solo-objetos-nuevos" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">-- =========================================================</span>
+<span class="c1">-- RF-01 — Administración de Grupos de Estados</span>
+<span class="c1">-- Tabla nueva: bb_ct_grupos_estados</span>
+<span class="c1">-- =========================================================</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">bb_ct_grupos_estados</span>
+<span class="p">(</span>
+<span class="w">    </span><span class="n">oid</span><span class="w">                 </span><span class="nb">char</span><span class="p">(</span><span class="mi">36</span><span class="p">)</span><span class="w">        </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">clave</span><span class="w">               </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span><span class="w">     </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">nombre</span><span class="w">              </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span><span class="w">     </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">descripcion</span><span class="w">         </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span><span class="w">    </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">estado</span><span class="w">              </span><span class="n">int4</span><span class="w">            </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="n">estatus_nuevo</span><span class="w">       </span><span class="n">int4</span><span class="w">            </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">estatusfecha</span><span class="w">        </span><span class="k">timestamp</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="w">    </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">au_fecha_hora_mod</span><span class="w">   </span><span class="k">timestamp</span><span class="w">       </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">au_terminal</span><span class="w">         </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span><span class="w">     </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">au_usuario</span><span class="w">          </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">18</span><span class="p">)</span><span class="w">     </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="k">CONSTRAINT</span><span class="w"> </span><span class="n">pk_bb_ct_grupos_estados</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">oid</span><span class="p">),</span>
+<span class="w">    </span><span class="k">CONSTRAINT</span><span class="w"> </span><span class="n">uq_bb_ct_grupos_estados_clave</span><span class="w"> </span><span class="k">UNIQUE</span><span class="w"> </span><span class="p">(</span><span class="n">clave</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="c1">-- RN-1.2: unicidad de Nombre sin distinguir mayúsculas/minúsculas ni espacios al inicio/final</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">UNIQUE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">uq_bb_ct_grupos_estados_nombre</span>
+<span class="w">    </span><span class="k">ON</span><span class="w"> </span><span class="n">bb_ct_grupos_estados</span><span class="w"> </span><span class="p">(</span><span class="k">lower</span><span class="p">(</span><span class="n">btrim</span><span class="p">(</span><span class="n">nombre</span><span class="p">)));</span>
+
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">bb_ct_grupos_estados</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="s1">&#39;Catálogo de Grupos de Estados (RF-01)&#39;</span><span class="p">;</span>
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">bb_ct_grupos_estados</span><span class="p">.</span><span class="n">oid</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="s1">&#39;Identificador único del registro (XPO Oid)&#39;</span><span class="p">;</span>
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">bb_ct_grupos_estados</span><span class="p">.</span><span class="n">clave</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="s1">&#39;Clave única del Grupo de Estados (RN-1.1)&#39;</span><span class="p">;</span>
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">bb_ct_grupos_estados</span><span class="p">.</span><span class="n">nombre</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="s1">&#39;Nombre único del Grupo de Estados (RN-1.2)&#39;</span><span class="p">;</span>
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">bb_ct_grupos_estados</span><span class="p">.</span><span class="n">descripcion</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="s1">&#39;Descripción del Grupo de Estados (RN-1.3)&#39;</span><span class="p">;</span>
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">bb_ct_grupos_estados</span><span class="p">.</span><span class="n">estado</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="s1">&#39;Estado del Registro: 0 = Activo, 1 = Cancelado (RN-1.4, RN-1.10)&#39;</span><span class="p">;</span>
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">bb_ct_grupos_estados</span><span class="p">.</span><span class="n">estatus_nuevo</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="s1">&#39;Último Estado del Registro aplicado (auditoría de cancelación/reactivación)&#39;</span><span class="p">;</span>
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">bb_ct_grupos_estados</span><span class="p">.</span><span class="n">estatusfecha</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="s1">&#39;Fecha del último cambio de Estado del Registro&#39;</span><span class="p">;</span>
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">bb_ct_grupos_estados</span><span class="p">.</span><span class="n">au_fecha_hora_mod</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="s1">&#39;Fecha y hora de la última modificación (bitácora de auditoría)&#39;</span><span class="p">;</span>
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">bb_ct_grupos_estados</span><span class="p">.</span><span class="n">au_terminal</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="s1">&#39;Terminal desde la que se realizó la última modificación&#39;</span><span class="p">;</span>
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">bb_ct_grupos_estados</span><span class="p">.</span><span class="n">au_usuario</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="s1">&#39;Usuario que realizó la última modificación&#39;</span><span class="p">;</span>
+</code></pre></div>
+<hr />
+<h2 id="5-rf-02--administración-de-estados">5. RF-02 — Administración de Estados<a class="headerlink" href="#5-rf-02--administración-de-estados" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p><strong>Puntos abiertos, según decisión de negocio al momento de este documento:</strong>
+- <strong>Descripción (RN-2.4):</strong> RN-2.4 exige Descripción obligatoria, pero por decisión de negocio no se agrega columna <code>descripcion</code> a <code>bb_ct_estados_procesos</code> en esta versión. Este RN queda sin soporte de persistencia hasta que se resuelva.</p>
+</blockquote>
+<h3 id="51-diccionario-de-datos">5.1 Diccionario de datos<a class="headerlink" href="#51-diccionario-de-datos" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Columna</th>
+<th>Tipo</th>
+<th>Nulo</th>
+<th>Descripción</th>
+<th>Regla de negocio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>oid</code></td>
+<td><code>char(36)</code></td>
+<td>No</td>
+<td>Identificador único del registro (PK)</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>clave</code></td>
+<td><code>varchar(30)</code></td>
+<td>Sí¹</td>
+<td>Clave única del Estado</td>
+<td>RN-2.1</td>
+</tr>
+<tr>
+<td><code>nombre</code></td>
+<td><code>varchar(255)</code></td>
+<td>Sí¹</td>
+<td>Nombre único del Estado (comparación sin distinguir mayúsculas/minúsculas ni espacios al inicio/final), sin importar el Grupo de Estados</td>
+<td>RN-2.2</td>
+</tr>
+<tr>
+<td><code>fk_grupo_estado</code></td>
+<td><code>char(36)</code></td>
+<td>Sí</td>
+<td>Referencia opcional al Grupo de Estados (<code>bb_ct_grupos_estados.oid</code>); cuando se define, debe corresponder a un grupo Activo</td>
+<td>RN-2.3, RN-2.10, RN-2.19</td>
+</tr>
+<tr>
+<td><code>mensaje_corto</code></td>
+<td><code>varchar(25)</code></td>
+<td>Sí</td>
+<td>Mensaje corto opcional para representar el estatus en la trayectoria/timeline de los procesos que lo consumen</td>
+<td>RN-2.7, RN-2.12</td>
+</tr>
+<tr>
+<td><code>color</code></td>
+<td><code>varchar(20)</code></td>
+<td>Sí</td>
+<td>Color opcional para identificar visualmente el Estado en tarjetas y bitácoras</td>
+<td>RN-2.20</td>
+</tr>
+<tr>
+<td><code>icono</code></td>
+<td><code>varchar(50)</code></td>
+<td>Sí</td>
+<td>Ícono opcional para identificar visualmente el Estado en tarjetas y bitácoras</td>
+<td>RN-2.21</td>
+</tr>
+<tr>
+<td><code>estado</code></td>
+<td><code>int4</code></td>
+<td>No</td>
+<td>Estado del Registro: <code>0</code> = Activo, <code>1</code> = Cancelado</td>
+<td>RN-2.5, RN-2.14, RN-2.17</td>
+</tr>
+<tr>
+<td><code>estatus_nuevo</code></td>
+<td><code>int4</code></td>
+<td>Sí</td>
+<td>Último Estado del Registro aplicado; soporta la auditoría de cancelación/reactivación</td>
+<td>RN-2.6</td>
+</tr>
+<tr>
+<td><code>estatusfecha</code></td>
+<td><code>timestamp(6)</code></td>
+<td>Sí</td>
+<td>Fecha en la que se aplicó el último cambio de Estado del Registro</td>
+<td>RN-2.6</td>
+</tr>
+<tr>
+<td><code>au_fecha_hora_mod</code></td>
+<td><code>timestamp</code></td>
+<td>Sí</td>
+<td>Fecha y hora de la última modificación del registro</td>
+<td>RN-2.6</td>
+</tr>
+<tr>
+<td><code>au_terminal</code></td>
+<td><code>varchar(30)</code></td>
+<td>Sí</td>
+<td>Terminal desde la que se realizó la última modificación</td>
+<td>RN-2.6</td>
+</tr>
+<tr>
+<td><code>au_usuario</code></td>
+<td><code>varchar(18)</code></td>
+<td>Sí</td>
+<td>Usuario que realizó la última modificación</td>
+<td>RN-2.6</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Llaves y restricciones:</strong>
+- PK: <code>oid</code>.
+- Única: <code>clave</code> (RN-2.1). No distingue entre estados Activos y Cancelados.
+- Única (case-insensitive, sin espacios al inicio/final): <code>nombre</code> (RN-2.2), implementada mediante índice funcional sobre <code>lower(btrim(nombre))</code>. No distingue entre estados Activos y Cancelados, ni entre Grupos de Estados.
+- FK: <code>fk_grupo_estado</code> → <code>bb_ct_grupos_estados(oid)</code>, nullable (RN-2.3). La validación de que, cuando se define, el grupo referenciado esté Activo (RN-2.3, RN-2.10, RN-2.19) es una regla de negocio aplicativa, no se expresa como constraint de base de datos.
+- ¹ <code>clave</code> y <code>nombre</code> son <code>NULL</code> en el esquema (comportamiento estándar de XPO para propiedades <code>string</code>); su obligatoriedad (RN-2.1, RN-2.2) se valida a nivel de aplicación, no como constraint de base de datos.</p>
+<h3 id="52-script-de-creación-solo-objetos-nuevos">5.2 Script de creación (solo objetos nuevos)<a class="headerlink" href="#52-script-de-creación-solo-objetos-nuevos" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">-- =========================================================</span>
+<span class="c1">-- RF-02 — Administración de Estados</span>
+<span class="c1">-- Tabla nueva: bb_ct_estados_procesos</span>
+<span class="c1">-- =========================================================</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">bb_ct_estados_procesos</span>
+<span class="p">(</span>
+<span class="w">    </span><span class="n">oid</span><span class="w">                 </span><span class="nb">char</span><span class="p">(</span><span class="mi">36</span><span class="p">)</span><span class="w">        </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">clave</span><span class="w">               </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span><span class="w">     </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">nombre</span><span class="w">              </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span><span class="w">    </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">fk_grupo_estado</span><span class="w">     </span><span class="nb">char</span><span class="p">(</span><span class="mi">36</span><span class="p">)</span><span class="w">        </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">mensaje_corto</span><span class="w">       </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span><span class="w">     </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">color</span><span class="w">               </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span><span class="w">     </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">icono</span><span class="w">               </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span><span class="w">     </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">estado</span><span class="w">              </span><span class="n">int4</span><span class="w">            </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="n">estatus_nuevo</span><span class="w">       </span><span class="n">int4</span><span class="w">            </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">estatusfecha</span><span class="w">        </span><span class="k">timestamp</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="w">    </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">au_fecha_hora_mod</span><span class="w">   </span><span class="k">timestamp</span><span class="w">       </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">au_terminal</span><span class="w">         </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span><span class="w">     </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">au_usuario</span><span class="w">          </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">18</span><span class="p">)</span><span class="w">     </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="k">CONSTRAINT</span><span class="w"> </span><span class="n">pk_bb_ct_estados_procesos</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">oid</span><span class="p">),</span>
+<span class="w">    </span><span class="k">CONSTRAINT</span><span class="w"> </span><span class="n">uq_bb_ct_estados_procesos_clave</span><span class="w"> </span><span class="k">UNIQUE</span><span class="w"> </span><span class="p">(</span><span class="n">clave</span><span class="p">),</span>
+<span class="w">    </span><span class="k">CONSTRAINT</span><span class="w"> </span><span class="n">fk_bb_ct_estados_procesos_grupo_estado</span><span class="w"> </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">fk_grupo_estado</span><span class="p">)</span>
+<span class="w">        </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">bb_ct_grupos_estados</span><span class="w"> </span><span class="p">(</span><span class="n">oid</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="c1">-- RN-2.2: unicidad de Nombre sin distinguir mayúsculas/minúsculas ni espacios al inicio/final</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">UNIQUE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">uq_bb_ct_estados_procesos_nombre</span>
+<span class="w">    </span><span class="k">ON</span><span class="w"> </span><span class="n">bb_ct_estados_procesos</span><span class="w"> </span><span class="p">(</span><span class="k">lower</span><span class="p">(</span><span class="n">btrim</span><span class="p">(</span><span class="n">nombre</span><span class="p">)));</span>
+
+<span class="c1">-- Índice de apoyo para la validación de Grupo de Estados Activo (RN-2.3, RN-2.10, RN-2.19)</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">ix_bb_ct_estados_procesos_fk_grupo_estado</span>
+<span class="w">    </span><span class="k">ON</span><span class="w"> </span><span class="n">bb_ct_estados_procesos</span><span class="w"> </span><span class="p">(</span><span class="n">fk_grupo_estado</span><span class="p">);</span>
+
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">bb_ct_estados_procesos</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="s1">&#39;Catálogo de Estados (RF-02)&#39;</span><span class="p">;</span>
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">bb_ct_estados_procesos</span><span class="p">.</span><span class="n">oid</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="s1">&#39;Identificador único del registro (XPO Oid)&#39;</span><span class="p">;</span>
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">bb_ct_estados_procesos</span><span class="p">.</span><span class="n">clave</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="s1">&#39;Clave única del Estado (RN-2.1)&#39;</span><span class="p">;</span>
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">bb_ct_estados_procesos</span><span class="p">.</span><span class="n">nombre</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="s1">&#39;Nombre único del Estado (RN-2.2)&#39;</span><span class="p">;</span>
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">bb_ct_estados_procesos</span><span class="p">.</span><span class="n">fk_grupo_estado</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="s1">&#39;Grupo de Estados asociado, opcional; si se define, debe estar Activo (RN-2.3)&#39;</span><span class="p">;</span>
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">bb_ct_estados_procesos</span><span class="p">.</span><span class="n">mensaje_corto</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="s1">&#39;Mensaje corto, opcional (RN-2.7)&#39;</span><span class="p">;</span>
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">bb_ct_estados_procesos</span><span class="p">.</span><span class="n">color</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="s1">&#39;Color, opcional, para identificación visual del Estado (RN-2.20)&#39;</span><span class="p">;</span>
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">bb_ct_estados_procesos</span><span class="p">.</span><span class="n">icono</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="s1">&#39;Ícono, opcional, para identificación visual del Estado (RN-2.21)&#39;</span><span class="p">;</span>
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">bb_ct_estados_procesos</span><span class="p">.</span><span class="n">estado</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="s1">&#39;Estado del Registro: 0 = Activo, 1 = Cancelado (RN-2.5, RN-2.14)&#39;</span><span class="p">;</span>
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">bb_ct_estados_procesos</span><span class="p">.</span><span class="n">estatus_nuevo</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="s1">&#39;Último Estado del Registro aplicado (auditoría de cancelación/reactivación)&#39;</span><span class="p">;</span>
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">bb_ct_estados_procesos</span><span class="p">.</span><span class="n">estatusfecha</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="s1">&#39;Fecha del último cambio de Estado del Registro&#39;</span><span class="p">;</span>
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">bb_ct_estados_procesos</span><span class="p">.</span><span class="n">au_fecha_hora_mod</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="s1">&#39;Fecha y hora de la última modificación (bitácora de auditoría)&#39;</span><span class="p">;</span>
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">bb_ct_estados_procesos</span><span class="p">.</span><span class="n">au_terminal</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="s1">&#39;Terminal desde la que se realizó la última modificación&#39;</span><span class="p">;</span>
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">bb_ct_estados_procesos</span><span class="p">.</span><span class="n">au_usuario</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="s1">&#39;Usuario que realizó la última modificación&#39;</span><span class="p">;</span>
+</code></pre></div>
+<hr />
+<h2 id="6-rf-03--administración-de-motivos-de-cancelación">6. RF-03 — Administración de Motivos de Cancelación<a class="headerlink" href="#6-rf-03--administración-de-motivos-de-cancelación" title="Permanent link">&para;</a></h2>
+<p>Ver su consumo desde la acción de cancelación del wizard (<code>fk_motivo_cancelacion</code>) en la <a href="#9-rf-11--cancelación-del-servicio-desde-el-wizard">sección 9</a>.</p>
+<h3 id="61-diccionario-de-datos">6.1 Diccionario de datos<a class="headerlink" href="#61-diccionario-de-datos" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Columna</th>
+<th>Tipo</th>
+<th>Nulo</th>
+<th>Descripción</th>
+<th>Regla de negocio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>oid</code></td>
+<td><code>char(36)</code></td>
+<td>No</td>
+<td>Identificador único del registro (PK)</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>clave</code></td>
+<td><code>varchar(30)</code></td>
+<td>Sí¹</td>
+<td>Clave única del Motivo de Cancelación</td>
+<td>RN-3.1</td>
+</tr>
+<tr>
+<td><code>nombre</code></td>
+<td><code>varchar(100)</code></td>
+<td>Sí¹</td>
+<td>Nombre único del Motivo de Cancelación (comparación sin distinguir mayúsculas/minúsculas ni espacios al inicio/final)</td>
+<td>RN-3.2</td>
+</tr>
+<tr>
+<td><code>descripcion</code></td>
+<td><code>varchar(255)</code></td>
+<td>Sí¹</td>
+<td>Descripción del Motivo de Cancelación</td>
+<td>RN-3.3</td>
+</tr>
+<tr>
+<td><code>requiere_especificar</code></td>
+<td><code>bool</code></td>
+<td>No</td>
+<td>Indica si este motivo exige capturar un detalle adicional en texto libre al usarse en una cancelación (por ejemplo, "Otro"); default <code>false</code></td>
+<td>RN-3.15, RN-3.16</td>
+</tr>
+<tr>
+<td><code>estado</code></td>
+<td><code>int4</code></td>
+<td>No</td>
+<td>Estado del Registro: <code>0</code> = Activo, <code>1</code> = Cancelado</td>
+<td>RN-3.4, RN-3.10, RN-3.13</td>
+</tr>
+<tr>
+<td><code>estatus_nuevo</code></td>
+<td><code>int4</code></td>
+<td>Sí</td>
+<td>Último Estado del Registro aplicado; soporta la auditoría de cancelación/reactivación</td>
+<td>RN-3.5</td>
+</tr>
+<tr>
+<td><code>estatusfecha</code></td>
+<td><code>timestamp(6)</code></td>
+<td>Sí</td>
+<td>Fecha en la que se aplicó el último cambio de Estado del Registro</td>
+<td>RN-3.5</td>
+</tr>
+<tr>
+<td><code>au_fecha_hora_mod</code></td>
+<td><code>timestamp</code></td>
+<td>Sí</td>
+<td>Fecha y hora de la última modificación del registro</td>
+<td>RN-3.5</td>
+</tr>
+<tr>
+<td><code>au_terminal</code></td>
+<td><code>varchar(30)</code></td>
+<td>Sí</td>
+<td>Terminal desde la que se realizó la última modificación</td>
+<td>RN-3.5</td>
+</tr>
+<tr>
+<td><code>au_usuario</code></td>
+<td><code>varchar(18)</code></td>
+<td>Sí</td>
+<td>Usuario que realizó la última modificación</td>
+<td>RN-3.5</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Llaves y restricciones:</strong>
+- PK: <code>oid</code>.
+- Única: <code>clave</code> (RN-3.1). No distingue entre motivos Activos y Cancelados.
+- Única (case-insensitive, sin espacios al inicio/final): <code>nombre</code> (RN-3.2), implementada mediante índice funcional sobre <code>lower(btrim(nombre))</code>.
+- ¹ <code>clave</code>, <code>nombre</code> y <code>descripcion</code> son <code>NULL</code> en el esquema (comportamiento estándar de XPO para propiedades <code>string</code>); su obligatoriedad (RN-3.1, RN-3.2, RN-3.3) se valida a nivel de aplicación, no como constraint de base de datos.</p>
+<h3 id="62-script-de-creación-solo-objetos-nuevos">6.2 Script de creación (solo objetos nuevos)<a class="headerlink" href="#62-script-de-creación-solo-objetos-nuevos" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">-- =========================================================</span>
+<span class="c1">-- RF-03 — Administración de Motivos de Cancelación</span>
+<span class="c1">-- Tabla nueva: bb_ct_motivos_cancelacion</span>
+<span class="c1">-- =========================================================</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">bb_ct_motivos_cancelacion</span>
+<span class="p">(</span>
+<span class="w">    </span><span class="n">oid</span><span class="w">                 </span><span class="nb">char</span><span class="p">(</span><span class="mi">36</span><span class="p">)</span><span class="w">        </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">clave</span><span class="w">               </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span><span class="w">     </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">nombre</span><span class="w">              </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="w">    </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">descripcion</span><span class="w">         </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span><span class="w">    </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">requiere_especificar</span><span class="w"> </span><span class="n">bool</span><span class="w">           </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="k">false</span><span class="p">,</span>
+<span class="w">    </span><span class="n">estado</span><span class="w">              </span><span class="n">int4</span><span class="w">            </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="n">estatus_nuevo</span><span class="w">       </span><span class="n">int4</span><span class="w">            </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">estatusfecha</span><span class="w">        </span><span class="k">timestamp</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="w">    </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">au_fecha_hora_mod</span><span class="w">   </span><span class="k">timestamp</span><span class="w">       </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">au_terminal</span><span class="w">         </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span><span class="w">     </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">au_usuario</span><span class="w">          </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">18</span><span class="p">)</span><span class="w">     </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="k">CONSTRAINT</span><span class="w"> </span><span class="n">pk_bb_ct_motivos_cancelacion</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">oid</span><span class="p">),</span>
+<span class="w">    </span><span class="k">CONSTRAINT</span><span class="w"> </span><span class="n">uq_bb_ct_motivos_cancelacion_clave</span><span class="w"> </span><span class="k">UNIQUE</span><span class="w"> </span><span class="p">(</span><span class="n">clave</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="c1">-- RN-3.2: unicidad de Nombre sin distinguir mayúsculas/minúsculas ni espacios al inicio/final</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">UNIQUE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">uq_bb_ct_motivos_cancelacion_nombre</span>
+<span class="w">    </span><span class="k">ON</span><span class="w"> </span><span class="n">bb_ct_motivos_cancelacion</span><span class="w"> </span><span class="p">(</span><span class="k">lower</span><span class="p">(</span><span class="n">btrim</span><span class="p">(</span><span class="n">nombre</span><span class="p">)));</span>
+
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">bb_ct_motivos_cancelacion</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="s1">&#39;Catálogo de Motivos de Cancelación (RF-03)&#39;</span><span class="p">;</span>
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">bb_ct_motivos_cancelacion</span><span class="p">.</span><span class="n">oid</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="s1">&#39;Identificador único del registro (XPO Oid)&#39;</span><span class="p">;</span>
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">bb_ct_motivos_cancelacion</span><span class="p">.</span><span class="n">clave</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="s1">&#39;Clave única del Motivo de Cancelación (RN-3.1)&#39;</span><span class="p">;</span>
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">bb_ct_motivos_cancelacion</span><span class="p">.</span><span class="n">nombre</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="s1">&#39;Nombre único del Motivo de Cancelación (RN-3.2)&#39;</span><span class="p">;</span>
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">bb_ct_motivos_cancelacion</span><span class="p">.</span><span class="n">descripcion</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="s1">&#39;Descripción del Motivo de Cancelación (RN-3.3)&#39;</span><span class="p">;</span>
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">bb_ct_motivos_cancelacion</span><span class="p">.</span><span class="n">requiere_especificar</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="s1">&#39;Indica si el motivo exige detalle adicional en texto libre al usarse en una cancelación (RN-3.15, RN-3.16)&#39;</span><span class="p">;</span>
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">bb_ct_motivos_cancelacion</span><span class="p">.</span><span class="n">estado</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="s1">&#39;Estado del Registro: 0 = Activo, 1 = Cancelado (RN-3.4, RN-3.10)&#39;</span><span class="p">;</span>
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">bb_ct_motivos_cancelacion</span><span class="p">.</span><span class="n">estatus_nuevo</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="s1">&#39;Último Estado del Registro aplicado (auditoría de cancelación/reactivación)&#39;</span><span class="p">;</span>
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">bb_ct_motivos_cancelacion</span><span class="p">.</span><span class="n">estatusfecha</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="s1">&#39;Fecha del último cambio de Estado del Registro&#39;</span><span class="p">;</span>
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">bb_ct_motivos_cancelacion</span><span class="p">.</span><span class="n">au_fecha_hora_mod</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="s1">&#39;Fecha y hora de la última modificación (bitácora de auditoría)&#39;</span><span class="p">;</span>
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">bb_ct_motivos_cancelacion</span><span class="p">.</span><span class="n">au_terminal</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="s1">&#39;Terminal desde la que se realizó la última modificación&#39;</span><span class="p">;</span>
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">bb_ct_motivos_cancelacion</span><span class="p">.</span><span class="n">au_usuario</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="s1">&#39;Usuario que realizó la última modificación&#39;</span><span class="p">;</span>
+</code></pre></div>
+<hr />
+<h2 id="7-rf-04--importación-de-los-estados-existentes-al-catálogo">7. RF-04 — Importación de los Estados existentes al catálogo<a class="headerlink" href="#7-rf-04--importación-de-los-estados-existentes-al-catálogo" title="Permanent link">&para;</a></h2>
+<p>Este RF no crea tablas ni columnas nuevas: es una carga de datos única sobre <code>bb_ct_estados_procesos</code> (RF-02), que registra un Estado por cada valor del listado fijo de estatus que hoy utiliza el sistema. No requiere <code>fk_grupo_estado</code> (nullable desde RF-02) ni genera ninguna estructura adicional.</p>
+<h3 id="71-alcance-de-la-carga">7.1 Alcance de la carga<a class="headerlink" href="#71-alcance-de-la-carga" title="Permanent link">&para;</a></h3>
+<p>Por cada valor del listado fijo de estatus del sistema, se inserta en <code>bb_ct_estados_procesos</code> un registro con:
+- <code>clave</code> y <code>nombre</code>: el mismo valor ya utilizado internamente para ese estatus.
+- <code>color</code> e <code>icono</code>: el mismo valor ya definido para ese estatus, cuando exista; <code>NULL</code> en caso contrario.
+- <code>fk_grupo_estado</code>: <code>NULL</code> (RN-4.4).
+- <code>estado</code>: <code>0</code> (Activo).</p>
+<p>Dado que el listado fijo de origen no es una tabla de base de datos sino un catálogo definido en el propio sistema, este script no puede expresarse como un único <code>INSERT ... SELECT</code>; se ejecuta como un lote de sentencias <code>INSERT</code>, una por cada valor del listado, siguiendo la plantilla de la sección 6.2. El detalle completo (una fila por cada estatus a importar, con su clave, nombre, color e ícono) debe completarse a partir del listado fijo vigente al momento de ejecutar la carga.</p>
+<h3 id="72-script-de-creación-solo-objetos-nuevos">7.2 Script de creación (solo objetos nuevos)<a class="headerlink" href="#72-script-de-creación-solo-objetos-nuevos" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">-- =========================================================</span>
+<span class="c1">-- RF-04 — Importación de los Estados existentes al catálogo</span>
+<span class="c1">-- Carga de datos única sobre bb_ct_estados_procesos (RF-02)</span>
+<span class="c1">-- Plantilla: repetir un INSERT por cada valor del listado fijo de estatus</span>
+<span class="c1">-- =========================================================</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">bb_ct_estados_procesos</span>
+<span class="w">    </span><span class="p">(</span><span class="n">oid</span><span class="p">,</span><span class="w"> </span><span class="n">clave</span><span class="p">,</span><span class="w"> </span><span class="n">nombre</span><span class="p">,</span><span class="w"> </span><span class="n">fk_grupo_estado</span><span class="p">,</span><span class="w"> </span><span class="n">mensaje_corto</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="p">,</span><span class="w"> </span><span class="n">icono</span><span class="p">,</span><span class="w"> </span><span class="n">estado</span><span class="p">)</span>
+<span class="k">VALUES</span>
+<span class="w">    </span><span class="p">(</span><span class="n">gen_random_uuid</span><span class="p">(),</span><span class="w"> </span><span class="s1">&#39;&lt;CLAVE_DEL_ESTATUS&gt;&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&lt;NOMBRE_DEL_ESTATUS&gt;&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&lt;COLOR_SI_EXISTE&gt;&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&lt;ICONO_SI_EXISTE&gt;&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="c1">-- ... repetir para cada estatus del listado fijo vigente ...</span>
+</code></pre></div>
+<hr />
+<h2 id="8-rf-05--bitácora-del-servicio-cliente-con-catálogo-de-estados">8. RF-05 — Bitácora del Servicio Cliente con catálogo de Estados<a class="headerlink" href="#8-rf-05--bitácora-del-servicio-cliente-con-catálogo-de-estados" title="Permanent link">&para;</a></h2>
+<p>Este RF no crea una tabla nueva: agrega una columna nueva a una tabla ya existente, <code>ga_tr_servicios_clientes_auditorias_estados</code>, sin modificar ni eliminar ninguna de sus columnas actuales. Ver esta relación en el <a href="#3-modelo-e-r-general">Modelo E-R general (sección 3)</a>.</p>
+<h3 id="81-diccionario-de-datos-solo-columna-nueva">8.1 Diccionario de datos (solo columna nueva)<a class="headerlink" href="#81-diccionario-de-datos-solo-columna-nueva" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Columna</th>
+<th>Tipo</th>
+<th>Nulo</th>
+<th>Descripción</th>
+<th>Regla de negocio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>fk_estado_proceso</code></td>
+<td><code>char(36)</code></td>
+<td>Sí</td>
+<td>Referencia al Estado del catálogo (<code>bb_ct_estados_procesos.oid</code>) homologado a la transición registrada; nulo cuando la transición aún no tiene un Estado homologado en el catálogo</td>
+<td>RN-5.1, RN-5.2, RN-5.4, RN-5.5</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Llaves y restricciones:</strong>
+- FK: <code>fk_estado_proceso</code> → <code>bb_ct_estados_procesos(oid)</code>, nullable.
+- La validación de que el Estado referenciado esté Activo (RN-5.4) es una regla de negocio aplicativa, no se expresa como constraint de base de datos.
+- El campo de estatus interno ya existente no se modifica (RN-5.3).</p>
+<h3 id="82-script-de-creación-solo-objetos-nuevos">8.2 Script de creación (solo objetos nuevos)<a class="headerlink" href="#82-script-de-creación-solo-objetos-nuevos" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">-- =========================================================</span>
+<span class="c1">-- RF-05 — Relación de la bitácora del Servicio Cliente</span>
+<span class="c1">--         con el catálogo de Estados</span>
+<span class="c1">-- Columna nueva sobre tabla ya existente: ga_tr_servicios_clientes_auditorias_estados</span>
+<span class="c1">-- =========================================================</span>
+<span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">ga_tr_servicios_clientes_auditorias_estados</span>
+<span class="w">    </span><span class="k">ADD</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">fk_estado_proceso</span><span class="w"> </span><span class="nb">char</span><span class="p">(</span><span class="mi">36</span><span class="p">)</span><span class="w"> </span><span class="k">NULL</span><span class="p">;</span>
+
+<span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">ga_tr_servicios_clientes_auditorias_estados</span>
+<span class="w">    </span><span class="k">ADD</span><span class="w"> </span><span class="k">CONSTRAINT</span><span class="w"> </span><span class="n">fk_ga_tr_servicios_clientes_auditorias_estados_estado</span>
+<span class="w">        </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">fk_estado_proceso</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">bb_ct_estados_procesos</span><span class="w"> </span><span class="p">(</span><span class="n">oid</span><span class="p">);</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">ix_ga_tr_servicios_clientes_auditorias_estados_fk_estado_proceso</span>
+<span class="w">    </span><span class="k">ON</span><span class="w"> </span><span class="n">ga_tr_servicios_clientes_auditorias_estados</span><span class="w"> </span><span class="p">(</span><span class="n">fk_estado_proceso</span><span class="p">);</span>
+
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">ga_tr_servicios_clientes_auditorias_estados</span><span class="p">.</span><span class="n">fk_estado_proceso</span><span class="w"> </span><span class="k">IS</span>
+<span class="w">    </span><span class="s1">&#39;Estado del catálogo (RF-02) homologado a la transición registrada; nulo si aún no existe homologación (RN-5.1, RN-5.5)&#39;</span><span class="p">;</span>
+</code></pre></div>
+<hr />
+<h2 id="9-rf-11--cancelación-del-servicio-desde-el-wizard">9. RF-11 — Cancelación del Servicio desde el wizard<a class="headerlink" href="#9-rf-11--cancelación-del-servicio-desde-el-wizard" title="Permanent link">&para;</a></h2>
+<p>Este RF no crea una tabla nueva: agrega una columna adicional a <code>ga_tr_servicios_clientes_auditorias_estados</code> (la misma tabla ampliada por RF-05 en la sección 8), sin modificar ni eliminar ninguna de sus columnas actuales. Ver esta relación en el <a href="#3-modelo-e-r-general">Modelo E-R general (sección 3)</a>.</p>
+<h3 id="91-diccionario-de-datos-solo-columnas-nuevas">9.1 Diccionario de datos (solo columnas nuevas)<a class="headerlink" href="#91-diccionario-de-datos-solo-columnas-nuevas" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Columna</th>
+<th>Tipo</th>
+<th>Nulo</th>
+<th>Descripción</th>
+<th>Regla de negocio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>fk_motivo_cancelacion</code></td>
+<td><code>char(36)</code></td>
+<td>Sí</td>
+<td>Referencia al Motivo de Cancelación (<code>bb_ct_motivos_cancelacion.oid</code>) seleccionado al cancelar el Servicio desde el wizard; nulo en cualquier registro de bitácora que no corresponda a una cancelación</td>
+<td>RN-11.2, RN-11.3, RN-11.6</td>
+</tr>
+<tr>
+<td><code>motivo_cancelacion_detalle</code></td>
+<td><code>varchar(500)</code></td>
+<td>Sí</td>
+<td>Detalle en texto libre capturado cuando el Motivo de Cancelación seleccionado tiene el indicador "Requiere Especificar" = Sí; nulo en cualquier otro caso</td>
+<td>RN-11.8, RN-11.9, RN-11.10, RN-11.11</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Llaves y restricciones:</strong>
+- FK: <code>fk_motivo_cancelacion</code> → <code>bb_ct_motivos_cancelacion(oid)</code>, nullable.
+- La validación de que el Motivo de Cancelación esté Activo (RN-11.2), y de que <code>motivo_cancelacion_detalle</code> sea obligatorio solo cuando el motivo lo requiere (RN-11.9), son reglas de negocio aplicativas; no se expresan como constraints de base de datos.</p>
+<h3 id="92-script-de-creación-solo-objetos-nuevos">9.2 Script de creación (solo objetos nuevos)<a class="headerlink" href="#92-script-de-creación-solo-objetos-nuevos" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">-- =========================================================</span>
+<span class="c1">-- RF-11 — Cancelación del Servicio desde el wizard</span>
+<span class="c1">-- Columnas nuevas sobre tabla ya existente: ga_tr_servicios_clientes_auditorias_estados</span>
+<span class="c1">-- =========================================================</span>
+<span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">ga_tr_servicios_clientes_auditorias_estados</span>
+<span class="w">    </span><span class="k">ADD</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">fk_motivo_cancelacion</span><span class="w"> </span><span class="nb">char</span><span class="p">(</span><span class="mi">36</span><span class="p">)</span><span class="w"> </span><span class="k">NULL</span><span class="p">;</span>
+
+<span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">ga_tr_servicios_clientes_auditorias_estados</span>
+<span class="w">    </span><span class="k">ADD</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">motivo_cancelacion_detalle</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span><span class="w"> </span><span class="k">NULL</span><span class="p">;</span>
+
+<span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">ga_tr_servicios_clientes_auditorias_estados</span>
+<span class="w">    </span><span class="k">ADD</span><span class="w"> </span><span class="k">CONSTRAINT</span><span class="w"> </span><span class="n">fk_ga_tr_servicios_clientes_auditorias_estados_motivo_cancelacion</span>
+<span class="w">        </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">fk_motivo_cancelacion</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">bb_ct_motivos_cancelacion</span><span class="w"> </span><span class="p">(</span><span class="n">oid</span><span class="p">);</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">ix_ga_tr_servicios_clientes_auditorias_estados_fk_motivo_cancelacion</span>
+<span class="w">    </span><span class="k">ON</span><span class="w"> </span><span class="n">ga_tr_servicios_clientes_auditorias_estados</span><span class="w"> </span><span class="p">(</span><span class="n">fk_motivo_cancelacion</span><span class="p">);</span>
+
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">ga_tr_servicios_clientes_auditorias_estados</span><span class="p">.</span><span class="n">fk_motivo_cancelacion</span><span class="w"> </span><span class="k">IS</span>
+<span class="w">    </span><span class="s1">&#39;Motivo de Cancelación (RF-03) seleccionado al cancelar el Servicio desde el wizard (RN-11.2, RN-11.6)&#39;</span><span class="p">;</span>
+<span class="k">COMMENT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">ga_tr_servicios_clientes_auditorias_estados</span><span class="p">.</span><span class="n">motivo_cancelacion_detalle</span><span class="w"> </span><span class="k">IS</span>
+<span class="w">    </span><span class="s1">&#39;Detalle en texto libre, obligatorio solo cuando el Motivo de Cancelación requiere especificar (RN-11.8, RN-11.9)&#39;</span><span class="p">;</span>
+</code></pre></div>
+<hr />
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": [], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../../../assets/javascripts/main-nav.js"></script>
+      
+    
+  </body>
+</html>

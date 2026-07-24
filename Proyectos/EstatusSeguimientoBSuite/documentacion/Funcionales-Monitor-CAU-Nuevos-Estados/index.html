@@ -1,0 +1,4006 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentación BRD y FSD - Business Suite">
+      
+      
+        <meta name="author" content="solis1408">
+      
+      
+        <link rel="canonical" href="https://solis1408.github.io/Business-Suite/Proyectos/EstatusSeguimientoBSuite/documentacion/Funcionales-Monitor-CAU-Nuevos-Estados/">
+      
+      
+        <link rel="prev" href="../Ejercicios%20de%20Estados%20Tickets.pdf">
+      
+      
+        <link rel="next" href="../Tecnico-Monitor-CAU-Nuevos-Estados/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Funcionales - Business Suite - Documentación</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main-nav.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#requerimientos-funcionales--monitor-cau-nuevos-estados" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../../../.." title="Business Suite - Documentación" class="md-header__button md-logo" aria-label="Business Suite - Documentación" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Business Suite - Documentación
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Funcionales
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Business Suite - Documentación" class="md-nav__button md-logo" aria-label="Business Suite - Documentación" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Business Suite - Documentación
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Proyectos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Proyectos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Expediente de Personal (EDC)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Expediente de Personal (EDC)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../EDC/documentacion/requerimiento-cliente/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requerimiento Cliente
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../EDC/documentacion/requerimiento-funcional/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requerimiento Funcional
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1_3" id="__nav_2_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RouteMap
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    RouteMap
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../EDC/documentacion/routemap/Roadmap%20Estrat%C3%A9gico%20%E2%80%94%20Expediente%20Digital%20del%20Colaborador/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RouteMap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../EDC/documentacion/routemap/roadmap-diagrama/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diagrama HTML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1_4" id="__nav_2_1_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diagramas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Diagramas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../EDC/documentacion/diagramas/contexto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contexto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../EDC/documentacion/diagramas/mapa-de-estados/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mapa de estados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1_5" id="__nav_2_1_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prototipos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Prototipos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../EDC/documentacion/prototipos/prototipo-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prototipo 1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../EDC/documentacion/prototipos/prototipo-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prototipo 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../EDC/documentacion/prototipos/prototipo-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prototipo 3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Auditorias
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Auditorias
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Auditorias/documentacion/requerimiento-cliente/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requerimiento Cliente
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Auditorias/documentacion/requerimiento-funcional/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requerimiento Funcional
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3" id="__nav_2_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diagramas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Diagramas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Auditorias/documentacion/diagramas/contexto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contexto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Auditorias/documentacion/diagramas/mapa-de-estados/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mapa de estados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_4" id="__nav_2_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prototipos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Prototipos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Auditorias/documentacion/prototipos/prototipo-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monitor Acciones Correctivas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Auditorias/documentacion/prototipos/prototipo-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monitor Auditorias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Auditorias/documentacion/prototipos/prototipo-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reporte Resumen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estatus de Tickets
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Estatus de Tickets
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../EstatusTickets/documentacion/requerimiento-cliente/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requerimiento Cliente
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../EstatusTickets/documentacion/requerimiento-funcional/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requerimiento Funcional
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_3" id="__nav_2_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diagramas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Diagramas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../EstatusTickets/documentacion/diagramas/contexto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contexto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../EstatusTickets/documentacion/diagramas/mapa-de-estados/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mapa de estados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estatus de Seguimiento BSuite
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Estatus de Seguimiento BSuite
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4_1" id="__nav_2_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diagramas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Diagramas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../diagramas/contexto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contexto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../diagramas/mapa-de-estados/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mapa de estados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Ejercicios%20de%20Estados%20Tickets.pdf" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejercicios de Estados Tickets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Funcionales
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Funcionales
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#índice-de-requerimientos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Índice de requerimientos
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Tecnico-Monitor-CAU-Nuevos-Estados/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Técnico
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Documentación BSuite
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Documentación BSuite
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Catálogos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Catálogos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1_1" id="__nav_3_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gestión TI
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gestión TI
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Catalogos/Gestion-TI/documentacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Catalogos/Gestion-TI/documentacion/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Catalogos/Gestion-TI/documentacion/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1_2" id="__nav_3_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compras
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Compras
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Catalogos/Compras/documentacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Catalogos/Compras/documentacion/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Catalogos/Compras/documentacion/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Procesos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Procesos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_1" id="__nav_3_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gestión TI
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gestión TI
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Procesos/Gestion-TI/documentacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Procesos/Gestion-TI/documentacion/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Procesos/Gestion-TI/documentacion/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_2" id="__nav_3_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compras
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Compras
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Procesos/Compras/documentacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Procesos/Compras/documentacion/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Procesos/Compras/documentacion/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Consultas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Consultas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3_1" id="__nav_3_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gestión TI
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gestión TI
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3_1_1" id="__nav_3_3_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reporte Forecast
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_3_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reporte Forecast
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Consultas/Gestion-TI/documentacion/reporte-forecast/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Consultas/Gestion-TI/documentacion/reporte-forecast/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Consultas/Gestion-TI/documentacion/reporte-forecast/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3_1_2" id="__nav_3_3_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reporte Financiero
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_3_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reporte Financiero
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Consultas/Gestion-TI/documentacion/reporte-financiero/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Consultas/Gestion-TI/documentacion/reporte-financiero/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Consultas/Gestion-TI/documentacion/reporte-financiero/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3_2" id="__nav_3_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compras
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Compras
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Consultas/Compras/documentacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Consultas/Compras/documentacion/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Consultas/Compras/documentacion/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#índice-de-requerimientos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Índice de requerimientos
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="requerimientos-funcionales--monitor-cau-nuevos-estados">Requerimientos Funcionales — Monitor CAU, Nuevos Estados<a class="headerlink" href="#requerimientos-funcionales--monitor-cau-nuevos-estados" title="Permanent link">&para;</a></h1>
+<hr />
+<h2 id="índice-de-requerimientos">Índice de requerimientos<a class="headerlink" href="#índice-de-requerimientos" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>RF</th>
+<th>Título</th>
+<th>Grupo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#rf-01--administración-de-grupos-de-estados">RF-01</a></td>
+<td>Administración de Grupos de Estados</td>
+<td>Catálogos</td>
+</tr>
+<tr>
+<td><a href="#rf-02--administración-de-estados">RF-02</a></td>
+<td>Administración de Estados</td>
+<td>Catálogos</td>
+</tr>
+<tr>
+<td><a href="#rf-03--administración-de-motivos-de-cancelación">RF-03</a></td>
+<td>Administración de Motivos de Cancelación</td>
+<td>Catálogos</td>
+</tr>
+<tr>
+<td><a href="#rf-04--importación-de-los-estados-existentes-al-catálogo">RF-04</a></td>
+<td>Importación de los Estados existentes al catálogo</td>
+<td>Catálogos</td>
+</tr>
+<tr>
+<td><a href="#rf-05--bitácora-del-servicio-cliente-con-catálogo-de-estados">RF-05</a></td>
+<td>Bitácora del Servicio Cliente con catálogo de Estados</td>
+<td>Monitor CAU</td>
+</tr>
+<tr>
+<td><a href="#rf-06--registro-del-servicio-con-estatus-registrado-y-su-bitácora">RF-06</a></td>
+<td>Registro del Servicio con Estatus Registrado y su bitácora</td>
+<td>Monitor CAU</td>
+</tr>
+<tr>
+<td><a href="#rf-07--transición-de-registrado-a-investigación-cau-desde-monitor-cau">RF-07</a></td>
+<td>Transición de Registrado a Investigación CAU desde Monitor CAU</td>
+<td>Monitor CAU</td>
+</tr>
+<tr>
+<td><a href="#rf-08--rediseño-de-tarjetas-del-monitor-cau">RF-08</a></td>
+<td>Rediseño de tarjetas del Monitor CAU</td>
+<td>Monitor CAU</td>
+</tr>
+<tr>
+<td><a href="#rf-09--adecuación-del-wizard-de-registro-de-ticket-o-solicitud-de-servicio">RF-09</a></td>
+<td>Adecuación del wizard de registro de Ticket o Solicitud de Servicio</td>
+<td>Monitor CAU</td>
+</tr>
+<tr>
+<td><a href="#rf-10--registro-automático-de-autorización-digital-al-generar-ticket-o-solicitud-de-servicio">RF-10</a></td>
+<td>Registro automático de autorización digital al generar Ticket o Solicitud de Servicio</td>
+<td>Monitor CAU</td>
+</tr>
+<tr>
+<td><a href="#rf-11--cancelación-del-servicio-desde-el-wizard">RF-11</a></td>
+<td>Cancelación del Servicio desde el wizard</td>
+<td>Monitor CAU</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="rf-01--administración-de-grupos-de-estados">RF-01 — Administración de Grupos de Estados<a class="headerlink" href="#rf-01--administración-de-grupos-de-estados" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Alta</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>Ninguna</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo">Objetivo<a class="headerlink" href="#objetivo" title="Permanent link">&para;</a></h2>
+<p>Administrar de forma centralizada el catálogo de Grupos de Estados, que agrupan por significado de negocio los estados de los distintos procesos del sistema.</p>
+<h2 id="descripción">Descripción<a class="headerlink" href="#descripción" title="Permanent link">&para;</a></h2>
+<p>El sistema permite registrar, consultar, editar, cancelar y reactivar Grupos de Estados. Un Grupo de Estados representa un hecho de negocio (por ejemplo, "Registrado", "En Proceso") del cual se derivan uno o varios estados de los distintos catálogos del sistema, evitando que distintos procesos dupliquen el significado de un mismo estatus.</p>
+<hr />
+<h2 id="us-11--registro-de-grupos-de-estados">US-1.1 — Registro de Grupos de Estados<a class="headerlink" href="#us-11--registro-de-grupos-de-estados" title="Permanent link">&para;</a></h2>
+<p>Como administrador del sistema, quiero registrar nuevos Grupos de Estados capturando Clave, Nombre y Descripción, para dar de alta el catálogo con el que se homologarán los estados de los distintos procesos.</p>
+<h3 id="reglas-de-negocio">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio" title="Permanent link">&para;</a></h3>
+<p><strong>RN-1.1</strong> La Clave será obligatoria y no podrá duplicarse contra ningún otro grupo del catálogo (incluyendo grupos cancelados).</p>
+<p><strong>RN-1.2</strong> El Nombre será obligatorio y no podrá duplicarse contra ningún otro grupo del catálogo, sin distinguir entre mayúsculas y minúsculas ni espacios al inicio/final (por ejemplo, "En Proceso", "EN PROCESO" y " en proceso " se consideran el mismo nombre).</p>
+<p><strong>RN-1.3</strong> La Descripción será obligatoria.</p>
+<p><strong>RN-1.4</strong> Todo grupo se crea con Estado del Registro = Activo.</p>
+<p><strong>RN-1.5</strong> Todo alta, edición, cancelación o reactivación realizada en el catálogo deberá registrarse en la bitácora de auditoría.</p>
+<h3 id="criterios-de-aceptación">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación" title="Permanent link">&para;</a></h3>
+<p><strong>CA-1.1.1 — Registro exitoso</strong>
+Dado que el administrador captura una Clave y un Nombre que no existen en el catálogo, junto con la Descripción
+Cuando seleccione Registrar
+Entonces el sistema creará el nuevo grupo con Estado del Registro = Activo y lo dejará disponible para su consulta.</p>
+<p><strong>CA-1.1.2 — Clave duplicada</strong>
+Dado que existe un grupo (activo o cancelado) con la misma Clave
+Cuando el administrador intente registrar un nuevo grupo con esa Clave
+Entonces el sistema impedirá el registro e informará que la Clave ya existe.</p>
+<p><strong>CA-1.1.3 — Nombre duplicado</strong>
+Dado que existe un grupo (activo o cancelado) con el mismo Nombre, sin distinguir mayúsculas/minúsculas ni espacios
+Cuando el administrador intente registrar un nuevo grupo con ese Nombre
+Entonces el sistema impedirá el registro e informará que el Nombre ya existe.</p>
+<p><strong>CA-1.1.4 — Campos obligatorios</strong>
+Dado que el administrador no captura la Clave, el Nombre o la Descripción
+Cuando intente registrar el grupo
+Entonces el sistema impedirá el registro e indicará los campos obligatorios faltantes.</p>
+<hr />
+<h2 id="us-12--edición-de-grupos-de-estados">US-1.2 — Edición de Grupos de Estados<a class="headerlink" href="#us-12--edición-de-grupos-de-estados" title="Permanent link">&para;</a></h2>
+<p>Como administrador del sistema, quiero editar la información de un Grupo de Estados existente, para corregir o actualizar su Nombre o Descripción sin perder su identificador ni su historial.</p>
+<h3 id="reglas-de-negocio_1">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_1" title="Permanent link">&para;</a></h3>
+<p><strong>RN-1.6</strong> La Clave no podrá modificarse una vez creado el grupo.</p>
+<p><strong>RN-1.7</strong> El Nombre podrá editarse siempre que el nuevo valor no coincida (sin distinguir mayúsculas/minúsculas ni espacios) con el de otro grupo del catálogo.</p>
+<p><strong>RN-1.8</strong> Un grupo con Estado del Registro = Cancelado no podrá editarse; primero deberá reactivarse.</p>
+<p><strong>RN-1.9</strong> La Descripción no podrá quedar vacía al editarla, dado que es obligatoria.</p>
+<h3 id="criterios-de-aceptación_1">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_1" title="Permanent link">&para;</a></h3>
+<p><strong>CA-1.2.1 — Edición exitosa</strong>
+Dado un grupo activo existente
+Cuando el administrador modifique su Nombre y/o Descripción con datos válidos
+Entonces el sistema actualizará el registro conservando su Clave.</p>
+<p><strong>CA-1.2.2 — Nombre duplicado al editar</strong>
+Dado un grupo activo existente
+Cuando el administrador intente editar su Nombre a uno ya utilizado por otro grupo
+Entonces el sistema impedirá la actualización e informará que el Nombre ya existe.</p>
+<p><strong>CA-1.2.3 — Edición de grupo cancelado</strong>
+Dado un grupo con Estado del Registro = Cancelado
+Cuando el administrador intente editarlo
+Entonces el sistema impedirá la edición e indicará que el grupo debe reactivarse primero.</p>
+<hr />
+<h2 id="us-13--cancelación-de-grupos-de-estados">US-1.3 — Cancelación de Grupos de Estados<a class="headerlink" href="#us-13--cancelación-de-grupos-de-estados" title="Permanent link">&para;</a></h2>
+<p>Como administrador del sistema, quiero cancelar un Grupo de Estados que ya no debe utilizarse, para evitar que se asigne a nuevos estados sin eliminar la información histórica.</p>
+<h3 id="reglas-de-negocio_2">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_2" title="Permanent link">&para;</a></h3>
+<p><strong>RN-1.10</strong> La cancelación es lógica: el sistema no permitirá eliminar físicamente un grupo, únicamente cambiar su Estado del Registro a Cancelado.</p>
+<p><strong>RN-1.11</strong> La cancelación de un grupo no modifica ni elimina los registros o estados que ya lo tengan asignado.</p>
+<p><strong>RN-1.12</strong> Un grupo cancelado no podrá asignarse a nuevos estados de ningún catálogo que lo consuma.</p>
+<h3 id="criterios-de-aceptación_2">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_2" title="Permanent link">&para;</a></h3>
+<p><strong>CA-1.3.1 — Cancelación exitosa</strong>
+Dado un grupo con Estado del Registro = Activo
+Cuando el administrador seleccione Cancelar
+Entonces el sistema cambiará su Estado del Registro a Cancelado, conservando la información histórica.</p>
+<p><strong>CA-1.3.2 — Cancelación de grupo ya cancelado</strong>
+Dado un grupo con Estado del Registro = Cancelado
+Cuando el administrador intente cancelarlo nuevamente
+Entonces el sistema no permitirá la operación e indicará que el grupo ya se encuentra cancelado.</p>
+<hr />
+<h2 id="us-14--reactivación-de-grupos-de-estados">US-1.4 — Reactivación de Grupos de Estados<a class="headerlink" href="#us-14--reactivación-de-grupos-de-estados" title="Permanent link">&para;</a></h2>
+<p>Como administrador del sistema, quiero reactivar un Grupo de Estados previamente cancelado, para volver a utilizarlo cuando el hecho de negocio que representa vuelva a ser vigente.</p>
+<h3 id="reglas-de-negocio_3">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_3" title="Permanent link">&para;</a></h3>
+<p><strong>RN-1.13</strong> Un grupo solo podrá reactivarse si su Estado del Registro actual es Cancelado.</p>
+<p><strong>RN-1.14</strong> Un grupo podrá reactivarse únicamente si no existe otro grupo Activo con el mismo Nombre (sin distinguir mayúsculas/minúsculas ni espacios).</p>
+<h3 id="criterios-de-aceptación_3">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_3" title="Permanent link">&para;</a></h3>
+<p><strong>CA-1.4.1 — Reactivación exitosa</strong>
+Dado un grupo con Estado del Registro = Cancelado y sin que exista otro grupo activo con el mismo Nombre
+Cuando el administrador seleccione Reactivar
+Entonces el sistema cambiará su Estado del Registro a Activo.</p>
+<p><strong>CA-1.4.2 — Reactivación bloqueada por nombre duplicado</strong>
+Dado un grupo con Estado del Registro = Cancelado cuyo Nombre coincide con el de un grupo actualmente Activo
+Cuando el administrador seleccione Reactivar
+Entonces el sistema impedirá la reactivación e informará que ya existe un grupo activo con ese Nombre.</p>
+<p><strong>CA-1.4.3 — Reactivación de grupo activo</strong>
+Dado un grupo con Estado del Registro = Activo
+Cuando el administrador intente reactivarlo
+Entonces el sistema no permitirá la operación e indicará que el grupo ya se encuentra activo.</p>
+<hr />
+<p><strong>Regla transversal:</strong>
+El catálogo de Grupos de Estados es prerrequisito de cualquier catálogo de estados que lo consuma: cuando un estado de dichos catálogos se homologa a un Grupo de Estados, este debe estar Activo, evitando que el mismo hecho de negocio se represente con nombres distintos entre procesos. La Clave y el Nombre son únicos en todo el catálogo, considerando tanto los grupos Activos como los Cancelados.</p>
+<hr />
+<hr />
+<h1 id="rf-02--administración-de-estados">RF-02 — Administración de Estados<a class="headerlink" href="#rf-02--administración-de-estados" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Alta</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>RF-01</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_1">Objetivo<a class="headerlink" href="#objetivo_1" title="Permanent link">&para;</a></h2>
+<p>Administrar el catálogo de Estados que utilizan los procesos del sistema, homologándolos opcionalmente a un Grupo de Estados y dotándolos de la información visual (Mensaje corto, Color, Ícono) con la que se presentan a los usuarios.</p>
+<h2 id="descripción_1">Descripción<a class="headerlink" href="#descripción_1" title="Permanent link">&para;</a></h2>
+<p>El sistema permite registrar, consultar, editar, cancelar y reactivar Estados. Cada Estado puede asociarse, de forma opcional, a un Grupo de Estados Activo (RF-01) para reutilizar el mismo significado de negocio entre procesos, y puede capturar, también de forma opcional, un Mensaje corto, un Color y un Ícono para identificarlo visualmente (por ejemplo, en tarjetas y bitácoras).</p>
+<hr />
+<h2 id="us-21--registro-de-estados">US-2.1 — Registro de Estados<a class="headerlink" href="#us-21--registro-de-estados" title="Permanent link">&para;</a></h2>
+<p>Como administrador del sistema, quiero registrar nuevos Estados asociados a un Grupo de Estados, para dar de alta el catálogo de estatus que utilizarán los distintos procesos del sistema.</p>
+<h3 id="reglas-de-negocio_4">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_4" title="Permanent link">&para;</a></h3>
+<p><strong>RN-2.1</strong> La Clave será obligatoria y no podrá duplicarse contra ningún otro estado del catálogo (incluyendo estados cancelados).</p>
+<p><strong>RN-2.2</strong> El Nombre será obligatorio y no podrá duplicarse contra ningún otro estado del catálogo, sin importar el Grupo de Estados al que pertenezca, sin distinguir mayúsculas/minúsculas ni espacios al inicio/final.</p>
+<p><strong>RN-2.3</strong> El Grupo de Estados es opcional; cuando se captura, deberá corresponder a un grupo con Estado del Registro = Activo (RF-01).</p>
+<p><strong>RN-2.4</strong> La Descripción será obligatoria.</p>
+<p><strong>RN-2.5</strong> Todo estado se crea con Estado del Registro = Activo.</p>
+<p><strong>RN-2.6</strong> Todo alta, edición, cancelación o reactivación realizada en el catálogo de Estados deberá registrarse en la bitácora de auditoría.</p>
+<p><strong>RN-2.7</strong> El Mensaje corto es opcional.</p>
+<p><strong>RN-2.20</strong> El Color es opcional; cuando se captura, se utiliza para identificar visualmente al Estado en las tarjetas y bitácoras de los procesos que lo consumen.</p>
+<p><strong>RN-2.21</strong> El Ícono es opcional; cuando se captura, se utiliza para identificar visualmente al Estado en las tarjetas y bitácoras de los procesos que lo consumen.</p>
+<h3 id="criterios-de-aceptación_4">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_4" title="Permanent link">&para;</a></h3>
+<p><strong>CA-2.1.1 — Registro exitoso</strong>
+Dado que el administrador captura una Clave y un Nombre que no existen en el catálogo, junto con la Descripción
+Cuando seleccione Registrar
+Entonces el sistema creará el nuevo estado con Estado del Registro = Activo y lo dejará disponible para su consulta, con o sin Grupo de Estados asignado.</p>
+<p><strong>CA-2.1.2 — Clave duplicada</strong>
+Dado que existe un estado (activo o cancelado) con la misma Clave
+Cuando el administrador intente registrar un nuevo estado con esa Clave
+Entonces el sistema impedirá el registro e informará que la Clave ya existe.</p>
+<p><strong>CA-2.1.3 — Nombre duplicado</strong>
+Dado que existe un estado (activo o cancelado) con el mismo Nombre, sin distinguir mayúsculas/minúsculas ni espacios, sin importar su Grupo de Estados
+Cuando el administrador intente registrar un nuevo estado con ese Nombre
+Entonces el sistema impedirá el registro e informará que el Nombre ya existe.</p>
+<p><strong>CA-2.1.4 — Grupo de Estados inválido</strong>
+Dado que el administrador selecciona un Grupo de Estados con Estado del Registro = Cancelado
+Cuando intente registrar el estado
+Entonces el sistema impedirá el registro e indicará que el Grupo de Estados seleccionado debe estar Activo.</p>
+<p><strong>CA-2.1.5 — Campos obligatorios</strong>
+Dado que el administrador no captura la Clave, el Nombre o la Descripción
+Cuando intente registrar el estado
+Entonces el sistema impedirá el registro e indicará los campos obligatorios faltantes.</p>
+<hr />
+<h2 id="us-22--edición-de-estados">US-2.2 — Edición de Estados<a class="headerlink" href="#us-22--edición-de-estados" title="Permanent link">&para;</a></h2>
+<p>Como administrador del sistema, quiero editar la información de un Estado existente, para corregir o actualizar su Nombre, Descripción, Mensaje corto, Color, Ícono o Grupo de Estados sin perder su identificador ni su historial.</p>
+<h3 id="reglas-de-negocio_5">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_5" title="Permanent link">&para;</a></h3>
+<p><strong>RN-2.8</strong> La Clave no podrá modificarse una vez creado el estado.</p>
+<p><strong>RN-2.9</strong> El Nombre podrá editarse siempre que el nuevo valor no coincida (sin distinguir mayúsculas/minúsculas ni espacios) con el de otro estado del catálogo.</p>
+<p><strong>RN-2.10</strong> El Grupo de Estados podrá asignarse, reasignarse o retirarse (dejar el estado sin Grupo de Estados); cuando se asigne o reasigne, el grupo indicado deberá tener Estado del Registro = Activo.</p>
+<p><strong>RN-2.11</strong> Un estado con Estado del Registro = Cancelado no podrá editarse; primero deberá reactivarse.</p>
+<p><strong>RN-2.12</strong> El Mensaje corto puede quedar vacío al editarlo, dado que es opcional.</p>
+<p><strong>RN-2.13</strong> La Descripción no podrá quedar vacía al editarla, dado que es obligatoria.</p>
+<h3 id="criterios-de-aceptación_5">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_5" title="Permanent link">&para;</a></h3>
+<p><strong>CA-2.2.1 — Edición exitosa</strong>
+Dado un estado activo existente
+Cuando el administrador modifique su Nombre, Descripción, Mensaje corto, Color, Ícono y/o Grupo de Estados con datos válidos
+Entonces el sistema actualizará el registro conservando su Clave.</p>
+<p><strong>CA-2.2.2 — Nombre duplicado al editar</strong>
+Dado un estado activo existente
+Cuando el administrador intente editar su Nombre a uno ya utilizado por otro estado
+Entonces el sistema impedirá la actualización e informará que el Nombre ya existe.</p>
+<p><strong>CA-2.2.3 — Reasignación a grupo cancelado</strong>
+Dado un estado activo existente
+Cuando el administrador intente reasignarlo a un Grupo de Estados Cancelado
+Entonces el sistema impedirá la actualización e indicará que el grupo debe estar Activo.</p>
+<p><strong>CA-2.2.4 — Edición de estado cancelado</strong>
+Dado un estado con Estado del Registro = Cancelado
+Cuando el administrador intente editarlo
+Entonces el sistema impedirá la edición e indicará que el estado debe reactivarse primero.</p>
+<hr />
+<h2 id="us-23--cancelación-de-estados">US-2.3 — Cancelación de Estados<a class="headerlink" href="#us-23--cancelación-de-estados" title="Permanent link">&para;</a></h2>
+<p>Como administrador del sistema, quiero cancelar un Estado que ya no debe utilizarse, para evitar que se asigne a nuevos registros sin eliminar la información histórica.</p>
+<h3 id="reglas-de-negocio_6">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_6" title="Permanent link">&para;</a></h3>
+<p><strong>RN-2.14</strong> La cancelación es lógica: el sistema no permitirá eliminar físicamente un estado, únicamente cambiar su Estado del Registro a Cancelado.</p>
+<p><strong>RN-2.15</strong> La cancelación de un estado no modifica ni elimina los registros que ya lo tengan asignado.</p>
+<p><strong>RN-2.16</strong> Un estado cancelado no podrá asignarse a nuevos registros de ningún proceso.</p>
+<h3 id="criterios-de-aceptación_6">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_6" title="Permanent link">&para;</a></h3>
+<p><strong>CA-2.3.1 — Cancelación exitosa</strong>
+Dado un estado con Estado del Registro = Activo
+Cuando el administrador seleccione Cancelar
+Entonces el sistema cambiará su Estado del Registro a Cancelado, conservando la información histórica.</p>
+<p><strong>CA-2.3.2 — Cancelación de estado ya cancelado</strong>
+Dado un estado con Estado del Registro = Cancelado
+Cuando el administrador intente cancelarlo nuevamente
+Entonces el sistema no permitirá la operación e indicará que el estado ya se encuentra cancelado.</p>
+<hr />
+<h2 id="us-24--reactivación-de-estados">US-2.4 — Reactivación de Estados<a class="headerlink" href="#us-24--reactivación-de-estados" title="Permanent link">&para;</a></h2>
+<p>Como administrador del sistema, quiero reactivar un Estado previamente cancelado, para volver a utilizarlo cuando el estatus que representa vuelva a ser vigente.</p>
+<h3 id="reglas-de-negocio_7">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_7" title="Permanent link">&para;</a></h3>
+<p><strong>RN-2.17</strong> Un estado solo podrá reactivarse si su Estado del Registro actual es Cancelado.</p>
+<p><strong>RN-2.18</strong> Un estado podrá reactivarse únicamente si no existe otro estado Activo con el mismo Nombre (sin distinguir mayúsculas/minúsculas ni espacios).</p>
+<p><strong>RN-2.19</strong> Si el estado tiene un Grupo de Estados asociado, solo podrá reactivarse si dicho grupo tiene Estado del Registro = Activo; si el estado no tiene Grupo de Estados asociado, esta condición no aplica.</p>
+<h3 id="criterios-de-aceptación_7">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_7" title="Permanent link">&para;</a></h3>
+<p><strong>CA-2.4.1 — Reactivación exitosa</strong>
+Dado un estado con Estado del Registro = Cancelado, sin que exista otro estado activo con el mismo Nombre, y cuyo Grupo de Estados (si tiene uno asignado) esté Activo
+Cuando el administrador seleccione Reactivar
+Entonces el sistema cambiará su Estado del Registro a Activo.</p>
+<p><strong>CA-2.4.2 — Reactivación bloqueada por nombre duplicado</strong>
+Dado un estado con Estado del Registro = Cancelado cuyo Nombre coincide con el de un estado actualmente Activo
+Cuando el administrador seleccione Reactivar
+Entonces el sistema impedirá la reactivación e informará que ya existe un estado activo con ese Nombre.</p>
+<p><strong>CA-2.4.3 — Reactivación bloqueada por grupo cancelado</strong>
+Dado un estado con Estado del Registro = Cancelado cuyo Grupo de Estados asociado se encuentra Cancelado
+Cuando el administrador seleccione Reactivar
+Entonces el sistema impedirá la reactivación e indicará que el Grupo de Estados debe estar Activo.</p>
+<p><strong>CA-2.4.4 — Reactivación de estado activo</strong>
+Dado un estado con Estado del Registro = Activo
+Cuando el administrador intente reactivarlo
+Entonces el sistema no permitirá la operación e indicará que el estado ya se encuentra activo.</p>
+<hr />
+<p><strong>Regla transversal:</strong>
+Un Estado puede pertenecer, de forma opcional, a un Grupo de Estados (RF-01); cuando lo tenga asignado, dicho grupo debe estar Activo. La Clave y el Nombre del Estado son únicos en todo el catálogo, considerando tanto los estados Activos como los Cancelados, independientemente del Grupo de Estados al que pertenezcan o de si no tienen uno asignado.</p>
+<hr />
+<hr />
+<h1 id="rf-03--administración-de-motivos-de-cancelación">RF-03 — Administración de Motivos de Cancelación<a class="headerlink" href="#rf-03--administración-de-motivos-de-cancelación" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Alta</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>Ninguna</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_2">Objetivo<a class="headerlink" href="#objetivo_2" title="Permanent link">&para;</a></h2>
+<p>Administrar de forma centralizada el catálogo de Motivos de Cancelación, utilizado para documentar la causa por la que se cancela un Servicio.</p>
+<h2 id="descripción_2">Descripción<a class="headerlink" href="#descripción_2" title="Permanent link">&para;</a></h2>
+<p>El sistema permite registrar, consultar, editar, cancelar y reactivar Motivos de Cancelación, cada uno con Clave, Nombre y Descripción propios, siguiendo el mismo esquema administrativo que los demás catálogos de este documento. Un motivo puede marcarse con el indicador "Requiere Especificar" (por ejemplo, "Otro"), para exigir un detalle adicional en texto libre al utilizarse en una cancelación.</p>
+<hr />
+<h2 id="us-31--registro-de-motivos-de-cancelación">US-3.1 — Registro de Motivos de Cancelación<a class="headerlink" href="#us-31--registro-de-motivos-de-cancelación" title="Permanent link">&para;</a></h2>
+<p>Como administrador del sistema, quiero registrar nuevos Motivos de Cancelación capturando Clave, Nombre y Descripción, para dar de alta el catálogo con el que se documentarán las cancelaciones de Servicio.</p>
+<h3 id="reglas-de-negocio_8">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_8" title="Permanent link">&para;</a></h3>
+<p><strong>RN-3.1</strong> La Clave será obligatoria y no podrá duplicarse contra ningún otro motivo del catálogo (incluyendo motivos cancelados).</p>
+<p><strong>RN-3.2</strong> El Nombre será obligatorio y no podrá duplicarse contra ningún otro motivo del catálogo, sin distinguir mayúsculas/minúsculas ni espacios al inicio/final.</p>
+<p><strong>RN-3.3</strong> La Descripción será obligatoria.</p>
+<p><strong>RN-3.4</strong> Todo motivo se crea con Estado del Registro = Activo.</p>
+<p><strong>RN-3.5</strong> Todo alta, edición, cancelación o reactivación realizada en el catálogo deberá registrarse en la bitácora de auditoría.</p>
+<p><strong>RN-3.15</strong> El Motivo de Cancelación cuenta con un indicador "Requiere Especificar", opcional, con valor por defecto No; cuando está en Sí, señala que este motivo exige capturar un detalle adicional en texto libre al utilizarse en una cancelación (por ejemplo, un motivo "Otro").</p>
+<h3 id="criterios-de-aceptación_8">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_8" title="Permanent link">&para;</a></h3>
+<p><strong>CA-3.1.1 — Registro exitoso</strong>
+Dado que el administrador captura una Clave y un Nombre que no existen en el catálogo, junto con la Descripción
+Cuando seleccione Registrar
+Entonces el sistema creará el nuevo motivo con Estado del Registro = Activo y lo dejará disponible para su consulta.</p>
+<p><strong>CA-3.1.5 — Valor por defecto de Requiere Especificar</strong>
+Dado que el administrador registra un nuevo motivo sin modificar el valor propuesto de "Requiere Especificar"
+Cuando seleccione Registrar
+Entonces el motivo queda creado con "Requiere Especificar" = No.</p>
+<p><strong>CA-3.1.2 — Clave duplicada</strong>
+Dado que existe un motivo (activo o cancelado) con la misma Clave
+Cuando el administrador intente registrar un nuevo motivo con esa Clave
+Entonces el sistema impedirá el registro e informará que la Clave ya existe.</p>
+<p><strong>CA-3.1.3 — Nombre duplicado</strong>
+Dado que existe un motivo (activo o cancelado) con el mismo Nombre, sin distinguir mayúsculas/minúsculas ni espacios
+Cuando el administrador intente registrar un nuevo motivo con ese Nombre
+Entonces el sistema impedirá el registro e informará que el Nombre ya existe.</p>
+<p><strong>CA-3.1.4 — Campos obligatorios</strong>
+Dado que el administrador no captura la Clave, el Nombre o la Descripción
+Cuando intente registrar el motivo
+Entonces el sistema impedirá el registro e indicará los campos obligatorios faltantes.</p>
+<hr />
+<h2 id="us-32--edición-de-motivos-de-cancelación">US-3.2 — Edición de Motivos de Cancelación<a class="headerlink" href="#us-32--edición-de-motivos-de-cancelación" title="Permanent link">&para;</a></h2>
+<p>Como administrador del sistema, quiero editar la información de un Motivo de Cancelación existente, para corregir o actualizar su Nombre, Descripción o indicador "Requiere Especificar" sin perder su identificador ni su historial.</p>
+<h3 id="reglas-de-negocio_9">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_9" title="Permanent link">&para;</a></h3>
+<p><strong>RN-3.6</strong> La Clave no podrá modificarse una vez creado el motivo.</p>
+<p><strong>RN-3.7</strong> El Nombre podrá editarse siempre que el nuevo valor no coincida (sin distinguir mayúsculas/minúsculas ni espacios) con el de otro motivo del catálogo.</p>
+<p><strong>RN-3.8</strong> Un motivo con Estado del Registro = Cancelado no podrá editarse; primero deberá reactivarse.</p>
+<p><strong>RN-3.9</strong> La Descripción no podrá quedar vacía al editarla, dado que es obligatoria.</p>
+<p><strong>RN-3.16</strong> El indicador "Requiere Especificar" podrá editarse en cualquier momento sobre un motivo Activo.</p>
+<h3 id="criterios-de-aceptación_9">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_9" title="Permanent link">&para;</a></h3>
+<p><strong>CA-3.2.1 — Edición exitosa</strong>
+Dado un motivo activo existente
+Cuando el administrador modifique su Nombre, Descripción y/o indicador "Requiere Especificar" con datos válidos
+Entonces el sistema actualizará el registro conservando su Clave.</p>
+<p><strong>CA-3.2.2 — Nombre duplicado al editar</strong>
+Dado un motivo activo existente
+Cuando el administrador intente editar su Nombre a uno ya utilizado por otro motivo
+Entonces el sistema impedirá la actualización e informará que el Nombre ya existe.</p>
+<p><strong>CA-3.2.3 — Edición de motivo cancelado</strong>
+Dado un motivo con Estado del Registro = Cancelado
+Cuando el administrador intente editarlo
+Entonces el sistema impedirá la edición e indicará que el motivo debe reactivarse primero.</p>
+<hr />
+<h2 id="us-33--cancelación-de-motivos-de-cancelación">US-3.3 — Cancelación de Motivos de Cancelación<a class="headerlink" href="#us-33--cancelación-de-motivos-de-cancelación" title="Permanent link">&para;</a></h2>
+<p>Como administrador del sistema, quiero cancelar un Motivo de Cancelación que ya no debe utilizarse, para evitar que se asigne a nuevas cancelaciones sin eliminar la información histórica.</p>
+<h3 id="reglas-de-negocio_10">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_10" title="Permanent link">&para;</a></h3>
+<p><strong>RN-3.10</strong> La cancelación es lógica: el sistema no permitirá eliminar físicamente un motivo, únicamente cambiar su Estado del Registro a Cancelado.</p>
+<p><strong>RN-3.11</strong> La cancelación de un motivo no modifica ni elimina las cancelaciones de Servicio que ya lo tengan asignado.</p>
+<p><strong>RN-3.12</strong> Un motivo cancelado no podrá asignarse a nuevas cancelaciones de Servicio.</p>
+<h3 id="criterios-de-aceptación_10">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_10" title="Permanent link">&para;</a></h3>
+<p><strong>CA-3.3.1 — Cancelación exitosa</strong>
+Dado un motivo con Estado del Registro = Activo
+Cuando el administrador seleccione Cancelar
+Entonces el sistema cambiará su Estado del Registro a Cancelado, conservando la información histórica.</p>
+<p><strong>CA-3.3.2 — Cancelación de motivo ya cancelado</strong>
+Dado un motivo con Estado del Registro = Cancelado
+Cuando el administrador intente cancelarlo nuevamente
+Entonces el sistema no permitirá la operación e indicará que el motivo ya se encuentra cancelado.</p>
+<hr />
+<h2 id="us-34--reactivación-de-motivos-de-cancelación">US-3.4 — Reactivación de Motivos de Cancelación<a class="headerlink" href="#us-34--reactivación-de-motivos-de-cancelación" title="Permanent link">&para;</a></h2>
+<p>Como administrador del sistema, quiero reactivar un Motivo de Cancelación previamente cancelado, para volver a utilizarlo cuando vuelva a ser vigente.</p>
+<h3 id="reglas-de-negocio_11">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_11" title="Permanent link">&para;</a></h3>
+<p><strong>RN-3.13</strong> Un motivo solo podrá reactivarse si su Estado del Registro actual es Cancelado.</p>
+<p><strong>RN-3.14</strong> Un motivo podrá reactivarse únicamente si no existe otro motivo Activo con el mismo Nombre (sin distinguir mayúsculas/minúsculas ni espacios).</p>
+<h3 id="criterios-de-aceptación_11">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_11" title="Permanent link">&para;</a></h3>
+<p><strong>CA-3.4.1 — Reactivación exitosa</strong>
+Dado un motivo con Estado del Registro = Cancelado y sin que exista otro motivo activo con el mismo Nombre
+Cuando el administrador seleccione Reactivar
+Entonces el sistema cambiará su Estado del Registro a Activo.</p>
+<p><strong>CA-3.4.2 — Reactivación bloqueada por nombre duplicado</strong>
+Dado un motivo con Estado del Registro = Cancelado cuyo Nombre coincide con el de un motivo actualmente Activo
+Cuando el administrador seleccione Reactivar
+Entonces el sistema impedirá la reactivación e informará que ya existe un motivo activo con ese Nombre.</p>
+<p><strong>CA-3.4.3 — Reactivación de motivo activo</strong>
+Dado un motivo con Estado del Registro = Activo
+Cuando el administrador intente reactivarlo
+Entonces el sistema no permitirá la operación e indicará que el motivo ya se encuentra activo.</p>
+<hr />
+<p><strong>Regla transversal:</strong>
+El catálogo de Motivos de Cancelación es prerrequisito de cualquier acción de cancelación que lo consuma (por ejemplo, RF-11); un motivo cancelado no puede utilizarse en nuevas cancelaciones, pero las cancelaciones ya registradas que lo tengan asignado no se ven afectadas.</p>
+<hr />
+<hr />
+<h1 id="rf-04--importación-de-los-estados-existentes-al-catálogo">RF-04 — Importación de los Estados existentes al catálogo<a class="headerlink" href="#rf-04--importación-de-los-estados-existentes-al-catálogo" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Alta</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>RF-02</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_3">Objetivo<a class="headerlink" href="#objetivo_3" title="Permanent link">&para;</a></h2>
+<p>Cargar en el catálogo de Estados (RF-02) los estatus que hoy están definidos de forma fija en el sistema, para que quede poblado desde su entrada en operación con un dato equivalente a cada valor ya utilizado.</p>
+<h2 id="descripción_3">Descripción<a class="headerlink" href="#descripción_3" title="Permanent link">&para;</a></h2>
+<p>El sistema utiliza hoy un listado fijo de estatus, compartido por múltiples procesos, que no proviene del catálogo de Estados (RF-02). Este RF realiza una carga única que registra en el catálogo un Estado por cada uno de esos estatus, tomando su misma Clave, Nombre, Color e Ícono, sin asignarles Grupo de Estados (dato opcional en RF-02). No es un proceso recurrente de sincronización.</p>
+<hr />
+<h2 id="us-41--carga-inicial-de-los-estados-existentes">US-4.1 — Carga inicial de los Estados existentes<a class="headerlink" href="#us-41--carga-inicial-de-los-estados-existentes" title="Permanent link">&para;</a></h2>
+<p>Como analista de negocio, quiero que el catálogo de Estados quede poblado desde el inicio con un registro equivalente a cada estatus fijo que ya utiliza el sistema, para que los procesos existentes cuenten de inmediato con sus Estados ya homologados en el catálogo administrado.</p>
+<h3 id="reglas-de-negocio_12">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_12" title="Permanent link">&para;</a></h3>
+<p><strong>RN-4.1</strong> Se realiza una carga inicial única que registra en el catálogo de Estados un Estado por cada estatus fijo actualmente utilizado por los procesos del sistema.</p>
+<p><strong>RN-4.2</strong> Cada Estado importado toma como Clave y Nombre el valor ya utilizado internamente para ese estatus, respetando las reglas de unicidad de Clave y Nombre del catálogo (RF-02).</p>
+<p><strong>RN-4.3</strong> Cuando el estatus fijo ya cuenta con un Color y/o un Ícono definidos, estos se replican en el Estado importado; cuando no cuente con ellos, el Estado se importa sin Color y/o sin Ícono, dado que ambos son opcionales (RF-02).</p>
+<p><strong>RN-4.4</strong> Los Estados importados no se asocian a ningún Grupo de Estados durante la carga inicial, dado que el Grupo de Estados es opcional (RF-02); su homologación a un Grupo de Estados, si llegara a requerirse, queda fuera de alcance de este RF.</p>
+<p><strong>RN-4.5</strong> Todo Estado importado se crea con Estado del Registro = Activo.</p>
+<p><strong>RN-4.6</strong> Esta carga es un evento único al entrar en operación este RF; no es un proceso recurrente ni se vuelve a ejecutar ante altas futuras del listado fijo de estatus, las cuales se incorporarán manualmente al catálogo conforme a RF-02.</p>
+<h3 id="criterios-de-aceptación_12">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_12" title="Permanent link">&para;</a></h3>
+<p><strong>CA-4.1.1 — Importación completa</strong>
+Dado el listado fijo de estatus que actualmente utilizan los procesos del sistema
+Cuando se ejecuta la carga inicial de este RF
+Entonces el catálogo de Estados queda con un registro por cada uno de esos estatus, con Estado del Registro = Activo.</p>
+<p><strong>CA-4.1.2 — Réplica de Color e Ícono existentes</strong>
+Dado un estatus fijo que ya cuenta con Color y/o Ícono definidos
+Cuando se importa al catálogo de Estados
+Entonces el Estado resultante conserva ese mismo Color y/o Ícono.</p>
+<p><strong>CA-4.1.3 — Importación sin Grupo de Estados</strong>
+Dado que se ejecuta la carga inicial de este RF
+Cuando se revisan los Estados resultantes
+Entonces ninguno queda asociado a un Grupo de Estados.</p>
+<p><strong>CA-4.1.4 — Evento único</strong>
+Dado que la carga inicial de este RF ya se ejecutó
+Cuando se da de alta manualmente un nuevo estatus fijo en el sistema
+Entonces dicha alta no dispara una nueva ejecución de la carga inicial; su incorporación al catálogo de Estados se realiza manualmente conforme a RF-02.</p>
+<hr />
+<p><strong>Regla transversal:</strong>
+Este RF depende del catálogo de Estados (RF-02), y de que el Grupo de Estados sea un dato opcional en dicho catálogo, para no requerir su asignación durante la carga inicial. Es un prerrequisito de datos para que RF-05 (relación de la bitácora del Servicio Cliente con el catálogo de Estados) pueda homologar transiciones existentes contra Estados ya presentes en el catálogo.</p>
+<hr />
+<hr />
+<h1 id="rf-05--bitácora-del-servicio-cliente-con-catálogo-de-estados">RF-05 — Bitácora del Servicio Cliente con catálogo de Estados<a class="headerlink" href="#rf-05--bitácora-del-servicio-cliente-con-catálogo-de-estados" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Media</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>RF-02, RF-04</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_4">Objetivo<a class="headerlink" href="#objetivo_4" title="Permanent link">&para;</a></h2>
+<p>Relacionar cada registro de la bitácora de estatus de la petición del cliente con su Estado del catálogo administrado, para mostrar de forma consistente su Nombre, Mensaje corto, Color e Ícono.</p>
+<h2 id="descripción_4">Descripción<a class="headerlink" href="#descripción_4" title="Permanent link">&para;</a></h2>
+<p>La bitácora de estatus de la petición del cliente guarda hoy el estatus como un valor fijo interno, compartido con otros procesos, sin relación al catálogo de Estados (RF-02). Este RF agrega dicha relación sin eliminar el valor interno existente, de modo que ambos convivan y el histórico pueda mostrar la información visual administrada en el catálogo.</p>
+<hr />
+<h2 id="us-51--relación-de-la-bitácora-con-el-catálogo-de-estados">US-5.1 — Relación de la bitácora con el catálogo de Estados<a class="headerlink" href="#us-51--relación-de-la-bitácora-con-el-catálogo-de-estados" title="Permanent link">&para;</a></h2>
+<p>Como analista de negocio, quiero que cada registro de la bitácora de estatus de la petición del cliente quede relacionado, cuando exista, con su Estado correspondiente del catálogo administrado, para que el histórico muestre de forma consistente la información visual de dicho Estado en lugar de un valor fijo interno.</p>
+<h3 id="reglas-de-negocio_13">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_13" title="Permanent link">&para;</a></h3>
+<p><strong>RN-5.1</strong> Se agrega a la bitácora de estatus de la petición del cliente una relación con el Estado correspondiente del catálogo administrado (RF-02).</p>
+<p><strong>RN-5.2</strong> Todo nuevo registro de la bitácora debe quedar relacionado con el Estado del catálogo homologado a la transición registrada, cuando dicha homologación exista.</p>
+<p><strong>RN-5.3</strong> El valor de estatus interno que hoy guarda la bitácora se conserva sin cambios; este RF no lo elimina ni lo sustituye, únicamente lo complementa.</p>
+<p><strong>RN-5.4</strong> El Estado del catálogo relacionado solo podrá corresponder a un Estado Activo (RF-02).</p>
+<p><strong>RN-5.5</strong> Si una transición de estatus no cuenta aún con un Estado homologado en el catálogo, el registro de la bitácora podrá generarse sin dicha relación; queda fuera de alcance de este RF completar retroactivamente los registros de bitácora ya generados antes de su entrada en vigor.</p>
+<h3 id="criterios-de-aceptación_13">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_13" title="Permanent link">&para;</a></h3>
+<p><strong>CA-5.1.1 — Registro con Estado del catálogo homologado</strong>
+Dado que se genera un nuevo registro de la bitácora de estatus de la petición del cliente para una transición que cuenta con un Estado homologado en el catálogo
+Cuando dicho registro se crea
+Entonces el registro queda relacionado con dicho Estado del catálogo, además de conservar su valor de estatus interno.</p>
+<p><strong>CA-5.1.2 — Bloqueo por Estado del catálogo cancelado</strong>
+Dado que el Estado del catálogo homologado a la transición se encuentra Cancelado
+Cuando se genera el registro de bitácora para dicha transición
+Entonces el sistema no relaciona el registro con ese Estado cancelado del catálogo.</p>
+<p><strong>CA-5.1.3 — Registro sin Estado del catálogo homologado</strong>
+Dado que una transición de estatus no cuenta aún con un Estado homologado en el catálogo
+Cuando se genera su registro de bitácora
+Entonces el registro se crea con su valor de estatus interno y sin relación al catálogo, sin que esto impida su generación.</p>
+<p><strong>CA-5.1.4 — Sin ajuste de registros históricos</strong>
+Dado un registro de la bitácora generado antes de la entrada en vigor de este RF
+Cuando se consulta dicho registro
+Entonces conserva su valor de estatus interno sin cambios y sin relación al catálogo, sin que se le aplique ningún ajuste retroactivo.</p>
+<hr />
+<p><strong>Regla transversal:</strong>
+Este RF depende del catálogo de Estados (RF-02) para contar con los registros que puede relacionar, y de la importación inicial (RF-04) para que las transiciones ya existentes cuenten con un Estado homologado desde el inicio; es el prerrequisito para que el histórico de la petición del cliente pueda mostrar el Nombre, Mensaje corto, Color e Ícono administrados en dicho catálogo, en lugar de un valor fijo interno.</p>
+<hr />
+<hr />
+<h1 id="rf-06--registro-del-servicio-con-estatus-registrado-y-su-bitácora">RF-06 — Registro del Servicio con Estatus Registrado y su bitácora<a class="headerlink" href="#rf-06--registro-del-servicio-con-estatus-registrado-y-su-bitácora" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Alta</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>RF-05</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_5">Objetivo<a class="headerlink" href="#objetivo_5" title="Permanent link">&para;</a></h2>
+<p>Que, al registrarse un nuevo Servicio (petición del cliente), su Estatus quede establecido en "Registrado" y se genere, en consecuencia, el primer registro de su bitácora de estatus.</p>
+<h2 id="descripción_5">Descripción<a class="headerlink" href="#descripción_5" title="Permanent link">&para;</a></h2>
+<p>Este RF garantiza que toda alta de un Servicio deje su Estatus en "Registrado" y que, como consecuencia directa de dicha alta, se genere automáticamente el primer registro de su bitácora, sin intervención manual del usuario, conforme al mecanismo de relación con el catálogo de Estados definido en RF-05.</p>
+<hr />
+<h2 id="us-61--alta-del-servicio-con-bitácora-inicial">US-6.1 — Alta del Servicio con bitácora inicial<a class="headerlink" href="#us-61--alta-del-servicio-con-bitácora-inicial" title="Permanent link">&para;</a></h2>
+<p>Como analista de negocio, quiero que todo nuevo Servicio quede registrado con Estatus "Registrado" y con el primer registro de su bitácora generado automáticamente, para contar con trazabilidad completa desde el origen de la petición del cliente.</p>
+<h3 id="reglas-de-negocio_14">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_14" title="Permanent link">&para;</a></h3>
+<p><strong>RN-6.1</strong> Al registrarse un nuevo Servicio, su Estatus se establece en "Registrado".</p>
+<p><strong>RN-6.2</strong> El alta de un Servicio genera automáticamente el primer registro de su bitácora de estatus, con Estatus = "Registrado".</p>
+<p><strong>RN-6.3</strong> El registro de bitácora generado por el alta queda relacionado con el Estado "Registrado" del catálogo administrado, conforme al mecanismo de RF-05, cuando dicho Estado exista homologado en el catálogo.</p>
+<p><strong>RN-6.4</strong> El registro de bitácora del alta no requiere ninguna acción manual adicional del usuario que registra el Servicio; se genera de forma automática como parte del alta.</p>
+<h3 id="criterios-de-aceptación_14">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_14" title="Permanent link">&para;</a></h3>
+<p><strong>CA-6.1.1 — Alta exitosa con Estatus Registrado</strong>
+Dado que un usuario registra un nuevo Servicio
+Cuando el registro se completa
+Entonces el Servicio queda con Estatus = "Registrado".</p>
+<p><strong>CA-6.1.2 — Generación automática de la bitácora</strong>
+Dado que se registra un nuevo Servicio
+Cuando el registro se completa
+Entonces se genera automáticamente el primer registro de su bitácora de estatus, con Estatus = "Registrado".</p>
+<p><strong>CA-6.1.3 — Relación con el catálogo de Estados</strong>
+Dado que el catálogo de Estados cuenta con un Estado homologado a "Registrado"
+Cuando se genera el primer registro de bitácora de un Servicio recién registrado
+Entonces dicho registro queda relacionado con ese Estado del catálogo, conforme al mecanismo de RF-05.</p>
+<p><strong>CA-6.1.4 — Sin intervención manual</strong>
+Dado que un usuario registra un nuevo Servicio
+Cuando el registro se completa
+Entonces el primer registro de la bitácora se genera sin que el usuario deba ejecutar ninguna acción adicional.</p>
+<hr />
+<p><strong>Regla transversal:</strong>
+Este RF depende de RF-05 (mecanismo de relación de la bitácora con el catálogo de Estados) para que el registro inicial de bitácora quede relacionado con el Estado homologado a "Registrado", y de que dicho Estado exista en el catálogo (RF-04, importación inicial, o alta manual conforme a RF-02).</p>
+<hr />
+<hr />
+<h1 id="rf-07--transición-de-registrado-a-investigación-cau-desde-monitor-cau">RF-07 — Transición de Registrado a Investigación CAU desde Monitor CAU<a class="headerlink" href="#rf-07--transición-de-registrado-a-investigación-cau-desde-monitor-cau" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Alta</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>RF-02, RF-05, RF-06</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_6">Objetivo<a class="headerlink" href="#objetivo_6" title="Permanent link">&para;</a></h2>
+<p>Habilitar que el Servicio transicione de "Registrado" a "Investigación CAU" cuando el analista del CAU inicia su revisión desde Monitor CAU, tomando el Nombre, Mensaje corto, Color e Ícono del catálogo administrado (RF-02).</p>
+<h2 id="descripción_6">Descripción<a class="headerlink" href="#descripción_6" title="Permanent link">&para;</a></h2>
+<p>Hoy el Servicio permanece en "Registrado" hasta generarse el Ticket o la Solicitud de Servicio derivada, sin una transición a "Investigación CAU" que tome su información visual del catálogo administrado. Este RF agrega la acción Iniciar Revisión en Monitor CAU, que transiciona el Servicio a "Investigación CAU" usando la configuración de dicho Estado en el catálogo (RF-02) y registra el movimiento en su bitácora (RF-05).</p>
+<hr />
+<h2 id="us-71--transición-a-investigación-cau-desde-monitor-cau">US-7.1 — Transición a Investigación CAU desde Monitor CAU<a class="headerlink" href="#us-71--transición-a-investigación-cau-desde-monitor-cau" title="Permanent link">&para;</a></h2>
+<p>Como analista del CAU, quiero que el Servicio cambie a "Investigación CAU" al seleccionar Iniciar Revisión en Monitor CAU, para que el estado reflejado provenga del catálogo administrado y quede registrado en su bitácora.</p>
+<h3 id="reglas-de-negocio_15">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_15" title="Permanent link">&para;</a></h3>
+<p><strong>RN-7.1</strong> El Servicio solo puede transicionar a "Investigación CAU" cuando su Estatus vigente es "Registrado".</p>
+<p><strong>RN-7.2</strong> Solo un usuario con el permiso especial de CAU puede ejecutar la transición.</p>
+<p><strong>RN-7.3</strong> Al ejecutar la transición, el sistema toma el Nombre, Mensaje corto, Color e Ícono del Estado "Investigación CAU" del catálogo de Estados (RF-02).</p>
+<p><strong>RN-7.4</strong> Un Estado "Investigación CAU" con Estado del Registro = Cancelado en el catálogo no puede utilizarse en la transición.</p>
+<p><strong>RN-7.5</strong> Toda transición a "Investigación CAU" genera un nuevo registro en la bitácora del Servicio, relacionado con dicho Estado del catálogo, conforme al mecanismo de RF-05.</p>
+<p><strong>RN-7.6</strong> La transición a "Investigación CAU" solo puede dispararse mediante la acción Iniciar Revisión disponible en Monitor CAU sobre el Servicio seleccionado; no existe otro punto de entrada.</p>
+<h3 id="criterios-de-aceptación_15">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_15" title="Permanent link">&para;</a></h3>
+<p><strong>CA-7.1.1 — Transición exitosa</strong>
+Dado que el Servicio está en Estatus "Registrado", el usuario cuenta con el permiso especial de CAU y se encuentra en Monitor CAU
+Cuando el analista selecciona Iniciar Revisión sobre ese Servicio
+Entonces el Estatus cambia a "Investigación CAU", tomando Nombre, Mensaje corto, Color e Ícono del catálogo de Estados, y se registra el movimiento en su bitácora.</p>
+<p><strong>CA-7.1.2 — Bloqueo por falta de permiso</strong>
+Dado que el usuario no cuenta con el permiso especial de CAU
+Cuando intenta seleccionar Iniciar Revisión en Monitor CAU
+Entonces el sistema lo impide.</p>
+<p><strong>CA-7.1.3 — Bloqueo por Estatus previo inválido</strong>
+Dado que el Servicio no se encuentra en Estatus "Registrado"
+Cuando se intenta transicionar a "Investigación CAU" desde Monitor CAU
+Entonces el sistema impide la operación.</p>
+<p><strong>CA-7.1.4 — Bloqueo por Estado cancelado en el catálogo</strong>
+Dado que el Estado "Investigación CAU" del catálogo se encuentra Cancelado
+Cuando el analista selecciona Iniciar Revisión
+Entonces el sistema impide la operación.</p>
+<p><strong>CA-7.1.5 — Sin otro punto de entrada</strong>
+Dado que el Servicio está en Estatus "Registrado"
+Cuando se intenta ejecutar la transición a "Investigación CAU" desde cualquier vista o proceso distinto a Iniciar Revisión de Monitor CAU
+Entonces el sistema no ofrece ni permite dicha transición.</p>
+<hr />
+<p><strong>Regla transversal:</strong>
+Este RF depende del catálogo de Estados (RF-02) para la configuración del Estado "Investigación CAU", del mecanismo de bitácora (RF-05) para registrar la transición relacionada con dicho catálogo, y de RF-06 para que el Servicio ya cuente con Estatus "Registrado" y su primer registro de bitácora antes de esta transición.</p>
+<hr />
+<hr />
+<h1 id="rf-08--rediseño-de-tarjetas-del-monitor-cau">RF-08 — Rediseño de tarjetas del Monitor CAU<a class="headerlink" href="#rf-08--rediseño-de-tarjetas-del-monitor-cau" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Alta</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>RF-05, RF-07</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_7">Objetivo<a class="headerlink" href="#objetivo_7" title="Permanent link">&para;</a></h2>
+<p>Que Monitor CAU muestre únicamente 4 tarjetas de Estatus (Registrado, Requiere Autorización, En Autorización e Investigación CAU), cada una filtrando directamente por el Estatus propio del Servicio.</p>
+<h2 id="descripción_7">Descripción<a class="headerlink" href="#descripción_7" title="Permanent link">&para;</a></h2>
+<p>Hoy Monitor CAU muestra 8 tarjetas, la mayoría de las cuales no filtra por el Estatus propio del Servicio, sino que se arma revisando el Estatus del Ticket o de la Solicitud de Servicio derivada. Este RF reduce Monitor CAU a 4 tarjetas, cada una filtrando exclusivamente por el Estatus propio del Servicio; esto implica que el Servicio deberá reflejar en su propio Estatus las etapas "Requiere Autorización" y "En Autorización" conforme avance el ciclo de su Ticket o Solicitud de Servicio derivada.</p>
+<hr />
+<h2 id="us-81--visualización-acotada-a-4-tarjetas-en-monitor-cau">US-8.1 — Visualización acotada a 4 tarjetas en Monitor CAU<a class="headerlink" href="#us-81--visualización-acotada-a-4-tarjetas-en-monitor-cau" title="Permanent link">&para;</a></h2>
+<p>Como analista del CAU, quiero que Monitor CAU muestre únicamente las tarjetas Registrado, Requiere Autorización, En Autorización e Investigación CAU, cada una con los Servicios cuyo propio Estatus corresponda a esa tarjeta, para enfocar mi trabajo sin distraerme con vistas derivadas de otros procesos.</p>
+<h3 id="reglas-de-negocio_16">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_16" title="Permanent link">&para;</a></h3>
+<p><strong>RN-8.1</strong> Monitor CAU mostrará exactamente 4 tarjetas: "Registrado", "Requiere Autorización", "En Autorización" e "Investigación CAU"; ninguna otra tarjeta o pestaña de estatus se mostrará en esta vista.</p>
+<p><strong>RN-8.2</strong> Cada tarjeta listará únicamente los Servicios cuyo propio Estatus corresponda exactamente al nombre de la tarjeta; la pertenencia a una tarjeta no podrá derivarse del Estatus de Tickets o Solicitudes de Servicio relacionados.</p>
+<p><strong>RN-8.3</strong> La tarjeta "Investigación CAU" mostrará los Servicios con Estatus = "Investigación CAU", conforme a la transición descrita en RF-07.</p>
+<p><strong>RN-8.4</strong> El Servicio deberá reflejar en su propio Estatus las etapas "Requiere Autorización" y "En Autorización" conforme a su ciclo de vida real (por ejemplo, al derivarse o avanzar su Ticket o Solicitud de Servicio), de modo que las tarjetas correspondientes puedan filtrar directamente sobre ese campo.</p>
+<p><strong>RN-8.5</strong> Toda transición del Estatus del Servicio hacia "Requiere Autorización" o "En Autorización" debe registrarse en su bitácora, relacionada con el Estado del catálogo homologado, conforme al mecanismo de RF-05.</p>
+<p><strong>RN-8.6</strong> El listado de cada una de las 4 tarjetas mostrará la Fecha de Registro del Servicio como columna visible.</p>
+<p><strong>RN-8.7</strong> El listado de cada tarjeta se ordenará por Fecha de Registro de forma ascendente (los Servicios más antiguos primero), para que el analista del CAU priorice la atención de los que llevan mayor tiempo de espera.</p>
+<h3 id="criterios-de-aceptación_16">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_16" title="Permanent link">&para;</a></h3>
+<p><strong>CA-8.1.1 — Solo 4 tarjetas visibles</strong>
+Dado que el analista del CAU abre la vista Monitor CAU
+Cuando la vista termina de cargar
+Entonces se muestran únicamente las tarjetas "Registrado", "Requiere Autorización", "En Autorización" e "Investigación CAU".</p>
+<p><strong>CA-8.1.2 — Tarjeta Registrado</strong>
+Dado que un Servicio tiene Estatus = "Registrado"
+Cuando se consulta la tarjeta "Registrado"
+Entonces el Servicio aparece listado en dicha tarjeta.</p>
+<p><strong>CA-8.1.3 — Tarjeta Requiere Autorización</strong>
+Dado que un Servicio tiene Estatus = "Requiere Autorización"
+Cuando se consulta la tarjeta "Requiere Autorización"
+Entonces el Servicio aparece listado en dicha tarjeta.</p>
+<p><strong>CA-8.1.4 — Tarjeta En Autorización</strong>
+Dado que un Servicio tiene Estatus = "En Autorización"
+Cuando se consulta la tarjeta "En Autorización"
+Entonces el Servicio aparece listado en dicha tarjeta.</p>
+<p><strong>CA-8.1.5 — Tarjeta Investigación CAU</strong>
+Dado que un Servicio tiene Estatus = "Investigación CAU"
+Cuando se consulta la tarjeta "Investigación CAU"
+Entonces el Servicio aparece listado en dicha tarjeta.</p>
+<p><strong>CA-8.1.6 — Exclusión de Servicios en otro Estatus</strong>
+Dado que un Servicio tiene un Estatus distinto a los cuatro contemplados por este RF
+Cuando se consulta cualquiera de las 4 tarjetas del Monitor CAU
+Entonces el Servicio no aparece listado en ninguna de ellas.</p>
+<p><strong>CA-8.1.7 — Sin derivación desde Tickets o Solicitudes de Servicio</strong>
+Dado que el Ticket o la Solicitud de Servicio derivada de un Servicio cambia de Estatus
+Cuando dicho cambio no actualiza el Estatus propio del Servicio
+Entonces la tarjeta correspondiente al nuevo Estatus del Ticket/Solicitud no muestra ese Servicio, ya que la tarjeta filtra únicamente por su Estatus propio.</p>
+<p><strong>CA-8.1.8 — Columna Fecha de Registro</strong>
+Dado que el analista del CAU consulta el listado de cualquiera de las 4 tarjetas
+Cuando visualiza los registros listados
+Entonces cada registro muestra su Fecha de Registro.</p>
+<p><strong>CA-8.1.9 — Orden por antigüedad</strong>
+Dado un listado con varios Servicios dentro de una misma tarjeta
+Cuando se muestra el listado
+Entonces los Servicios aparecen ordenados por Fecha de Registro ascendente, mostrando primero los más antiguos.</p>
+<hr />
+<p><strong>Regla transversal:</strong>
+Este RF depende de que el Servicio sincronice su propio Estatus con las etapas "Requiere Autorización" y "En Autorización" de su ciclo de vida (RN-8.4); dicha sincronización, si no existe hoy en el sistema, es un prerrequisito de este RF y debe registrarse en bitácora conforme al mecanismo de RF-05.</p>
+<hr />
+<hr />
+<h1 id="rf-09--adecuación-del-wizard-de-registro-de-ticket-o-solicitud-de-servicio">RF-09 — Adecuación del wizard de registro de Ticket o Solicitud de Servicio<a class="headerlink" href="#rf-09--adecuación-del-wizard-de-registro-de-ticket-o-solicitud-de-servicio" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Alta</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>Ninguna</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_8">Objetivo<a class="headerlink" href="#objetivo_8" title="Permanent link">&para;</a></h2>
+<p>Que el wizard de registro en Monitor CAU exija, según el tipo de servicio elegido, seleccionar una persona responsable desde un listado de empleados: la Persona Asignada del Ticket, o la Persona que Recibirá el Equipo de Cómputo.</p>
+<h2 id="descripción_8">Descripción<a class="headerlink" href="#descripción_8" title="Permanent link">&para;</a></h2>
+<p>Al seleccionar, desde Monitor CAU, un Servicio en Estatus "Registrado", el sistema presenta un wizard donde el analista elige el tipo de servicio (Ticket o Equipo de Cómputo) y captura la información necesaria para generar el Ticket o la Solicitud de Servicio derivada. Hoy, la Persona Asignada del Ticket solo es obligatoria cuando el Ticket resultante es interno, y la persona que recibirá el equipo de cómputo se captura como texto libre, sin vínculo a un registro real de empleado. Este RF exige que ambos campos se seleccionen siempre desde un listado de empleados, y que la Persona Asignada del Ticket sea siempre obligatoria.</p>
+<hr />
+<h2 id="us-91--selección-de-la-persona-asignada-al-registrar-un-ticket">US-9.1 — Selección de la Persona Asignada al registrar un Ticket<a class="headerlink" href="#us-91--selección-de-la-persona-asignada-al-registrar-un-ticket" title="Permanent link">&para;</a></h2>
+<p>Como analista del CAU, quiero que el wizard me exija seleccionar la Persona Asignada del Ticket desde un listado acotado de empleados que atienden tickets, cuando el tipo de servicio elegido sea Ticket, para asegurar que todo Ticket quede, desde su registro, con un responsable válido de atenderlo.</p>
+<h3 id="reglas-de-negocio_17">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_17" title="Permanent link">&para;</a></h3>
+<p><strong>RN-9.1</strong> Cuando el tipo de servicio seleccionado en el wizard sea Ticket, el wizard deberá mostrar un listado de empleados y requerir la selección de uno de ellos como Persona Asignada del Ticket.</p>
+<p><strong>RN-9.2</strong> El listado de empleados para este caso se limitará a empleados Activos cuyo departamento sea de aquellos que atienden tickets (por ejemplo: Soporte, Centro de Atención a Usuarios/CAU, Soporte de Aplicaciones o Tecnologías de la Información/TI); si el catálogo de departamentos que atienden tickets cambia, el listado deberá reflejar dicho catálogo sin requerir modificar esta regla.</p>
+<p><strong>RN-9.3</strong> La Persona Asignada del Ticket será obligatoria para completar el registro cuando el tipo de servicio sea Ticket, independientemente de si el Ticket resultante es interno o no.</p>
+<p><strong>RN-9.4</strong> El campo Persona Asignada capturado en el wizard es el mismo campo ya existente en el Ticket; este RF amplía su obligatoriedad, no crea un campo nuevo.</p>
+<h3 id="criterios-de-aceptación_17">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_17" title="Permanent link">&para;</a></h3>
+<p><strong>CA-9.1.1 — Listado acotado para Ticket</strong>
+Dado que el analista del CAU selecciona el tipo de servicio Ticket en el wizard
+Cuando el wizard presenta el listado de empleados para elegir la Persona Asignada
+Entonces el listado solo incluye empleados Activos cuyo departamento sea uno de los que atienden tickets.</p>
+<p><strong>CA-9.1.2 — Persona Asignada obligatoria</strong>
+Dado que el tipo de servicio seleccionado es Ticket
+Cuando el analista del CAU intenta completar el wizard sin seleccionar una Persona Asignada
+Entonces el sistema impide continuar e indica que el campo es obligatorio.</p>
+<p><strong>CA-9.1.3 — Registro exitoso con Persona Asignada</strong>
+Dado que el tipo de servicio seleccionado es Ticket y se selecciona una Persona Asignada válida del listado
+Cuando el analista del CAU completa el wizard
+Entonces el Ticket se registra con esa Persona Asignada.</p>
+<hr />
+<h2 id="us-92--selección-de-la-persona-que-recibirá-el-equipo-de-cómputo">US-9.2 — Selección de la Persona que Recibirá el Equipo de Cómputo<a class="headerlink" href="#us-92--selección-de-la-persona-que-recibirá-el-equipo-de-cómputo" title="Permanent link">&para;</a></h2>
+<p>Como analista del CAU, quiero que el wizard me exija seleccionar, desde un listado de empleados, a la Persona que Recibirá el Equipo de Cómputo cuando el tipo de servicio elegido sea Equipo de Cómputo, para que dicha información quede vinculada a un registro real de empleado y no a texto libre capturado manualmente.</p>
+<h3 id="reglas-de-negocio_18">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_18" title="Permanent link">&para;</a></h3>
+<p><strong>RN-9.5</strong> Cuando el tipo de servicio seleccionado en el wizard sea Equipo de Cómputo, el wizard deberá mostrar un listado de empleados y requerir la selección de uno de ellos como Persona que Recibirá el Equipo de Cómputo.</p>
+<p><strong>RN-9.6</strong> El listado de empleados para este caso incluirá a todos los empleados Activos, sin acotarse por área.</p>
+<p><strong>RN-9.7</strong> La captura de la Persona que Recibirá el Equipo de Cómputo, hoy registrada como texto libre (nombre y apellidos), deberá sustituirse por una referencia al registro de empleado seleccionado en el wizard.</p>
+<p><strong>RN-9.8</strong> La Persona que Recibirá el Equipo de Cómputo será obligatoria para completar el registro cuando el tipo de servicio sea Equipo de Cómputo.</p>
+<h3 id="criterios-de-aceptación_18">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_18" title="Permanent link">&para;</a></h3>
+<p><strong>CA-9.2.1 — Listado sin acotar por área</strong>
+Dado que el analista del CAU selecciona el tipo de servicio Equipo de Cómputo en el wizard
+Cuando el wizard presenta el listado de empleados para elegir la Persona que Recibirá el Equipo
+Entonces el listado incluye a todos los empleados Activos, sin filtrarse por área.</p>
+<p><strong>CA-9.2.2 — Persona que Recibe obligatoria</strong>
+Dado que el tipo de servicio seleccionado es Equipo de Cómputo
+Cuando el analista del CAU intenta completar el wizard sin seleccionar una Persona que Recibirá el Equipo
+Entonces el sistema impide continuar e indica que el campo es obligatorio.</p>
+<p><strong>CA-9.2.3 — Registro con referencia a empleado</strong>
+Dado que el tipo de servicio seleccionado es Equipo de Cómputo y se selecciona una Persona que Recibirá el Equipo válida del listado
+Cuando el analista del CAU completa el wizard
+Entonces la Solicitud de Servicio de Equipo de Cómputo queda registrada con una referencia al empleado seleccionado, en lugar de un nombre capturado como texto libre.</p>
+<hr />
+<p><strong>Regla transversal:</strong>
+Este RF requiere que la Solicitud de Servicio de Equipo de Cómputo sustituya su captura actual de la persona que recibe el equipo (texto libre) por una referencia a un registro de empleado; este cambio es prerrequisito de RN-9.7 y debe coordinarse con cualquier proceso o reporte que hoy consuma el nombre capturado como texto libre.</p>
+<hr />
+<hr />
+<h1 id="rf-10--registro-automático-de-autorización-digital-al-generar-ticket-o-solicitud-de-servicio">RF-10 — Registro automático de autorización digital al generar Ticket o Solicitud de Servicio<a class="headerlink" href="#rf-10--registro-automático-de-autorización-digital-al-generar-ticket-o-solicitud-de-servicio" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Alta</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>RF-05, RF-08</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_9">Objetivo<a class="headerlink" href="#objetivo_9" title="Permanent link">&para;</a></h2>
+<p>Que, al generarse el Ticket o la Solicitud de Servicio desde el wizard de Monitor CAU, el sistema registre automáticamente su autorización digital sin confirmación manual, actualizando el Estatus del documento y el del Servicio relacionado, y dejando ambas transiciones registradas en bitácora.</p>
+<h2 id="descripción_9">Descripción<a class="headerlink" href="#descripción_9" title="Permanent link">&para;</a></h2>
+<p>Hoy, al generar un Ticket o una Solicitud de Servicio que requiere autorización digital, el sistema pregunta al analista del CAU si desea enviarla; solo al confirmar se registra la autorización y el documento pasa a Estatus "En Autorización". Este RF elimina dicha confirmación manual únicamente para el flujo derivado del wizard de Monitor CAU: la autorización digital se intenta de forma automática al generarse el documento. Aplica a todo Ticket cuyo tipo de servicio sea "Solicitud de Acceso" y a toda Solicitud de Servicio generada, sin importar su tipo. Además, sincroniza el Estatus del Servicio con el resultado de la autorización y mantiene trazabilidad recíproca entre ambas bitácoras.</p>
+<hr />
+<h2 id="us-101--registro-automático-de-la-autorización-digital-al-generar-el-documento">US-10.1 — Registro automático de la autorización digital al generar el documento<a class="headerlink" href="#us-101--registro-automático-de-la-autorización-digital-al-generar-el-documento" title="Permanent link">&para;</a></h2>
+<p>Como analista del CAU, quiero que al generarse el Ticket (Solicitud de Acceso) o la Solicitud de Servicio desde el wizard, el sistema intente registrar su autorización digital de forma automática, para no depender de una confirmación manual adicional en el flujo de registro.</p>
+<h3 id="reglas-de-negocio_19">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_19" title="Permanent link">&para;</a></h3>
+<p><strong>RN-10.1</strong> Al generarse un Ticket cuyo tipo de servicio sea "Solicitud de Acceso", el sistema deberá intentar registrar su autorización digital de forma automática, sin solicitar confirmación al analista del CAU.</p>
+<p><strong>RN-10.2</strong> Al generarse cualquier Solicitud de Servicio, el sistema deberá intentar registrar su autorización digital de forma automática, sin solicitar confirmación al analista del CAU.</p>
+<p><strong>RN-10.3</strong> Un Ticket cuyo tipo de servicio no sea "Solicitud de Acceso" no queda sujeto al registro automático de autorización digital de este RF.</p>
+<p><strong>RN-10.4</strong> Si el registro automático de la autorización digital se completa exitosamente, el Ticket o la Solicitud de Servicio deberá quedar en Estatus "En Autorización".</p>
+<p><strong>RN-10.5</strong> Si el registro automático de la autorización digital no puede ejecutarse (por ejemplo, por una falla técnica del servicio de autorización, o porque el autorizador correspondiente no cumple una condición de negocio requerida para autorizar), el Ticket o la Solicitud de Servicio deberá quedar en Estatus "Requiere Autorización", habilitando que el analista del CAU la registre manualmente bajo demanda mediante la acción ya existente para solicitar autorización.</p>
+<p><strong>RN-10.6</strong> Toda transición del Ticket o la Solicitud de Servicio derivada de este RF (a "En Autorización" o a "Requiere Autorización") debe quedar registrada en su propia bitácora de estatus.</p>
+<h3 id="criterios-de-aceptación_19">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_19" title="Permanent link">&para;</a></h3>
+<p><strong>CA-10.1.1 — Autorización automática exitosa en Ticket de Solicitud de Acceso</strong>
+Dado que el wizard genera un Ticket cuyo tipo de servicio es "Solicitud de Acceso"
+Cuando el sistema registra su autorización digital automáticamente sin errores
+Entonces el Ticket queda en Estatus "En Autorización" sin haberse solicitado confirmación al analista del CAU.</p>
+<p><strong>CA-10.1.2 — Autorización automática exitosa en Solicitud de Servicio</strong>
+Dado que el wizard genera una Solicitud de Servicio de cualquier tipo
+Cuando el sistema registra su autorización digital automáticamente sin errores
+Entonces la Solicitud de Servicio queda en Estatus "En Autorización" sin haberse solicitado confirmación al analista del CAU.</p>
+<p><strong>CA-10.1.3 — Falla en la autorización automática</strong>
+Dado que el registro automático de la autorización digital no puede completarse (falla técnica del servicio de autorización, o incumplimiento de una condición de negocio del autorizador)
+Cuando ocurre dicha falla al generar el Ticket o la Solicitud de Servicio
+Entonces el documento queda en Estatus "Requiere Autorización" y disponible para que el analista del CAU la registre manualmente bajo demanda.</p>
+<p><strong>CA-10.1.4 — Ticket sin condición de Solicitud de Acceso</strong>
+Dado que el wizard genera un Ticket cuyo tipo de servicio no es "Solicitud de Acceso"
+Cuando se completa el registro del Ticket
+Entonces no se ejecuta el registro automático de autorización digital de este RF.</p>
+<p><strong>CA-10.1.5 — Registro en la bitácora propia del documento</strong>
+Dado que el Ticket o la Solicitud de Servicio transiciona a "En Autorización" o a "Requiere Autorización" como resultado de este RF
+Cuando dicha transición ocurre
+Entonces se genera un registro en la bitácora de estatus propia del Ticket o de la Solicitud de Servicio.</p>
+<hr />
+<h2 id="us-102--sincronización-del-estatus-y-bitácora-del-servicio">US-10.2 — Sincronización del Estatus y bitácora del Servicio<a class="headerlink" href="#us-102--sincronización-del-estatus-y-bitácora-del-servicio" title="Permanent link">&para;</a></h2>
+<p>Como analista de negocio, quiero que el Estatus del Servicio refleje el resultado de la autorización digital de su Ticket o Solicitud de Servicio, y que dicho movimiento quede registrado tanto en la bitácora del Servicio como en la del documento relacionado, para mantener trazabilidad completa entre ambos registros.</p>
+<h3 id="reglas-de-negocio_20">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_20" title="Permanent link">&para;</a></h3>
+<p><strong>RN-10.7</strong> Cuando el Ticket o la Solicitud de Servicio relacionados a un Servicio transicionen a "En Autorización" conforme a RN-10.4, el Estatus del Servicio relacionado deberá actualizarse a "En Autorización".</p>
+<p><strong>RN-10.8</strong> Cuando el Ticket o la Solicitud de Servicio relacionados a un Servicio transicionen a "Requiere Autorización" conforme a RN-10.5, el Estatus del Servicio relacionado deberá actualizarse a "Requiere Autorización".</p>
+<p><strong>RN-10.9</strong> Toda actualización del Estatus del Servicio derivada de RN-10.7 o RN-10.8 debe registrarse en su bitácora, conforme al mecanismo de RF-05.</p>
+<p><strong>RN-10.10</strong> Todo registro agregado a la bitácora del Servicio como resultado de RN-10.9 deberá reflejarse también en la bitácora de estatus del Ticket o de la Solicitud de Servicio relacionado, para mantener la trazabilidad entre ambos registros.</p>
+<h3 id="criterios-de-aceptación_20">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_20" title="Permanent link">&para;</a></h3>
+<p><strong>CA-10.2.1 — Sincronización a En Autorización</strong>
+Dado que el Ticket o la Solicitud de Servicio de un Servicio transiciona a "En Autorización"
+Cuando dicha transición ocurre
+Entonces el Estatus del Servicio relacionado se actualiza a "En Autorización" y queda registrado en su bitácora.</p>
+<p><strong>CA-10.2.2 — Sincronización a Requiere Autorización</strong>
+Dado que el Ticket o la Solicitud de Servicio de un Servicio transiciona a "Requiere Autorización"
+Cuando dicha transición ocurre
+Entonces el Estatus del Servicio relacionado se actualiza a "Requiere Autorización" y queda registrado en su bitácora.</p>
+<p><strong>CA-10.2.3 — Trazabilidad recíproca</strong>
+Dado que se agrega un registro en la bitácora del Servicio por efecto de RN-10.9
+Cuando se consulta la bitácora de estatus del Ticket o de la Solicitud de Servicio relacionado
+Entonces dicho registro también aparece reflejado ahí.</p>
+<hr />
+<p><strong>Regla transversal:</strong>
+Este RF depende de RF-08 (las tarjetas "Requiere Autorización" y "En Autorización" filtran por el Estatus propio del Servicio) y de RF-05 (mecanismo de bitácora relacionada con el catálogo de Estados). La trazabilidad recíproca de RN-10.10 aplica únicamente a los movimientos originados por este RF y no se generaliza a otras transiciones de la bitácora del Servicio.</p>
+<hr />
+<hr />
+<h1 id="rf-11--cancelación-del-servicio-desde-el-wizard">RF-11 — Cancelación del Servicio desde el wizard<a class="headerlink" href="#rf-11--cancelación-del-servicio-desde-el-wizard" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Alta</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>RF-03, RF-05, RF-09</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_10">Objetivo<a class="headerlink" href="#objetivo_10" title="Permanent link">&para;</a></h2>
+<p>Que el wizard de registro de Ticket o Solicitud de Servicio permita cancelar el Servicio en cualquiera de sus pasos, solicitando siempre un Motivo de Cancelación del catálogo administrado (RF-03).</p>
+<h2 id="descripción_10">Descripción<a class="headerlink" href="#descripción_10" title="Permanent link">&para;</a></h2>
+<p>Hoy el wizard no ofrece una acción para cancelar el Servicio durante su captura; si el analista decide no continuar, debe abandonarlo sin dejar constancia del motivo. Este RF agrega la acción Cancelar, disponible en cualquier paso del wizard, que exige seleccionar un Motivo de Cancelación (RF-03) antes de completarse, transiciona el Servicio a Estatus "Cancelado" y deja el movimiento registrado en su bitácora. Cuando el motivo seleccionado esté marcado como "Requiere Especificar" (por ejemplo, "Otro"), el wizard exige además capturar el detalle en un campo de texto libre.</p>
+<hr />
+<h2 id="us-111--cancelación-del-servicio-desde-cualquier-paso-del-wizard">US-11.1 — Cancelación del Servicio desde cualquier paso del wizard<a class="headerlink" href="#us-111--cancelación-del-servicio-desde-cualquier-paso-del-wizard" title="Permanent link">&para;</a></h2>
+<p>Como analista del CAU, quiero poder cancelar el Servicio desde cualquier paso del wizard, indicando siempre el Motivo de Cancelación, para dejar constancia de la causa por la que no se continuó con su registro.</p>
+<h3 id="reglas-de-negocio_21">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_21" title="Permanent link">&para;</a></h3>
+<p><strong>RN-11.1</strong> La acción Cancelar estará disponible en todos los pasos del wizard de registro de Ticket o Solicitud de Servicio.</p>
+<p><strong>RN-11.2</strong> Al seleccionar Cancelar, el sistema exigirá elegir un Motivo de Cancelación del catálogo (RF-03) con Estado del Registro = Activo.</p>
+<p><strong>RN-11.3</strong> La cancelación no podrá completarse sin seleccionar un Motivo de Cancelación.</p>
+<p><strong>RN-11.4</strong> Al completarse la cancelación, el Estatus del Servicio cambia a "Cancelado".</p>
+<p><strong>RN-11.5</strong> Toda cancelación ejecutada desde el wizard debe registrarse en la bitácora del Servicio, relacionada con el Estado "Cancelado" del catálogo de Estados (RF-02), conforme al mecanismo de RF-05.</p>
+<p><strong>RN-11.6</strong> El Motivo de Cancelación seleccionado queda asociado al registro de bitácora generado por la cancelación.</p>
+<p><strong>RN-11.7</strong> Al cancelar el Servicio desde el wizard, no queda generado ningún Ticket ni Solicitud de Servicio a partir de dicho Servicio.</p>
+<p><strong>RN-11.8</strong> Cuando el Motivo de Cancelación seleccionado tenga el indicador "Requiere Especificar" = Sí (RF-03), el wizard deberá presentar un campo de texto adicional para capturar el detalle de la cancelación.</p>
+<p><strong>RN-11.9</strong> Dicho campo de texto será obligatorio cuando se muestre; la cancelación no podrá completarse sin capturarlo.</p>
+<p><strong>RN-11.10</strong> El texto capturado se almacena junto con el registro de bitácora generado por la cancelación (RN-11.5, RN-11.6).</p>
+<p><strong>RN-11.11</strong> Cuando el Motivo de Cancelación seleccionado no tenga el indicador "Requiere Especificar" activado, el campo de texto adicional no se presenta.</p>
+<h3 id="criterios-de-aceptación_21">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_21" title="Permanent link">&para;</a></h3>
+<p><strong>CA-11.1.1 — Cancelar disponible en cualquier paso</strong>
+Dado que el analista se encuentra en cualquier paso del wizard de registro
+Cuando revisa las acciones disponibles
+Entonces la acción Cancelar está disponible.</p>
+<p><strong>CA-11.1.2 — Motivo de Cancelación obligatorio</strong>
+Dado que el analista selecciona Cancelar en el wizard
+Cuando intenta completar la cancelación sin seleccionar un Motivo de Cancelación
+Entonces el sistema lo impide e indica que el campo es obligatorio.</p>
+<p><strong>CA-11.1.3 — Cancelación exitosa</strong>
+Dado que el analista selecciona Cancelar y elige un Motivo de Cancelación Activo del catálogo
+Cuando confirma la cancelación
+Entonces el Servicio cambia a Estatus "Cancelado" y el movimiento queda registrado en su bitácora, relacionado con el Motivo de Cancelación seleccionado.</p>
+<p><strong>CA-11.1.4 — Sin generación de Ticket o Solicitud de Servicio</strong>
+Dado que el Servicio se cancela desde el wizard
+Cuando se revisa dicho Servicio
+Entonces no existe ningún Ticket ni Solicitud de Servicio generado a partir de él.</p>
+<p><strong>CA-11.1.5 — Motivo de Cancelación inválido</strong>
+Dado que el analista intenta seleccionar un Motivo de Cancelación con Estado del Registro = Cancelado
+Cuando intenta completar la cancelación
+Entonces el sistema lo impide e indica que debe seleccionar un Motivo de Cancelación Activo.</p>
+<p><strong>CA-11.1.6 — Campo de texto visible para motivo que requiere especificar</strong>
+Dado que el analista selecciona un Motivo de Cancelación con indicador "Requiere Especificar" = Sí
+Cuando el wizard presenta el formulario de cancelación
+Entonces se muestra un campo de texto para capturar el detalle de la cancelación.</p>
+<p><strong>CA-11.1.7 — Texto de detalle obligatorio</strong>
+Dado que el Motivo de Cancelación seleccionado requiere especificar detalle
+Cuando el analista intenta completar la cancelación sin capturar el texto
+Entonces el sistema lo impide e indica que el campo es obligatorio.</p>
+<p><strong>CA-11.1.8 — Motivo sin requerir detalle</strong>
+Dado que el analista selecciona un Motivo de Cancelación con indicador "Requiere Especificar" = No
+Cuando el wizard presenta el formulario de cancelación
+Entonces no se muestra el campo de texto adicional.</p>
+<hr />
+<p><strong>Regla transversal:</strong>
+Este RF depende del catálogo de Motivos de Cancelación (RF-03) para el motivo seleccionable, del catálogo de Estados (RF-02) para el Estado "Cancelado" que la transición utiliza, del mecanismo de bitácora (RF-05) para relacionar el registro generado con dicho Estado, y del wizard de registro (RF-09) sobre el cual se agrega esta acción.</p>
+<hr />
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": [], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../../../assets/javascripts/main-nav.js"></script>
+      
+    
+  </body>
+</html>
