@@ -51,6 +51,13 @@ nav:
       - Diagramas:
         - Contexto: Proyectos/EstatusTickets/documentacion/diagramas/contexto.md
         - Mapa de estados: Proyectos/EstatusTickets/documentacion/diagramas/mapa-de-estados.md
+    - Estatus de Seguimiento BSuite:
+      - Diagramas:
+        - Contexto: Proyectos/EstatusSeguimientoBSuite/documentacion/diagramas/contexto.md
+        - Mapa de estados: Proyectos/EstatusSeguimientoBSuite/documentacion/diagramas/mapa-de-estados.md
+      - Ejercicios de Estados Tickets: "Proyectos/EstatusSeguimientoBSuite/documentacion/Ejercicios de Estados Tickets.pdf"
+      - Funcionales: Proyectos/EstatusSeguimientoBSuite/documentacion/Funcionales-Monitor-CAU-Nuevos-Estados.md
+      - Técnico: Proyectos/EstatusSeguimientoBSuite/documentacion/Tecnico-Monitor-CAU-Nuevos-Estados.md
   - Documentación BSuite:
     - Catálogos:
       - Gestión TI:
