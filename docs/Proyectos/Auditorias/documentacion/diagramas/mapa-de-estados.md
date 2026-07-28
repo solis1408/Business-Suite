@@ -10,12 +10,12 @@ stateDiagram-v2
 [*] --> Activo
 
 Activo --> Cancelado : Manual
-Abierta --> Cancelado : Manual
+Iniciada --> Cancelado : Manual
 En_Ejecucion --> Cancelado : Manual
 Completado --> Cancelado : Manual
 
-Activo --> Abierta : Manual
-Abierta --> En_Ejecucion : Manual
+Activo --> Iniciada : Manual
+Iniciada --> En_Ejecucion : Manual
 
 En_Ejecucion --> Completado : Manual
 
@@ -48,8 +48,8 @@ note right of Cancelado
     Auditoria Cancelada
 end note
 
-state Abierta
-note right of Abierta
+state Iniciada
+note right of Iniciada
     Auditoría disponible para
     InnoVapp
 end note
