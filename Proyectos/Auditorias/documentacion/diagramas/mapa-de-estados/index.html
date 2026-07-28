@@ -2899,12 +2899,12 @@
 [*] --&gt; Activo
 
 Activo --&gt; Cancelado : Manual
-Abierta --&gt; Cancelado : Manual
+Iniciada --&gt; Cancelado : Manual
 En_Ejecucion --&gt; Cancelado : Manual
 Completado --&gt; Cancelado : Manual
 
-Activo --&gt; Abierta : Manual
-Abierta --&gt; En_Ejecucion : Manual
+Activo --&gt; Iniciada : Manual
+Iniciada --&gt; En_Ejecucion : Manual
 
 En_Ejecucion --&gt; Completado : Manual
 
@@ -2937,8 +2937,8 @@ note right of Cancelado
     Auditoria Cancelada
 end note
 
-state Abierta
-note right of Abierta
+state Iniciada
+note right of Iniciada
     Auditoría disponible para
     InnoVapp
 end note
