@@ -32,39 +32,40 @@ Registrar y versionar los requerimientos funcionales del módulo de Auditorías,
 
 ## 3. Índice de requerimientos
 
-| RF           | Título                                       | Estado                | Asignado | Fecha estimada |
-|--------------|----------------------------------------------|-----------------------|----------|----------------|
-| [RF-01](#rf-01--esquema-de-colores-por-estatus) | Esquema de colores por estatus               | Completado            | Jiri Karell | N/A |
-| [RF-02](#rf-02--gestión-de-fechas-en-auditoría) | Gestión de fechas en Auditoría               | Completado            | Jiri Karell | N/A |
-| [RF-03](#rf-03--generación-automática-de-plan-al-crear-auditoría) | Generación automática de Plan al crear Auditoría | Completado        | Jiri Karell | N/A |
-| [RF-04](#rf-04--reprogramación-de-auditoría) | Reprogramación de Auditoría                  | Completado            | Jiri Karell | N/A |
-| [RF-05](#rf-05--sincronización-de-estatus-plan--auditoría) | Sincronización de estatus Plan ↔ Auditoría  | Completado            | Jiri Karell | N/A |
-| [RF-06](#rf-06--calendario-de-planes-en-detalle-de-auditoría) | Calendario de planes en detalle de Auditoría | Completado            | Jiri Karell | N/A |
-| [RF-07](#rf-07--reporte-resumen-de-auditoría-por-criterio) | Reporte Resumen de Auditoría por Criterio   | En Proceso           | Falcon | Por definir |
-| [RF-08](#rf-08--vista-calendario-multi-mes) | Vista calendario multi-mes                  | Pendiente             | Por definir | Por definir |
-| [RF-09](#rf-09--hallazgos-con-ítems-expandidos) | Hallazgos con ítems expandidos              | Completado            | Jiri Karell | N/A |
-| [RF-10](#rf-10--histórico-de-reprogramaciones-en-calendario) | Histórico de reprogramaciones en calendario  | Completado            | Jiri Karell | N/A |
-| [RF-11](#rf-11--notificación-por-correo-electrónico-con-resumen-de-auditoría) | Notificación por correo electrónico con resumen de auditoría | Pendiente | Falcon | 30/06/2026     |
-| [RF-12](#rf-12--gestión-del-catálogo-de-grupos-de-criterios) | Gestión del catálogo de Grupos de Criterios  | Completado            | Jiri Karell | N/A |
-| [RF-13](#rf-13--segmentación-por-departamento-en-catálogos-procesos-y-monitores) | Segmentación por departamento en catálogos, procesos y monitores | Completado | Jiri Karell | N/A |
-| [RF-14](#rf-14--flujo-base-de-estados-de-auditoría) | Flujo base de estados de Auditoría           | En Proceso            | Jiri Karell | 29/06/2026 |
-| [RF-15](#rf-15--ciclo-pdca--seguimiento-y-cierre-de-hallazgos) | Ciclo PDCA — Seguimiento y cierre de hallazgos | En Proceso | Jiri Karell | 29/06/2026     |
-| [RF-16](#rf-16--bitácora-de-estados-de-auditoría) | Bitácora de estados de Auditoría             | En Proceso  | Jiri Karell | 29/06/2026 |
-| [RF-17](#rf-17--monitor-consolidado-de-auditorías) | Monitor consolidado de Auditorías            | Validación funcional  | Por definir | 15/06/2026     |
-| [RF-18](#rf-18--monitor-de-hallazgosacciones-correctivas) | Monitor de Hallazgos/Acciones Correctivas              | Definición            | Por definir | 27/06/2026     |
-| [RF-19](#rf-19--finalización-de-hallazgos-desde-el-monitor-de-acciones-correctivas) | Finalización de hallazgos desde el monitor de acciones correctivas | Definición | Por definir | 04/07/2026 |
-| [RF-20](#rf-20--registro-de-seguimiento-de-acciones-correctivas) | Registro de seguimiento de acciones correctivas | Definición          | Por definir | 11/07/2026     |
-| [RF-21](#rf-21--catálogo-de-colores-para-porcentajes-de-resultados) | Catálogo de colores para porcentajes de resultados | Falcón               | Falcón | 02/06/2026 |
-| [RF-22](#rf-22--configuración-de-departamento-del-auditado-para-gestión-de-hallazgos-y-acciones-correctivas) | Configuración de departamento del Auditado para gestión de hallazgos y acciones correctivas | Falcón               | Por definir | 02/06/2026     |
-| [RF-23](#rf-23--limitar-grid-de-hallazgos-y-acciones-correctivas) | Limitar grid de hallazgos y acciones correctivas | Falcón   | Por definir | 02/06/2026     |
-| [RF-24](#rf-24--reapertura-de-acciones-correctivas) | Reapertura de Acciones Correctivas           | Falcón      | Por definir | 03/06/2026     |
-| [RF-25](#rf-25--aplicación-del-catálogo-de-colores-en-resultados-de-auditoría) | Aplicación del catálogo de colores en resultados de Auditoría | Definición | Por definir | Por definir |
-| [RF-26](#rf-26--aplicación-del-catálogo-de-colores-en-monitores-de-auditoría-y-acciones-correctivas) | Aplicación del catálogo de colores en monitores de Auditoría y Acciones Correctivas | Definición | Por definir | Por definir |
-| [RF-27](#rf-27--clasificación-de-tipo-de-auditoría-como-programada) | Clasificación de Tipo de Auditoría como programada           | Definición            | Por definir | 04/06/2026     |
-| [RF-28](#rf-28--clasificación-de-tipo-de-hallazgo-como-alto-impacto) | Clasificación de Tipo de Hallazgo como alto impacto          | Definición            | Por definir | 04/06/2026 |
-| [RF-29](#rf-29--auditoría-de-validación-del-ciclo-pdca) | Auditoría de validación del ciclo PDCA                       | Definición            | Por definir | Por definir |
-| [RF-30](#rf-30--configuración-de-días-límite-para-registro-de-acciones-correctivas) | Configuración de días límite para registro de acciones correctivas | Definición       | Por definir | Por definir |
-| [RF-31](#rf-31--firma-móvil-del-listado-de-hallazgos) | Firma móvil del listado de hallazgos                         | Pendiente de definición | Por definir | Por definir |
+| RF           | Título                                       | Estado                | Plataforma | Asignado | Fecha estimada |
+|--------------|----------------------------------------------|-----------------------|------------|----------|----------------|
+| [RF-01](#rf-01--esquema-de-colores-por-estatus) | Esquema de colores por estatus               | Completado            | BSuite | Jiri Karell | N/A |
+| [RF-02](#rf-02--gestión-de-fechas-en-auditoría) | Gestión de fechas en Auditoría               | Completado            | BSuite | Jiri Karell | N/A |
+| [RF-03](#rf-03--generación-automática-de-plan-al-crear-auditoría) | Generación automática de Plan al crear Auditoría | Completado        | BSuite     | Jiri Karell | N/A |
+| [RF-04](#rf-04--reprogramación-de-auditoría) | Reprogramación de Auditoría                  | Completado            | BSuite     | Jiri Karell | N/A |
+| [RF-05](#rf-05--sincronización-de-estatus-plan--auditoría) | Sincronización de estatus Plan ↔ Auditoría  | Completado            | BSuite | Jiri Karell | N/A |
+| [RF-06](#rf-06--calendario-de-planes-en-detalle-de-auditoría) | Calendario de planes en detalle de Auditoría | Completado            | BSuite     | Jiri Karell | N/A |
+| [RF-07](#rf-07--reporte-resumen-de-auditoría-por-criterio) | Reporte Resumen de Auditoría por Criterio   | En Proceso           | BSuite     | Falcon | Por definir |
+| [RF-08](#rf-08--vista-calendario-multi-mes) | Vista calendario multi-mes                  | Pendiente             | BSuite     | Por definir | Por definir |
+| [RF-09](#rf-09--hallazgos-con-ítems-expandidos) | Hallazgos con ítems expandidos              | Completado            | BSuite     | Jiri Karell | N/A |
+| [RF-10](#rf-10--histórico-de-reprogramaciones-en-calendario) | Histórico de reprogramaciones en calendario  | Completado            | BSuite     | Jiri Karell | N/A |
+| [RF-11](#rf-11--notificación-por-correo-electrónico-con-resumen-de-auditoría) | Notificación por correo electrónico con resumen de auditoría | Pendiente | BSuite | Falcon | 30/06/2026     |
+| [RF-12](#rf-12--gestión-del-catálogo-de-grupos-de-criterios) | Gestión del catálogo de Grupos de Criterios  | Completado            | BSuite     | Jiri Karell | N/A |
+| [RF-13](#rf-13--segmentación-por-departamento-en-catálogos-procesos-y-monitores) | Segmentación por departamento en catálogos, procesos y monitores | Completado | Ambos | Jiri Karell | N/A |
+| [RF-14](#rf-14--flujo-base-de-estados-de-auditoría) | Flujo base de estados de Auditoría           | En Proceso            | BSuite | Jiri Karell | 29/06/2026 |
+| [RF-15](#rf-15--ciclo-pdca--seguimiento-y-cierre-de-hallazgos) | Ciclo PDCA — Seguimiento y cierre de hallazgos | En Proceso | BSuite | Jiri Karell | 29/06/2026     |
+| [RF-16](#rf-16--bitácora-de-estados-de-auditoría) | Bitácora de estados de Auditoría             | En Proceso  | Ambos      | Jiri Karell | 29/06/2026 |
+| [RF-17](#rf-17--monitor-consolidado-de-auditorías) | Monitor consolidado de Auditorías            | Validación funcional  | BSuite     | Por definir | 15/06/2026     |
+| [RF-18](#rf-18--monitor-de-hallazgosacciones-correctivas) | Monitor de Hallazgos/Acciones Correctivas              | Definición            | BSuite     | Por definir | 27/06/2026     |
+| [RF-19](#rf-19--finalización-de-hallazgos-desde-el-monitor-de-acciones-correctivas) | Finalización de hallazgos desde el monitor de acciones correctivas | Definición | BSuite | Por definir | 04/07/2026 |
+| [RF-20](#rf-20--registro-de-seguimiento-de-acciones-correctivas) | Registro de seguimiento de acciones correctivas | Definición          | BSuite     | Por definir | 11/07/2026     |
+| [RF-21](#rf-21--catálogo-de-colores-para-porcentajes-de-resultados) | Catálogo de colores para porcentajes de resultados | Falcón               | BSuite     | Falcón | 02/06/2026 |
+| [RF-22](#rf-22--configuración-de-departamento-del-auditado-para-gestión-de-hallazgos-y-acciones-correctivas) | Configuración de departamento del Auditado para gestión de hallazgos y acciones correctivas | Falcón               | BSuite     | Por definir | 02/06/2026     |
+| [RF-23](#rf-23--limitar-grid-de-hallazgos-y-acciones-correctivas) | Limitar grid de hallazgos y acciones correctivas | Falcón   | BSuite     | Por definir | 02/06/2026     |
+| [RF-24](#rf-24--reapertura-de-acciones-correctivas) | Reapertura de Acciones Correctivas           | Falcón      | BSuite     | Por definir | 03/06/2026     |
+| [RF-25](#rf-25--aplicación-del-catálogo-de-colores-en-resultados-de-auditoría) | Aplicación del catálogo de colores en resultados de Auditoría | Definición | BSuite | Por definir | Por definir |
+| [RF-26](#rf-26--aplicación-del-catálogo-de-colores-en-monitores-de-auditoría-y-acciones-correctivas) | Aplicación del catálogo de colores en monitores de Auditoría y Acciones Correctivas | Definición | BSuite | Por definir | Por definir |
+| [RF-27](#rf-27--clasificación-de-tipo-de-auditoría-como-programada) | Clasificación de Tipo de Auditoría como programada           | Definición            | BSuite     | Por definir | 04/06/2026     |
+| [RF-28](#rf-28--clasificación-de-tipo-de-hallazgo-como-alto-impacto) | Clasificación de Tipo de Hallazgo como alto impacto          | Definición            | BSuite     | Por definir | 04/06/2026 |
+| [RF-29](#rf-29--auditoría-de-validación-del-ciclo-pdca) | Auditoría de validación del ciclo PDCA                       | Definición            | BSuite     | Por definir | Por definir |
+| [RF-30](#rf-30--configuración-de-días-límite-para-registro-de-acciones-correctivas) | Configuración de días límite para registro de acciones correctivas | Definición       | BSuite     | Por definir | Por definir |
+| [RF-31](#rf-31--firma-digital-del-responsable-al-completar-auditoría-desde-innovapp) | Firma digital del Responsable al completar auditoría desde InnoVapp | Definición            | InnoVapp   | Por definir | Por definir |
+| [RF-32](#rf-32--alcance-funcional-de-innovapp) | Alcance funcional de InnoVapp                | Definición            | InnoVapp   | Por definir | Por definir |
 
 ---
 
@@ -1245,21 +1246,21 @@ La segmentación por departamento es obligatoria en todo el módulo de Auditorí
 | Estado       | Definición          |
 | Dependencias | RF-07, RF-13        |
 
-**Descripción:** El sistema debe gestionar el flujo base de estados de la Auditoría con transiciones controladas entre Activo, Abierta, En_Ejecucion, Completado y Cancelado, y determinar automáticamente la ruta de cierre al alcanzar Completado. La cancelación solo está permitida en el flujo base y requiere captura obligatoria de motivo. El registro de cada transición en bitácora se rige por RF-16.
+**Descripción:** El sistema debe gestionar el flujo base de estados de la Auditoría con transiciones controladas entre Activo, Iniciada, En_Ejecucion, Completado y Cancelado, y determinar automáticamente la ruta de cierre al alcanzar Completado. La cancelación solo está permitida en el flujo base y requiere captura obligatoria de motivo. El registro de cada transición en bitácora se rige por RF-16.
 
 ---
 
 ## US-14.1
 
-Como auditor, quiero avanzar manualmente la auditoría en su flujo base (Activo, Abierta, En Ejecución, Completado), para reflejar el progreso real de la ejecución.
+Como auditor, quiero avanzar manualmente la auditoría en su flujo base (Activo, Iniciada, En Ejecución, Completado), para reflejar el progreso real de la ejecución.
 
 **CA-14.1.1**  
 Dado que la auditoría está en estado Activo  
 Cuando el usuario ejecuta la acción de apertura  
-Entonces el sistema cambia el estado a Abierta.
+Entonces el sistema cambia el estado a Iniciada.
 
 **CA-14.1.2**  
-Dado que la auditoría está en estado Abierta  
+Dado que la auditoría está en estado Iniciada  
 Cuando el usuario inicia la ejecución  
 Entonces el sistema cambia el estado a En Ejecución.
 
@@ -1301,7 +1302,7 @@ Entonces se registra la transición en bitácora conforme a RF-16.
 Como usuario autorizado, quiero poder cancelar una auditoría únicamente en el flujo base previo al ciclo PDCA, para cerrar administrativamente procesos que no continuarán antes de iniciar el tratamiento formal de hallazgos.
 
 **CA-14.3.1**  
-Dado que la auditoría está en estado Activo, Abierta, En_Ejecucion o Completado  
+Dado que la auditoría está en estado Activo, Iniciada, En_Ejecucion o Completado  
 Cuando el usuario ejecuta la acción Cancelar  
 Entonces el sistema solicita de forma obligatoria el motivo de cancelación.
 
@@ -1333,7 +1334,7 @@ Entonces el sistema no permite transiciones adicionales.
 ---
 
 **Regla transversal:**  
-El flujo base comprende las transiciones entre Activo, Abierta, En_Ejecucion, Completado y Cancelado. Al alcanzar Completado, el sistema determina automáticamente la ruta de cierre: sin hallazgos avanza a Finalizado de forma inmediata; con hallazgos inicia el ciclo PDCA definido en RF-15. La cancelación solo está permitida en los estados Activo, Abierta, En_Ejecucion y Completado. El registro de cada transición en bitácora se rige por RF-16.
+El flujo base comprende las transiciones entre Activo, Iniciada, En_Ejecucion, Completado y Cancelado. Al alcanzar Completado, el sistema determina automáticamente la ruta de cierre: sin hallazgos avanza a Finalizado de forma inmediata; con hallazgos inicia el ciclo PDCA definido en RF-15. La cancelación solo está permitida en los estados Activo, Iniciada, En_Ejecucion y Completado. El registro de cada transición en bitácora se rige por RF-16.
 
 ---
 
@@ -1473,7 +1474,7 @@ La bitácora es inmutable: una vez registrada una transición no puede modificar
 | Estado         | Validación funcional     |
 | Dependencias   | RF-12, RF-13, RF-27      |
 
-**Descripción:** El sistema debe contar con un monitor consolidado que muestre las auditorías aplicadas, el concentrado de hallazgos, las acciones correctivas y sus respectivos estados. Incluye 4 tarjetas KPI, grid principal de 15 columnas e interacción bidireccional KPI-Grid, con exportación a Excel y comportamiento responsivo.
+**Descripción:** El sistema debe contar con un monitor consolidado que muestre las auditorías aplicadas, el concentrado de hallazgos, las acciones correctivas y sus respectivos estados. Incluye 4 tarjetas KPI, grid principal de 14 columnas e interacción bidireccional KPI-Grid, con exportación a Excel y comportamiento responsivo.
 
 ---
 
@@ -1616,7 +1617,7 @@ RT-06 Interaccion bidireccional KPI-Grid
 - Al filtrar el grid, los KPIs se recalculan con el mismo subconjunto.
 
 RT-07 Grid principal estandar
-- El tablero usa un grid principal de 15 columnas funcionales definidas en este documento.
+- El tablero usa un grid principal de 14 columnas funcionales definidas en este documento.
 
 RT-08 Exportacion
 - La exportacion a Excel respeta filtros activos y columnas visibles.
@@ -1633,7 +1634,7 @@ RT-10 Consistencia de datos
 - Las 3 tarjetas de auditoria calculan correctamente contra datos historicos validados por negocio.
 - Usuarios clave de Auditoria aprueban definiciones y semaforos.
 - Existe evidencia de prueba funcional por cada CA.
-- El grid principal muestra las 15 columnas funcionales definidas.
+- El grid principal muestra las 14 columnas funcionales definidas.
 - Se valida la interaccion bidireccional KPI-Grid.
 - Se valida exportacion a Excel del resultado filtrado.
 - Se valida comportamiento responsivo en escritorio y movil.
@@ -1655,15 +1656,15 @@ RT-10 Consistencia de datos
 4. Tarjeta 1: se presenta como Auditorías Programadas (Realizadas / Programadas).
 5. Tarjeta 2: se presenta como Auditorías Reprogramadas.
 6. Tarjeta 3: se presenta como Completadas en Tiempo de Auditorías (%).
-7. Grid principal: se conforma por 15 columnas funcionales oficiales.
+7. Grid principal: se conforma por 14 columnas funcionales oficiales.
 8. Interaccion KPI-Grid: se implementa en ambos sentidos.
 
 
 ---
 
-## Grid principal — 15 columnas
+## Grid principal — 14 columnas
 
-Define las 15 columnas oficiales del grid principal y establece su fuente de llenado a nivel funcional, sin detalle técnico.
+Define las 14 columnas oficiales del grid principal y establece su fuente de llenado a nivel funcional, sin detalle técnico.
 
 | No | Columna                        | Se llena desde                                      |
 |----|--------------------------------|-----------------------------------------------------|
@@ -1680,12 +1681,11 @@ Define las 15 columnas oficiales del grid principal y establece su fuente de lle
 | 11 | Fecha Compromiso               | Fecha compromiso de cierre de la auditoría.          |
 | 12 | Fecha Completado               | Fecha de término/cierre de la auditoría.             |
 | 13 | Completado en tiempo           | Indicador (Sí/No) si la auditoría cerró en tiempo.   |
-| 14 | Días sin avance                | Días desde la última actualización relevante.        |
-| 15 | No. Reprogramaciones           | Cantidad de veces que la auditoría ha sido reprogramada. |
+| 14 | No. Reprogramaciones           | Cantidad de veces que la auditoría ha sido reprogramada. |
 
 Reglas funcionales de llenado:
 - Todas las columnas respetan el mismo alcance de filtros del tablero.
-- Las columnas derivadas (completado en tiempo, días sin avance, No. Reprogramaciones) se recalculan con el contexto activo.
+- Las columnas derivadas (completado en tiempo, No. Reprogramaciones) se recalculan con el contexto activo.
 - No. Reprogramaciones muestra 0 cuando la auditoría nunca ha sido reprogramada; el valor se obtiene del historial de planes de la auditoría (RF-10).
 - Cuando un dato no aplica, se muestra vacío controlado.
 
@@ -3106,14 +3106,164 @@ El ContenedorCatalogo de días límite PDCA es la única fuente de verdad para e
 
 ---
 
-# RF-31 — Firma móvil del listado de hallazgos
+# RF-31 — Firma digital del Responsable al completar auditoría desde InnoVapp
 
 | Campo          | Valor                    |
 |----------------|--------------------------|
 | Prioridad      | Alta                     |
-| Estado         | Pendiente de definición  |
-| Dependencias   | RF-14                    |
+| Estado         | Definición               |
+| Dependencias   | RF-14, RF-32             |
 
-**Descripción:** El sistema móvil debe permitir firmar el listado de hallazgos detectados durante la finalización de la auditoría. Esta firma representa la aceptación formal del Auditado o del Auditor sobre los hallazgos registrados y queda asociada al registro de la auditoría como evidencia del proceso.
+**Descripción:** InnoVapp debe solicitar y capturar la firma digital del Responsable/Auditado al ejecutar la acción Completar Auditoría. La firma representa la aceptación formal del Responsable sobre los hallazgos registrados durante la ejecución y es obligatoria: sin firma capturada el sistema no permite confirmar la transición de estatus a Completado. La firma se almacena en el campo `FirmaResponsable` de la Auditoría, como evidencia del proceso.
 
-> **Nota:** Los User Stories, Criterios de Aceptación, mecanismo de firma (trazo digital, biométrico, aceptación explícita), actor responsable de firmar (Auditado, Auditor o ambos), plataforma móvil soportada e integración con el flujo de estados requieren análisis y definición con el cliente antes de documentarse.
+---
+
+## US-31.1 — Captura obligatoria de firma al completar
+
+Como Responsable/Auditado, quiero firmar digitalmente al completar la auditoría desde InnoVapp, para dejar constancia de mi aceptación sobre los hallazgos registrados.
+
+**CA-31.1.1**
+Dado que el Auditor ejecuta la acción Completar Auditoría desde InnoVapp
+Cuando el sistema procesa la solicitud
+Entonces se solicita al Responsable/Auditado la captura de firma digital antes de confirmar el cambio de estatus.
+
+**CA-31.1.2**
+Dado que el Responsable/Auditado no ha capturado la firma
+Cuando se intenta confirmar la acción Completar Auditoría
+Entonces el sistema no permite la transición a estatus Completado y muestra mensaje de validación.
+
+**CA-31.1.3**
+Dado que el Responsable/Auditado captura la firma digital
+Cuando confirma la acción
+Entonces el sistema guarda la firma en el campo `FirmaResponsable` de la Auditoría y cambia el estatus a Completado.
+
+**CA-31.1.4**
+Dado que la firma fue capturada y almacenada
+Cuando el usuario consulta el detalle de la auditoría desde el sistema central
+Entonces la firma es visible como evidencia del proceso de completado.
+
+---
+
+## US-31.2 — Trazabilidad de la firma en bitácora
+
+Como coordinador de auditorías, quiero que la captura de firma quede registrada junto con la transición a Completado, para mantener trazabilidad del proceso.
+
+**CA-31.2.1**
+Dado que la auditoría cambia a estatus Completado con firma capturada desde InnoVapp
+Cuando el sistema registra la transición
+Entonces la bitácora conforme a RF-16 refleja el cambio de estatus, sin duplicar el registro por la captura de firma.
+
+---
+
+**Regla transversal:**
+La firma digital es exclusiva del Responsable/Auditado y es obligatoria para completar la auditoría desde InnoVapp; no aplica a la finalización de la auditoría (Finalizado), que sigue el flujo de RF-14. El mecanismo de captura (trazo digital en pantalla) y el detalle de UI de InnoVapp se documentan en el manual propio de la app; este RF define únicamente la regla de negocio y el punto de persistencia (`FirmaResponsable`).
+
+---
+
+# RF-32 — Alcance funcional de InnoVapp
+
+| Campo          | Valor                    |
+|----------------|--------------------------|
+| Prioridad      | Alta                     |
+| Estado         | Definición               |
+| Dependencias   | RF-02, RF-05, RF-13, RF-14, RF-16, RF-31 |
+
+**Descripción:** InnoVapp debe permitir al Auditor visualizar todas las auditorías dentro de su alcance departamental (RF-13), pero solo ejecutar o dar avance a las que se encuentran en estatus Iniciada o En_Ejecucion. InnoVapp expone únicamente dos acciones que alteran el estatus de la auditoría: Ejecutar, que cambia el estatus de Iniciada a En_Ejecucion, y Completar, que cambia el estatus de En_Ejecucion a Completado aplicando la ruta automática de cierre de RF-14. El resto de las acciones del ciclo de vida (creación, reprogramación, cancelación, gestión de acciones correctivas, ciclo PDCA y monitores) permanece exclusivo del sistema de escritorio/web. Completar la auditoría requiere, además, la firma digital del Responsable/Auditado conforme a RF-31.
+
+---
+
+## US-32.1 — Acciones disponibles en InnoVapp
+
+Como Auditor, quiero que InnoVapp me muestre todas las auditorías dentro de mi alcance departamental, pero que solo me permita ejecutar o dar avance a las que están en estatus Iniciada o En_Ejecucion, para consultar mi carga completa sin operar auditorías fuera del flujo de campo.
+
+**CA-32.1.1**
+Dado que el Auditor accede a InnoVapp
+Cuando consulta sus auditorías
+Entonces puede visualizar todas las auditorías dentro de su alcance departamental conforme a RF-13, sin restricción de estatus.
+
+**CA-32.1.2**
+Dado que una auditoría se encuentra en estatus Iniciada o En_Ejecucion
+Cuando el Auditor la visualiza en InnoVapp
+Entonces únicamente se habilitan las acciones Ejecutar y Completar, según corresponda a su estatus.
+
+**CA-32.1.3**
+Dado que una auditoría se encuentra en estatus Iniciada
+Cuando el Auditor revisa las acciones disponibles
+Entonces solo se habilita la acción Ejecutar; la acción Completar permanece deshabilitada hasta que la auditoría pase a En_Ejecucion.
+
+**CA-32.1.4**
+Dado que una auditoría se encuentra en un estatus distinto a Iniciada o En_Ejecucion
+Cuando el Auditor la visualiza en InnoVapp
+Entonces la auditoría se muestra únicamente en modo consulta, sin las acciones Ejecutar ni Completar disponibles.
+
+**CA-32.1.5**
+Dado que una auditoría está en estatus Iniciada
+Cuando el Auditor ejecuta la acción Ejecutar en InnoVapp
+Entonces el sistema cambia el estatus de la auditoría a En_Ejecucion y registra la transición en bitácora conforme a RF-16.
+
+**CA-32.1.6**
+Dado que en InnoVapp se confirma la acción Ejecutar o la acción Completar
+Cuando el sistema procesa cualquiera de las dos
+Entonces son las únicas acciones de InnoVapp que alteran el estatus de la auditoría; el resto de las acciones disponibles en la aplicación son de consulta o captura de información sin cambio de estatus.
+
+---
+
+## US-32.2 — Condiciones para habilitar el botón Completar
+
+Como Auditor, quiero que el botón Completar solo se habilite cuando se cumplan todas las condiciones necesarias, para evitar cierres inválidos, sin evidencia de aceptación o sin conexión al sistema central.
+
+**CA-32.2.1**
+Dado que una auditoría no se encuentra en estatus En_Ejecucion
+Cuando el Auditor visualiza el botón Completar en InnoVapp
+Entonces el botón permanece deshabilitado.
+
+**CA-32.2.2**
+Dado que la auditoría está en estatus En_Ejecucion
+Cuando el Responsable/Auditado no ha registrado la firma digital conforme a RF-31
+Entonces el botón Completar permanece deshabilitado.
+
+**CA-32.2.3**
+Dado que la auditoría está en estatus En_Ejecucion y la firma digital ya fue registrada
+Cuando el dispositivo no cuenta con conexión
+Entonces el botón Completar permanece deshabilitado.
+
+**CA-32.2.4**
+Dado que la auditoría está en estatus En_Ejecucion, la firma digital fue registrada y el dispositivo cuenta con conexión
+Cuando el Auditor consulta el botón Completar
+Entonces el botón se habilita y permite confirmar la acción.
+
+**CA-32.2.5**
+Dado que el Auditor confirma la acción Completar con las tres condiciones cumplidas
+Cuando el sistema procesa la solicitud
+Entonces cambia el estatus de la auditoría y aplica la misma regla de ruta automática de cierre definida en RF-14 (Finalizado o Registro_PDCA según existan hallazgos abiertos).
+
+**CA-32.2.6**
+Dado que el Auditor confirma la acción Completar en InnoVapp
+Cuando el sistema procesa la solicitud
+Entonces envía al sistema central la bitácora generada durante la ejecución de la auditoría, conforme a RF-16.
+
+**CA-32.2.7**
+Dado que el Auditor confirma la acción Completar en InnoVapp y la auditoría no tiene hallazgos abiertos
+Cuando el sistema aplica la ruta automática de cierre definida en RF-14
+Entonces la auditoría queda en estatus Finalizado y InnoVapp refleja al Auditor dicho estatus final, no el estatus intermedio Completado.
+
+**CA-32.2.8**
+Dado que la auditoría pasa directamente de En_Ejecucion a Finalizado por no tener hallazgos abiertos
+Cuando el sistema envía la bitácora al sistema central conforme a CA-32.2.6
+Entonces la bitácora enviada incluye ambas transiciones registradas: Completado y Finalizado.
+
+**CA-32.2.9**
+Dado que el Auditor confirma la acción Completar en InnoVapp
+Cuando el sistema procesa la solicitud
+Entonces registra la fecha y hora de completado (FechaCompletado) en la auditoría, tomando la fecha y hora del servidor al momento de la confirmación, conforme al mismo comportamiento de registro automático de fechas definido en RF-02.
+
+**CA-32.2.10**
+Dado que el Auditor confirma la acción Completar en InnoVapp
+Cuando el sistema aplica el cambio de estatus (Completado, Finalizado o Registro_PDCA según corresponda)
+Entonces sincroniza el estatus del PlanAuditoria asociado conforme a RF-05, de la misma forma que si la acción se ejecutara desde el sistema de escritorio/web.
+
+---
+
+**Regla transversal:**
+InnoVapp es un canal de ejecución en campo, no un canal administrativo. Toda regla de estatus, transición y bitácora definida en RF-14 y RF-16 aplica igual, sin importar si la acción se ejecuta desde InnoVapp o desde el sistema de escritorio/web. La operación sin conexión de InnoVapp (captura offline y sincronización) se documenta en un documento aparte.
+
