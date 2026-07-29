@@ -1,1 +1,2 @@
-# Requerimientos Funcionales — Módulo de Estatus de Tickets
+# Requerimiento Funcional
+
