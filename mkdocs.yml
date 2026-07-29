@@ -45,22 +45,16 @@ nav:
         - Monitor Acciones Correctivas: Proyectos/Auditorias/documentacion/prototipos/prototipo-1.md
         - Monitor Auditorias: Proyectos/Auditorias/documentacion/prototipos/prototipo-2.md
         - Reporte Resumen: Proyectos/Auditorias/documentacion/prototipos/prototipo-3.md
-    - Estatus de Tickets:
-      - Requerimiento Cliente: Proyectos/EstatusTickets/documentacion/requerimiento-cliente.md
-      - Requerimiento Funcional: Proyectos/EstatusTickets/documentacion/requerimiento-funcional.md
+    - Estatus Tickets:
       - Diagramas:
         - Contexto: Proyectos/EstatusTickets/documentacion/diagramas/contexto.md
         - Mapa de estados: Proyectos/EstatusTickets/documentacion/diagramas/mapa-de-estados.md
-    - Estatus de Seguimiento BSuite:
-      - Diagramas:
-        - Contexto: Proyectos/EstatusSeguimientoBSuite/documentacion/diagramas/contexto.md
-        - Mapa de estados: Proyectos/EstatusSeguimientoBSuite/documentacion/diagramas/mapa-de-estados.md
-        - Ejercicios de Estados Tickets: "Proyectos/EstatusSeguimientoBSuite/documentacion/Ejercicios de Estados Tickets.pdf"
-        - Estatus Equipo de Cómputo: Proyectos/EstatusSeguimientoBSuite/documentacion/Estatus-Equipo-Computo.pdf
-        - Estatus Proyectos Internos: Proyectos/EstatusSeguimientoBSuite/documentacion/Estatus-Proyectos-Internos.pdf
-        - Estatus Proyectos: Proyectos/EstatusSeguimientoBSuite/documentacion/Estatus-Proyectos.pdf
-      - Funcionales: Proyectos/EstatusSeguimientoBSuite/documentacion/Funcionales-Monitor-CAU-Nuevos-Estados.md
-      - Técnico: Proyectos/EstatusSeguimientoBSuite/documentacion/Tecnico-Monitor-CAU-Nuevos-Estados.md
+        - Ejercicios de Estados Tickets: "Proyectos/EstatusTickets/documentacion/Ejercicios de Estados Tickets.pdf"
+        - Estatus Equipo de Cómputo: Proyectos/EstatusTickets/documentacion/Estatus-Equipo-Computo.pdf
+        - Estatus Proyectos Internos: Proyectos/EstatusTickets/documentacion/Estatus-Proyectos-Internos.pdf
+        - Estatus Proyectos: Proyectos/EstatusTickets/documentacion/Estatus-Proyectos.pdf
+      - Funcionales: Proyectos/EstatusTickets/documentacion/Funcionales-Monitor-CAU-Nuevos-Estados.md
+      - Técnico: Proyectos/EstatusTickets/documentacion/Tecnico-Monitor-CAU-Nuevos-Estados.md
   - Documentación BSuite:
     - Catálogos:
       - Gestión TI:
