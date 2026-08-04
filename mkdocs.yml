@@ -55,6 +55,8 @@ nav:
         - Estatus Proyectos: Proyectos/EstatusTickets/documentacion/Estatus-Proyectos.pdf
       - Funcionales: Proyectos/EstatusTickets/documentacion/Funcionales-Monitor-CAU-Nuevos-Estados.md
       - Técnico: Proyectos/EstatusTickets/documentacion/Tecnico-Monitor-CAU-Nuevos-Estados.md
+    - Visibilidad Fiscal ONU:
+      - Requerimiento Funcional: Proyectos/VisibilidadFiscal-ONU/Documento_Requerimientos_Funcionales_Interplantas.md
   - Documentación BSuite:
     - Catálogos:
       - Gestión TI:
