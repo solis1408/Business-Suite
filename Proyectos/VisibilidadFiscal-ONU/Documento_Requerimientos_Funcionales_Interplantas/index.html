@@ -1,0 +1,5304 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentación BRD y FSD - Business Suite">
+      
+      
+        <meta name="author" content="solis1408">
+      
+      
+        <link rel="canonical" href="https://solis1408.github.io/Business-Suite/Proyectos/VisibilidadFiscal-ONU/Documento_Requerimientos_Funcionales_Interplantas/">
+      
+      
+        <link rel="prev" href="../../EstatusTickets/documentacion/Tecnico-Monitor-CAU-Nuevos-Estados/">
+      
+      
+        <link rel="next" href="../../../BSuite/Catalogos/Gestion-TI/documentacion/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Requerimiento Funcional - Business Suite - Documentación</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main-nav.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#requerimientos-funcionales--control-de-acceso-a-sistema-remv-ventas-de-consignación-interplantas" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../../.." title="Business Suite - Documentación" class="md-header__button md-logo" aria-label="Business Suite - Documentación" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Business Suite - Documentación
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Requerimiento Funcional
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Business Suite - Documentación" class="md-nav__button md-logo" aria-label="Business Suite - Documentación" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Business Suite - Documentación
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Proyectos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Proyectos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Expediente de Personal (EDC)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Expediente de Personal (EDC)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EDC/documentacion/requerimiento-cliente/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requerimiento Cliente
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EDC/documentacion/requerimiento-funcional/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requerimiento Funcional
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1_3" id="__nav_2_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RouteMap
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    RouteMap
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EDC/documentacion/routemap/Roadmap%20Estrat%C3%A9gico%20%E2%80%94%20Expediente%20Digital%20del%20Colaborador/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RouteMap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EDC/documentacion/routemap/roadmap-diagrama/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diagrama HTML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1_4" id="__nav_2_1_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diagramas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Diagramas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EDC/documentacion/diagramas/contexto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contexto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EDC/documentacion/diagramas/mapa-de-estados/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mapa de estados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1_5" id="__nav_2_1_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prototipos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Prototipos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EDC/documentacion/prototipos/prototipo-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prototipo 1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EDC/documentacion/prototipos/prototipo-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prototipo 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EDC/documentacion/prototipos/prototipo-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prototipo 3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Auditorias
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Auditorias
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Auditorias/documentacion/requerimiento-cliente/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requerimiento Cliente
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Auditorias/documentacion/requerimiento-funcional/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requerimiento Funcional
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3" id="__nav_2_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diagramas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Diagramas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Auditorias/documentacion/diagramas/contexto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contexto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Auditorias/documentacion/diagramas/mapa-de-estados/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mapa de estados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_4" id="__nav_2_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prototipos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Prototipos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Auditorias/documentacion/prototipos/prototipo-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monitor Acciones Correctivas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Auditorias/documentacion/prototipos/prototipo-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monitor Auditorias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Auditorias/documentacion/prototipos/prototipo-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reporte Resumen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estatus Tickets
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Estatus Tickets
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_1" id="__nav_2_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diagramas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Diagramas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EstatusTickets/documentacion/diagramas/contexto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contexto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EstatusTickets/documentacion/diagramas/mapa-de-estados/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mapa de estados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EstatusTickets/documentacion/Ejercicios%20de%20Estados%20Tickets.pdf" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejercicios de Estados Tickets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EstatusTickets/documentacion/Estatus-Equipo-Computo.pdf" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estatus Equipo de Cómputo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EstatusTickets/documentacion/Estatus-Proyectos-Internos.pdf" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estatus Proyectos Internos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EstatusTickets/documentacion/Estatus-Proyectos.pdf" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estatus Proyectos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EstatusTickets/documentacion/Funcionales-Monitor-CAU-Nuevos-Estados/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Funcionales
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EstatusTickets/documentacion/Tecnico-Monitor-CAU-Nuevos-Estados/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Técnico
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visibilidad Fiscal ONU
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Visibilidad Fiscal ONU
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requerimiento Funcional
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requerimiento Funcional
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-propósito-del-documento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Propósito del documento
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-alcance-del-documento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Alcance del documento
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-actores-y-roles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Actores y roles
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-glosario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Glosario
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-entidad-a-la-que-aplica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Entidad a la que aplica
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-índice-de-requerimientos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Índice de requerimientos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#---" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ---
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Documentación BSuite
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Documentación BSuite
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Catálogos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Catálogos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1_1" id="__nav_3_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gestión TI
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gestión TI
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../BSuite/Catalogos/Gestion-TI/documentacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../BSuite/Catalogos/Gestion-TI/documentacion/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../BSuite/Catalogos/Gestion-TI/documentacion/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1_2" id="__nav_3_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compras
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Compras
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../BSuite/Catalogos/Compras/documentacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../BSuite/Catalogos/Compras/documentacion/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../BSuite/Catalogos/Compras/documentacion/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Procesos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Procesos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_1" id="__nav_3_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gestión TI
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gestión TI
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../BSuite/Procesos/Gestion-TI/documentacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../BSuite/Procesos/Gestion-TI/documentacion/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../BSuite/Procesos/Gestion-TI/documentacion/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_2" id="__nav_3_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compras
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Compras
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../BSuite/Procesos/Compras/documentacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../BSuite/Procesos/Compras/documentacion/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../BSuite/Procesos/Compras/documentacion/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Consultas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Consultas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3_1" id="__nav_3_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gestión TI
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gestión TI
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3_1_1" id="__nav_3_3_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reporte Forecast
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_3_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reporte Forecast
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../BSuite/Consultas/Gestion-TI/documentacion/reporte-forecast/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../BSuite/Consultas/Gestion-TI/documentacion/reporte-forecast/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../BSuite/Consultas/Gestion-TI/documentacion/reporte-forecast/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3_1_2" id="__nav_3_3_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reporte Financiero
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_3_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reporte Financiero
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../BSuite/Consultas/Gestion-TI/documentacion/reporte-financiero/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../BSuite/Consultas/Gestion-TI/documentacion/reporte-financiero/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../BSuite/Consultas/Gestion-TI/documentacion/reporte-financiero/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3_2" id="__nav_3_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compras
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Compras
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../BSuite/Consultas/Compras/documentacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../BSuite/Consultas/Compras/documentacion/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../BSuite/Consultas/Compras/documentacion/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-propósito-del-documento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Propósito del documento
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-alcance-del-documento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Alcance del documento
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-actores-y-roles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Actores y roles
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-glosario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Glosario
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-entidad-a-la-que-aplica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Entidad a la que aplica
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-índice-de-requerimientos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Índice de requerimientos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#---" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ---
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="requerimientos-funcionales--control-de-acceso-a-sistema-remv-ventas-de-consignación-interplantas">Requerimientos Funcionales — Control de Acceso a Sistema REMV Ventas de Consignación (Interplantas)<a class="headerlink" href="#requerimientos-funcionales--control-de-acceso-a-sistema-remv-ventas-de-consignación-interplantas" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Proyecto</td>
+<td>Adecuación al Sistema REMV — Interplantas</td>
+</tr>
+<tr>
+<td>Número de Solicitud de Servicio</td>
+<td>3765</td>
+</tr>
+<tr>
+<td>Versión</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>Fecha</td>
+<td>2026-07-17</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Módulo</td>
+<td>Ventas / Facturación / Cuentas por Cobrar (CXC)</td>
+</tr>
+<tr>
+<td>Prioridad general</td>
+<td>Urgente</td>
+</tr>
+<tr>
+<td>Área de negocio</td>
+<td>Otras unidades de negocio</td>
+</tr>
+<tr>
+<td>Responsable del requerimiento / Product Owner</td>
+<td>María De Lourdes Viurquiz Gamiño</td>
+</tr>
+<tr>
+<td>Autor del análisis</td>
+<td>Análisis de Negocio de TI</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1-propósito-del-documento">1. Propósito del documento<a class="headerlink" href="#1-propósito-del-documento" title="Permanent link">&para;</a></h2>
+<p>Este documento describe los requerimientos funcionales necesarios para implementar un mecanismo de control de acceso, basado en el permiso especial <strong>FN-INTERPLANTAS</strong>, que restrinja la visualización de la información relacionada con ventas de consignación en el sistema ERP REMV. Actualmente cualquier usuario puede consultar esta información sin distinción, lo que representa un riesgo de exposición de datos financieros sensibles. El documento traduce esa necesidad en un conjunto de 25 requerimientos funcionales (uno por cada pantalla o consulta afectada), agrupados en los módulos de Facturación/Ventas y Cuentas por Cobrar (CXC):</p>
+<ul>
+<li><strong>RF-01</strong> — Restricción de visualización en Ventas &gt; Facturas.</li>
+<li><strong>RF-02</strong> — Restricción de visualización en Ventas &gt; Notas de Crédito.</li>
+<li><strong>RF-03</strong> — Restricción de visualización en Ventas &gt; Facturas Emitidas.</li>
+<li><strong>RF-04</strong> — Restricción de visualización en Ventas &gt; Facturas por producto.</li>
+<li><strong>RF-05</strong> — Restricción de visualización en Ventas &gt; Notas de crédito por producto.</li>
+<li><strong>RF-06</strong> — Restricción de visualización en Ventas &gt; Resumen facturas.</li>
+<li><strong>RF-07</strong> — Restricción de visualización en Ventas &gt; Resumen Notas de crédito.</li>
+<li><strong>RF-08</strong> — Restricción de visualización en Ventas &gt; Facturas Canceladas.</li>
+<li><strong>RF-09</strong> — Restricción de visualización en Ventas &gt; Ventas por factura pagada.</li>
+<li><strong>RF-10</strong> — Restricción de visualización en Ventas &gt; Detallado de ventas por factura pagada.</li>
+<li><strong>RF-11</strong> — Restricción de visualización en Cuentas por Cobrar &gt; Abonos.</li>
+<li><strong>RF-12</strong> — Restricción de visualización en Cuentas por Cobrar &gt; Transacciones.</li>
+<li><strong>RF-13</strong> — Restricción de visualización en CXC &gt; Antigüedad de Saldos.</li>
+<li><strong>RF-14</strong> — Restricción de visualización en CXC &gt; Cobranza general.</li>
+<li><strong>RF-15</strong> — Restricción de visualización en Ventas &gt; Cobranza general consulta.</li>
+<li><strong>RF-16</strong> — Restricción de visualización en CXC &gt; Comportamiento de pagos.</li>
+<li><strong>RF-17</strong> — Restricción de visualización en Ventas &gt; Concentrado de cobranza.</li>
+<li><strong>RF-18</strong> — Restricción de visualización en CXC &gt; Diario de abonos.</li>
+<li><strong>RF-19</strong> — Restricción de visualización en Ventas &gt; Documentos de Cobranza.</li>
+<li><strong>RF-20</strong> — Restricción de visualización en Ventas &gt; Detalle de abonos por facturas.</li>
+<li><strong>RF-21</strong> — Restricción de visualización en Ventas &gt; Detalle abonos facturas (Pagado).</li>
+<li><strong>RF-22</strong> — Restricción de visualización en Ventas &gt; Facturas Relación de factura.</li>
+<li><strong>RF-23</strong> — Restricción de visualización en CXC &gt; Estado de Cuenta.</li>
+<li><strong>RF-24</strong> — Restricción de visualización en CXC &gt; Estado de Cuenta Detallado.</li>
+<li><strong>RF-25</strong> — Restricción de visualización en CXC &gt; Resumen de movimientos.</li>
+</ul>
+<p><strong>Objetivo del proyecto:</strong> implementar un mecanismo de control de acceso mediante el permiso especial FN-INTERPLANTAS, con el fin de restringir la visualización de las consultas relacionadas con ventas de consignación en los módulos de Ventas, Inventario, Facturación y Cobranza, permitiendo el acceso únicamente a los usuarios autorizados.</p>
+<p><strong>Antecedentes:</strong> actualmente no existe un mecanismo de control de acceso que restrinja la visualización de estas opciones según el perfil o los permisos del usuario, lo que representa un riesgo de exposición de información financiera sensible. El ERP actual permite que todos los usuarios accedan a las consultas de los módulos de Ventas, Inventario, Facturación y Cobranza sin distinguir el tipo de venta que gestionan.</p>
+<p><strong>Beneficio de negocio:</strong> facilidad en la interpretación de la información de venta interplantas, al separar claramente lo que es visible según el perfil del usuario.</p>
+<h2 id="2-alcance-del-documento">2. Alcance del documento<a class="headerlink" href="#2-alcance-del-documento" title="Permanent link">&para;</a></h2>
+<p><strong>Incluye:</strong>
+- La implementación del permiso especial FN-INTERPLANTAS como mecanismo de control de acceso.
+- La restricción de visualización de la información de ventas de consignación en las 25 pantallas y consultas de los módulos de Facturación/Ventas y Cuentas por Cobrar (CXC) listadas en el punto 1.
+- Mostrar la información de consignación únicamente a los usuarios cuyo perfil tenga asignado el permiso FN-INTERPLANTAS, y ocultarla al resto de los usuarios.</p>
+<p><strong>No incluye:</strong>
+- La modificación de la lógica de negocio existente para las ventas de consignación.
+- La creación o eliminación de perfiles de usuario (esto lo gestiona el área de Administración de Sistemas).
+- La auditoría de accesos a la información de consignación (se cubre mediante un requerimiento separado, fuera de este documento).</p>
+<h2 id="3-actores-y-roles">3. Actores y roles<a class="headerlink" href="#3-actores-y-roles" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Actor / Rol</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Usuario autorizado (permiso FN-INTERPLANTAS)</td>
+<td>Usuario del ERP REMV cuyo perfil (por ejemplo remcxc01, remvta01, remvta02 o remvta06) tiene asignado el permiso especial FN-INTERPLANTAS; puede visualizar la información de ventas de consignación en las pantallas y consultas dentro del alcance.</td>
+</tr>
+<tr>
+<td>Usuario no autorizado</td>
+<td>Cualquier usuario del ERP REMV que no tenga asignado el permiso especial FN-INTERPLANTAS; no debe visualizar la información de ventas de consignación en las pantallas y consultas dentro del alcance.</td>
+</tr>
+<tr>
+<td>Administración de Sistemas</td>
+<td>Área responsable de la creación, eliminación y asignación de perfiles y permisos (incluido FN-INTERPLANTAS); esta gestión queda fuera del alcance de este documento.</td>
+</tr>
+<tr>
+<td>Responsable del requerimiento / Product Owner de negocio</td>
+<td>María De Lourdes Viurquiz Gamiño; define y valida la necesidad de negocio y prioriza el alcance funcional.</td>
+</tr>
+<tr>
+<td>Consultor (Product Owner del proyecto)</td>
+<td>José Cruz Cisneros; participa en la aprobación funcional del alcance.</td>
+</tr>
+<tr>
+<td>Coordinador de Desarrollo</td>
+<td>Ma. Luisa Brandi; coordina la implementación técnica de los requerimientos.</td>
+</tr>
+<tr>
+<td>Aseguramiento de Calidad de Software (QA)</td>
+<td>Edwin Quintanilla; valida el cumplimiento de los criterios de aceptación antes de la liberación.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4-glosario">4. Glosario<a class="headerlink" href="#4-glosario" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Término / Sigla</th>
+<th>Definición</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FN-INTERPLANTAS</td>
+<td>Permiso especial del ERP REMV que habilita a un perfil de usuario a visualizar la información de ventas de consignación en las pantallas y consultas dentro del alcance.</td>
+</tr>
+<tr>
+<td>Venta de consignación / Documento CONSIGNACIÓN</td>
+<td>Tipo de venta en la que el producto se traslada entre plantas o a un cliente sin que se facture como una venta ordinaria inmediata; el documento asociado (factura, nota de crédito, abono, transacción) queda marcado con este atributo en el sistema.</td>
+</tr>
+<tr>
+<td>CXC</td>
+<td>Cuentas por Cobrar; módulo del ERP REMV donde se gestionan abonos, transacciones y el seguimiento de cobranza.</td>
+</tr>
+<tr>
+<td>ERP REMV</td>
+<td>Sistema de planeación de recursos empresariales utilizado por Grupo Reyes, sobre el cual se implementan estos requerimientos.</td>
+</tr>
+<tr>
+<td>Perfil (remcxc01, remvta01, remvta02, remvta06)</td>
+<td>Perfiles de usuario predefinidos en el ERP REMV a los que, de acuerdo con la información disponible, se asigna el permiso FN-INTERPLANTAS.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-entidad-a-la-que-aplica">5. Entidad a la que aplica<a class="headerlink" href="#5-entidad-a-la-que-aplica" title="Permanent link">&para;</a></h2>
+<p>Este conjunto de requerimientos aplica sobre los <strong>documentos de venta</strong> del ERP REMV (facturas, notas de crédito, abonos y transacciones) que tienen el atributo o tipo de documento <strong>CONSIGNACIÓN</strong>, así como sobre las pantallas y consultas que exponen esa información en los módulos de Facturación/Ventas y Cuentas por Cobrar (CXC).</p>
+<p>No se trata de un flujo de estados de la entidad, sino de una condición de visibilidad: el documento conserva su ciclo de vida normal (registro, cancelación, cobro, etc.) y lo único que cambia es si un usuario determinado puede o no verlo, en función de si su perfil tiene asignado el permiso FN-INTERPLANTAS. Por lo tanto, <strong>no aplica</strong> un estatus inicial/terminal propio de este control de acceso.</p>
+<h2 id="6-índice-de-requerimientos">6. Índice de requerimientos<a class="headerlink" href="#6-índice-de-requerimientos" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>RF</th>
+<th>Título</th>
+<th>Sistema</th>
+<th>Aplica a</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RF-01</td>
+<td>Restricción de visualización — Facturas</td>
+<td>Facturación / Ventas</td>
+<td>Pantalla/consulta "Ventas &gt; Facturas"</td>
+</tr>
+<tr>
+<td>RF-02</td>
+<td>Restricción de visualización — Notas de Crédito</td>
+<td>Facturación / Ventas</td>
+<td>Pantalla/consulta "Ventas &gt; Notas de Crédito"</td>
+</tr>
+<tr>
+<td>RF-03</td>
+<td>Restricción de visualización — Facturas Emitidas</td>
+<td>Facturación / Ventas</td>
+<td>Pantalla/consulta "Ventas &gt; Facturas Emitidas"</td>
+</tr>
+<tr>
+<td>RF-04</td>
+<td>Restricción de visualización — Facturas por producto</td>
+<td>Facturación / Ventas</td>
+<td>Pantalla/consulta "Ventas &gt; Facturas por producto"</td>
+</tr>
+<tr>
+<td>RF-05</td>
+<td>Restricción de visualización — Notas de crédito por producto</td>
+<td>Facturación / Ventas</td>
+<td>Pantalla/consulta "Ventas &gt; Notas de crédito por producto"</td>
+</tr>
+<tr>
+<td>RF-06</td>
+<td>Restricción de visualización — Resumen facturas</td>
+<td>Facturación / Ventas</td>
+<td>Pantalla/consulta "Ventas &gt; Resumen facturas"</td>
+</tr>
+<tr>
+<td>RF-07</td>
+<td>Restricción de visualización — Resumen Notas de crédito</td>
+<td>Facturación / Ventas</td>
+<td>Pantalla/consulta "Ventas &gt; Resumen Notas de crédito"</td>
+</tr>
+<tr>
+<td>RF-08</td>
+<td>Restricción de visualización — Facturas Canceladas</td>
+<td>Facturación / Ventas</td>
+<td>Pantalla/consulta "Ventas &gt; Facturas Canceladas"</td>
+</tr>
+<tr>
+<td>RF-09</td>
+<td>Restricción de visualización — Ventas por factura pagada</td>
+<td>Facturación / Ventas</td>
+<td>Pantalla/consulta "Ventas &gt; Ventas por factura pagada"</td>
+</tr>
+<tr>
+<td>RF-10</td>
+<td>Restricción de visualización — Detallado de ventas por factura pagada</td>
+<td>Facturación / Ventas</td>
+<td>Pantalla/consulta "Ventas &gt; Detallado de ventas por factura pagada"</td>
+</tr>
+<tr>
+<td>RF-11</td>
+<td>Restricción de visualización — Abonos</td>
+<td>Cuentas por Cobrar (CXC)</td>
+<td>Pantalla/consulta "Cuentas por Cobrar &gt; Abonos"</td>
+</tr>
+<tr>
+<td>RF-12</td>
+<td>Restricción de visualización — Transacciones</td>
+<td>Cuentas por Cobrar (CXC)</td>
+<td>Pantalla/consulta "Cuentas por Cobrar &gt; Transacciones"</td>
+</tr>
+<tr>
+<td>RF-13</td>
+<td>Restricción de visualización — Antigüedad de Saldos</td>
+<td>Cuentas por Cobrar (CXC)</td>
+<td>Pantalla/consulta "CXC &gt; Antigüedad de Saldos"</td>
+</tr>
+<tr>
+<td>RF-14</td>
+<td>Restricción de visualización — Cobranza general</td>
+<td>Cuentas por Cobrar (CXC)</td>
+<td>Pantalla/consulta "CXC &gt; Cobranza general"</td>
+</tr>
+<tr>
+<td>RF-15</td>
+<td>Restricción de visualización — Cobranza general consulta</td>
+<td>Facturación / Ventas</td>
+<td>Pantalla/consulta "Ventas &gt; Cobranza general consulta"</td>
+</tr>
+<tr>
+<td>RF-16</td>
+<td>Restricción de visualización — Comportamiento de pagos</td>
+<td>Cuentas por Cobrar (CXC)</td>
+<td>Pantalla/consulta "CXC &gt; Comportamiento de pagos"</td>
+</tr>
+<tr>
+<td>RF-17</td>
+<td>Restricción de visualización — Concentrado de cobranza</td>
+<td>Facturación / Ventas</td>
+<td>Pantalla/consulta "Ventas &gt; Concentrado de cobranza"</td>
+</tr>
+<tr>
+<td>RF-18</td>
+<td>Restricción de visualización — Diario de abonos</td>
+<td>Cuentas por Cobrar (CXC)</td>
+<td>Pantalla/consulta "CXC &gt; Diario de abonos"</td>
+</tr>
+<tr>
+<td>RF-19</td>
+<td>Restricción de visualización — Documentos de Cobranza</td>
+<td>Facturación / Ventas</td>
+<td>Pantalla/consulta "Ventas &gt; Documentos de Cobranza"</td>
+</tr>
+<tr>
+<td>RF-20</td>
+<td>Restricción de visualización — Detalle de abonos por facturas</td>
+<td>Facturación / Ventas</td>
+<td>Pantalla/consulta "Ventas &gt; Detalle de abonos por facturas"</td>
+</tr>
+<tr>
+<td>RF-21</td>
+<td>Restricción de visualización — Detalle abonos facturas (Pagado)</td>
+<td>Facturación / Ventas</td>
+<td>Pantalla/consulta "Ventas &gt; Detalle abonos facturas (Pagado)"</td>
+</tr>
+<tr>
+<td>RF-22</td>
+<td>Restricción de visualización — Facturas Relación de factura</td>
+<td>Facturación / Ventas</td>
+<td>Pantalla/consulta "Ventas &gt; Facturas Relación de factura"</td>
+</tr>
+<tr>
+<td>RF-23</td>
+<td>Restricción de visualización — Estado de Cuenta</td>
+<td>Cuentas por Cobrar (CXC)</td>
+<td>Pantalla/consulta "CXC &gt; Estado de Cuenta"</td>
+</tr>
+<tr>
+<td>RF-24</td>
+<td>Restricción de visualización — Estado de Cuenta Detallado</td>
+<td>Cuentas por Cobrar (CXC)</td>
+<td>Pantalla/consulta "CXC &gt; Estado de Cuenta Detallado"</td>
+</tr>
+<tr>
+<td>RF-25</td>
+<td>Restricción de visualización — Resumen de movimientos</td>
+<td>Cuentas por Cobrar (CXC)</td>
+<td>Pantalla/consulta "CXC &gt; Resumen de movimientos"</td>
+</tr>
+</tbody>
+</table>
+<h2 id="---">---<a class="headerlink" href="#---" title="Permanent link">&para;</a></h2>
+<h1 id="rf-01--restricción-de-visualización-de-información-de-consignación-en-facturas">RF-01 — Restricción de visualización de información de consignación en Facturas<a class="headerlink" href="#rf-01--restricción-de-visualización-de-información-de-consignación-en-facturas" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo">Objetivo<a class="headerlink" href="#objetivo" title="Permanent link">&para;</a></h2>
+<p>Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "Ventas &gt; Facturas", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h2 id="descripción">Descripción<a class="headerlink" href="#descripción" title="Permanent link">&para;</a></h2>
+<p>El sistema deberá limitar la visualización de la pantalla "Ventas &gt; Facturas" para que las facturas marcadas con documento CONSIGNACIÓN sean visibles para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h3 id="información--atributos">Información / atributos<a class="headerlink" href="#información--atributos" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Obligatorio</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tipo de documento</td>
+<td>Sí</td>
+<td>Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación.</td>
+</tr>
+<tr>
+<td>Permiso especial FN-INTERPLANTAS</td>
+<td>Sí</td>
+<td>Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="operaciones">Operaciones<a class="headerlink" href="#operaciones" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Consultar: al abrir la pantalla/consulta "Ventas &gt; Facturas", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.</li>
+</ul>
+<h2 id="hu-11--visualización-restringida-en-facturas">HU-1.1 — Visualización restringida en Facturas<a class="headerlink" href="#hu-11--visualización-restringida-en-facturas" title="Permanent link">&para;</a></h2>
+<p>Como usuario autorizado para consultar información de consignación, quiero que en la pantalla "Ventas &gt; Facturas" solo sean visibles los documentos marcados como CONSIGNACIÓN cuando tenga asignado el permiso FN-INTERPLANTAS, para proteger la información sensible y evitar accesos no autorizados.</p>
+<h3 id="reglas-de-negocio">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio" title="Permanent link">&para;</a></h3>
+<p><strong>RN-1.1</strong> Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "Ventas &gt; Facturas".</p>
+<p><strong>RN-1.2</strong> Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).</p>
+<h3 id="criterios-de-aceptación">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación" title="Permanent link">&para;</a></h3>
+<p><strong>CA-1.1.1 — Usuario autorizado visualiza la información de consignación</strong>
+Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "Ventas &gt; Facturas"
+Entonces el sistema muestra información de consigna a los usuarios con permisos especial: remcxc01, remvta01, remvta02, remvta06.</p>
+<p><strong>CA-1.2.1 — Usuario no autorizado no visualiza la información de consignación</strong>
+Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "Ventas &gt; Facturas"
+Entonces el sistema oculta la información de consigna a usuarios no autorizados.</p>
+<hr />
+<h1 id="rf-02--restricción-de-visualización-de-información-de-consignación-en-notas-de-crédito">RF-02 — Restricción de visualización de información de consignación en Notas de Crédito<a class="headerlink" href="#rf-02--restricción-de-visualización-de-información-de-consignación-en-notas-de-crédito" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_1">Objetivo<a class="headerlink" href="#objetivo_1" title="Permanent link">&para;</a></h2>
+<p>Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "Ventas &gt; Notas de Crédito", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h2 id="descripción_1">Descripción<a class="headerlink" href="#descripción_1" title="Permanent link">&para;</a></h2>
+<p>El sistema deberá limitar la visualización de la pantalla "Ventas &gt; Notas de Crédito" para que los registros relacionados a facturas marcadas con documento CONSIGNACIÓN sean visibles para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h3 id="información--atributos_1">Información / atributos<a class="headerlink" href="#información--atributos_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Obligatorio</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tipo de documento</td>
+<td>Sí</td>
+<td>Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación.</td>
+</tr>
+<tr>
+<td>Permiso especial FN-INTERPLANTAS</td>
+<td>Sí</td>
+<td>Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="operaciones_1">Operaciones<a class="headerlink" href="#operaciones_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Consultar: al abrir la pantalla/consulta "Ventas &gt; Notas de Crédito", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.</li>
+</ul>
+<h2 id="hu-21--visualización-restringida-en-notas-de-crédito">HU-2.1 — Visualización restringida en Notas de Crédito<a class="headerlink" href="#hu-21--visualización-restringida-en-notas-de-crédito" title="Permanent link">&para;</a></h2>
+<p>Como usuario autorizado para consultar información de consignación, quiero que en la pantalla "Ventas &gt; Notas de Crédito" solo sean visibles los documentos marcados como CONSIGNACIÓN cuando tenga asignado el permiso FN-INTERPLANTAS, para garantizar que únicamente el personal autorizado acceda a esta información.</p>
+<h3 id="reglas-de-negocio_1">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_1" title="Permanent link">&para;</a></h3>
+<p><strong>RN-2.1</strong> Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "Ventas &gt; Notas de Crédito".</p>
+<p><strong>RN-2.2</strong> Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).</p>
+<h3 id="criterios-de-aceptación_1">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_1" title="Permanent link">&para;</a></h3>
+<p><strong>CA-2.1.1 — Usuario autorizado visualiza la información de consignación</strong>
+Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "Ventas &gt; Notas de Crédito"
+Entonces el sistema muestra la información de consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.</p>
+<p><strong>CA-2.2.1 — Usuario no autorizado no visualiza la información de consignación</strong>
+Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "Ventas &gt; Notas de Crédito"
+Entonces el sistema oculta la información de consigna a usuario no autorizado.</p>
+<hr />
+<h1 id="rf-03--restricción-de-visualización-de-información-de-consignación-en-facturas-emitidas">RF-03 — Restricción de visualización de información de consignación en Facturas Emitidas<a class="headerlink" href="#rf-03--restricción-de-visualización-de-información-de-consignación-en-facturas-emitidas" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_2">Objetivo<a class="headerlink" href="#objetivo_2" title="Permanent link">&para;</a></h2>
+<p>Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "Ventas &gt; Facturas Emitidas", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h2 id="descripción_2">Descripción<a class="headerlink" href="#descripción_2" title="Permanent link">&para;</a></h2>
+<p>El sistema deberá limitar la visualización de la consulta "Ventas &gt; Facturas Emitidas" para que la información correspondiente solo a ventas de consignación y sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h3 id="información--atributos_2">Información / atributos<a class="headerlink" href="#información--atributos_2" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Obligatorio</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tipo de documento</td>
+<td>Sí</td>
+<td>Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación.</td>
+</tr>
+<tr>
+<td>Permiso especial FN-INTERPLANTAS</td>
+<td>Sí</td>
+<td>Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="operaciones_2">Operaciones<a class="headerlink" href="#operaciones_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Consultar: al abrir la pantalla/consulta "Ventas &gt; Facturas Emitidas", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.</li>
+</ul>
+<h2 id="hu-31--visualización-restringida-en-facturas-emitidas">HU-3.1 — Visualización restringida en Facturas Emitidas<a class="headerlink" href="#hu-31--visualización-restringida-en-facturas-emitidas" title="Permanent link">&para;</a></h2>
+<p>Como usuario autorizado para consultar información de consignación, quiero que la consulta "Ventas &gt; Facturas Emitidas" muestre la información correspondiente a ventas de consignación únicamente cuando tenga el permiso FN-INTERPLANTAS, para resguardar la información financiera sensible.</p>
+<h3 id="reglas-de-negocio_2">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_2" title="Permanent link">&para;</a></h3>
+<p><strong>RN-3.1</strong> Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "Ventas &gt; Facturas Emitidas".</p>
+<p><strong>RN-3.2</strong> Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).</p>
+<h3 id="criterios-de-aceptación_2">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_2" title="Permanent link">&para;</a></h3>
+<p><strong>CA-3.1.1 — Usuario autorizado visualiza la información de consignación</strong>
+Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "Ventas &gt; Facturas Emitidas"
+Entonces el sistema muestra la información de consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.</p>
+<p><strong>CA-3.2.1 — Usuario no autorizado no visualiza la información de consignación</strong>
+Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "Ventas &gt; Facturas Emitidas"
+Entonces el sistema oculta la información de consigna a usuarios no autorizados.</p>
+<hr />
+<h1 id="rf-04--restricción-de-visualización-de-información-de-consignación-en-facturas-por-producto">RF-04 — Restricción de visualización de información de consignación en Facturas por producto<a class="headerlink" href="#rf-04--restricción-de-visualización-de-información-de-consignación-en-facturas-por-producto" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_3">Objetivo<a class="headerlink" href="#objetivo_3" title="Permanent link">&para;</a></h2>
+<p>Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "Ventas &gt; Facturas por producto", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h2 id="descripción_3">Descripción<a class="headerlink" href="#descripción_3" title="Permanent link">&para;</a></h2>
+<p>El sistema deberá limitar la visualización de la consulta "Ventas &gt; Facturas por producto" para que la información correspondiente a facturas de consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h3 id="información--atributos_3">Información / atributos<a class="headerlink" href="#información--atributos_3" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Obligatorio</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tipo de documento</td>
+<td>Sí</td>
+<td>Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación.</td>
+</tr>
+<tr>
+<td>Permiso especial FN-INTERPLANTAS</td>
+<td>Sí</td>
+<td>Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="operaciones_3">Operaciones<a class="headerlink" href="#operaciones_3" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Consultar: al abrir la pantalla/consulta "Ventas &gt; Facturas por producto", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.</li>
+</ul>
+<h2 id="hu-41--visualización-restringida-en-facturas-por-producto">HU-4.1 — Visualización restringida en Facturas por producto<a class="headerlink" href="#hu-41--visualización-restringida-en-facturas-por-producto" title="Permanent link">&para;</a></h2>
+<p>Como usuario autorizado para consultar información de consignación, quiero que la consulta "Ventas &gt; Facturas por Producto" muestre únicamente la información de ventas de consignación cuando cuente con el permiso FN-INTERPLANTAS, para evitar el acceso no autorizado.</p>
+<h3 id="reglas-de-negocio_3">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_3" title="Permanent link">&para;</a></h3>
+<p><strong>RN-4.1</strong> Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "Ventas &gt; Facturas por producto".</p>
+<p><strong>RN-4.2</strong> Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).</p>
+<h3 id="criterios-de-aceptación_3">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_3" title="Permanent link">&para;</a></h3>
+<p><strong>CA-4.1.1 — Usuario autorizado visualiza la información de consignación</strong>
+Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "Ventas &gt; Facturas por producto"
+Entonces el sistema muestra la información de consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.</p>
+<p><strong>CA-4.2.1 — Usuario no autorizado no visualiza la información de consignación</strong>
+Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "Ventas &gt; Facturas por producto"
+Entonces el sistema oculta la información de consigna a usuarios no autorizados.</p>
+<hr />
+<h1 id="rf-05--restricción-de-visualización-de-información-de-consignación-en-notas-de-crédito-por-producto">RF-05 — Restricción de visualización de información de consignación en Notas de crédito por producto<a class="headerlink" href="#rf-05--restricción-de-visualización-de-información-de-consignación-en-notas-de-crédito-por-producto" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_4">Objetivo<a class="headerlink" href="#objetivo_4" title="Permanent link">&para;</a></h2>
+<p>Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "Ventas &gt; Notas de crédito por producto", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h2 id="descripción_4">Descripción<a class="headerlink" href="#descripción_4" title="Permanent link">&para;</a></h2>
+<p>El sistema deberá limitar la visualización de la consulta "Ventas &gt; Notas de crédito por producto" para que la información de nota de crédito ligada a facturas de consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h3 id="información--atributos_4">Información / atributos<a class="headerlink" href="#información--atributos_4" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Obligatorio</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tipo de documento</td>
+<td>Sí</td>
+<td>Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación.</td>
+</tr>
+<tr>
+<td>Permiso especial FN-INTERPLANTAS</td>
+<td>Sí</td>
+<td>Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="operaciones_4">Operaciones<a class="headerlink" href="#operaciones_4" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Consultar: al abrir la pantalla/consulta "Ventas &gt; Notas de crédito por producto", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.</li>
+</ul>
+<h2 id="hu-51--visualización-restringida-en-notas-de-crédito-por-producto">HU-5.1 — Visualización restringida en Notas de crédito por producto<a class="headerlink" href="#hu-51--visualización-restringida-en-notas-de-crédito-por-producto" title="Permanent link">&para;</a></h2>
+<p>Como usuario autorizado para consultar información de consignación, quiero que la consulta "Ventas &gt; Notas de Crédito por Producto" muestre únicamente la información de consignación cuando tenga el permiso FN-INTERPLANTAS, para proteger la confidencialidad de la información.</p>
+<h3 id="reglas-de-negocio_4">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_4" title="Permanent link">&para;</a></h3>
+<p><strong>RN-5.1</strong> Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "Ventas &gt; Notas de crédito por producto".</p>
+<p><strong>RN-5.2</strong> Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).</p>
+<h3 id="criterios-de-aceptación_4">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_4" title="Permanent link">&para;</a></h3>
+<p><strong>CA-5.1.1 — Usuario autorizado visualiza la información de consignación</strong>
+Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "Ventas &gt; Notas de crédito por producto"
+Entonces el sistema muestra la información de consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.</p>
+<p><strong>CA-5.2.1 — Usuario no autorizado no visualiza la información de consignación</strong>
+Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "Ventas &gt; Notas de crédito por producto"
+Entonces el sistema oculta la información de consigna a usuarios no autorizados.</p>
+<hr />
+<h1 id="rf-06--restricción-de-visualización-de-información-de-consignación-en-resumen-facturas">RF-06 — Restricción de visualización de información de consignación en Resumen facturas<a class="headerlink" href="#rf-06--restricción-de-visualización-de-información-de-consignación-en-resumen-facturas" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_5">Objetivo<a class="headerlink" href="#objetivo_5" title="Permanent link">&para;</a></h2>
+<p>Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "Ventas &gt; Resumen facturas", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h2 id="descripción_5">Descripción<a class="headerlink" href="#descripción_5" title="Permanent link">&para;</a></h2>
+<p>El sistema deberá limitar la visualización de la consulta "Ventas &gt; Resumen facturas" para que la información correspondiente a facturas de consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h3 id="información--atributos_5">Información / atributos<a class="headerlink" href="#información--atributos_5" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Obligatorio</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tipo de documento</td>
+<td>Sí</td>
+<td>Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación.</td>
+</tr>
+<tr>
+<td>Permiso especial FN-INTERPLANTAS</td>
+<td>Sí</td>
+<td>Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="operaciones_5">Operaciones<a class="headerlink" href="#operaciones_5" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Consultar: al abrir la pantalla/consulta "Ventas &gt; Resumen facturas", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.</li>
+</ul>
+<h2 id="hu-61--visualización-restringida-en-resumen-facturas">HU-6.1 — Visualización restringida en Resumen facturas<a class="headerlink" href="#hu-61--visualización-restringida-en-resumen-facturas" title="Permanent link">&para;</a></h2>
+<p>Como usuario autorizado para consultar información de consignación, quiero que la consulta "Ventas &gt; Resumen Facturas" muestre únicamente la información correspondiente a ventas de consignación cuando tenga el permiso FN-INTERPLANTAS, para proteger la información financiera.</p>
+<h3 id="reglas-de-negocio_5">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_5" title="Permanent link">&para;</a></h3>
+<p><strong>RN-6.1</strong> Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "Ventas &gt; Resumen facturas".</p>
+<p><strong>RN-6.2</strong> Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).</p>
+<h3 id="criterios-de-aceptación_5">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_5" title="Permanent link">&para;</a></h3>
+<p><strong>CA-6.1.1 — Usuario autorizado visualiza la información de consignación</strong>
+Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "Ventas &gt; Resumen facturas"
+Entonces el sistema muestra la información de consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.</p>
+<p><strong>CA-6.2.1 — Usuario no autorizado no visualiza la información de consignación</strong>
+Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "Ventas &gt; Resumen facturas"
+Entonces el sistema oculta la información de consigna a usuarios no autorizados.</p>
+<hr />
+<h1 id="rf-07--restricción-de-visualización-de-información-de-consignación-en-resumen-notas-de-crédito">RF-07 — Restricción de visualización de información de consignación en Resumen Notas de crédito<a class="headerlink" href="#rf-07--restricción-de-visualización-de-información-de-consignación-en-resumen-notas-de-crédito" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_6">Objetivo<a class="headerlink" href="#objetivo_6" title="Permanent link">&para;</a></h2>
+<p>Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "Ventas &gt; Resumen Notas de crédito", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h2 id="descripción_6">Descripción<a class="headerlink" href="#descripción_6" title="Permanent link">&para;</a></h2>
+<p>El sistema deberá limitar la visualización de la consulta "Ventas &gt; Resumen Notas de crédito" para que la información de notas de crédito relacionada a facturas consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h3 id="información--atributos_6">Información / atributos<a class="headerlink" href="#información--atributos_6" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Obligatorio</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tipo de documento</td>
+<td>Sí</td>
+<td>Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación.</td>
+</tr>
+<tr>
+<td>Permiso especial FN-INTERPLANTAS</td>
+<td>Sí</td>
+<td>Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="operaciones_6">Operaciones<a class="headerlink" href="#operaciones_6" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Consultar: al abrir la pantalla/consulta "Ventas &gt; Resumen Notas de crédito", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.</li>
+</ul>
+<h2 id="hu-71--visualización-restringida-en-resumen-notas-de-crédito">HU-7.1 — Visualización restringida en Resumen Notas de crédito<a class="headerlink" href="#hu-71--visualización-restringida-en-resumen-notas-de-crédito" title="Permanent link">&para;</a></h2>
+<p>Como usuario autorizado para consultar información de consignación, quiero que la consulta "Ventas &gt; Resumen Notas de Crédito" muestre únicamente la información correspondiente a consignación cuando tenga el permiso FN-INTERPLANTAS, para restringir el acceso a usuarios autorizados.</p>
+<h3 id="reglas-de-negocio_6">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_6" title="Permanent link">&para;</a></h3>
+<p><strong>RN-7.1</strong> Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "Ventas &gt; Resumen Notas de crédito".</p>
+<p><strong>RN-7.2</strong> Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).</p>
+<h3 id="criterios-de-aceptación_6">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_6" title="Permanent link">&para;</a></h3>
+<p><strong>CA-7.1.1 — Usuario autorizado visualiza la información de consignación</strong>
+Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "Ventas &gt; Resumen Notas de crédito"
+Entonces el sistema permite filtrar la información por Consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.</p>
+<p><strong>CA-7.2.1 — Usuario no autorizado no visualiza la información de consignación</strong>
+Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "Ventas &gt; Resumen Notas de crédito"
+Entonces el sistema no permite filtrar la información por Consigna.</p>
+<hr />
+<h1 id="rf-08--restricción-de-visualización-de-información-de-consignación-en-facturas-canceladas">RF-08 — Restricción de visualización de información de consignación en Facturas Canceladas<a class="headerlink" href="#rf-08--restricción-de-visualización-de-información-de-consignación-en-facturas-canceladas" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_7">Objetivo<a class="headerlink" href="#objetivo_7" title="Permanent link">&para;</a></h2>
+<p>Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "Ventas &gt; Facturas Canceladas", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h2 id="descripción_7">Descripción<a class="headerlink" href="#descripción_7" title="Permanent link">&para;</a></h2>
+<p>El sistema deberá limitar la visualización de la consulta "Ventas &gt; Facturas Canceladas" para que la información correspondiente a facturas consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h3 id="información--atributos_7">Información / atributos<a class="headerlink" href="#información--atributos_7" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Obligatorio</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tipo de documento</td>
+<td>Sí</td>
+<td>Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación.</td>
+</tr>
+<tr>
+<td>Permiso especial FN-INTERPLANTAS</td>
+<td>Sí</td>
+<td>Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="operaciones_7">Operaciones<a class="headerlink" href="#operaciones_7" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Consultar: al abrir la pantalla/consulta "Ventas &gt; Facturas Canceladas", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.</li>
+</ul>
+<h2 id="hu-81--visualización-restringida-en-facturas-canceladas">HU-8.1 — Visualización restringida en Facturas Canceladas<a class="headerlink" href="#hu-81--visualización-restringida-en-facturas-canceladas" title="Permanent link">&para;</a></h2>
+<p>Como usuario autorizado para consultar información de consignación, quiero que la consulta "Ventas &gt; Facturas Canceladas" muestre únicamente la información correspondiente a consignación cuando tenga el permiso FN-INTERPLANTAS, para evitar la exposición de información sensible.</p>
+<h3 id="reglas-de-negocio_7">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_7" title="Permanent link">&para;</a></h3>
+<p><strong>RN-8.1</strong> Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "Ventas &gt; Facturas Canceladas".</p>
+<p><strong>RN-8.2</strong> Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).</p>
+<h3 id="criterios-de-aceptación_7">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_7" title="Permanent link">&para;</a></h3>
+<p><strong>CA-8.1.1 — Usuario autorizado visualiza la información de consignación</strong>
+Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "Ventas &gt; Facturas Canceladas"
+Entonces el sistema muestra la información de consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.</p>
+<p><strong>CA-8.2.1 — Usuario no autorizado no visualiza la información de consignación</strong>
+Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "Ventas &gt; Facturas Canceladas"
+Entonces el sistema oculta la información de consigna a usuarios no autorizados.</p>
+<hr />
+<h1 id="rf-09--restricción-de-visualización-de-información-de-consignación-en-ventas-por-factura-pagada">RF-09 — Restricción de visualización de información de consignación en Ventas por factura pagada<a class="headerlink" href="#rf-09--restricción-de-visualización-de-información-de-consignación-en-ventas-por-factura-pagada" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_8">Objetivo<a class="headerlink" href="#objetivo_8" title="Permanent link">&para;</a></h2>
+<p>Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "Ventas &gt; Ventas por factura pagada", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h2 id="descripción_8">Descripción<a class="headerlink" href="#descripción_8" title="Permanent link">&para;</a></h2>
+<p>El sistema deberá limitar la visualización de la consulta "Ventas &gt; Ventas por factura pagada" para que la información correspondiente a ventas de consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h3 id="información--atributos_8">Información / atributos<a class="headerlink" href="#información--atributos_8" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Obligatorio</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tipo de documento</td>
+<td>Sí</td>
+<td>Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación.</td>
+</tr>
+<tr>
+<td>Permiso especial FN-INTERPLANTAS</td>
+<td>Sí</td>
+<td>Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="operaciones_8">Operaciones<a class="headerlink" href="#operaciones_8" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Consultar: al abrir la pantalla/consulta "Ventas &gt; Ventas por factura pagada", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.</li>
+</ul>
+<h2 id="hu-91--visualización-restringida-en-ventas-por-factura-pagada">HU-9.1 — Visualización restringida en Ventas por factura pagada<a class="headerlink" href="#hu-91--visualización-restringida-en-ventas-por-factura-pagada" title="Permanent link">&para;</a></h2>
+<p>Como usuario autorizado para consultar información de consignación, quiero que la consulta "Ventas &gt; Ventas por Factura Pagada" muestre únicamente la información de ventas de consignación cuando tenga el permiso FN-INTERPLANTAS, para proteger la información restringida.</p>
+<h3 id="reglas-de-negocio_8">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_8" title="Permanent link">&para;</a></h3>
+<p><strong>RN-9.1</strong> Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "Ventas &gt; Ventas por factura pagada".</p>
+<p><strong>RN-9.2</strong> Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).</p>
+<h3 id="criterios-de-aceptación_8">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_8" title="Permanent link">&para;</a></h3>
+<p><strong>CA-9.1.1 — Usuario autorizado visualiza la información de consignación</strong>
+Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "Ventas &gt; Ventas por factura pagada"
+Entonces el sistema muestra la información de consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.</p>
+<p><strong>CA-9.2.1 — Usuario no autorizado no visualiza la información de consignación</strong>
+Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "Ventas &gt; Ventas por factura pagada"
+Entonces el sistema oculta la información de consigna a usuarios no autorizados.</p>
+<hr />
+<h1 id="rf-10--restricción-de-visualización-de-información-de-consignación-en-detallado-de-ventas-por-factura-pagada">RF-10 — Restricción de visualización de información de consignación en Detallado de ventas por factura pagada<a class="headerlink" href="#rf-10--restricción-de-visualización-de-información-de-consignación-en-detallado-de-ventas-por-factura-pagada" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_9">Objetivo<a class="headerlink" href="#objetivo_9" title="Permanent link">&para;</a></h2>
+<p>Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "Ventas &gt; Detallado de ventas por factura pagada", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h2 id="descripción_9">Descripción<a class="headerlink" href="#descripción_9" title="Permanent link">&para;</a></h2>
+<p>El sistema deberá limitar la visualización de la consulta "Ventas &gt; Detallado de ventas por factura pagada" para que la información correspondiente a facturas de consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h3 id="información--atributos_9">Información / atributos<a class="headerlink" href="#información--atributos_9" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Obligatorio</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tipo de documento</td>
+<td>Sí</td>
+<td>Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación.</td>
+</tr>
+<tr>
+<td>Permiso especial FN-INTERPLANTAS</td>
+<td>Sí</td>
+<td>Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="operaciones_9">Operaciones<a class="headerlink" href="#operaciones_9" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Consultar: al abrir la pantalla/consulta "Ventas &gt; Detallado de ventas por factura pagada", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.</li>
+</ul>
+<h2 id="hu-101--visualización-restringida-en-detallado-de-ventas-por-factura-pagada">HU-10.1 — Visualización restringida en Detallado de ventas por factura pagada<a class="headerlink" href="#hu-101--visualización-restringida-en-detallado-de-ventas-por-factura-pagada" title="Permanent link">&para;</a></h2>
+<p>Como usuario autorizado para consultar información de consignación, quiero que la consulta "Ventas &gt; Detallado de Ventas por Factura Pagada" muestre únicamente la información correspondiente a ventas de consignación cuando tenga el permiso FN-INTERPLANTAS, para garantizar el acceso exclusivo a usuarios autorizados.</p>
+<h3 id="reglas-de-negocio_9">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_9" title="Permanent link">&para;</a></h3>
+<p><strong>RN-10.1</strong> Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "Ventas &gt; Detallado de ventas por factura pagada".</p>
+<p><strong>RN-10.2</strong> Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).</p>
+<h3 id="criterios-de-aceptación_9">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_9" title="Permanent link">&para;</a></h3>
+<p><strong>CA-10.1.1 — Usuario autorizado visualiza la información de consignación</strong>
+Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "Ventas &gt; Detallado de ventas por factura pagada"
+Entonces el sistema muestra la información de consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.</p>
+<p><strong>CA-10.2.1 — Usuario no autorizado no visualiza la información de consignación</strong>
+Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "Ventas &gt; Detallado de ventas por factura pagada"
+Entonces el sistema oculta la información de consigna a usuarios no autorizados.</p>
+<hr />
+<h1 id="rf-11--restricción-de-visualización-de-información-de-consignación-en-abonos">RF-11 — Restricción de visualización de información de consignación en Abonos<a class="headerlink" href="#rf-11--restricción-de-visualización-de-información-de-consignación-en-abonos" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_10">Objetivo<a class="headerlink" href="#objetivo_10" title="Permanent link">&para;</a></h2>
+<p>Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "Cuentas por Cobrar &gt; Abonos", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h2 id="descripción_10">Descripción<a class="headerlink" href="#descripción_10" title="Permanent link">&para;</a></h2>
+<p>El sistema deberá limitar la visualización de la pantalla "Cuentas por Cobrar &gt; Abonos" para que los abonos marcados con documento CONSIGNACIÓN sean visibles para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h3 id="información--atributos_10">Información / atributos<a class="headerlink" href="#información--atributos_10" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Obligatorio</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tipo de documento</td>
+<td>Sí</td>
+<td>Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación.</td>
+</tr>
+<tr>
+<td>Permiso especial FN-INTERPLANTAS</td>
+<td>Sí</td>
+<td>Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="operaciones_10">Operaciones<a class="headerlink" href="#operaciones_10" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Consultar: al abrir la pantalla/consulta "Cuentas por Cobrar &gt; Abonos", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.</li>
+</ul>
+<h2 id="hu-111--visualización-restringida-en-abonos">HU-11.1 — Visualización restringida en Abonos<a class="headerlink" href="#hu-111--visualización-restringida-en-abonos" title="Permanent link">&para;</a></h2>
+<p>Como usuario autorizado para consultar información de consignación, quiero que en la pantalla "Cuentas por Cobrar &gt; Abonos" solo sean visibles los documentos marcados como CONSIGNACIÓN cuando tenga el permiso FN-INTERPLANTAS, para proteger la información de consignación.</p>
+<h3 id="reglas-de-negocio_10">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_10" title="Permanent link">&para;</a></h3>
+<p><strong>RN-11.1</strong> Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "Cuentas por Cobrar &gt; Abonos".</p>
+<p><strong>RN-11.2</strong> Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).</p>
+<h3 id="criterios-de-aceptación_10">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_10" title="Permanent link">&para;</a></h3>
+<p><strong>CA-11.1.1 — Usuario autorizado visualiza la información de consignación</strong>
+Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "Cuentas por Cobrar &gt; Abonos"
+Entonces el sistema muestra la información de consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.</p>
+<p><strong>CA-11.2.1 — Usuario no autorizado no visualiza la información de consignación</strong>
+Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "Cuentas por Cobrar &gt; Abonos"
+Entonces el sistema oculta la información de consigna a usuarios no autorizados.</p>
+<hr />
+<h1 id="rf-12--restricción-de-visualización-de-información-de-consignación-en-transacciones">RF-12 — Restricción de visualización de información de consignación en Transacciones<a class="headerlink" href="#rf-12--restricción-de-visualización-de-información-de-consignación-en-transacciones" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_11">Objetivo<a class="headerlink" href="#objetivo_11" title="Permanent link">&para;</a></h2>
+<p>Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "Cuentas por Cobrar &gt; Transacciones", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h2 id="descripción_11">Descripción<a class="headerlink" href="#descripción_11" title="Permanent link">&para;</a></h2>
+<p>El sistema deberá limitar la visualización de la pantalla "Cuentas por Cobrar &gt; Transacciones" para que las transacciones marcadas con documento CONSIGNACIÓN sean visibles para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h3 id="información--atributos_11">Información / atributos<a class="headerlink" href="#información--atributos_11" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Obligatorio</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tipo de documento</td>
+<td>Sí</td>
+<td>Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación.</td>
+</tr>
+<tr>
+<td>Permiso especial FN-INTERPLANTAS</td>
+<td>Sí</td>
+<td>Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="operaciones_11">Operaciones<a class="headerlink" href="#operaciones_11" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Consultar: al abrir la pantalla/consulta "Cuentas por Cobrar &gt; Transacciones", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.</li>
+</ul>
+<h2 id="hu-121--visualización-restringida-en-transacciones">HU-12.1 — Visualización restringida en Transacciones<a class="headerlink" href="#hu-121--visualización-restringida-en-transacciones" title="Permanent link">&para;</a></h2>
+<p>Como usuario autorizado para consultar información de consignación, quiero que en la pantalla "Cuentas por Cobrar &gt; Transacciones" solo sean visibles los documentos marcados como CONSIGNACIÓN cuando tenga el permiso FN-INTERPLANTAS, para restringir el acceso a la información sensible.</p>
+<h3 id="reglas-de-negocio_11">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_11" title="Permanent link">&para;</a></h3>
+<p><strong>RN-12.1</strong> Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "Cuentas por Cobrar &gt; Transacciones".</p>
+<p><strong>RN-12.2</strong> Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).</p>
+<h3 id="criterios-de-aceptación_11">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_11" title="Permanent link">&para;</a></h3>
+<p><strong>CA-12.1.1 — Usuario autorizado visualiza la información de consignación</strong>
+Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "Cuentas por Cobrar &gt; Transacciones"
+Entonces el sistema muestra la información de consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.</p>
+<p><strong>CA-12.2.1 — Usuario no autorizado no visualiza la información de consignación</strong>
+Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "Cuentas por Cobrar &gt; Transacciones"
+Entonces el sistema oculta la información de consigna a usuarios no autorizados.</p>
+<hr />
+<h1 id="rf-13--restricción-de-visualización-de-información-de-consignación-en-antigüedad-de-saldos">RF-13 — Restricción de visualización de información de consignación en Antigüedad de Saldos<a class="headerlink" href="#rf-13--restricción-de-visualización-de-información-de-consignación-en-antigüedad-de-saldos" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_12">Objetivo<a class="headerlink" href="#objetivo_12" title="Permanent link">&para;</a></h2>
+<p>Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "CXC &gt; Antigüedad de Saldos", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h2 id="descripción_12">Descripción<a class="headerlink" href="#descripción_12" title="Permanent link">&para;</a></h2>
+<p>El sistema deberá limitar la visualización de la consulta "CXC &gt; Antigüedad de Saldos" para que la información correspondiente a movimientos y transacciones marcadas por consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h3 id="información--atributos_12">Información / atributos<a class="headerlink" href="#información--atributos_12" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Obligatorio</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tipo de documento</td>
+<td>Sí</td>
+<td>Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación.</td>
+</tr>
+<tr>
+<td>Permiso especial FN-INTERPLANTAS</td>
+<td>Sí</td>
+<td>Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="operaciones_12">Operaciones<a class="headerlink" href="#operaciones_12" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Consultar: al abrir la pantalla/consulta "CXC &gt; Antigüedad de Saldos", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.</li>
+</ul>
+<h2 id="hu-131--visualización-restringida-en-antigüedad-de-saldos">HU-13.1 — Visualización restringida en Antigüedad de Saldos<a class="headerlink" href="#hu-131--visualización-restringida-en-antigüedad-de-saldos" title="Permanent link">&para;</a></h2>
+<p>Como usuario autorizado para consultar información de consignación, quiero que la consulta "CXC &gt; Antigüedad de Saldos" muestre únicamente la información correspondiente a consignación cuando tenga el permiso FN-INTERPLANTAS, para proteger la información financiera.</p>
+<h3 id="reglas-de-negocio_12">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_12" title="Permanent link">&para;</a></h3>
+<p><strong>RN-13.1</strong> Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "CXC &gt; Antigüedad de Saldos".</p>
+<p><strong>RN-13.2</strong> Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).</p>
+<h3 id="criterios-de-aceptación_12">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_12" title="Permanent link">&para;</a></h3>
+<p><strong>CA-13.1.1 — Usuario autorizado visualiza la información de consignación</strong>
+Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "CXC &gt; Antigüedad de Saldos"
+Entonces el sistema permite filtrar la información por Consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.</p>
+<p><strong>CA-13.2.1 — Usuario no autorizado no visualiza la información de consignación</strong>
+Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "CXC &gt; Antigüedad de Saldos"
+Entonces el sistema no permite filtrar la información por Consigna.</p>
+<hr />
+<h1 id="rf-14--restricción-de-visualización-de-información-de-consignación-en-cobranza-general">RF-14 — Restricción de visualización de información de consignación en Cobranza general<a class="headerlink" href="#rf-14--restricción-de-visualización-de-información-de-consignación-en-cobranza-general" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_13">Objetivo<a class="headerlink" href="#objetivo_13" title="Permanent link">&para;</a></h2>
+<p>Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "CXC &gt; Cobranza general", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h2 id="descripción_13">Descripción<a class="headerlink" href="#descripción_13" title="Permanent link">&para;</a></h2>
+<p>El sistema deberá limitar la visualización de la consulta "CXC &gt; Cobranza general" para que la información correspondiente a consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h3 id="información--atributos_13">Información / atributos<a class="headerlink" href="#información--atributos_13" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Obligatorio</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tipo de documento</td>
+<td>Sí</td>
+<td>Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación.</td>
+</tr>
+<tr>
+<td>Permiso especial FN-INTERPLANTAS</td>
+<td>Sí</td>
+<td>Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="operaciones_13">Operaciones<a class="headerlink" href="#operaciones_13" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Consultar: al abrir la pantalla/consulta "CXC &gt; Cobranza general", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.</li>
+</ul>
+<h2 id="hu-141--visualización-restringida-en-cobranza-general">HU-14.1 — Visualización restringida en Cobranza general<a class="headerlink" href="#hu-141--visualización-restringida-en-cobranza-general" title="Permanent link">&para;</a></h2>
+<p>Como usuario autorizado para consultar información de consignación, quiero que la consulta "CXC &gt; Cobranza General" muestre únicamente la información correspondiente a consignación cuando tenga el permiso FN-INTERPLANTAS, para evitar consultas no autorizadas.</p>
+<h3 id="reglas-de-negocio_13">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_13" title="Permanent link">&para;</a></h3>
+<p><strong>RN-14.1</strong> Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "CXC &gt; Cobranza general".</p>
+<p><strong>RN-14.2</strong> Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).</p>
+<h3 id="criterios-de-aceptación_13">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_13" title="Permanent link">&para;</a></h3>
+<p><strong>CA-14.1.1 — Usuario autorizado visualiza la información de consignación</strong>
+Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "CXC &gt; Cobranza general"
+Entonces el sistema permite filtrar la información por Consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.</p>
+<p><strong>CA-14.2.1 — Usuario no autorizado no visualiza la información de consignación</strong>
+Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "CXC &gt; Cobranza general"
+Entonces el sistema no permite filtrar la información por Consigna.</p>
+<hr />
+<h1 id="rf-15--restricción-de-visualización-de-información-de-consignación-en-cobranza-general-consulta">RF-15 — Restricción de visualización de información de consignación en Cobranza general consulta<a class="headerlink" href="#rf-15--restricción-de-visualización-de-información-de-consignación-en-cobranza-general-consulta" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_14">Objetivo<a class="headerlink" href="#objetivo_14" title="Permanent link">&para;</a></h2>
+<p>Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "Ventas &gt; Cobranza general consulta", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h2 id="descripción_14">Descripción<a class="headerlink" href="#descripción_14" title="Permanent link">&para;</a></h2>
+<p>El sistema deberá limitar la visualización de la consulta "Ventas &gt; Cobranza general consulta" para que la información correspondiente a facturas marcadas por consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h3 id="información--atributos_14">Información / atributos<a class="headerlink" href="#información--atributos_14" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Obligatorio</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tipo de documento</td>
+<td>Sí</td>
+<td>Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación.</td>
+</tr>
+<tr>
+<td>Permiso especial FN-INTERPLANTAS</td>
+<td>Sí</td>
+<td>Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="operaciones_14">Operaciones<a class="headerlink" href="#operaciones_14" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Consultar: al abrir la pantalla/consulta "Ventas &gt; Cobranza general consulta", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.</li>
+</ul>
+<h2 id="hu-151--visualización-restringida-en-cobranza-general-consulta">HU-15.1 — Visualización restringida en Cobranza general consulta<a class="headerlink" href="#hu-151--visualización-restringida-en-cobranza-general-consulta" title="Permanent link">&para;</a></h2>
+<p>Como usuario autorizado para consultar información de consignación, quiero que la consulta "Ventas &gt; Cobranza General Consulta" muestre únicamente la información correspondiente a ventas de consignación cuando tenga el permiso FN-INTERPLANTAS, para preservar la confidencialidad de la información.</p>
+<h3 id="reglas-de-negocio_14">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_14" title="Permanent link">&para;</a></h3>
+<p><strong>RN-15.1</strong> Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "Ventas &gt; Cobranza general consulta".</p>
+<p><strong>RN-15.2</strong> Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).</p>
+<h3 id="criterios-de-aceptación_14">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_14" title="Permanent link">&para;</a></h3>
+<p><strong>CA-15.1.1 — Usuario autorizado visualiza la información de consignación</strong>
+Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "Ventas &gt; Cobranza general consulta"
+Entonces el sistema muestra la información de consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.</p>
+<p><strong>CA-15.2.1 — Usuario no autorizado no visualiza la información de consignación</strong>
+Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "Ventas &gt; Cobranza general consulta"
+Entonces el sistema oculta la información de consigna a usuarios no autorizados.</p>
+<hr />
+<h1 id="rf-16--restricción-de-visualización-de-información-de-consignación-en-comportamiento-de-pagos">RF-16 — Restricción de visualización de información de consignación en Comportamiento de pagos<a class="headerlink" href="#rf-16--restricción-de-visualización-de-información-de-consignación-en-comportamiento-de-pagos" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_15">Objetivo<a class="headerlink" href="#objetivo_15" title="Permanent link">&para;</a></h2>
+<p>Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "CXC &gt; Comportamiento de pagos", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h2 id="descripción_15">Descripción<a class="headerlink" href="#descripción_15" title="Permanent link">&para;</a></h2>
+<p>El sistema deberá limitar la visualización de la consulta "CXC &gt; Comportamiento de pagos" para que la información correspondiente a movimientos y transacciones por consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h3 id="información--atributos_15">Información / atributos<a class="headerlink" href="#información--atributos_15" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Obligatorio</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tipo de documento</td>
+<td>Sí</td>
+<td>Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación.</td>
+</tr>
+<tr>
+<td>Permiso especial FN-INTERPLANTAS</td>
+<td>Sí</td>
+<td>Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="operaciones_15">Operaciones<a class="headerlink" href="#operaciones_15" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Consultar: al abrir la pantalla/consulta "CXC &gt; Comportamiento de pagos", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.</li>
+</ul>
+<h2 id="hu-161--visualización-restringida-en-comportamiento-de-pagos">HU-16.1 — Visualización restringida en Comportamiento de pagos<a class="headerlink" href="#hu-161--visualización-restringida-en-comportamiento-de-pagos" title="Permanent link">&para;</a></h2>
+<p>Como usuario autorizado para consultar información de consignación, quiero que la consulta "CXC &gt; Comportamiento de Pagos" muestre únicamente la información correspondiente a consignación cuando tenga el permiso FN-INTERPLANTAS, para proteger la información restringida.</p>
+<h3 id="reglas-de-negocio_15">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_15" title="Permanent link">&para;</a></h3>
+<p><strong>RN-16.1</strong> Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "CXC &gt; Comportamiento de pagos".</p>
+<p><strong>RN-16.2</strong> Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).</p>
+<h3 id="criterios-de-aceptación_15">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_15" title="Permanent link">&para;</a></h3>
+<p><strong>CA-16.1.1 — Usuario autorizado visualiza la información de consignación</strong>
+Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "CXC &gt; Comportamiento de pagos"
+Entonces el sistema permite filtrar la información por Consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.</p>
+<p><strong>CA-16.2.1 — Usuario no autorizado no visualiza la información de consignación</strong>
+Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "CXC &gt; Comportamiento de pagos"
+Entonces el sistema no permite filtrar la información por Consigna.</p>
+<hr />
+<h1 id="rf-17--restricción-de-visualización-de-información-de-consignación-en-concentrado-de-cobranza">RF-17 — Restricción de visualización de información de consignación en Concentrado de cobranza<a class="headerlink" href="#rf-17--restricción-de-visualización-de-información-de-consignación-en-concentrado-de-cobranza" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_16">Objetivo<a class="headerlink" href="#objetivo_16" title="Permanent link">&para;</a></h2>
+<p>Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "Ventas &gt; Concentrado de cobranza", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h2 id="descripción_16">Descripción<a class="headerlink" href="#descripción_16" title="Permanent link">&para;</a></h2>
+<p>El sistema deberá limitar la visualización de la consulta "Ventas &gt; Concentrado de cobranza" para que la información correspondiente a facturas de consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h3 id="información--atributos_16">Información / atributos<a class="headerlink" href="#información--atributos_16" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Obligatorio</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tipo de documento</td>
+<td>Sí</td>
+<td>Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación.</td>
+</tr>
+<tr>
+<td>Permiso especial FN-INTERPLANTAS</td>
+<td>Sí</td>
+<td>Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="operaciones_16">Operaciones<a class="headerlink" href="#operaciones_16" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Consultar: al abrir la pantalla/consulta "Ventas &gt; Concentrado de cobranza", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.</li>
+</ul>
+<h2 id="hu-171--visualización-restringida-en-concentrado-de-cobranza">HU-17.1 — Visualización restringida en Concentrado de cobranza<a class="headerlink" href="#hu-171--visualización-restringida-en-concentrado-de-cobranza" title="Permanent link">&para;</a></h2>
+<p>Como usuario autorizado para consultar información de consignación, quiero que la consulta "Ventas &gt; Concentrado de Cobranza" muestre únicamente la información correspondiente a ventas de consignación cuando tenga el permiso FN-INTERPLANTAS, para garantizar que solo usuarios autorizados puedan consultarla.</p>
+<h3 id="reglas-de-negocio_16">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_16" title="Permanent link">&para;</a></h3>
+<p><strong>RN-17.1</strong> Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "Ventas &gt; Concentrado de cobranza".</p>
+<p><strong>RN-17.2</strong> Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).</p>
+<h3 id="criterios-de-aceptación_16">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_16" title="Permanent link">&para;</a></h3>
+<p><strong>CA-17.1.1 — Usuario autorizado visualiza la información de consignación</strong>
+Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "Ventas &gt; Concentrado de cobranza"
+Entonces el sistema muestra la información de consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.</p>
+<p><strong>CA-17.2.1 — Usuario no autorizado no visualiza la información de consignación</strong>
+Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "Ventas &gt; Concentrado de cobranza"
+Entonces el sistema oculta la información de consigna a usuarios no autorizados.</p>
+<hr />
+<h1 id="rf-18--restricción-de-visualización-de-información-de-consignación-en-diario-de-abonos">RF-18 — Restricción de visualización de información de consignación en Diario de abonos<a class="headerlink" href="#rf-18--restricción-de-visualización-de-información-de-consignación-en-diario-de-abonos" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_17">Objetivo<a class="headerlink" href="#objetivo_17" title="Permanent link">&para;</a></h2>
+<p>Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "CXC &gt; Diario de abonos", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h2 id="descripción_17">Descripción<a class="headerlink" href="#descripción_17" title="Permanent link">&para;</a></h2>
+<p>El sistema deberá limitar la visualización de la consulta "CXC &gt; Diario de abonos" para que la información correspondiente a movimientos y transacciones marcadas como consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h3 id="información--atributos_17">Información / atributos<a class="headerlink" href="#información--atributos_17" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Obligatorio</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tipo de documento</td>
+<td>Sí</td>
+<td>Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación.</td>
+</tr>
+<tr>
+<td>Permiso especial FN-INTERPLANTAS</td>
+<td>Sí</td>
+<td>Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="operaciones_17">Operaciones<a class="headerlink" href="#operaciones_17" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Consultar: al abrir la pantalla/consulta "CXC &gt; Diario de abonos", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.</li>
+</ul>
+<h2 id="hu-181--visualización-restringida-en-diario-de-abonos">HU-18.1 — Visualización restringida en Diario de abonos<a class="headerlink" href="#hu-181--visualización-restringida-en-diario-de-abonos" title="Permanent link">&para;</a></h2>
+<p>Como usuario autorizado para consultar información de consignación, quiero que la consulta "CXC &gt; Diario de Abonos" muestre únicamente la información correspondiente a consignación cuando tenga el permiso FN-INTERPLANTAS, para proteger la información financiera.</p>
+<h3 id="reglas-de-negocio_17">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_17" title="Permanent link">&para;</a></h3>
+<p><strong>RN-18.1</strong> Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "CXC &gt; Diario de abonos".</p>
+<p><strong>RN-18.2</strong> Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).</p>
+<h3 id="criterios-de-aceptación_17">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_17" title="Permanent link">&para;</a></h3>
+<p><strong>CA-18.1.1 — Usuario autorizado visualiza la información de consignación</strong>
+Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "CXC &gt; Diario de abonos"
+Entonces el sistema permite filtrar la información por Consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.</p>
+<p><strong>CA-18.2.1 — Usuario no autorizado no visualiza la información de consignación</strong>
+Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "CXC &gt; Diario de abonos"
+Entonces el sistema no permite filtrar la información por Consigna.</p>
+<hr />
+<h1 id="rf-19--restricción-de-visualización-de-información-de-consignación-en-documentos-de-cobranza">RF-19 — Restricción de visualización de información de consignación en Documentos de Cobranza<a class="headerlink" href="#rf-19--restricción-de-visualización-de-información-de-consignación-en-documentos-de-cobranza" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_18">Objetivo<a class="headerlink" href="#objetivo_18" title="Permanent link">&para;</a></h2>
+<p>Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "Ventas &gt; Documentos de Cobranza", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h2 id="descripción_18">Descripción<a class="headerlink" href="#descripción_18" title="Permanent link">&para;</a></h2>
+<p>El sistema deberá limitar la visualización de la consulta "Ventas &gt; Documentos de Cobranza" para que la información correspondiente a facturas de consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h3 id="información--atributos_18">Información / atributos<a class="headerlink" href="#información--atributos_18" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Obligatorio</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tipo de documento</td>
+<td>Sí</td>
+<td>Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación.</td>
+</tr>
+<tr>
+<td>Permiso especial FN-INTERPLANTAS</td>
+<td>Sí</td>
+<td>Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="operaciones_18">Operaciones<a class="headerlink" href="#operaciones_18" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Consultar: al abrir la pantalla/consulta "Ventas &gt; Documentos de Cobranza", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.</li>
+</ul>
+<h2 id="hu-191--visualización-restringida-en-documentos-de-cobranza">HU-19.1 — Visualización restringida en Documentos de Cobranza<a class="headerlink" href="#hu-191--visualización-restringida-en-documentos-de-cobranza" title="Permanent link">&para;</a></h2>
+<p>Como usuario autorizado para consultar información de consignación, quiero que la consulta "Ventas &gt; Documentos de Cobranza" muestre únicamente la información correspondiente a ventas de consignación cuando tenga el permiso FN-INTERPLANTAS, para evitar la exposición de información restringida.</p>
+<h3 id="reglas-de-negocio_18">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_18" title="Permanent link">&para;</a></h3>
+<p><strong>RN-19.1</strong> Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "Ventas &gt; Documentos de Cobranza".</p>
+<p><strong>RN-19.2</strong> Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).</p>
+<h3 id="criterios-de-aceptación_18">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_18" title="Permanent link">&para;</a></h3>
+<p><strong>CA-19.1.1 — Usuario autorizado visualiza la información de consignación</strong>
+Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "Ventas &gt; Documentos de Cobranza"
+Entonces el sistema muestra la información de consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.</p>
+<p><strong>CA-19.2.1 — Usuario no autorizado no visualiza la información de consignación</strong>
+Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "Ventas &gt; Documentos de Cobranza"
+Entonces el sistema oculta la información de consigna a usuarios no autorizados.</p>
+<hr />
+<h1 id="rf-20--restricción-de-visualización-de-información-de-consignación-en-detalle-de-abonos-por-facturas">RF-20 — Restricción de visualización de información de consignación en Detalle de abonos por facturas<a class="headerlink" href="#rf-20--restricción-de-visualización-de-información-de-consignación-en-detalle-de-abonos-por-facturas" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_19">Objetivo<a class="headerlink" href="#objetivo_19" title="Permanent link">&para;</a></h2>
+<p>Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "Ventas &gt; Detalle de abonos por facturas", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h2 id="descripción_19">Descripción<a class="headerlink" href="#descripción_19" title="Permanent link">&para;</a></h2>
+<p>El sistema deberá limitar la visualización de la consulta "Ventas &gt; Detalle de abonos por facturas" para que la información correspondiente a facturas de consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h3 id="información--atributos_19">Información / atributos<a class="headerlink" href="#información--atributos_19" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Obligatorio</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tipo de documento</td>
+<td>Sí</td>
+<td>Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación.</td>
+</tr>
+<tr>
+<td>Permiso especial FN-INTERPLANTAS</td>
+<td>Sí</td>
+<td>Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="operaciones_19">Operaciones<a class="headerlink" href="#operaciones_19" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Consultar: al abrir la pantalla/consulta "Ventas &gt; Detalle de abonos por facturas", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.</li>
+</ul>
+<h2 id="hu-201--visualización-restringida-en-detalle-de-abonos-por-facturas">HU-20.1 — Visualización restringida en Detalle de abonos por facturas<a class="headerlink" href="#hu-201--visualización-restringida-en-detalle-de-abonos-por-facturas" title="Permanent link">&para;</a></h2>
+<p>Como usuario autorizado para consultar información de consignación, quiero que la consulta "Ventas &gt; Detalle de Abonos por Facturas" muestre únicamente la información correspondiente a ventas de consignación cuando tenga el permiso FN-INTERPLANTAS, para garantizar la seguridad de la información.</p>
+<h3 id="reglas-de-negocio_19">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_19" title="Permanent link">&para;</a></h3>
+<p><strong>RN-20.1</strong> Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "Ventas &gt; Detalle de abonos por facturas".</p>
+<p><strong>RN-20.2</strong> Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).</p>
+<h3 id="criterios-de-aceptación_19">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_19" title="Permanent link">&para;</a></h3>
+<p><strong>CA-20.1.1 — Usuario autorizado visualiza la información de consignación</strong>
+Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "Ventas &gt; Detalle de abonos por facturas"
+Entonces el sistema muestra la información de consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.</p>
+<p><strong>CA-20.2.1 — Usuario no autorizado no visualiza la información de consignación</strong>
+Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "Ventas &gt; Detalle de abonos por facturas"
+Entonces el sistema oculta la información de consigna a usuarios no autorizados.</p>
+<hr />
+<h1 id="rf-21--restricción-de-visualización-de-información-de-consignación-en-detalle-abonos-facturas-pagado">RF-21 — Restricción de visualización de información de consignación en Detalle abonos facturas (Pagado)<a class="headerlink" href="#rf-21--restricción-de-visualización-de-información-de-consignación-en-detalle-abonos-facturas-pagado" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_20">Objetivo<a class="headerlink" href="#objetivo_20" title="Permanent link">&para;</a></h2>
+<p>Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "Ventas &gt; Detalle abonos facturas (Pagado)", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h2 id="descripción_20">Descripción<a class="headerlink" href="#descripción_20" title="Permanent link">&para;</a></h2>
+<p>El sistema deberá limitar la visualización de la consulta "Ventas &gt; Detalle abonos facturas (Pagado)" para que la información correspondiente a facturas de consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h3 id="información--atributos_20">Información / atributos<a class="headerlink" href="#información--atributos_20" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Obligatorio</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tipo de documento</td>
+<td>Sí</td>
+<td>Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación.</td>
+</tr>
+<tr>
+<td>Permiso especial FN-INTERPLANTAS</td>
+<td>Sí</td>
+<td>Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="operaciones_20">Operaciones<a class="headerlink" href="#operaciones_20" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Consultar: al abrir la pantalla/consulta "Ventas &gt; Detalle abonos facturas (Pagado)", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.</li>
+</ul>
+<h2 id="hu-211--visualización-restringida-en-detalle-abonos-facturas-pagado">HU-21.1 — Visualización restringida en Detalle abonos facturas (Pagado)<a class="headerlink" href="#hu-211--visualización-restringida-en-detalle-abonos-facturas-pagado" title="Permanent link">&para;</a></h2>
+<p>Como usuario autorizado para consultar información de consignación, quiero que la consulta "Ventas &gt; Detalle Abonos Facturas (Pagado)" muestre únicamente la información correspondiente a ventas de consignación cuando tenga el permiso FN-INTERPLANTAS, para restringir su consulta a usuarios autorizados.</p>
+<h3 id="reglas-de-negocio_20">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_20" title="Permanent link">&para;</a></h3>
+<p><strong>RN-21.1</strong> Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "Ventas &gt; Detalle abonos facturas (Pagado)".</p>
+<p><strong>RN-21.2</strong> Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).</p>
+<h3 id="criterios-de-aceptación_20">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_20" title="Permanent link">&para;</a></h3>
+<p><strong>CA-21.1.1 — Usuario autorizado visualiza la información de consignación</strong>
+Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "Ventas &gt; Detalle abonos facturas (Pagado)"
+Entonces el sistema muestra la información de consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.</p>
+<p><strong>CA-21.2.1 — Usuario no autorizado no visualiza la información de consignación</strong>
+Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "Ventas &gt; Detalle abonos facturas (Pagado)"
+Entonces el sistema oculta la información de consigna a usuarios no autorizados.</p>
+<hr />
+<h1 id="rf-22--restricción-de-visualización-de-información-de-consignación-en-facturas-relación-de-factura">RF-22 — Restricción de visualización de información de consignación en Facturas Relación de factura<a class="headerlink" href="#rf-22--restricción-de-visualización-de-información-de-consignación-en-facturas-relación-de-factura" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_21">Objetivo<a class="headerlink" href="#objetivo_21" title="Permanent link">&para;</a></h2>
+<p>Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "Ventas &gt; Facturas Relación de factura", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h2 id="descripción_21">Descripción<a class="headerlink" href="#descripción_21" title="Permanent link">&para;</a></h2>
+<p>El sistema deberá limitar la visualización de la consulta "Ventas &gt; Facturas Relación de factura" para que la información correspondiente a facturas de consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h3 id="información--atributos_21">Información / atributos<a class="headerlink" href="#información--atributos_21" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Obligatorio</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tipo de documento</td>
+<td>Sí</td>
+<td>Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación.</td>
+</tr>
+<tr>
+<td>Permiso especial FN-INTERPLANTAS</td>
+<td>Sí</td>
+<td>Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="operaciones_21">Operaciones<a class="headerlink" href="#operaciones_21" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Consultar: al abrir la pantalla/consulta "Ventas &gt; Facturas Relación de factura", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.</li>
+</ul>
+<h2 id="hu-221--visualización-restringida-en-facturas-relación-de-factura">HU-22.1 — Visualización restringida en Facturas Relación de factura<a class="headerlink" href="#hu-221--visualización-restringida-en-facturas-relación-de-factura" title="Permanent link">&para;</a></h2>
+<p>Como usuario autorizado para consultar información de consignación, quiero que la consulta "Ventas &gt; Facturas Relación de Factura" muestre únicamente la información correspondiente a ventas de consignación cuando tenga el permiso FN-INTERPLANTAS, para proteger la confidencialidad de la información.</p>
+<h3 id="reglas-de-negocio_21">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_21" title="Permanent link">&para;</a></h3>
+<p><strong>RN-22.1</strong> Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "Ventas &gt; Facturas Relación de factura".</p>
+<p><strong>RN-22.2</strong> Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).</p>
+<h3 id="criterios-de-aceptación_21">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_21" title="Permanent link">&para;</a></h3>
+<p><strong>CA-22.1.1 — Usuario autorizado visualiza la información de consignación</strong>
+Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "Ventas &gt; Facturas Relación de factura"
+Entonces el sistema muestra la información de consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.</p>
+<p><strong>CA-22.2.1 — Usuario no autorizado no visualiza la información de consignación</strong>
+Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "Ventas &gt; Facturas Relación de factura"
+Entonces el sistema oculta la información de consigna a usuarios no autorizados.</p>
+<hr />
+<h1 id="rf-23--restricción-de-visualización-de-información-de-consignación-en-estado-de-cuenta">RF-23 — Restricción de visualización de información de consignación en Estado de Cuenta<a class="headerlink" href="#rf-23--restricción-de-visualización-de-información-de-consignación-en-estado-de-cuenta" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_22">Objetivo<a class="headerlink" href="#objetivo_22" title="Permanent link">&para;</a></h2>
+<p>Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "CXC &gt; Estado de Cuenta", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h2 id="descripción_22">Descripción<a class="headerlink" href="#descripción_22" title="Permanent link">&para;</a></h2>
+<p>El sistema deberá limitar la visualización de la consulta "CXC &gt; Estado de Cuenta" para que la información de movimientos y transacciones marcadas como consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h3 id="información--atributos_22">Información / atributos<a class="headerlink" href="#información--atributos_22" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Obligatorio</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tipo de documento</td>
+<td>Sí</td>
+<td>Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación.</td>
+</tr>
+<tr>
+<td>Permiso especial FN-INTERPLANTAS</td>
+<td>Sí</td>
+<td>Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="operaciones_22">Operaciones<a class="headerlink" href="#operaciones_22" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Consultar: al abrir la pantalla/consulta "CXC &gt; Estado de Cuenta", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.</li>
+</ul>
+<h2 id="hu-231--visualización-restringida-en-estado-de-cuenta">HU-23.1 — Visualización restringida en Estado de Cuenta<a class="headerlink" href="#hu-231--visualización-restringida-en-estado-de-cuenta" title="Permanent link">&para;</a></h2>
+<p>Como usuario autorizado para consultar información de consignación, quiero que la consulta "CXC &gt; Estado de Cuenta" muestre únicamente la información correspondiente a consignación cuando tenga el permiso FN-INTERPLANTAS, para garantizar que solo usuarios autorizados puedan acceder a ella.</p>
+<h3 id="reglas-de-negocio_22">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_22" title="Permanent link">&para;</a></h3>
+<p><strong>RN-23.1</strong> Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "CXC &gt; Estado de Cuenta".</p>
+<p><strong>RN-23.2</strong> Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).</p>
+<h3 id="criterios-de-aceptación_22">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_22" title="Permanent link">&para;</a></h3>
+<p><strong>CA-23.1.1 — Usuario autorizado visualiza la información de consignación</strong>
+Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "CXC &gt; Estado de Cuenta"
+Entonces el sistema permite filtrar la información por Consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.</p>
+<p><strong>CA-23.2.1 — Usuario no autorizado no visualiza la información de consignación</strong>
+Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "CXC &gt; Estado de Cuenta"
+Entonces el sistema no permite filtrar la información por Consigna.</p>
+<hr />
+<h1 id="rf-24--restricción-de-visualización-de-información-de-consignación-en-estado-de-cuenta-detallado">RF-24 — Restricción de visualización de información de consignación en Estado de Cuenta Detallado<a class="headerlink" href="#rf-24--restricción-de-visualización-de-información-de-consignación-en-estado-de-cuenta-detallado" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_23">Objetivo<a class="headerlink" href="#objetivo_23" title="Permanent link">&para;</a></h2>
+<p>Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "CXC &gt; Estado de Cuenta Detallado", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h2 id="descripción_23">Descripción<a class="headerlink" href="#descripción_23" title="Permanent link">&para;</a></h2>
+<p>El sistema deberá limitar la visualización de la consulta "CXC &gt; Estado de Cuenta Detallado" para que la información de movimientos y transacciones marcadas como consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h3 id="información--atributos_23">Información / atributos<a class="headerlink" href="#información--atributos_23" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Obligatorio</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tipo de documento</td>
+<td>Sí</td>
+<td>Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación.</td>
+</tr>
+<tr>
+<td>Permiso especial FN-INTERPLANTAS</td>
+<td>Sí</td>
+<td>Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="operaciones_23">Operaciones<a class="headerlink" href="#operaciones_23" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Consultar: al abrir la pantalla/consulta "CXC &gt; Estado de Cuenta Detallado", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.</li>
+</ul>
+<h2 id="hu-241--visualización-restringida-en-estado-de-cuenta-detallado">HU-24.1 — Visualización restringida en Estado de Cuenta Detallado<a class="headerlink" href="#hu-241--visualización-restringida-en-estado-de-cuenta-detallado" title="Permanent link">&para;</a></h2>
+<p>Como usuario autorizado para consultar información de consignación, quiero que la consulta "CXC &gt; Estado de Cuenta Detallado" muestre únicamente la información correspondiente a consignación cuando tenga el permiso FN-INTERPLANTAS, para proteger la información financiera sensible.</p>
+<h3 id="reglas-de-negocio_23">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_23" title="Permanent link">&para;</a></h3>
+<p><strong>RN-24.1</strong> Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "CXC &gt; Estado de Cuenta Detallado".</p>
+<p><strong>RN-24.2</strong> Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).</p>
+<h3 id="criterios-de-aceptación_23">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_23" title="Permanent link">&para;</a></h3>
+<p><strong>CA-24.1.1 — Usuario autorizado visualiza la información de consignación</strong>
+Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "CXC &gt; Estado de Cuenta Detallado"
+Entonces el sistema permite filtrar la información por Consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.</p>
+<p><strong>CA-24.2.1 — Usuario no autorizado no visualiza la información de consignación</strong>
+Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "CXC &gt; Estado de Cuenta Detallado"
+Entonces el sistema no permite filtrar la información por Consigna.</p>
+<hr />
+<h1 id="rf-25--restricción-de-visualización-de-información-de-consignación-en-resumen-de-movimientos">RF-25 — Restricción de visualización de información de consignación en Resumen de movimientos<a class="headerlink" href="#rf-25--restricción-de-visualización-de-información-de-consignación-en-resumen-de-movimientos" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_24">Objetivo<a class="headerlink" href="#objetivo_24" title="Permanent link">&para;</a></h2>
+<p>Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "CXC &gt; Resumen de movimientos", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h2 id="descripción_24">Descripción<a class="headerlink" href="#descripción_24" title="Permanent link">&para;</a></h2>
+<p>El sistema deberá limitar la visualización de la consulta "CXC &gt; Resumen de movimientos" para que la información de movimientos y transacciones marcadas como  consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.</p>
+<h3 id="información--atributos_24">Información / atributos<a class="headerlink" href="#información--atributos_24" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Obligatorio</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tipo de documento</td>
+<td>Sí</td>
+<td>Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación.</td>
+</tr>
+<tr>
+<td>Permiso especial FN-INTERPLANTAS</td>
+<td>Sí</td>
+<td>Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="operaciones_24">Operaciones<a class="headerlink" href="#operaciones_24" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Consultar: al abrir la pantalla/consulta "CXC &gt; Resumen de movimientos", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.</li>
+</ul>
+<h2 id="hu-251--visualización-restringida-en-resumen-de-movimientos">HU-25.1 — Visualización restringida en Resumen de movimientos<a class="headerlink" href="#hu-251--visualización-restringida-en-resumen-de-movimientos" title="Permanent link">&para;</a></h2>
+<p>Como usuario autorizado para consultar información de consignación, quiero que la consulta "CXC &gt; Resumen de Movimientos" muestre únicamente la información correspondiente a consignación cuando tenga el permiso FN-INTERPLANTAS, para restringir el acceso a la información sensible.</p>
+<h3 id="reglas-de-negocio_24">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_24" title="Permanent link">&para;</a></h3>
+<p><strong>RN-25.1</strong> Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "CXC &gt; Resumen de movimientos".</p>
+<p><strong>RN-25.2</strong> Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).</p>
+<h3 id="criterios-de-aceptación_24">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_24" title="Permanent link">&para;</a></h3>
+<p><strong>CA-25.1.1 — Usuario autorizado visualiza la información de consignación</strong>
+Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "CXC &gt; Resumen de movimientos"
+Entonces el sistema permite filtrar la información por Consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.</p>
+<p><strong>CA-25.2.1 — Usuario no autorizado no visualiza la información de consignación</strong>
+Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
+Cuando el usuario ingresa a "CXC &gt; Resumen de movimientos"
+Entonces el sistema no permite filtrar la información por Consigna.</p>
+<hr />
+<h1 id="requerimientos-no-funcionales-rnf">Requerimientos No Funcionales (RNF)<a class="headerlink" href="#requerimientos-no-funcionales-rnf" title="Permanent link">&para;</a></h1>
+<p>El documento original no especifica requerimientos no funcionales. Dado que el proyecto trata sobre control de acceso a información financiera sensible, se proponen los siguientes RNF como punto de partida; deben validarse con el negocio y con el equipo técnico responsable del ERP REMV.</p>
+<h3 id="rnf-001--seguridad-aplicación-de-la-restricción-del-lado-del-servidor">RNF-001 — Seguridad: aplicación de la restricción del lado del servidor<a class="headerlink" href="#rnf-001--seguridad-aplicación-de-la-restricción-del-lado-del-servidor" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Descripción:</strong> La restricción de visualización de información de consignación debe aplicarse en la capa de datos/servicio del ERP REMV, y no únicamente ocultando elementos en la interfaz, para evitar que un usuario no autorizado acceda a la información por otra vía (exportación, impresión, servicios internos).</li>
+<li><strong>Métrica / criterio de verificación:</strong> Pruebas de seguridad confirman que ninguna respuesta del servidor (incluyendo exportaciones a Excel/PDF de las 25 pantallas y consultas en alcance) contiene registros de consignación cuando el usuario no tiene el permiso FN-INTERPLANTAS.</li>
+<li><strong>Prioridad:</strong> Must</li>
+</ul>
+<h3 id="rnf-002--rendimiento-sin-degradación-de-tiempos-de-respuesta">RNF-002 — Rendimiento: sin degradación de tiempos de respuesta<a class="headerlink" href="#rnf-002--rendimiento-sin-degradación-de-tiempos-de-respuesta" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Descripción:</strong> La validación del permiso FN-INTERPLANTAS y el filtrado de registros de consignación no deben incrementar de forma perceptible el tiempo de respuesta de las pantallas y consultas en alcance.</li>
+<li><strong>Métrica / criterio de verificación:</strong> El tiempo de respuesta de cada pantalla/consulta con el filtro aplicado no aumenta más de un 10% respecto al tiempo de respuesta actual (medido antes del cambio), en condiciones de carga equivalentes.</li>
+<li><strong>Prioridad:</strong> Should</li>
+</ul>
+<h3 id="rnf-003--compatibilidad-con-el-erp-vigente">RNF-003 — Compatibilidad con el ERP vigente<a class="headerlink" href="#rnf-003--compatibilidad-con-el-erp-vigente" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Descripción:</strong> La solución debe operar sobre la versión actual del ERP REMV, sin requerir actualización de clientes ni de infraestructura adicional.</li>
+<li><strong>Métrica / criterio de verificación:</strong> La funcionalidad se valida exitosamente en el ambiente de pruebas actual del ERP REMV, sin cambios de versión.</li>
+<li><strong>Prioridad:</strong> Should</li>
+</ul>
+<hr />
+<h1 id="matriz-de-trazabilidad">Matriz de trazabilidad<a class="headerlink" href="#matriz-de-trazabilidad" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Objetivo de negocio</th>
+<th>RF</th>
+<th>Historia</th>
+<th>Criterio de aceptación</th>
+<th>Prioridad</th>
+<th>Estado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OBJ-1 Restringir la visualización de información de ventas de consignación a usuarios autorizados</td>
+<td>RF-01 a RF-25</td>
+<td>HU-1.1 a HU-25.1</td>
+<td>CA-x.1.1 "Usuario autorizado visualiza la información de consignación"</td>
+<td>Must</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>OBJ-1</td>
+<td>RF-01 a RF-25</td>
+<td>HU-1.1 a HU-25.1</td>
+<td>CA-x.2.1 "Usuario no autorizado no visualiza la información de consignación"</td>
+<td>Must</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>OBJ-2 Reducir el riesgo de exposición de información financiera sensible</td>
+<td>RF-01 a RF-25</td>
+<td>HU-1.1 a HU-25.1</td>
+<td>RN-x.1 "Solo los usuarios con permiso FN-INTERPLANTAS pueden visualizar la información de consignación"</td>
+<td>Must</td>
+<td>Definición</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Nota: dado que las 25 historias comparten el mismo objetivo de negocio y el mismo patrón de criterios, se resume la trazabilidad en un solo bloque por objetivo en lugar de repetir 25 filas idénticas. Si el equipo de QA requiere trazabilidad fila por fila para su matriz de pruebas, puede expandirse esta tabla sustituyendo "RF-01 a RF-25" por cada RF individual.</p>
+</blockquote>
+<h1 id="reglas-de-negocio-consolidado">Reglas de negocio (consolidado)<a class="headerlink" href="#reglas-de-negocio-consolidado" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Regla</th>
+<th>Aplica a</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RN-global-1</td>
+<td>Un usuario solo puede visualizar documentos e información marcados como CONSIGNACIÓN si su perfil tiene asignado el permiso especial FN-INTERPLANTAS.</td>
+<td>RF-01 a RF-25</td>
+</tr>
+<tr>
+<td>RN-global-2</td>
+<td>Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este análisis, los perfiles con el permiso FN-INTERPLANTAS asignado.</td>
+<td>RF-01 a RF-25</td>
+</tr>
+</tbody>
+</table>
+<h1 id="supuestos-sup">Supuestos (SUP)<a class="headerlink" href="#supuestos-sup" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Supuesto</th>
+<th>Impacto si es falso</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SUP-01</td>
+<td>El ERP REMV permite marcar/identificar a nivel de dato (no solo de interfaz) qué documentos corresponden a ventas de consignación (atributo o tipo de documento CONSIGNACIÓN).</td>
+<td>Si no existe ese marcado a nivel de dato, se requeriría primero un desarrollo adicional para clasificar los documentos, lo cual amplía el alcance y el esfuerzo.</td>
+</tr>
+<tr>
+<td>SUP-02</td>
+<td>Los perfiles remcxc01, remvta01, remvta02 y remvta06 son la lista completa y vigente de perfiles autorizados; cualquier perfil nuevo que requiera el permiso deberá solicitarse a Administración de Sistemas.</td>
+<td>Si la lista cambia o está incompleta, algunos usuarios que deberían ver la información de consignación quedarían bloqueados, o viceversa.</td>
+</tr>
+<tr>
+<td>SUP-03</td>
+<td>El permiso especial FN-INTERPLANTAS ya existe o será creado como parte de la infraestructura de permisos del ERP REMV, de forma independiente a estos 25 requerimientos.</td>
+<td>Si no existe, se requiere un requerimiento adicional para su creación antes de poder implementar las restricciones descritas.</td>
+</tr>
+<tr>
+<td>SUP-04</td>
+<td>La prioridad Must asignada a los 25 RF es correcta, dado que el documento original no especificó prioridad MoSCoW por requerimiento y se trata de un proyecto marcado como "Urgente".</td>
+<td>Si el negocio considera que algunas pantallas/consultas son menos críticas que otras, la priorización debe ajustarse RF por RF.</td>
+</tr>
+</tbody>
+</table>
+<h1 id="dependencias-dep">Dependencias (DEP)<a class="headerlink" href="#dependencias-dep" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Dependencia</th>
+<th>De quién / de qué</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DEP-01</td>
+<td>Existencia y asignación previa del permiso especial FN-INTERPLANTAS a los perfiles autorizados.</td>
+<td>Administración de Sistemas</td>
+</tr>
+<tr>
+<td>DEP-02</td>
+<td>Disponibilidad de un ambiente de pruebas del ERP REMV con datos de ejemplo marcados como CONSIGNACIÓN, para validar los 25 criterios de aceptación.</td>
+<td>Equipo de Infraestructura / Administración del ERP</td>
+</tr>
+</tbody>
+</table>
+<h1 id="riesgos-rgo">Riesgos (RGO)<a class="headerlink" href="#riesgos-rgo" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Riesgo</th>
+<th>Prob.</th>
+<th>Impacto</th>
+<th>Mitigación</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RGO-01</td>
+<td>Que la restricción se implemente solo a nivel de interfaz y no a nivel de datos, permitiendo el acceso a la información de consignación por otra vía (exportaciones, reportes, servicios).</td>
+<td>Media</td>
+<td>Alto</td>
+<td>Validar con el equipo técnico que el filtro se aplique en la capa de datos/servicio (ver RNF-001) y no solo en la pantalla.</td>
+</tr>
+<tr>
+<td>RGO-02</td>
+<td>Que la lista de perfiles autorizados (remcxc01, remvta01, remvta02, remvta06) quede desactualizada con el tiempo, dejando usuarios sin el acceso que deberían tener o con acceso indebido.</td>
+<td>Media</td>
+<td>Medio</td>
+<td>Definir junto con Administración de Sistemas un proceso claro de alta/baja del permiso FN-INTERPLANTAS, aunque esté fuera del alcance funcional de este documento.</td>
+</tr>
+<tr>
+<td>RGO-03</td>
+<td>Inconsistencia detectada entre el alcance descrito en la sección 3 del documento original (que menciona la pantalla "Inventario &gt; Detallado de Movimientos de Almacén") y la tabla de requerimientos funcionales, que no incluye ningún RF para el módulo de Inventario.</td>
+<td>Alta</td>
+<td>Medio</td>
+<td>Confirmar con el negocio si la restricción en Inventario está pendiente de definir (y agregar el RF correspondiente) o si fue descartada del alcance.</td>
+</tr>
+</tbody>
+</table>
+<h1 id="preguntas-abiertas">Preguntas abiertas<a class="headerlink" href="#preguntas-abiertas" title="Permanent link">&para;</a></h1>
+<ol>
+<li><strong>Inventario fuera de la tabla de RF:</strong> el documento original menciona en el punto 3.1 la pantalla "Inventario &gt; Detallado de Movimientos de Almacén" como parte del alcance, pero no existe ningún RF para ese módulo en la tabla de requerimientos. ¿Debe agregarse un RF-26 para Inventario, o esa pantalla queda fuera del alcance de esta entrega? — Responsable sugerido: Responsable del requerimiento (María De Lourdes Viurquiz Gamiño).</li>
+<li><strong>Prioridad MoSCoW por RF:</strong> el documento original no define prioridad individual por requerimiento; se asumió "Must" para los 25 RF dado que el proyecto está marcado como "Urgente" (ver SUP-04). ¿Existen RF que puedan degradarse a Should/Could en una primera entrega? — Responsable sugerido: Product Owner del proyecto.</li>
+<li><strong>Nivel de aplicación del filtro:</strong> ¿la restricción debe aplicarse también a exportaciones, impresiones y reportes generados desde estas 25 pantallas/consultas, o únicamente a la visualización en pantalla? — Responsable sugerido: Coordinador de Desarrollo.</li>
+<li><strong>Vigencia de la lista de perfiles:</strong> ¿remcxc01, remvta01, remvta02 y remvta06 son los únicos perfiles que deben tener el permiso FN-INTERPLANTAS, o existen otros perfiles (por ejemplo de Dirección o Auditoría) que también deban visualizar esta información? — Responsable sugerido: Administración de Sistemas.</li>
+<li><strong>Duplicidad "Resumen de facturas":</strong> en la sección de alcance del documento original, "Resumen de facturas" aparece listado tanto en Facturación como en Cuentas por Cobrar; ¿son dos consultas distintas o un error de captura? — Responsable sugerido: Responsable del requerimiento.</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../../assets/javascripts/main-nav.js"></script>
+      
+    
+  </body>
+</html>
