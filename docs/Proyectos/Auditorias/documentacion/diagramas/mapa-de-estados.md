@@ -51,7 +51,7 @@ end note
 state Iniciada
 note right of Iniciada
     Auditoría disponible para
-    InnoVapp
+    InovApp
 end note
 
 state En_Ejecucion

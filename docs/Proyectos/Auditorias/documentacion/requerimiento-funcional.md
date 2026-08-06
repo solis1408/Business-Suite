@@ -2,8 +2,8 @@
 
 | Campo       | Valor                      |
 |-------------|----------------------------|
-| Versión     | 1.1                        |
-| Fecha       | 2026-05-20                 |
+| Versión     | 1.2                        |
+| Fecha       | 2026-08-06                 |
 | Estado      | Validación funcional       |
 | Módulo      | Auditorías                 |
 
@@ -64,8 +64,9 @@ Registrar y versionar los requerimientos funcionales del módulo de Auditorías,
 | [RF-28](#rf-28--clasificación-de-tipo-de-hallazgo-como-alto-impacto) | Clasificación de Tipo de Hallazgo como alto impacto          | Definición            | BSuite     | Por definir | 04/06/2026 |
 | [RF-29](#rf-29--auditoría-de-validación-del-ciclo-pdca) | Auditoría de validación del ciclo PDCA                       | Definición            | BSuite     | Por definir | Por definir |
 | [RF-30](#rf-30--configuración-de-días-límite-para-registro-de-acciones-correctivas) | Configuración de días límite para registro de acciones correctivas | Definición       | BSuite     | Por definir | Por definir |
-| [RF-31](#rf-31--firma-digital-del-responsable-al-completar-auditoría-desde-innovapp) | Firma digital del Responsable al completar auditoría desde InnoVapp | Definición            | InnoVapp   | Por definir | Por definir |
-| [RF-32](#rf-32--alcance-funcional-de-innovapp) | Alcance funcional de InnoVapp                | Definición            | InnoVapp   | Por definir | Por definir |
+| [RF-31](#rf-31--firma-digital-del-responsable-al-completar-auditoría-desde-inovapp) | Firma digital del Responsable al completar auditoría desde InovApp | Definición            | InovApp   | Por definir | Por definir |
+| [RF-32](#rf-32--alcance-funcional-de-inovapp) | Alcance funcional de InovApp                | Definición            | InovApp   | Por definir | Por definir |
+| [RF-33](#rf-33--tipos-de-respuesta-a-criterios-de-auditoría) | Tipos de respuesta a criterios de auditoría  | Definición            | Ambos      | Por definir | Por definir |
 
 ---
 
@@ -3106,7 +3107,7 @@ El ContenedorCatalogo de días límite PDCA es la única fuente de verdad para e
 
 ---
 
-# RF-31 — Firma digital del Responsable al completar auditoría desde InnoVapp
+# RF-31 — Firma digital del Responsable al completar auditoría desde InovApp
 
 | Campo          | Valor                    |
 |----------------|--------------------------|
@@ -3114,16 +3115,16 @@ El ContenedorCatalogo de días límite PDCA es la única fuente de verdad para e
 | Estado         | Definición               |
 | Dependencias   | RF-14, RF-32             |
 
-**Descripción:** InnoVapp debe solicitar y capturar la firma digital del Responsable/Auditado al ejecutar la acción Completar Auditoría. La firma representa la aceptación formal del Responsable sobre los hallazgos registrados durante la ejecución y es obligatoria: sin firma capturada el sistema no permite confirmar la transición de estatus a Completado. La firma se almacena en el campo `FirmaResponsable` de la Auditoría, como evidencia del proceso.
+**Descripción:** InovApp debe solicitar y capturar la firma digital del Responsable/Auditado al ejecutar la acción Completar Auditoría. La firma representa la aceptación formal del Responsable sobre los hallazgos registrados durante la ejecución y es obligatoria: sin firma capturada el sistema no permite confirmar la transición de estatus a Completado. La firma se almacena en el campo `FirmaResponsable` de la Auditoría, como evidencia del proceso.
 
 ---
 
 ## US-31.1 — Captura obligatoria de firma al completar
 
-Como Responsable/Auditado, quiero firmar digitalmente al completar la auditoría desde InnoVapp, para dejar constancia de mi aceptación sobre los hallazgos registrados.
+Como Responsable/Auditado, quiero firmar digitalmente al completar la auditoría desde InovApp, para dejar constancia de mi aceptación sobre los hallazgos registrados.
 
 **CA-31.1.1**
-Dado que el Auditor ejecuta la acción Completar Auditoría desde InnoVapp
+Dado que el Auditor ejecuta la acción Completar Auditoría desde InovApp
 Cuando el sistema procesa la solicitud
 Entonces se solicita al Responsable/Auditado la captura de firma digital antes de confirmar el cambio de estatus.
 
@@ -3149,18 +3150,18 @@ Entonces la firma es visible como evidencia del proceso de completado.
 Como coordinador de auditorías, quiero que la captura de firma quede registrada junto con la transición a Completado, para mantener trazabilidad del proceso.
 
 **CA-31.2.1**
-Dado que la auditoría cambia a estatus Completado con firma capturada desde InnoVapp
+Dado que la auditoría cambia a estatus Completado con firma capturada desde InovApp
 Cuando el sistema registra la transición
 Entonces la bitácora conforme a RF-16 refleja el cambio de estatus, sin duplicar el registro por la captura de firma.
 
 ---
 
 **Regla transversal:**
-La firma digital es exclusiva del Responsable/Auditado y es obligatoria para completar la auditoría desde InnoVapp; no aplica a la finalización de la auditoría (Finalizado), que sigue el flujo de RF-14. El mecanismo de captura (trazo digital en pantalla) y el detalle de UI de InnoVapp se documentan en el manual propio de la app; este RF define únicamente la regla de negocio y el punto de persistencia (`FirmaResponsable`).
+La firma digital es exclusiva del Responsable/Auditado y es obligatoria para completar la auditoría desde InovApp; no aplica a la finalización de la auditoría (Finalizado), que sigue el flujo de RF-14. El mecanismo de captura (trazo digital en pantalla) y el detalle de UI de InovApp se documentan en el manual propio de la app; este RF define únicamente la regla de negocio y el punto de persistencia (`FirmaResponsable`).
 
 ---
 
-# RF-32 — Alcance funcional de InnoVapp
+# RF-32 — Alcance funcional de InovApp
 
 | Campo          | Valor                    |
 |----------------|--------------------------|
@@ -3168,22 +3169,22 @@ La firma digital es exclusiva del Responsable/Auditado y es obligatoria para com
 | Estado         | Definición               |
 | Dependencias   | RF-02, RF-05, RF-13, RF-14, RF-16, RF-31 |
 
-**Descripción:** InnoVapp debe permitir al Auditor visualizar todas las auditorías dentro de su alcance departamental (RF-13), pero solo ejecutar o dar avance a las que se encuentran en estatus Iniciada o En_Ejecucion. InnoVapp expone únicamente dos acciones que alteran el estatus de la auditoría: Ejecutar, que cambia el estatus de Iniciada a En_Ejecucion, y Completar, que cambia el estatus de En_Ejecucion a Completado aplicando la ruta automática de cierre de RF-14. El resto de las acciones del ciclo de vida (creación, reprogramación, cancelación, gestión de acciones correctivas, ciclo PDCA y monitores) permanece exclusivo del sistema de escritorio/web. Completar la auditoría requiere, además, la firma digital del Responsable/Auditado conforme a RF-31.
+**Descripción:** InovApp debe permitir al Auditor visualizar todas las auditorías dentro de su alcance departamental (RF-13), pero solo ejecutar o dar avance a las que se encuentran en estatus Iniciada o En_Ejecucion. InovApp expone únicamente dos acciones que alteran el estatus de la auditoría: Ejecutar, que cambia el estatus de Iniciada a En_Ejecucion, y Completar, que cambia el estatus de En_Ejecucion a Completado aplicando la ruta automática de cierre de RF-14. El resto de las acciones del ciclo de vida (creación, reprogramación, cancelación, gestión de acciones correctivas, ciclo PDCA y monitores) permanece exclusivo del sistema de escritorio/web. Completar la auditoría requiere, además, la firma digital del Responsable/Auditado conforme a RF-31.
 
 ---
 
-## US-32.1 — Acciones disponibles en InnoVapp
+## US-32.1 — Acciones disponibles en InovApp
 
-Como Auditor, quiero que InnoVapp me muestre todas las auditorías dentro de mi alcance departamental, pero que solo me permita ejecutar o dar avance a las que están en estatus Iniciada o En_Ejecucion, para consultar mi carga completa sin operar auditorías fuera del flujo de campo.
+Como Auditor, quiero que InovApp me muestre todas las auditorías dentro de mi alcance departamental, pero que solo me permita ejecutar o dar avance a las que están en estatus Iniciada o En_Ejecucion, para consultar mi carga completa sin operar auditorías fuera del flujo de campo.
 
 **CA-32.1.1**
-Dado que el Auditor accede a InnoVapp
+Dado que el Auditor accede a InovApp
 Cuando consulta sus auditorías
 Entonces puede visualizar todas las auditorías dentro de su alcance departamental conforme a RF-13, sin restricción de estatus.
 
 **CA-32.1.2**
 Dado que una auditoría se encuentra en estatus Iniciada o En_Ejecucion
-Cuando el Auditor la visualiza en InnoVapp
+Cuando el Auditor la visualiza en InovApp
 Entonces únicamente se habilitan las acciones Ejecutar y Completar, según corresponda a su estatus.
 
 **CA-32.1.3**
@@ -3193,18 +3194,18 @@ Entonces solo se habilita la acción Ejecutar; la acción Completar permanece de
 
 **CA-32.1.4**
 Dado que una auditoría se encuentra en un estatus distinto a Iniciada o En_Ejecucion
-Cuando el Auditor la visualiza en InnoVapp
+Cuando el Auditor la visualiza en InovApp
 Entonces la auditoría se muestra únicamente en modo consulta, sin las acciones Ejecutar ni Completar disponibles.
 
 **CA-32.1.5**
 Dado que una auditoría está en estatus Iniciada
-Cuando el Auditor ejecuta la acción Ejecutar en InnoVapp
+Cuando el Auditor ejecuta la acción Ejecutar en InovApp
 Entonces el sistema cambia el estatus de la auditoría a En_Ejecucion y registra la transición en bitácora conforme a RF-16.
 
 **CA-32.1.6**
-Dado que en InnoVapp se confirma la acción Ejecutar o la acción Completar
+Dado que en InovApp se confirma la acción Ejecutar o la acción Completar
 Cuando el sistema procesa cualquiera de las dos
-Entonces son las únicas acciones de InnoVapp que alteran el estatus de la auditoría; el resto de las acciones disponibles en la aplicación son de consulta o captura de información sin cambio de estatus.
+Entonces son las únicas acciones de InovApp que alteran el estatus de la auditoría; el resto de las acciones disponibles en la aplicación son de consulta o captura de información sin cambio de estatus.
 
 ---
 
@@ -3214,7 +3215,7 @@ Como Auditor, quiero que el botón Completar solo se habilite cuando se cumplan 
 
 **CA-32.2.1**
 Dado que una auditoría no se encuentra en estatus En_Ejecucion
-Cuando el Auditor visualiza el botón Completar en InnoVapp
+Cuando el Auditor visualiza el botón Completar en InovApp
 Entonces el botón permanece deshabilitado.
 
 **CA-32.2.2**
@@ -3238,14 +3239,14 @@ Cuando el sistema procesa la solicitud
 Entonces cambia el estatus de la auditoría y aplica la misma regla de ruta automática de cierre definida en RF-14 (Finalizado o Registro_PDCA según existan hallazgos abiertos).
 
 **CA-32.2.6**
-Dado que el Auditor confirma la acción Completar en InnoVapp
+Dado que el Auditor confirma la acción Completar en InovApp
 Cuando el sistema procesa la solicitud
 Entonces envía al sistema central la bitácora generada durante la ejecución de la auditoría, conforme a RF-16.
 
 **CA-32.2.7**
-Dado que el Auditor confirma la acción Completar en InnoVapp y la auditoría no tiene hallazgos abiertos
+Dado que el Auditor confirma la acción Completar en InovApp y la auditoría no tiene hallazgos abiertos
 Cuando el sistema aplica la ruta automática de cierre definida en RF-14
-Entonces la auditoría queda en estatus Finalizado y InnoVapp refleja al Auditor dicho estatus final, no el estatus intermedio Completado.
+Entonces la auditoría queda en estatus Finalizado y InovApp refleja al Auditor dicho estatus final, no el estatus intermedio Completado.
 
 **CA-32.2.8**
 Dado que la auditoría pasa directamente de En_Ejecucion a Finalizado por no tener hallazgos abiertos
@@ -3253,17 +3254,203 @@ Cuando el sistema envía la bitácora al sistema central conforme a CA-32.2.6
 Entonces la bitácora enviada incluye ambas transiciones registradas: Completado y Finalizado.
 
 **CA-32.2.9**
-Dado que el Auditor confirma la acción Completar en InnoVapp
+Dado que el Auditor confirma la acción Completar en InovApp
 Cuando el sistema procesa la solicitud
 Entonces registra la fecha y hora de completado (FechaCompletado) en la auditoría, tomando la fecha y hora del servidor al momento de la confirmación, conforme al mismo comportamiento de registro automático de fechas definido en RF-02.
 
 **CA-32.2.10**
-Dado que el Auditor confirma la acción Completar en InnoVapp
+Dado que el Auditor confirma la acción Completar en InovApp
 Cuando el sistema aplica el cambio de estatus (Completado, Finalizado o Registro_PDCA según corresponda)
 Entonces sincroniza el estatus del PlanAuditoria asociado conforme a RF-05, de la misma forma que si la acción se ejecutara desde el sistema de escritorio/web.
 
 ---
 
 **Regla transversal:**
-InnoVapp es un canal de ejecución en campo, no un canal administrativo. Toda regla de estatus, transición y bitácora definida en RF-14 y RF-16 aplica igual, sin importar si la acción se ejecuta desde InnoVapp o desde el sistema de escritorio/web. La operación sin conexión de InnoVapp (captura offline y sincronización) se documenta en un documento aparte.
+InovApp es un canal de ejecución en campo, no un canal administrativo. Toda regla de estatus, transición y bitácora definida en RF-14 y RF-16 aplica igual, sin importar si la acción se ejecuta desde InovApp o desde el sistema de escritorio/web. La operación sin conexión de InovApp (captura offline y sincronización) se documenta en un documento aparte.
+
+---
+
+# RF-33 — Tipos de respuesta a criterios de auditoría
+
+| Campo          | Valor                    |
+|----------------|--------------------------|
+| Prioridad      | Alta                     |
+| Estado         | Definición               |
+| Dependencias   | RF-07, RF-25, RF-32      |
+
+**Descripción:** El sistema debe permitir configurar, por criterio de auditoría, el tipo de respuesta con el que el Auditor registra la evaluación durante la ejecución. Los tipos disponibles son seis: Sí/No, Texto libre, Numérico, Selección única, Selección múltiple y Muestreo. Los seis tipos deben estar disponibles tanto en Business Suite como en InovApp. El tipo Muestreo captura tres valores numéricos decimales —Muestra total, Muestra tomada y Resultado— y calcula la calificación del criterio a partir del Resultado mediante la fórmula `(Resultado × Ponderación) ÷ Muestra tomada`. La captura de respuestas en InovApp debe operar sin conexión, incluyendo el cálculo local de la calificación del tipo Muestreo, y sincronizarse con el sistema central al recuperar conectividad.
+
+---
+
+## US-33.1 — Configuración del tipo de respuesta por criterio
+
+Como administrador funcional del módulo
+Quiero definir el tipo de respuesta que aplica a cada criterio de auditoría
+Para que el Auditor capture la evaluación con el mecanismo correcto según la naturaleza del criterio.
+
+**CA-33.1.1**
+Dado que el usuario configura un criterio de auditoría
+Cuando selecciona el tipo de respuesta
+Entonces el sistema ofrece exactamente seis opciones: Sí/No, Texto libre, Numérico, Selección única, Selección múltiple y Muestreo.
+
+**CA-33.1.2**
+Dado que el usuario configura un criterio
+Cuando guarda el registro
+Entonces el criterio tiene un único tipo de respuesta asignado.
+
+**CA-33.1.3**
+Dado que el usuario intenta guardar un criterio sin tipo de respuesta
+Cuando el sistema valida
+Entonces muestra mensaje de validación y no permite guardar.
+
+**CA-33.1.4**
+Dado que el criterio tiene tipo de respuesta Selección única o Selección múltiple
+Cuando el usuario lo configura
+Entonces el sistema exige registrar al menos una opción de respuesta antes de guardar.
+
+**CA-33.1.5**
+Dado que un criterio ya fue evaluado en auditorías ejecutadas
+Cuando se modifica su tipo de respuesta
+Entonces el cambio aplica únicamente a auditorías posteriores y no altera las respuestas ya registradas.
+
+---
+
+## US-33.2 — Captura de la respuesta durante la ejecución de la auditoría
+
+Como Auditor
+Quiero que cada criterio me presente el control de captura correspondiente a su tipo de respuesta
+Para registrar la evaluación de forma consistente durante la ejecución.
+
+**CA-33.2.1**
+Dado que el criterio tiene tipo de respuesta Sí/No
+Cuando el Auditor lo evalúa
+Entonces el sistema permite registrar únicamente uno de los dos valores posibles.
+
+**CA-33.2.2**
+Dado que el criterio tiene tipo de respuesta Texto libre
+Cuando el Auditor lo evalúa
+Entonces el sistema permite capturar texto sin restricción de formato.
+
+**CA-33.2.3**
+Dado que el criterio tiene tipo de respuesta Numérico
+Cuando el Auditor captura un valor no numérico
+Entonces el sistema muestra validación y no permite registrar la respuesta.
+
+**CA-33.2.4**
+Dado que el criterio tiene tipo de respuesta Selección única
+Cuando el Auditor lo evalúa
+Entonces el sistema muestra las opciones configuradas y permite seleccionar solo una.
+
+**CA-33.2.5**
+Dado que el criterio tiene tipo de respuesta Selección múltiple
+Cuando el Auditor lo evalúa
+Entonces el sistema muestra las opciones configuradas y permite seleccionar una o más.
+
+**CA-33.2.6**
+Dado que el Auditor ejecuta la auditoría desde Business Suite o desde InovApp
+Cuando captura la respuesta de un criterio
+Entonces el comportamiento del tipo de respuesta es el mismo en ambas plataformas.
+
+---
+
+## US-33.3 — Tipo de respuesta Muestreo
+
+Como Auditor
+Quiero registrar muestra total, muestra tomada y resultado en los criterios de tipo Muestreo
+Para que el sistema calcule la calificación del criterio a partir del muestreo realizado en campo.
+
+**CA-33.3.1**
+Dado que el criterio tiene tipo de respuesta Muestreo
+Cuando el Auditor lo evalúa durante la ejecución
+Entonces el sistema solicita tres datos: Muestra total, Muestra tomada y Resultado.
+
+**CA-33.3.2**
+Dado que el sistema solicita los tres datos del muestreo
+Cuando el Auditor los captura
+Entonces los tres son campos numéricos decimales.
+
+**CA-33.3.3**
+Dado que el Auditor captura la respuesta de un criterio de tipo Muestreo
+Cuando intenta darlo por respondido con alguno de los tres datos vacío
+Entonces el sistema muestra validación y no permite registrar la respuesta.
+
+**CA-33.3.4**
+Dado que los tres datos del muestreo fueron capturados
+Cuando el sistema calcula la calificación del criterio
+Entonces aplica la fórmula `(Resultado × Ponderación) ÷ Muestra tomada`.
+
+**CA-33.3.5**
+Dado que el Auditor captura Muestra tomada con valor cero
+Cuando el sistema intenta calcular la calificación
+Entonces no realiza el cálculo, muestra validación y evita el error de división entre cero.
+
+**CA-33.3.6**
+Dado que el Auditor captura Muestra tomada mayor que Muestra total
+Cuando el sistema valida los datos
+Entonces muestra mensaje de validación y no permite registrar la respuesta.
+
+**CA-33.3.7**
+Dado que la respuesta de muestreo ya fue registrada
+Cuando el Auditor modifica cualquiera de los tres valores
+Entonces el sistema recalcula la calificación del criterio con la misma fórmula.
+
+**CA-33.3.8**
+Dado que un criterio de tipo Muestreo tiene calificación calculada
+Cuando se consulta el reporte resumen por criterio conforme a RF-07
+Entonces la calificación mostrada corresponde al resultado de la fórmula y consume la semaforización definida en RF-25.
+
+---
+
+## US-33.4 — Lógica y estructura offline para app móvil
+
+Como Auditor en campo
+Quiero capturar las respuestas de todos los tipos, incluido Muestreo, sin conexión desde InovApp
+Para ejecutar auditorías en zonas sin cobertura y sincronizar los resultados al recuperar conectividad.
+
+**CA-33.4.1**
+Dado que InovApp descarga una auditoría para su ejecución
+Cuando almacena la estructura local
+Entonces incluye, por cada criterio, su tipo de respuesta, su ponderación y las opciones configuradas cuando el tipo es Selección única o Selección múltiple.
+
+**CA-33.4.2**
+Dado que el dispositivo no cuenta con conexión
+Cuando el Auditor captura la respuesta de cualquiera de los seis tipos
+Entonces InovApp permite el registro y lo persiste localmente sin requerir conectividad.
+
+**CA-33.4.3**
+Dado que el dispositivo no cuenta con conexión
+Cuando el Auditor captura los tres datos de un criterio de tipo Muestreo
+Entonces InovApp calcula la calificación localmente con la misma fórmula definida en CA-33.3.4 y aplica las mismas validaciones de CA-33.3.5 y CA-33.3.6.
+
+**CA-33.4.4**
+Dado que existen respuestas capturadas sin conexión
+Cuando el dispositivo recupera conectividad
+Entonces InovApp sincroniza con el sistema central las respuestas registradas y las calificaciones calculadas localmente.
+
+**CA-33.4.5**
+Dado que la sincronización se ejecuta
+Cuando el sistema central recibe una calificación calculada en el dispositivo
+Entonces revalida el cálculo con la misma fórmula y, en caso de discrepancia, prevalece el valor recalculado por el sistema central.
+
+**CA-33.4.6**
+Dado que la sincronización falla o se interrumpe
+Cuando el proceso se detiene
+Entonces las respuestas capturadas permanecen almacenadas localmente sin pérdida de información y el envío se reintenta al recuperar conectividad.
+
+**CA-33.4.7**
+Dado que existen respuestas capturadas sin sincronizar
+Cuando el Auditor consulta la auditoría en InovApp
+Entonces el sistema identifica visualmente que la información está pendiente de sincronización.
+
+---
+
+**Regla transversal:**
+El tipo de respuesta es un atributo de configuración del criterio y determina tanto el control de captura como la forma de obtener su calificación. Los seis tipos aplican por igual en Business Suite y en InovApp. La fórmula `(Resultado × Ponderación) ÷ Muestra tomada` es exclusiva del tipo Muestreo y debe producir el mismo valor en captura en línea y offline. La captura offline no altera ninguna regla de estatus ni de transición: completar la auditoría desde InovApp sigue requiriendo conexión conforme a CA-32.2.3.
+
+**Pendientes de definición:**
+- Regla de conversión a calificación de los tipos Sí/No, Texto libre, Numérico, Selección única y Selección múltiple. Este RF define únicamente el cálculo del tipo Muestreo.
+- Origen, rango y administración del atributo Ponderación del criterio.
+- Rango válido del campo Resultado respecto a Muestra tomada en el tipo Muestreo.
+
+---
 
