@@ -1,1371 +1,1357 @@
-# Requerimientos Funcionales — Control de Acceso a Sistema REMV Ventas de Consignación (Interplantas)
+# Requerimientos Funcionales — Restricción de Visualización de Ventas de Consignación (Interplantas)
 
-| Campo                         | Valor                                                    |
-|-------------------------------|-----------------------------------------------------------|
-| Proyecto                      | Adecuación al Sistema REMV — Interplantas                 |
-| Número de Solicitud de Servicio | 3765                                                     |
-| Versión                       | 1.0                                                       |
-| Fecha                         | 2026-07-17                                                |
-| Estado                        | Definición                                                |
-| Módulo                        | Ventas / Facturación / Cuentas por Cobrar (CXC)           |
-| Prioridad general             | Urgente                                                   |
-| Área de negocio                | Otras unidades de negocio                                |
-| Responsable del requerimiento / Product Owner | María De Lourdes Viurquiz Gamiño            |
-| Autor del análisis            | Análisis de Negocio de TI                                 |
+| Campo   | Valor        |
+|---------|--------------|
+| Versión | 1.0          |
+| Fecha   | 2026-08-06   |
+| Estado  | Definición   |
+| Módulo  | Ventas, Facturación, Cuentas por Cobrar (CXC), Inventario — Sistema Remv |
+| Autor   | Análisis de Negocio |
+
+> Documento actualizado a partir de "RY-01INN01-FT01 — Documento de Alcance Funcional (Interplantas)", Solicitud de Servicio 3765, Grupo Reyes — Dirección de Innovación y Negocios. Responsable del requerimiento y Product Owner: María De Lourdes Viurquiz Gamiño.
 
 ---
 
 ## 1. Propósito del documento
 
-Este documento describe los requerimientos funcionales necesarios para implementar un mecanismo de control de acceso, basado en el permiso especial **FN-INTERPLANTAS**, que restrinja la visualización de la información relacionada con ventas de consignación en el sistema ERP REMV. Actualmente cualquier usuario puede consultar esta información sin distinción, lo que representa un riesgo de exposición de datos financieros sensibles. El documento traduce esa necesidad en un conjunto de 25 requerimientos funcionales (uno por cada pantalla o consulta afectada), agrupados en los módulos de Facturación/Ventas y Cuentas por Cobrar (CXC):
+Este documento describe los requerimientos funcionales necesarios para implementar un mecanismo de control de acceso, mediante el permiso especial **FN-INTERPLANTAS**, que restrinja la visualización de la información relacionada con ventas de consignación (documentos marcados como **CONSIGNACIÓN**) en las pantallas y consultas de los módulos de Ventas, Facturación y Cuentas por Cobrar (CXC) del sistema Remv. El documento está dirigido al equipo de desarrollo, control de calidad y a las áreas de negocio involucradas (Otras Unidades de Negocio) para su validación y seguimiento. Contiene los siguientes requerimientos funcionales:
 
-- **RF-01** — Restricción de visualización en Ventas > Facturas.
-- **RF-02** — Restricción de visualización en Ventas > Notas de Crédito.
-- **RF-03** — Restricción de visualización en Ventas > Facturas Emitidas.
-- **RF-04** — Restricción de visualización en Ventas > Facturas por producto.
-- **RF-05** — Restricción de visualización en Ventas > Notas de crédito por producto.
-- **RF-06** — Restricción de visualización en Ventas > Resumen facturas.
-- **RF-07** — Restricción de visualización en Ventas > Resumen Notas de crédito.
-- **RF-08** — Restricción de visualización en Ventas > Facturas Canceladas.
-- **RF-09** — Restricción de visualización en Ventas > Ventas por factura pagada.
-- **RF-10** — Restricción de visualización en Ventas > Detallado de ventas por factura pagada.
-- **RF-11** — Restricción de visualización en Cuentas por Cobrar > Abonos.
-- **RF-12** — Restricción de visualización en Cuentas por Cobrar > Transacciones.
-- **RF-13** — Restricción de visualización en CXC > Antigüedad de Saldos.
-- **RF-14** — Restricción de visualización en CXC > Cobranza general.
-- **RF-15** — Restricción de visualización en Ventas > Cobranza general consulta.
-- **RF-16** — Restricción de visualización en CXC > Comportamiento de pagos.
-- **RF-17** — Restricción de visualización en Ventas > Concentrado de cobranza.
-- **RF-18** — Restricción de visualización en CXC > Diario de abonos.
-- **RF-19** — Restricción de visualización en Ventas > Documentos de Cobranza.
-- **RF-20** — Restricción de visualización en Ventas > Detalle de abonos por facturas.
-- **RF-21** — Restricción de visualización en Ventas > Detalle abonos facturas (Pagado).
-- **RF-22** — Restricción de visualización en Ventas > Facturas Relación de factura.
-- **RF-23** — Restricción de visualización en CXC > Estado de Cuenta.
-- **RF-24** — Restricción de visualización en CXC > Estado de Cuenta Detallado.
-- **RF-25** — Restricción de visualización en CXC > Resumen de movimientos.
-
-**Objetivo del proyecto:** implementar un mecanismo de control de acceso mediante el permiso especial FN-INTERPLANTAS, con el fin de restringir la visualización de las consultas relacionadas con ventas de consignación en los módulos de Ventas, Inventario, Facturación y Cobranza, permitiendo el acceso únicamente a los usuarios autorizados.
-
-**Antecedentes:** actualmente no existe un mecanismo de control de acceso que restrinja la visualización de estas opciones según el perfil o los permisos del usuario, lo que representa un riesgo de exposición de información financiera sensible. El ERP actual permite que todos los usuarios accedan a las consultas de los módulos de Ventas, Inventario, Facturación y Cobranza sin distinguir el tipo de venta que gestionan.
-
-**Beneficio de negocio:** facilidad en la interpretación de la información de venta interplantas, al separar claramente lo que es visible según el perfil del usuario.
+- [RF-01](#rf-01) — Restricción de visualización de consignación en Ventas > Facturas.
+- [RF-02](#rf-02) — Restricción de visualización de consignación en Ventas > Notas de Crédito.
+- [RF-03](#rf-03) — Restricción de visualización de consignación en Ventas > Facturas Emitidas.
+- [RF-04](#rf-04) — Restricción de visualización de consignación en Ventas > Facturas por Producto.
+- [RF-05](#rf-05) — Restricción de visualización de consignación en Ventas > Notas de Crédito por Producto.
+- [RF-06](#rf-06) — Restricción de visualización de consignación en Ventas > Resumen de Facturas.
+- [RF-07](#rf-07) — Restricción de filtrado de consignación en Ventas > Resumen de Notas de Crédito.
+- [RF-08](#rf-08) — Restricción de visualización de consignación en Ventas > Facturas Canceladas.
+- [RF-09](#rf-09) — Restricción de visualización de consignación en Ventas > Ventas por Factura Pagada.
+- [RF-10](#rf-10) — Restricción de visualización de consignación en Ventas > Detallado de Ventas por Factura Pagada.
+- [RF-11](#rf-11) — Restricción de visualización de consignación en Cuentas por Cobrar > Abonos.
+- [RF-12](#rf-12) — Restricción de visualización de consignación en Cuentas por Cobrar > Transacciones.
+- [RF-13](#rf-13) — Restricción de filtrado de consignación en CXC > Antigüedad de Saldos.
+- [RF-14](#rf-14) — Restricción de filtrado de consignación en CXC > Cobranza General.
+- [RF-15](#rf-15) — Restricción de visualización de consignación en Ventas > Cobranza General Consulta.
+- [RF-16](#rf-16) — Restricción de filtrado de consignación en CXC > Comportamiento de Pagos.
+- [RF-17](#rf-17) — Restricción de visualización de consignación en Ventas > Concentrado de Cobranza.
+- [RF-18](#rf-18) — Restricción de filtrado de consignación en CXC > Diario de Abonos.
+- [RF-19](#rf-19) — Restricción de visualización de consignación en Ventas > Documentos de Cobranza.
+- [RF-20](#rf-20) — Restricción de visualización de consignación en Ventas > Detalle de Abonos por Facturas.
+- [RF-21](#rf-21) — Restricción de visualización de consignación en Ventas > Detalle Abonos Facturas (Pagado).
+- [RF-22](#rf-22) — Restricción de visualización de consignación en Ventas > Facturas Relación de Factura.
+- [RF-23](#rf-23) — Restricción de filtrado de consignación en CXC > Estado de Cuenta.
+- [RF-24](#rf-24) — Restricción de filtrado de consignación en CXC > Estado de Cuenta Detallado.
+- [RF-25](#rf-25) — Restricción de filtrado de consignación en CXC > Resumen de Movimientos.
+- [RF-26](#rf-26) — Restricción de visualización de consignación en Ventas > Detalles de Ventas.
+- [RF-27](#rf-27) — Restricción de visualización de consignación en Ventas > Devolución del Cliente.
+- [RF-28](#rf-28) — Restricción de visualización de consignación en Cuentas por Cobrar > Anticipos.
 
 ## 2. Alcance del documento
 
 **Incluye:**
-- La implementación del permiso especial FN-INTERPLANTAS como mecanismo de control de acceso.
-- La restricción de visualización de la información de ventas de consignación en las 25 pantallas y consultas de los módulos de Facturación/Ventas y Cuentas por Cobrar (CXC) listadas en el punto 1.
-- Mostrar la información de consignación únicamente a los usuarios cuyo perfil tenga asignado el permiso FN-INTERPLANTAS, y ocultarla al resto de los usuarios.
+- Restringir la visualización de información de consignación (documentos/registros marcados como CONSIGNACIÓN) en 28 pantallas y consultas de los módulos de Ventas, Facturación y Cuentas por Cobrar (CXC), condicionada al permiso especial FN-INTERPLANTAS.
+- Ocultar o, según la naturaleza de la consulta, impedir el filtrado por Consigna a los usuarios que no cuenten con el permiso especial FN-INTERPLANTAS.
+- Los usuarios autorizados son aquellos que cuenten con el permiso especial FN-INTERPLANTAS junto con alguno de los roles remcxc01, remvta01, remvta02 o remvta06.
 
 **No incluye:**
-- La modificación de la lógica de negocio existente para las ventas de consignación.
-- La creación o eliminación de perfiles de usuario (esto lo gestiona el área de Administración de Sistemas).
-- La auditoría de accesos a la información de consignación (se cubre mediante un requerimiento separado, fuera de este documento).
+- Modificación de la lógica de negocio existente para ventas de consignación.
+- Creación o eliminación de perfiles de usuario (gestionado por Administración de Sistemas).
+- Auditoría de accesos (cubierta por un requerimiento separado).
+- Restricciones sobre la pantalla "Inventario > Detallado de Movimientos de Almacén" mencionada en el alcance original; no se documentó como RF explícito en la fuente y queda registrada como pregunta abierta (ver sección de Preguntas abiertas).
 
 ## 3. Actores y roles
 
 | Actor / Rol | Descripción |
 |-------------|-------------|
-| Usuario autorizado (permiso FN-INTERPLANTAS) | Usuario del ERP REMV cuyo perfil (por ejemplo remcxc01, remvta01, remvta02 o remvta06) tiene asignado el permiso especial FN-INTERPLANTAS; puede visualizar la información de ventas de consignación en las pantallas y consultas dentro del alcance. |
-| Usuario no autorizado | Cualquier usuario del ERP REMV que no tenga asignado el permiso especial FN-INTERPLANTAS; no debe visualizar la información de ventas de consignación en las pantallas y consultas dentro del alcance. |
-| Administración de Sistemas | Área responsable de la creación, eliminación y asignación de perfiles y permisos (incluido FN-INTERPLANTAS); esta gestión queda fuera del alcance de este documento. |
-| Responsable del requerimiento / Product Owner de negocio | María De Lourdes Viurquiz Gamiño; define y valida la necesidad de negocio y prioriza el alcance funcional. |
-| Consultor (Product Owner del proyecto) | José Cruz Cisneros; participa en la aprobación funcional del alcance. |
-| Coordinador de Desarrollo | Ma. Luisa Brandi; coordina la implementación técnica de los requerimientos. |
-| Aseguramiento de Calidad de Software (QA) | Edwin Quintanilla; valida el cumplimiento de los criterios de aceptación antes de la liberación. |
+| Usuario autorizado | Usuario que cuenta con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06; puede visualizar y, donde aplique, filtrar la información de consignación. |
+| Usuario no autorizado | Usuario que no cuenta con el permiso especial FN-INTERPLANTAS; no debe visualizar ni filtrar información de consignación en las pantallas y consultas dentro del alcance. |
+| Administrador de Sistemas | Área responsable de crear/eliminar perfiles de usuario y de asignar el permiso especial FN-INTERPLANTAS y los roles remcxc01, remvta01, remvta02, remvta06 (fuera del alcance de este documento). |
+| Product Owner / Responsable del Requerimiento | María De Lourdes Viurquiz Gamiño; valida y prioriza el alcance funcional. |
 
 ## 4. Glosario
 
 | Término / Sigla | Definición |
 |-----------------|------------|
-| FN-INTERPLANTAS | Permiso especial del ERP REMV que habilita a un perfil de usuario a visualizar la información de ventas de consignación en las pantallas y consultas dentro del alcance. |
-| Venta de consignación / Documento CONSIGNACIÓN | Tipo de venta en la que el producto se traslada entre plantas o a un cliente sin que se facture como una venta ordinaria inmediata; el documento asociado (factura, nota de crédito, abono, transacción) queda marcado con este atributo en el sistema. |
-| CXC | Cuentas por Cobrar; módulo del ERP REMV donde se gestionan abonos, transacciones y el seguimiento de cobranza. |
-| ERP REMV | Sistema de planeación de recursos empresariales utilizado por Grupo Reyes, sobre el cual se implementan estos requerimientos. |
-| Perfil (remcxc01, remvta01, remvta02, remvta06) | Perfiles de usuario predefinidos en el ERP REMV a los que, de acuerdo con la información disponible, se asigna el permiso FN-INTERPLANTAS. |
+| FN-INTERPLANTAS | Permiso especial del sistema Remv que habilita la visualización (y, en algunas consultas, el filtrado) de la información marcada como CONSIGNACIÓN. |
+| CONSIGNACIÓN | Marca/tipo de documento que identifica una venta, factura, nota de crédito, abono, anticipo o transacción derivada de una operación de venta interplantas (consignación). |
+| Interplantas | Operaciones de venta entre plantas del grupo que se gestionan como consignación dentro del ERP. |
+| CXC | Cuentas por Cobrar. |
+| remcxc01, remvta01, remvta02, remvta06 | Roles/perfiles de seguridad del sistema Remv autorizados, junto con el permiso FN-INTERPLANTAS, para visualizar información de consignación. |
+| Remv | Sistema ERP (Grupo Reyes) sobre el que se implementa el control de acceso descrito en este documento. |
 
 ## 5. Entidad a la que aplica
 
-Este conjunto de requerimientos aplica sobre los **documentos de venta** del ERP REMV (facturas, notas de crédito, abonos y transacciones) que tienen el atributo o tipo de documento **CONSIGNACIÓN**, así como sobre las pantallas y consultas que exponen esa información en los módulos de Facturación/Ventas y Cuentas por Cobrar (CXC).
-
-No se trata de un flujo de estados de la entidad, sino de una condición de visibilidad: el documento conserva su ciclo de vida normal (registro, cancelación, cobro, etc.) y lo único que cambia es si un usuario determinado puede o no verlo, en función de si su perfil tiene asignado el permiso FN-INTERPLANTAS. Por lo tanto, **no aplica** un estatus inicial/terminal propio de este control de acceso.
+Este documento aplica sobre los documentos y registros de venta (facturas, notas de crédito, abonos, anticipos, transacciones y sus consultas derivadas) marcados con el tipo **CONSIGNACIÓN** en el sistema Remv. Estatus inicial: la información de consignación es visible para todos los usuarios sin distinción de perfil. Estatus terminal: la información de consignación solo es visible (o filtrable, según la consulta) para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06.
 
 ## 6. Índice de requerimientos
 
+> **Navegación rápida:** cada identificador RF en la primera columna es un enlace que lleva directamente al detalle del requerimiento, su historia de usuario, sus reglas de negocio y sus criterios de aceptación.
+
 | RF | Título | Sistema | Aplica a |
 |----|--------|---------|----------|
-| RF-01 | Restricción de visualización — Facturas | Facturación / Ventas | Pantalla/consulta "Ventas > Facturas" |
-| RF-02 | Restricción de visualización — Notas de Crédito | Facturación / Ventas | Pantalla/consulta "Ventas > Notas de Crédito" |
-| RF-03 | Restricción de visualización — Facturas Emitidas | Facturación / Ventas | Pantalla/consulta "Ventas > Facturas Emitidas" |
-| RF-04 | Restricción de visualización — Facturas por producto | Facturación / Ventas | Pantalla/consulta "Ventas > Facturas por producto" |
-| RF-05 | Restricción de visualización — Notas de crédito por producto | Facturación / Ventas | Pantalla/consulta "Ventas > Notas de crédito por producto" |
-| RF-06 | Restricción de visualización — Resumen facturas | Facturación / Ventas | Pantalla/consulta "Ventas > Resumen facturas" |
-| RF-07 | Restricción de visualización — Resumen Notas de crédito | Facturación / Ventas | Pantalla/consulta "Ventas > Resumen Notas de crédito" |
-| RF-08 | Restricción de visualización — Facturas Canceladas | Facturación / Ventas | Pantalla/consulta "Ventas > Facturas Canceladas" |
-| RF-09 | Restricción de visualización — Ventas por factura pagada | Facturación / Ventas | Pantalla/consulta "Ventas > Ventas por factura pagada" |
-| RF-10 | Restricción de visualización — Detallado de ventas por factura pagada | Facturación / Ventas | Pantalla/consulta "Ventas > Detallado de ventas por factura pagada" |
-| RF-11 | Restricción de visualización — Abonos | Cuentas por Cobrar (CXC) | Pantalla/consulta "Cuentas por Cobrar > Abonos" |
-| RF-12 | Restricción de visualización — Transacciones | Cuentas por Cobrar (CXC) | Pantalla/consulta "Cuentas por Cobrar > Transacciones" |
-| RF-13 | Restricción de visualización — Antigüedad de Saldos | Cuentas por Cobrar (CXC) | Pantalla/consulta "CXC > Antigüedad de Saldos" |
-| RF-14 | Restricción de visualización — Cobranza general | Cuentas por Cobrar (CXC) | Pantalla/consulta "CXC > Cobranza general" |
-| RF-15 | Restricción de visualización — Cobranza general consulta | Facturación / Ventas | Pantalla/consulta "Ventas > Cobranza general consulta" |
-| RF-16 | Restricción de visualización — Comportamiento de pagos | Cuentas por Cobrar (CXC) | Pantalla/consulta "CXC > Comportamiento de pagos" |
-| RF-17 | Restricción de visualización — Concentrado de cobranza | Facturación / Ventas | Pantalla/consulta "Ventas > Concentrado de cobranza" |
-| RF-18 | Restricción de visualización — Diario de abonos | Cuentas por Cobrar (CXC) | Pantalla/consulta "CXC > Diario de abonos" |
-| RF-19 | Restricción de visualización — Documentos de Cobranza | Facturación / Ventas | Pantalla/consulta "Ventas > Documentos de Cobranza" |
-| RF-20 | Restricción de visualización — Detalle de abonos por facturas | Facturación / Ventas | Pantalla/consulta "Ventas > Detalle de abonos por facturas" |
-| RF-21 | Restricción de visualización — Detalle abonos facturas (Pagado) | Facturación / Ventas | Pantalla/consulta "Ventas > Detalle abonos facturas (Pagado)" |
-| RF-22 | Restricción de visualización — Facturas Relación de factura | Facturación / Ventas | Pantalla/consulta "Ventas > Facturas Relación de factura" |
-| RF-23 | Restricción de visualización — Estado de Cuenta | Cuentas por Cobrar (CXC) | Pantalla/consulta "CXC > Estado de Cuenta" |
-| RF-24 | Restricción de visualización — Estado de Cuenta Detallado | Cuentas por Cobrar (CXC) | Pantalla/consulta "CXC > Estado de Cuenta Detallado" |
-| RF-25 | Restricción de visualización — Resumen de movimientos | Cuentas por Cobrar (CXC) | Pantalla/consulta "CXC > Resumen de movimientos" |
+| [RF-01](#rf-01) | Restricción de visualización de consignación en Ventas > Facturas | Ventas | Información de consignación (FN-INTERPLANTAS) |
+| [RF-02](#rf-02) | Restricción de visualización de consignación en Ventas > Notas de Crédito | Ventas | Información de consignación (FN-INTERPLANTAS) |
+| [RF-03](#rf-03) | Restricción de visualización de consignación en Ventas > Facturas Emitidas | Ventas | Información de consignación (FN-INTERPLANTAS) |
+| [RF-04](#rf-04) | Restricción de visualización de consignación en Ventas > Facturas por Producto | Ventas | Información de consignación (FN-INTERPLANTAS) |
+| [RF-05](#rf-05) | Restricción de visualización de consignación en Ventas > Notas de Crédito por Producto | Ventas | Información de consignación (FN-INTERPLANTAS) |
+| [RF-06](#rf-06) | Restricción de visualización de consignación en Ventas > Resumen de Facturas | Ventas | Información de consignación (FN-INTERPLANTAS) |
+| [RF-07](#rf-07) | Restricción de filtrado de consignación en Ventas > Resumen de Notas de Crédito | Ventas | Información de consignación (FN-INTERPLANTAS) |
+| [RF-08](#rf-08) | Restricción de visualización de consignación en Ventas > Facturas Canceladas | Ventas | Información de consignación (FN-INTERPLANTAS) |
+| [RF-09](#rf-09) | Restricción de visualización de consignación en Ventas > Ventas por Factura Pagada | Ventas | Información de consignación (FN-INTERPLANTAS) |
+| [RF-10](#rf-10) | Restricción de visualización de consignación en Ventas > Detallado de Ventas por Factura Pagada | Ventas | Información de consignación (FN-INTERPLANTAS) |
+| [RF-11](#rf-11) | Restricción de visualización de consignación en Cuentas por Cobrar > Abonos | Cuentas por Cobrar | Información de consignación (FN-INTERPLANTAS) |
+| [RF-12](#rf-12) | Restricción de visualización de consignación en Cuentas por Cobrar > Transacciones | Cuentas por Cobrar | Información de consignación (FN-INTERPLANTAS) |
+| [RF-13](#rf-13) | Restricción de filtrado de consignación en CXC > Antigüedad de Saldos | CXC | Información de consignación (FN-INTERPLANTAS) |
+| [RF-14](#rf-14) | Restricción de filtrado de consignación en CXC > Cobranza General | CXC | Información de consignación (FN-INTERPLANTAS) |
+| [RF-15](#rf-15) | Restricción de visualización de consignación en Ventas > Cobranza General Consulta | Ventas | Información de consignación (FN-INTERPLANTAS) |
+| [RF-16](#rf-16) | Restricción de filtrado de consignación en CXC > Comportamiento de Pagos | CXC | Información de consignación (FN-INTERPLANTAS) |
+| [RF-17](#rf-17) | Restricción de visualización de consignación en Ventas > Concentrado de Cobranza | Ventas | Información de consignación (FN-INTERPLANTAS) |
+| [RF-18](#rf-18) | Restricción de filtrado de consignación en CXC > Diario de Abonos | CXC | Información de consignación (FN-INTERPLANTAS) |
+| [RF-19](#rf-19) | Restricción de visualización de consignación en Ventas > Documentos de Cobranza | Ventas | Información de consignación (FN-INTERPLANTAS) |
+| [RF-20](#rf-20) | Restricción de visualización de consignación en Ventas > Detalle de Abonos por Facturas | Ventas | Información de consignación (FN-INTERPLANTAS) |
+| [RF-21](#rf-21) | Restricción de visualización de consignación en Ventas > Detalle Abonos Facturas (Pagado) | Ventas | Información de consignación (FN-INTERPLANTAS) |
+| [RF-22](#rf-22) | Restricción de visualización de consignación en Ventas > Facturas Relación de Factura | Ventas | Información de consignación (FN-INTERPLANTAS) |
+| [RF-23](#rf-23) | Restricción de filtrado de consignación en CXC > Estado de Cuenta | CXC | Información de consignación (FN-INTERPLANTAS) |
+| [RF-24](#rf-24) | Restricción de filtrado de consignación en CXC > Estado de Cuenta Detallado | CXC | Información de consignación (FN-INTERPLANTAS) |
+| [RF-25](#rf-25) | Restricción de filtrado de consignación en CXC > Resumen de Movimientos | CXC | Información de consignación (FN-INTERPLANTAS) |
+| [RF-26](#rf-26) | Restricción de visualización de consignación en Ventas > Detalles de Ventas | Ventas | Información de consignación (FN-INTERPLANTAS) |
+| [RF-27](#rf-27) | Restricción de visualización de consignación en Ventas > Devolución del Cliente | Ventas | Información de consignación (FN-INTERPLANTAS) |
+| [RF-28](#rf-28) | Restricción de visualización de consignación en Cuentas por Cobrar > Anticipos | Cuentas por Cobrar | Información de consignación (FN-INTERPLANTAS) |
 
 ---
 ---
 
-# RF-01 — Restricción de visualización de información de consignación en Facturas
+<a id="rf-01"></a>
+# RF-01 — Restricción de visualización de consignación en Ventas > Facturas
 
 | Campo        | Valor       |
 |--------------|-------------|
 | Prioridad    | Must        |
 | Estado       | Definición  |
-| Dependencias | Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV) |
-
-## Objetivo
-Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "Ventas > Facturas", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.
+| Dependencias | DEP-01 |
 
 ## Descripción
-El sistema deberá limitar la visualización de la pantalla "Ventas > Facturas" para que las facturas marcadas con documento CONSIGNACIÓN sean visibles para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
+El sistema deberá limitar la visualización de la pantalla "Ventas > Facturas" para que las facturas marcadas con documento CONSIGNACIÓN sean visibles únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
 
-### Información / atributos
-| Campo | Obligatorio | Descripción |
-|-------|-------------|-------------|
-| Tipo de documento | Sí | Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación. |
-| Permiso especial FN-INTERPLANTAS | Sí | Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta. |
+## HU-1.1 — Visualización restringida en Ventas > Facturas
 
-### Operaciones
-- Consultar: al abrir la pantalla/consulta "Ventas > Facturas", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.
-
-## HU-1.1 — Visualización restringida en Facturas
-
-Como usuario autorizado para consultar información de consignación, quiero que en la pantalla "Ventas > Facturas" solo sean visibles los documentos marcados como CONSIGNACIÓN cuando tenga asignado el permiso FN-INTERPLANTAS, para proteger la información sensible y evitar accesos no autorizados.
+Como usuario autorizado para consultar información de consignación, quiero que "Ventas > Facturas" muestre únicamente la información correspondiente a consignación cuando cuente con el permiso especial FN-INTERPLANTAS, para proteger la información sensible y evitar accesos no autorizados.
 
 ### Reglas de negocio
 
-**RN-1.1** Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "Ventas > Facturas".
+**RN-1.1** Solo los usuarios que cuenten con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06 podrán visualizar información de consignación en "Ventas > Facturas".
 
-**RN-1.2** Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).
+**RN-1.2** Los usuarios que no cuenten con el permiso especial FN-INTERPLANTAS no podrán visualizar los registros marcados como CONSIGNACIÓN en "Ventas > Facturas"; dichos registros deberán permanecer ocultos.
 
 ### Criterios de Aceptación
 
-**CA-1.1.1 — Usuario autorizado visualiza la información de consignación**
-Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "Ventas > Facturas"
-Entonces el sistema muestra información de consigna a los usuarios con permisos especial: remcxc01, remvta01, remvta02, remvta06.
+**CA-1.1.1 — Acceso autorizado a la información de consignación**
+Dado que el usuario cuenta con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06
+Cuando ingresa a "Ventas > Facturas"
+Entonces el sistema muestra en "Ventas > Facturas" la información marcada como CONSIGNACIÓN correspondiente a ese usuario.
 
-**CA-1.2.1 — Usuario no autorizado no visualiza la información de consignación**
-Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "Ventas > Facturas"
-Entonces el sistema oculta la información de consigna a usuarios no autorizados.
+**CA-1.1.2 — Restricción para usuario no autorizado**
+Dado que el usuario no cuenta con el permiso especial FN-INTERPLANTAS
+Cuando ingresa a "Ventas > Facturas"
+Entonces el sistema oculta la información marcada como CONSIGNACIÓN en "Ventas > Facturas" y no la incluye en el resultado.
 
 ---
 
-# RF-02 — Restricción de visualización de información de consignación en Notas de Crédito
+<a id="rf-02"></a>
+# RF-02 — Restricción de visualización de consignación en Ventas > Notas de Crédito
 
 | Campo        | Valor       |
 |--------------|-------------|
 | Prioridad    | Must        |
 | Estado       | Definición  |
-| Dependencias | Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV) |
-
-## Objetivo
-Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "Ventas > Notas de Crédito", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.
+| Dependencias | DEP-01 |
 
 ## Descripción
-El sistema deberá limitar la visualización de la pantalla "Ventas > Notas de Crédito" para que los registros relacionados a facturas marcadas con documento CONSIGNACIÓN sean visibles para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
+El sistema deberá limitar la visualización de la pantalla "Ventas > Notas de Crédito" para que los registros relacionados a facturas marcadas con documento CONSIGNACIÓN sean visibles únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
 
-### Información / atributos
-| Campo | Obligatorio | Descripción |
-|-------|-------------|-------------|
-| Tipo de documento | Sí | Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación. |
-| Permiso especial FN-INTERPLANTAS | Sí | Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta. |
+## HU-2.1 — Visualización restringida en Ventas > Notas de Crédito
 
-### Operaciones
-- Consultar: al abrir la pantalla/consulta "Ventas > Notas de Crédito", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.
-
-## HU-2.1 — Visualización restringida en Notas de Crédito
-
-Como usuario autorizado para consultar información de consignación, quiero que en la pantalla "Ventas > Notas de Crédito" solo sean visibles los documentos marcados como CONSIGNACIÓN cuando tenga asignado el permiso FN-INTERPLANTAS, para garantizar que únicamente el personal autorizado acceda a esta información.
+Como usuario autorizado para consultar información de consignación, quiero que "Ventas > Notas de Crédito" muestre únicamente la información correspondiente a consignación cuando cuente con el permiso especial FN-INTERPLANTAS, para garantizar que únicamente el personal autorizado acceda a esta información.
 
 ### Reglas de negocio
 
-**RN-2.1** Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "Ventas > Notas de Crédito".
+**RN-2.1** Solo los usuarios que cuenten con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06 podrán visualizar información de consignación en "Ventas > Notas de Crédito".
 
-**RN-2.2** Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).
+**RN-2.2** Los usuarios que no cuenten con el permiso especial FN-INTERPLANTAS no podrán visualizar los registros marcados como CONSIGNACIÓN en "Ventas > Notas de Crédito"; dichos registros deberán permanecer ocultos.
 
 ### Criterios de Aceptación
 
-**CA-2.1.1 — Usuario autorizado visualiza la información de consignación**
-Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "Ventas > Notas de Crédito"
-Entonces el sistema muestra la información de consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.
+**CA-2.1.1 — Acceso autorizado a la información de consignación**
+Dado que el usuario cuenta con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06
+Cuando ingresa a "Ventas > Notas de Crédito"
+Entonces el sistema muestra en "Ventas > Notas de Crédito" la información marcada como CONSIGNACIÓN correspondiente a ese usuario.
 
-**CA-2.2.1 — Usuario no autorizado no visualiza la información de consignación**
-Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "Ventas > Notas de Crédito"
-Entonces el sistema oculta la información de consigna a usuario no autorizado.
+**CA-2.1.2 — Restricción para usuario no autorizado**
+Dado que el usuario no cuenta con el permiso especial FN-INTERPLANTAS
+Cuando ingresa a "Ventas > Notas de Crédito"
+Entonces el sistema oculta la información marcada como CONSIGNACIÓN en "Ventas > Notas de Crédito" y no la incluye en el resultado.
 
 ---
 
-# RF-03 — Restricción de visualización de información de consignación en Facturas Emitidas
+**Regla transversal:**
+Este requerimiento comparte el mismo mecanismo de autorización que [RF-01](#rf-01): el permiso especial FN-INTERPLANTAS junto con los roles remcxc01, remvta01, remvta02 o remvta06 determina la visibilidad de la información de consignación en todas las pantallas y consultas listadas en el [índice de requerimientos](#6-índice-de-requerimientos).
+
+---
+
+<a id="rf-03"></a>
+# RF-03 — Restricción de visualización de consignación en Ventas > Facturas Emitidas
 
 | Campo        | Valor       |
 |--------------|-------------|
 | Prioridad    | Must        |
 | Estado       | Definición  |
-| Dependencias | Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV) |
-
-## Objetivo
-Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "Ventas > Facturas Emitidas", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.
+| Dependencias | DEP-01 |
 
 ## Descripción
-El sistema deberá limitar la visualización de la consulta "Ventas > Facturas Emitidas" para que la información correspondiente solo a ventas de consignación y sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
+El sistema deberá limitar la visualización de la consulta "Ventas > Facturas Emitidas" para que la información correspondiente a ventas de consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
 
-### Información / atributos
-| Campo | Obligatorio | Descripción |
-|-------|-------------|-------------|
-| Tipo de documento | Sí | Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación. |
-| Permiso especial FN-INTERPLANTAS | Sí | Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta. |
+## HU-3.1 — Visualización restringida en Ventas > Facturas Emitidas
 
-### Operaciones
-- Consultar: al abrir la pantalla/consulta "Ventas > Facturas Emitidas", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.
-
-## HU-3.1 — Visualización restringida en Facturas Emitidas
-
-Como usuario autorizado para consultar información de consignación, quiero que la consulta "Ventas > Facturas Emitidas" muestre la información correspondiente a ventas de consignación únicamente cuando tenga el permiso FN-INTERPLANTAS, para resguardar la información financiera sensible.
+Como usuario autorizado para consultar información de consignación, quiero que "Ventas > Facturas Emitidas" muestre únicamente la información correspondiente a consignación cuando cuente con el permiso especial FN-INTERPLANTAS, para resguardar la información financiera sensible.
 
 ### Reglas de negocio
 
-**RN-3.1** Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "Ventas > Facturas Emitidas".
+**RN-3.1** Solo los usuarios que cuenten con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06 podrán visualizar información de consignación en "Ventas > Facturas Emitidas".
 
-**RN-3.2** Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).
+**RN-3.2** Los usuarios que no cuenten con el permiso especial FN-INTERPLANTAS no podrán visualizar los registros marcados como CONSIGNACIÓN en "Ventas > Facturas Emitidas"; dichos registros deberán permanecer ocultos.
 
 ### Criterios de Aceptación
 
-**CA-3.1.1 — Usuario autorizado visualiza la información de consignación**
-Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "Ventas > Facturas Emitidas"
-Entonces el sistema muestra la información de consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.
+**CA-3.1.1 — Acceso autorizado a la información de consignación**
+Dado que el usuario cuenta con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06
+Cuando ingresa a "Ventas > Facturas Emitidas"
+Entonces el sistema muestra en "Ventas > Facturas Emitidas" la información marcada como CONSIGNACIÓN correspondiente a ese usuario.
 
-**CA-3.2.1 — Usuario no autorizado no visualiza la información de consignación**
-Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "Ventas > Facturas Emitidas"
-Entonces el sistema oculta la información de consigna a usuarios no autorizados.
+**CA-3.1.2 — Restricción para usuario no autorizado**
+Dado que el usuario no cuenta con el permiso especial FN-INTERPLANTAS
+Cuando ingresa a "Ventas > Facturas Emitidas"
+Entonces el sistema oculta la información marcada como CONSIGNACIÓN en "Ventas > Facturas Emitidas" y no la incluye en el resultado.
 
 ---
 
-# RF-04 — Restricción de visualización de información de consignación en Facturas por producto
+**Regla transversal:**
+Este requerimiento comparte el mismo mecanismo de autorización que [RF-01](#rf-01): el permiso especial FN-INTERPLANTAS junto con los roles remcxc01, remvta01, remvta02 o remvta06 determina la visibilidad de la información de consignación en todas las pantallas y consultas listadas en el [índice de requerimientos](#6-índice-de-requerimientos).
+
+---
+
+<a id="rf-04"></a>
+# RF-04 — Restricción de visualización de consignación en Ventas > Facturas por Producto
 
 | Campo        | Valor       |
 |--------------|-------------|
 | Prioridad    | Must        |
 | Estado       | Definición  |
-| Dependencias | Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV) |
-
-## Objetivo
-Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "Ventas > Facturas por producto", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.
+| Dependencias | DEP-01 |
 
 ## Descripción
-El sistema deberá limitar la visualización de la consulta "Ventas > Facturas por producto" para que la información correspondiente a facturas de consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
+El sistema deberá limitar la visualización de la consulta "Ventas > Facturas por Producto" para que la información correspondiente a facturas de consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
 
-### Información / atributos
-| Campo | Obligatorio | Descripción |
-|-------|-------------|-------------|
-| Tipo de documento | Sí | Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación. |
-| Permiso especial FN-INTERPLANTAS | Sí | Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta. |
+## HU-4.1 — Visualización restringida en Ventas > Facturas por Producto
 
-### Operaciones
-- Consultar: al abrir la pantalla/consulta "Ventas > Facturas por producto", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.
-
-## HU-4.1 — Visualización restringida en Facturas por producto
-
-Como usuario autorizado para consultar información de consignación, quiero que la consulta "Ventas > Facturas por Producto" muestre únicamente la información de ventas de consignación cuando cuente con el permiso FN-INTERPLANTAS, para evitar el acceso no autorizado.
+Como usuario autorizado para consultar información de consignación, quiero que "Ventas > Facturas por Producto" muestre únicamente la información correspondiente a consignación cuando cuente con el permiso especial FN-INTERPLANTAS, para evitar el acceso no autorizado.
 
 ### Reglas de negocio
 
-**RN-4.1** Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "Ventas > Facturas por producto".
+**RN-4.1** Solo los usuarios que cuenten con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06 podrán visualizar información de consignación en "Ventas > Facturas por Producto".
 
-**RN-4.2** Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).
+**RN-4.2** Los usuarios que no cuenten con el permiso especial FN-INTERPLANTAS no podrán visualizar los registros marcados como CONSIGNACIÓN en "Ventas > Facturas por Producto"; dichos registros deberán permanecer ocultos.
 
 ### Criterios de Aceptación
 
-**CA-4.1.1 — Usuario autorizado visualiza la información de consignación**
-Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "Ventas > Facturas por producto"
-Entonces el sistema muestra la información de consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.
+**CA-4.1.1 — Acceso autorizado a la información de consignación**
+Dado que el usuario cuenta con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06
+Cuando ingresa a "Ventas > Facturas por Producto"
+Entonces el sistema muestra en "Ventas > Facturas por Producto" la información marcada como CONSIGNACIÓN correspondiente a ese usuario.
 
-**CA-4.2.1 — Usuario no autorizado no visualiza la información de consignación**
-Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "Ventas > Facturas por producto"
-Entonces el sistema oculta la información de consigna a usuarios no autorizados.
+**CA-4.1.2 — Restricción para usuario no autorizado**
+Dado que el usuario no cuenta con el permiso especial FN-INTERPLANTAS
+Cuando ingresa a "Ventas > Facturas por Producto"
+Entonces el sistema oculta la información marcada como CONSIGNACIÓN en "Ventas > Facturas por Producto" y no la incluye en el resultado.
 
 ---
 
-# RF-05 — Restricción de visualización de información de consignación en Notas de crédito por producto
+**Regla transversal:**
+Este requerimiento comparte el mismo mecanismo de autorización que [RF-01](#rf-01): el permiso especial FN-INTERPLANTAS junto con los roles remcxc01, remvta01, remvta02 o remvta06 determina la visibilidad de la información de consignación en todas las pantallas y consultas listadas en el [índice de requerimientos](#6-índice-de-requerimientos).
+
+---
+
+<a id="rf-05"></a>
+# RF-05 — Restricción de visualización de consignación en Ventas > Notas de Crédito por Producto
 
 | Campo        | Valor       |
 |--------------|-------------|
 | Prioridad    | Must        |
 | Estado       | Definición  |
-| Dependencias | Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV) |
-
-## Objetivo
-Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "Ventas > Notas de crédito por producto", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.
+| Dependencias | DEP-01 |
 
 ## Descripción
-El sistema deberá limitar la visualización de la consulta "Ventas > Notas de crédito por producto" para que la información de nota de crédito ligada a facturas de consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
+El sistema deberá limitar la visualización de la consulta "Ventas > Notas de Crédito por Producto" para que la información de nota de crédito ligada a facturas de consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
 
-### Información / atributos
-| Campo | Obligatorio | Descripción |
-|-------|-------------|-------------|
-| Tipo de documento | Sí | Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación. |
-| Permiso especial FN-INTERPLANTAS | Sí | Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta. |
+## HU-5.1 — Visualización restringida en Ventas > Notas de Crédito por Producto
 
-### Operaciones
-- Consultar: al abrir la pantalla/consulta "Ventas > Notas de crédito por producto", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.
-
-## HU-5.1 — Visualización restringida en Notas de crédito por producto
-
-Como usuario autorizado para consultar información de consignación, quiero que la consulta "Ventas > Notas de Crédito por Producto" muestre únicamente la información de consignación cuando tenga el permiso FN-INTERPLANTAS, para proteger la confidencialidad de la información.
+Como usuario autorizado para consultar información de consignación, quiero que "Ventas > Notas de Crédito por Producto" muestre únicamente la información correspondiente a consignación cuando cuente con el permiso especial FN-INTERPLANTAS, para proteger la confidencialidad de la información.
 
 ### Reglas de negocio
 
-**RN-5.1** Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "Ventas > Notas de crédito por producto".
+**RN-5.1** Solo los usuarios que cuenten con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06 podrán visualizar información de consignación en "Ventas > Notas de Crédito por Producto".
 
-**RN-5.2** Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).
+**RN-5.2** Los usuarios que no cuenten con el permiso especial FN-INTERPLANTAS no podrán visualizar los registros marcados como CONSIGNACIÓN en "Ventas > Notas de Crédito por Producto"; dichos registros deberán permanecer ocultos.
 
 ### Criterios de Aceptación
 
-**CA-5.1.1 — Usuario autorizado visualiza la información de consignación**
-Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "Ventas > Notas de crédito por producto"
-Entonces el sistema muestra la información de consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.
+**CA-5.1.1 — Acceso autorizado a la información de consignación**
+Dado que el usuario cuenta con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06
+Cuando ingresa a "Ventas > Notas de Crédito por Producto"
+Entonces el sistema muestra en "Ventas > Notas de Crédito por Producto" la información marcada como CONSIGNACIÓN correspondiente a ese usuario.
 
-**CA-5.2.1 — Usuario no autorizado no visualiza la información de consignación**
-Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "Ventas > Notas de crédito por producto"
-Entonces el sistema oculta la información de consigna a usuarios no autorizados.
+**CA-5.1.2 — Restricción para usuario no autorizado**
+Dado que el usuario no cuenta con el permiso especial FN-INTERPLANTAS
+Cuando ingresa a "Ventas > Notas de Crédito por Producto"
+Entonces el sistema oculta la información marcada como CONSIGNACIÓN en "Ventas > Notas de Crédito por Producto" y no la incluye en el resultado.
 
 ---
 
-# RF-06 — Restricción de visualización de información de consignación en Resumen facturas
+**Regla transversal:**
+Este requerimiento comparte el mismo mecanismo de autorización que [RF-01](#rf-01): el permiso especial FN-INTERPLANTAS junto con los roles remcxc01, remvta01, remvta02 o remvta06 determina la visibilidad de la información de consignación en todas las pantallas y consultas listadas en el [índice de requerimientos](#6-índice-de-requerimientos).
+
+---
+
+<a id="rf-06"></a>
+# RF-06 — Restricción de visualización de consignación en Ventas > Resumen de Facturas
 
 | Campo        | Valor       |
 |--------------|-------------|
 | Prioridad    | Must        |
 | Estado       | Definición  |
-| Dependencias | Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV) |
-
-## Objetivo
-Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "Ventas > Resumen facturas", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.
+| Dependencias | DEP-01 |
 
 ## Descripción
-El sistema deberá limitar la visualización de la consulta "Ventas > Resumen facturas" para que la información correspondiente a facturas de consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
+El sistema deberá limitar la visualización de la consulta "Ventas > Resumen de Facturas" para que la información correspondiente a facturas de consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
 
-### Información / atributos
-| Campo | Obligatorio | Descripción |
-|-------|-------------|-------------|
-| Tipo de documento | Sí | Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación. |
-| Permiso especial FN-INTERPLANTAS | Sí | Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta. |
+## HU-6.1 — Visualización restringida en Ventas > Resumen de Facturas
 
-### Operaciones
-- Consultar: al abrir la pantalla/consulta "Ventas > Resumen facturas", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.
-
-## HU-6.1 — Visualización restringida en Resumen facturas
-
-Como usuario autorizado para consultar información de consignación, quiero que la consulta "Ventas > Resumen Facturas" muestre únicamente la información correspondiente a ventas de consignación cuando tenga el permiso FN-INTERPLANTAS, para proteger la información financiera.
+Como usuario autorizado para consultar información de consignación, quiero que "Ventas > Resumen de Facturas" muestre únicamente la información correspondiente a consignación cuando cuente con el permiso especial FN-INTERPLANTAS, para proteger la información financiera.
 
 ### Reglas de negocio
 
-**RN-6.1** Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "Ventas > Resumen facturas".
+**RN-6.1** Solo los usuarios que cuenten con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06 podrán visualizar información de consignación en "Ventas > Resumen de Facturas".
 
-**RN-6.2** Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).
+**RN-6.2** Los usuarios que no cuenten con el permiso especial FN-INTERPLANTAS no podrán visualizar los registros marcados como CONSIGNACIÓN en "Ventas > Resumen de Facturas"; dichos registros deberán permanecer ocultos.
 
 ### Criterios de Aceptación
 
-**CA-6.1.1 — Usuario autorizado visualiza la información de consignación**
-Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "Ventas > Resumen facturas"
-Entonces el sistema muestra la información de consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.
+**CA-6.1.1 — Acceso autorizado a la información de consignación**
+Dado que el usuario cuenta con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06
+Cuando ingresa a "Ventas > Resumen de Facturas"
+Entonces el sistema muestra en "Ventas > Resumen de Facturas" la información marcada como CONSIGNACIÓN correspondiente a ese usuario.
 
-**CA-6.2.1 — Usuario no autorizado no visualiza la información de consignación**
-Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "Ventas > Resumen facturas"
-Entonces el sistema oculta la información de consigna a usuarios no autorizados.
+**CA-6.1.2 — Restricción para usuario no autorizado**
+Dado que el usuario no cuenta con el permiso especial FN-INTERPLANTAS
+Cuando ingresa a "Ventas > Resumen de Facturas"
+Entonces el sistema oculta la información marcada como CONSIGNACIÓN en "Ventas > Resumen de Facturas" y no la incluye en el resultado.
 
 ---
 
-# RF-07 — Restricción de visualización de información de consignación en Resumen Notas de crédito
+**Regla transversal:**
+Este requerimiento comparte el mismo mecanismo de autorización que [RF-01](#rf-01): el permiso especial FN-INTERPLANTAS junto con los roles remcxc01, remvta01, remvta02 o remvta06 determina la visibilidad de la información de consignación en todas las pantallas y consultas listadas en el [índice de requerimientos](#6-índice-de-requerimientos).
+
+---
+
+<a id="rf-07"></a>
+# RF-07 — Restricción de filtrado de consignación en Ventas > Resumen de Notas de Crédito
 
 | Campo        | Valor       |
 |--------------|-------------|
 | Prioridad    | Must        |
 | Estado       | Definición  |
-| Dependencias | Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV) |
-
-## Objetivo
-Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "Ventas > Resumen Notas de crédito", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.
+| Dependencias | DEP-01 |
 
 ## Descripción
-El sistema deberá limitar la visualización de la consulta "Ventas > Resumen Notas de crédito" para que la información de notas de crédito relacionada a facturas consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
+El sistema deberá limitar la visualización de la consulta "Ventas > Resumen de Notas de Crédito" para que la información de notas de crédito relacionada a facturas de consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
 
-### Información / atributos
-| Campo | Obligatorio | Descripción |
-|-------|-------------|-------------|
-| Tipo de documento | Sí | Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación. |
-| Permiso especial FN-INTERPLANTAS | Sí | Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta. |
+## HU-7.1 — Visualización restringida en Ventas > Resumen de Notas de Crédito
 
-### Operaciones
-- Consultar: al abrir la pantalla/consulta "Ventas > Resumen Notas de crédito", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.
-
-## HU-7.1 — Visualización restringida en Resumen Notas de crédito
-
-Como usuario autorizado para consultar información de consignación, quiero que la consulta "Ventas > Resumen Notas de Crédito" muestre únicamente la información correspondiente a consignación cuando tenga el permiso FN-INTERPLANTAS, para restringir el acceso a usuarios autorizados.
+Como usuario autorizado para consultar información de consignación, quiero que "Ventas > Resumen de Notas de Crédito" permita filtrar únicamente la información correspondiente a consignación cuando cuente con el permiso especial FN-INTERPLANTAS, para restringir el acceso a usuarios autorizados.
 
 ### Reglas de negocio
 
-**RN-7.1** Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "Ventas > Resumen Notas de crédito".
+**RN-7.1** Solo los usuarios que cuenten con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06 podrán visualizar información de consignación en "Ventas > Resumen de Notas de Crédito".
 
-**RN-7.2** Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).
+**RN-7.2** Los usuarios que no cuenten con el permiso especial FN-INTERPLANTAS no podrán utilizar el filtro por Consigna en "Ventas > Resumen de Notas de Crédito".
 
 ### Criterios de Aceptación
 
-**CA-7.1.1 — Usuario autorizado visualiza la información de consignación**
-Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "Ventas > Resumen Notas de crédito"
-Entonces el sistema permite filtrar la información por Consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.
+**CA-7.1.1 — Acceso autorizado a la información de consignación**
+Dado que el usuario cuenta con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06
+Cuando ingresa a "Ventas > Resumen de Notas de Crédito"
+Entonces el sistema permite utilizar el filtro por Consigna en "Ventas > Resumen de Notas de Crédito" y devuelve la información marcada como CONSIGNACIÓN.
 
-**CA-7.2.1 — Usuario no autorizado no visualiza la información de consignación**
-Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "Ventas > Resumen Notas de crédito"
-Entonces el sistema no permite filtrar la información por Consigna.
+**CA-7.1.2 — Restricción para usuario no autorizado**
+Dado que el usuario no cuenta con el permiso especial FN-INTERPLANTAS
+Cuando ingresa a "Ventas > Resumen de Notas de Crédito"
+Entonces el sistema no permite utilizar el filtro por Consigna en "Ventas > Resumen de Notas de Crédito".
 
 ---
 
-# RF-08 — Restricción de visualización de información de consignación en Facturas Canceladas
+**Regla transversal:**
+Este requerimiento comparte el mismo mecanismo de autorización que [RF-01](#rf-01): el permiso especial FN-INTERPLANTAS junto con los roles remcxc01, remvta01, remvta02 o remvta06 determina la visibilidad de la información de consignación en todas las pantallas y consultas listadas en el [índice de requerimientos](#6-índice-de-requerimientos).
+
+---
+
+<a id="rf-08"></a>
+# RF-08 — Restricción de visualización de consignación en Ventas > Facturas Canceladas
 
 | Campo        | Valor       |
 |--------------|-------------|
 | Prioridad    | Must        |
 | Estado       | Definición  |
-| Dependencias | Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV) |
-
-## Objetivo
-Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "Ventas > Facturas Canceladas", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.
+| Dependencias | DEP-01 |
 
 ## Descripción
-El sistema deberá limitar la visualización de la consulta "Ventas > Facturas Canceladas" para que la información correspondiente a facturas consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
+El sistema deberá limitar la visualización de la consulta "Ventas > Facturas Canceladas" para que la información correspondiente a facturas de consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
 
-### Información / atributos
-| Campo | Obligatorio | Descripción |
-|-------|-------------|-------------|
-| Tipo de documento | Sí | Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación. |
-| Permiso especial FN-INTERPLANTAS | Sí | Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta. |
+## HU-8.1 — Visualización restringida en Ventas > Facturas Canceladas
 
-### Operaciones
-- Consultar: al abrir la pantalla/consulta "Ventas > Facturas Canceladas", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.
-
-## HU-8.1 — Visualización restringida en Facturas Canceladas
-
-Como usuario autorizado para consultar información de consignación, quiero que la consulta "Ventas > Facturas Canceladas" muestre únicamente la información correspondiente a consignación cuando tenga el permiso FN-INTERPLANTAS, para evitar la exposición de información sensible.
+Como usuario autorizado para consultar información de consignación, quiero que "Ventas > Facturas Canceladas" muestre únicamente la información correspondiente a consignación cuando cuente con el permiso especial FN-INTERPLANTAS, para evitar la exposición de información sensible.
 
 ### Reglas de negocio
 
-**RN-8.1** Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "Ventas > Facturas Canceladas".
+**RN-8.1** Solo los usuarios que cuenten con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06 podrán visualizar información de consignación en "Ventas > Facturas Canceladas".
 
-**RN-8.2** Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).
+**RN-8.2** Los usuarios que no cuenten con el permiso especial FN-INTERPLANTAS no podrán visualizar los registros marcados como CONSIGNACIÓN en "Ventas > Facturas Canceladas"; dichos registros deberán permanecer ocultos.
 
 ### Criterios de Aceptación
 
-**CA-8.1.1 — Usuario autorizado visualiza la información de consignación**
-Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "Ventas > Facturas Canceladas"
-Entonces el sistema muestra la información de consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.
+**CA-8.1.1 — Acceso autorizado a la información de consignación**
+Dado que el usuario cuenta con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06
+Cuando ingresa a "Ventas > Facturas Canceladas"
+Entonces el sistema muestra en "Ventas > Facturas Canceladas" la información marcada como CONSIGNACIÓN correspondiente a ese usuario.
 
-**CA-8.2.1 — Usuario no autorizado no visualiza la información de consignación**
-Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "Ventas > Facturas Canceladas"
-Entonces el sistema oculta la información de consigna a usuarios no autorizados.
+**CA-8.1.2 — Restricción para usuario no autorizado**
+Dado que el usuario no cuenta con el permiso especial FN-INTERPLANTAS
+Cuando ingresa a "Ventas > Facturas Canceladas"
+Entonces el sistema oculta la información marcada como CONSIGNACIÓN en "Ventas > Facturas Canceladas" y no la incluye en el resultado.
 
 ---
 
-# RF-09 — Restricción de visualización de información de consignación en Ventas por factura pagada
+**Regla transversal:**
+Este requerimiento comparte el mismo mecanismo de autorización que [RF-01](#rf-01): el permiso especial FN-INTERPLANTAS junto con los roles remcxc01, remvta01, remvta02 o remvta06 determina la visibilidad de la información de consignación en todas las pantallas y consultas listadas en el [índice de requerimientos](#6-índice-de-requerimientos).
+
+---
+
+<a id="rf-09"></a>
+# RF-09 — Restricción de visualización de consignación en Ventas > Ventas por Factura Pagada
 
 | Campo        | Valor       |
 |--------------|-------------|
 | Prioridad    | Must        |
 | Estado       | Definición  |
-| Dependencias | Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV) |
-
-## Objetivo
-Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "Ventas > Ventas por factura pagada", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.
+| Dependencias | DEP-01 |
 
 ## Descripción
-El sistema deberá limitar la visualización de la consulta "Ventas > Ventas por factura pagada" para que la información correspondiente a ventas de consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
+El sistema deberá limitar la visualización de la consulta "Ventas > Ventas por Factura Pagada" para que la información correspondiente a ventas de consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
 
-### Información / atributos
-| Campo | Obligatorio | Descripción |
-|-------|-------------|-------------|
-| Tipo de documento | Sí | Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación. |
-| Permiso especial FN-INTERPLANTAS | Sí | Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta. |
+## HU-9.1 — Visualización restringida en Ventas > Ventas por Factura Pagada
 
-### Operaciones
-- Consultar: al abrir la pantalla/consulta "Ventas > Ventas por factura pagada", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.
-
-## HU-9.1 — Visualización restringida en Ventas por factura pagada
-
-Como usuario autorizado para consultar información de consignación, quiero que la consulta "Ventas > Ventas por Factura Pagada" muestre únicamente la información de ventas de consignación cuando tenga el permiso FN-INTERPLANTAS, para proteger la información restringida.
+Como usuario autorizado para consultar información de consignación, quiero que "Ventas > Ventas por Factura Pagada" muestre únicamente la información correspondiente a consignación cuando cuente con el permiso especial FN-INTERPLANTAS, para proteger la información restringida.
 
 ### Reglas de negocio
 
-**RN-9.1** Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "Ventas > Ventas por factura pagada".
+**RN-9.1** Solo los usuarios que cuenten con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06 podrán visualizar información de consignación en "Ventas > Ventas por Factura Pagada".
 
-**RN-9.2** Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).
+**RN-9.2** Los usuarios que no cuenten con el permiso especial FN-INTERPLANTAS no podrán visualizar los registros marcados como CONSIGNACIÓN en "Ventas > Ventas por Factura Pagada"; dichos registros deberán permanecer ocultos.
 
 ### Criterios de Aceptación
 
-**CA-9.1.1 — Usuario autorizado visualiza la información de consignación**
-Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "Ventas > Ventas por factura pagada"
-Entonces el sistema muestra la información de consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.
+**CA-9.1.1 — Acceso autorizado a la información de consignación**
+Dado que el usuario cuenta con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06
+Cuando ingresa a "Ventas > Ventas por Factura Pagada"
+Entonces el sistema muestra en "Ventas > Ventas por Factura Pagada" la información marcada como CONSIGNACIÓN correspondiente a ese usuario.
 
-**CA-9.2.1 — Usuario no autorizado no visualiza la información de consignación**
-Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "Ventas > Ventas por factura pagada"
-Entonces el sistema oculta la información de consigna a usuarios no autorizados.
+**CA-9.1.2 — Restricción para usuario no autorizado**
+Dado que el usuario no cuenta con el permiso especial FN-INTERPLANTAS
+Cuando ingresa a "Ventas > Ventas por Factura Pagada"
+Entonces el sistema oculta la información marcada como CONSIGNACIÓN en "Ventas > Ventas por Factura Pagada" y no la incluye en el resultado.
 
 ---
 
-# RF-10 — Restricción de visualización de información de consignación en Detallado de ventas por factura pagada
+**Regla transversal:**
+Este requerimiento comparte el mismo mecanismo de autorización que [RF-01](#rf-01): el permiso especial FN-INTERPLANTAS junto con los roles remcxc01, remvta01, remvta02 o remvta06 determina la visibilidad de la información de consignación en todas las pantallas y consultas listadas en el [índice de requerimientos](#6-índice-de-requerimientos).
+
+---
+
+<a id="rf-10"></a>
+# RF-10 — Restricción de visualización de consignación en Ventas > Detallado de Ventas por Factura Pagada
 
 | Campo        | Valor       |
 |--------------|-------------|
 | Prioridad    | Must        |
 | Estado       | Definición  |
-| Dependencias | Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV) |
-
-## Objetivo
-Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "Ventas > Detallado de ventas por factura pagada", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.
+| Dependencias | DEP-01 |
 
 ## Descripción
-El sistema deberá limitar la visualización de la consulta "Ventas > Detallado de ventas por factura pagada" para que la información correspondiente a facturas de consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
+El sistema deberá limitar la visualización de la consulta "Ventas > Detallado de Ventas por Factura Pagada" para que la información correspondiente a facturas de consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
 
-### Información / atributos
-| Campo | Obligatorio | Descripción |
-|-------|-------------|-------------|
-| Tipo de documento | Sí | Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación. |
-| Permiso especial FN-INTERPLANTAS | Sí | Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta. |
+## HU-10.1 — Visualización restringida en Ventas > Detallado de Ventas por Factura Pagada
 
-### Operaciones
-- Consultar: al abrir la pantalla/consulta "Ventas > Detallado de ventas por factura pagada", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.
-
-## HU-10.1 — Visualización restringida en Detallado de ventas por factura pagada
-
-Como usuario autorizado para consultar información de consignación, quiero que la consulta "Ventas > Detallado de Ventas por Factura Pagada" muestre únicamente la información correspondiente a ventas de consignación cuando tenga el permiso FN-INTERPLANTAS, para garantizar el acceso exclusivo a usuarios autorizados.
+Como usuario autorizado para consultar información de consignación, quiero que "Ventas > Detallado de Ventas por Factura Pagada" muestre únicamente la información correspondiente a consignación cuando cuente con el permiso especial FN-INTERPLANTAS, para garantizar el acceso exclusivo a usuarios autorizados.
 
 ### Reglas de negocio
 
-**RN-10.1** Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "Ventas > Detallado de ventas por factura pagada".
+**RN-10.1** Solo los usuarios que cuenten con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06 podrán visualizar información de consignación en "Ventas > Detallado de Ventas por Factura Pagada".
 
-**RN-10.2** Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).
+**RN-10.2** Los usuarios que no cuenten con el permiso especial FN-INTERPLANTAS no podrán visualizar los registros marcados como CONSIGNACIÓN en "Ventas > Detallado de Ventas por Factura Pagada"; dichos registros deberán permanecer ocultos.
 
 ### Criterios de Aceptación
 
-**CA-10.1.1 — Usuario autorizado visualiza la información de consignación**
-Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "Ventas > Detallado de ventas por factura pagada"
-Entonces el sistema muestra la información de consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.
+**CA-10.1.1 — Acceso autorizado a la información de consignación**
+Dado que el usuario cuenta con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06
+Cuando ingresa a "Ventas > Detallado de Ventas por Factura Pagada"
+Entonces el sistema muestra en "Ventas > Detallado de Ventas por Factura Pagada" la información marcada como CONSIGNACIÓN correspondiente a ese usuario.
 
-**CA-10.2.1 — Usuario no autorizado no visualiza la información de consignación**
-Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "Ventas > Detallado de ventas por factura pagada"
-Entonces el sistema oculta la información de consigna a usuarios no autorizados.
+**CA-10.1.2 — Restricción para usuario no autorizado**
+Dado que el usuario no cuenta con el permiso especial FN-INTERPLANTAS
+Cuando ingresa a "Ventas > Detallado de Ventas por Factura Pagada"
+Entonces el sistema oculta la información marcada como CONSIGNACIÓN en "Ventas > Detallado de Ventas por Factura Pagada" y no la incluye en el resultado.
 
 ---
 
-# RF-11 — Restricción de visualización de información de consignación en Abonos
+**Regla transversal:**
+Este requerimiento comparte el mismo mecanismo de autorización que [RF-01](#rf-01): el permiso especial FN-INTERPLANTAS junto con los roles remcxc01, remvta01, remvta02 o remvta06 determina la visibilidad de la información de consignación en todas las pantallas y consultas listadas en el [índice de requerimientos](#6-índice-de-requerimientos).
+
+---
+
+<a id="rf-11"></a>
+# RF-11 — Restricción de visualización de consignación en Cuentas por Cobrar > Abonos
 
 | Campo        | Valor       |
 |--------------|-------------|
 | Prioridad    | Must        |
 | Estado       | Definición  |
-| Dependencias | Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV) |
-
-## Objetivo
-Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "Cuentas por Cobrar > Abonos", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.
+| Dependencias | DEP-01 |
 
 ## Descripción
-El sistema deberá limitar la visualización de la pantalla "Cuentas por Cobrar > Abonos" para que los abonos marcados con documento CONSIGNACIÓN sean visibles para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
+El sistema deberá limitar la visualización de la pantalla "Cuentas por Cobrar > Abonos" para que los abonos aplicados a facturas marcadas con documento CONSIGNACIÓN sean visibles únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
 
-### Información / atributos
-| Campo | Obligatorio | Descripción |
-|-------|-------------|-------------|
-| Tipo de documento | Sí | Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación. |
-| Permiso especial FN-INTERPLANTAS | Sí | Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta. |
+## HU-11.1 — Visualización restringida en Cuentas por Cobrar > Abonos
 
-### Operaciones
-- Consultar: al abrir la pantalla/consulta "Cuentas por Cobrar > Abonos", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.
-
-## HU-11.1 — Visualización restringida en Abonos
-
-Como usuario autorizado para consultar información de consignación, quiero que en la pantalla "Cuentas por Cobrar > Abonos" solo sean visibles los documentos marcados como CONSIGNACIÓN cuando tenga el permiso FN-INTERPLANTAS, para proteger la información de consignación.
+Como usuario autorizado para consultar información de consignación, quiero que "Cuentas por Cobrar > Abonos" muestre únicamente la información correspondiente a consignación cuando cuente con el permiso especial FN-INTERPLANTAS, para proteger la información de consignación.
 
 ### Reglas de negocio
 
-**RN-11.1** Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "Cuentas por Cobrar > Abonos".
+**RN-11.1** Solo los usuarios que cuenten con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06 podrán visualizar información de consignación en "Cuentas por Cobrar > Abonos".
 
-**RN-11.2** Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).
+**RN-11.2** Los usuarios que no cuenten con el permiso especial FN-INTERPLANTAS no podrán visualizar los registros marcados como CONSIGNACIÓN en "Cuentas por Cobrar > Abonos"; dichos registros deberán permanecer ocultos.
 
 ### Criterios de Aceptación
 
-**CA-11.1.1 — Usuario autorizado visualiza la información de consignación**
-Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "Cuentas por Cobrar > Abonos"
-Entonces el sistema muestra la información de consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.
+**CA-11.1.1 — Acceso autorizado a la información de consignación**
+Dado que el usuario cuenta con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06
+Cuando ingresa a "Cuentas por Cobrar > Abonos"
+Entonces el sistema muestra en "Cuentas por Cobrar > Abonos" la información marcada como CONSIGNACIÓN correspondiente a ese usuario.
 
-**CA-11.2.1 — Usuario no autorizado no visualiza la información de consignación**
-Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "Cuentas por Cobrar > Abonos"
-Entonces el sistema oculta la información de consigna a usuarios no autorizados.
+**CA-11.1.2 — Restricción para usuario no autorizado**
+Dado que el usuario no cuenta con el permiso especial FN-INTERPLANTAS
+Cuando ingresa a "Cuentas por Cobrar > Abonos"
+Entonces el sistema oculta la información marcada como CONSIGNACIÓN en "Cuentas por Cobrar > Abonos" y no la incluye en el resultado.
 
 ---
 
-# RF-12 — Restricción de visualización de información de consignación en Transacciones
+**Regla transversal:**
+Este requerimiento comparte el mismo mecanismo de autorización que [RF-01](#rf-01): el permiso especial FN-INTERPLANTAS junto con los roles remcxc01, remvta01, remvta02 o remvta06 determina la visibilidad de la información de consignación en todas las pantallas y consultas listadas en el [índice de requerimientos](#6-índice-de-requerimientos).
+
+---
+
+<a id="rf-12"></a>
+# RF-12 — Restricción de visualización de consignación en Cuentas por Cobrar > Transacciones
 
 | Campo        | Valor       |
 |--------------|-------------|
 | Prioridad    | Must        |
 | Estado       | Definición  |
-| Dependencias | Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV) |
-
-## Objetivo
-Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "Cuentas por Cobrar > Transacciones", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.
+| Dependencias | DEP-01 |
 
 ## Descripción
-El sistema deberá limitar la visualización de la pantalla "Cuentas por Cobrar > Transacciones" para que las transacciones marcadas con documento CONSIGNACIÓN sean visibles para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
+El sistema deberá limitar la visualización de la pantalla "Cuentas por Cobrar > Transacciones" para que las transacciones relacionadas a abonos y facturas marcadas con documento CONSIGNACIÓN sean visibles únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
 
-### Información / atributos
-| Campo | Obligatorio | Descripción |
-|-------|-------------|-------------|
-| Tipo de documento | Sí | Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación. |
-| Permiso especial FN-INTERPLANTAS | Sí | Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta. |
+## HU-12.1 — Visualización restringida en Cuentas por Cobrar > Transacciones
 
-### Operaciones
-- Consultar: al abrir la pantalla/consulta "Cuentas por Cobrar > Transacciones", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.
-
-## HU-12.1 — Visualización restringida en Transacciones
-
-Como usuario autorizado para consultar información de consignación, quiero que en la pantalla "Cuentas por Cobrar > Transacciones" solo sean visibles los documentos marcados como CONSIGNACIÓN cuando tenga el permiso FN-INTERPLANTAS, para restringir el acceso a la información sensible.
+Como usuario autorizado para consultar información de consignación, quiero que "Cuentas por Cobrar > Transacciones" muestre únicamente la información correspondiente a consignación cuando cuente con el permiso especial FN-INTERPLANTAS, para restringir el acceso a la información sensible.
 
 ### Reglas de negocio
 
-**RN-12.1** Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "Cuentas por Cobrar > Transacciones".
+**RN-12.1** Solo los usuarios que cuenten con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06 podrán visualizar información de consignación en "Cuentas por Cobrar > Transacciones".
 
-**RN-12.2** Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).
+**RN-12.2** Los usuarios que no cuenten con el permiso especial FN-INTERPLANTAS no podrán visualizar los registros marcados como CONSIGNACIÓN en "Cuentas por Cobrar > Transacciones"; dichos registros deberán permanecer ocultos.
 
 ### Criterios de Aceptación
 
-**CA-12.1.1 — Usuario autorizado visualiza la información de consignación**
-Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "Cuentas por Cobrar > Transacciones"
-Entonces el sistema muestra la información de consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.
+**CA-12.1.1 — Acceso autorizado a la información de consignación**
+Dado que el usuario cuenta con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06
+Cuando ingresa a "Cuentas por Cobrar > Transacciones"
+Entonces el sistema muestra en "Cuentas por Cobrar > Transacciones" la información marcada como CONSIGNACIÓN correspondiente a ese usuario.
 
-**CA-12.2.1 — Usuario no autorizado no visualiza la información de consignación**
-Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "Cuentas por Cobrar > Transacciones"
-Entonces el sistema oculta la información de consigna a usuarios no autorizados.
+**CA-12.1.2 — Restricción para usuario no autorizado**
+Dado que el usuario no cuenta con el permiso especial FN-INTERPLANTAS
+Cuando ingresa a "Cuentas por Cobrar > Transacciones"
+Entonces el sistema oculta la información marcada como CONSIGNACIÓN en "Cuentas por Cobrar > Transacciones" y no la incluye en el resultado.
 
 ---
 
-# RF-13 — Restricción de visualización de información de consignación en Antigüedad de Saldos
+**Regla transversal:**
+Este requerimiento comparte el mismo mecanismo de autorización que [RF-01](#rf-01): el permiso especial FN-INTERPLANTAS junto con los roles remcxc01, remvta01, remvta02 o remvta06 determina la visibilidad de la información de consignación en todas las pantallas y consultas listadas en el [índice de requerimientos](#6-índice-de-requerimientos).
+
+---
+
+<a id="rf-13"></a>
+# RF-13 — Restricción de filtrado de consignación en CXC > Antigüedad de Saldos
 
 | Campo        | Valor       |
 |--------------|-------------|
 | Prioridad    | Must        |
 | Estado       | Definición  |
-| Dependencias | Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV) |
-
-## Objetivo
-Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "CXC > Antigüedad de Saldos", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.
+| Dependencias | DEP-01 |
 
 ## Descripción
 El sistema deberá limitar la visualización de la consulta "CXC > Antigüedad de Saldos" para que la información correspondiente a movimientos y transacciones marcadas por consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
 
-### Información / atributos
-| Campo | Obligatorio | Descripción |
-|-------|-------------|-------------|
-| Tipo de documento | Sí | Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación. |
-| Permiso especial FN-INTERPLANTAS | Sí | Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta. |
+## HU-13.1 — Visualización restringida en CXC > Antigüedad de Saldos
 
-### Operaciones
-- Consultar: al abrir la pantalla/consulta "CXC > Antigüedad de Saldos", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.
-
-## HU-13.1 — Visualización restringida en Antigüedad de Saldos
-
-Como usuario autorizado para consultar información de consignación, quiero que la consulta "CXC > Antigüedad de Saldos" muestre únicamente la información correspondiente a consignación cuando tenga el permiso FN-INTERPLANTAS, para proteger la información financiera.
+Como usuario autorizado para consultar información de consignación, quiero que "CXC > Antigüedad de Saldos" permita filtrar únicamente la información correspondiente a consignación cuando cuente con el permiso especial FN-INTERPLANTAS, para proteger la información financiera.
 
 ### Reglas de negocio
 
-**RN-13.1** Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "CXC > Antigüedad de Saldos".
+**RN-13.1** Solo los usuarios que cuenten con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06 podrán visualizar información de consignación en "CXC > Antigüedad de Saldos".
 
-**RN-13.2** Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).
+**RN-13.2** Los usuarios que no cuenten con el permiso especial FN-INTERPLANTAS no podrán utilizar el filtro por Consigna en "CXC > Antigüedad de Saldos".
 
 ### Criterios de Aceptación
 
-**CA-13.1.1 — Usuario autorizado visualiza la información de consignación**
-Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "CXC > Antigüedad de Saldos"
-Entonces el sistema permite filtrar la información por Consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.
+**CA-13.1.1 — Acceso autorizado a la información de consignación**
+Dado que el usuario cuenta con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06
+Cuando ingresa a "CXC > Antigüedad de Saldos"
+Entonces el sistema permite utilizar el filtro por Consigna en "CXC > Antigüedad de Saldos" y devuelve la información marcada como CONSIGNACIÓN.
 
-**CA-13.2.1 — Usuario no autorizado no visualiza la información de consignación**
-Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "CXC > Antigüedad de Saldos"
-Entonces el sistema no permite filtrar la información por Consigna.
+**CA-13.1.2 — Restricción para usuario no autorizado**
+Dado que el usuario no cuenta con el permiso especial FN-INTERPLANTAS
+Cuando ingresa a "CXC > Antigüedad de Saldos"
+Entonces el sistema no permite utilizar el filtro por Consigna en "CXC > Antigüedad de Saldos".
 
 ---
 
-# RF-14 — Restricción de visualización de información de consignación en Cobranza general
+**Regla transversal:**
+Este requerimiento comparte el mismo mecanismo de autorización que [RF-01](#rf-01): el permiso especial FN-INTERPLANTAS junto con los roles remcxc01, remvta01, remvta02 o remvta06 determina la visibilidad de la información de consignación en todas las pantallas y consultas listadas en el [índice de requerimientos](#6-índice-de-requerimientos).
+
+---
+
+<a id="rf-14"></a>
+# RF-14 — Restricción de filtrado de consignación en CXC > Cobranza General
 
 | Campo        | Valor       |
 |--------------|-------------|
 | Prioridad    | Must        |
 | Estado       | Definición  |
-| Dependencias | Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV) |
-
-## Objetivo
-Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "CXC > Cobranza general", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.
+| Dependencias | DEP-01 |
 
 ## Descripción
-El sistema deberá limitar la visualización de la consulta "CXC > Cobranza general" para que la información correspondiente a consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
+El sistema deberá limitar la visualización de la consulta "CXC > Cobranza General" para que la información correspondiente a consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
 
-### Información / atributos
-| Campo | Obligatorio | Descripción |
-|-------|-------------|-------------|
-| Tipo de documento | Sí | Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación. |
-| Permiso especial FN-INTERPLANTAS | Sí | Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta. |
+## HU-14.1 — Visualización restringida en CXC > Cobranza General
 
-### Operaciones
-- Consultar: al abrir la pantalla/consulta "CXC > Cobranza general", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.
-
-## HU-14.1 — Visualización restringida en Cobranza general
-
-Como usuario autorizado para consultar información de consignación, quiero que la consulta "CXC > Cobranza General" muestre únicamente la información correspondiente a consignación cuando tenga el permiso FN-INTERPLANTAS, para evitar consultas no autorizadas.
+Como usuario autorizado para consultar información de consignación, quiero que "CXC > Cobranza General" permita filtrar únicamente la información correspondiente a consignación cuando cuente con el permiso especial FN-INTERPLANTAS, para evitar consultas no autorizadas.
 
 ### Reglas de negocio
 
-**RN-14.1** Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "CXC > Cobranza general".
+**RN-14.1** Solo los usuarios que cuenten con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06 podrán visualizar información de consignación en "CXC > Cobranza General".
 
-**RN-14.2** Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).
+**RN-14.2** Los usuarios que no cuenten con el permiso especial FN-INTERPLANTAS no podrán utilizar el filtro por Consigna en "CXC > Cobranza General".
 
 ### Criterios de Aceptación
 
-**CA-14.1.1 — Usuario autorizado visualiza la información de consignación**
-Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "CXC > Cobranza general"
-Entonces el sistema permite filtrar la información por Consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.
+**CA-14.1.1 — Acceso autorizado a la información de consignación**
+Dado que el usuario cuenta con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06
+Cuando ingresa a "CXC > Cobranza General"
+Entonces el sistema permite utilizar el filtro por Consigna en "CXC > Cobranza General" y devuelve la información marcada como CONSIGNACIÓN.
 
-**CA-14.2.1 — Usuario no autorizado no visualiza la información de consignación**
-Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "CXC > Cobranza general"
-Entonces el sistema no permite filtrar la información por Consigna.
+**CA-14.1.2 — Restricción para usuario no autorizado**
+Dado que el usuario no cuenta con el permiso especial FN-INTERPLANTAS
+Cuando ingresa a "CXC > Cobranza General"
+Entonces el sistema no permite utilizar el filtro por Consigna en "CXC > Cobranza General".
 
 ---
 
-# RF-15 — Restricción de visualización de información de consignación en Cobranza general consulta
+**Regla transversal:**
+Este requerimiento comparte el mismo mecanismo de autorización que [RF-01](#rf-01): el permiso especial FN-INTERPLANTAS junto con los roles remcxc01, remvta01, remvta02 o remvta06 determina la visibilidad de la información de consignación en todas las pantallas y consultas listadas en el [índice de requerimientos](#6-índice-de-requerimientos).
+
+---
+
+<a id="rf-15"></a>
+# RF-15 — Restricción de visualización de consignación en Ventas > Cobranza General Consulta
 
 | Campo        | Valor       |
 |--------------|-------------|
 | Prioridad    | Must        |
 | Estado       | Definición  |
-| Dependencias | Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV) |
-
-## Objetivo
-Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "Ventas > Cobranza general consulta", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.
+| Dependencias | DEP-01 |
 
 ## Descripción
-El sistema deberá limitar la visualización de la consulta "Ventas > Cobranza general consulta" para que la información correspondiente a facturas marcadas por consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
+El sistema deberá limitar la visualización de la consulta "Ventas > Cobranza General Consulta" para que la información correspondiente a facturas marcadas por consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
 
-### Información / atributos
-| Campo | Obligatorio | Descripción |
-|-------|-------------|-------------|
-| Tipo de documento | Sí | Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación. |
-| Permiso especial FN-INTERPLANTAS | Sí | Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta. |
+## HU-15.1 — Visualización restringida en Ventas > Cobranza General Consulta
 
-### Operaciones
-- Consultar: al abrir la pantalla/consulta "Ventas > Cobranza general consulta", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.
-
-## HU-15.1 — Visualización restringida en Cobranza general consulta
-
-Como usuario autorizado para consultar información de consignación, quiero que la consulta "Ventas > Cobranza General Consulta" muestre únicamente la información correspondiente a ventas de consignación cuando tenga el permiso FN-INTERPLANTAS, para preservar la confidencialidad de la información.
+Como usuario autorizado para consultar información de consignación, quiero que "Ventas > Cobranza General Consulta" muestre únicamente la información correspondiente a consignación cuando cuente con el permiso especial FN-INTERPLANTAS, para preservar la confidencialidad de la información.
 
 ### Reglas de negocio
 
-**RN-15.1** Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "Ventas > Cobranza general consulta".
+**RN-15.1** Solo los usuarios que cuenten con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06 podrán visualizar información de consignación en "Ventas > Cobranza General Consulta".
 
-**RN-15.2** Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).
+**RN-15.2** Los usuarios que no cuenten con el permiso especial FN-INTERPLANTAS no podrán visualizar los registros marcados como CONSIGNACIÓN en "Ventas > Cobranza General Consulta"; dichos registros deberán permanecer ocultos.
 
 ### Criterios de Aceptación
 
-**CA-15.1.1 — Usuario autorizado visualiza la información de consignación**
-Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "Ventas > Cobranza general consulta"
-Entonces el sistema muestra la información de consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.
+**CA-15.1.1 — Acceso autorizado a la información de consignación**
+Dado que el usuario cuenta con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06
+Cuando ingresa a "Ventas > Cobranza General Consulta"
+Entonces el sistema muestra en "Ventas > Cobranza General Consulta" la información marcada como CONSIGNACIÓN correspondiente a ese usuario.
 
-**CA-15.2.1 — Usuario no autorizado no visualiza la información de consignación**
-Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "Ventas > Cobranza general consulta"
-Entonces el sistema oculta la información de consigna a usuarios no autorizados.
+**CA-15.1.2 — Restricción para usuario no autorizado**
+Dado que el usuario no cuenta con el permiso especial FN-INTERPLANTAS
+Cuando ingresa a "Ventas > Cobranza General Consulta"
+Entonces el sistema oculta la información marcada como CONSIGNACIÓN en "Ventas > Cobranza General Consulta" y no la incluye en el resultado.
 
 ---
 
-# RF-16 — Restricción de visualización de información de consignación en Comportamiento de pagos
+**Regla transversal:**
+Este requerimiento comparte el mismo mecanismo de autorización que [RF-01](#rf-01): el permiso especial FN-INTERPLANTAS junto con los roles remcxc01, remvta01, remvta02 o remvta06 determina la visibilidad de la información de consignación en todas las pantallas y consultas listadas en el [índice de requerimientos](#6-índice-de-requerimientos).
+
+---
+
+<a id="rf-16"></a>
+# RF-16 — Restricción de filtrado de consignación en CXC > Comportamiento de Pagos
 
 | Campo        | Valor       |
 |--------------|-------------|
 | Prioridad    | Must        |
 | Estado       | Definición  |
-| Dependencias | Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV) |
-
-## Objetivo
-Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "CXC > Comportamiento de pagos", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.
+| Dependencias | DEP-01 |
 
 ## Descripción
-El sistema deberá limitar la visualización de la consulta "CXC > Comportamiento de pagos" para que la información correspondiente a movimientos y transacciones por consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
+El sistema deberá limitar la visualización de la consulta "CXC > Comportamiento de Pagos" para que la información correspondiente a movimientos y transacciones por consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
 
-### Información / atributos
-| Campo | Obligatorio | Descripción |
-|-------|-------------|-------------|
-| Tipo de documento | Sí | Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación. |
-| Permiso especial FN-INTERPLANTAS | Sí | Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta. |
+## HU-16.1 — Visualización restringida en CXC > Comportamiento de Pagos
 
-### Operaciones
-- Consultar: al abrir la pantalla/consulta "CXC > Comportamiento de pagos", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.
-
-## HU-16.1 — Visualización restringida en Comportamiento de pagos
-
-Como usuario autorizado para consultar información de consignación, quiero que la consulta "CXC > Comportamiento de Pagos" muestre únicamente la información correspondiente a consignación cuando tenga el permiso FN-INTERPLANTAS, para proteger la información restringida.
+Como usuario autorizado para consultar información de consignación, quiero que "CXC > Comportamiento de Pagos" permita filtrar únicamente la información correspondiente a consignación cuando cuente con el permiso especial FN-INTERPLANTAS, para proteger la información restringida.
 
 ### Reglas de negocio
 
-**RN-16.1** Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "CXC > Comportamiento de pagos".
+**RN-16.1** Solo los usuarios que cuenten con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06 podrán visualizar información de consignación en "CXC > Comportamiento de Pagos".
 
-**RN-16.2** Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).
+**RN-16.2** Los usuarios que no cuenten con el permiso especial FN-INTERPLANTAS no podrán utilizar el filtro por Consigna en "CXC > Comportamiento de Pagos".
 
 ### Criterios de Aceptación
 
-**CA-16.1.1 — Usuario autorizado visualiza la información de consignación**
-Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "CXC > Comportamiento de pagos"
-Entonces el sistema permite filtrar la información por Consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.
+**CA-16.1.1 — Acceso autorizado a la información de consignación**
+Dado que el usuario cuenta con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06
+Cuando ingresa a "CXC > Comportamiento de Pagos"
+Entonces el sistema permite utilizar el filtro por Consigna en "CXC > Comportamiento de Pagos" y devuelve la información marcada como CONSIGNACIÓN.
 
-**CA-16.2.1 — Usuario no autorizado no visualiza la información de consignación**
-Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "CXC > Comportamiento de pagos"
-Entonces el sistema no permite filtrar la información por Consigna.
+**CA-16.1.2 — Restricción para usuario no autorizado**
+Dado que el usuario no cuenta con el permiso especial FN-INTERPLANTAS
+Cuando ingresa a "CXC > Comportamiento de Pagos"
+Entonces el sistema no permite utilizar el filtro por Consigna en "CXC > Comportamiento de Pagos".
 
 ---
 
-# RF-17 — Restricción de visualización de información de consignación en Concentrado de cobranza
+**Regla transversal:**
+Este requerimiento comparte el mismo mecanismo de autorización que [RF-01](#rf-01): el permiso especial FN-INTERPLANTAS junto con los roles remcxc01, remvta01, remvta02 o remvta06 determina la visibilidad de la información de consignación en todas las pantallas y consultas listadas en el [índice de requerimientos](#6-índice-de-requerimientos).
+
+---
+
+<a id="rf-17"></a>
+# RF-17 — Restricción de visualización de consignación en Ventas > Concentrado de Cobranza
 
 | Campo        | Valor       |
 |--------------|-------------|
 | Prioridad    | Must        |
 | Estado       | Definición  |
-| Dependencias | Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV) |
-
-## Objetivo
-Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "Ventas > Concentrado de cobranza", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.
+| Dependencias | DEP-01 |
 
 ## Descripción
-El sistema deberá limitar la visualización de la consulta "Ventas > Concentrado de cobranza" para que la información correspondiente a facturas de consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
+El sistema deberá limitar la visualización de la consulta "Ventas > Concentrado de Cobranza" para que la información correspondiente a facturas de consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
 
-### Información / atributos
-| Campo | Obligatorio | Descripción |
-|-------|-------------|-------------|
-| Tipo de documento | Sí | Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación. |
-| Permiso especial FN-INTERPLANTAS | Sí | Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta. |
+## HU-17.1 — Visualización restringida en Ventas > Concentrado de Cobranza
 
-### Operaciones
-- Consultar: al abrir la pantalla/consulta "Ventas > Concentrado de cobranza", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.
-
-## HU-17.1 — Visualización restringida en Concentrado de cobranza
-
-Como usuario autorizado para consultar información de consignación, quiero que la consulta "Ventas > Concentrado de Cobranza" muestre únicamente la información correspondiente a ventas de consignación cuando tenga el permiso FN-INTERPLANTAS, para garantizar que solo usuarios autorizados puedan consultarla.
+Como usuario autorizado para consultar información de consignación, quiero que "Ventas > Concentrado de Cobranza" muestre únicamente la información correspondiente a consignación cuando cuente con el permiso especial FN-INTERPLANTAS, para garantizar que solo usuarios autorizados puedan consultarla.
 
 ### Reglas de negocio
 
-**RN-17.1** Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "Ventas > Concentrado de cobranza".
+**RN-17.1** Solo los usuarios que cuenten con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06 podrán visualizar información de consignación en "Ventas > Concentrado de Cobranza".
 
-**RN-17.2** Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).
+**RN-17.2** Los usuarios que no cuenten con el permiso especial FN-INTERPLANTAS no podrán visualizar los registros marcados como CONSIGNACIÓN en "Ventas > Concentrado de Cobranza"; dichos registros deberán permanecer ocultos.
 
 ### Criterios de Aceptación
 
-**CA-17.1.1 — Usuario autorizado visualiza la información de consignación**
-Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "Ventas > Concentrado de cobranza"
-Entonces el sistema muestra la información de consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.
+**CA-17.1.1 — Acceso autorizado a la información de consignación**
+Dado que el usuario cuenta con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06
+Cuando ingresa a "Ventas > Concentrado de Cobranza"
+Entonces el sistema muestra en "Ventas > Concentrado de Cobranza" la información marcada como CONSIGNACIÓN correspondiente a ese usuario.
 
-**CA-17.2.1 — Usuario no autorizado no visualiza la información de consignación**
-Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "Ventas > Concentrado de cobranza"
-Entonces el sistema oculta la información de consigna a usuarios no autorizados.
+**CA-17.1.2 — Restricción para usuario no autorizado**
+Dado que el usuario no cuenta con el permiso especial FN-INTERPLANTAS
+Cuando ingresa a "Ventas > Concentrado de Cobranza"
+Entonces el sistema oculta la información marcada como CONSIGNACIÓN en "Ventas > Concentrado de Cobranza" y no la incluye en el resultado.
 
 ---
 
-# RF-18 — Restricción de visualización de información de consignación en Diario de abonos
+**Regla transversal:**
+Este requerimiento comparte el mismo mecanismo de autorización que [RF-01](#rf-01): el permiso especial FN-INTERPLANTAS junto con los roles remcxc01, remvta01, remvta02 o remvta06 determina la visibilidad de la información de consignación en todas las pantallas y consultas listadas en el [índice de requerimientos](#6-índice-de-requerimientos).
+
+---
+
+<a id="rf-18"></a>
+# RF-18 — Restricción de filtrado de consignación en CXC > Diario de Abonos
 
 | Campo        | Valor       |
 |--------------|-------------|
 | Prioridad    | Must        |
 | Estado       | Definición  |
-| Dependencias | Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV) |
-
-## Objetivo
-Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "CXC > Diario de abonos", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.
+| Dependencias | DEP-01 |
 
 ## Descripción
-El sistema deberá limitar la visualización de la consulta "CXC > Diario de abonos" para que la información correspondiente a movimientos y transacciones marcadas como consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
+El sistema deberá limitar la visualización de la consulta "CXC > Diario de Abonos" para que la información correspondiente a movimientos y transacciones marcadas como consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
 
-### Información / atributos
-| Campo | Obligatorio | Descripción |
-|-------|-------------|-------------|
-| Tipo de documento | Sí | Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación. |
-| Permiso especial FN-INTERPLANTAS | Sí | Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta. |
+## HU-18.1 — Visualización restringida en CXC > Diario de Abonos
 
-### Operaciones
-- Consultar: al abrir la pantalla/consulta "CXC > Diario de abonos", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.
-
-## HU-18.1 — Visualización restringida en Diario de abonos
-
-Como usuario autorizado para consultar información de consignación, quiero que la consulta "CXC > Diario de Abonos" muestre únicamente la información correspondiente a consignación cuando tenga el permiso FN-INTERPLANTAS, para proteger la información financiera.
+Como usuario autorizado para consultar información de consignación, quiero que "CXC > Diario de Abonos" permita filtrar únicamente la información correspondiente a consignación cuando cuente con el permiso especial FN-INTERPLANTAS, para proteger la información financiera.
 
 ### Reglas de negocio
 
-**RN-18.1** Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "CXC > Diario de abonos".
+**RN-18.1** Solo los usuarios que cuenten con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06 podrán visualizar información de consignación en "CXC > Diario de Abonos".
 
-**RN-18.2** Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).
+**RN-18.2** Los usuarios que no cuenten con el permiso especial FN-INTERPLANTAS no podrán utilizar el filtro por Consigna en "CXC > Diario de Abonos".
 
 ### Criterios de Aceptación
 
-**CA-18.1.1 — Usuario autorizado visualiza la información de consignación**
-Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "CXC > Diario de abonos"
-Entonces el sistema permite filtrar la información por Consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.
+**CA-18.1.1 — Acceso autorizado a la información de consignación**
+Dado que el usuario cuenta con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06
+Cuando ingresa a "CXC > Diario de Abonos"
+Entonces el sistema permite utilizar el filtro por Consigna en "CXC > Diario de Abonos" y devuelve la información marcada como CONSIGNACIÓN.
 
-**CA-18.2.1 — Usuario no autorizado no visualiza la información de consignación**
-Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "CXC > Diario de abonos"
-Entonces el sistema no permite filtrar la información por Consigna.
+**CA-18.1.2 — Restricción para usuario no autorizado**
+Dado que el usuario no cuenta con el permiso especial FN-INTERPLANTAS
+Cuando ingresa a "CXC > Diario de Abonos"
+Entonces el sistema no permite utilizar el filtro por Consigna en "CXC > Diario de Abonos".
 
 ---
 
-# RF-19 — Restricción de visualización de información de consignación en Documentos de Cobranza
+**Regla transversal:**
+Este requerimiento comparte el mismo mecanismo de autorización que [RF-01](#rf-01): el permiso especial FN-INTERPLANTAS junto con los roles remcxc01, remvta01, remvta02 o remvta06 determina la visibilidad de la información de consignación en todas las pantallas y consultas listadas en el [índice de requerimientos](#6-índice-de-requerimientos).
+
+---
+
+<a id="rf-19"></a>
+# RF-19 — Restricción de visualización de consignación en Ventas > Documentos de Cobranza
 
 | Campo        | Valor       |
 |--------------|-------------|
 | Prioridad    | Must        |
 | Estado       | Definición  |
-| Dependencias | Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV) |
-
-## Objetivo
-Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "Ventas > Documentos de Cobranza", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.
+| Dependencias | DEP-01 |
 
 ## Descripción
 El sistema deberá limitar la visualización de la consulta "Ventas > Documentos de Cobranza" para que la información correspondiente a facturas de consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
 
-### Información / atributos
-| Campo | Obligatorio | Descripción |
-|-------|-------------|-------------|
-| Tipo de documento | Sí | Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación. |
-| Permiso especial FN-INTERPLANTAS | Sí | Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta. |
+## HU-19.1 — Visualización restringida en Ventas > Documentos de Cobranza
 
-### Operaciones
-- Consultar: al abrir la pantalla/consulta "Ventas > Documentos de Cobranza", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.
-
-## HU-19.1 — Visualización restringida en Documentos de Cobranza
-
-Como usuario autorizado para consultar información de consignación, quiero que la consulta "Ventas > Documentos de Cobranza" muestre únicamente la información correspondiente a ventas de consignación cuando tenga el permiso FN-INTERPLANTAS, para evitar la exposición de información restringida.
+Como usuario autorizado para consultar información de consignación, quiero que "Ventas > Documentos de Cobranza" muestre únicamente la información correspondiente a consignación cuando cuente con el permiso especial FN-INTERPLANTAS, para evitar la exposición de información restringida.
 
 ### Reglas de negocio
 
-**RN-19.1** Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "Ventas > Documentos de Cobranza".
+**RN-19.1** Solo los usuarios que cuenten con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06 podrán visualizar información de consignación en "Ventas > Documentos de Cobranza".
 
-**RN-19.2** Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).
+**RN-19.2** Los usuarios que no cuenten con el permiso especial FN-INTERPLANTAS no podrán visualizar los registros marcados como CONSIGNACIÓN en "Ventas > Documentos de Cobranza"; dichos registros deberán permanecer ocultos.
 
 ### Criterios de Aceptación
 
-**CA-19.1.1 — Usuario autorizado visualiza la información de consignación**
-Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "Ventas > Documentos de Cobranza"
-Entonces el sistema muestra la información de consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.
+**CA-19.1.1 — Acceso autorizado a la información de consignación**
+Dado que el usuario cuenta con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06
+Cuando ingresa a "Ventas > Documentos de Cobranza"
+Entonces el sistema muestra en "Ventas > Documentos de Cobranza" la información marcada como CONSIGNACIÓN correspondiente a ese usuario.
 
-**CA-19.2.1 — Usuario no autorizado no visualiza la información de consignación**
-Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "Ventas > Documentos de Cobranza"
-Entonces el sistema oculta la información de consigna a usuarios no autorizados.
+**CA-19.1.2 — Restricción para usuario no autorizado**
+Dado que el usuario no cuenta con el permiso especial FN-INTERPLANTAS
+Cuando ingresa a "Ventas > Documentos de Cobranza"
+Entonces el sistema oculta la información marcada como CONSIGNACIÓN en "Ventas > Documentos de Cobranza" y no la incluye en el resultado.
 
 ---
 
-# RF-20 — Restricción de visualización de información de consignación en Detalle de abonos por facturas
+**Regla transversal:**
+Este requerimiento comparte el mismo mecanismo de autorización que [RF-01](#rf-01): el permiso especial FN-INTERPLANTAS junto con los roles remcxc01, remvta01, remvta02 o remvta06 determina la visibilidad de la información de consignación en todas las pantallas y consultas listadas en el [índice de requerimientos](#6-índice-de-requerimientos).
+
+---
+
+<a id="rf-20"></a>
+# RF-20 — Restricción de visualización de consignación en Ventas > Detalle de Abonos por Facturas
 
 | Campo        | Valor       |
 |--------------|-------------|
 | Prioridad    | Must        |
 | Estado       | Definición  |
-| Dependencias | Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV) |
-
-## Objetivo
-Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "Ventas > Detalle de abonos por facturas", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.
+| Dependencias | DEP-01 |
 
 ## Descripción
-El sistema deberá limitar la visualización de la consulta "Ventas > Detalle de abonos por facturas" para que la información correspondiente a facturas de consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
+El sistema deberá limitar la visualización de la consulta "Ventas > Detalle de Abonos por Facturas" para que la información correspondiente a facturas de consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
 
-### Información / atributos
-| Campo | Obligatorio | Descripción |
-|-------|-------------|-------------|
-| Tipo de documento | Sí | Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación. |
-| Permiso especial FN-INTERPLANTAS | Sí | Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta. |
+## HU-20.1 — Visualización restringida en Ventas > Detalle de Abonos por Facturas
 
-### Operaciones
-- Consultar: al abrir la pantalla/consulta "Ventas > Detalle de abonos por facturas", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.
-
-## HU-20.1 — Visualización restringida en Detalle de abonos por facturas
-
-Como usuario autorizado para consultar información de consignación, quiero que la consulta "Ventas > Detalle de Abonos por Facturas" muestre únicamente la información correspondiente a ventas de consignación cuando tenga el permiso FN-INTERPLANTAS, para garantizar la seguridad de la información.
+Como usuario autorizado para consultar información de consignación, quiero que "Ventas > Detalle de Abonos por Facturas" muestre únicamente la información correspondiente a consignación cuando cuente con el permiso especial FN-INTERPLANTAS, para garantizar la seguridad de la información.
 
 ### Reglas de negocio
 
-**RN-20.1** Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "Ventas > Detalle de abonos por facturas".
+**RN-20.1** Solo los usuarios que cuenten con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06 podrán visualizar información de consignación en "Ventas > Detalle de Abonos por Facturas".
 
-**RN-20.2** Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).
+**RN-20.2** Los usuarios que no cuenten con el permiso especial FN-INTERPLANTAS no podrán visualizar los registros marcados como CONSIGNACIÓN en "Ventas > Detalle de Abonos por Facturas"; dichos registros deberán permanecer ocultos.
 
 ### Criterios de Aceptación
 
-**CA-20.1.1 — Usuario autorizado visualiza la información de consignación**
-Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "Ventas > Detalle de abonos por facturas"
-Entonces el sistema muestra la información de consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.
+**CA-20.1.1 — Acceso autorizado a la información de consignación**
+Dado que el usuario cuenta con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06
+Cuando ingresa a "Ventas > Detalle de Abonos por Facturas"
+Entonces el sistema muestra en "Ventas > Detalle de Abonos por Facturas" la información marcada como CONSIGNACIÓN correspondiente a ese usuario.
 
-**CA-20.2.1 — Usuario no autorizado no visualiza la información de consignación**
-Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "Ventas > Detalle de abonos por facturas"
-Entonces el sistema oculta la información de consigna a usuarios no autorizados.
+**CA-20.1.2 — Restricción para usuario no autorizado**
+Dado que el usuario no cuenta con el permiso especial FN-INTERPLANTAS
+Cuando ingresa a "Ventas > Detalle de Abonos por Facturas"
+Entonces el sistema oculta la información marcada como CONSIGNACIÓN en "Ventas > Detalle de Abonos por Facturas" y no la incluye en el resultado.
 
 ---
 
-# RF-21 — Restricción de visualización de información de consignación en Detalle abonos facturas (Pagado)
+**Regla transversal:**
+Este requerimiento comparte el mismo mecanismo de autorización que [RF-01](#rf-01): el permiso especial FN-INTERPLANTAS junto con los roles remcxc01, remvta01, remvta02 o remvta06 determina la visibilidad de la información de consignación en todas las pantallas y consultas listadas en el [índice de requerimientos](#6-índice-de-requerimientos).
+
+---
+
+<a id="rf-21"></a>
+# RF-21 — Restricción de visualización de consignación en Ventas > Detalle Abonos Facturas (Pagado)
 
 | Campo        | Valor       |
 |--------------|-------------|
 | Prioridad    | Must        |
 | Estado       | Definición  |
-| Dependencias | Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV) |
-
-## Objetivo
-Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "Ventas > Detalle abonos facturas (Pagado)", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.
+| Dependencias | DEP-01 |
 
 ## Descripción
-El sistema deberá limitar la visualización de la consulta "Ventas > Detalle abonos facturas (Pagado)" para que la información correspondiente a facturas de consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
+El sistema deberá limitar la visualización de la consulta "Ventas > Detalle Abonos Facturas (Pagado)" para que la información correspondiente a facturas de consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
 
-### Información / atributos
-| Campo | Obligatorio | Descripción |
-|-------|-------------|-------------|
-| Tipo de documento | Sí | Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación. |
-| Permiso especial FN-INTERPLANTAS | Sí | Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta. |
+## HU-21.1 — Visualización restringida en Ventas > Detalle Abonos Facturas (Pagado)
 
-### Operaciones
-- Consultar: al abrir la pantalla/consulta "Ventas > Detalle abonos facturas (Pagado)", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.
-
-## HU-21.1 — Visualización restringida en Detalle abonos facturas (Pagado)
-
-Como usuario autorizado para consultar información de consignación, quiero que la consulta "Ventas > Detalle Abonos Facturas (Pagado)" muestre únicamente la información correspondiente a ventas de consignación cuando tenga el permiso FN-INTERPLANTAS, para restringir su consulta a usuarios autorizados.
+Como usuario autorizado para consultar información de consignación, quiero que "Ventas > Detalle Abonos Facturas (Pagado)" muestre únicamente la información correspondiente a consignación cuando cuente con el permiso especial FN-INTERPLANTAS, para restringir su consulta a usuarios autorizados.
 
 ### Reglas de negocio
 
-**RN-21.1** Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "Ventas > Detalle abonos facturas (Pagado)".
+**RN-21.1** Solo los usuarios que cuenten con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06 podrán visualizar información de consignación en "Ventas > Detalle Abonos Facturas (Pagado)".
 
-**RN-21.2** Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).
+**RN-21.2** Los usuarios que no cuenten con el permiso especial FN-INTERPLANTAS no podrán visualizar los registros marcados como CONSIGNACIÓN en "Ventas > Detalle Abonos Facturas (Pagado)"; dichos registros deberán permanecer ocultos.
 
 ### Criterios de Aceptación
 
-**CA-21.1.1 — Usuario autorizado visualiza la información de consignación**
-Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "Ventas > Detalle abonos facturas (Pagado)"
-Entonces el sistema muestra la información de consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.
+**CA-21.1.1 — Acceso autorizado a la información de consignación**
+Dado que el usuario cuenta con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06
+Cuando ingresa a "Ventas > Detalle Abonos Facturas (Pagado)"
+Entonces el sistema muestra en "Ventas > Detalle Abonos Facturas (Pagado)" la información marcada como CONSIGNACIÓN correspondiente a ese usuario.
 
-**CA-21.2.1 — Usuario no autorizado no visualiza la información de consignación**
-Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "Ventas > Detalle abonos facturas (Pagado)"
-Entonces el sistema oculta la información de consigna a usuarios no autorizados.
+**CA-21.1.2 — Restricción para usuario no autorizado**
+Dado que el usuario no cuenta con el permiso especial FN-INTERPLANTAS
+Cuando ingresa a "Ventas > Detalle Abonos Facturas (Pagado)"
+Entonces el sistema oculta la información marcada como CONSIGNACIÓN en "Ventas > Detalle Abonos Facturas (Pagado)" y no la incluye en el resultado.
 
 ---
 
-# RF-22 — Restricción de visualización de información de consignación en Facturas Relación de factura
+**Regla transversal:**
+Este requerimiento comparte el mismo mecanismo de autorización que [RF-01](#rf-01): el permiso especial FN-INTERPLANTAS junto con los roles remcxc01, remvta01, remvta02 o remvta06 determina la visibilidad de la información de consignación en todas las pantallas y consultas listadas en el [índice de requerimientos](#6-índice-de-requerimientos).
+
+---
+
+<a id="rf-22"></a>
+# RF-22 — Restricción de visualización de consignación en Ventas > Facturas Relación de Factura
 
 | Campo        | Valor       |
 |--------------|-------------|
 | Prioridad    | Must        |
 | Estado       | Definición  |
-| Dependencias | Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV) |
-
-## Objetivo
-Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "Ventas > Facturas Relación de factura", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.
+| Dependencias | DEP-01 |
 
 ## Descripción
-El sistema deberá limitar la visualización de la consulta "Ventas > Facturas Relación de factura" para que la información correspondiente a facturas de consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
+El sistema deberá limitar la visualización de la consulta "Ventas > Facturas Relación de Factura" para que la información correspondiente a facturas de consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
 
-### Información / atributos
-| Campo | Obligatorio | Descripción |
-|-------|-------------|-------------|
-| Tipo de documento | Sí | Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación. |
-| Permiso especial FN-INTERPLANTAS | Sí | Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta. |
+## HU-22.1 — Visualización restringida en Ventas > Facturas Relación de Factura
 
-### Operaciones
-- Consultar: al abrir la pantalla/consulta "Ventas > Facturas Relación de factura", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.
-
-## HU-22.1 — Visualización restringida en Facturas Relación de factura
-
-Como usuario autorizado para consultar información de consignación, quiero que la consulta "Ventas > Facturas Relación de Factura" muestre únicamente la información correspondiente a ventas de consignación cuando tenga el permiso FN-INTERPLANTAS, para proteger la confidencialidad de la información.
+Como usuario autorizado para consultar información de consignación, quiero que "Ventas > Facturas Relación de Factura" muestre únicamente la información correspondiente a consignación cuando cuente con el permiso especial FN-INTERPLANTAS, para proteger la confidencialidad de la información.
 
 ### Reglas de negocio
 
-**RN-22.1** Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "Ventas > Facturas Relación de factura".
+**RN-22.1** Solo los usuarios que cuenten con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06 podrán visualizar información de consignación en "Ventas > Facturas Relación de Factura".
 
-**RN-22.2** Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).
+**RN-22.2** Los usuarios que no cuenten con el permiso especial FN-INTERPLANTAS no podrán visualizar los registros marcados como CONSIGNACIÓN en "Ventas > Facturas Relación de Factura"; dichos registros deberán permanecer ocultos.
 
 ### Criterios de Aceptación
 
-**CA-22.1.1 — Usuario autorizado visualiza la información de consignación**
-Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "Ventas > Facturas Relación de factura"
-Entonces el sistema muestra la información de consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.
+**CA-22.1.1 — Acceso autorizado a la información de consignación**
+Dado que el usuario cuenta con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06
+Cuando ingresa a "Ventas > Facturas Relación de Factura"
+Entonces el sistema muestra en "Ventas > Facturas Relación de Factura" la información marcada como CONSIGNACIÓN correspondiente a ese usuario.
 
-**CA-22.2.1 — Usuario no autorizado no visualiza la información de consignación**
-Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "Ventas > Facturas Relación de factura"
-Entonces el sistema oculta la información de consigna a usuarios no autorizados.
+**CA-22.1.2 — Restricción para usuario no autorizado**
+Dado que el usuario no cuenta con el permiso especial FN-INTERPLANTAS
+Cuando ingresa a "Ventas > Facturas Relación de Factura"
+Entonces el sistema oculta la información marcada como CONSIGNACIÓN en "Ventas > Facturas Relación de Factura" y no la incluye en el resultado.
 
 ---
 
-# RF-23 — Restricción de visualización de información de consignación en Estado de Cuenta
+**Regla transversal:**
+Este requerimiento comparte el mismo mecanismo de autorización que [RF-01](#rf-01): el permiso especial FN-INTERPLANTAS junto con los roles remcxc01, remvta01, remvta02 o remvta06 determina la visibilidad de la información de consignación en todas las pantallas y consultas listadas en el [índice de requerimientos](#6-índice-de-requerimientos).
+
+---
+
+<a id="rf-23"></a>
+# RF-23 — Restricción de filtrado de consignación en CXC > Estado de Cuenta
 
 | Campo        | Valor       |
 |--------------|-------------|
 | Prioridad    | Must        |
 | Estado       | Definición  |
-| Dependencias | Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV) |
-
-## Objetivo
-Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "CXC > Estado de Cuenta", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.
+| Dependencias | DEP-01 |
 
 ## Descripción
 El sistema deberá limitar la visualización de la consulta "CXC > Estado de Cuenta" para que la información de movimientos y transacciones marcadas como consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
 
-### Información / atributos
-| Campo | Obligatorio | Descripción |
-|-------|-------------|-------------|
-| Tipo de documento | Sí | Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación. |
-| Permiso especial FN-INTERPLANTAS | Sí | Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta. |
+## HU-23.1 — Visualización restringida en CXC > Estado de Cuenta
 
-### Operaciones
-- Consultar: al abrir la pantalla/consulta "CXC > Estado de Cuenta", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.
-
-## HU-23.1 — Visualización restringida en Estado de Cuenta
-
-Como usuario autorizado para consultar información de consignación, quiero que la consulta "CXC > Estado de Cuenta" muestre únicamente la información correspondiente a consignación cuando tenga el permiso FN-INTERPLANTAS, para garantizar que solo usuarios autorizados puedan acceder a ella.
+Como usuario autorizado para consultar información de consignación, quiero que "CXC > Estado de Cuenta" permita filtrar únicamente la información correspondiente a consignación cuando cuente con el permiso especial FN-INTERPLANTAS, para garantizar que solo usuarios autorizados puedan acceder a ella.
 
 ### Reglas de negocio
 
-**RN-23.1** Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "CXC > Estado de Cuenta".
+**RN-23.1** Solo los usuarios que cuenten con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06 podrán visualizar información de consignación en "CXC > Estado de Cuenta".
 
-**RN-23.2** Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).
+**RN-23.2** Los usuarios que no cuenten con el permiso especial FN-INTERPLANTAS no podrán utilizar el filtro por Consigna en "CXC > Estado de Cuenta".
 
 ### Criterios de Aceptación
 
-**CA-23.1.1 — Usuario autorizado visualiza la información de consignación**
-Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "CXC > Estado de Cuenta"
-Entonces el sistema permite filtrar la información por Consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.
+**CA-23.1.1 — Acceso autorizado a la información de consignación**
+Dado que el usuario cuenta con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06
+Cuando ingresa a "CXC > Estado de Cuenta"
+Entonces el sistema permite utilizar el filtro por Consigna en "CXC > Estado de Cuenta" y devuelve la información marcada como CONSIGNACIÓN.
 
-**CA-23.2.1 — Usuario no autorizado no visualiza la información de consignación**
-Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "CXC > Estado de Cuenta"
-Entonces el sistema no permite filtrar la información por Consigna.
+**CA-23.1.2 — Restricción para usuario no autorizado**
+Dado que el usuario no cuenta con el permiso especial FN-INTERPLANTAS
+Cuando ingresa a "CXC > Estado de Cuenta"
+Entonces el sistema no permite utilizar el filtro por Consigna en "CXC > Estado de Cuenta".
 
 ---
 
-# RF-24 — Restricción de visualización de información de consignación en Estado de Cuenta Detallado
+**Regla transversal:**
+Este requerimiento comparte el mismo mecanismo de autorización que [RF-01](#rf-01): el permiso especial FN-INTERPLANTAS junto con los roles remcxc01, remvta01, remvta02 o remvta06 determina la visibilidad de la información de consignación en todas las pantallas y consultas listadas en el [índice de requerimientos](#6-índice-de-requerimientos).
+
+---
+
+<a id="rf-24"></a>
+# RF-24 — Restricción de filtrado de consignación en CXC > Estado de Cuenta Detallado
 
 | Campo        | Valor       |
 |--------------|-------------|
 | Prioridad    | Must        |
 | Estado       | Definición  |
-| Dependencias | Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV) |
-
-## Objetivo
-Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "CXC > Estado de Cuenta Detallado", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.
+| Dependencias | DEP-01 |
 
 ## Descripción
 El sistema deberá limitar la visualización de la consulta "CXC > Estado de Cuenta Detallado" para que la información de movimientos y transacciones marcadas como consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
 
-### Información / atributos
-| Campo | Obligatorio | Descripción |
-|-------|-------------|-------------|
-| Tipo de documento | Sí | Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación. |
-| Permiso especial FN-INTERPLANTAS | Sí | Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta. |
+## HU-24.1 — Visualización restringida en CXC > Estado de Cuenta Detallado
 
-### Operaciones
-- Consultar: al abrir la pantalla/consulta "CXC > Estado de Cuenta Detallado", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.
-
-## HU-24.1 — Visualización restringida en Estado de Cuenta Detallado
-
-Como usuario autorizado para consultar información de consignación, quiero que la consulta "CXC > Estado de Cuenta Detallado" muestre únicamente la información correspondiente a consignación cuando tenga el permiso FN-INTERPLANTAS, para proteger la información financiera sensible.
+Como usuario autorizado para consultar información de consignación, quiero que "CXC > Estado de Cuenta Detallado" permita filtrar únicamente la información correspondiente a consignación cuando cuente con el permiso especial FN-INTERPLANTAS, para proteger la información financiera sensible.
 
 ### Reglas de negocio
 
-**RN-24.1** Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "CXC > Estado de Cuenta Detallado".
+**RN-24.1** Solo los usuarios que cuenten con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06 podrán visualizar información de consignación en "CXC > Estado de Cuenta Detallado".
 
-**RN-24.2** Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).
+**RN-24.2** Los usuarios que no cuenten con el permiso especial FN-INTERPLANTAS no podrán utilizar el filtro por Consigna en "CXC > Estado de Cuenta Detallado".
 
 ### Criterios de Aceptación
 
-**CA-24.1.1 — Usuario autorizado visualiza la información de consignación**
-Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "CXC > Estado de Cuenta Detallado"
-Entonces el sistema permite filtrar la información por Consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.
+**CA-24.1.1 — Acceso autorizado a la información de consignación**
+Dado que el usuario cuenta con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06
+Cuando ingresa a "CXC > Estado de Cuenta Detallado"
+Entonces el sistema permite utilizar el filtro por Consigna en "CXC > Estado de Cuenta Detallado" y devuelve la información marcada como CONSIGNACIÓN.
 
-**CA-24.2.1 — Usuario no autorizado no visualiza la información de consignación**
-Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "CXC > Estado de Cuenta Detallado"
-Entonces el sistema no permite filtrar la información por Consigna.
+**CA-24.1.2 — Restricción para usuario no autorizado**
+Dado que el usuario no cuenta con el permiso especial FN-INTERPLANTAS
+Cuando ingresa a "CXC > Estado de Cuenta Detallado"
+Entonces el sistema no permite utilizar el filtro por Consigna en "CXC > Estado de Cuenta Detallado".
 
 ---
 
-# RF-25 — Restricción de visualización de información de consignación en Resumen de movimientos
+**Regla transversal:**
+Este requerimiento comparte el mismo mecanismo de autorización que [RF-01](#rf-01): el permiso especial FN-INTERPLANTAS junto con los roles remcxc01, remvta01, remvta02 o remvta06 determina la visibilidad de la información de consignación en todas las pantallas y consultas listadas en el [índice de requerimientos](#6-índice-de-requerimientos).
+
+---
+
+<a id="rf-25"></a>
+# RF-25 — Restricción de filtrado de consignación en CXC > Resumen de Movimientos
 
 | Campo        | Valor       |
 |--------------|-------------|
 | Prioridad    | Must        |
 | Estado       | Definición  |
-| Dependencias | Ninguna (requiere que el permiso especial FN-INTERPLANTAS ya exista en el catálogo de permisos del ERP REMV) |
-
-## Objetivo
-Evitar que usuarios sin autorización visualicen información financiera de ventas de consignación en la pantalla/consulta "CXC > Resumen de movimientos", exponiendo dicha información únicamente a los perfiles que cuenten con el permiso especial FN-INTERPLANTAS.
+| Dependencias | DEP-01 |
 
 ## Descripción
-El sistema deberá limitar la visualización de la consulta "CXC > Resumen de movimientos" para que la información de movimientos y transacciones marcadas como  consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
+El sistema deberá limitar la visualización de la consulta "CXC > Resumen de Movimientos" para que la información de movimientos y transacciones marcadas como consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
 
-### Información / atributos
-| Campo | Obligatorio | Descripción |
-|-------|-------------|-------------|
-| Tipo de documento | Sí | Atributo del documento (factura, nota de crédito, abono o transacción, según la pantalla) que indica si corresponde a una venta de consignación. |
-| Permiso especial FN-INTERPLANTAS | Sí | Permiso asignado al perfil del usuario que habilita la visualización de los documentos de consignación en esta pantalla/consulta. |
+## HU-25.1 — Visualización restringida en CXC > Resumen de Movimientos
 
-### Operaciones
-- Consultar: al abrir la pantalla/consulta "CXC > Resumen de movimientos", el sistema evalúa si el usuario cuenta con el permiso FN-INTERPLANTAS antes de incluir los registros de consignación en el resultado.
-
-## HU-25.1 — Visualización restringida en Resumen de movimientos
-
-Como usuario autorizado para consultar información de consignación, quiero que la consulta "CXC > Resumen de Movimientos" muestre únicamente la información correspondiente a consignación cuando tenga el permiso FN-INTERPLANTAS, para restringir el acceso a la información sensible.
+Como usuario autorizado para consultar información de consignación, quiero que "CXC > Resumen de Movimientos" permita filtrar únicamente la información correspondiente a consignación cuando cuente con el permiso especial FN-INTERPLANTAS, para restringir el acceso a la información sensible.
 
 ### Reglas de negocio
 
-**RN-25.1** Solo los usuarios con el permiso especial FN-INTERPLANTAS asignado a su perfil podrán visualizar los documentos marcados como CONSIGNACIÓN en "CXC > Resumen de movimientos".
+**RN-25.1** Solo los usuarios que cuenten con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06 podrán visualizar información de consignación en "CXC > Resumen de Movimientos".
 
-**RN-25.2** Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este documento, los perfiles a los que se asigna el permiso FN-INTERPLANTAS (supuesto SUP-02, sujeto a validación con Administración de Sistemas).
+**RN-25.2** Los usuarios que no cuenten con el permiso especial FN-INTERPLANTAS no podrán utilizar el filtro por Consigna en "CXC > Resumen de Movimientos".
 
 ### Criterios de Aceptación
 
-**CA-25.1.1 — Usuario autorizado visualiza la información de consignación**
-Dado que el usuario tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "CXC > Resumen de movimientos"
-Entonces el sistema permite filtrar la información por Consigna a usuarios autorizados con permisos especial: remcxc01, remvta01, remvta02, remvta06.
+**CA-25.1.1 — Acceso autorizado a la información de consignación**
+Dado que el usuario cuenta con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06
+Cuando ingresa a "CXC > Resumen de Movimientos"
+Entonces el sistema permite utilizar el filtro por Consigna en "CXC > Resumen de Movimientos" y devuelve la información marcada como CONSIGNACIÓN.
 
-**CA-25.2.1 — Usuario no autorizado no visualiza la información de consignación**
-Dado que el usuario no tiene asignado el permiso especial FN-INTERPLANTAS
-Cuando el usuario ingresa a "CXC > Resumen de movimientos"
-Entonces el sistema no permite filtrar la información por Consigna.
-
+**CA-25.1.2 — Restricción para usuario no autorizado**
+Dado que el usuario no cuenta con el permiso especial FN-INTERPLANTAS
+Cuando ingresa a "CXC > Resumen de Movimientos"
+Entonces el sistema no permite utilizar el filtro por Consigna en "CXC > Resumen de Movimientos".
 
 ---
 
-# Requerimientos No Funcionales (RNF)
+**Regla transversal:**
+Este requerimiento comparte el mismo mecanismo de autorización que [RF-01](#rf-01): el permiso especial FN-INTERPLANTAS junto con los roles remcxc01, remvta01, remvta02 o remvta06 determina la visibilidad de la información de consignación en todas las pantallas y consultas listadas en el [índice de requerimientos](#6-índice-de-requerimientos).
 
-El documento original no especifica requerimientos no funcionales. Dado que el proyecto trata sobre control de acceso a información financiera sensible, se proponen los siguientes RNF como punto de partida; deben validarse con el negocio y con el equipo técnico responsable del ERP REMV.
+---
 
-### RNF-001 — Seguridad: aplicación de la restricción del lado del servidor
-- **Descripción:** La restricción de visualización de información de consignación debe aplicarse en la capa de datos/servicio del ERP REMV, y no únicamente ocultando elementos en la interfaz, para evitar que un usuario no autorizado acceda a la información por otra vía (exportación, impresión, servicios internos).
-- **Métrica / criterio de verificación:** Pruebas de seguridad confirman que ninguna respuesta del servidor (incluyendo exportaciones a Excel/PDF de las 25 pantallas y consultas en alcance) contiene registros de consignación cuando el usuario no tiene el permiso FN-INTERPLANTAS.
+<a id="rf-26"></a>
+# RF-26 — Restricción de visualización de consignación en Ventas > Detalles de Ventas
+
+| Campo        | Valor       |
+|--------------|-------------|
+| Prioridad    | Must        |
+| Estado       | Definición  |
+| Dependencias | DEP-01 |
+
+## Descripción
+El sistema deberá limitar la visualización de la consulta "Ventas > Detalles de Ventas" para que la información correspondiente a facturas de consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
+
+## HU-26.1 — Visualización restringida en Ventas > Detalles de Ventas
+
+Como usuario autorizado para consultar información de consignación, quiero que "Ventas > Detalles de Ventas" muestre únicamente la información correspondiente a consignación cuando cuente con el permiso especial FN-INTERPLANTAS, para restringir el acceso a la información sensible.
+
+### Reglas de negocio
+
+**RN-26.1** Solo los usuarios que cuenten con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06 podrán visualizar información de consignación en "Ventas > Detalles de Ventas".
+
+**RN-26.2** Los usuarios que no cuenten con el permiso especial FN-INTERPLANTAS no podrán visualizar los registros marcados como CONSIGNACIÓN en "Ventas > Detalles de Ventas"; dichos registros deberán permanecer ocultos.
+
+### Criterios de Aceptación
+
+**CA-26.1.1 — Acceso autorizado a la información de consignación**
+Dado que el usuario cuenta con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06
+Cuando ingresa a "Ventas > Detalles de Ventas"
+Entonces el sistema muestra en "Ventas > Detalles de Ventas" la información marcada como CONSIGNACIÓN correspondiente a ese usuario.
+
+**CA-26.1.2 — Restricción para usuario no autorizado**
+Dado que el usuario no cuenta con el permiso especial FN-INTERPLANTAS
+Cuando ingresa a "Ventas > Detalles de Ventas"
+Entonces el sistema oculta la información marcada como CONSIGNACIÓN en "Ventas > Detalles de Ventas" y no la incluye en el resultado.
+
+---
+
+**Regla transversal:**
+Este requerimiento comparte el mismo mecanismo de autorización que [RF-01](#rf-01): el permiso especial FN-INTERPLANTAS junto con los roles remcxc01, remvta01, remvta02 o remvta06 determina la visibilidad de la información de consignación en todas las pantallas y consultas listadas en el [índice de requerimientos](#6-índice-de-requerimientos).
+
+---
+
+<a id="rf-27"></a>
+# RF-27 — Restricción de visualización de consignación en Ventas > Devolución del Cliente
+
+| Campo        | Valor       |
+|--------------|-------------|
+| Prioridad    | Must        |
+| Estado       | Definición  |
+| Dependencias | DEP-01 |
+
+## Descripción
+El sistema deberá limitar la visualización de la pantalla de proceso "Ventas > Devolución del Cliente" para que la información de las devoluciónes relacionadas a facturas de consignación sea visible únicamente para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
+
+## HU-27.1 — Visualización restringida en Ventas > Devolución del Cliente
+
+Como usuario autorizado para consultar información de consignación, quiero que "Ventas > Devolución del Cliente" muestre únicamente la información correspondiente a consignación cuando cuente con el permiso especial FN-INTERPLANTAS, para restringir el acceso a la información sensible.
+
+### Reglas de negocio
+
+**RN-27.1** Solo los usuarios que cuenten con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06 podrán visualizar información de consignación en "Ventas > Devolución del Cliente".
+
+**RN-27.2** Los usuarios que no cuenten con el permiso especial FN-INTERPLANTAS no podrán visualizar los registros marcados como CONSIGNACIÓN en "Ventas > Devolución del Cliente"; dichos registros deberán permanecer ocultos.
+
+### Criterios de Aceptación
+
+**CA-27.1.1 — Acceso autorizado a la información de consignación**
+Dado que el usuario cuenta con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06
+Cuando ingresa a "Ventas > Devolución del Cliente"
+Entonces el sistema muestra en "Ventas > Devolución del Cliente" la información marcada como CONSIGNACIÓN correspondiente a ese usuario.
+
+**CA-27.1.2 — Restricción para usuario no autorizado**
+Dado que el usuario no cuenta con el permiso especial FN-INTERPLANTAS
+Cuando ingresa a "Ventas > Devolución del Cliente"
+Entonces el sistema oculta la información marcada como CONSIGNACIÓN en "Ventas > Devolución del Cliente" y no la incluye en el resultado.
+
+---
+
+**Regla transversal:**
+Este requerimiento comparte el mismo mecanismo de autorización que [RF-01](#rf-01): el permiso especial FN-INTERPLANTAS junto con los roles remcxc01, remvta01, remvta02 o remvta06 determina la visibilidad de la información de consignación en todas las pantallas y consultas listadas en el [índice de requerimientos](#6-índice-de-requerimientos).
+
+---
+
+<a id="rf-28"></a>
+# RF-28 — Restricción de visualización de consignación en Cuentas por Cobrar > Anticipos
+
+| Campo        | Valor       |
+|--------------|-------------|
+| Prioridad    | Must        |
+| Estado       | Definición  |
+| Dependencias | DEP-01 |
+
+## Descripción
+El sistema deberá limitar la visualización de la pantalla de proceso "Cuentas por Cobrar > Anticipos" para que solo sean visibles los anticipos marcados como CONSIGNACIÓN para los usuarios que cuenten con el permiso especial FN-INTERPLANTAS.
+
+## HU-28.1 — Visualización restringida en Cuentas por Cobrar > Anticipos
+
+Como usuario autorizado para consultar información de consignación, quiero que "Cuentas por Cobrar > Anticipos" muestre únicamente la información correspondiente a consignación cuando cuente con el permiso especial FN-INTERPLANTAS, para proteger la información de consignación.
+
+### Reglas de negocio
+
+**RN-28.1** Solo los usuarios que cuenten con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06 podrán visualizar información de consignación en "Cuentas por Cobrar > Anticipos".
+
+**RN-28.2** Los usuarios que no cuenten con el permiso especial FN-INTERPLANTAS no podrán visualizar los registros marcados como CONSIGNACIÓN en "Cuentas por Cobrar > Anticipos"; dichos registros deberán permanecer ocultos.
+
+### Criterios de Aceptación
+
+**CA-28.1.1 — Acceso autorizado a la información de consignación**
+Dado que el usuario cuenta con el permiso especial FN-INTERPLANTAS y alguno de los roles remcxc01, remvta01, remvta02 o remvta06
+Cuando ingresa a "Cuentas por Cobrar > Anticipos"
+Entonces el sistema muestra en "Cuentas por Cobrar > Anticipos" la información marcada como CONSIGNACIÓN correspondiente a ese usuario.
+
+**CA-28.1.2 — Restricción para usuario no autorizado**
+Dado que el usuario no cuenta con el permiso especial FN-INTERPLANTAS
+Cuando ingresa a "Cuentas por Cobrar > Anticipos"
+Entonces el sistema oculta la información marcada como CONSIGNACIÓN en "Cuentas por Cobrar > Anticipos" y no la incluye en el resultado.
+
+---
+
+**Regla transversal:**
+Este requerimiento comparte el mismo mecanismo de autorización que [RF-01](#rf-01): el permiso especial FN-INTERPLANTAS junto con los roles remcxc01, remvta01, remvta02 o remvta06 determina la visibilidad de la información de consignación en todas las pantallas y consultas listadas en el [índice de requerimientos](#6-índice-de-requerimientos).
+
+---
+
+## 7. Requerimientos No Funcionales (RNF)
+
+> El documento fuente indica "NA" para requerimientos no funcionales. Se proponen los siguientes RNF mínimos, razonables para un control de acceso a información financiera sensible; deben ser confirmados por el negocio (ver Preguntas abiertas).
+
+### RNF-001 — Seguridad: enforcement a nivel de consulta
+- **Descripción:** La validación del permiso especial FN-INTERPLANTAS y de los roles remcxc01, remvta01, remvta02 y remvta06 debe aplicarse en el motor de consulta/servidor, no únicamente en la interfaz de usuario.
+- **Métrica / criterio de verificación:** 0 registros marcados como CONSIGNACIÓN devueltos a un usuario no autorizado en pruebas de acceso directo (API/reporte) a cualquiera de las 28 consultas/pantallas.
 - **Prioridad:** Must
 
-### RNF-002 — Rendimiento: sin degradación de tiempos de respuesta
-- **Descripción:** La validación del permiso FN-INTERPLANTAS y el filtrado de registros de consignación no deben incrementar de forma perceptible el tiempo de respuesta de las pantallas y consultas en alcance.
-- **Métrica / criterio de verificación:** El tiempo de respuesta de cada pantalla/consulta con el filtro aplicado no aumenta más de un 10% respecto al tiempo de respuesta actual (medido antes del cambio), en condiciones de carga equivalentes.
+### RNF-002 — Rendimiento
+- **Descripción:** La validación adicional de permiso no debe degradar el tiempo de respuesta de las consultas existentes.
+- **Métrica / criterio de verificación:** El 95% de las consultas afectadas debe responder en un tiempo no mayor al 10% del tiempo actual medido antes del cambio.
 - **Prioridad:** Should
 
-### RNF-003 — Compatibilidad con el ERP vigente
-- **Descripción:** La solución debe operar sobre la versión actual del ERP REMV, sin requerir actualización de clientes ni de infraestructura adicional.
-- **Métrica / criterio de verificación:** La funcionalidad se valida exitosamente en el ambiente de pruebas actual del ERP REMV, sin cambios de versión.
-- **Prioridad:** Should
+### RNF-003 — Auditabilidad (preparación)
+- **Descripción:** Aunque la auditoría de accesos está fuera de alcance (ver requerimiento separado), el mecanismo de validación de permisos debe quedar disponible para ser auditado a futuro sin cambios de arquitectura.
+- **Métrica / criterio de verificación:** El punto de validación de FN-INTERPLANTAS queda centralizado en un único componente/servicio reutilizable por las 28 consultas.
+- **Prioridad:** Could
 
----
-
-# Matriz de trazabilidad
-
-| Objetivo de negocio | RF | Historia | Criterio de aceptación | Prioridad | Estado |
-|---------------------|-----|----------|------------------------|-----------|--------|
-| OBJ-1 Restringir la visualización de información de ventas de consignación a usuarios autorizados | RF-01 a RF-25 | HU-1.1 a HU-25.1 | CA-x.1.1 "Usuario autorizado visualiza la información de consignación" | Must | Definición |
-| OBJ-1 | RF-01 a RF-25 | HU-1.1 a HU-25.1 | CA-x.2.1 "Usuario no autorizado no visualiza la información de consignación" | Must | Definición |
-| OBJ-2 Reducir el riesgo de exposición de información financiera sensible | RF-01 a RF-25 | HU-1.1 a HU-25.1 | RN-x.1 "Solo los usuarios con permiso FN-INTERPLANTAS pueden visualizar la información de consignación" | Must | Definición |
-
-> Nota: dado que las 25 historias comparten el mismo objetivo de negocio y el mismo patrón de criterios, se resume la trazabilidad en un solo bloque por objetivo en lugar de repetir 25 filas idénticas. Si el equipo de QA requiere trazabilidad fila por fila para su matriz de pruebas, puede expandirse esta tabla sustituyendo "RF-01 a RF-25" por cada RF individual.
-
-# Reglas de negocio (consolidado)
+## 8. Reglas de negocio generales
 
 | ID | Regla | Aplica a |
 |----|-------|----------|
-| RN-global-1 | Un usuario solo puede visualizar documentos e información marcados como CONSIGNACIÓN si su perfil tiene asignado el permiso especial FN-INTERPLANTAS. | RF-01 a RF-25 |
-| RN-global-2 | Los perfiles remcxc01, remvta01, remvta02 y remvta06 son, a la fecha de este análisis, los perfiles con el permiso FN-INTERPLANTAS asignado. | RF-01 a RF-25 |
+| RN-000 | Un usuario se considera autorizado para ver información de consignación solo si tiene asignado el permiso especial FN-INTERPLANTAS junto con alguno de los roles remcxc01, remvta01, remvta02 o remvta06. | RF-01 a RF-28 |
+| RN-000.1 | Un documento (factura, nota de crédito, abono, anticipo o transacción) se considera de consignación cuando está marcado con el tipo CONSIGNACIÓN en el sistema Remv. | RF-01 a RF-28 |
 
-# Supuestos (SUP)
+## 9. Matriz de trazabilidad
+
+| Objetivo de negocio | RF | Historia | Criterio de aceptación | Prioridad | Estado |
+|---------------------|-----|----------|------------------------|-----------|--------|
+| Restringir visualización de ventas de consignación | RF-01 | HU-1.1 | CA-1.1.1, CA-1.1.2 | Must | Propuesto |
+| Restringir visualización de ventas de consignación | RF-02 | HU-2.1 | CA-2.1.1, CA-2.1.2 | Must | Propuesto |
+| Restringir visualización de ventas de consignación | RF-03 | HU-3.1 | CA-3.1.1, CA-3.1.2 | Must | Propuesto |
+| Restringir visualización de ventas de consignación | RF-04 | HU-4.1 | CA-4.1.1, CA-4.1.2 | Must | Propuesto |
+| Restringir visualización de ventas de consignación | RF-05 | HU-5.1 | CA-5.1.1, CA-5.1.2 | Must | Propuesto |
+| Restringir visualización de ventas de consignación | RF-06 | HU-6.1 | CA-6.1.1, CA-6.1.2 | Must | Propuesto |
+| Restringir visualización de ventas de consignación | RF-07 | HU-7.1 | CA-7.1.1, CA-7.1.2 | Must | Propuesto |
+| Restringir visualización de ventas de consignación | RF-08 | HU-8.1 | CA-8.1.1, CA-8.1.2 | Must | Propuesto |
+| Restringir visualización de ventas de consignación | RF-09 | HU-9.1 | CA-9.1.1, CA-9.1.2 | Must | Propuesto |
+| Restringir visualización de ventas de consignación | RF-10 | HU-10.1 | CA-10.1.1, CA-10.1.2 | Must | Propuesto |
+| Restringir visualización de ventas de consignación | RF-11 | HU-11.1 | CA-11.1.1, CA-11.1.2 | Must | Propuesto |
+| Restringir visualización de ventas de consignación | RF-12 | HU-12.1 | CA-12.1.1, CA-12.1.2 | Must | Propuesto |
+| Restringir visualización de ventas de consignación | RF-13 | HU-13.1 | CA-13.1.1, CA-13.1.2 | Must | Propuesto |
+| Restringir visualización de ventas de consignación | RF-14 | HU-14.1 | CA-14.1.1, CA-14.1.2 | Must | Propuesto |
+| Restringir visualización de ventas de consignación | RF-15 | HU-15.1 | CA-15.1.1, CA-15.1.2 | Must | Propuesto |
+| Restringir visualización de ventas de consignación | RF-16 | HU-16.1 | CA-16.1.1, CA-16.1.2 | Must | Propuesto |
+| Restringir visualización de ventas de consignación | RF-17 | HU-17.1 | CA-17.1.1, CA-17.1.2 | Must | Propuesto |
+| Restringir visualización de ventas de consignación | RF-18 | HU-18.1 | CA-18.1.1, CA-18.1.2 | Must | Propuesto |
+| Restringir visualización de ventas de consignación | RF-19 | HU-19.1 | CA-19.1.1, CA-19.1.2 | Must | Propuesto |
+| Restringir visualización de ventas de consignación | RF-20 | HU-20.1 | CA-20.1.1, CA-20.1.2 | Must | Propuesto |
+| Restringir visualización de ventas de consignación | RF-21 | HU-21.1 | CA-21.1.1, CA-21.1.2 | Must | Propuesto |
+| Restringir visualización de ventas de consignación | RF-22 | HU-22.1 | CA-22.1.1, CA-22.1.2 | Must | Propuesto |
+| Restringir visualización de ventas de consignación | RF-23 | HU-23.1 | CA-23.1.1, CA-23.1.2 | Must | Propuesto |
+| Restringir visualización de ventas de consignación | RF-24 | HU-24.1 | CA-24.1.1, CA-24.1.2 | Must | Propuesto |
+| Restringir visualización de ventas de consignación | RF-25 | HU-25.1 | CA-25.1.1, CA-25.1.2 | Must | Propuesto |
+| Restringir visualización de ventas de consignación | RF-26 | HU-26.1 | CA-26.1.1, CA-26.1.2 | Must | Propuesto |
+| Restringir visualización de ventas de consignación | RF-27 | HU-27.1 | CA-27.1.1, CA-27.1.2 | Must | Propuesto |
+| Restringir visualización de ventas de consignación | RF-28 | HU-28.1 | CA-28.1.1, CA-28.1.2 | Must | Propuesto |
+
+Estados sugeridos: Propuesto → Aprobado → En desarrollo → Verificado.
+
+## 10. Supuestos, Dependencias y Riesgos
+
+### Supuestos (SUP)
 
 | ID | Supuesto | Impacto si es falso |
 |----|----------|---------------------|
-| SUP-01 | El ERP REMV permite marcar/identificar a nivel de dato (no solo de interfaz) qué documentos corresponden a ventas de consignación (atributo o tipo de documento CONSIGNACIÓN). | Si no existe ese marcado a nivel de dato, se requeriría primero un desarrollo adicional para clasificar los documentos, lo cual amplía el alcance y el esfuerzo. |
-| SUP-02 | Los perfiles remcxc01, remvta01, remvta02 y remvta06 son la lista completa y vigente de perfiles autorizados; cualquier perfil nuevo que requiera el permiso deberá solicitarse a Administración de Sistemas. | Si la lista cambia o está incompleta, algunos usuarios que deberían ver la información de consignación quedarían bloqueados, o viceversa. |
-| SUP-03 | El permiso especial FN-INTERPLANTAS ya existe o será creado como parte de la infraestructura de permisos del ERP REMV, de forma independiente a estos 25 requerimientos. | Si no existe, se requiere un requerimiento adicional para su creación antes de poder implementar las restricciones descritas. |
-| SUP-04 | La prioridad Must asignada a los 25 RF es correcta, dado que el documento original no especificó prioridad MoSCoW por requerimiento y se trata de un proyecto marcado como "Urgente". | Si el negocio considera que algunas pantallas/consultas son menos críticas que otras, la priorización debe ajustarse RF por RF. |
+| SUP-01 | El permiso especial FN-INTERPLANTAS puede crearse y asignarse en el catálogo de seguridad del sistema Remv sin desarrollo adicional. | Si no, se requiere un requerimiento adicional para el módulo de seguridad. |
+| SUP-02 | El campo/marca CONSIGNACIÓN ya existe en las entidades de factura, nota de crédito, abono, anticipo y transacción, y es consistente en todas las 28 pantallas/consultas. | Si no, se requiere homologar el dato antes de aplicar el filtro de visibilidad. |
+| SUP-03 | Los roles remcxc01, remvta01, remvta02 y remvta06 ya existen y están asignados a los usuarios que deben conservar el acceso. | Si no, se requiere depurar/crear roles antes de liberar el control de acceso. |
 
-# Dependencias (DEP)
+### Dependencias (DEP)
 
 | ID | Dependencia | De quién / de qué |
-|----|-------------|-------------------|
-| DEP-01 | Existencia y asignación previa del permiso especial FN-INTERPLANTAS a los perfiles autorizados. | Administración de Sistemas |
-| DEP-02 | Disponibilidad de un ambiente de pruebas del ERP REMV con datos de ejemplo marcados como CONSIGNACIÓN, para validar los 25 criterios de aceptación. | Equipo de Infraestructura / Administración del ERP |
+|----|-------------|--------------------|
+| DEP-01 | Creación del permiso especial FN-INTERPLANTAS y asignación a los roles remcxc01, remvta01, remvta02, remvta06 en el módulo de seguridad del sistema Remv. | Administración de Sistemas |
 
-# Riesgos (RGO)
+### Riesgos (RGO)
 
 | ID | Riesgo | Prob. | Impacto | Mitigación |
 |----|--------|-------|---------|------------|
-| RGO-01 | Que la restricción se implemente solo a nivel de interfaz y no a nivel de datos, permitiendo el acceso a la información de consignación por otra vía (exportaciones, reportes, servicios). | Media | Alto | Validar con el equipo técnico que el filtro se aplique en la capa de datos/servicio (ver RNF-001) y no solo en la pantalla. |
-| RGO-02 | Que la lista de perfiles autorizados (remcxc01, remvta01, remvta02, remvta06) quede desactualizada con el tiempo, dejando usuarios sin el acceso que deberían tener o con acceso indebido. | Media | Medio | Definir junto con Administración de Sistemas un proceso claro de alta/baja del permiso FN-INTERPLANTAS, aunque esté fuera del alcance funcional de este documento. |
-| RGO-03 | Inconsistencia detectada entre el alcance descrito en la sección 3 del documento original (que menciona la pantalla "Inventario > Detallado de Movimientos de Almacén") y la tabla de requerimientos funcionales, que no incluye ningún RF para el módulo de Inventario. | Alta | Medio | Confirmar con el negocio si la restricción en Inventario está pendiente de definir (y agregar el RF correspondiente) o si fue descartada del alcance. |
+| RGO-01 | Que existan otras consultas o reportes (por ejemplo, exportaciones o integraciones) que expongan información de consignación fuera de las 28 pantallas listadas. | Media | Alto | Inventariar reportes/exportaciones adicionales en una fase posterior de descubrimiento. |
+| RGO-02 | Que el campo CONSIGNACIÓN no esté marcado de forma consistente en datos históricos. | Media | Medio | Validar/depurar datos históricos antes de liberar a producción. |
 
-# Preguntas abiertas
+## 11. Preguntas abiertas
 
-1. **Inventario fuera de la tabla de RF:** el documento original menciona en el punto 3.1 la pantalla "Inventario > Detallado de Movimientos de Almacén" como parte del alcance, pero no existe ningún RF para ese módulo en la tabla de requerimientos. ¿Debe agregarse un RF-26 para Inventario, o esa pantalla queda fuera del alcance de esta entrega? — Responsable sugerido: Responsable del requerimiento (María De Lourdes Viurquiz Gamiño).
-2. **Prioridad MoSCoW por RF:** el documento original no define prioridad individual por requerimiento; se asumió "Must" para los 25 RF dado que el proyecto está marcado como "Urgente" (ver SUP-04). ¿Existen RF que puedan degradarse a Should/Could en una primera entrega? — Responsable sugerido: Product Owner del proyecto.
-3. **Nivel de aplicación del filtro:** ¿la restricción debe aplicarse también a exportaciones, impresiones y reportes generados desde estas 25 pantallas/consultas, o únicamente a la visualización en pantalla? — Responsable sugerido: Coordinador de Desarrollo.
-4. **Vigencia de la lista de perfiles:** ¿remcxc01, remvta01, remvta02 y remvta06 son los únicos perfiles que deben tener el permiso FN-INTERPLANTAS, o existen otros perfiles (por ejemplo de Dirección o Auditoría) que también deban visualizar esta información? — Responsable sugerido: Administración de Sistemas.
-5. **Duplicidad "Resumen de facturas":** en la sección de alcance del documento original, "Resumen de facturas" aparece listado tanto en Facturación como en Cuentas por Cobrar; ¿son dos consultas distintas o un error de captura? — Responsable sugerido: Responsable del requerimiento.
+| # | Pregunta | Responsable sugerido |
+|---|----------|------------------------|
+| 1 | ¿La pantalla "Inventario > Detallado de Movimientos de Almacén", mencionada en el alcance original, requiere un RF propio con el mismo control FN-INTERPLANTAS, o queda fuera de esta entrega? | Product Owner (María De Lourdes Viurquiz Gamiño) |
+| 2 | ¿Los RNF propuestos (rendimiento, enforcement a nivel de consulta) son aceptables para el negocio o existen umbrales ya definidos por TI? | Área de I&N / Infraestructura |
+| 3 | Para las consultas de tipo "filtro" (RF-07, RF-13, RF-14, RF-16, RF-18, RF-23, RF-24, RF-25), ¿el usuario no autorizado debe ver la opción de filtro deshabilitada, o no debe ver la opción en absoluto? | Product Owner / UX |
+| 4 | ¿Existe un requerimiento de auditoría de accesos ya definido (mencionado como "cubierta por requerimiento separado") con el que este documento deba conectarse mediante dependencia? | Product Owner |
