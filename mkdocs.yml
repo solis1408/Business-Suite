@@ -23,40 +23,40 @@ nav:
   - Inicio: index.md
   - Proyectos:
     - Expediente de Personal (EDC):
-      - Requerimiento Cliente: Proyectos/EDC/documentacion/requerimiento-cliente.md
-      - Requerimiento Funcional: Proyectos/EDC/documentacion/requerimiento-funcional.md
+      - Requerimiento Cliente: Proyectos/iNN/EDC/documentacion/requerimiento-cliente.md
+      - Requerimiento Funcional: Proyectos/iNN/EDC/documentacion/requerimiento-funcional.md
       - RouteMap:
-        - RouteMap: Proyectos/EDC/documentacion/routemap/Roadmap Estratégico — Expediente Digital del Colaborador.md
-        - Diagrama HTML: Proyectos/EDC/documentacion/routemap/roadmap-diagrama.md
+        - RouteMap: Proyectos/iNN/EDC/documentacion/routemap/Roadmap Estratégico — Expediente Digital del Colaborador.md
+        - Diagrama HTML: Proyectos/iNN/EDC/documentacion/routemap/roadmap-diagrama.md
       - Diagramas:
-        - Contexto: Proyectos/EDC/documentacion/diagramas/contexto.md
-        - Mapa de estados: Proyectos/EDC/documentacion/diagramas/mapa-de-estados.md
+        - Contexto: Proyectos/iNN/EDC/documentacion/diagramas/contexto.md
+        - Mapa de estados: Proyectos/iNN/EDC/documentacion/diagramas/mapa-de-estados.md
       - Prototipos:
-        - Prototipo 1: Proyectos/EDC/documentacion/prototipos/prototipo-1.md
-        - Prototipo 2: Proyectos/EDC/documentacion/prototipos/prototipo-2.md
-        - Prototipo 3: Proyectos/EDC/documentacion/prototipos/prototipo-3.md
+        - Prototipo 1: Proyectos/iNN/EDC/documentacion/prototipos/prototipo-1.md
+        - Prototipo 2: Proyectos/iNN/EDC/documentacion/prototipos/prototipo-2.md
+        - Prototipo 3: Proyectos/iNN/EDC/documentacion/prototipos/prototipo-3.md
     - Auditorias:
-      - Requerimiento Cliente: Proyectos/Auditorias/documentacion/requerimiento-cliente.md
-      - Requerimiento Funcional: Proyectos/Auditorias/documentacion/requerimiento-funcional.md
+      - Requerimiento Cliente: Proyectos/iNN/Auditorias/documentacion/requerimiento-cliente.md
+      - Requerimiento Funcional: Proyectos/iNN/Auditorias/documentacion/requerimiento-funcional.md
       - Diagramas:
-        - Contexto: Proyectos/Auditorias/documentacion/diagramas/contexto.md
-        - Mapa de estados: Proyectos/Auditorias/documentacion/diagramas/mapa-de-estados.md
+        - Contexto: Proyectos/iNN/Auditorias/documentacion/diagramas/contexto.md
+        - Mapa de estados: Proyectos/iNN/Auditorias/documentacion/diagramas/mapa-de-estados.md
       - Prototipos:
-        - Monitor Acciones Correctivas: Proyectos/Auditorias/documentacion/prototipos/prototipo-1.md
-        - Monitor Auditorias: Proyectos/Auditorias/documentacion/prototipos/prototipo-2.md
-        - Reporte Resumen: Proyectos/Auditorias/documentacion/prototipos/prototipo-3.md
+        - Monitor Acciones Correctivas: Proyectos/iNN/Auditorias/documentacion/prototipos/prototipo-1.md
+        - Monitor Auditorias: Proyectos/iNN/Auditorias/documentacion/prototipos/prototipo-2.md
+        - Reporte Resumen: Proyectos/iNN/Auditorias/documentacion/prototipos/prototipo-3.md
     - Estatus Tickets:
       - Diagramas:
-        - Contexto: Proyectos/EstatusTickets/documentacion/diagramas/contexto.md
-        - Mapa de estados: Proyectos/EstatusTickets/documentacion/diagramas/mapa-de-estados.md
-        - Ejercicios de Estados Tickets: "Proyectos/EstatusTickets/documentacion/Ejercicios de Estados Tickets.pdf"
-        - Estatus Equipo de Cómputo: Proyectos/EstatusTickets/documentacion/Estatus-Equipo-Computo.pdf
-        - Estatus Proyectos Internos: Proyectos/EstatusTickets/documentacion/Estatus-Proyectos-Internos.pdf
-        - Estatus Proyectos: Proyectos/EstatusTickets/documentacion/Estatus-Proyectos.pdf
-      - Funcionales: Proyectos/EstatusTickets/documentacion/Funcionales-Estados-Tickets-Proyectos.md
-      - Técnico: Proyectos/EstatusTickets/documentacion/Tecnico-Monitor-CAU-Nuevos-Estados.md
+        - Contexto: Proyectos/iNN/EstatusTickets/documentacion/diagramas/contexto.md
+        - Mapa de estados: Proyectos/iNN/EstatusTickets/documentacion/diagramas/mapa-de-estados.md
+        - Ejercicios de Estados Tickets: "Proyectos/iNN/EstatusTickets/documentacion/Ejercicios de Estados Tickets.pdf"
+        - Estatus Equipo de Cómputo: Proyectos/iNN/EstatusTickets/documentacion/Estatus-Equipo-Computo.pdf
+        - Estatus Proyectos Internos: Proyectos/iNN/EstatusTickets/documentacion/Estatus-Proyectos-Internos.pdf
+        - Estatus Proyectos: Proyectos/iNN/EstatusTickets/documentacion/Estatus-Proyectos.pdf
+      - Funcionales: Proyectos/iNN/EstatusTickets/documentacion/Funcionales-Estados-Tickets-Proyectos.md
+      - Técnico: Proyectos/iNN/EstatusTickets/documentacion/Tecnico-Monitor-CAU-Nuevos-Estados.md
     - Visibilidad Fiscal ONU:
-      - Requerimiento Funcional: Proyectos/VisibilidadFiscal-ONU/Documento_Requerimientos_Funcionales_Interplantas.md
+      - Requerimiento Funcional: Proyectos/ONU/VisibilidadFiscal/Documento_Requerimientos_Funcionales_Interplantas.md
   - Documentación BSuite:
     - Catálogos:
       - Gestión TI:
