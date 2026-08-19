@@ -59,6 +59,8 @@ nav:
     - ONU:
       - Visibilidad Fiscal:
         - Requerimiento Funcional: Proyectos/ONU/VisibilidadFiscal/Documento_Requerimientos_Funcionales_Interplantas.md
+      - Foliación Caja Operativa:
+        - Requerimiento Funcional: Proyectos/ONU/Foliacion-Caja-Operativa/RF-Foliacion-Caja-Financiera.md
   - Documentación BSuite:
     - Catálogos:
       - Gestión TI:
