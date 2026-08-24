@@ -1806,10 +1806,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-índice-de-requerimientos" class="md-nav__link">
+  <a href="#6-usuarios-y-responsables" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6. Índice de requerimientos
+        6. Usuarios y Responsables
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-índice-de-requerimientos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Índice de requerimientos
       
     </span>
   </a>
@@ -3188,10 +3199,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-índice-de-requerimientos" class="md-nav__link">
+  <a href="#6-usuarios-y-responsables" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6. Índice de requerimientos
+        6. Usuarios y Responsables
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-índice-de-requerimientos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Índice de requerimientos
       
     </span>
   </a>
@@ -3265,7 +3287,8 @@
 <li><strong>RF-02</strong> — Consecutivo de folios para Crédito.</li>
 <li><strong>RF-03</strong> — Consecutivo de folios para Autorización de Entrega de Efectivo.</li>
 <li><strong>RF-04</strong> — Consecutivo de folios para Pago.</li>
-<li><strong>RF-05</strong> — Consecutivo de folios para Autorización de Condonación de Crédito.</li>
+<li><strong>RF-05</strong> — Consecutivo de folios para Autorización de Condonación de Crédito (proceso administrativo).</li>
+<li><strong>RF-06</strong> — Continuidad del consecutivo de folios para Autorización de Condonación de Crédito (proceso operativo).</li>
 </ul>
 <h2 id="2-alcance-del-documento">2. Alcance del documento<a class="headerlink" href="#2-alcance-del-documento" title="Permanent link">&para;</a></h2>
 <p><strong>Incluye:</strong>
@@ -3285,6 +3308,10 @@
 <tr>
 <td>Usuario del proceso administrativo</td>
 <td>Persona que genera los documentos administrativos (solicitud de crédito, crédito, entrega de efectivo, pago, condonación de crédito) en una sucursal y necesita que cada uno cuente con folio propio y trazable.</td>
+</tr>
+<tr>
+<td>Usuario del proceso operativo</td>
+<td>Persona que genera el documento de Autorización de Condonación de Crédito dentro del proceso operativo y necesita que su consecutivo actual no se reinicie ni se vea afectado por la nueva foliación administrativa.</td>
 </tr>
 <tr>
 <td>Sistema de Caja Operativa</td>
@@ -3325,7 +3352,23 @@
 </table>
 <h2 id="5-entidad-a-la-que-aplica">5. Entidad a la que aplica<a class="headerlink" href="#5-entidad-a-la-que-aplica" title="Permanent link">&para;</a></h2>
 <p>Aplica a los documentos generados por los procesos administrativos listados en el alcance. El estatus inicial de cada consecutivo es <strong>1</strong> por sucursal y por tipo de documento; no se define un estatus terminal, ya que el consecutivo es de incremento continuo mientras el proceso esté activo.</p>
-<h2 id="6-índice-de-requerimientos">6. Índice de requerimientos<a class="headerlink" href="#6-índice-de-requerimientos" title="Permanent link">&para;</a></h2>
+<h2 id="6-usuarios-y-responsables">6. Usuarios y Responsables<a class="headerlink" href="#6-usuarios-y-responsables" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Usuarios</th>
+<th>Responsable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pablnfin01</td>
+<td>Myrka Gabriela López Tavares</td>
+</tr>
+</tbody>
+</table>
+<p><a id="indice-requerimientos"></a></p>
+<h2 id="7-índice-de-requerimientos">7. Índice de requerimientos<a class="headerlink" href="#7-índice-de-requerimientos" title="Permanent link">&para;</a></h2>
 <blockquote>
 <p><strong>Navegación rápida:</strong> cada identificador RF de la primera columna es un enlace que lleva directamente al detalle del requerimiento, su historia de usuario y sus criterios de aceptación. Haz clic en el RF para ir a su ficha completa.</p>
 </blockquote>
@@ -3341,31 +3384,37 @@
 <tbody>
 <tr>
 <td><a href="#rf-01">RF-01</a></td>
-<td>Consecutivo de folios — Solicitud de Crédito</td>
+<td>Consecutivo de folios — Solicitud de Crédito (administrativo)</td>
 <td>Sistema de Caja Operativa</td>
 <td>Todas las sucursales</td>
 </tr>
 <tr>
 <td><a href="#rf-02">RF-02</a></td>
-<td>Consecutivo de folios — Crédito</td>
+<td>Consecutivo de folios — Crédito (administrativo)</td>
 <td>Sistema de Caja Operativa</td>
 <td>Todas las sucursales</td>
 </tr>
 <tr>
 <td><a href="#rf-03">RF-03</a></td>
-<td>Consecutivo de folios — Autorización de Entrega de Efectivo</td>
+<td>Consecutivo de folios — Autorización de Entrega de Efectivo (administrativo)</td>
 <td>Sistema de Caja Operativa</td>
 <td>Todas las sucursales</td>
 </tr>
 <tr>
 <td><a href="#rf-04">RF-04</a></td>
-<td>Consecutivo de folios — Pago</td>
+<td>Consecutivo de folios — Pago (administrativo)</td>
 <td>Sistema de Caja Operativa</td>
 <td>Todas las sucursales</td>
 </tr>
 <tr>
 <td><a href="#rf-05">RF-05</a></td>
-<td>Consecutivo de folios — Autorización de Condonación de Crédito</td>
+<td>Consecutivo de folios — Autorización de Condonación de Crédito (administrativo)</td>
+<td>Sistema de Caja Operativa</td>
+<td>Todas las sucursales</td>
+</tr>
+<tr>
+<td><a href="#rf-06">RF-06</a></td>
+<td>Continuidad de folios — Autorización de Condonación de Crédito (operativo)</td>
 <td>Sistema de Caja Operativa</td>
 <td>Todas las sucursales</td>
 </tr>
@@ -3374,6 +3423,7 @@
 <h2 id="---">---<a class="headerlink" href="#---" title="Permanent link">&para;</a></h2>
 <p><a id="rf-01"></a></p>
 <h1 id="rf-01--consecutivo-de-folios-para-solicitud-de-crédito">RF-01 — Consecutivo de folios para Solicitud de Crédito<a class="headerlink" href="#rf-01--consecutivo-de-folios-para-solicitud-de-crédito" title="Permanent link">&para;</a></h1>
+<p><a href="#indice-requerimientos">⬆ Volver al índice de requerimientos</a></p>
 <table>
 <thead>
 <tr>
@@ -3464,10 +3514,11 @@ Entonces el sistema no deberá afectar el consecutivo de ninguna otra sucursal.<
 <p><strong>CA-1.1.4 — Composición del folio</strong>
 Dado que el sistema genera un folio para Solicitud de Crédito
 Cuando lo construye
-Entonces deberá incorporar la abreviatura de la sucursal y el consecutivo correspondiente.</p>
+Entonces deberá incorporar la abreviatura de la sucursal y el consecutivo correspondiente, de acuerdo con el formato definido para el proyecto.</p>
 <hr />
 <p><a id="rf-02"></a></p>
 <h1 id="rf-02--consecutivo-de-folios-para-crédito">RF-02 — Consecutivo de folios para Crédito<a class="headerlink" href="#rf-02--consecutivo-de-folios-para-crédito" title="Permanent link">&para;</a></h1>
+<p><a href="#indice-requerimientos">⬆ Volver al índice de requerimientos</a></p>
 <table>
 <thead>
 <tr>
@@ -3558,10 +3609,11 @@ Entonces el sistema no deberá afectar el consecutivo de ninguna otra sucursal.<
 <p><strong>CA-2.1.4 — Composición del folio</strong>
 Dado que el sistema genera un folio para Crédito
 Cuando lo construye
-Entonces deberá incorporar la abreviatura de la sucursal y el consecutivo correspondiente.</p>
+Entonces deberá incorporar la abreviatura de la sucursal y el consecutivo correspondiente, de acuerdo con el formato definido para el proyecto.</p>
 <hr />
 <p><a id="rf-03"></a></p>
 <h1 id="rf-03--consecutivo-de-folios-para-autorización-de-entrega-de-efectivo">RF-03 — Consecutivo de folios para Autorización de Entrega de Efectivo<a class="headerlink" href="#rf-03--consecutivo-de-folios-para-autorización-de-entrega-de-efectivo" title="Permanent link">&para;</a></h1>
+<p><a href="#indice-requerimientos">⬆ Volver al índice de requerimientos</a></p>
 <table>
 <thead>
 <tr>
@@ -3652,10 +3704,11 @@ Entonces el sistema no deberá afectar el consecutivo de ninguna otra sucursal.<
 <p><strong>CA-3.1.4 — Composición del folio</strong>
 Dado que el sistema genera un folio para Autorización de Entrega de Efectivo
 Cuando lo construye
-Entonces deberá incorporar la abreviatura de la sucursal y el consecutivo correspondiente.</p>
+Entonces deberá incorporar la abreviatura de la sucursal y el consecutivo correspondiente, de acuerdo con el formato definido para el proyecto.</p>
 <hr />
 <p><a id="rf-04"></a></p>
 <h1 id="rf-04--consecutivo-de-folios-para-pago">RF-04 — Consecutivo de folios para Pago<a class="headerlink" href="#rf-04--consecutivo-de-folios-para-pago" title="Permanent link">&para;</a></h1>
+<p><a href="#indice-requerimientos">⬆ Volver al índice de requerimientos</a></p>
 <table>
 <thead>
 <tr>
@@ -3746,10 +3799,11 @@ Entonces el sistema no deberá afectar el consecutivo de ninguna otra sucursal.<
 <p><strong>CA-4.1.4 — Composición del folio</strong>
 Dado que el sistema genera un folio para Pago
 Cuando lo construye
-Entonces deberá incorporar la abreviatura de la sucursal y el consecutivo correspondiente.</p>
+Entonces deberá incorporar la abreviatura de la sucursal y el consecutivo correspondiente, de acuerdo con el formato definido para el proyecto.</p>
 <hr />
 <p><a id="rf-05"></a></p>
-<h1 id="rf-05--consecutivo-de-folios-para-autorización-de-condonación-de-crédito">RF-05 — Consecutivo de folios para Autorización de Condonación de Crédito<a class="headerlink" href="#rf-05--consecutivo-de-folios-para-autorización-de-condonación-de-crédito" title="Permanent link">&para;</a></h1>
+<h1 id="rf-05--consecutivo-de-folios-para-autorización-de-condonación-de-crédito-proceso-administrativo">RF-05 — Consecutivo de folios para Autorización de Condonación de Crédito (proceso administrativo)<a class="headerlink" href="#rf-05--consecutivo-de-folios-para-autorización-de-condonación-de-crédito-proceso-administrativo" title="Permanent link">&para;</a></h1>
+<p><a href="#indice-requerimientos">⬆ Volver al índice de requerimientos</a></p>
 <table>
 <thead>
 <tr>
@@ -3808,7 +3862,7 @@ Entonces deberá usar la abreviatura configurada para esa sucursal, de acuerdo c
 </tr>
 <tr>
 <td>Mérida</td>
-<td>PMEA</td>
+<td>ACMEA</td>
 <td>1</td>
 </tr>
 <tr>
@@ -3833,7 +3887,6 @@ Entonces deberá usar la abreviatura configurada para esa sucursal, de acuerdo c
 </tr>
 </tbody>
 </table>
-<p>* En el documento original la abreviatura de Mérida para este proceso aparece como "PME" (la misma que la del proceso Pago), en lugar de un código que inicie con "AC" como en el resto de sucursales. Se conserva tal cual para no alterar el dato fuente, pero se marca como pregunta abierta al final del documento.</p>
 <p><strong>CA-5.1.3 — Consecutivo independiente por sucursal</strong>
 Dado que existen varias sucursales operando en paralelo
 Cuando se incrementa el consecutivo de folios de una sucursal
@@ -3841,11 +3894,106 @@ Entonces el sistema no deberá afectar el consecutivo de ninguna otra sucursal.<
 <p><strong>CA-5.1.4 — Composición del folio</strong>
 Dado que el sistema genera un folio para Autorización de Condonación de Crédito
 Cuando lo construye
-Entonces deberá incorporar la abreviatura de la sucursal y el consecutivo correspondiente.</p>
+Entonces deberá incorporar la abreviatura de la sucursal y el consecutivo correspondiente, de acuerdo con el formato definido para el proyecto.</p>
 <hr />
-<h2 id="7-requerimientos-no-funcionales">7. Requerimientos no funcionales<a class="headerlink" href="#7-requerimientos-no-funcionales" title="Permanent link">&para;</a></h2>
+<p><a id="rf-06"></a></p>
+<h1 id="rf-06--continuidad-del-consecutivo-de-folios-para-autorización-de-condonación-de-crédito-proceso-operativo">RF-06 — Continuidad del consecutivo de folios para Autorización de Condonación de Crédito (proceso operativo)<a class="headerlink" href="#rf-06--continuidad-del-consecutivo-de-folios-para-autorización-de-condonación-de-crédito-proceso-operativo" title="Permanent link">&para;</a></h1>
+<p><a href="#indice-requerimientos">⬆ Volver al índice de requerimientos</a></p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>RF-05 (comparten el mismo tipo de documento, pero clasificaciones distintas: administrativo vs. operativo)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="descripción_5">Descripción<a class="headerlink" href="#descripción_5" title="Permanent link">&para;</a></h2>
+<p>El sistema deberá generar y administrar un consecutivo de folios independiente por sucursal para el proceso de <strong>Autorización de Condonación de Crédito</strong> cuando este se origina dentro del proceso <strong>operativo</strong>. A diferencia de RF-05 (clasificación Administrativos), en este caso el consecutivo <strong>no se reinicia</strong>: debe continuar a partir del último consecutivo ya utilizado por cada sucursal, preservando la operación actual y sin afectar la foliación administrativa nueva.</p>
+<h2 id="hu-61--continuidad-de-folios-de-autorización-de-condonación-de-crédito-operativo">HU-6.1 — Continuidad de folios de Autorización de Condonación de Crédito (operativo)<a class="headerlink" href="#hu-61--continuidad-de-folios-de-autorización-de-condonación-de-crédito-operativo" title="Permanent link">&para;</a></h2>
+<p>Como usuario del proceso operativo, quiero que el sistema genere y administre un consecutivo de folios para el proceso de "Autorización de Condonación de Crédito", para identificar, controlar y dar trazabilidad a las solicitudes y operaciones de condonación de crédito realizadas en cada sucursal.</p>
+<h3 id="reglas-de-negocio_5">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_5" title="Permanent link">&para;</a></h3>
+<p><strong>RN-6.1</strong> El consecutivo de folios del proceso operativo de Autorización de Condonación de Crédito no se reinicia con esta iniciativa: continúa a partir del último valor utilizado por cada sucursal.</p>
+<h3 id="criterios-de-aceptación_5">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_5" title="Permanent link">&para;</a></h3>
+<p><strong>CA-6.1.1 — Configuración de consecutivo inicial por sucursal (continuidad)</strong>
+Dado que el administrador configura los folios del proceso operativo Autorización de Condonación de Crédito
+Cuando define el valor distintivo en la variable de sistema para los folios a nivel sucursal
+Entonces el sistema deberá permitir esa configuración considerando como valor inicial <strong>el último consecutivo ya utilizado</strong> por cada sucursal, en lugar de reiniciarlo en 1.</p>
+<p><strong>CA-6.1.2 — Identificación de sucursal en el folio</strong>
+Dado que el sistema genera un folio operativo de Autorización de Condonación de Crédito
+Cuando identifica la sucursal de origen
+Entonces deberá usar la abreviatura configurada para esa sucursal, de acuerdo con la siguiente tabla:</p>
+<table>
+<thead>
+<tr>
+<th>Sucursal</th>
+<th>Abreviatura</th>
+<th>Consecutivo inicial</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Distribuidora Reyma</td>
+<td>ACD</td>
+<td>1</td>
+</tr>
+<tr>
+<td>León</td>
+<td>AC</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Mérida</td>
+<td>ACME</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Monterrey</td>
+<td>ACM</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Nogales</td>
+<td>ACN</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Reyma del Este Central</td>
+<td>ACSA</td>
+<td>1</td>
+</tr>
+<tr>
+<td>San Francisco del Rincón</td>
+<td>ACS</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p><strong>CA-6.1.3 — Consecutivo independiente por sucursal</strong>
+Dado que existen varias sucursales operando en paralelo
+Cuando se incrementa el consecutivo de folios de una sucursal
+Entonces el sistema no deberá afectar el consecutivo de ninguna otra sucursal.</p>
+<p><strong>CA-6.1.4 — Composición del folio</strong>
+Dado que el sistema genera un folio operativo para Autorización de Condonación de Crédito
+Cuando lo construye
+Entonces deberá incorporar la abreviatura de la sucursal y el consecutivo correspondiente, de acuerdo con el formato definido para el proyecto.</p>
+<hr />
+<h2 id="8-requerimientos-no-funcionales">8. Requerimientos no funcionales<a class="headerlink" href="#8-requerimientos-no-funcionales" title="Permanent link">&para;</a></h2>
 <p>No aplica — el documento original no especificó requerimientos no funcionales (la tabla correspondiente se dejó en "NA").</p>
-<h2 id="8-matriz-de-trazabilidad">8. Matriz de trazabilidad<a class="headerlink" href="#8-matriz-de-trazabilidad" title="Permanent link">&para;</a></h2>
+<h2 id="9-matriz-de-trazabilidad">9. Matriz de trazabilidad<a class="headerlink" href="#9-matriz-de-trazabilidad" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
@@ -3898,9 +4046,17 @@ Entonces deberá incorporar la abreviatura de la sucursal y el consecutivo corre
 <td>Must</td>
 <td>Definición</td>
 </tr>
+<tr>
+<td>Preservar sin afectación el consecutivo del proceso operativo de Autorización de Condonación de Crédito</td>
+<td><a href="#rf-06">RF-06</a></td>
+<td>HU-6.1</td>
+<td>CA-6.1.1 a CA-6.1.4</td>
+<td>Must</td>
+<td>Definición</td>
+</tr>
 </tbody>
 </table>
-<h2 id="9-supuestos-dependencias-y-riesgos">9. Supuestos, dependencias y riesgos<a class="headerlink" href="#9-supuestos-dependencias-y-riesgos" title="Permanent link">&para;</a></h2>
+<h2 id="10-supuestos-dependencias-y-riesgos">10. Supuestos, dependencias y riesgos<a class="headerlink" href="#10-supuestos-dependencias-y-riesgos" title="Permanent link">&para;</a></h2>
 <p><strong>Supuestos (SUP)</strong></p>
 <table>
 <thead>
@@ -3941,7 +4097,7 @@ Entonces deberá incorporar la abreviatura de la sucursal y el consecutivo corre
 </tr>
 </tbody>
 </table>
-<h2 id="10-preguntas-abiertas">10. Preguntas abiertas<a class="headerlink" href="#10-preguntas-abiertas" title="Permanent link">&para;</a></h2>
+<h2 id="11-preguntas-abiertas">11. Preguntas abiertas<a class="headerlink" href="#11-preguntas-abiertas" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
@@ -3953,16 +4109,11 @@ Entonces deberá incorporar la abreviatura de la sucursal y el consecutivo corre
 <tbody>
 <tr>
 <td>1</td>
-<td>En RF-05 (Autorización de Condonación de Crédito), la abreviatura de la sucursal Mérida aparece como "PME" en el documento original, igual a la del proceso Pago (RF-04), en lugar de un código que inicie con "AC". ¿Es un error de captura o es intencional?</td>
-<td>Product Owner / Responsable del requerimiento</td>
-</tr>
-<tr>
-<td>2</td>
 <td>El documento no define el formato exacto de composición del folio (orden de la abreviatura y el consecutivo, separadores, longitud del número). ¿Cuál es el formato final esperado?</td>
 <td>Product Owner</td>
 </tr>
 <tr>
-<td>3</td>
+<td>2</td>
 <td>No se definieron requerimientos no funcionales (rendimiento, concurrencia entre sucursales, auditoría). ¿Existen restricciones que deban documentarse?</td>
 <td>Responsable de Implementación</td>
 </tr>
