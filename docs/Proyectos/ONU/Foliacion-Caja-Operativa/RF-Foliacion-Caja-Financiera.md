@@ -397,13 +397,13 @@ Entonces deberá usar la abreviatura configurada para esa sucursal, de acuerdo c
 
 | Sucursal | Abreviatura | Consecutivo inicial |
 |----------|-------------|----------------------|
-| Distribuidora Reyma | ACD | 1 |
-| León | AC | 1 |
-| Mérida | ACME | 1 |
-| Monterrey | ACM | 1 |
-| Nogales | ACN | 1 |
-| Reyma del Este Central | ACSA | 1 |
-| San Francisco del Rincón | ACS | 1 |
+| Distribuidora Reyma | ACD | Ultimo |
+| León | AC | Ultimo |
+| Mérida | ACME | Ultimo |
+| Monterrey | ACM | Ultimo |
+| Nogales | ACN | Ultimo |
+| Reyma del Este Central | ACSA | Ultimo |
+| San Francisco del Rincón | ACS | Ultimo |
 
 **CA-6.1.3 — Consecutivo independiente por sucursal**
 Dado que existen varias sucursales operando en paralelo
