@@ -1,0 +1,5252 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentación BRD y FSD - Business Suite">
+      
+      
+        <meta name="author" content="solis1408">
+      
+      
+        <link rel="canonical" href="https://solis1408.github.io/Business-Suite/Proyectos/iNN/Baja%20usuario%20-%20Ticket%20escalonado/Ejecuci%C3%B3n%20del%20Flujo%20de%20Trabajo%20de%20Tickets%20por%20Bloques/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Requerimientos Funcionales — Ejecución del Flujo de Trabajo de Tickets por Bloques - Business Suite - Documentación</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main-nav.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#requerimientos-funcionales--ejecución-del-flujo-de-trabajo-de-tickets-por-bloques" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../../../.." title="Business Suite - Documentación" class="md-header__button md-logo" aria-label="Business Suite - Documentación" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Business Suite - Documentación
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Requerimientos Funcionales — Ejecución del Flujo de Trabajo de Tickets por Bloques
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Business Suite - Documentación" class="md-nav__button md-logo" aria-label="Business Suite - Documentación" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Business Suite - Documentación
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Proyectos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Proyectos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    iNN
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    iNN
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1_1" id="__nav_2_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Expediente de Personal (EDC)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Expediente de Personal (EDC)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EDC/documentacion/requerimiento-cliente/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requerimiento Cliente
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EDC/documentacion/requerimiento-funcional/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requerimiento Funcional
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1_1_3" id="__nav_2_1_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RouteMap
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_1_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    RouteMap
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EDC/documentacion/routemap/Roadmap%20Estrat%C3%A9gico%20%E2%80%94%20Expediente%20Digital%20del%20Colaborador/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RouteMap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EDC/documentacion/routemap/roadmap-diagrama/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diagrama HTML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_1_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1_1_4" id="__nav_2_1_1_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diagramas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_1_1_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_1_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Diagramas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EDC/documentacion/diagramas/contexto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contexto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EDC/documentacion/diagramas/mapa-de-estados/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mapa de estados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_1_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1_1_5" id="__nav_2_1_1_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prototipos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_1_1_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_1_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Prototipos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EDC/documentacion/prototipos/prototipo-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prototipo 1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EDC/documentacion/prototipos/prototipo-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prototipo 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EDC/documentacion/prototipos/prototipo-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prototipo 3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1_2" id="__nav_2_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Auditorias
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Auditorias
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Auditorias/documentacion/requerimiento-cliente/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requerimiento Cliente
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Auditorias/documentacion/requerimiento-funcional/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requerimiento Funcional
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1_2_3" id="__nav_2_1_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diagramas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_1_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Diagramas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Auditorias/documentacion/diagramas/contexto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contexto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Auditorias/documentacion/diagramas/mapa-de-estados/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mapa de estados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1_2_4" id="__nav_2_1_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prototipos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_1_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Prototipos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Auditorias/documentacion/prototipos/prototipo-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monitor Acciones Correctivas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Auditorias/documentacion/prototipos/prototipo-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monitor Auditorias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Auditorias/documentacion/prototipos/prototipo-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reporte Resumen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1_3" id="__nav_2_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estatus Tickets
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Estatus Tickets
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1_3_1" id="__nav_2_1_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diagramas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_1_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Diagramas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EstatusTickets/documentacion/diagramas/contexto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contexto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EstatusTickets/documentacion/diagramas/mapa-de-estados/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mapa de estados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EstatusTickets/documentacion/Ejercicios%20de%20Estados%20Tickets.pdf" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejercicios de Estados Tickets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EstatusTickets/documentacion/Estatus-Equipo-Computo.pdf" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estatus Equipo de Cómputo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EstatusTickets/documentacion/Estatus-Proyectos-Internos.pdf" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estatus Proyectos Internos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EstatusTickets/documentacion/Estatus-Proyectos.pdf" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estatus Proyectos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EstatusTickets/documentacion/Funcionales-Estados-Tickets-Proyectos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Funcionales
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EstatusTickets/documentacion/Tecnico-Monitor-CAU-Nuevos-Estados/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Técnico
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ONU
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ONU
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_1" id="__nav_2_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visibilidad Fiscal
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Visibilidad Fiscal
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ONU/VisibilidadFiscal/Documento_Requerimientos_Funcionales_Interplantas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requerimiento Funcional
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_2" id="__nav_2_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Foliación Caja Operativa
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Foliación Caja Operativa
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ONU/Foliacion-Caja-Operativa/RF-Foliacion-Caja-Financiera/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requerimiento Funcional
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Documentación BSuite
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Documentación BSuite
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Catálogos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Catálogos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1_1" id="__nav_3_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gestión TI
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gestión TI
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Catalogos/Gestion-TI/documentacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Catalogos/Gestion-TI/documentacion/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Catalogos/Gestion-TI/documentacion/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1_2" id="__nav_3_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compras
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Compras
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Catalogos/Compras/documentacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Catalogos/Compras/documentacion/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Catalogos/Compras/documentacion/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Procesos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Procesos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_1" id="__nav_3_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gestión TI
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gestión TI
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Procesos/Gestion-TI/documentacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Procesos/Gestion-TI/documentacion/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Procesos/Gestion-TI/documentacion/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_2" id="__nav_3_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compras
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Compras
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Procesos/Compras/documentacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Procesos/Compras/documentacion/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Procesos/Compras/documentacion/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Consultas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Consultas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3_1" id="__nav_3_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gestión TI
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gestión TI
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3_1_1" id="__nav_3_3_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reporte Forecast
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_3_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reporte Forecast
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Consultas/Gestion-TI/documentacion/reporte-forecast/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Consultas/Gestion-TI/documentacion/reporte-forecast/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Consultas/Gestion-TI/documentacion/reporte-forecast/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3_1_2" id="__nav_3_3_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reporte Financiero
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_3_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reporte Financiero
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Consultas/Gestion-TI/documentacion/reporte-financiero/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Consultas/Gestion-TI/documentacion/reporte-financiero/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Consultas/Gestion-TI/documentacion/reporte-financiero/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3_2" id="__nav_3_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compras
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Compras
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Consultas/Compras/documentacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Consultas/Compras/documentacion/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Consultas/Compras/documentacion/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-propósito-del-documento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Propósito del documento
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-alcance-del-documento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Alcance del documento
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-actores-y-roles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Actores y roles
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-glosario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Glosario
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-entidad-a-la-que-aplica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Entidad a la que aplica
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Entidad a la que aplica">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#visión-general-del-flujo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visión general del flujo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-índice-de-requerimientos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Índice de requerimientos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#---" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ---
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="requerimientos-funcionales--ejecución-del-flujo-de-trabajo-de-tickets-por-bloques">Requerimientos Funcionales — Ejecución del Flujo de Trabajo de Tickets por Bloques<a class="headerlink" href="#requerimientos-funcionales--ejecución-del-flujo-de-trabajo-de-tickets-por-bloques" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Versión</td>
+<td>1.1</td>
+</tr>
+<tr>
+<td>Fecha</td>
+<td>2026-08-21</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Módulo</td>
+<td>Innovación &amp; Negocios — Cómputo / Tickets Escalonados</td>
+</tr>
+<tr>
+<td>Autor</td>
+<td>Análisis de Negocio</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1-propósito-del-documento">1. Propósito del documento<a class="headerlink" href="#1-propósito-del-documento" title="Permanent link">&para;</a></h2>
+<p>Cuando se asigna equipo de cómputo a un colaborador, el sistema no genera un solo ticket: genera un <strong>flujo de trabajo escalonado</strong>, es decir, una cadena de actividades que se van abriendo unas a otras conforme se atienden, y donde cada actividad que lo requiere produce su propio subticket dirigido al área responsable. Hoy ese encadenamiento funciona <strong>etapa contra etapa</strong>: cada actividad declara de cuál otra depende, y en cuanto esa única actividad se cierra, la siguiente arranca.</p>
+<p>Ese comportamiento tiene un límite que el negocio ya está encontrando: <strong>no existe forma de exigir que un grupo completo de actividades termine antes de que empiece el grupo siguiente</strong>. Si tres actividades deben trabajarse en paralelo y la cuarta solo tiene sentido cuando las tres estén listas, hoy la cuarta se abre en cuanto termina aquella de la que se colgó, sin importar que las otras dos sigan pendientes. El resultado es trabajo que arranca sin sus insumos, retrabajo, y actividades que se dan por buenas sobre información incompleta.</p>
+<p>Este documento describe los siete requerimientos funcionales necesarios para que el flujo de trabajo opere <strong>por bloques</strong>: tandas de actividades que se abren juntas y donde el siguiente bloque no arranca hasta que <strong>todas</strong> las actividades del bloque en curso hayan concluido.</p>
+<ul>
+<li><strong>RF-01 — Definición de bloques en la configuración del flujo de trabajo</strong>, que incorpora el bloque como la unidad que agrupa las etapas y que gobierna el avance, en sustitución de la dependencia etapa contra etapa.</li>
+<li><strong>RF-02 — Integridad del armado del flujo por bloques</strong>, que impide guardar configuraciones mal armadas que dejarían tickets detenidos en producción.</li>
+<li><strong>RF-03 — Registro y visualización del bloque en el ticket y en sus subtickets</strong>, que lleva el bloque al ticket, lo deja registrado en cada subticket que se genera y hace visible en qué tanda va el trabajo y por qué una etapa todavía no está disponible.</li>
+<li><strong>RF-04 — Activación por barrera del siguiente bloque</strong>, que es el corazón del cambio: el siguiente bloque se abre en una sola operación cuando, y solo cuando, el bloque en curso quedó completamente cerrado.</li>
+<li><strong>RF-05 — Continuidad del flujo ante bloques vacíos o descartados</strong>, que garantiza que un bloque que no aplica al caso no detenga el ticket para siempre.</li>
+<li><strong>RF-06 — Condicionamiento de una etapa al resultado de una etapa previa</strong>, que preserva —ahora de forma explícita— la capacidad actual de descartar actividades según cómo se haya resuelto una decisión anterior.</li>
+<li><strong>RF-07 — Migración de los flujos configurados y de los tickets en curso</strong>, que convierte lo ya configurado al nuevo esquema y permite liberar el cambio sin detener el trabajo en proceso.</li>
+</ul>
+<p>El objetivo es que cualquier persona del negocio entienda, sin consultar otro documento, qué es un bloque, cuándo se abre el siguiente, qué pasa cuando una tanda completa no aplica, cómo se configura todo esto y qué ocurre con los tickets que ya estaban abiertos el día de la liberación.</p>
+<h2 id="2-alcance-del-documento">2. Alcance del documento<a class="headerlink" href="#2-alcance-del-documento" title="Permanent link">&para;</a></h2>
+<p><strong>Incluye:</strong>
+- La incorporación del <strong>bloque</strong> como atributo de cada etapa en la configuración del flujo de trabajo, y su uso como mecanismo que gobierna el avance del flujo.
+- Las <strong>validaciones de armado</strong> que impiden guardar un flujo con bloques incompletos, mal numerados o con la etapa principal fuera de lugar.
+- El traslado del bloque al ticket en el momento de generarlo, el <strong>sello del bloque en cada subticket que se genera</strong>, y la <strong>presentación agrupada</strong> del flujo de trabajo por bloque, con indicador del bloque en curso.
+- La <strong>regla de barrera</strong>: apertura del siguiente bloque únicamente cuando todas las etapas del bloque en curso quedaron en un estatus terminal, y apertura simultánea de todas las etapas de ese siguiente bloque con sus respectivos subtickets.
+- El <strong>avance automático</strong> sobre bloques que quedaron sin etapas aplicables al caso concreto o cuyas etapas se descartaron en su totalidad.
+- El <strong>condicionamiento explícito</strong> de una etapa al resultado registrado en una etapa previa específica, en sustitución del parámetro de activación actual, que dependía del antecesor único.
+- La <strong>conversión de los flujos ya configurados</strong> al esquema de bloques, con reporte de resultado para su validación, y el tratamiento de los <strong>tickets abiertos</strong> al momento de la liberación.
+- El registro en <strong>bitácora</strong> de la apertura de cada bloque, de la activación de cada etapa y del descarte de cada etapa con su motivo.</p>
+<p><strong>No incluye:</strong>
+- El contenido funcional de cada etapa —alta de correo electrónico, directorio activo, VPN, perfil de seguridad, configuración de red, check list—, que continúa operando exactamente como hoy.
+- El mecanismo de creación del ticket principal a partir de la asignación de cómputo, la elección del flujo por subrama del activo y el descarte de etapas no solicitadas, que se conservan sin cambio.
+- La resolución del responsable de cada etapa por unidad de negocio, que se mantiene con su comportamiento actual.
+- El flujo escalonado de <strong>baja de personal vía nómina</strong>, que opera con un mecanismo distinto —genera todos sus subtickets de una sola vez, sin dependencias entre ellos— y que no se configura desde el catálogo de flujos de trabajo.
+- El proceso de cierre del ticket principal y de los subtickets, que conserva sus reglas actuales; este documento únicamente cambia <strong>cuándo</strong> quedan disponibles para cerrarse.
+- Nuevos estatus para las etapas ni para los tickets: el requerimiento reutiliza los estatus vigentes.
+- La reingeniería de las pantallas de captura de cada tipo de etapa.</p>
+<h2 id="3-actores-y-roles">3. Actores y roles<a class="headerlink" href="#3-actores-y-roles" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Actor / Rol</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Administrador del flujo de trabajo</td>
+<td>Persona de Innovación &amp; Negocios que da de alta y mantiene los flujos de trabajo y sus etapas: define los bloques, el orden, los responsables y las condiciones de cada actividad.</td>
+</tr>
+<tr>
+<td>Responsable de etapa</td>
+<td>Colaborador del departamento al que está dirigida una etapa del flujo; es quien captura la información de la actividad y registra la atención realizada.</td>
+</tr>
+<tr>
+<td>Coordinador / Jefe de Cómputo</td>
+<td>Da seguimiento al avance del flujo de un ticket, revisa los bloques pendientes y detecta desviaciones.</td>
+</tr>
+<tr>
+<td>Colaborador solicitante</td>
+<td>Persona a la que se le asigna el equipo de cómputo y cuyo expediente se completa a lo largo del flujo. No interviene en la ejecución.</td>
+</tr>
+<tr>
+<td>Sistema (motor de flujo)</td>
+<td>Mecanismo automático que evalúa el cierre de un bloque, abre el siguiente, genera los subtickets y descarta las etapas que no aplican.</td>
+</tr>
+<tr>
+<td>Equipo de Desarrollo</td>
+<td>Área responsable de implementar el cambio, ejecutar la conversión de los flujos existentes y operar el modo de compatibilidad.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4-glosario">4. Glosario<a class="headerlink" href="#4-glosario" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Término / Sigla</th>
+<th>Definición</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Flujo de trabajo</td>
+<td>Plantilla configurable que describe todas las actividades que deben ejecutarse para atender una asignación de equipo de cómputo, quién las atiende y en qué momento se abren. Se configura una sola vez y se reutiliza en cada ticket.</td>
+</tr>
+<tr>
+<td>Etapa del flujo</td>
+<td>Cada una de las actividades que componen un flujo de trabajo (por ejemplo: alta de correo electrónico, alta en directorio activo, configuración de red, check list de entrega). Es la unidad que se atiende y que puede generar un subticket.</td>
+</tr>
+<tr>
+<td><strong>Bloque</strong></td>
+<td>Conjunto de etapas de un mismo flujo que se abren juntas y se trabajan en paralelo. Es la unidad que gobierna el avance: <strong>hasta que todas las etapas de un bloque concluyen, no se abre el bloque siguiente</strong>. Se identifica con un número entero consecutivo empezando en 1.</td>
+</tr>
+<tr>
+<td>Barrera</td>
+<td>Punto de sincronización al final de cada bloque. El flujo se detiene ahí hasta que la última etapa pendiente del bloque queda concluida, y solo entonces continúa. Es el concepto que da nombre a la regla de activación de RF-04.</td>
+</tr>
+<tr>
+<td>Etapa en curso / bloque en curso</td>
+<td>Etapa o bloque cuyas actividades están abiertas y disponibles para atenderse en este momento. Solo puede haber un bloque en curso a la vez.</td>
+</tr>
+<tr>
+<td>Estatus de la etapa</td>
+<td>Situación de una etapa dentro del ticket. <strong>Espera</strong>: todavía no le toca, no es editable ni generó subticket. <strong>Activo</strong>: está en curso y disponible para atenderse. <strong>Atendido</strong>: se registró su atención y concluyó. <strong>Cancelado</strong>: se descartó porque no aplica al caso.</td>
+</tr>
+<tr>
+<td>Estatus terminal</td>
+<td>Estatus del que una etapa ya no sale: <strong>Atendido</strong> o <strong>Cancelado</strong>. Una etapa en estatus terminal se considera concluida para efectos de cerrar el bloque.</td>
+</tr>
+<tr>
+<td>Atención realizada</td>
+<td>Resultado con el que el responsable cierra una etapa. Admite dos valores: <strong>SI</strong>, cuando la actividad se ejecutó, y <strong>NA</strong>, cuando la actividad no aplicaba al caso. Es el dato que dispara el avance del flujo y el que se evalúa en las etapas condicionadas.</td>
+</tr>
+<tr>
+<td>Etapa mandatoria</td>
+<td>Etapa que siempre forma parte del flujo de un ticket, sin importar qué cuentas o accesos se hayan solicitado.</td>
+</tr>
+<tr>
+<td>Etapa condicional</td>
+<td>Etapa que solo forma parte del flujo de un ticket cuando la cuenta o acceso al que está asociada fue efectivamente solicitado. Si no se solicitó, la etapa nunca se genera en ese ticket.</td>
+</tr>
+<tr>
+<td>Etapa condicionante</td>
+<td>Etapa previa cuyo resultado (SI o NA) determina si otra etapa se activa o se descarta. Concepto introducido en RF-06.</td>
+</tr>
+<tr>
+<td>Descartar una etapa</td>
+<td>Dejar una etapa en estatus Cancelado porque no aplica al caso, sin que nadie la atienda. Una etapa descartada cuenta como concluida y no impide cerrar el bloque ni el ticket.</td>
+</tr>
+<tr>
+<td>Ticket principal</td>
+<td>Ticket que se genera al asignar el equipo de cómputo y que contiene el flujo de trabajo completo. Es el que concentra todas las etapas.</td>
+</tr>
+<tr>
+<td>Subticket</td>
+<td>Ticket que el sistema genera automáticamente a partir de una etapa marcada para registrar ticket, dirigido al responsable de esa etapa. Depende del ticket principal y queda registrado con el bloque de la etapa que lo originó.</td>
+</tr>
+<tr>
+<td>Grupo escalonado</td>
+<td>Nombre con el que el negocio se refiere al bloque cuando se habla del dato que queda registrado en el ticket y en sus subtickets. Es el mismo concepto que <strong>bloque</strong>: la tanda de etapas a la que perteneció la actividad que originó el ticket.</td>
+</tr>
+<tr>
+<td>Antecesor</td>
+<td>Mecanismo actual de encadenamiento: referencia de una etapa a <strong>una sola</strong> etapa previa, cuya conclusión la activa. Es el mecanismo que este documento sustituye por el bloque.</td>
+</tr>
+<tr>
+<td>Ticket escalonado</td>
+<td>Forma de operar en la que un ticket principal va generando subtickets conforme avanza el flujo, en lugar de generarlos todos al inicio.</td>
+</tr>
+<tr>
+<td>Modo de compatibilidad</td>
+<td>Operación temporal en la que el sistema atiende con las reglas anteriores los tickets que se generaron antes de la liberación del esquema de bloques.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-entidad-a-la-que-aplica">5. Entidad a la que aplica<a class="headerlink" href="#5-entidad-a-la-que-aplica" title="Permanent link">&para;</a></h2>
+<p>Este requerimiento aplica sobre dos entidades que hoy ya existen y que se relacionan como plantilla e instancia.</p>
+<p>La primera es la <strong>etapa del flujo de trabajo en su definición</strong>, es decir, el renglón que el administrador captura al configurar un flujo. Sobre ella se agrega el bloque y se ajustan sus validaciones. No tiene ciclo de estatus relevante para este documento más allá de estar activa o cancelada dentro del catálogo.</p>
+<p>La segunda, y la que concentra el cambio de comportamiento, es la <strong>etapa del flujo de trabajo dentro de un ticket</strong>: la copia que se genera en el momento de crear el ticket principal y que es la que realmente se atiende. Su <strong>estatus inicial es Espera</strong> —salvo la etapa del primer bloque, que se activa de inmediato— y sus <strong>estatus terminales son Atendido</strong>, cuando el responsable registró la atención realizada, <strong>o Cancelado</strong>, cuando el sistema la descartó por no aplicar al caso. El proceso descrito por este documento concluye cuando <strong>ninguna etapa del ticket permanece en Espera ni en Activo</strong>, momento en el que el ticket principal queda disponible para cerrarse.</p>
+<p>Es importante entender que la etapa del ticket es una <strong>copia congelada</strong> de la configuración: se lleva el bloque, el orden, el responsable, la condición y el expediente del colaborador tal como estaban al momento del alta. Un cambio posterior en la plantilla no altera los tickets ya generados, lo cual es deliberado: cada ticket termina de ejecutarse con las reglas con las que nació.</p>
+<p>A esa copia congelada se suma un tercer punto de registro: el <strong>subticket</strong>. Cada subticket que el flujo genera se registra con el número de bloque —el grupo escalonado— de la etapa que lo originó, de modo que el dato viaja de la plantilla a la etapa del ticket y de ahí al subticket, y queda disponible para consulta y filtrado sin necesidad de abrir el ticket principal.</p>
+<h3 id="visión-general-del-flujo">Visión general del flujo<a class="headerlink" href="#visión-general-del-flujo" title="Permanent link">&para;</a></h3>
+<p>El primer diagrama muestra el ciclo de vida de una etapa dentro del ticket. Nótese que <strong>Cancelado no es un fracaso</strong>: es la salida normal de una etapa que no aplicaba al caso, y cuenta igual que Atendido para dar por cerrado el bloque.</p>
+<pre class="mermaid"><code>stateDiagram-v2
+    [*] --&gt; Espera: la etapa se genera al crear el ticket
+    Espera --&gt; Activo: se cierra por completo el bloque anterior
+    Espera --&gt; Cancelado: su bloque se abre pero la condición no se cumple
+    Activo --&gt; Atendido: el responsable registra la Atención Realizada (SI o NA)
+    Atendido --&gt; [*]
+    Cancelado --&gt; [*]</code></pre>
+<p>El segundo diagrama muestra la decisión que ejecuta el sistema cada vez que un responsable cierra una etapa. La pregunta central —y la que cambia respecto de hoy— es la primera: ya no se pregunta <em>"¿quién dependía de esta etapa?"</em>, se pregunta <em>"¿ya terminó todo el bloque?"</em>.</p>
+<pre class="mermaid"><code>flowchart TD
+    A[El responsable registra la Atención Realizada y guarda la etapa] --&gt; B[La etapa queda en Atendido]
+    B --&gt; C{¿Queda alguna etapa del mismo bloque en Espera o en Activo?}
+    C -- Sí --&gt; D[No se abre nada: el bloque sigue en curso]
+    C -- No --&gt; E[El bloque queda cerrado: se busca el siguiente bloque con etapas pendientes]
+    E --&gt; F{¿Existe un bloque posterior con etapas en Espera?}
+    F -- No --&gt; G[El flujo concluyó: el ticket principal queda disponible para cerrarse]
+    F -- Sí --&gt; H[Se evalúa cada etapa del bloque encontrado]
+    H --&gt; I{¿La etapa tiene condición y el resultado esperado no se cumplió?}
+    I -- Sí --&gt; J[La etapa se descarta: queda en Cancelado con su motivo]
+    I -- No --&gt; K[La etapa pasa a Activo y genera su subticket con el bloque registrado si lo requiere]
+    J --&gt; L{¿Se descartaron todas las etapas del bloque?}
+    K --&gt; M[Bloque abierto: el flujo continúa aquí]
+    L -- Sí --&gt; E
+    L -- No --&gt; M</code></pre>
+<p>El tercer diagrama ilustra la diferencia de comportamiento con un ejemplo de cuatro actividades. Arriba, cómo avanza hoy; abajo, cómo avanzaría por bloques.</p>
+<pre class="mermaid"><code>flowchart LR
+    subgraph HOY["Hoy — encadenamiento etapa contra etapa"]
+        direction LR
+        A1[Etapa A - Principal] --&gt; B1[Etapa B]
+        A1 --&gt; C1[Etapa C]
+        B1 --&gt; D1[Etapa D depende solo de B]
+        C1 -.-&gt; N1[C puede seguir abierta cuando D ya arrancó]
+    end
+    subgraph BLOQUES["Propuesta — ejecución por bloques"]
+        direction LR
+        A2[Bloque 1 - Etapa A] --&gt; BAR1(( Barrera ))
+        BAR1 --&gt; B2[Bloque 2 - Etapa B]
+        BAR1 --&gt; C2[Bloque 2 - Etapa C]
+        B2 --&gt; BAR2(( Barrera ))
+        C2 --&gt; BAR2
+        BAR2 --&gt; D2[Bloque 3 - Etapa D]
+    end</code></pre>
+<h2 id="6-índice-de-requerimientos">6. Índice de requerimientos<a class="headerlink" href="#6-índice-de-requerimientos" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p><strong>Navegación rápida:</strong> cada identificador RF en la primera columna es un enlace que lleva directamente al detalle del requerimiento. Hacer clic para ir al RF.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>RF</th>
+<th>Título</th>
+<th>Sistema</th>
+<th>Aplica a</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#rf-01">RF-01</a></td>
+<td>Definición de bloques en la configuración del flujo de trabajo</td>
+<td>Business Suite</td>
+<td>Flujos de Trabajo / Configuración</td>
+</tr>
+<tr>
+<td><a href="#rf-02">RF-02</a></td>
+<td>Integridad del armado del flujo por bloques</td>
+<td>Business Suite</td>
+<td>Flujos de Trabajo / Configuración</td>
+</tr>
+<tr>
+<td><a href="#rf-03">RF-03</a></td>
+<td>Registro y visualización del bloque en el ticket y en sus subtickets</td>
+<td>Business Suite</td>
+<td>Tickets de Cómputo</td>
+</tr>
+<tr>
+<td><a href="#rf-04">RF-04</a></td>
+<td>Activación por barrera del siguiente bloque</td>
+<td>Business Suite</td>
+<td>Tickets de Cómputo</td>
+</tr>
+<tr>
+<td><a href="#rf-05">RF-05</a></td>
+<td>Continuidad del flujo ante bloques vacíos o descartados</td>
+<td>Business Suite</td>
+<td>Tickets de Cómputo</td>
+</tr>
+<tr>
+<td><a href="#rf-06">RF-06</a></td>
+<td>Condicionamiento de una etapa al resultado de una etapa previa</td>
+<td>Business Suite</td>
+<td>Flujos de Trabajo / Tickets de Cómputo</td>
+</tr>
+<tr>
+<td><a href="#rf-07">RF-07</a></td>
+<td>Migración de los flujos configurados y de los tickets en curso</td>
+<td>Business Suite</td>
+<td>Transversal / Liberación</td>
+</tr>
+</tbody>
+</table>
+<h2 id="---">---<a class="headerlink" href="#---" title="Permanent link">&para;</a></h2>
+<p><a id="rf-01"></a></p>
+<h1 id="rf-01--definición-de-bloques-en-la-configuración-del-flujo-de-trabajo">RF-01 — Definición de Bloques en la Configuración del Flujo de Trabajo<a class="headerlink" href="#rf-01--definición-de-bloques-en-la-configuración-del-flujo-de-trabajo" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>Ninguna</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo">Objetivo<a class="headerlink" href="#objetivo" title="Permanent link">&para;</a></h2>
+<p>Permitir que el administrador agrupe las etapas de un flujo de trabajo en tandas numeradas, de manera que el flujo exprese la idea de negocio "estas actividades se trabajan juntas y hasta que todas terminen no empieza la siguiente tanda", sin tener que armar dependencias etapa por etapa.</p>
+<h2 id="descripción">Descripción<a class="headerlink" href="#descripción" title="Permanent link">&para;</a></h2>
+<p>El sistema deberá incorporar, en cada etapa del flujo de trabajo, un campo <strong>Bloque</strong> que indique a qué tanda pertenece esa actividad. El bloque es un número entero que empieza en 1 y avanza de uno en uno; todas las etapas que compartan el mismo número forman una tanda que se abre y se trabaja en paralelo.</p>
+<p>El bloque <strong>sustituye al antecesor como el mecanismo que gobierna el avance del flujo</strong>. Hasta hoy, cada etapa declaraba de qué otra etapa dependía y arrancaba en cuanto esa dependencia se cerraba; a partir de este requerimiento, lo que determina cuándo arranca una etapa es únicamente el bloque al que pertenece. Esto simplifica la configuración —el administrador piensa en tandas, no en cadenas— y elimina de raíz la posibilidad de armar dependencias circulares o etapas que nunca se alcanzan.</p>
+<p>El campo <strong>Orden</strong> conserva su lugar, pero cambia de significado: dentro de un bloque ya no expresa secuencia de ejecución, porque todas las etapas del bloque se abren al mismo tiempo. Sirve únicamente para <strong>presentar las etapas en un orden legible</strong> dentro de su bloque, tanto en la configuración como en el ticket.</p>
+<p>El campo <strong>Antecesor</strong> deja de capturarse en flujos nuevos. Se conserva en los flujos existentes como dato histórico y como insumo de la conversión descrita en RF-07, pero no vuelve a intervenir en la decisión de activar una etapa.</p>
+<h3 id="información--atributos">Información / atributos<a class="headerlink" href="#información--atributos" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Obligatorio</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bloque</td>
+<td>Sí</td>
+<td>Número entero mayor o igual a 1 que identifica la tanda a la que pertenece la etapa. Todas las etapas con el mismo número se abren juntas. El bloque 1 se reserva a la etapa principal.</td>
+</tr>
+<tr>
+<td>Orden</td>
+<td>Sí</td>
+<td>Número entero que determina la posición en la que se presenta la etapa <strong>dentro de su bloque</strong>. No influye en el momento de activación. Debe ser único dentro del bloque, pero puede repetirse entre bloques distintos.</td>
+</tr>
+<tr>
+<td>Principal</td>
+<td>Sí</td>
+<td>Marca la etapa con la que arranca el flujo. Solo puede haber una por flujo y debe estar en el bloque 1.</td>
+</tr>
+<tr>
+<td>Mandatorio</td>
+<td>Sí</td>
+<td>Indica que la etapa siempre forma parte del flujo del ticket, sin importar qué cuentas o accesos se hayan solicitado.</td>
+</tr>
+<tr>
+<td>Antecesor</td>
+<td>No</td>
+<td>Referencia histórica a la etapa de la que dependía en el esquema anterior. Solo lectura; no se captura en etapas nuevas y no interviene en la activación.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="operaciones">Operaciones<a class="headerlink" href="#operaciones" title="Permanent link">&para;</a></h3>
+<p>El administrador del flujo de trabajo deberá poder:
+- Capturar el bloque al registrar una etapa nueva.
+- Modificar el bloque de una etapa existente mientras el flujo lo permita.
+- Consultar el flujo con sus etapas <strong>agrupadas por bloque</strong>, en orden ascendente de bloque y, dentro de cada uno, en el orden capturado.</p>
+<hr />
+<h2 id="hu-11--agrupación-de-las-etapas-en-bloques">HU-1.1 — Agrupación de las etapas en bloques<a class="headerlink" href="#hu-11--agrupación-de-las-etapas-en-bloques" title="Permanent link">&para;</a></h2>
+<p>Como administrador del flujo de trabajo, quiero agrupar las etapas de un flujo en bloques numerados, para que el equipo trabaje por tandas completas y ninguna actividad arranque antes de que estén listos los insumos que produce la tanda anterior.</p>
+<h3 id="reglas-de-negocio">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio" title="Permanent link">&para;</a></h3>
+<p><strong>RN-1.1</strong> Cada etapa del flujo deberá pertenecer a exactamente un bloque, identificado por un número entero mayor o igual a 1.</p>
+<p><strong>RN-1.2</strong> El bloque es un dato obligatorio; no podrá guardarse una etapa sin bloque asignado.</p>
+<p><strong>RN-1.3</strong> El bloque 1 se reserva a la etapa principal y contendrá únicamente esa etapa.</p>
+<p><strong>RN-1.4</strong> Dentro de un mismo bloque, el Orden determina únicamente la presentación de las etapas; no condiciona el momento en que se activan, porque todas las etapas del bloque se activan simultáneamente.</p>
+<p><strong>RN-1.5</strong> El Orden deberá ser único dentro de un mismo bloque. Dos etapas de bloques distintos podrán tener el mismo Orden sin que ello represente un conflicto.</p>
+<p><strong>RN-1.6</strong> El Antecesor deja de gobernar la activación de las etapas. Se conserva como dato de consulta en los flujos configurados antes del cambio y no se captura en etapas nuevas.</p>
+<h3 id="criterios-de-aceptación">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación" title="Permanent link">&para;</a></h3>
+<p><strong>CA-1.1.1 — Captura del bloque en una etapa nueva</strong>
+Dado que el administrador registra una etapa nueva en un flujo de trabajo
+Cuando captura el bloque 2, un orden y los demás datos obligatorios de la etapa
+Entonces el sistema guarda la etapa asociada al bloque 2 y la presenta agrupada junto con las demás etapas de ese bloque.</p>
+<p><strong>CA-1.1.2 — El bloque es obligatorio</strong>
+Dado que el administrador registra una etapa nueva y deja el bloque vacío
+Cuando intenta guardar la etapa
+Entonces el sistema impide el guardado e informa que el bloque es un dato requerido.</p>
+<p><strong>CA-1.1.3 — Orden duplicado dentro del mismo bloque</strong>
+Dado que en el bloque 2 ya existe una etapa con orden 1
+Cuando el administrador intenta guardar otra etapa del bloque 2 también con orden 1
+Entonces el sistema impide el guardado e informa que el orden ya está utilizado dentro de ese bloque.</p>
+<p><strong>CA-1.1.4 — Orden repetido en bloques distintos</strong>
+Dado que en el bloque 2 existe una etapa con orden 1
+Cuando el administrador guarda una etapa del bloque 3 con orden 1
+Entonces el sistema acepta el guardado, porque la unicidad del orden aplica dentro de cada bloque y no en todo el flujo.</p>
+<p><strong>CA-1.1.5 — El antecesor ya no se captura</strong>
+Dado que el administrador registra una etapa nueva en un flujo de trabajo
+Cuando revisa los datos disponibles para captura
+Entonces el sistema no le solicita ni le permite capturar un antecesor, y presenta el bloque como el único dato que determina cuándo se abrirá la etapa.</p>
+<p><strong>CA-1.1.6 — Presentación agrupada de la configuración</strong>
+Dado que un flujo de trabajo tiene una etapa en el bloque 1, tres en el bloque 2 y dos en el bloque 3
+Cuando el administrador consulta el flujo
+Entonces el sistema presenta las seis etapas agrupadas por bloque, en orden ascendente de bloque y, dentro de cada bloque, en el orden capturado.</p>
+<hr />
+<p><strong>Regla transversal:</strong>
+El bloque capturado en la configuración es el que se copia al ticket en el momento de generarlo (RF-03) y el que gobierna la apertura de las etapas durante la ejecución (RF-04). Un cambio de bloque en la configuración surte efecto únicamente en los tickets que se generen a partir de ese momento.</p>
+<h2 id="---_1">---<a class="headerlink" href="#---_1" title="Permanent link">&para;</a></h2>
+<p><a id="rf-02"></a></p>
+<h1 id="rf-02--integridad-del-armado-del-flujo-por-bloques">RF-02 — Integridad del Armado del Flujo por Bloques<a class="headerlink" href="#rf-02--integridad-del-armado-del-flujo-por-bloques" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>RF-01</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_1">Objetivo<a class="headerlink" href="#objetivo_1" title="Permanent link">&para;</a></h2>
+<p>Impedir que se guarde un flujo de trabajo cuyo armado por bloques dejaría tickets detenidos sin salida, de modo que los errores de configuración se detecten al momento de capturarlos y no cuando un ticket ya está atorado en producción.</p>
+<h2 id="descripción_1">Descripción<a class="headerlink" href="#descripción_1" title="Permanent link">&para;</a></h2>
+<p>El sistema deberá <strong>validar el armado completo del flujo cada vez que se guarde</strong>, y no únicamente la etapa que se está capturando. Un flujo por bloques es correcto solo si se puede recorrer de principio a fin sin huecos: cualquier bloque faltante en la secuencia rompe la cadena y deja las etapas posteriores esperando un momento que nunca llegará.</p>
+<p>Las validaciones son de dos naturalezas. Las <strong>bloqueantes</strong> impiden el guardado porque describen configuraciones que con certeza dejarían un ticket detenido. Las <strong>advertencias</strong> permiten guardar pero informan al administrador de un riesgo que puede ser deliberado: es el caso de un bloque compuesto en su totalidad por etapas condicionales, que en un ticket concreto podría quedar sin ninguna actividad. Ese escenario está previsto y resuelto en RF-05, por lo que no debe impedirse; pero el administrador debe saber que lo está configurando.</p>
+<p>Se incluye también la validación de la <strong>cancelación de etapas</strong>. Cancelar una etapa dentro de la configuración no debe poder dejar un bloque intermedio sin ninguna etapa activa, porque el efecto es idéntico al de un hueco en la numeración.</p>
+<h3 id="validaciones">Validaciones<a class="headerlink" href="#validaciones" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Validación</th>
+<th>Tipo</th>
+<th>Comportamiento esperado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>La numeración de bloques debe ser consecutiva desde 1, sin huecos</td>
+<td>Bloqueante</td>
+<td>Impide guardar e indica qué número de bloque falta.</td>
+</tr>
+<tr>
+<td>Todo bloque declarado debe tener al menos una etapa activa</td>
+<td>Bloqueante</td>
+<td>Impide guardar e indica el bloque vacío.</td>
+</tr>
+<tr>
+<td>La etapa principal debe existir, ser única y estar en el bloque 1</td>
+<td>Bloqueante</td>
+<td>Impide guardar e indica la inconsistencia detectada.</td>
+</tr>
+<tr>
+<td>El bloque 1 no puede contener etapas adicionales a la principal</td>
+<td>Bloqueante</td>
+<td>Impide guardar e indica qué etapas deben moverse.</td>
+</tr>
+<tr>
+<td>Un bloque compuesto exclusivamente por etapas condicionales</td>
+<td>Advertencia</td>
+<td>Permite guardar e informa que ese bloque podría quedar sin actividades en algunos tickets.</td>
+</tr>
+<tr>
+<td>Cancelar la única etapa activa de un bloque intermedio</td>
+<td>Bloqueante</td>
+<td>Impide la cancelación mientras existan bloques posteriores con etapas activas.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="hu-21--validación-del-armado-del-flujo">HU-2.1 — Validación del armado del flujo<a class="headerlink" href="#hu-21--validación-del-armado-del-flujo" title="Permanent link">&para;</a></h2>
+<p>Como administrador del flujo de trabajo, quiero que el sistema no me permita guardar un flujo con bloques mal armados, para no descubrir el error cuando un ticket ya quedó detenido y sin forma de cerrarse.</p>
+<h3 id="reglas-de-negocio_1">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_1" title="Permanent link">&para;</a></h3>
+<p><strong>RN-2.1</strong> La numeración de los bloques de un flujo deberá ser consecutiva a partir de 1, sin huecos intermedios.</p>
+<p><strong>RN-2.2</strong> Todo bloque declarado en un flujo deberá tener al menos una etapa activa.</p>
+<p><strong>RN-2.3</strong> Todo flujo deberá tener una y solo una etapa principal, y esa etapa deberá pertenecer al bloque 1.</p>
+<p><strong>RN-2.4</strong> El bloque 1 no podrá contener etapas distintas a la principal.</p>
+<p><strong>RN-2.5</strong> Cuando un bloque se componga exclusivamente de etapas condicionales, el sistema deberá advertirlo al guardar, sin impedir la operación, porque ese bloque podría quedar sin actividades aplicables en un ticket concreto.</p>
+<p><strong>RN-2.6</strong> No podrá cancelarse la única etapa activa de un bloque cuando existan bloques posteriores con etapas activas, porque la cancelación dejaría un hueco en la numeración.</p>
+<h3 id="criterios-de-aceptación_1">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_1" title="Permanent link">&para;</a></h3>
+<p><strong>CA-2.1.1 — Hueco en la numeración de bloques</strong>
+Dado que un flujo tiene etapas en los bloques 1, 2 y 4, y ninguna en el bloque 3
+Cuando el administrador intenta guardar el flujo
+Entonces el sistema impide el guardado e informa que el bloque 3 no tiene etapas y que la numeración debe ser consecutiva.</p>
+<p><strong>CA-2.1.2 — El bloque 1 contiene etapas adicionales</strong>
+Dado que un flujo tiene la etapa principal y otra etapa más, ambas en el bloque 1
+Cuando el administrador intenta guardar el flujo
+Entonces el sistema impide el guardado e informa que el bloque 1 se reserva exclusivamente a la etapa principal.</p>
+<p><strong>CA-2.1.3 — Etapa principal fuera del bloque 1</strong>
+Dado que el administrador marca como principal una etapa que está en el bloque 2
+Cuando intenta guardar el flujo
+Entonces el sistema impide el guardado e informa que la etapa principal debe pertenecer al bloque 1.</p>
+<p><strong>CA-2.1.4 — Advertencia por bloque enteramente condicional</strong>
+Dado que el bloque 3 de un flujo se compone únicamente de etapas condicionales no mandatorias
+Cuando el administrador guarda el flujo
+Entonces el sistema guarda la configuración y le advierte que el bloque 3 podría quedar sin actividades en los tickets donde ninguna de esas cuentas se solicite.</p>
+<p><strong>CA-2.1.5 — Cancelación que dejaría un bloque vacío</strong>
+Dado que el bloque 2 de un flujo tiene una sola etapa activa y existe un bloque 3 con etapas activas
+Cuando el administrador intenta cancelar esa etapa del bloque 2
+Entonces el sistema impide la cancelación e informa que el bloque quedaría sin actividades y rompería la secuencia.</p>
+<hr />
+<p><strong>Regla transversal:</strong>
+Estas validaciones operan sobre la configuración y garantizan que el flujo sea recorrible en el papel. No sustituyen a RF-05, que resuelve las situaciones que solo aparecen en tiempo de ejecución, cuando el caso concreto de un ticket deja un bloque sin actividades aplicables.</p>
+<h2 id="---_2">---<a class="headerlink" href="#---_2" title="Permanent link">&para;</a></h2>
+<p><a id="rf-03"></a></p>
+<h1 id="rf-03--registro-y-visualización-del-bloque-en-el-ticket-y-en-sus-subtickets">RF-03 — Registro y Visualización del Bloque en el Ticket y en sus Subtickets<a class="headerlink" href="#rf-03--registro-y-visualización-del-bloque-en-el-ticket-y-en-sus-subtickets" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>RF-01</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_2">Objetivo<a class="headerlink" href="#objetivo_2" title="Permanent link">&para;</a></h2>
+<p>Llevar el bloque configurado hasta el ticket y hacer visible, para quien trabaja el flujo, en qué tanda va el trabajo, cuáles actividades están disponibles ahora y cuáles todavía no, de modo que nadie tenga que preguntar por qué su etapa aparece bloqueada. Además, dejar registrado en cada subticket que se genera el bloque del que proviene, para que el dato viaje con el propio ticket y no solo con el flujo del ticket principal.</p>
+<h2 id="descripción_2">Descripción<a class="headerlink" href="#descripción_2" title="Permanent link">&para;</a></h2>
+<p>El sistema deberá <strong>copiar el bloque de cada etapa al ticket</strong> en el momento de generarlo, junto con los demás datos que hoy ya se copian: el orden, el responsable, el expediente del colaborador y la condición de activación. A partir de ese momento, el bloque registrado en el ticket es el que gobierna su ejecución, con independencia de que la configuración cambie después.</p>
+<p>Esta congelación es deliberada y tiene una consecuencia que el negocio debe conocer: <strong>si mañana se reorganizan los bloques de un flujo, los tickets que ya estaban abiertos terminan de ejecutarse con la organización que tenían al nacer</strong>, y la nueva aplica solo a los tickets que se generen a partir de ese cambio. Es el mismo criterio con el que hoy opera el resto de la copia del flujo.</p>
+<p>El bloque no se queda en el ticket principal: <strong>cada subticket que el flujo genera se registra con el número de bloque de la etapa que lo originó</strong>. El valor se toma en el momento en que el subticket se registra y se conserva sin cambio durante toda su vida, de manera que quien consulta un subticket suelto —o un listado de subtickets— puede saber de qué tanda del proceso proviene sin abrir el ticket principal ni reconstruir el flujo. El bloque queda además disponible como columna y como criterio de filtrado en los listados de tickets, que es lo que permite responder preguntas del tipo "¿qué trae pendiente el bloque 2 de todos los tickets abiertos?".</p>
+<p>En la presentación, el flujo de trabajo del ticket deberá mostrarse <strong>agrupado por bloque</strong>, en orden ascendente, con una indicación clara de cuál es el bloque en curso y un <strong>indicador de avance</strong> del tipo "Bloque 2 de 4". El indicador se calcula sobre los bloques que efectivamente tienen etapas en ese ticket, no sobre los que existen en la plantilla, para que el número que ve el usuario corresponda con lo que realmente va a trabajar.</p>
+<p>Las etapas de bloques posteriores permanecen visibles pero <strong>no editables</strong>: el responsable puede ver que su actividad viene más adelante y qué falta para que se abra, pero no puede adelantarse a capturarla. Esta restricción se suma —no sustituye— a la restricción vigente de que una etapa solo la edita el departamento responsable de esa etapa.</p>
+<h3 id="información--atributos_1">Información / atributos<a class="headerlink" href="#información--atributos_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Obligatorio</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bloque de la etapa en el ticket</td>
+<td>Sí</td>
+<td>Copia del bloque configurado en la plantilla al momento de generar el ticket. No cambia durante la vida del ticket.</td>
+</tr>
+<tr>
+<td>Bloque en curso</td>
+<td>Sí</td>
+<td>Número del bloque cuyas etapas están actualmente activas. Es único: solo puede haber un bloque en curso a la vez.</td>
+</tr>
+<tr>
+<td>Indicador de avance</td>
+<td>Sí</td>
+<td>Texto que expresa el bloque en curso respecto del total de bloques con etapas en ese ticket (por ejemplo, "Bloque 2 de 4").</td>
+</tr>
+<tr>
+<td>Bloque del subticket (grupo escalonado)</td>
+<td>Sí, cuando el subticket lo genera el flujo</td>
+<td>Número de bloque de la etapa que originó el subticket, tomado al momento de registrarlo. No cambia durante la vida del subticket. Los subtickets que no provienen del flujo escalonado no lo llevan.</td>
+</tr>
+<tr>
+<td>Bloque en los listados de tickets</td>
+<td>Sí</td>
+<td>El bloque del subticket se presenta como columna consultable y como criterio de filtrado en los listados de tickets.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="diseño-uxui">Diseño UX/UI<a class="headerlink" href="#diseño-uxui" title="Permanent link">&para;</a></h3>
+<p>Dentro de la pestaña de flujo de trabajo del ticket, las etapas se presentan agrupadas bajo un encabezado por bloque. El bloque en curso se distingue visualmente de los ya concluidos y de los pendientes, y el indicador de avance se muestra en la parte superior de la pestaña. En los subtickets, donde hoy ya se muestra el flujo completo del ticket principal como contexto, se aplica la misma agrupación y el mismo indicador.</p>
+<hr />
+<h2 id="hu-31--visibilidad-del-avance-por-bloques">HU-3.1 — Visibilidad del avance por bloques<a class="headerlink" href="#hu-31--visibilidad-del-avance-por-bloques" title="Permanent link">&para;</a></h2>
+<p>Como responsable de una etapa del flujo de trabajo, quiero ver el flujo agrupado por bloques y saber cuál está en curso, para entender por qué mi actividad todavía no está disponible y qué falta para que se abra.</p>
+<h3 id="reglas-de-negocio_2">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_2" title="Permanent link">&para;</a></h3>
+<p><strong>RN-3.1</strong> Cada etapa del ticket conservará el número de bloque con el que se configuró al momento del alta; los cambios posteriores en la plantilla no afectarán a los tickets ya generados.</p>
+<p><strong>RN-3.2</strong> Únicamente las etapas del bloque en curso podrán editarse. Las etapas de bloques posteriores permanecerán visibles y no editables, además de la restricción vigente por departamento responsable.</p>
+<p><strong>RN-3.3</strong> El indicador de avance se calculará sobre los bloques que tengan al menos una etapa en ese ticket, excluyendo los bloques de la plantilla que no generaron ninguna etapa en el caso concreto.</p>
+<p><strong>RN-3.4</strong> Solo podrá existir un bloque en curso a la vez dentro de un mismo ticket.</p>
+<h3 id="criterios-de-aceptación_2">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_2" title="Permanent link">&para;</a></h3>
+<p><strong>CA-3.1.1 — Presentación agrupada del flujo en el ticket</strong>
+Dado un ticket cuyo flujo tiene una etapa en el bloque 1, tres en el bloque 2 y dos en el bloque 3
+Cuando el coordinador de Cómputo consulta la pestaña de flujo de trabajo
+Entonces el sistema presenta las etapas agrupadas bajo el encabezado de su bloque, en orden ascendente de bloque.</p>
+<p><strong>CA-3.1.2 — Indicador del bloque en curso</strong>
+Dado un ticket cuyo bloque 1 ya está concluido y cuyas etapas del bloque 2 están activas
+Cuando el responsable consulta la pestaña de flujo de trabajo
+Entonces el sistema muestra el indicador "Bloque 2 de 4" y distingue visualmente el bloque 2 como el bloque en curso.</p>
+<p><strong>CA-3.1.3 — Indicador que excluye bloques sin etapas</strong>
+Dado un flujo configurado con cinco bloques, en el que un ticket concreto no generó ninguna etapa del bloque 4 porque esas cuentas no fueron solicitadas
+Cuando el responsable consulta el indicador de avance
+Entonces el sistema muestra un total de cuatro bloques, no de cinco, porque el bloque sin etapas no forma parte del trabajo de ese ticket.</p>
+<p><strong>CA-3.1.4 — Etapa de bloque posterior no editable</strong>
+Dado que el bloque 2 está en curso y el responsable del departamento de una etapa del bloque 3 abre el ticket
+Cuando intenta capturar la información de su etapa del bloque 3
+Entonces el sistema le muestra la etapa en solo lectura, indica que pertenece a un bloque posterior y no le permite capturar ni registrar la atención realizada.</p>
+<p><strong>CA-3.1.5 — Un cambio en la plantilla no altera un ticket en curso</strong>
+Dado un ticket generado cuando la etapa de alta de VPN estaba configurada en el bloque 2
+Cuando el administrador mueve esa etapa al bloque 3 en la configuración del flujo
+Entonces el ticket ya generado conserva la etapa en el bloque 2 y continúa ejecutándose con esa organización, y el cambio aplica únicamente a los tickets generados a partir de ese momento.</p>
+<hr />
+<h2 id="hu-32--registro-del-bloque-en-el-subticket-generado">HU-3.2 — Registro del bloque en el subticket generado<a class="headerlink" href="#hu-32--registro-del-bloque-en-el-subticket-generado" title="Permanent link">&para;</a></h2>
+<p>Como coordinador de Cómputo, quiero que cada subticket que genera el flujo traiga registrado el bloque —el grupo escalonado— al que perteneció la etapa que lo originó, para saber de qué tanda del proceso proviene cada atención sin tener que abrir el ticket principal y para poder agrupar y filtrar el trabajo por bloque.</p>
+<h3 id="reglas-de-negocio_3">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_3" title="Permanent link">&para;</a></h3>
+<p><strong>RN-3.5</strong> Todo subticket que el sistema genere a partir de una etapa del flujo se registrará con el número de bloque al que pertenecía esa etapa dentro del ticket, tomado en el momento en que el subticket se registra.</p>
+<p><strong>RN-3.6</strong> El bloque será un dato obligatorio de los subtickets generados por el flujo: ninguno podrá quedar registrado sin bloque. Si el bloque no puede determinarse, el subticket no se registra y la apertura del bloque se revierte conforme a la regla transversal de RF-04.</p>
+<p><strong>RN-3.7</strong> El bloque registrado en el subticket no cambiará durante su vida: no lo altera una reorganización posterior de la plantilla ni el avance del ticket principal a bloques posteriores. Es el bloque con el que nació.</p>
+<p><strong>RN-3.8</strong> El bloque del subticket se mostrará en la consulta del propio subticket y estará disponible como columna y como criterio de filtrado en los listados de tickets.</p>
+<p><strong>RN-3.9</strong> Los subtickets que no provienen del flujo escalonado no llevarán bloque, y su ausencia no se tratará como error ni como dato incompleto.</p>
+<h3 id="criterios-de-aceptación_3">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_3" title="Permanent link">&para;</a></h3>
+<p><strong>CA-3.2.1 — El subticket nace con el bloque de su etapa</strong>
+Dado un flujo cuyo bloque 2 contiene la etapa de alta de correo electrónico marcada para registrar ticket
+Cuando el bloque 2 se abre y el sistema genera el subticket de esa etapa
+Entonces el subticket queda registrado con el bloque 2 como grupo escalonado al que perteneció la etapa que lo originó, y ese valor es consultable desde el propio subticket.</p>
+<p><strong>CA-3.2.2 — Todos los subtickets de una misma apertura traen su bloque</strong>
+Dado un bloque 3 con tres etapas marcadas para registrar ticket
+Cuando el bloque 2 queda cerrado y el sistema abre el bloque 3 generando los tres subtickets en una sola operación
+Entonces los tres subtickets quedan registrados con el bloque 3, cada uno dirigido al responsable configurado de su etapa.</p>
+<p><strong>CA-3.2.3 — El bloque del subticket no cambia al avanzar el flujo</strong>
+Dado un subticket generado desde una etapa del bloque 2 y ya atendido
+Cuando el ticket principal cierra el bloque 2 y abre el bloque 3
+Entonces el subticket conserva el bloque 2 con el que se registró y no adopta el bloque en curso del ticket principal.</p>
+<p><strong>CA-3.2.4 — Consulta y filtrado de los subtickets por bloque</strong>
+Dado un conjunto de tickets abiertos con subtickets generados en distintos bloques
+Cuando el coordinador de Cómputo consulta el listado de tickets y filtra por el bloque 2
+Entonces el sistema muestra únicamente los subtickets registrados con el bloque 2 y presenta el bloque como columna del listado.</p>
+<p><strong>CA-3.2.5 — Un subticket ajeno al flujo escalonado no requiere bloque</strong>
+Dado un subticket registrado por una vía distinta al flujo escalonado de asignación de cómputo
+Cuando el usuario lo consulta
+Entonces el sistema lo presenta sin bloque, no lo señala como incompleto y no impide su atención ni su cierre.</p>
+<hr />
+<p><strong>Regla transversal:</strong>
+La restricción de edición por bloque se suma a la restricción vigente por departamento responsable. Una etapa es editable únicamente cuando pertenece al bloque en curso, está activa y el usuario pertenece al departamento responsable de esa etapa; si cualquiera de las tres condiciones falla, la etapa se presenta en solo lectura.</p>
+<h2 id="---_3">---<a class="headerlink" href="#---_3" title="Permanent link">&para;</a></h2>
+<p><a id="rf-04"></a></p>
+<h1 id="rf-04--activación-por-barrera-del-siguiente-bloque">RF-04 — Activación por Barrera del Siguiente Bloque<a class="headerlink" href="#rf-04--activación-por-barrera-del-siguiente-bloque" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>RF-01, RF-03</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_3">Objetivo<a class="headerlink" href="#objetivo_3" title="Permanent link">&para;</a></h2>
+<p>Garantizar que el siguiente bloque de actividades se abra únicamente cuando todas las actividades del bloque en curso hayan concluido, de modo que ninguna actividad comience antes de que estén listos los insumos que produce la tanda anterior.</p>
+<h2 id="descripción_3">Descripción<a class="headerlink" href="#descripción_3" title="Permanent link">&para;</a></h2>
+<p>El sistema deberá evaluar, <strong>cada vez que una etapa concluye</strong>, si el bloque al que pertenece quedó completamente cerrado. Un bloque se considera cerrado cuando ninguna de sus etapas permanece en Espera ni en Activo, es decir, cuando todas quedaron en un estatus terminal: Atendido, porque el responsable registró la atención realizada, o Cancelado, porque el sistema las descartó por no aplicar al caso.</p>
+<p>Mientras el bloque en curso no esté cerrado, <strong>el sistema no modifica ninguna etapa de bloques posteriores</strong>: no las activa, no las cancela y no genera sus subtickets. Esta es la diferencia esencial con el comportamiento actual, donde el cierre de una sola actividad bastaba para abrir a las que dependían de ella.</p>
+<p>Cuando el bloque queda cerrado, el sistema abre el siguiente bloque que tenga etapas pendientes <strong>en una sola operación</strong>: todas sus etapas pasan a estar disponibles al mismo tiempo y cada una que esté marcada para registrar ticket genera su subticket dirigido al responsable configurado, registrado con el número de bloque del que proviene. Si una etapa del bloque tiene una condición que no se cumple, se descarta en ese mismo momento (RF-06) y no llega a abrirse.</p>
+<p>El sistema deberá evitar la generación de subtickets duplicados: si por cualquier razón ya existe un subticket no cancelado asociado a una etapa, no se genera un segundo.</p>
+<p>Cuando no exista ningún bloque posterior con etapas pendientes, el flujo concluye. En ese momento ninguna etapa del ticket permanece en Espera ni en Activo, y el ticket principal queda disponible para cerrarse conforme a sus reglas vigentes.</p>
+<h3 id="momento-en-que-ocurre-la-evaluación">Momento en que ocurre la evaluación<a class="headerlink" href="#momento-en-que-ocurre-la-evaluación" title="Permanent link">&para;</a></h3>
+<p>La evaluación se dispara al <strong>registrar la atención realizada de una etapa y guardarla</strong>. No existe una acción independiente de "finalizar bloque": el bloque se cierra solo, cuando su última etapa pendiente concluye. Esto conserva la forma de trabajar actual del responsable, que no necesita aprender un paso nuevo.</p>
+<hr />
+<h2 id="hu-41--cierre-completo-del-bloque-antes-de-abrir-el-siguiente">HU-4.1 — Cierre completo del bloque antes de abrir el siguiente<a class="headerlink" href="#hu-41--cierre-completo-del-bloque-antes-de-abrir-el-siguiente" title="Permanent link">&para;</a></h2>
+<p>Como coordinador de Cómputo, quiero que el siguiente bloque de actividades se abra solo cuando todas las actividades del bloque en curso hayan terminado, para que ninguna actividad se ejecute sobre información incompleta y se evite el retrabajo.</p>
+<h3 id="reglas-de-negocio_4">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_4" title="Permanent link">&para;</a></h3>
+<p><strong>RN-4.1</strong> Una etapa se considerará concluida cuando quede en estatus Atendido o en estatus Cancelado. Ambos cuentan por igual para efectos de cerrar el bloque.</p>
+<p><strong>RN-4.2</strong> Un bloque se considerará cerrado cuando ninguna de sus etapas permanezca en estatus Espera ni en estatus Activo.</p>
+<p><strong>RN-4.3</strong> Mientras el bloque en curso no esté cerrado, ninguna etapa de un bloque posterior cambiará de estatus ni generará subticket.</p>
+<p><strong>RN-4.4</strong> Al cerrarse el bloque en curso, todas las etapas del siguiente bloque con etapas pendientes se abrirán en una sola operación.</p>
+<p><strong>RN-4.5</strong> Cada etapa que se abra y esté marcada para registrar ticket generará un subticket dirigido al responsable configurado para esa etapa. Cada subticket que se genere quedará registrado con el número de bloque de la etapa que lo originó (RN-3.5). No se generará un segundo subticket si ya existe uno no cancelado asociado a esa misma etapa.</p>
+<p><strong>RN-4.6</strong> En ningún momento podrán coexistir etapas activas de más de un bloque dentro de un mismo ticket.</p>
+<p><strong>RN-4.7</strong> Cuando no exista ningún bloque posterior con etapas pendientes, el flujo del ticket se dará por concluido.</p>
+<p><strong>RN-4.8</strong> La apertura de cada bloque y la activación de cada etapa quedarán registradas en la bitácora del ticket, con fecha, hora y el evento que las originó.</p>
+<h3 id="criterios-de-aceptación_4">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_4" title="Permanent link">&para;</a></h3>
+<p><strong>CA-4.1.1 — El bloque no cierra mientras haya actividades pendientes</strong>
+Dado un bloque 2 con tres etapas activas, de las cuales una se atiende y dos siguen abiertas
+Cuando el responsable registra la atención realizada de esa primera etapa y la guarda
+Entonces el sistema deja la etapa en Atendido, mantiene el bloque 2 como bloque en curso y no activa ninguna etapa del bloque 3 ni genera subtickets.</p>
+<p><strong>CA-4.1.2 — Apertura del siguiente bloque al concluir la última etapa</strong>
+Dado un bloque 2 con tres etapas, de las cuales dos ya están en Atendido y una sigue activa
+Cuando el responsable registra la atención realizada de la última etapa pendiente y la guarda
+Entonces el sistema da por cerrado el bloque 2, activa todas las etapas del bloque 3 en una sola operación y lo señala como el nuevo bloque en curso.</p>
+<p><strong>CA-4.1.3 — Generación simultánea de los subtickets del bloque</strong>
+Dado un bloque 3 con cuatro etapas, de las cuales tres están marcadas para registrar ticket
+Cuando el bloque 2 queda cerrado y el bloque 3 se abre
+Entonces el sistema genera los tres subtickets correspondientes, cada uno dirigido al responsable configurado de su etapa, y deja la cuarta etapa activa sin subticket.</p>
+<p><strong>CA-4.1.4 — No se duplican los subtickets</strong>
+Dado que una etapa del bloque 3 ya tiene un subticket no cancelado asociado
+Cuando el sistema vuelve a evaluar la apertura de ese bloque
+Entonces el sistema no genera un segundo subticket para esa etapa y conserva el existente.</p>
+<p><strong>CA-4.1.5 — Una etapa descartada también cierra el bloque</strong>
+Dado un bloque 2 con dos etapas, de las cuales una quedó en Atendido y la otra fue descartada por el sistema
+Cuando se evalúa el estado del bloque
+Entonces el sistema considera el bloque 2 como cerrado y abre el bloque 3, porque una etapa descartada cuenta como concluida.</p>
+<p><strong>CA-4.1.6 — Fin del flujo al cerrar el último bloque</strong>
+Dado un ticket cuyo último bloque tiene una sola etapa activa
+Cuando el responsable registra la atención realizada de esa etapa y la guarda
+Entonces el sistema no abre ningún bloque adicional, da por concluido el flujo y deja el ticket principal disponible para cerrarse.</p>
+<p><strong>CA-4.1.7 — No coexisten dos bloques abiertos</strong>
+Dado un ticket cuyo bloque 3 acaba de abrirse
+Cuando el coordinador consulta el flujo de trabajo
+Entonces el sistema muestra etapas activas únicamente del bloque 3, con las del bloque 2 concluidas y las del bloque 4 en espera.</p>
+<hr />
+<p><strong>Regla transversal:</strong>
+La apertura de un bloque es una operación indivisible: o se abren todas sus etapas aplicables con sus subtickets, o no se abre ninguna. Si la generación de un subticket falla, la apertura completa del bloque debe revertirse y notificarse, para no dejar el flujo en un estado intermedio en el que unas etapas quedaron activas y otras no.</p>
+<h2 id="---_4">---<a class="headerlink" href="#---_4" title="Permanent link">&para;</a></h2>
+<p><a id="rf-05"></a></p>
+<h1 id="rf-05--continuidad-del-flujo-ante-bloques-vacíos-o-descartados">RF-05 — Continuidad del Flujo ante Bloques Vacíos o Descartados<a class="headerlink" href="#rf-05--continuidad-del-flujo-ante-bloques-vacíos-o-descartados" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>RF-04, RF-06</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_4">Objetivo<a class="headerlink" href="#objetivo_4" title="Permanent link">&para;</a></h2>
+<p>Evitar que un bloque que no aplica al caso concreto detenga el ticket de manera permanente, garantizando que el flujo siempre encuentre su siguiente actividad o concluya de forma limpia.</p>
+<h2 id="descripción_4">Descripción<a class="headerlink" href="#descripción_4" title="Permanent link">&para;</a></h2>
+<p>Existen dos situaciones en las que un bloque completo puede quedarse sin actividades que ejecutar, y ambas deben resolverse sin intervención humana porque, de no hacerlo, el ticket quedaría detenido para siempre.</p>
+<p>La primera es el <strong>bloque sin etapas generadas</strong>. Al crear el ticket, las etapas condicionales cuya cuenta o acceso no fue solicitado nunca llegan a generarse. Si todas las etapas de un bloque eran condicionales y ninguna fue solicitada, ese bloque simplemente no existe en ese ticket. El sistema deberá omitirlo y buscar el siguiente bloque que sí tenga etapas pendientes, en lugar de esperar el cierre de un bloque que no tiene nada que cerrar.</p>
+<p>La segunda es el <strong>bloque descartado en su totalidad</strong>. Un bloque puede sí tener etapas, pero que todas ellas resulten descartadas al abrirse porque su condición no se cumplió (RF-06). En ese caso el bloque nace y muere en la misma operación, sin que ningún responsable intervenga. El sistema deberá continuar en ese mismo momento con el bloque siguiente, y repetir la evaluación tantas veces como haga falta, hasta abrir un bloque con al menos una etapa activa o hasta agotar los bloques del ticket.</p>
+<p>Este comportamiento en cadena es indispensable: como el descarte de una etapa no lo ejecuta ninguna persona, nadie volvería a disparar la evaluación del flujo, y el ticket quedaría con etapas en espera de un momento que ya pasó.</p>
+<p>Para hacer verificable que esto se cumple, el requerimiento establece un <strong>invariante de no bloqueo</strong>: mientras un ticket tenga etapas en Espera, deberá existir al menos una etapa en Activo. Si un ticket incumple esa condición, está detenido y requiere atención. El sistema deberá poder listar los tickets que la incumplan.</p>
+<h3 id="diagrama-del-avance-en-cadena">Diagrama del avance en cadena<a class="headerlink" href="#diagrama-del-avance-en-cadena" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>flowchart TD
+    A[Se cierra el bloque en curso] --&gt; B{¿Existe un bloque posterior con etapas pendientes?}
+    B -- No --&gt; C[El flujo concluye y el ticket queda disponible para cerrarse]
+    B -- Sí --&gt; D[Se evalúan las etapas de ese bloque]
+    D --&gt; E{¿Al menos una etapa quedó activa?}
+    E -- Sí --&gt; F[El bloque queda en curso y el flujo se detiene aquí a esperar]
+    E -- No --&gt; G[Todas se descartaron: se registra el motivo]
+    G --&gt; B</code></pre>
+<hr />
+<h2 id="hu-51--avance-automático-sobre-bloques-que-no-aplican">HU-5.1 — Avance automático sobre bloques que no aplican<a class="headerlink" href="#hu-51--avance-automático-sobre-bloques-que-no-aplican" title="Permanent link">&para;</a></h2>
+<p>Como coordinador de Cómputo, quiero que el flujo continúe por sí solo cuando un bloque completo no aplica al caso, para que el ticket no quede detenido esperando actividades que nunca se van a ejecutar.</p>
+<h3 id="reglas-de-negocio_5">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_5" title="Permanent link">&para;</a></h3>
+<p><strong>RN-5.1</strong> Los bloques que no tengan ninguna etapa generada en el ticket se omitirán; el sistema abrirá el siguiente bloque que sí tenga etapas pendientes.</p>
+<p><strong>RN-5.2</strong> Si al abrir un bloque todas sus etapas resultan descartadas, el sistema continuará en la misma operación con el bloque siguiente, y repetirá la evaluación hasta abrir un bloque con al menos una etapa activa o hasta agotar los bloques del ticket.</p>
+<p><strong>RN-5.3</strong> Mientras un ticket tenga etapas en estatus Espera, deberá existir al menos una etapa en estatus Activo. El incumplimiento de esta condición identifica un ticket detenido.</p>
+<p><strong>RN-5.4</strong> Todo descarte de una etapa deberá registrar en la bitácora del ticket el motivo por el que se descartó y la etapa cuyo resultado lo originó, cuando aplique.</p>
+<p><strong>RN-5.5</strong> Cuando el avance en cadena agote todos los bloques sin dejar ninguna etapa activa, el flujo se dará por concluido y el ticket principal quedará disponible para cerrarse.</p>
+<h3 id="criterios-de-aceptación_5">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_5" title="Permanent link">&para;</a></h3>
+<p><strong>CA-5.1.1 — Bloque sin etapas generadas en el ticket</strong>
+Dado un ticket en el que el bloque 3 no generó ninguna etapa porque ninguna de sus cuentas fue solicitada
+Cuando se cierra el bloque 2
+Entonces el sistema omite el bloque 3 y abre directamente el bloque 4, dejándolo como bloque en curso.</p>
+<p><strong>CA-5.1.2 — Bloque descartado en su totalidad</strong>
+Dado un ticket cuyo bloque 3 tiene dos etapas, ambas condicionadas a que la etapa de diagnóstico se resolviera con SI, y esa etapa se resolvió con NA
+Cuando se cierra el bloque 2
+Entonces el sistema descarta las dos etapas del bloque 3, registra el motivo en la bitácora y continúa abriendo el bloque 4 en la misma operación.</p>
+<p><strong>CA-5.1.3 — Varios bloques consecutivos descartados</strong>
+Dado un ticket cuyos bloques 3 y 4 quedan descartados en su totalidad por no cumplirse sus condiciones
+Cuando se cierra el bloque 2
+Entonces el sistema descarta ambos bloques en la misma operación y abre el bloque 5, sin dejar etapas en espera de un bloque que ya no se abrirá.</p>
+<p><strong>CA-5.1.4 — Todos los bloques restantes quedan descartados</strong>
+Dado un ticket cuyos bloques 3 y 4 son los últimos y ambos quedan descartados en su totalidad
+Cuando se cierra el bloque 2
+Entonces el sistema descarta todas las etapas restantes, da por concluido el flujo y deja el ticket principal disponible para cerrarse.</p>
+<p><strong>CA-5.1.5 — Registro del motivo del descarte</strong>
+Dado que el sistema descarta una etapa porque la etapa de la que dependía se resolvió con un resultado distinto al esperado
+Cuando el coordinador consulta la bitácora del ticket
+Entonces encuentra el registro del descarte con la fecha, la etapa descartada, la etapa que originó el descarte y el motivo.</p>
+<p><strong>CA-5.1.6 — Detección de tickets detenidos</strong>
+Dado un ticket con etapas en estatus Espera y ninguna etapa en estatus Activo
+Cuando se ejecuta la verificación del invariante de no bloqueo
+Entonces el sistema incluye ese ticket en el listado de tickets detenidos para su atención.</p>
+<hr />
+<p><strong>Regla transversal:</strong>
+El avance en cadena descrito en este requerimiento y la barrera descrita en RF-04 son la misma operación vista desde dos ángulos: la barrera decide <em>cuándo</em> continuar, y este requerimiento decide <em>hasta dónde</em> continuar dentro de esa misma decisión. Ninguno de los dos puede implementarse sin el otro sin dejar tickets detenidos.</p>
+<h2 id="---_5">---<a class="headerlink" href="#---_5" title="Permanent link">&para;</a></h2>
+<p><a id="rf-06"></a></p>
+<h1 id="rf-06--condicionamiento-de-una-etapa-al-resultado-de-una-etapa-previa">RF-06 — Condicionamiento de una Etapa al Resultado de una Etapa Previa<a class="headerlink" href="#rf-06--condicionamiento-de-una-etapa-al-resultado-de-una-etapa-previa" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>RF-01, RF-04</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_5">Objetivo<a class="headerlink" href="#objetivo_5" title="Permanent link">&para;</a></h2>
+<p>Conservar, dentro del esquema de bloques, la capacidad de descartar una actividad cuando la decisión de la que depende se resolvió en sentido contrario, expresando de forma explícita <strong>de cuál</strong> etapa depende y <strong>qué resultado</strong> espera.</p>
+<h2 id="descripción_5">Descripción<a class="headerlink" href="#descripción_5" title="Permanent link">&para;</a></h2>
+<p>Hoy una etapa puede condicionarse al resultado de su antecesor: si el antecesor cerró con un resultado distinto al esperado, la etapa se descarta. Esa capacidad es necesaria y debe conservarse, pero al desaparecer el antecesor como mecanismo de encadenamiento (RF-01) la condición se queda sin referencia: en un bloque con varias etapas previas ya no existe "el antecesor" del que hablar.</p>
+<p>El sistema deberá, por tanto, permitir que una etapa declare de forma explícita <strong>la etapa condicionante</strong> —cualquier etapa de un bloque anterior— y el <strong>resultado esperado</strong> de esa etapa: SI o NA. Al abrirse el bloque de la etapa condicionada, el sistema compara el resultado registrado en la etapa condicionante contra el esperado: si coinciden, la etapa se activa con normalidad; si no coinciden, la etapa se descarta y no llega a abrirse.</p>
+<p>Cuando la etapa condicionante fue a su vez descartada, no existe un resultado que comparar. En ese caso la etapa condicionada <strong>también se descarta</strong>, porque la decisión de la que dependía nunca llegó a tomarse. Este arrastre es el que permite que ramas completas del flujo se poden de forma coherente.</p>
+<p>Una etapa sin condición declarada se activa siempre que su bloque se abra. Una etapa mandatoria no puede declararse condicionada, porque las dos definiciones se contradicen: lo mandatorio siempre aplica.</p>
+<h3 id="información--atributos_2">Información / atributos<a class="headerlink" href="#información--atributos_2" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Obligatorio</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Etapa condicionante</td>
+<td>No</td>
+<td>Etapa de un bloque anterior cuyo resultado determina si esta etapa se activa. Si se deja vacía, la etapa se activa siempre que su bloque se abra.</td>
+</tr>
+<tr>
+<td>Resultado esperado</td>
+<td>Sí, cuando hay etapa condicionante</td>
+<td>Resultado que debe haberse registrado en la etapa condicionante para que esta etapa se active. Admite SI o NA.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="operaciones_1">Operaciones<a class="headerlink" href="#operaciones_1" title="Permanent link">&para;</a></h3>
+<p>El administrador del flujo de trabajo deberá poder:
+- Seleccionar la etapa condicionante de entre las etapas de bloques anteriores del mismo flujo, y solo de entre ellas.
+- Capturar el resultado esperado cuando haya declarado una etapa condicionante.
+- Retirar la condición, dejando la etapa como incondicional.</p>
+<hr />
+<h2 id="hu-61--actividades-que-solo-aplican-según-el-resultado-de-otra">HU-6.1 — Actividades que solo aplican según el resultado de otra<a class="headerlink" href="#hu-61--actividades-que-solo-aplican-según-el-resultado-de-otra" title="Permanent link">&para;</a></h2>
+<p>Como administrador del flujo de trabajo, quiero condicionar una etapa al resultado de una etapa previa específica, para que las actividades que dependen de una decisión no se abran ni generen subtickets cuando esa decisión se resolvió en sentido contrario.</p>
+<h3 id="reglas-de-negocio_6">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_6" title="Permanent link">&para;</a></h3>
+<p><strong>RN-6.1</strong> Una etapa podrá declarar a lo sumo una etapa condicionante, con su respectivo resultado esperado.</p>
+<p><strong>RN-6.2</strong> La etapa condicionante deberá pertenecer a un bloque estrictamente anterior al de la etapa condicionada.</p>
+<p><strong>RN-6.3</strong> Cuando se declare una etapa condicionante, el resultado esperado será obligatorio y solo podrá tomar los valores SI o NA.</p>
+<p><strong>RN-6.4</strong> Al abrirse el bloque, si el resultado registrado en la etapa condicionante difiere del resultado esperado, la etapa condicionada se descartará y no se activará ni generará subticket.</p>
+<p><strong>RN-6.5</strong> Si la etapa condicionante fue descartada, la etapa condicionada también se descartará, porque la decisión de la que dependía nunca se tomó.</p>
+<p><strong>RN-6.6</strong> Una etapa sin condicionante declarado se activará siempre que su bloque se abra.</p>
+<p><strong>RN-6.7</strong> Una etapa marcada como mandatoria no podrá declararse condicionada.</p>
+<h3 id="criterios-de-aceptación_6">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_6" title="Permanent link">&para;</a></h3>
+<p><strong>CA-6.1.1 — Condición cumplida: la etapa se activa</strong>
+Dado que la etapa de diagnóstico del bloque 2 se cerró con resultado SI y que la etapa de configuración del bloque 3 está condicionada a ese mismo resultado
+Cuando se cierra el bloque 2 y se abre el bloque 3
+Entonces el sistema activa la etapa de configuración y genera su subticket.</p>
+<p><strong>CA-6.1.2 — Condición no cumplida: la etapa se descarta</strong>
+Dado que la etapa de diagnóstico del bloque 2 se cerró con resultado NA y que la etapa de configuración del bloque 3 está condicionada al resultado SI
+Cuando se cierra el bloque 2 y se abre el bloque 3
+Entonces el sistema descarta la etapa de configuración, no genera subticket y registra el motivo en la bitácora.</p>
+<p><strong>CA-6.1.3 — Etapa sin condición</strong>
+Dado que una etapa del bloque 3 no tiene etapa condicionante declarada
+Cuando se abre el bloque 3
+Entonces el sistema activa la etapa sin evaluar ninguna condición.</p>
+<p><strong>CA-6.1.4 — Arrastre del descarte</strong>
+Dado que la etapa del bloque 3 fue descartada y que una etapa del bloque 4 está condicionada al resultado de esa etapa descartada
+Cuando se abre el bloque 4
+Entonces el sistema descarta también la etapa del bloque 4 e indica en la bitácora que su etapa condicionante había sido descartada.</p>
+<p><strong>CA-6.1.5 — La etapa condicionante debe ser de un bloque anterior</strong>
+Dado que el administrador captura una etapa del bloque 3
+Cuando intenta seleccionar como condicionante otra etapa del bloque 3 o de un bloque posterior
+Entonces el sistema no ofrece esas etapas en la selección y, de intentarse el guardado, lo impide indicando que la etapa condicionante debe pertenecer a un bloque anterior.</p>
+<p><strong>CA-6.1.6 — Resultado esperado obligatorio</strong>
+Dado que el administrador selecciona una etapa condicionante y deja vacío el resultado esperado
+Cuando intenta guardar la etapa
+Entonces el sistema impide el guardado e informa que el resultado esperado es requerido cuando se declara una etapa condicionante.</p>
+<p><strong>CA-6.1.7 — Etapa mandatoria no puede condicionarse</strong>
+Dado que el administrador marca una etapa como mandatoria
+Cuando intenta declararle una etapa condicionante
+Entonces el sistema impide el guardado e informa que una etapa mandatoria siempre aplica y por lo tanto no admite condición.</p>
+<hr />
+<p><strong>Regla transversal:</strong>
+El descarte de etapas que se define en este requerimiento es la causa más frecuente de que un bloque completo quede sin actividades, situación que resuelve RF-05. Ambos requerimientos deben liberarse juntos: implementar el condicionamiento sin el avance en cadena dejaría tickets detenidos.</p>
+<h2 id="---_6">---<a class="headerlink" href="#---_6" title="Permanent link">&para;</a></h2>
+<p><a id="rf-07"></a></p>
+<h1 id="rf-07--migración-de-los-flujos-configurados-y-de-los-tickets-en-curso">RF-07 — Migración de los Flujos Configurados y de los Tickets en Curso<a class="headerlink" href="#rf-07--migración-de-los-flujos-configurados-y-de-los-tickets-en-curso" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>RF-01, RF-04, RF-06</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_6">Objetivo<a class="headerlink" href="#objetivo_6" title="Permanent link">&para;</a></h2>
+<p>Llevar los flujos ya configurados y los tickets abiertos al nuevo esquema sin detener la operación, y sin cambiar de manera involuntaria el comportamiento de procesos que hoy funcionan correctamente.</p>
+<h2 id="descripción_6">Descripción<a class="headerlink" href="#descripción_6" title="Permanent link">&para;</a></h2>
+<p>El cambio a bloques toca dos poblaciones de datos y cada una requiere un tratamiento distinto.</p>
+<p>La primera son los <strong>flujos ya configurados</strong>. El sistema deberá convertirlos automáticamente asignando a cada etapa el bloque que le corresponde según su cadena de dependencias: la etapa principal queda en el bloque 1, y cada etapa queda en el bloque inmediato siguiente al de su antecesor. La conversión deberá producir un <strong>reporte por flujo</strong> con la asignación resultante, para que el administrador la revise y la valide antes de darla por buena.</p>
+<p>Esa revisión no es un trámite. La conversión mecánica <strong>cambia el comportamiento</strong> cuando un flujo tiene ramas de distinta longitud: actividades que hoy corren desfasadas quedarían sincronizadas en una barrera, que es precisamente lo que se busca, pero el negocio debe confirmar que esa sincronización es la deseada en cada caso. Por eso el reporte debe señalar de manera explícita <strong>qué etapas cambian su momento de arranque</strong> respecto del comportamiento actual.</p>
+<p>La conversión deberá trasladar también las condiciones vigentes: la condición que hoy se evalúa contra el antecesor se convierte en una condición referida explícitamente a esa misma etapa, conservando el resultado esperado. De este modo ningún flujo pierde su lógica de ramificación.</p>
+<p>La segunda población son los <strong>tickets abiertos</strong> al momento de la liberación. Sus etapas se generaron sin bloque y no pueden reorganizarse sin alterar trabajo en proceso. El sistema deberá operar en <strong>modo de compatibilidad</strong> para ellos: las etapas que no tengan bloque asignado continúan avanzando con la regla anterior, etapa contra etapa, hasta que el ticket se cierre. El modo de compatibilidad se retira cuando ya no queden tickets abiertos sin bloque, y el sistema deberá permitir consultar cuántos quedan para saber cuándo es seguro retirarlo.</p>
+<h3 id="reglas-de-conversión">Reglas de conversión<a class="headerlink" href="#reglas-de-conversión" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Situación en el flujo actual</th>
+<th>Asignación al convertir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Etapa marcada como principal</td>
+<td>Bloque 1</td>
+</tr>
+<tr>
+<td>Etapa con antecesor</td>
+<td>Bloque del antecesor más uno</td>
+</tr>
+<tr>
+<td>Etapa con varias rutas hasta la principal</td>
+<td>Bloque correspondiente a la ruta más larga, para no adelantarla</td>
+</tr>
+<tr>
+<td>Etapa sin antecesor y no principal</td>
+<td>Se marca como inconsistencia; requiere asignación manual antes de validar el flujo</td>
+</tr>
+<tr>
+<td>Condición de activación contra el antecesor</td>
+<td>Etapa condicionante igual al antecesor, con el mismo resultado esperado</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="hu-71--conversión-de-los-flujos-ya-configurados">HU-7.1 — Conversión de los flujos ya configurados<a class="headerlink" href="#hu-71--conversión-de-los-flujos-ya-configurados" title="Permanent link">&para;</a></h2>
+<p>Como administrador del flujo de trabajo, quiero que los flujos existentes se conviertan automáticamente al esquema de bloques y poder revisar el resultado antes de darlo por bueno, para no cambiar sin darme cuenta el comportamiento de procesos que hoy operan correctamente.</p>
+<h3 id="reglas-de-negocio_7">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_7" title="Permanent link">&para;</a></h3>
+<p><strong>RN-7.1</strong> El bloque de cada etapa se derivará de su cadena de dependencias: la etapa principal se asignará al bloque 1 y cada etapa al bloque inmediato siguiente al de su antecesor.</p>
+<p><strong>RN-7.2</strong> Cuando una etapa pueda alcanzarse por varias rutas de distinta longitud, se le asignará el bloque correspondiente a la ruta más larga, para no adelantar su arranque respecto de lo que el negocio espera.</p>
+<p><strong>RN-7.3</strong> Las etapas sin antecesor que no sean la principal se reportarán como inconsistencia y requerirán asignación manual de bloque antes de que el flujo pueda validarse.</p>
+<p><strong>RN-7.4</strong> Las condiciones de activación vigentes se convertirán en condición referida explícitamente al antecesor actual, conservando el resultado esperado.</p>
+<p><strong>RN-7.5</strong> La conversión producirá un reporte por flujo que señale la asignación resultante y, de forma explícita, las etapas cuyo momento de arranque cambia respecto del comportamiento actual.</p>
+<p><strong>RN-7.6</strong> Un flujo convertido no entrará en operación hasta que el administrador responsable valide su reporte de conversión.</p>
+<h3 id="criterios-de-aceptación_7">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_7" title="Permanent link">&para;</a></h3>
+<p><strong>CA-7.1.1 — Conversión de una cadena simple</strong>
+Dado un flujo con una etapa principal, una etapa que depende de ella y una tercera que depende de la segunda
+Cuando se ejecuta la conversión
+Entonces el sistema asigna los bloques 1, 2 y 3 respectivamente y lo refleja en el reporte de conversión.</p>
+<p><strong>CA-7.1.2 — Conversión de ramas de distinta longitud</strong>
+Dado un flujo en el que una etapa puede alcanzarse por una ruta de dos pasos y por otra de tres
+Cuando se ejecuta la conversión
+Entonces el sistema le asigna el bloque correspondiente a la ruta más larga y señala en el reporte que esa etapa cambia su momento de arranque.</p>
+<p><strong>CA-7.1.3 — Etapa huérfana detectada</strong>
+Dado un flujo que contiene una etapa activa sin antecesor y que no está marcada como principal
+Cuando se ejecuta la conversión
+Entonces el sistema la reporta como inconsistencia, no le asigna bloque automáticamente y marca el flujo como pendiente de asignación manual.</p>
+<p><strong>CA-7.1.4 — Conversión de las condiciones de activación</strong>
+Dado un flujo en el que una etapa se activa solo cuando su antecesor cierra con resultado SI
+Cuando se ejecuta la conversión
+Entonces el sistema declara a ese antecesor como etapa condicionante de la etapa convertida y conserva SI como resultado esperado.</p>
+<p><strong>CA-7.1.5 — El flujo convertido requiere validación</strong>
+Dado un flujo cuya conversión se ejecutó y cuyo reporte no ha sido validado por el administrador
+Cuando se genera un ticket que correspondería a ese flujo
+Entonces el sistema no aplica la configuración convertida y advierte que el flujo está pendiente de validación.</p>
+<hr />
+<h2 id="hu-72--continuidad-de-los-tickets-abiertos">HU-7.2 — Continuidad de los tickets abiertos<a class="headerlink" href="#hu-72--continuidad-de-los-tickets-abiertos" title="Permanent link">&para;</a></h2>
+<p>Como responsable de Cómputo, quiero que los tickets que ya estaban abiertos al momento de la liberación sigan avanzando con normalidad, para no tener que cerrarlos a mano ni perder el trabajo en proceso.</p>
+<h3 id="reglas-de-negocio_8">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_8" title="Permanent link">&para;</a></h3>
+<p><strong>RN-7.7</strong> Los tickets cuyas etapas se generaron sin bloque continuarán avanzando con la regla anterior de encadenamiento etapa contra etapa hasta su cierre.</p>
+<p><strong>RN-7.8</strong> Los tickets generados a partir de la liberación operarán exclusivamente con la regla de bloques.</p>
+<p><strong>RN-7.9</strong> El sistema deberá permitir consultar cuántos tickets abiertos permanecen operando en modo de compatibilidad.</p>
+<p><strong>RN-7.10</strong> El modo de compatibilidad se retirará únicamente cuando no queden tickets abiertos operando bajo él.</p>
+<h3 id="criterios-de-aceptación_8">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_8" title="Permanent link">&para;</a></h3>
+<p><strong>CA-7.2.1 — Un ticket abierto antes de la liberación sigue avanzando</strong>
+Dado un ticket generado antes de la liberación, cuyas etapas no tienen bloque asignado
+Cuando el responsable registra la atención realizada de una de sus etapas
+Entonces el sistema activa las etapas que dependían de ella conforme a la regla anterior y el ticket continúa su curso sin intervención manual.</p>
+<p><strong>CA-7.2.2 — Un ticket nuevo opera por bloques</strong>
+Dado un ticket generado después de la liberación a partir de un flujo convertido y validado
+Cuando el responsable registra la atención realizada de una etapa
+Entonces el sistema aplica la regla de barrera por bloques y no la regla anterior.</p>
+<p><strong>CA-7.2.3 — Consulta de tickets en modo de compatibilidad</strong>
+Dado que existen tickets abiertos generados antes de la liberación
+Cuando el equipo de desarrollo consulta el indicador de compatibilidad
+Entonces el sistema informa cuántos tickets abiertos permanecen operando con la regla anterior.</p>
+<hr />
+<p><strong>Regla transversal:</strong>
+Mientras existan tickets en modo de compatibilidad conviven dos reglas de avance en el sistema. Esa convivencia es temporal y debe tener fecha de revisión: el indicador de RN-7.9 es el insumo para decidir cuándo retirar la regla anterior.</p>
+<h2 id="---_7">---<a class="headerlink" href="#---_7" title="Permanent link">&para;</a></h2>
+<h1 id="requerimientos-no-funcionales-rnf">Requerimientos no funcionales (RNF)<a class="headerlink" href="#requerimientos-no-funcionales-rnf" title="Permanent link">&para;</a></h1>
+<h3 id="rnf-001--rendimiento-apertura-de-un-bloque">RNF-001 — Rendimiento: apertura de un bloque<a class="headerlink" href="#rnf-001--rendimiento-apertura-de-un-bloque" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Descripción:</strong> La apertura de un bloque de hasta 20 etapas, con la generación de sus subtickets correspondientes, deberá completarse en menos de 5 segundos desde que el responsable guarda la última etapa del bloque anterior.</li>
+<li><strong>Métrica / criterio de verificación:</strong> Medición del tiempo transcurrido entre el guardado y la disponibilidad de las etapas del nuevo bloque, en un ambiente de prueba con volumen equivalente al productivo, sobre 20 ejecuciones; el percentil 95 debe ubicarse por debajo de 5 segundos.</li>
+<li><strong>Prioridad:</strong> Must</li>
+</ul>
+<h3 id="rnf-002--integridad-operación-indivisible-de-apertura">RNF-002 — Integridad: operación indivisible de apertura<a class="headerlink" href="#rnf-002--integridad-operación-indivisible-de-apertura" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Descripción:</strong> La apertura de un bloque deberá completarse en su totalidad o no aplicarse en absoluto. No podrá quedar un bloque parcialmente abierto, con unas etapas activas y otras en espera, ni etapas activas sin su subticket correspondiente.</li>
+<li><strong>Métrica / criterio de verificación:</strong> Prueba de interrupción forzada durante la apertura de un bloque de cinco etapas; al reintentar, el estado del ticket debe ser el previo a la operación o el posterior completo, nunca intermedio. Cero estados intermedios en 10 ejecuciones.</li>
+<li><strong>Prioridad:</strong> Must</li>
+</ul>
+<h3 id="rnf-003--integridad-ausencia-de-tickets-detenidos">RNF-003 — Integridad: ausencia de tickets detenidos<a class="headerlink" href="#rnf-003--integridad-ausencia-de-tickets-detenidos" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Descripción:</strong> Ningún ticket con etapas en estatus Espera podrá permanecer sin al menos una etapa en estatus Activo. El sistema deberá disponer de una verificación consultable de esta condición.</li>
+<li><strong>Métrica / criterio de verificación:</strong> Ejecución diaria de la verificación del invariante sobre la totalidad de tickets abiertos; meta de cero tickets detenidos. Cualquier ocurrencia se atiende como incidente.</li>
+<li><strong>Prioridad:</strong> Must</li>
+</ul>
+<h3 id="rnf-004--compatibilidad-continuidad-de-la-operación-en-curso">RNF-004 — Compatibilidad: continuidad de la operación en curso<a class="headerlink" href="#rnf-004--compatibilidad-continuidad-de-la-operación-en-curso" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Descripción:</strong> La liberación del esquema de bloques no deberá requerir la intervención manual de ningún ticket abierto ni el cierre anticipado de ninguno.</li>
+<li><strong>Métrica / criterio de verificación:</strong> Conteo de tickets abiertos que requirieron intervención manual durante la semana posterior a la liberación; meta de cero.</li>
+<li><strong>Prioridad:</strong> Must</li>
+</ul>
+<h3 id="rnf-005--auditoría-trazabilidad-del-avance-del-flujo">RNF-005 — Auditoría: trazabilidad del avance del flujo<a class="headerlink" href="#rnf-005--auditoría-trazabilidad-del-avance-del-flujo" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Descripción:</strong> Toda apertura de bloque, activación de etapa y descarte de etapa deberá registrarse en la bitácora del ticket con fecha, hora, usuario o proceso que la originó y, en el caso de los descartes, el motivo y la etapa condicionante involucrada.</li>
+<li><strong>Métrica / criterio de verificación:</strong> Revisión de la bitácora de una muestra de 10 tickets con flujo completo; el 100% de las transiciones de estatus de sus etapas debe tener su registro correspondiente.</li>
+<li><strong>Prioridad:</strong> Must</li>
+</ul>
+<h3 id="rnf-006--seguridad-restricción-de-edición-de-etapas">RNF-006 — Seguridad: restricción de edición de etapas<a class="headerlink" href="#rnf-006--seguridad-restricción-de-edición-de-etapas" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Descripción:</strong> Una etapa solo podrá editarse cuando pertenezca al bloque en curso, esté activa y el usuario pertenezca al departamento responsable de esa etapa. El incumplimiento de cualquiera de las tres condiciones deberá presentar la etapa en solo lectura.</li>
+<li><strong>Métrica / criterio de verificación:</strong> Pruebas de acceso con tres perfiles distintos —responsable del bloque en curso, responsable de un bloque posterior y usuario de otro departamento— sobre el mismo ticket; solo el primero debe poder capturar.</li>
+<li><strong>Prioridad:</strong> Must</li>
+</ul>
+<h3 id="rnf-007--mantenibilidad-cobertura-de-pruebas-del-avance-del-flujo">RNF-007 — Mantenibilidad: cobertura de pruebas del avance del flujo<a class="headerlink" href="#rnf-007--mantenibilidad-cobertura-de-pruebas-del-avance-del-flujo" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Descripción:</strong> La lógica que decide el cierre de un bloque, la apertura del siguiente, el descarte por condición y el avance en cadena deberá contar con pruebas automatizadas que cubran al menos el 80% de sus rutas de decisión.</li>
+<li><strong>Métrica / criterio de verificación:</strong> Reporte de cobertura de pruebas automatizadas sobre los componentes de avance del flujo, ejecutado en la integración continua.</li>
+<li><strong>Prioridad:</strong> Should</li>
+</ul>
+<h3 id="rnf-008--usabilidad-comprensión-del-avance">RNF-008 — Usabilidad: comprensión del avance<a class="headerlink" href="#rnf-008--usabilidad-comprensión-del-avance" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Descripción:</strong> Un responsable de etapa deberá identificar cuál es el bloque en curso y por qué su etapa no está disponible en un tiempo no mayor a 15 segundos desde que abre la pestaña de flujo de trabajo, sin ayuda externa.</li>
+<li><strong>Métrica / criterio de verificación:</strong> Prueba de usabilidad con cinco responsables de distintos departamentos; al menos cuatro de cinco deben lograrlo dentro del tiempo indicado.</li>
+<li><strong>Prioridad:</strong> Should</li>
+</ul>
+<h3 id="rnf-009--trazabilidad-bloque-registrado-en-todo-subticket-del-flujo">RNF-009 — Trazabilidad: bloque registrado en todo subticket del flujo<a class="headerlink" href="#rnf-009--trazabilidad-bloque-registrado-en-todo-subticket-del-flujo" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Descripción:</strong> La totalidad de los subtickets generados por el flujo escalonado deberá contar con el número de bloque de la etapa que los originó, disponible para consulta en el propio subticket y para filtrado en los listados de tickets.</li>
+<li><strong>Métrica / criterio de verificación:</strong> Consulta de verificación sobre los subtickets generados a partir de la liberación, ejecutada de forma semanal; meta de cero subtickets del flujo escalonado sin bloque registrado.</li>
+<li><strong>Prioridad:</strong> Must</li>
+</ul>
+<hr />
+<h1 id="matriz-de-trazabilidad">Matriz de trazabilidad<a class="headerlink" href="#matriz-de-trazabilidad" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Objetivo de negocio</th>
+<th>RF</th>
+<th>Historia</th>
+<th>Criterio de aceptación</th>
+<th>Prioridad</th>
+<th>Estado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OBJ-1 Evitar que una actividad arranque sin los insumos de su tanda</td>
+<td>RF-01</td>
+<td>HU-1.1</td>
+<td>CA-1.1.1 Captura del bloque en una etapa nueva</td>
+<td>Must</td>
+<td>Propuesto</td>
+</tr>
+<tr>
+<td>OBJ-1</td>
+<td>RF-01</td>
+<td>HU-1.1</td>
+<td>CA-1.1.4 Orden repetido en bloques distintos</td>
+<td>Must</td>
+<td>Propuesto</td>
+</tr>
+<tr>
+<td>OBJ-1</td>
+<td>RF-04</td>
+<td>HU-4.1</td>
+<td>CA-4.1.1 El bloque no cierra mientras haya actividades pendientes</td>
+<td>Must</td>
+<td>Propuesto</td>
+</tr>
+<tr>
+<td>OBJ-1</td>
+<td>RF-04</td>
+<td>HU-4.1</td>
+<td>CA-4.1.2 Apertura del siguiente bloque al concluir la última etapa</td>
+<td>Must</td>
+<td>Propuesto</td>
+</tr>
+<tr>
+<td>OBJ-1</td>
+<td>RF-04</td>
+<td>HU-4.1</td>
+<td>CA-4.1.7 No coexisten dos bloques abiertos</td>
+<td>Must</td>
+<td>Propuesto</td>
+</tr>
+<tr>
+<td>OBJ-1</td>
+<td>RF-06</td>
+<td>HU-6.1</td>
+<td>CA-6.1.1 Condición cumplida: la etapa se activa</td>
+<td>Must</td>
+<td>Propuesto</td>
+</tr>
+<tr>
+<td>OBJ-2 Que ningún ticket quede detenido sin salida</td>
+<td>RF-05</td>
+<td>HU-5.1</td>
+<td>CA-5.1.1 Bloque sin etapas generadas en el ticket</td>
+<td>Must</td>
+<td>Propuesto</td>
+</tr>
+<tr>
+<td>OBJ-2</td>
+<td>RF-05</td>
+<td>HU-5.1</td>
+<td>CA-5.1.2 Bloque descartado en su totalidad</td>
+<td>Must</td>
+<td>Propuesto</td>
+</tr>
+<tr>
+<td>OBJ-2</td>
+<td>RF-05</td>
+<td>HU-5.1</td>
+<td>CA-5.1.3 Varios bloques consecutivos descartados</td>
+<td>Must</td>
+<td>Propuesto</td>
+</tr>
+<tr>
+<td>OBJ-2</td>
+<td>RF-05</td>
+<td>HU-5.1</td>
+<td>CA-5.1.6 Detección de tickets detenidos</td>
+<td>Must</td>
+<td>Propuesto</td>
+</tr>
+<tr>
+<td>OBJ-2</td>
+<td>RF-06</td>
+<td>HU-6.1</td>
+<td>CA-6.1.4 Arrastre del descarte</td>
+<td>Must</td>
+<td>Propuesto</td>
+</tr>
+<tr>
+<td>OBJ-2</td>
+<td>RF-02</td>
+<td>HU-2.1</td>
+<td>CA-2.1.1 Hueco en la numeración de bloques</td>
+<td>Must</td>
+<td>Propuesto</td>
+</tr>
+<tr>
+<td>OBJ-3 Configuración del flujo entendible y a prueba de errores</td>
+<td>RF-01</td>
+<td>HU-1.1</td>
+<td>CA-1.1.5 El antecesor ya no se captura</td>
+<td>Must</td>
+<td>Propuesto</td>
+</tr>
+<tr>
+<td>OBJ-3</td>
+<td>RF-01</td>
+<td>HU-1.1</td>
+<td>CA-1.1.6 Presentación agrupada de la configuración</td>
+<td>Must</td>
+<td>Propuesto</td>
+</tr>
+<tr>
+<td>OBJ-3</td>
+<td>RF-02</td>
+<td>HU-2.1</td>
+<td>CA-2.1.2 El bloque 1 contiene etapas adicionales</td>
+<td>Must</td>
+<td>Propuesto</td>
+</tr>
+<tr>
+<td>OBJ-3</td>
+<td>RF-02</td>
+<td>HU-2.1</td>
+<td>CA-2.1.4 Advertencia por bloque enteramente condicional</td>
+<td>Must</td>
+<td>Propuesto</td>
+</tr>
+<tr>
+<td>OBJ-3</td>
+<td>RF-03</td>
+<td>HU-3.1</td>
+<td>CA-3.1.2 Indicador del bloque en curso</td>
+<td>Must</td>
+<td>Propuesto</td>
+</tr>
+<tr>
+<td>OBJ-3</td>
+<td>RF-03</td>
+<td>HU-3.2</td>
+<td>CA-3.2.1 El subticket nace con el bloque de su etapa</td>
+<td>Must</td>
+<td>Propuesto</td>
+</tr>
+<tr>
+<td>OBJ-3</td>
+<td>RF-03</td>
+<td>HU-3.2</td>
+<td>CA-3.2.4 Consulta y filtrado de los subtickets por bloque</td>
+<td>Should</td>
+<td>Propuesto</td>
+</tr>
+<tr>
+<td>OBJ-3</td>
+<td>RF-06</td>
+<td>HU-6.1</td>
+<td>CA-6.1.5 La etapa condicionante debe ser de un bloque anterior</td>
+<td>Must</td>
+<td>Propuesto</td>
+</tr>
+<tr>
+<td>OBJ-4 Liberar el cambio sin afectar la operación en curso</td>
+<td>RF-03</td>
+<td>HU-3.1</td>
+<td>CA-3.1.5 Un cambio en la plantilla no altera un ticket en curso</td>
+<td>Must</td>
+<td>Propuesto</td>
+</tr>
+<tr>
+<td>OBJ-4</td>
+<td>RF-03</td>
+<td>HU-3.2</td>
+<td>CA-3.2.3 El bloque del subticket no cambia al avanzar el flujo</td>
+<td>Must</td>
+<td>Propuesto</td>
+</tr>
+<tr>
+<td>OBJ-4</td>
+<td>RF-07</td>
+<td>HU-7.1</td>
+<td>CA-7.1.2 Conversión de ramas de distinta longitud</td>
+<td>Must</td>
+<td>Propuesto</td>
+</tr>
+<tr>
+<td>OBJ-4</td>
+<td>RF-07</td>
+<td>HU-7.1</td>
+<td>CA-7.1.5 El flujo convertido requiere validación</td>
+<td>Must</td>
+<td>Propuesto</td>
+</tr>
+<tr>
+<td>OBJ-4</td>
+<td>RF-07</td>
+<td>HU-7.2</td>
+<td>CA-7.2.1 Un ticket abierto antes de la liberación sigue avanzando</td>
+<td>Must</td>
+<td>Propuesto</td>
+</tr>
+<tr>
+<td>OBJ-4</td>
+<td>RF-07</td>
+<td>HU-7.2</td>
+<td>CA-7.2.3 Consulta de tickets en modo de compatibilidad</td>
+<td>Must</td>
+<td>Propuesto</td>
+</tr>
+</tbody>
+</table>
+<p>Estados sugeridos: Propuesto → Aprobado → En desarrollo → Verificado.</p>
+<hr />
+<h1 id="reglas-de-negocio-transversales">Reglas de negocio transversales<a class="headerlink" href="#reglas-de-negocio-transversales" title="Permanent link">&para;</a></h1>
+<p>Reglas que se reutilizan en más de un requerimiento y que conviene tener a la vista de forma independiente:</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Regla</th>
+<th>Aplica a</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RN-T.1</td>
+<td>Una etapa se considera concluida cuando queda en Atendido o en Cancelado; ambos estatus cuentan por igual para cerrar un bloque y para cerrar el ticket.</td>
+<td>RF-04, RF-05, RF-06</td>
+</tr>
+<tr>
+<td>RN-T.2</td>
+<td>Solo puede existir un bloque en curso a la vez dentro de un mismo ticket.</td>
+<td>RF-03, RF-04</td>
+</tr>
+<tr>
+<td>RN-T.3</td>
+<td>Las etapas del ticket son una copia congelada de la configuración vigente al momento del alta; los cambios posteriores en la plantilla no afectan tickets ya generados.</td>
+<td>RF-03, RF-07</td>
+</tr>
+<tr>
+<td>RN-T.4</td>
+<td>Mientras un ticket tenga etapas en Espera, debe existir al menos una etapa en Activo.</td>
+<td>RF-05</td>
+</tr>
+<tr>
+<td>RN-T.5</td>
+<td>Una etapa es editable únicamente cuando pertenece al bloque en curso, está activa y el usuario pertenece al departamento responsable.</td>
+<td>RF-03, RNF-006</td>
+</tr>
+<tr>
+<td>RN-T.6</td>
+<td>Todo subticket generado por el flujo escalonado se registra con el bloque de la etapa que lo originó, y ese valor no cambia durante su vida.</td>
+<td>RF-03, RF-04</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="supuestos-sup">Supuestos (SUP)<a class="headerlink" href="#supuestos-sup" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Supuesto</th>
+<th>Impacto si es falso</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SUP-01</td>
+<td>Los flujos configurados hoy en producción son pocos y pueden revisarse uno a uno tras la conversión.</td>
+<td>Si son muchos o muy ramificados, la validación de RF-07 se vuelve un proyecto en sí mismo y debe planearse por separado.</td>
+</tr>
+<tr>
+<td>SUP-02</td>
+<td>El negocio acepta que dentro de un bloque no exista secuencia: todas sus etapas se abren al mismo tiempo.</td>
+<td>Si se requiere secuencia interna, el modelo de bloques no basta y habría que reconsiderar el esquema de dependencias múltiples descartado en el análisis.</td>
+</tr>
+<tr>
+<td>SUP-03</td>
+<td>La condición de activación vigente siempre se evalúa contra el antecesor directo de la etapa, sin excepciones en los flujos configurados.</td>
+<td>Si existen configuraciones que dependen de otra etapa, la conversión de RF-07 perdería lógica de ramificación y requeriría revisión manual etapa por etapa.</td>
+</tr>
+<tr>
+<td>SUP-04</td>
+<td>Los tickets abiertos al momento de la liberación se cierran en un plazo razonable, de modo que el modo de compatibilidad sea temporal.</td>
+<td>Si algunos tickets permanecen abiertos indefinidamente, habría que migrarlos de forma asistida o convivir con dos reglas de avance por tiempo indefinido.</td>
+</tr>
+<tr>
+<td>SUP-05</td>
+<td>Los responsables de etapa continúan cerrando sus actividades mediante el registro de la atención realizada, sin necesidad de una acción nueva.</td>
+<td>Si el negocio pide una acción explícita de cierre de bloque, se agrega alcance de interfaz no contemplado en este documento.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="dependencias-dep">Dependencias (DEP)<a class="headerlink" href="#dependencias-dep" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Dependencia</th>
+<th>De quién / de qué</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DEP-01</td>
+<td>Inventario y revisión de los flujos de trabajo configurados en producción, para dimensionar la conversión.</td>
+<td>Administrador del flujo de trabajo / Innovación &amp; Negocios</td>
+</tr>
+<tr>
+<td>DEP-02</td>
+<td>Definición del negocio sobre cómo debe convertirse cada flujo cuando la sincronización por barrera cambie el momento de arranque de una etapa.</td>
+<td>Coordinación de Cómputo</td>
+</tr>
+<tr>
+<td>DEP-03</td>
+<td>Ambiente de pruebas con volumen equivalente al productivo para verificar RNF-001 y RNF-002.</td>
+<td>Equipo de Infraestructura</td>
+</tr>
+<tr>
+<td>DEP-04</td>
+<td>Ventana de liberación acordada, dado que la conversión de flujos y la activación del modo de compatibilidad ocurren en el mismo despliegue.</td>
+<td>Equipo de Desarrollo / Coordinación de Cómputo</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="riesgos-rgo">Riesgos (RGO)<a class="headerlink" href="#riesgos-rgo" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Riesgo</th>
+<th>Prob.</th>
+<th>Impacto</th>
+<th>Mitigación</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RGO-01</td>
+<td>Que el descarte de una etapa no propague el avance del flujo y deje tickets detenidos sin forma de cerrarse. Es el riesgo principal del cambio, porque el descarte no lo ejecuta ninguna persona y nadie volvería a disparar la evaluación.</td>
+<td>Alta</td>
+<td>Alto</td>
+<td>Implementar RF-05 junto con RF-04 y RF-06, nunca por separado; verificar el invariante de RNF-003 de forma diaria desde el primer día.</td>
+</tr>
+<tr>
+<td>RGO-02</td>
+<td>Que la conversión automática de los flujos existentes cambie el comportamiento de procesos que hoy operan correctamente, sin que nadie lo note.</td>
+<td>Media</td>
+<td>Alto</td>
+<td>Reporte de conversión que señale explícitamente las etapas que cambian su momento de arranque, y validación obligatoria del administrador antes de poner el flujo en operación (RN-7.6).</td>
+</tr>
+<tr>
+<td>RGO-03</td>
+<td>Que la apertura simultánea de un bloque numeroso genere muchos subtickets a la vez y sature al área responsable.</td>
+<td>Media</td>
+<td>Medio</td>
+<td>Revisar el tamaño de los bloques al validar la conversión; considerar dividir en bloques más pequeños los que superen un umbral acordado con el negocio.</td>
+</tr>
+<tr>
+<td>RGO-04</td>
+<td>Que una etapa quede sin responsable resoluble al abrirse un bloque y falle la apertura completa.</td>
+<td>Media</td>
+<td>Alto</td>
+<td>Validar la existencia de responsable activo para todas las etapas del flujo al momento de validar la conversión; definir un responsable de respaldo por flujo.</td>
+</tr>
+<tr>
+<td>RGO-05</td>
+<td>Que la convivencia temporal de dos reglas de avance genere confusión operativa o diagnósticos equivocados durante el periodo de compatibilidad.</td>
+<td>Media</td>
+<td>Medio</td>
+<td>Identificar visiblemente en el ticket con qué regla opera; publicar el indicador de RN-7.9 y fijar fecha de revisión para retirar la regla anterior.</td>
+</tr>
+<tr>
+<td>RGO-06</td>
+<td>Que el negocio descubra, ya en operación, que dentro de un bloque sí necesitaba secuencia entre algunas actividades.</td>
+<td>Baja</td>
+<td>Alto</td>
+<td>Validar SUP-02 con la Coordinación de Cómputo antes de iniciar el desarrollo, sobre casos reales de los flujos vigentes.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="preguntas-abiertas">Preguntas abiertas<a class="headerlink" href="#preguntas-abiertas" title="Permanent link">&para;</a></h1>
+<ol>
+<li>
+<p><strong>¿Qué tanto se usa hoy la condición de activación?</strong> Antes de definir RF-06 es necesario revisar los flujos configurados en producción para saber cuántas etapas tienen condición y contra qué etapa se evalúan. Si prácticamente no se usa, RF-06 podría simplificarse o posponerse. <em>Responsable sugerido: Administrador del flujo de trabajo.</em></p>
+</li>
+<li>
+<p><strong>¿Se requiere secuencia dentro de un bloque?</strong> El documento asume que no (SUP-02). Conviene confirmarlo contra los flujos reales antes de desarrollar, porque de requerirse cambiaría el modelo. <em>Responsable sugerido: Coordinación de Cómputo.</em></p>
+</li>
+<li>
+<p><strong>¿Debe notificarse al área responsable cuando su bloque completo se descarta?</strong> Hoy el descarte es silencioso. Con bloques, un área podría no enterarse de que su tanda ya no aplica. <em>Responsable sugerido: Coordinación de Cómputo.</em></p>
+</li>
+<li>
+<p><strong>¿Debe existir una facultad excepcional para desbloquear un ticket detenido?</strong> Actualmente las etapas no pueden cancelarse ni eliminarse desde la interfaz, por lo que un ticket detenido no tiene salida operativa. Con la verificación del invariante se detectarán, pero habría que decidir si un rol autorizado puede intervenirlos o si la corrección será siempre por parte del área de desarrollo. <em>Responsable sugerido: Coordinación de Cómputo / Equipo de Desarrollo.</em></p>
+</li>
+<li>
+<p><strong>¿Debe corregirse, dentro de este alcance, la asignación del responsable por unidad de negocio?</strong> Durante el análisis del comportamiento actual se identificó que la selección del responsable de una etapa por unidad de negocio no está surtiendo efecto y que siempre se toma el primer responsable activo configurado. El comportamiento es previo a este requerimiento y no forma parte de su alcance, pero con bloques se abren más etapas a la vez y el efecto se vuelve más visible. <em>Responsable sugerido: Equipo de Desarrollo.</em></p>
+</li>
+<li>
+<p><strong>¿Cuál es el umbral aceptable de etapas por bloque?</strong> Para mitigar RGO-03 conviene acordar un número máximo de subtickets simultáneos que el área puede absorber. <em>Responsable sugerido: Coordinación de Cómputo.</em></p>
+</li>
+<li>
+<p><strong>¿Qué se hace con los flujos cuya conversión detecte etapas huérfanas?</strong> RN-7.3 los deja pendientes de asignación manual. Falta definir el plazo y quién ejecuta esa asignación. <em>Responsable sugerido: Administrador del flujo de trabajo.</em></p>
+</li>
+<li>
+<p><strong>¿Debe mostrarse el bloque en la notificación del subticket?</strong> El bloque ya queda registrado en el subticket y disponible en los listados; falta decidir si además se incluye en el asunto o el cuerpo del correo con el que se avisa al responsable, para que ubique la tanda sin entrar al sistema. <em>Responsable sugerido: Coordinación de Cómputo.</em></p>
+</li>
+</ol>
+<hr />
+<h1 id="casos-de-prueba">Casos de prueba<a class="headerlink" href="#casos-de-prueba" title="Permanent link">&para;</a></h1>
+<p><strong>CP-001 — Registro de una etapa con bloque (camino feliz)</strong>
+Verifica: CA-1.1.1 · RN-1.1
+Dado que el administrador registra una etapa nueva en un flujo de trabajo y captura el bloque 2, el orden 1 y los demás datos obligatorios
+Cuando selecciona Guardar
+Entonces el sistema guarda la etapa asociada al bloque 2 y la presenta agrupada con las demás etapas de ese bloque.</p>
+<p><strong>CP-002 — Rechazo por bloque vacío (validación)</strong>
+Verifica: CA-1.1.2 · RN-1.2
+Dado que el administrador registra una etapa nueva y deja el bloque sin capturar
+Cuando intenta guardar la etapa
+Entonces el sistema impide el guardado e informa que el bloque es un dato requerido.</p>
+<p><strong>CP-003 — Rechazo por bloque cero o negativo (validación)</strong>
+Verifica: CA-1.1.2 · RN-1.1
+Dado que el administrador captura el valor 0 en el bloque de una etapa
+Cuando intenta guardar la etapa
+Entonces el sistema impide el guardado e informa que el bloque debe ser un número entero mayor o igual a 1.</p>
+<p><strong>CP-004 — Rechazo por orden duplicado dentro del mismo bloque (validación)</strong>
+Verifica: CA-1.1.3 · RN-1.5
+Dado que en el bloque 2 ya existe la etapa "Alta de correo electrónico" con orden 1
+Cuando el administrador intenta guardar la etapa "Alta en directorio activo" en el bloque 2 también con orden 1
+Entonces el sistema impide el guardado e informa que el orden ya está utilizado dentro de ese bloque.</p>
+<p><strong>CP-005 — Orden repetido entre bloques distintos (escenario alternativo)</strong>
+Verifica: CA-1.1.4 · RN-1.5
+Dado que en el bloque 2 existe una etapa con orden 1
+Cuando el administrador guarda una etapa del bloque 3 con orden 1
+Entonces el sistema acepta el guardado sin señalar conflicto.</p>
+<p><strong>CP-006 — El antecesor no está disponible para captura</strong>
+Verifica: CA-1.1.5 · RN-1.6
+Dado que el administrador registra una etapa nueva en un flujo de trabajo
+Cuando revisa los datos disponibles para captura
+Entonces el sistema no le presenta el antecesor como dato capturable y sí presenta el bloque.</p>
+<p><strong>CP-007 — Presentación agrupada de las etapas configuradas</strong>
+Verifica: CA-1.1.6
+Dado un flujo con una etapa en el bloque 1, tres en el bloque 2 y dos en el bloque 3
+Cuando el administrador consulta el flujo
+Entonces el sistema presenta las seis etapas agrupadas por bloque en orden ascendente y, dentro de cada bloque, por el orden capturado.</p>
+<p><strong>CP-008 — Usuario sin permiso no configura el flujo (permisos)</strong>
+Verifica: CA-1.1.1 · RNF-006
+Dado que un usuario sin permiso de administración de flujos de trabajo abre el catálogo
+Cuando intenta registrar o modificar una etapa
+Entonces el sistema no le habilita la opción e impide cualquier cambio en la configuración.</p>
+<p><strong>CP-009 — Rechazo por hueco en la numeración de bloques (validación)</strong>
+Verifica: CA-2.1.1 · RN-2.1
+Dado un flujo con etapas en los bloques 1, 2 y 4, y ninguna en el bloque 3
+Cuando el administrador intenta guardar el flujo
+Entonces el sistema impide el guardado e informa que el bloque 3 no tiene etapas y que la numeración debe ser consecutiva.</p>
+<p><strong>CP-010 — Guardado de un flujo con numeración correcta (camino feliz)</strong>
+Verifica: CA-2.1.1 · RN-2.1
+Dado un flujo con etapas en los bloques 1, 2, 3 y 4, todos con al menos una etapa activa
+Cuando el administrador guarda el flujo
+Entonces el sistema acepta el guardado sin observaciones de numeración.</p>
+<p><strong>CP-011 — Rechazo por etapa adicional en el bloque 1 (validación)</strong>
+Verifica: CA-2.1.2 · RN-2.4
+Dado un flujo con la etapa principal y una etapa de alta de correo, ambas en el bloque 1
+Cuando el administrador intenta guardar el flujo
+Entonces el sistema impide el guardado e informa que el bloque 1 se reserva exclusivamente a la etapa principal.</p>
+<p><strong>CP-012 — Rechazo por etapa principal fuera del bloque 1 (validación)</strong>
+Verifica: CA-2.1.3 · RN-2.3
+Dado que el administrador marca como principal una etapa que pertenece al bloque 2
+Cuando intenta guardar el flujo
+Entonces el sistema impide el guardado e informa que la etapa principal debe pertenecer al bloque 1.</p>
+<p><strong>CP-013 — Rechazo por flujo sin etapa principal (error)</strong>
+Verifica: CA-2.1.3 · RN-2.3
+Dado un flujo en el que ninguna etapa está marcada como principal
+Cuando el administrador intenta guardar el flujo
+Entonces el sistema impide el guardado e informa que el flujo debe tener una etapa principal en el bloque 1.</p>
+<p><strong>CP-014 — Advertencia por bloque compuesto solo de etapas condicionales</strong>
+Verifica: CA-2.1.4 · RN-2.5
+Dado un flujo cuyo bloque 3 se compone únicamente de etapas condicionales no mandatorias
+Cuando el administrador guarda el flujo
+Entonces el sistema guarda la configuración y muestra la advertencia de que ese bloque podría quedar sin actividades en algunos tickets.</p>
+<p><strong>CP-015 — Rechazo de la cancelación que dejaría un bloque intermedio vacío (validación)</strong>
+Verifica: CA-2.1.5 · RN-2.6
+Dado que el bloque 2 tiene una sola etapa activa y existe un bloque 3 con etapas activas
+Cuando el administrador intenta cancelar esa etapa del bloque 2
+Entonces el sistema impide la cancelación e informa que el bloque quedaría sin actividades.</p>
+<p><strong>CP-016 — Cancelación permitida en el último bloque (escenario alternativo)</strong>
+Verifica: CA-2.1.5 · RN-2.6
+Dado que el bloque 4 es el último del flujo y tiene dos etapas activas
+Cuando el administrador cancela una de ellas
+Entonces el sistema acepta la cancelación porque el bloque conserva al menos una etapa activa y no se rompe la secuencia.</p>
+<p><strong>CP-017 — El bloque se copia al ticket al generarlo (camino feliz)</strong>
+Verifica: CA-3.1.1 · RN-3.1
+Dado un flujo con etapas distribuidas en cuatro bloques
+Cuando se genera un ticket a partir de la asignación de equipo de cómputo
+Entonces cada etapa del ticket queda registrada con el mismo número de bloque que tenía en la configuración.</p>
+<p><strong>CP-018 — Presentación agrupada del flujo en el ticket</strong>
+Verifica: CA-3.1.1
+Dado un ticket con una etapa en el bloque 1, tres en el bloque 2 y dos en el bloque 3
+Cuando el coordinador de Cómputo consulta la pestaña de flujo de trabajo
+Entonces el sistema presenta las etapas agrupadas bajo el encabezado de su bloque, en orden ascendente.</p>
+<p><strong>CP-019 — Indicador del bloque en curso</strong>
+Verifica: CA-3.1.2 · RN-3.4
+Dado un ticket con el bloque 1 concluido y las etapas del bloque 2 activas
+Cuando el responsable consulta la pestaña de flujo de trabajo
+Entonces el sistema muestra el indicador "Bloque 2 de 4" y distingue visualmente el bloque 2 como bloque en curso.</p>
+<p><strong>CP-020 — El indicador excluye los bloques sin etapas</strong>
+Verifica: CA-3.1.3 · RN-3.3
+Dado un flujo configurado con cinco bloques y un ticket en el que el bloque 4 no generó ninguna etapa
+Cuando el responsable consulta el indicador de avance
+Entonces el sistema muestra un total de cuatro bloques y no de cinco.</p>
+<p><strong>CP-021 — Etapa de bloque posterior en solo lectura (permisos)</strong>
+Verifica: CA-3.1.4 · RN-3.2
+Dado que el bloque 2 está en curso y el responsable del departamento de una etapa del bloque 3 abre el ticket
+Cuando intenta capturar la información de esa etapa
+Entonces el sistema la presenta en solo lectura, indica que pertenece a un bloque posterior y no permite registrar la atención realizada.</p>
+<p><strong>CP-022 — Etapa del bloque en curso de otro departamento en solo lectura (permisos)</strong>
+Verifica: CA-3.1.4 · RNF-006
+Dado que el bloque 2 está en curso y un usuario de un departamento distinto al responsable de una de sus etapas abre el ticket
+Cuando intenta capturar esa etapa
+Entonces el sistema la presenta en solo lectura y no permite la captura.</p>
+<p><strong>CP-023 — Un cambio en la plantilla no altera un ticket en curso</strong>
+Verifica: CA-3.1.5 · RN-3.1
+Dado un ticket generado cuando la etapa de alta de VPN estaba en el bloque 2
+Cuando el administrador mueve esa etapa al bloque 3 en la configuración del flujo
+Entonces el ticket ya generado conserva la etapa en el bloque 2 y continúa ejecutándose con esa organización.</p>
+<p><strong>CP-024 — El bloque no cierra con actividades pendientes</strong>
+Verifica: CA-4.1.1 · RN-4.3
+Dado un bloque 2 con tres etapas activas
+Cuando el responsable registra la atención realizada de una de ellas y guarda
+Entonces el sistema deja esa etapa en Atendido, mantiene el bloque 2 en curso y no activa ninguna etapa del bloque 3.</p>
+<p><strong>CP-025 — Apertura del siguiente bloque al concluir la última etapa (camino feliz)</strong>
+Verifica: CA-4.1.2 · RN-4.4
+Dado un bloque 2 con tres etapas, dos ya en Atendido y una activa
+Cuando el responsable registra la atención realizada de la última y guarda
+Entonces el sistema cierra el bloque 2, activa todas las etapas del bloque 3 y lo señala como bloque en curso.</p>
+<p><strong>CP-026 — Generación simultánea de los subtickets del bloque</strong>
+Verifica: CA-4.1.3 · RN-4.5
+Dado un bloque 3 con cuatro etapas, tres de ellas marcadas para registrar ticket
+Cuando el bloque 2 queda cerrado y el bloque 3 se abre
+Entonces el sistema genera los tres subtickets, cada uno dirigido al responsable configurado de su etapa.</p>
+<p><strong>CP-027 — Etapa activa que no genera subticket (escenario alternativo)</strong>
+Verifica: CA-4.1.3 · RN-4.5
+Dado un bloque 3 con una etapa que no está marcada para registrar ticket
+Cuando el bloque 3 se abre
+Entonces el sistema activa esa etapa sin generar subticket y la deja disponible para su captura dentro del ticket principal.</p>
+<p><strong>CP-028 — No se duplican los subtickets</strong>
+Verifica: CA-4.1.4 · RN-4.5
+Dado que una etapa del bloque 3 ya tiene un subticket no cancelado asociado
+Cuando el sistema vuelve a evaluar la apertura de ese bloque
+Entonces no genera un segundo subticket y conserva el existente.</p>
+<p><strong>CP-029 — Una etapa descartada también cierra el bloque</strong>
+Verifica: CA-4.1.5 · RN-4.1
+Dado un bloque 2 con dos etapas, una en Atendido y otra descartada por el sistema
+Cuando se evalúa el estado del bloque
+Entonces el sistema lo considera cerrado y abre el bloque 3.</p>
+<p><strong>CP-030 — Fin del flujo al cerrar el último bloque</strong>
+Verifica: CA-4.1.6 · RN-4.7
+Dado un ticket cuyo último bloque tiene una sola etapa activa
+Cuando el responsable registra su atención realizada y guarda
+Entonces el sistema no abre ningún bloque adicional y deja el ticket principal disponible para cerrarse.</p>
+<p><strong>CP-031 — El ticket principal no puede cerrarse con etapas pendientes (error)</strong>
+Verifica: CA-4.1.6 · RN-4.7
+Dado un ticket cuyo bloque 3 tiene etapas activas y cuyo bloque 4 tiene etapas en espera
+Cuando un usuario de Cómputo intenta cerrar el ticket principal
+Entonces el sistema no ofrece la acción de cierre o la impide, indicando que el flujo de trabajo no ha concluido.</p>
+<p><strong>CP-032 — No coexisten dos bloques abiertos</strong>
+Verifica: CA-4.1.7 · RN-4.6
+Dado un ticket cuyo bloque 3 acaba de abrirse
+Cuando el coordinador consulta el flujo de trabajo
+Entonces el sistema muestra etapas activas únicamente del bloque 3, con las del bloque 2 concluidas y las del bloque 4 en espera.</p>
+<p><strong>CP-033 — Registro en bitácora de la apertura del bloque (auditoría)</strong>
+Verifica: CA-4.1.2 · RN-4.8
+Dado que el bloque 3 se abrió al cerrarse el bloque 2
+Cuando el coordinador consulta la bitácora del ticket
+Entonces encuentra el registro de la apertura del bloque 3 y de la activación de cada una de sus etapas, con fecha y hora.</p>
+<p><strong>CP-034 — Falla al generar un subticket revierte la apertura del bloque (error)</strong>
+Verifica: CA-4.1.3 · RNF-002
+Dado un bloque 3 de cinco etapas en el que una de ellas no tiene responsable activo resoluble
+Cuando el sistema intenta abrir el bloque
+Entonces la apertura completa se revierte, ninguna etapa del bloque 3 queda activa, no se genera ningún subticket y el sistema informa el motivo del fallo.</p>
+<p><strong>CP-035 — Bloque sin etapas generadas en el ticket</strong>
+Verifica: CA-5.1.1 · RN-5.1
+Dado un ticket en el que el bloque 3 no generó ninguna etapa porque ninguna de sus cuentas fue solicitada
+Cuando se cierra el bloque 2
+Entonces el sistema omite el bloque 3 y abre directamente el bloque 4.</p>
+<p><strong>CP-036 — Bloque descartado en su totalidad</strong>
+Verifica: CA-5.1.2 · RN-5.2
+Dado un ticket cuyo bloque 3 tiene dos etapas condicionadas al resultado SI de la etapa de diagnóstico, y esa etapa se cerró con NA
+Cuando se cierra el bloque 2
+Entonces el sistema descarta ambas etapas del bloque 3, registra el motivo y abre el bloque 4 en la misma operación.</p>
+<p><strong>CP-037 — Dos bloques consecutivos descartados</strong>
+Verifica: CA-5.1.3 · RN-5.2
+Dado un ticket cuyos bloques 3 y 4 quedan descartados en su totalidad
+Cuando se cierra el bloque 2
+Entonces el sistema descarta ambos bloques en la misma operación y abre el bloque 5, sin dejar etapas esperando un bloque que ya no se abrirá.</p>
+<p><strong>CP-038 — Todos los bloques restantes quedan descartados</strong>
+Verifica: CA-5.1.4 · RN-5.5
+Dado un ticket cuyos bloques 3 y 4 son los últimos y ambos quedan descartados en su totalidad
+Cuando se cierra el bloque 2
+Entonces el sistema da por concluido el flujo y deja el ticket principal disponible para cerrarse.</p>
+<p><strong>CP-039 — Motivo del descarte registrado en bitácora (auditoría)</strong>
+Verifica: CA-5.1.5 · RN-5.4
+Dado que el sistema descartó una etapa porque su etapa condicionante se resolvió con un resultado distinto al esperado
+Cuando el coordinador consulta la bitácora del ticket
+Entonces encuentra el registro con la fecha, la etapa descartada, la etapa condicionante y el motivo del descarte.</p>
+<p><strong>CP-040 — La verificación detecta un ticket detenido</strong>
+Verifica: CA-5.1.6 · RN-5.3
+Dado un ticket con etapas en estatus Espera y ninguna en estatus Activo
+Cuando se ejecuta la verificación del invariante de no bloqueo
+Entonces el sistema incluye ese ticket en el listado de tickets detenidos.</p>
+<p><strong>CP-041 — La verificación no marca un ticket sano (escenario alternativo)</strong>
+Verifica: CA-5.1.6 · RN-5.3
+Dado un ticket con etapas en Espera y al menos una etapa en Activo
+Cuando se ejecuta la verificación del invariante de no bloqueo
+Entonces el sistema no lo incluye en el listado de tickets detenidos.</p>
+<p><strong>CP-042 — Condición cumplida: la etapa se activa (camino feliz)</strong>
+Verifica: CA-6.1.1 · RN-6.4
+Dado que la etapa de diagnóstico del bloque 2 se cerró con resultado SI y la etapa de configuración del bloque 3 está condicionada a ese resultado
+Cuando se cierra el bloque 2 y se abre el bloque 3
+Entonces el sistema activa la etapa de configuración y genera su subticket.</p>
+<p><strong>CP-043 — Condición no cumplida: la etapa se descarta</strong>
+Verifica: CA-6.1.2 · RN-6.4
+Dado que la etapa de diagnóstico del bloque 2 se cerró con resultado NA y la etapa de configuración del bloque 3 está condicionada al resultado SI
+Cuando se cierra el bloque 2 y se abre el bloque 3
+Entonces el sistema descarta la etapa de configuración, no genera subticket y registra el motivo.</p>
+<p><strong>CP-044 — Etapa sin condición se activa siempre</strong>
+Verifica: CA-6.1.3 · RN-6.6
+Dado que una etapa del bloque 3 no tiene etapa condicionante declarada
+Cuando se abre el bloque 3
+Entonces el sistema la activa sin evaluar condición alguna.</p>
+<p><strong>CP-045 — Arrastre del descarte a la etapa dependiente</strong>
+Verifica: CA-6.1.4 · RN-6.5
+Dado que la etapa del bloque 3 fue descartada y una etapa del bloque 4 está condicionada al resultado de esa etapa
+Cuando se abre el bloque 4
+Entonces el sistema descarta también la etapa del bloque 4 e indica en la bitácora que su etapa condicionante había sido descartada.</p>
+<p><strong>CP-046 — La selección de condicionante se limita a bloques anteriores</strong>
+Verifica: CA-6.1.5 · RN-6.2
+Dado que el administrador captura una etapa del bloque 3
+Cuando abre la selección de etapa condicionante
+Entonces el sistema solo le ofrece etapas de los bloques 1 y 2.</p>
+<p><strong>CP-047 — Rechazo de condicionante del mismo bloque o posterior (validación)</strong>
+Verifica: CA-6.1.5 · RN-6.2
+Dado que el administrador intenta asignar como condicionante de una etapa del bloque 3 otra etapa del bloque 3
+Cuando intenta guardar
+Entonces el sistema impide el guardado e informa que la etapa condicionante debe pertenecer a un bloque anterior.</p>
+<p><strong>CP-048 — Resultado esperado obligatorio (validación)</strong>
+Verifica: CA-6.1.6 · RN-6.3
+Dado que el administrador selecciona una etapa condicionante y deja vacío el resultado esperado
+Cuando intenta guardar la etapa
+Entonces el sistema impide el guardado e informa que el resultado esperado es requerido.</p>
+<p><strong>CP-049 — Etapa mandatoria no admite condición (validación)</strong>
+Verifica: CA-6.1.7 · RN-6.7
+Dado que el administrador marca una etapa como mandatoria
+Cuando intenta declararle una etapa condicionante
+Entonces el sistema impide el guardado e informa que una etapa mandatoria siempre aplica y no admite condición.</p>
+<p><strong>CP-050 — Retiro de la condición de una etapa (escenario alternativo)</strong>
+Verifica: CA-6.1.3 · RN-6.6
+Dado que una etapa del bloque 3 tiene declarada una etapa condicionante y un resultado esperado
+Cuando el administrador retira la etapa condicionante y guarda
+Entonces el sistema deja la etapa como incondicional y, en los tickets que se generen a partir de ese momento, la activa siempre que su bloque se abra.</p>
+<p><strong>CP-051 — Conversión de una cadena simple (camino feliz)</strong>
+Verifica: CA-7.1.1 · RN-7.1
+Dado un flujo con una etapa principal, una etapa que depende de ella y una tercera que depende de la segunda
+Cuando se ejecuta la conversión
+Entonces el sistema asigna los bloques 1, 2 y 3 respectivamente y lo refleja en el reporte de conversión.</p>
+<p><strong>CP-052 — Conversión de ramas de distinta longitud</strong>
+Verifica: CA-7.1.2 · RN-7.2
+Dado un flujo en el que una etapa puede alcanzarse por una ruta de dos pasos y por otra de tres
+Cuando se ejecuta la conversión
+Entonces el sistema le asigna el bloque correspondiente a la ruta más larga y señala en el reporte que esa etapa cambia su momento de arranque.</p>
+<p><strong>CP-053 — Detección de etapa huérfana (error)</strong>
+Verifica: CA-7.1.3 · RN-7.3
+Dado un flujo que contiene una etapa activa sin antecesor que no está marcada como principal
+Cuando se ejecuta la conversión
+Entonces el sistema la reporta como inconsistencia, no le asigna bloque y marca el flujo como pendiente de asignación manual.</p>
+<p><strong>CP-054 — Conversión de las condiciones de activación</strong>
+Verifica: CA-7.1.4 · RN-7.4
+Dado un flujo en el que una etapa se activa solo cuando su antecesor cierra con resultado SI
+Cuando se ejecuta la conversión
+Entonces el sistema declara a ese antecesor como etapa condicionante y conserva SI como resultado esperado.</p>
+<p><strong>CP-055 — Flujo convertido sin validar no entra en operación (error)</strong>
+Verifica: CA-7.1.5 · RN-7.6
+Dado un flujo cuya conversión se ejecutó y cuyo reporte no ha sido validado por el administrador
+Cuando se genera un ticket que correspondería a ese flujo
+Entonces el sistema no aplica la configuración convertida y advierte que el flujo está pendiente de validación.</p>
+<p><strong>CP-056 — Flujo convertido y validado entra en operación (camino feliz)</strong>
+Verifica: CA-7.1.5 · RN-7.6
+Dado un flujo cuya conversión fue validada por el administrador responsable
+Cuando se genera un ticket que corresponde a ese flujo
+Entonces el sistema aplica la configuración por bloques y abre el bloque 1 con la etapa principal.</p>
+<p><strong>CP-057 — Ticket abierto antes de la liberación conserva la regla anterior</strong>
+Verifica: CA-7.2.1 · RN-7.7
+Dado un ticket generado antes de la liberación, cuyas etapas no tienen bloque asignado
+Cuando el responsable registra la atención realizada de una de sus etapas
+Entonces el sistema activa las etapas que dependían de ella conforme a la regla anterior y el ticket continúa su curso sin intervención manual.</p>
+<p><strong>CP-058 — Ticket nuevo opera por bloques</strong>
+Verifica: CA-7.2.2 · RN-7.8
+Dado un ticket generado después de la liberación a partir de un flujo convertido y validado
+Cuando el responsable registra la atención realizada de una etapa que deja pendientes otras del mismo bloque
+Entonces el sistema no abre el siguiente bloque, aplicando la regla de barrera y no la regla anterior.</p>
+<p><strong>CP-059 — Consulta de tickets en modo de compatibilidad</strong>
+Verifica: CA-7.2.3 · RN-7.9
+Dado que existen tickets abiertos generados antes de la liberación
+Cuando el equipo de desarrollo consulta el indicador de compatibilidad
+Entonces el sistema informa cuántos tickets abiertos permanecen operando con la regla anterior.</p>
+<p><strong>CP-060 — El subticket se registra con el bloque de su etapa (camino feliz)</strong>
+Verifica: CA-3.2.1 · RN-3.5
+Dado un flujo cuyo bloque 2 contiene una etapa marcada para registrar ticket
+Cuando el bloque 2 se abre y el sistema genera el subticket de esa etapa
+Entonces el subticket queda registrado con el bloque 2 y el dato es consultable desde el propio subticket.</p>
+<p><strong>CP-061 — Todos los subtickets de una apertura traen su bloque</strong>
+Verifica: CA-3.2.2 · RN-3.5 · RN-3.6
+Dado un bloque 3 con tres etapas marcadas para registrar ticket
+Cuando el sistema abre el bloque 3 y genera los tres subtickets en una sola operación
+Entonces los tres quedan registrados con el bloque 3 y ninguno queda sin bloque.</p>
+<p><strong>CP-062 — El bloque del subticket no cambia al avanzar el flujo</strong>
+Verifica: CA-3.2.3 · RN-3.7
+Dado un subticket generado desde una etapa del bloque 2 y ya atendido
+Cuando el ticket principal cierra el bloque 2 y abre el bloque 3
+Entonces el subticket conserva el bloque 2 y no adopta el bloque en curso del ticket principal.</p>
+<p><strong>CP-063 — Consulta y filtrado de subtickets por bloque</strong>
+Verifica: CA-3.2.4 · RN-3.8
+Dado un conjunto de tickets abiertos con subtickets de distintos bloques
+Cuando el coordinador filtra el listado de tickets por el bloque 2
+Entonces el sistema muestra únicamente los subtickets del bloque 2 y presenta el bloque como columna del listado.</p>
+<p><strong>CP-064 — Subticket ajeno al flujo escalonado sin bloque (escenario alternativo)</strong>
+Verifica: CA-3.2.5 · RN-3.9
+Dado un subticket registrado por una vía distinta al flujo escalonado
+Cuando el usuario lo consulta y lo atiende
+Entonces el sistema lo presenta sin bloque, no lo marca como incompleto y permite su atención y cierre.</p>
+<h2 id="trazabilidad-de-la-cobertura">Trazabilidad de la cobertura<a class="headerlink" href="#trazabilidad-de-la-cobertura" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>CA</th>
+<th>Caso(s) de prueba</th>
+<th>Escenarios cubiertos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CA-1.1.1</td>
+<td>CP-001, CP-008</td>
+<td>Camino feliz, Permisos</td>
+</tr>
+<tr>
+<td>CA-1.1.2</td>
+<td>CP-002, CP-003</td>
+<td>Validación (obligatoriedad y rango)</td>
+</tr>
+<tr>
+<td>CA-1.1.3</td>
+<td>CP-004</td>
+<td>Validación (unicidad dentro del bloque)</td>
+</tr>
+<tr>
+<td>CA-1.1.4</td>
+<td>CP-005</td>
+<td>Escenario alternativo</td>
+</tr>
+<tr>
+<td>CA-1.1.5</td>
+<td>CP-006</td>
+<td>Camino feliz</td>
+</tr>
+<tr>
+<td>CA-1.1.6</td>
+<td>CP-007</td>
+<td>Camino feliz</td>
+</tr>
+<tr>
+<td>CA-2.1.1</td>
+<td>CP-009, CP-010</td>
+<td>Error, Camino feliz</td>
+</tr>
+<tr>
+<td>CA-2.1.2</td>
+<td>CP-011</td>
+<td>Validación</td>
+</tr>
+<tr>
+<td>CA-2.1.3</td>
+<td>CP-012, CP-013</td>
+<td>Validación, Error</td>
+</tr>
+<tr>
+<td>CA-2.1.4</td>
+<td>CP-014</td>
+<td>Advertencia</td>
+</tr>
+<tr>
+<td>CA-2.1.5</td>
+<td>CP-015, CP-016</td>
+<td>Error, Escenario alternativo</td>
+</tr>
+<tr>
+<td>CA-3.1.1</td>
+<td>CP-017, CP-018</td>
+<td>Camino feliz, Visualización</td>
+</tr>
+<tr>
+<td>CA-3.1.2</td>
+<td>CP-019</td>
+<td>Camino feliz</td>
+</tr>
+<tr>
+<td>CA-3.1.3</td>
+<td>CP-020</td>
+<td>Escenario alternativo</td>
+</tr>
+<tr>
+<td>CA-3.1.4</td>
+<td>CP-021, CP-022</td>
+<td>Permisos (por bloque y por departamento)</td>
+</tr>
+<tr>
+<td>CA-3.1.5</td>
+<td>CP-023</td>
+<td>Escenario alternativo</td>
+</tr>
+<tr>
+<td>CA-3.2.1</td>
+<td>CP-060</td>
+<td>Camino feliz</td>
+</tr>
+<tr>
+<td>CA-3.2.2</td>
+<td>CP-061</td>
+<td>Camino feliz (apertura simultánea)</td>
+</tr>
+<tr>
+<td>CA-3.2.3</td>
+<td>CP-062</td>
+<td>Escenario alternativo (congelación)</td>
+</tr>
+<tr>
+<td>CA-3.2.4</td>
+<td>CP-063</td>
+<td>Visualización y filtrado</td>
+</tr>
+<tr>
+<td>CA-3.2.5</td>
+<td>CP-064</td>
+<td>Escenario alternativo</td>
+</tr>
+<tr>
+<td>CA-4.1.1</td>
+<td>CP-024</td>
+<td>Camino feliz (barrera activa)</td>
+</tr>
+<tr>
+<td>CA-4.1.2</td>
+<td>CP-025, CP-033</td>
+<td>Camino feliz, Auditoría</td>
+</tr>
+<tr>
+<td>CA-4.1.3</td>
+<td>CP-026, CP-027, CP-034</td>
+<td>Camino feliz, Alternativo, Error</td>
+</tr>
+<tr>
+<td>CA-4.1.4</td>
+<td>CP-028</td>
+<td>Validación (idempotencia)</td>
+</tr>
+<tr>
+<td>CA-4.1.5</td>
+<td>CP-029</td>
+<td>Escenario alternativo</td>
+</tr>
+<tr>
+<td>CA-4.1.6</td>
+<td>CP-030, CP-031</td>
+<td>Camino feliz, Error</td>
+</tr>
+<tr>
+<td>CA-4.1.7</td>
+<td>CP-032</td>
+<td>Camino feliz</td>
+</tr>
+<tr>
+<td>CA-5.1.1</td>
+<td>CP-035</td>
+<td>Escenario alternativo</td>
+</tr>
+<tr>
+<td>CA-5.1.2</td>
+<td>CP-036</td>
+<td>Escenario alternativo</td>
+</tr>
+<tr>
+<td>CA-5.1.3</td>
+<td>CP-037</td>
+<td>Escenario alternativo (encadenado)</td>
+</tr>
+<tr>
+<td>CA-5.1.4</td>
+<td>CP-038</td>
+<td>Escenario límite</td>
+</tr>
+<tr>
+<td>CA-5.1.5</td>
+<td>CP-039</td>
+<td>Auditoría</td>
+</tr>
+<tr>
+<td>CA-5.1.6</td>
+<td>CP-040, CP-041</td>
+<td>Error, Camino feliz</td>
+</tr>
+<tr>
+<td>CA-6.1.1</td>
+<td>CP-042</td>
+<td>Camino feliz</td>
+</tr>
+<tr>
+<td>CA-6.1.2</td>
+<td>CP-043</td>
+<td>Escenario alternativo</td>
+</tr>
+<tr>
+<td>CA-6.1.3</td>
+<td>CP-044, CP-050</td>
+<td>Camino feliz, Alternativo</td>
+</tr>
+<tr>
+<td>CA-6.1.4</td>
+<td>CP-045</td>
+<td>Escenario alternativo (arrastre)</td>
+</tr>
+<tr>
+<td>CA-6.1.5</td>
+<td>CP-046, CP-047</td>
+<td>Visibilidad, Validación</td>
+</tr>
+<tr>
+<td>CA-6.1.6</td>
+<td>CP-048</td>
+<td>Validación</td>
+</tr>
+<tr>
+<td>CA-6.1.7</td>
+<td>CP-049</td>
+<td>Validación</td>
+</tr>
+<tr>
+<td>CA-7.1.1</td>
+<td>CP-051</td>
+<td>Camino feliz</td>
+</tr>
+<tr>
+<td>CA-7.1.2</td>
+<td>CP-052</td>
+<td>Escenario alternativo</td>
+</tr>
+<tr>
+<td>CA-7.1.3</td>
+<td>CP-053</td>
+<td>Error</td>
+</tr>
+<tr>
+<td>CA-7.1.4</td>
+<td>CP-054</td>
+<td>Camino feliz</td>
+</tr>
+<tr>
+<td>CA-7.1.5</td>
+<td>CP-055, CP-056</td>
+<td>Error, Camino feliz</td>
+</tr>
+<tr>
+<td>CA-7.2.1</td>
+<td>CP-057</td>
+<td>Camino feliz (compatibilidad)</td>
+</tr>
+<tr>
+<td>CA-7.2.2</td>
+<td>CP-058</td>
+<td>Camino feliz</td>
+</tr>
+<tr>
+<td>CA-7.2.3</td>
+<td>CP-059</td>
+<td>Camino feliz</td>
+</tr>
+</tbody>
+</table>
+<p>Los 49 criterios de aceptación del documento quedan cubiertos por al menos un caso de prueba; no hay criterios sin cobertura.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": [], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../../../assets/javascripts/main-nav.js"></script>
+      
+    
+  </body>
+</html>
