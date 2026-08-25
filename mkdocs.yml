@@ -56,6 +56,9 @@ nav:
           - Estatus Proyectos: Proyectos/iNN/EstatusTickets/documentacion/Estatus-Proyectos.pdf
         - Funcionales: Proyectos/iNN/EstatusTickets/documentacion/Funcionales-Estados-Tickets-Proyectos.md
         - Técnico: Proyectos/iNN/EstatusTickets/documentacion/Tecnico-Monitor-CAU-Nuevos-Estados.md
+      - Baja Usuario - Ticket Escalonado:
+        - Ejecución del Flujo de Trabajo por Bloques: Proyectos/iNN/Baja usuario - Ticket escalonado/Ejecución del Flujo de Trabajo de Tickets por Bloques.md
+        - Vigencia del Resguardo y Recolección Automática: Proyectos/iNN/Baja usuario - Ticket escalonado/Vigencia del Resguardo en Sitio y Recolección Automática de Activos.md
     - ONU:
       - Visibilidad Fiscal:
         - Requerimiento Funcional: Proyectos/ONU/VisibilidadFiscal/Documento_Requerimientos_Funcionales_Interplantas.md
