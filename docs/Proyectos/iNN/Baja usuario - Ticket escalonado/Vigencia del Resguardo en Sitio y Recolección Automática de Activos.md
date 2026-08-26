@@ -14,17 +14,17 @@
 
 Cuando un colaborador se da de baja de la empresa —ya sea por despido o por decisión propia— el equipo de cómputo que tenía asignado no siempre se recolecta de inmediato: se deja **en resguardo en sitio**, bajo la custodia de una persona del mismo centro de trabajo, previendo que se contrate un reemplazo al que se le asignará ese mismo equipo. Ese resguardo tiene un **periodo de vigencia** definido por el negocio (por ejemplo, 15 días). Hoy, cuando ese periodo se vence sin que llegue un reemplazo, nadie genera la solicitud de recolección: el activo se queda indefinidamente fuera del almacén, sin responsable formal de recuperarlo y sin visibilidad para el área de Cómputo.
 
-La baja del colaborador, además, deja pendientes que no tienen que ver con el equipo físico: la reserva de IP que tenía apartada sigue ocupada, su equipo sigue reportando al monitoreo de antivirus, su HostName sigue habilitado en el directorio activo y sus activos de telefonía siguen registrados a su nombre en el control interno del área. El sistema ya sabe generar subtickets al detectar una baja de nómina y dirigirlos al departamento que corresponde, pero los condiciona a la información capturada en el expediente del colaborador: si el apartado viene vacío el subticket no se abre, y mientras conserve información el subticket no se puede cerrar. Esas revisiones se resuelven en herramientas externas a Business Suite, donde esa condición estorba en los dos extremos. Lo que falta, entonces, es **configurar** esas revisiones —tres subtickets, porque la reserva de IP y el antivirus se atienden juntos— y poder marcarlas como **"No requiere validación"**: que se detonen siempre, esté o no capturado el dato, y que se cierren sin exigir que el expediente esté depurado.
+La baja del colaborador, además, deja pendientes que no tienen que ver con el equipo físico: la reserva de IP que tenía apartada sigue ocupada, sus activos de telefonía siguen registrados a su nombre en el control interno del área, su equipo sigue reportando al monitoreo de antivirus y su HostName sigue habilitado en el directorio activo. El sistema ya sabe generar subtickets al detectar una baja de nómina y dirigirlos al departamento que corresponde, pero los condiciona a la información capturada en el expediente del colaborador: si el apartado viene vacío el subticket no se abre, y mientras conserve información el subticket no se puede cerrar. Esas revisiones se resuelven en herramientas externas a Business Suite, donde esa condición estorba en los dos extremos. Lo que falta, entonces, es **configurar** esas revisiones —dos subtickets, porque la telefonía y la reserva de IP se atienden juntas y la desactivación del HostName viaja en el subticket que ya se detona para la baja de Directorio Activo— y poder marcarlas como **"No requiere validación"**: que se detonen siempre, esté o no capturado el dato, y que se cierren sin exigir que el expediente esté depurado.
 
 Este documento describe los siete requerimientos funcionales necesarios para cerrar esos huecos:
 
-- **RF-01 — Configuración de los subtickets automáticos por baja de personal**, que deja operando tres revisiones nuevas —activos de telefonía y datos del directorio telefónico; baja de la reserva de IP y remoción del monitoreo de antivirus; desactivación del HostName— mediante el alta de registros en el catálogo "Datos Personales", y agrega en ese catálogo el campo **"No requiere validación"**: los registros marcados se detonan siempre y se cierran sin validar la información del colaborador. El mecanismo queda abierto para configurar después cualquier otra revisión que deba generarse al registrar una baja, sin desarrollo.
+- **RF-01 — Configuración de los subtickets automáticos por baja de personal**, que deja operando dos revisiones nuevas —activos de telefonía y datos del directorio telefónico junto con la reserva de la dirección IP, en un solo subticket; y remoción del monitoreo de antivirus— mediante el alta de registros en el catálogo "Datos Personales", ajusta el asunto del subticket que ya se detona para la baja de los directorios activos para que declare también la desactivación del HostName, y agrega en ese catálogo el campo **"No requiere validación"**: los registros marcados se detonan siempre y se cierran sin validar la información del colaborador. El mecanismo queda abierto para configurar después cualquier otra revisión que deba generarse al registrar una baja, sin desarrollo.
 
 - **RF-02 — Parametrización de la vigencia del resguardo**, que hace administrable los días de vigencia, el destino del ticket de recolección y la fecha a partir de la cual el proceso empieza a operar, sin requerir cambios de desarrollo.
 - **RF-03 — Registro de las fechas de vigencia del resguardo**, que garantiza que todo activo que entra en resguardo quede con su fecha de inicio y su fecha de fin de vigencia guardadas desde el primer momento.
 - **RF-04 — Generación automática del ticket "Recolección por Resguardo"**, que al vencer el periodo de vigencia crea de manera desatendida un ticket de recolección por colaborador, con el detalle de todos sus equipos en resguardo, y lo asigna al personal y departamento encargados de recolectar activos.
-- **RF-05 — Extensión de la vigencia del resguardo**, que permite agregar días de vigencia a los equipos de un colaborador cuando el negocio necesita conservarlos más tiempo en sitio, sin detener ni alterar el resto del proceso.
-- **RF-06 — Bloque "Resguardo" en la pantalla del activo**, que concentra en un solo lugar la información del resguardo —responsable, quién autorizó, fecha de inicio y fecha de fin de vigencia— y desde donde se agregan los días adicionales.
+- **RF-05 — Extensión de la vigencia del resguardo**, que permite mover hacia adelante la fecha de fin de vigencia de los equipos de un colaborador seleccionando la nueva fecha en un calendario, cuando el negocio necesita conservarlos más tiempo en sitio, sin detener ni alterar el resto del proceso.
+- **RF-06 — Bloque "Resguardo" en la pantalla del activo**, que concentra en un solo lugar la información del resguardo —responsable, quién autorizó, fecha de inicio y fecha de fin de vigencia— y desde donde se extiende su vigencia.
 - **RF-07 — Días restantes de resguardo en el listado de activos**, que agrega al inventario una columna con los días que le quedan de resguardo a cada equipo, para detectar los próximos a vencer sin abrir activo por activo.
 
 El objetivo es que cualquier persona del negocio entienda, sin consultar otro documento, qué subtickets nacen al registrar una baja de personal, cuáles están marcados como "No requiere validación" —y por lo tanto se detonan siempre y se cierran sin revisar el expediente—, cómo agregar otros después sin desarrollo, cuándo un activo en resguardo está por vencer, qué pasa el día del vencimiento, cómo se gana tiempo cuando se necesita y cómo se detiene el proceso si el equipo se reasigna antes de esa fecha.
@@ -32,13 +32,13 @@ El objetivo es que cualquier persona del negocio entienda, sin consultar otro do
 ## 2. Alcance del documento
 
 **Incluye:**
-- La configuración, en el catálogo "Datos Personales", de los tres subtickets que el sistema debe generar automáticamente al registrar la baja de un colaborador —revisión de activos de telefonía y datos del directorio telefónico; baja de la reserva de IP y remoción del monitoreo de antivirus, en un solo subticket; y desactivación del HostName—, cada uno con su departamento destino y con los datos del colaborador que debe transcribir al subticket. La lista es la del arranque, no un límite: el mismo catálogo permite configurar después cualquier otra revisión que deba detonarse al registrar una baja.
-- El campo **"No requiere validación"** en ese mismo catálogo, que se marca por registro. Los registros **marcados** generan su subticket **siempre** —sin evaluar el expediente del colaborador— y lo **cierran sin validación**. Los tres subtickets del arranque se dan de alta con esa marca puesta; los registros sin marcar conservan el comportamiento actual.
+- La configuración, en el catálogo "Datos Personales", de los **dos** subtickets que el sistema debe generar automáticamente al registrar la baja de un colaborador —revisión de activos de telefonía y datos del directorio telefónico junto con la reserva de la dirección IP, en un solo subticket; y remoción del monitoreo de antivirus—, cada uno con su departamento destino, su asunto y los datos del colaborador que debe transcribir al subticket: Dirección IP y HostName en el primero, Usuario de Directorio Activo y Host Name en el segundo. Se incluye además el **ajuste del asunto del subticket ya existente de baja de los directorios activos**, que pasa a declarar también la desactivación del HostName y a transcribir el nombre del equipo del colaborador, sin que esa desactivación requiera un registro propio. La lista es la del arranque, no un límite: el mismo catálogo permite configurar después cualquier otra revisión que deba detonarse al registrar una baja.
+- El campo **"No requiere validación"** en ese mismo catálogo, que se marca por registro. Los registros **marcados** generan su subticket **siempre** —sin evaluar el expediente del colaborador— y lo **cierran sin validación**. Los dos subtickets del arranque se dan de alta con esa marca puesta; los registros sin marcar —entre ellos el de baja de Directorio Activo— conservan el comportamiento actual.
 - La configuración administrable de los días de vigencia del resguardo en sitio, del departamento/personal encargado de las recolecciones y de la fecha de corte a partir de la cual el proceso opera.
 - El registro en el activo de la fecha de inicio y la fecha de fin de vigencia del resguardo.
-- La creación automática y desatendida (job programado) del ticket de recolección identificado como **"Recolección por Resguardo"**, generado **uno por colaborador dado de baja** con el detalle de todos sus activos en resguardo, a nombre de quien autorizó el resguardo y asignado al responsable de recolecciones.
-- La opción de **agregar días de vigencia** al resguardo de un colaborador, que se aplica a todos sus activos en resguardo, **restringida por un permiso propio**, con motivo obligatorio y registro en bitácora.
-- Un **bloque "Resguardo" en la pantalla del activo**, visible solo cuando el equipo está en resguardo, que reúne la información del resguardo y desde el cual se agregan los días adicionales.
+- La creación automática y desatendida (job programado) del ticket de recolección identificado como **"Recolección por Resguardo"**, generado **uno por colaborador dado de baja**, que nace en estatus **En Proceso** y lleva en su detalle todos los activos que el colaborador tenía asignados antes de su baja, a nombre de quien autorizó el resguardo y asignado al responsable de recolecciones.
+- La opción de **extender la vigencia** del resguardo de un colaborador **seleccionando la nueva fecha de fin de vigencia en un calendario**, que se aplica a todos sus activos en resguardo, **restringida por un permiso propio**, con validación de la fecha mínima permitida, motivo obligatorio y registro en bitácora.
+- Un **bloque "Resguardo" en la pantalla del activo**, visible solo cuando el equipo está en resguardo, que reúne la información del resguardo y desde el cual se extiende su vigencia.
 - Una **columna de días restantes de resguardo en el listado principal de activos**, que se llena únicamente cuando el equipo está en resguardo en sitio.
 - Las condiciones que interrumpen el proceso: reasignación del equipo a un nuevo colaborador, recolección anticipada, baja o cancelación del activo.
 - El registro en bitácora de las extensiones otorgadas y del ticket generado automáticamente.
@@ -47,7 +47,7 @@ El objetivo es que cualquier persona del negocio entienda, sin consultar otro do
 - Un flujo de prórroga con solicitud y autorización: la extensión de la fecha es una acción directa del rol facultado, sin cadena de aprobaciones.
 - El tratamiento de los resguardos cuyo periodo de vigencia ya venció antes de la puesta en marcha de esta funcionalidad; esos activos quedan fuera del proceso automático conforme a la fecha de corte definida en RF-02.
 - El proceso operativo de recolección física del activo (levantamiento, traslado, entrada a almacén, responsiva), que continúa operando con la funcionalidad ya existente de recolección de activos.
-- El flujo de baja del colaborador vía nómina y el **mecanismo** que genera el ticket principal y sus subtickets, que ya existen y no se modifican: RF-01 únicamente da de alta tres subtickets nuevos en el catálogo que gobierna ese mecanismo y agrega el campo "No requiere validación", que exenta de la validación al generar y al cerrar. Para los requerimientos de resguardo, el documento parte de que el activo ya quedó en estatus **Resguardo en Sitio**.
+- El flujo de baja del colaborador vía nómina y el **mecanismo** que genera el ticket principal y sus subtickets, que ya existen y no se modifican: RF-01 únicamente da de alta dos registros nuevos en el catálogo que gobierna ese mecanismo, ajusta el mensaje de un registro ya existente —el de baja de Directorio Activo— y agrega el campo "No requiere validación", que exenta de la validación al generar y al cerrar. Para los requerimientos de resguardo, el documento parte de que el activo ya quedó en estatus **Resguardo en Sitio**.
 - El contenido operativo de las revisiones nuevas —cómo se libera una reserva de IP, cómo se remueve el agente de antivirus, cómo se desactiva un HostName en el directorio activo o cómo se coteja el control interno de telefonía—, que se ejecuta en las herramientas de cada especialidad y no dentro de Business Suite.
 - La reasignación del equipo al nuevo colaborador, que se ejecuta con la funcionalidad de asignación/reasignación ya existente.
 - Nuevos estatus para el activo o para el ticket: este requerimiento reutiliza los estatus vigentes.
@@ -57,8 +57,8 @@ El objetivo es que cualquier persona del negocio entienda, sin consultar otro do
 | Actor / Rol | Descripción |
 |-------------|-------------|
 | Administrador del sistema | Mantiene la configuración del sistema: los subtickets que se generan al registrar una baja de personal —con su departamento destino, los datos que transcriben y la marca "No requiere validación"— y los parámetros del resguardo: días de vigencia, departamento y personal encargados de recolecciones, motivo del ticket y fecha de corte del proceso. |
-| Coordinación de Redes y Telecomunicaciones | Departamento al que se dirigen el subticket de revisión de activos de telefonía y datos del directorio telefónico y el de baja de la reserva de IP y remoción del monitoreo de antivirus. |
-| Coordinación de Servidores y Bases de Datos | Departamento al que se dirige el subticket de desactivación del HostName del colaborador dado de baja. |
+| Coordinación de Redes y Telecomunicaciones | Departamento al que se dirigen los dos subtickets nuevos: el de revisión de activos de telefonía y baja de la reserva de IP y el de remoción del monitoreo de antivirus. |
+| Responsable del subticket de baja de Directorio Activo | Juan Carlos Segovia Espinoza, responsable del departamento configurado en ese registro, que atiende la baja de los directorios activos del colaborador y, con el ajuste que introduce RF-01, la desactivación del HostName de su equipo. |
 | Responsable del subticket de baja | Colaborador del departamento destino que atiende y cierra el subticket generado automáticamente al registrarse la baja. |
 | Personal que resguarda | Colaborador del centro de trabajo que quedó como custodio físico del equipo mientras está en resguardo en sitio. |
 | Responsable de recolecciones | Persona del departamento encargado de recolectar activos, a quien se asigna el ticket "Recolección por Resguardo". |
@@ -77,9 +77,9 @@ El objetivo es que cualquier persona del negocio entienda, sin consultar otro do
 | Fecha de resguardo (inicio de vigencia) | Fecha en que el activo quedó formalmente en resguardo en sitio. Es el punto de partida de la vigencia y se registra en el momento en que el activo entra en resguardo. |
 | Días de vigencia del resguardo | Cantidad de días naturales, configurable en una variable del sistema, que un activo puede permanecer en resguardo en sitio antes de que deba recolectarse. El valor lo define el negocio al configurar; en los ejemplos de este documento se usan 15 días. Cuando el documento habla del "periodo de vigencia" se refiere a este plazo. |
 | Fecha de fin de vigencia del resguardo | Fecha límite del resguardo. **Es un dato que se guarda en el activo**, no un cálculo que se rehace cada vez: se registra al iniciar el resguardo sumando a la fecha de resguardo los días de vigencia configurados, y solo cambia si se otorga una extensión. Es la fecha contra la que se evalúa el vencimiento y se genera la recolección. |
-| Extensión del resguardo | Acción que mueve hacia adelante la fecha de fin de vigencia del resguardo de un colaborador, aplicándose a todos sus activos en resguardo, para conservarlos más tiempo en sitio. No requiere autorización de un tercero, pero exige capturar un motivo y queda registrada en la bitácora del activo. |
+| Extensión del resguardo | Acción que mueve hacia adelante la fecha de fin de vigencia del resguardo de un colaborador, seleccionando la nueva fecha en un calendario y aplicándola a todos sus activos en resguardo, para conservarlos más tiempo en sitio. La nueva fecha solo puede ser posterior a la vigente y al día actual. No requiere autorización de un tercero, pero exige capturar un motivo y queda registrada en la bitácora del activo. |
 | Fecha de corte | Fecha configurable a partir de la cual el proceso automático empieza a considerar los resguardos. Los activos cuya fecha de resguardo sea anterior a ella quedan fuera del proceso, evitando que los resguardos históricos ya vencidos generen tickets al momento de la puesta en marcha. |
-| Recolección por Resguardo | Motivo con el que se identifica el ticket que el sistema crea automáticamente al vencer el periodo de vigencia, para recuperar los equipos de un colaborador que quedaron en resguardo en sitio y no fueron reasignados. Se genera **un ticket por colaborador**, con todos sus activos en el detalle. |
+| Recolección por Resguardo | Motivo con el que se identifica el ticket que el sistema crea automáticamente al vencer el periodo de vigencia, para recuperar los equipos de un colaborador que quedaron en resguardo en sitio y no fueron reasignados. Se genera **un ticket por colaborador**, en estatus En Proceso y con todos los activos que ese colaborador tenía asignados antes de su baja en el detalle. |
 | Autorizador del resguardo | Persona que aprobó el resguardo en sitio y que figura como solicitante del ticket de recolección. Se toma del registro de autorización del resguardo. |
 | Ticket interno | Registro de atención del área de Cómputo que se genera dentro del sistema (no lo levanta el usuario final) y que se asigna a un responsable para su ejecución. |
 | Job | Proceso automático que el sistema ejecuta de forma periódica y desatendida, sin que ninguna persona lo dispare. |
@@ -90,10 +90,12 @@ El objetivo es que cualquier persona del negocio entienda, sin consultar otro do
 | Validación de información | Condición que el sistema aplica sobre el apartado configurado en el registro, en dos momentos: al **generar** el subticket, que solo nace si el colaborador tiene información ahí, y al **cerrarlo**, que se impide mientras el colaborador conserve información activa. Es la validación de la que quedan exentos los registros marcados como "No requiere validación". |
 | No requiere validación | Campo del catálogo "Datos Personales" que se marca por registro. **Marcado**, el subticket se detona en toda baja y se cierra sin revisar el apartado del colaborador. **Sin marcar** —que es como nace—, el subticket conserva el comportamiento condicionado de siempre. |
 | Reserva de IP | Dirección IP apartada en la red para el equipo de un colaborador. Al causar baja el colaborador, la reserva debe liberarse para que la dirección vuelva a estar disponible. |
+| Dirección IP | Dirección de red registrada al equipo de cómputo del colaborador. Es uno de los dos datos que lleva el subticket de revisión de activos de telefonía y baja de la reserva de IP, y con ella el responsable identifica en la red la reserva que debe liberar. |
 | HostName | Nombre con el que el equipo del colaborador está registrado en la red y en el directorio activo. |
 | Directorio Activo | Servicio de directorio donde se administran los usuarios y equipos de la empresa; conserva el usuario y el equipo del colaborador hasta que se desactivan. |
+| Usuario de Directorio Activo | Cuenta con la que el colaborador está registrado en el directorio activo. Es uno de los dos datos que lleva el subticket de remoción del monitoreo de antivirus, y con ella el responsable localiza el equipo en la consola del antivirus. |
 | Monitoreo de antivirus | Consola de administración del antivirus donde el equipo del colaborador aparece registrado y reportando; al causar baja, el equipo debe removerse de ese monitoreo. |
-| Directorio telefónico | Registro interno de extensiones y activos de telefonía asignados a cada colaborador, que debe cotejarse contra el expediente al registrarse una baja. |
+| Directorio telefónico | Registro interno de extensiones y activos de telefonía asignados a cada colaborador, que el área de Redes y Telecomunicaciones coteja contra su control interno al registrarse una baja. |
 
 ## 5. Entidad a la que aplica
 
@@ -101,7 +103,7 @@ Este documento aplica sobre dos entidades distintas, según el requerimiento.
 
 RF-01 aplica sobre el **registro de configuración del catálogo "Datos Personales"** y sobre el **subticket de baja de personal** que ese registro produce. Para el registro de configuración, el **estatus inicial** es Activo desde su alta y su **estatus terminal** es Baja, cuando el negocio decide que ese subticket deje de generarse. Para el subticket, el estatus inicial es el estatus con el que nacen los subtickets de baja de personal (En Proceso) y el terminal es Finalizado o Cancelado, conforme al flujo de tickets internos ya existente. La marca "No requiere validación" no cambia esos estatus: cambia únicamente si el subticket llega a existir y qué exige el sistema para llevarlo al estatus terminal.
 
-Los requerimientos RF-02 a RF-07 aplican sobre el **activo de cómputo** que quedó en resguardo en sitio como consecuencia de la baja de un colaborador, y producen como resultado un **ticket interno de cómputo** con motivo "Recolección por Resguardo", que se genera **uno por colaborador dado de baja** y reúne en su detalle todos los activos que quedaron en resguardo.
+Los requerimientos RF-02 a RF-07 aplican sobre el **activo de cómputo** que quedó en resguardo en sitio como consecuencia de la baja de un colaborador, y producen como resultado un **ticket interno de cómputo** con motivo "Recolección por Resguardo", que se genera **uno por colaborador dado de baja**, nace en estatus En Proceso y reúne en su detalle todos los activos que ese colaborador tenía asignados antes de su baja.
 
 Para el activo, el **estatus inicial** que activa este proceso es **Resguardo en Sitio**, acompañado de dos fechas que definen la vigencia del resguardo: la **fecha de resguardo**, que marca el inicio, y la **fecha de fin de vigencia**, que marca el límite. Ambas se registran en el activo en el momento en que entra en resguardo: la primera con la fecha del día y la segunda sumándole los días de vigencia configurados. El proceso descrito termina cuando el activo sale de ese estatus, ya sea porque se reasignó a un nuevo colaborador (**Asignado**) o porque entró al proceso de recolección (**En Recolección**) derivado del ticket generado.
 
@@ -166,7 +168,7 @@ flowchart TD
 
 ## Objetivo
 
-Permitir que el negocio configure, desde el catálogo "Datos Personales" y sin desarrollo, qué revisiones deben generar un subticket al registrarse la baja de un colaborador, y marcar en cada una si **no requiere validación**. Las revisiones marcadas se detonan **siempre**, sin evaluar el expediente del colaborador, y se cierran sin exigir que ese expediente esté depurado. Con ese mecanismo se dejan operando las tres revisiones que el negocio requiere hoy —activos de telefonía y datos del directorio telefónico; baja de la reserva de IP y remoción del monitoreo de antivirus; desactivación del HostName—, y queda abierta la puerta para agregar después cualquier otra sin volver a desarrollar.
+Permitir que el negocio configure, desde el catálogo "Datos Personales" y sin desarrollo, qué revisiones deben generar un subticket al registrarse la baja de un colaborador, y marcar en cada una si **no requiere validación**. Las revisiones marcadas se detonan **siempre**, sin evaluar el expediente del colaborador, y se cierran sin exigir que ese expediente esté depurado. Con ese mecanismo se dejan operando las dos revisiones que el negocio requiere hoy —activos de telefonía y datos del directorio telefónico junto con la reserva de la dirección IP, en un solo subticket; y remoción del monitoreo de antivirus—, se ajusta el asunto del subticket que ya se detona para la baja de los directorios activos para que declare también la desactivación del HostName, y queda abierta la puerta para agregar después cualquier otra revisión sin volver a desarrollar.
 
 ## Descripción
 
@@ -179,9 +181,9 @@ Ese mecanismo es hoy **condicionado en los dos extremos**, y siempre por la mism
 
 Esa doble condición tiene sentido cuando atender el subticket consiste precisamente en depurar ese apartado dentro de Business Suite —cancelar una cuenta de correo, dar de baja un usuario de directorio activo—: si no hay nada que depurar no hay nada que hacer, y mientras quede algo el trabajo no está terminado.
 
-Pero hay revisiones donde esa lógica se invierte. Liberar una reserva de IP, remover un equipo del monitoreo de antivirus, desactivar un HostName en el directorio activo o cotejar el control interno de telefonía son acciones que se ejecutan **en herramientas externas** a Business Suite. Ahí, la información capturada en el expediente no dice si hay trabajo pendiente ni si el trabajo se hizo:
+Pero hay revisiones donde esa lógica se invierte. Liberar una reserva de IP, remover un equipo del monitoreo de antivirus o cotejar el control interno de telefonía son acciones que se ejecutan **en herramientas externas** a Business Suite. Ahí, la información capturada en el expediente no dice si hay trabajo pendiente ni si el trabajo se hizo:
 
-- Que el expediente **no tenga** el Hostname o el Directorio Activo capturados no significa que el equipo no exista en la red: significa que el dato no se registró. La revisión sigue siendo necesaria —y es justo en esos casos donde más falta hace—, pero con la regla actual el subticket nunca se abriría.
+- Que el expediente **no tenga** capturados la Dirección IP, el HostName o el Usuario de Directorio Activo no significa que el equipo no exista en la red: significa que el dato no se registró. La revisión sigue siendo necesaria —y es justo en esos casos donde más falta hace—, pero con la regla actual el subticket nunca se abriría.
 - Que el expediente **siga teniendo** esa información después de atender la revisión es lo normal, porque la depuración ocurrió afuera. Con la regla actual el subticket nunca podría cerrarse.
 
 Por eso este requerimiento agrega al catálogo un **campo validador** llamado **"No requiere validación"**. Es una marca por registro: **los registros marcados no se validan**, ni al generar el subticket ni al cerrarlo. Los que quedan sin marcar conservan exactamente el comportamiento de hoy.
@@ -193,7 +195,7 @@ Por eso este requerimiento agrega al catálogo un **campo validador** llamado **
 
 Que el valor por omisión sea "sin marcar" es deliberado: al liberarse la funcionalidad, ningún registro existente cambia de comportamiento. Solo se comporta distinto aquello que el administrador marca expresamente.
 
-El campo es **configuración, no desarrollo**. Las revisiones que el negocio requiere hoy se resuelven dando de alta tres registros con "No requiere validación" **marcado**, y **cualquier revisión futura** que deba detonarse siempre —hoy no identificada— se resolverá dando de alta un registro más con esa misma marca, sin código y sin liberación. Lo único que este requerimiento desarrolla es el campo y el efecto que tiene sobre la generación y sobre el cierre.
+El campo es **configuración, no desarrollo**. Las revisiones que el negocio requiere hoy se resuelven dando de alta **dos** registros con "No requiere validación" **marcado** —más el ajuste del mensaje del registro ya existente de baja de Directorio Activo, que también es configuración—, y **cualquier revisión futura** que deba detonarse siempre —hoy no identificada— se resolverá dando de alta un registro más con esa misma marca, sin código y sin liberación. Lo único que este requerimiento desarrolla es el campo y el efecto que tiene sobre la generación y sobre el cierre.
 
 ### Información / atributos
 
@@ -213,25 +215,60 @@ Estos son los datos que componen cada registro de configuración del catálogo "
 
 ### Configuraciones requeridas
 
-Las tres altas que el negocio requiere hoy en el catálogo son las siguientes. Ninguna implica desarrollo: son registros de configuración, y las tres se dan de alta con **"No requiere validación" marcado**, de modo que se detonen en toda baja y puedan cerrarse sin validación.
+Las altas que el negocio requiere hoy en el catálogo son **dos**, y ninguna implica desarrollo: son registros de configuración, y las dos se dan de alta con **"No requiere validación" marcado**, de modo que se detonen en toda baja y puedan cerrarse sin validación. A ellas se suma un **ajuste** —también de configuración— sobre un registro que ya existe, el de la baja de Directorio Activo, que se describe más abajo.
 
 | # | Subticket que se genera al registrar la baja | Departamento asignado | Datos que debe incluir el subticket | No requiere validación |
 |---|---|---|---|---|
-| 1 | Revisión de activos de telefonía y datos del directorio telefónico, para cotejar el control interno del departamento contra el expediente del colaborador | Coordinación de Redes y Telecomunicaciones | Activos de telefonía y datos del directorio telefónico registrados al colaborador | Marcado |
-| 2 | Baja de la reserva de IP y remoción del monitoreo de antivirus del equipo del colaborador | Coordinación de Redes y Telecomunicaciones | Hostname, Directorio Activo | Marcado |
-| 3 | Desactivación del HostName | Coordinación de Servidores y Bases de Datos | Hostname, Directorio Activo | Marcado |
+| 1 | Revisión de activos de telefonía y datos del directorio telefónico, y reserva de la dirección IP del equipo del colaborador | Coordinación de Redes y Telecomunicaciones | Dirección IP, HostName | Marcado |
+| 2 | Remoción del monitoreo de antivirus del equipo del colaborador | Coordinación de Redes y Telecomunicaciones | Usuario de Directorio Activo, Host Name | Marcado |
 
-**Asunto con el que nace cada subticket.** Cada registro se da de alta con el texto que se muestra a continuación. Los espacios entre llaves `{}` los sustituye el sistema al generar el subticket: el primero con el **nombre del colaborador** dado de baja y el segundo con su **RFC**.
+**Asunto con el que nace cada subticket.** Cada registro se da de alta con el texto que se muestra a continuación, tal como el negocio lo definió. Los espacios entre llaves `{ }` los sustituye el sistema al generar el subticket: el primero con el **nombre del colaborador** dado de baja, el segundo con su **RFC**, y los del bloque **LISTADO** con los datos configurados en "datos que se transcriben al subticket". El listado no se captura renglón por renglón: el sistema lo arma solo, con los datos que estén registrados en el apartado del expediente, y la etiqueta de cada renglón es el nombre del dato configurado.
 
-| # | Subticket | Asunto configurado |
+| # | Subticket | Responsable que lo atiende |
 |---|---|---|
-| 1 | Activos de telefonía | BUEN DÍA, SE NOTIFICA BAJA DE PERSONAL CON NOMBRE: {} Y RFC: {} EN NÓMINA DE RECURSOS HUMANOS, ES NECESARIO REALIZAR LA REVISIÓN DE ACTIVOS DE TELEFONÍA Y DATOS DEL DIRECTORIO TELEFÓNICO. |
-| 2 | Reserva IP / Remoción Antivirus | BUEN DÍA, SE NOTIFICA BAJA DE PERSONAL CON NOMBRE: {} Y RFC: {} EN NÓMINA DE RECURSOS HUMANOS, ES NECESARIO REALIZAR LA BAJA DE LA RESERVA DE IP Y REMOCIÓN DEL MONITOREO DEL ANTIVIRUS. |
-| 3 | Desactivación HostName | BUEN DÍA, SE NOTIFICA BAJA DE PERSONAL CON NOMBRE: {} Y RFC: {} EN NÓMINA DE RECURSOS HUMANOS, ES NECESARIO REALIZAR LA DESACTIVACIÓN DEL HOSTNAME DEL EQUIPO. |
+| 1 | IP y Activos de telefonía | Víctor Hugo Gómez Aguiluz |
+| 2 | Remoción de Antivirus | Cesar Rafael Figueroa López |
+| 3 | Baja de Directorio Activo — registro ya existente, del que solo se ajusta el asunto | Juan Carlos Segovia Espinoza |
 
-La baja de la reserva de IP y la remoción del monitoreo de antivirus se resuelven en **un solo subticket** y no en dos: ambas se dirigen al mismo departamento, se ejecutan sobre el mismo equipo y las atiende la misma persona en la misma sesión de trabajo. Separarlas duplicaba el trámite sin agregar control, y obligaba a cerrar dos tickets por un trabajo que se hace de una vez. El subticket declara las dos acciones en su mensaje, y su cierre da por atendidas ambas.
+**1. IP y Activos de telefonía** — asignado a Víctor Hugo Gómez Aguiluz:
 
-Al estar los tres registros marcados, los tres subtickets nacen en **toda** baja de personal, tenga o no el colaborador su Hostname, su Directorio Activo o sus datos de telefonía capturados en el expediente. Nacen colgados del ticket principal de la baja, en la misma corrida del proceso automático y junto con los subtickets que estén configurados sin la marca. Ninguno depende del cierre de otro: se abren todos a la vez y cada departamento atiende el suyo por su cuenta.
+```text
+BUEN DÍA, SE NOTIFICA BAJA DE PERSONAL CON NOMBRE: { } Y RFC: { } EN NÓMINA DE RECURSOS HUMANOS, ES NECESARIO REALIZAR LA REVISIÓN DE ACTIVOS DE TELEFONÍA Y DATOS DEL DIRECTORIO TELEFÓNICO, ASÍ COMO LA RESERVA DE LA DIRECCIÓN IP.
+LISTADO:
+IP: { }
+HostName: { }
+```
+
+**2. Remoción de Antivirus** — asignado a Cesar Rafael Figueroa López:
+
+```text
+BUEN DÍA, SE NOTIFICA BAJA DE PERSONAL CON NOMBRE: { } Y RFC: { } EN NÓMINA DE RECURSOS HUMANOS, ES NECESARIO REALIZAR LA REMOCIÓN DEL MONITOREO DEL ANTIVIRUS.
+LISTADO:
+DirectorioActivo: { }
+HostName: { }
+```
+
+**3. Baja de Directorio Activo** — asignado a Juan Carlos Segovia Espinoza. Es el registro que ya existe y del que únicamente se ajusta el asunto:
+
+```text
+BUEN DÍA, SE NOTIFICA BAJA DE PERSONAL CON NOMBRE: { } Y RFC: { } EN NÓMINA DE RECURSOS HUMANOS, ES NECESARIO REALIZAR LA BAJA DE LOS DIRECTORIOS ACTIVOS Y DESACTIVACIÓN DE HOSTNAME.
+LISTADO:
+NombreEquipo: { }
+NombreEquipo: { }
+DirectorioActivo:  { }
+```
+
+El listado del tercer subticket muestra el **NombreEquipo** en dos renglones porque un colaborador puede tener más de un equipo registrado en el directorio activo: el sistema repite el renglón por cada registro que encuentre en el apartado, de modo que el responsable ve todos los equipos que debe atender. Son esos nombres de equipo los que indican sobre qué HostName aplica la desactivación que el asunto declara.
+
+**El subticket se asigna al responsable del departamento configurado en el registro.** Ese responsable es un dato administrable del catálogo de departamentos, de modo que para que cada uno de los tres subtickets llegue a la persona indicada arriba basta con que el departamento capturado en su registro tenga configurada a esa persona como responsable, conforme a SUP-24.
+
+La revisión de los activos de telefonía y la baja de la reserva de IP se resuelven en **un solo subticket** y no en dos: ambas se dirigen al mismo departamento, se resuelven sobre el mismo equipo del colaborador y las atiende la misma persona en la misma sesión de trabajo. Separarlas duplicaba el trámite sin agregar control, y obligaba a cerrar dos tickets por un trabajo que se hace de una vez. El subticket declara las dos acciones en su mensaje, y su cierre da por atendidas ambas. La remoción del monitoreo de antivirus, en cambio, queda como subticket propio: se ejecuta en la consola del antivirus y se coteja contra el usuario de Directorio Activo del colaborador, no contra su dirección de red.
+
+**Los datos de cada registro provienen de un solo apartado del expediente**, que es lo que el catálogo admite —un registro apunta a un apartado y transcribe los datos de ese apartado—. En el registro 1, la Dirección IP y el HostName se toman del apartado de direcciones IP del activo de cómputo del colaborador, donde el HostName corresponde al nombre de red del equipo. En el registro 2, el Usuario de Directorio Activo y el Host Name se toman del apartado de Directorio Activo. Esa correspondencia debe confirmarse con el equipo de desarrollo antes de capturar los registros, conforme a SUP-18: de ella depende que ambos datos de cada subticket puedan transcribirse sin desarrollo.
+
+**Ajuste del subticket de baja de Directorio Activo.** La desactivación del HostName **no se da de alta como registro nuevo**. El sistema ya detona un subticket para la baja de los directorios activos del colaborador, y esa desactivación la atiende el mismo responsable sobre el mismo registro del directorio; por eso lo único que se hace es **ajustar el asunto de ese registro** al texto del punto 3 de arriba, en el que el subticket declara las dos acciones —la baja de los directorios activos y la desactivación del HostName— y transcribe el nombre del equipo junto con el usuario de Directorio Activo, de modo que ambas se atiendan en la misma sesión de trabajo. Ese registro conserva su departamento, su apartado, sus datos a transcribir y su comportamiento de validación actuales: no se marca como "No requiere validación", porque la baja del usuario sí se depura dentro de Business Suite. La consecuencia de esa decisión queda registrada en RGO-13.
+
+Al estar los dos registros nuevos marcados, sus subtickets nacen en **toda** baja de personal, tenga o no el colaborador su Dirección IP, su HostName o su Usuario de Directorio Activo capturados en el expediente. Nacen colgados del ticket principal de la baja, en la misma corrida del proceso automático y junto con los subtickets que estén configurados sin la marca —entre ellos el de baja de Directorio Activo—. Ninguno depende del cierre de otro: se abren todos a la vez y cada responsable atiende el suyo por su cuenta.
 
 Esta lista es la del arranque, no un límite: si mañana el negocio identifica otra revisión que deba detonarse en toda baja —de sistemas, de accesos físicos, de licencias—, se resuelve con un registro más en este mismo catálogo y la marca puesta, sin desarrollo.
 
@@ -274,7 +311,7 @@ flowchart TD
 
 ## HU-1.1 — Configuración de los subtickets que se generan al registrar una baja
 
-Como administrador del sistema, quiero configurar en el catálogo "Datos Personales" los subtickets que deben generarse automáticamente al registrarse la baja de un colaborador, marcando en cada uno si no requiere validación, para que las revisiones de telefonía, reserva de IP y antivirus, y HostName —y las que el negocio agregue después— lleguen al departamento que las atiende sin depender de que alguien las recuerde ni de una liberación de desarrollo.
+Como administrador del sistema, quiero configurar en el catálogo "Datos Personales" los subtickets que deben generarse automáticamente al registrarse la baja de un colaborador, marcando en cada uno si no requiere validación, para que las revisiones de telefonía y reserva de IP y de remoción del monitoreo de antivirus —y las que el negocio agregue después— lleguen al departamento que las atiende sin depender de que alguien las recuerde ni de una liberación de desarrollo.
 
 ### Reglas de negocio
 
@@ -282,13 +319,13 @@ Como administrador del sistema, quiero configurar en el catálogo "Datos Persona
 
 **RN-1.2** El departamento destino de cada registro deberá estar activo y contar con un responsable asignado, porque el subticket se asigna a ese responsable; si no cumple ambas condiciones, la configuración no podrá guardarse.
 
-**RN-1.3** El subticket de revisión de activos de telefonía y datos del directorio telefónico y el de baja de la reserva de IP y remoción del monitoreo de antivirus deberán dirigirse a **Coordinación de Redes y Telecomunicaciones**; el de desactivación del HostName deberá dirigirse a **Coordinación de Servidores y Bases de Datos**.
+**RN-1.3** Cada registro deberá dirigirse al departamento que tenga configurada como responsable a la persona que debe atender su subticket, porque es a ese responsable a quien el sistema lo asigna: el de revisión de activos de telefonía y reserva de la dirección IP a **Víctor Hugo Gómez Aguiluz** y el de remoción del monitoreo de antivirus a **Cesar Rafael Figueroa López**, ambos de **Coordinación de Redes y Telecomunicaciones**. La desactivación del HostName no se dirige a un departamento propio: se atiende en el subticket ya existente de baja de los directorios activos, asignado a **Juan Carlos Segovia Espinoza**, que conserva el departamento que tiene configurado hoy.
 
-**RN-1.4** La baja de la reserva de IP y la remoción del monitoreo de antivirus deberán resolverse en un **único subticket**, no en dos: ambas se dirigen al mismo departamento y se ejecutan sobre el mismo equipo. Ese subticket deberá declarar las dos acciones en su mensaje, y su cierre deberá dar por atendidas ambas.
+**RN-1.4** La revisión de los activos de telefonía y la baja de la reserva de IP deberán resolverse en un **único subticket**, no en dos: ambas se dirigen al mismo departamento y se resuelven sobre el mismo equipo del colaborador. Ese subticket deberá declarar las dos acciones en su mensaje, y su cierre deberá dar por atendidas ambas. La remoción del monitoreo de antivirus deberá quedar como un subticket propio, porque se ejecuta en una consola distinta y se coteja contra otros datos del expediente.
 
-**RN-1.5** El subticket de baja de la reserva de IP y remoción del monitoreo de antivirus y el de desactivación del HostName deberán incluir en su cuerpo el **Hostname** y el **Directorio Activo** del colaborador dado de baja cuando estén registrados en su expediente; cuando alguno no lo esté, el subticket deberá generarse igual e indicar en su cuerpo que el dato no está registrado, conforme a RN-1.13.
+**RN-1.5** El subticket de revisión de activos de telefonía y baja de la reserva de IP deberá incluir en su cuerpo la **Dirección IP** y el **HostName** del colaborador dado de baja; el de remoción del monitoreo de antivirus deberá incluir el **Usuario de Directorio Activo** y el **Host Name**. Los datos se transcriben cuando estén registrados en el expediente; cuando alguno no lo esté, el subticket deberá generarse igual e indicar en su cuerpo que el dato no está registrado, conforme a RN-1.13.
 
-**RN-1.6** El subticket de revisión de activos de telefonía deberá incluir los activos de telefonía y los datos del directorio telefónico registrados al colaborador, de modo que el responsable pueda cotejar el control interno de su departamento contra el expediente del colaborador.
+**RN-1.6** La desactivación del HostName **no deberá configurarse como un registro nuevo** del catálogo: del registro ya existente que detona el subticket de baja de los directorios activos únicamente se ajustará el asunto, al texto definido por el negocio, en el que se declaran esa baja y la desactivación del HostName y se transcriben el nombre del equipo del colaborador —donde viaja el HostName— y su usuario de Directorio Activo. Ese registro conservará su departamento, su apartado del expediente, sus datos a transcribir y su comportamiento de validación actuales.
 
 **RN-1.7** El sistema no deberá generar un segundo subticket cuando ya exista uno en proceso para la misma baja, el mismo registro de configuración y el mismo ticket principal, de modo que las corridas sucesivas del proceso automático no produzcan duplicados. Esta regla aplica por igual a los registros marcados y a los que no lo están.
 
@@ -298,29 +335,29 @@ Como administrador del sistema, quiero configurar en el catálogo "Datos Persona
 
 **RN-1.10** El alta, la edición y la baja de los registros de este catálogo deberán estar restringidas al administrador del sistema y quedar registradas en la bitácora de auditoría, indicando el valor anterior, el valor nuevo, el usuario que hizo el cambio y la fecha y hora en que lo realizó.
 
-**RN-1.11** La puesta en marcha de las tres revisiones del arranque, y la de cualquier revisión que el negocio agregue después, deberá resolverse por configuración del catálogo, sin desarrollo ni liberación de código. La única excepción es el campo "No requiere validación" que se describe en HU-1.2, que se desarrolla una sola vez y queda disponible para todos los registros, presentes y futuros. Los tres registros del arranque deberán darse de alta con el campo **"No requiere validación" marcado**, de modo que sus subtickets se detonen en toda baja y puedan cerrarse sin validación, conforme a HU-1.2.
+**RN-1.11** La puesta en marcha de las dos revisiones del arranque, el ajuste del mensaje del subticket de baja de Directorio Activo y la incorporación de cualquier revisión que el negocio agregue después deberán resolverse por configuración del catálogo, sin desarrollo ni liberación de código. La única excepción es el campo "No requiere validación" que se describe en HU-1.2, que se desarrolla una sola vez y queda disponible para todos los registros, presentes y futuros. Los dos registros nuevos deberán darse de alta con el campo **"No requiere validación" marcado**, de modo que sus subtickets se detonen en toda baja y puedan cerrarse sin validación, conforme a HU-1.2.
 
 ### Criterios de Aceptación
 
-**CA-1.1.1 — Alta del subticket de revisión de telefonía y directorio telefónico**
+**CA-1.1.1 — Alta del subticket de revisión de activos de telefonía y baja de la reserva de IP**
 Dado que el administrador ingresa al catálogo "Datos Personales"
-Cuando da de alta el registro de revisión de activos de telefonía y datos del directorio telefónico, con departamento Coordinación de Redes y Telecomunicaciones, con los datos del expediente de telefonía del colaborador como datos a transcribir y con "No requiere validación" marcado
-Entonces el sistema guarda el registro en estatus Activo, y queda listo para generar ese subticket en la siguiente baja de personal que se registre.
+Cuando da de alta **un único registro** para la revisión de activos de telefonía y la baja de la reserva de IP, con departamento Coordinación de Redes y Telecomunicaciones, con Dirección IP y HostName como datos a transcribir, con un mensaje que declara las dos acciones y con "No requiere validación" marcado
+Entonces el sistema guarda un solo registro en estatus Activo para ambas acciones, y los subtickets que se generen a partir de él incluirán en su cuerpo la Dirección IP y el HostName del colaborador cuando estén registrados.
 
-**CA-1.1.2 — Alta del subticket de baja de la reserva de IP y remoción del monitoreo de antivirus**
-Dado que el administrador da de alta el registro de baja de la reserva de IP y remoción del monitoreo de antivirus
-Cuando lo configura con departamento Coordinación de Redes y Telecomunicaciones, con Hostname y Directorio Activo como datos a transcribir, con un mensaje que declara las dos acciones y con "No requiere validación" marcado
-Entonces el sistema guarda **un solo registro** para ambas acciones, y los subtickets que se generen a partir de él incluirán en su cuerpo el Hostname y el Directorio Activo del colaborador cuando estén registrados.
+**CA-1.1.2 — Alta del subticket de remoción del monitoreo de antivirus**
+Dado que el administrador da de alta el registro de remoción del monitoreo de antivirus
+Cuando lo configura con departamento Coordinación de Redes y Telecomunicaciones, con Usuario de Directorio Activo y Host Name como datos a transcribir y con "No requiere validación" marcado
+Entonces el sistema guarda el registro en estatus Activo, y los subtickets que se generen a partir de él incluirán en su cuerpo el Usuario de Directorio Activo y el Host Name del colaborador cuando estén registrados.
 
-**CA-1.1.3 — Alta del subticket de desactivación del HostName**
-Dado que el administrador da de alta el registro de desactivación del HostName
-Cuando lo configura con departamento Coordinación de Servidores y Bases de Datos, con Hostname y Directorio Activo como datos a transcribir y con "No requiere validación" marcado
-Entonces el sistema guarda el registro, y los subtickets que se generen a partir de él se asignan al responsable de Coordinación de Servidores y Bases de Datos con esos datos en su cuerpo.
+**CA-1.1.3 — Ajuste del subticket existente de baja de Directorio Activo**
+Dado el registro ya existente del catálogo que detona el subticket de baja de los directorios activos
+Cuando el administrador ajusta su asunto al texto definido por el negocio, en el que se declaran la baja de los directorios activos y la desactivación del HostName, y se transcriben el nombre del equipo y el usuario de Directorio Activo
+Entonces el sistema conserva ese registro con su departamento, su apartado y su comportamiento de validación actuales, no se da de alta ningún registro nuevo para la desactivación del HostName, y los subtickets que se generen a partir de ese registro nacen con ese asunto y con el listado de los equipos registrados al colaborador.
 
-**CA-1.1.4 — Generación de los tres subtickets al registrarse la baja**
-Dado que los tres registros están activos y marcados como "No requiere validación", y un colaborador queda en estatus Cancelado por la sincronización de nómina
+**CA-1.1.4 — Generación de los dos subtickets nuevos al registrarse la baja**
+Dado que los dos registros nuevos están activos y marcados como "No requiere validación", y un colaborador queda en estatus Cancelado por la sincronización de nómina
 Cuando el proceso automático de tickets por baja de personal se ejecuta
-Entonces el sistema crea el ticket principal de la baja y, colgados de él, exactamente **tres** subtickets —no cuatro—, cada uno asignado al responsable del departamento configurado, con los datos del colaborador transcritos en su cuerpo y sin dependencia entre ellos.
+Entonces el sistema crea el ticket principal de la baja y, colgados de él, exactamente **dos** subtickets a partir de esos registros —no tres—, ambos asignados al responsable de Coordinación de Redes y Telecomunicaciones, con los datos del colaborador transcritos en su cuerpo y sin dependencia entre ellos ni con los subtickets de los demás registros del catálogo.
 
 **CA-1.1.5 — Alta de una revisión nueva después de la puesta en marcha**
 Dado que el negocio identifica una revisión adicional que debe detonarse en toda baja de personal
@@ -328,9 +365,9 @@ Cuando el administrador la da de alta como un registro más del catálogo, con s
 Entonces el sistema empieza a generar ese subticket en la siguiente baja que se registre, sin desarrollo ni liberación de código.
 
 **CA-1.1.6 — Ejecuciones sucesivas sin subtickets duplicados**
-Dado que los tres subtickets ya se generaron para una baja y siguen en proceso
+Dado que los dos subtickets nuevos ya se generaron para una baja y siguen en proceso
 Cuando el proceso automático se ejecuta de nuevo
-Entonces el sistema no crea subtickets adicionales para esa baja y conserva los tres existentes.
+Entonces el sistema no crea subtickets adicionales para esa baja y conserva los dos existentes.
 
 **CA-1.1.7 — Validación del departamento destino**
 Dado que el administrador selecciona como departamento destino uno que está inactivo o que no tiene responsable asignado
@@ -376,17 +413,17 @@ Como responsable de un subticket generado por una baja de personal, quiero que l
 ### Criterios de Aceptación
 
 **CA-1.2.1 — Marcado de un registro como "No requiere validación"**
-Dado que el administrador edita el registro de baja de la reserva de IP y remoción del monitoreo de antivirus en el catálogo "Datos Personales"
+Dado que el administrador edita el registro de revisión de activos de telefonía y baja de la reserva de IP en el catálogo "Datos Personales"
 Cuando marca "No requiere validación" y guarda
 Entonces el sistema almacena la marca, y los subtickets de ese registro se generarán en toda baja y podrán cerrarse sin reevaluar el apartado del colaborador.
 
 **CA-1.2.2 — Generación en una baja sin información en el apartado**
-Dado un colaborador dado de baja cuyo expediente no tiene registrados el Hostname ni el Directorio Activo, y los registros de reserva de IP y antivirus y de HostName marcados
+Dado un colaborador dado de baja cuyo expediente no tiene registrados la Dirección IP, el HostName ni el Usuario de Directorio Activo, y los dos registros nuevos marcados
 Cuando el proceso automático se ejecuta
 Entonces el sistema genera los dos subtickets de todos modos, y cada uno indica en su cuerpo que esos datos no están registrados en el expediente.
 
 **CA-1.2.3 — Cierre de un subticket marcado con información aún activa en el apartado**
-Dado un subticket de baja de la reserva de IP y remoción del monitoreo de antivirus, generado a partir de un registro marcado, cuyo colaborador dado de baja todavía tiene información activa en el apartado configurado
+Dado un subticket de revisión de activos de telefonía y baja de la reserva de IP, generado a partir de un registro marcado, cuyo colaborador dado de baja todavía tiene información activa en el apartado configurado
 Cuando el responsable registra su atención de las dos acciones y solicita el cierre
 Entonces el sistema cierra el subticket sin exigir que el apartado esté depurado y sin mostrar el mensaje de información activa.
 
@@ -640,13 +677,17 @@ La fecha de fin de vigencia que produce este requerimiento es el único dato con
 
 ## Objetivo
 
-Garantizar que ningún activo se quede en resguardo en sitio más allá del periodo de vigencia autorizado, creando de manera automática y desatendida **un ticket de recolección por cada colaborador dado de baja**, que reúne todos sus activos en resguardo y se asigna al personal y departamento responsables de ejecutar la recolección.
+Garantizar que ningún activo se quede en resguardo en sitio más allá del periodo de vigencia autorizado, creando de manera automática y desatendida **un ticket de recolección por cada colaborador dado de baja**, que nace en estatus **En Proceso** y reúne en su detalle todos los activos que ese colaborador tenía asignados antes de su baja, asignado al personal y departamento responsables de ejecutar la recolección.
 
 ## Descripción
 
 El sistema deberá contar con un proceso automático (job) que se ejecute periódicamente y que, cuando se agota el periodo de vigencia del resguardo de un colaborador dado de baja, cree un **ticket interno** identificado con el motivo **"Recolección por Resguardo"** y lo asigne al responsable del departamento encargado de las recolecciones configurado en RF-02.
 
-El ticket se genera **por colaborador, no por activo**: un solo ticket reúne en su detalle todos los activos que ese colaborador tenía asignados y que quedaron en resguardo en sitio. La razón es que el resguardo nace de la baja de una persona y se resuelve por persona —cuando llega el reemplazo se le entrega el equipo completo—, de modo que la recolección se coordina una sola vez con el custodio en lugar de abrir un ticket por cada pieza. Por la misma razón el ticket agrupa todos los activos del colaborador aunque estén en centros de trabajo distintos.
+El ticket se genera **por colaborador, no por activo**: un solo ticket reúne en su detalle **todos los activos que ese colaborador tenía asignados antes de su baja**, no únicamente los que quedaron en resguardo en sitio. La razón es que el resguardo nace de la baja de una persona y se resuelve por persona —cuando llega el reemplazo se le entrega el equipo completo—, de modo que la recolección se coordina una sola vez con el custodio en lugar de abrir un ticket por cada pieza. Por la misma razón el ticket agrupa todos los activos del colaborador aunque estén en centros de trabajo distintos.
+
+Lo que **detona** el ticket sigue siendo el vencimiento del periodo de vigencia del resguardo; lo que cambia es la amplitud de su **detalle**. Cada renglón muestra el estatus vigente del activo, de modo que el responsable de recolecciones tenga a la vista el inventario completo de la persona —qué sigue en resguardo y debe recuperar, y qué ya salió por recolección o por reasignación— sin reconstruirlo desde el expediente del colaborador ni consultar activo por activo.
+
+El ticket nace en estatus **En Proceso**, con estatus interno Recibido: llega a la bandeja del responsable de recolecciones listo para atenderse, sin pasar por ningún estatus previo de borrador, de autorización o de revisión.
 
 El ticket nace **a nombre de quien autorizó el resguardo en sitio**: esa persona, su departamento y su centro de trabajo son los datos del solicitante. El colaborador dado de baja no puede figurar como solicitante porque quedó en estatus Cancelado tras la baja, y quien autorizó es quien decidió que el equipo permaneciera en sitio, por lo que es el interlocutor natural cuando el plazo se agota.
 
@@ -659,17 +700,17 @@ El ticket nace **a nombre de quien autorizó el resguardo en sitio**: esa person
 | Departamento del solicitante | Sí | Departamento de quien autorizó el resguardo. |
 | Centro de trabajo del solicitante | Sí | Centro de trabajo de quien autorizó el resguardo. |
 | Colaborador dado de baja | Sí | Colaborador que tenía asignados los activos antes de la baja; es el criterio con el que se agrupa el ticket. |
-| Detalle de activos | Sí | Un renglón por cada activo en resguardo del colaborador, con etiqueta de activo, número de serie, descripción, centro de trabajo donde se encuentra, personal que lo resguarda, fecha de resguardo y fecha de fin de vigencia. |
+| Detalle de activos | Sí | Un renglón por cada activo que el colaborador tenía asignado antes de su baja, con etiqueta de activo, número de serie, descripción, estatus vigente del activo, centro de trabajo donde se encuentra, personal que lo resguarda, fecha de resguardo y fecha de fin de vigencia. |
 | Personal asignado (responsable) | Sí | Responsable del departamento encargado de recolecciones configurado en RF-02. |
 | Departamento | Sí | Departamento encargado de recolecciones configurado en RF-02. |
 | Observaciones | Sí | Texto que indica que el ticket se generó automáticamente por vencimiento del resguardo en sitio, con la fecha de fin de vigencia que lo originó y la cantidad de activos incluidos. |
-| Estatus | Sí | El estatus con el que nacen los tickets internos generados por el sistema (En Proceso, con estatus interno Recibido). |
+| Estatus | Sí | **En Proceso**, con estatus interno Recibido: el ticket nace en proceso y listo para atenderse, como todos los tickets internos que genera el sistema. |
 
 ### Operaciones
 
 El proceso automático deberá, en cada ejecución:
 - Identificar los colaboradores con activos en resguardo cuyo periodo de vigencia ya venció.
-- Reunir todos los activos en estatus Resguardo en Sitio de cada uno de esos colaboradores.
+- Reunir, para cada uno de esos colaboradores, todos los activos que tenía asignados antes de su baja, con el estatus que cada uno tenga en ese momento.
 - Verificar que no exista ya un ticket vigente de "Recolección por Resguardo" para ese colaborador.
 - Crear el ticket con su detalle de activos, tomar del registro de autorización los datos del solicitante y asignarlo al responsable de recolecciones.
 - Registrar el resultado de la ejecución, incluyendo los colaboradores y activos procesados y los omitidos con su razón.
@@ -684,11 +725,11 @@ Como responsable de recolecciones, quiero que el sistema genere y me asigne auto
 
 **RN-4.1** El proceso automático deberá ejecutarse de forma desatendida al menos una vez al día, sin intervención de ninguna persona.
 
-**RN-4.2** Se considerarán únicamente los activos cuyo estatus vigente sea **Resguardo en Sitio** y cuya fecha de resguardo sea válida e igual o posterior a la fecha de corte configurada en RF-02.
+**RN-4.2** Para **detonar** el ticket se considerarán únicamente los activos cuyo estatus vigente sea **Resguardo en Sitio** y cuya fecha de resguardo sea válida e igual o posterior a la fecha de corte configurada en RF-02. La integración del detalle del ticket es más amplia y se rige por RN-4.4.
 
-**RN-4.3** El ticket se generará **por colaborador dado de baja**: el proceso agrupa por colaborador todos sus activos en resguardo y crea un único ticket para el conjunto, sin importar el centro de trabajo en el que se encuentre físicamente cada activo.
+**RN-4.3** El ticket se generará **por colaborador dado de baja**: el proceso agrupa por colaborador todos los activos que tenía asignados antes de su baja y crea un único ticket para el conjunto, sin importar el centro de trabajo en el que se encuentre físicamente cada activo.
 
-**RN-4.4** El ticket de un colaborador se creará cuando la **más próxima de las fechas de fin de vigencia** de sus activos en resguardo sea igual o anterior a la fecha del servidor, y deberá incluir en su detalle **todos** los activos de ese colaborador que en ese momento estén en estatus Resguardo en Sitio, hayan vencido o no. Ningún activo del colaborador queda fuera del ticket.
+**RN-4.4** El ticket de un colaborador se creará cuando la **más próxima de las fechas de fin de vigencia** de sus activos en resguardo sea igual o anterior a la fecha del servidor, y deberá incluir en su detalle **todos los activos que ese colaborador tenía asignados antes de su baja**, no únicamente los que siguen en resguardo ni únicamente los vencidos. Cada renglón deberá mostrar el **estatus vigente** del activo, de modo que el responsable distinga los que debe recolectar de los que ya salieron del resguardo por recolección o por reasignación. Ningún activo del colaborador queda fuera del ticket.
 
 **RN-4.5** El ticket nacerá a nombre de **quien autorizó el resguardo en sitio**: su personal, su departamento y su centro de trabajo son los datos del solicitante. Se asignará al responsable del departamento encargado de recolecciones y llevará el motivo "Recolección por Resguardo", ambos configurados en RF-02.
 
@@ -706,22 +747,24 @@ Como responsable de recolecciones, quiero que el sistema genere y me asigne auto
 
 **RN-4.12** El proceso deberá garantizar que solo una instancia se ejecute a la vez, aun cuando el sistema opere con varios servidores, para no generar tickets duplicados.
 
-**RN-4.13** Cada ticket generado automáticamente deberá quedar registrado en la bitácora de auditoría del ticket y en la bitácora de **cada uno de los activos incluidos**, indicando que se originó por vencimiento del resguardo en sitio, con la fecha de resguardo, la fecha de fin de vigencia y el periodo de vigencia aplicado.
+**RN-4.13** Cada ticket generado automáticamente deberá quedar registrado en la bitácora de auditoría del ticket y en la bitácora de **cada uno de los activos que estén en resguardo al momento de generarlo**, indicando que se originó por vencimiento del resguardo en sitio, con la fecha de resguardo, la fecha de fin de vigencia y el periodo de vigencia aplicado.
 
 **RN-4.14** El ticket generado automáticamente se opera con el mismo flujo, permisos y estatus que cualquier otro ticket interno de cómputo; este requerimiento no crea estatus nuevos ni un flujo paralelo de atención.
 
 **RN-4.15** Mientras todos los activos en resguardo de un colaborador tengan una fecha de fin de vigencia posterior a la fecha del servidor, el proceso no creará ticket para ese colaborador. Conforme a RN-5.5, una extensión mueve la fecha de todos los activos del colaborador a la vez, de modo que aplaza el ticket completo y no deja activos sueltos que puedan detonarlo antes de tiempo.
 
-**RN-4.16** Los activos cuya fecha de resguardo sea anterior a la fecha de corte configurada no se considerarán ni para detonar el ticket ni para integrar su detalle, aunque su periodo de vigencia esté vencido; su recolección se gestiona de forma manual con la funcionalidad ya existente.
+**RN-4.16** Los activos cuya fecha de resguardo sea anterior a la fecha de corte configurada no se considerarán para **detonar** el ticket, aunque su periodo de vigencia esté vencido; su recolección se gestiona de forma manual con la funcionalidad ya existente. Cuando el colaborador tenga además activos que sí detonen el ticket, esos activos aparecerán en el **detalle** con su estatus vigente, conforme a RN-4.4, para que el responsable tenga a la vista el inventario completo de la persona.
 
 **RN-4.17** Las observaciones del ticket deberán indicar la fecha de fin de vigencia que originó la recolección, la cantidad de activos incluidos y, cuando el resguardo tuvo extensiones, señalar que la fecha fue extendida.
+
+**RN-4.18** El ticket deberá crearse en estatus **En Proceso**, con estatus interno Recibido, de modo que nazca listo para atenderse: no pasa por ningún estatus previo de borrador, de autorización ni de revisión, y el responsable de recolecciones lo recibe directamente en su bandeja de trabajo.
 
 ### Criterios de Aceptación
 
 **CA-4.1.1 — Creación de un ticket único por colaborador al vencer el periodo de vigencia**
 Dado un colaborador dado de baja con tres activos en estatus Resguardo en Sitio, con fecha de resguardo del 1 de septiembre y un periodo de vigencia de 15 días
 Cuando el proceso automático se ejecuta el 16 de septiembre
-Entonces el sistema crea un único ticket interno con motivo "Recolección por Resguardo" que incluye los tres activos en su detalle, lo asigna al responsable del departamento encargado de recolecciones y lo deja en estatus En Proceso con estatus interno Recibido.
+Entonces el sistema crea un único ticket interno con motivo "Recolección por Resguardo" que incluye en su detalle todos los activos que el colaborador tenía asignados antes de su baja, lo asigna al responsable del departamento encargado de recolecciones y lo deja en estatus **En Proceso** con estatus interno Recibido.
 
 **CA-4.1.2 — El ticket nace a nombre de quien autorizó el resguardo**
 Dado un colaborador cuyo resguardo en sitio fue autorizado por una persona registrada en el registro de autorización
@@ -729,12 +772,12 @@ Cuando el sistema crea el ticket de "Recolección por Resguardo"
 Entonces el solicitante del ticket es esa persona, con su departamento y su centro de trabajo, y el ticket queda asignado al responsable de recolecciones configurado en RF-02.
 
 **CA-4.1.3 — Detalle de activos del ticket**
-Dado que el sistema creó el ticket de "Recolección por Resguardo" de un colaborador con tres activos en resguardo
+Dado que el sistema creó el ticket de "Recolección por Resguardo" de un colaborador que antes de su baja tenía cuatro activos asignados, de los cuales tres siguen en resguardo y uno ya se había recolectado
 Cuando el responsable asignado lo consulta
-Entonces visualiza el colaborador dado de baja y un renglón por cada activo con su etiqueta, número de serie, descripción, centro de trabajo, personal que lo resguarda, fecha de resguardo y fecha de fin de vigencia, además de la observación de que el ticket se generó automáticamente por vencimiento del resguardo, con la fecha que lo originó y la cantidad de activos incluidos.
+Entonces visualiza el colaborador dado de baja y un renglón por cada uno de los cuatro activos con su etiqueta, número de serie, descripción, estatus vigente, centro de trabajo, personal que lo resguarda, fecha de resguardo y fecha de fin de vigencia, además de la observación de que el ticket se generó automáticamente por vencimiento del resguardo, con la fecha que lo originó y la cantidad de activos incluidos.
 
 **CA-4.1.4 — Ningún activo del colaborador queda fuera del ticket**
-Dado un colaborador con tres activos en resguardo que entraron en resguardo en momentos distintos, de los cuales solo uno alcanzó su fecha de fin de vigencia
+Dado un colaborador que antes de su baja tenía tres activos asignados, que entraron en resguardo en momentos distintos y de los cuales solo uno alcanzó su fecha de fin de vigencia
 Cuando el proceso automático se ejecuta ese día
 Entonces el ticket creado incluye los tres activos en su detalle, no únicamente el que venció.
 
@@ -831,28 +874,32 @@ Este requerimiento reutiliza el flujo de tickets internos y el proceso de recole
 
 ## Objetivo
 
-Permitir que el área de Cómputo conserve más tiempo en resguardo en sitio los equipos de un colaborador cuando el negocio lo justifica —por ejemplo, porque hay una contratación en curso—, agregando días de vigencia sin necesidad de un flujo de autorización y sin perder el control automático sobre el vencimiento.
+Permitir que el área de Cómputo conserve más tiempo en resguardo en sitio los equipos de un colaborador cuando el negocio lo justifica —por ejemplo, porque hay una contratación en curso—, **seleccionando en un calendario la nueva fecha de fin de vigencia**, sin necesidad de un flujo de autorización y sin perder el control automático sobre el vencimiento.
 
 ## Descripción
 
-El sistema deberá ofrecer, **dentro del bloque "Resguardo" del activo definido en RF-06**, una acción que permita **agregar días de vigencia adicionales** al resguardo. El usuario facultado captura la cantidad de días adicionales y el motivo, y el sistema mueve hacia adelante la fecha de fin de vigencia, que es la que rige la generación automática del ticket de RF-04. La fecha de resguardo, que marca el inicio de la vigencia, no se modifica.
+El sistema deberá ofrecer, **dentro del bloque "Resguardo" del activo definido en RF-06**, una acción que permita **extender la vigencia del resguardo seleccionando una nueva fecha de fin de vigencia en un calendario**. El usuario facultado elige la fecha y captura el motivo, y el sistema escribe esa fecha como nueva fecha de fin de vigencia, que es la que rige la generación automática del ticket de RF-04. La fecha de resguardo, que marca el inicio de la vigencia, no se modifica.
 
 La extensión opera **a nivel del colaborador dado de baja, no del activo individual**: el sistema toma el colaborador titular del activo desde el que se ejecuta la acción y aplica la nueva fecha a **todos los activos de ese colaborador que estén en estatus Resguardo en Sitio**. Es la consecuencia directa de que el ticket de recolección se genere por colaborador (RN-4.3): si la extensión se aplicara a un solo activo, el vencimiento de cualquiera de los otros arrastraría al equipo completo a recolección y la extensión no serviría de nada. Extender por colaborador también es lo que corresponde al origen del resguardo, que se conserva porque se contratará un reemplazo para esa persona y no para un equipo suelto.
 
-La **fecha de fin de vigencia del resguardo del colaborador** es la más próxima de las fechas registradas en sus activos en resguardo, que es la que detona el ticket conforme a RN-4.4. La extensión suma los días capturados a esa fecha y escribe el resultado en todos los activos del colaborador, de modo que después de una extensión todos quedan con la misma fecha de fin de vigencia.
+La **fecha de fin de vigencia del resguardo del colaborador** es la más próxima de las fechas registradas en sus activos en resguardo, que es la que detona el ticket conforme a RN-4.4 y la que el diálogo presenta como vigente. La fecha que el usuario selecciona se escribe en todos los activos del colaborador, de modo que después de una extensión todos quedan con la misma fecha de fin de vigencia.
 
-Se captura una **cantidad de días** y no una fecha destino porque así es como el negocio razona el resguardo —"dale una semana más"— y porque evita que un error de captura de fecha mueva el vencimiento a un punto arbitrario. La nueva fecha resultante se muestra al usuario antes de confirmar, junto con los activos que quedarán afectados.
+Se selecciona una **fecha destino en un calendario** y no una cantidad de días porque el negocio razona el resguardo contra una fecha concreta —la del ingreso del reemplazo, la del cierre de la vacante— y verla en el calendario evita el cálculo mental de días. Para que la acción no pueda usarse como su contrario, el calendario **solo habilita fechas que efectivamente extienden la vigencia**: quedan fuera las anteriores o iguales a la fecha de fin de vigencia que el resguardo ya tiene —la que resultó de los días configurados en la variable de sistema de RF-02— y cualquier fecha anterior al día actual. Con eso, una extensión nunca puede acortar el plazo, dejarlo igual ni colocarlo en el pasado.
 
-La extensión es una **acción directa**, no una solicitud: no requiere autorización de un tercero ni genera un ticket. El control no está en una cadena de aprobaciones sino en tres puntos: un **permiso propio** que decide quién puede ejecutarla, el **motivo obligatorio** y la **bitácora**. Esta última registra el cambio en cada activo afectado, de manera que siempre pueda saberse quién extendió el resguardo, cuándo, cuántos días agregó, de qué fecha a qué fecha, sobre qué activos y por qué.
+Cuando los activos del colaborador conservan **fechas distintas** —situación que se da antes de la primera extensión, si entraron en resguardo en momentos diferentes—, la fecha mínima que el calendario habilita es el día siguiente a la **más lejana** de esas fechas, porque la nueva fecha se escribe en todos y no debe acortar la vigencia de ninguno. Cuando todos comparten la misma fecha, que es lo habitual tras una extensión, ese mínimo coincide con la fecha vigente del resguardo.
+
+Al seleccionar la fecha, el diálogo muestra los **días equivalentes** que se están agregando respecto de la vigencia actual, de modo que el usuario confirme con los dos datos a la vista y la bitácora pueda registrar ambos.
+
+La extensión es una **acción directa**, no una solicitud: no requiere autorización de un tercero ni genera un ticket. El control no está en una cadena de aprobaciones sino en tres puntos: un **permiso propio** que decide quién puede ejecutarla, el **motivo obligatorio** y la **bitácora**. Esta última registra el cambio en cada activo afectado, de manera que siempre pueda saberse quién extendió el resguardo, cuándo, de qué fecha a qué fecha, cuántos días equivalen, sobre qué activos y por qué.
 
 ### Diseño UX/UI
 
 La acción vive en el **bloque "Resguardo" de la pantalla del activo** (RF-06), que solo se muestra cuando el activo está en estatus **Resguardo en Sitio**; por lo tanto, la acción hereda esa misma condición de visibilidad. Además, solo se muestra a los usuarios que tienen el permiso de extensión definido en RN-5.13; para el resto, el bloque se presenta en modo de consulta y la acción no aparece. Al ejecutarla, el sistema presenta un diálogo que muestra el colaborador dado de baja, la fecha de fin de vigencia vigente de su resguardo, los días restantes y **la lista de activos que se verán afectados**, y solicita:
 
-- **Días adicionales de vigencia** (obligatorio, número entero mayor a cero).
+- **Nueva fecha de fin de vigencia** (obligatoria, se elige en un **calendario**).
 - **Motivo de la extensión** (obligatorio, texto libre).
 
-Conforme el usuario captura los días, el diálogo muestra la **nueva fecha de fin de vigencia resultante**. El diálogo advierte explícitamente que la extensión aplica a todos los activos listados y requiere confirmación antes de aplicar el cambio.
+El calendario presenta **deshabilitadas** las fechas que no puede tomar la nueva vigencia —las anteriores o iguales a la fecha de fin de vigencia vigente y las anteriores al día actual—, de modo que el usuario no pueda seleccionarlas; si la fecha llega por captura directa en lugar de por el calendario, el sistema la rechaza con el mismo criterio e indica cuál es la fecha mínima permitida. Conforme el usuario selecciona la fecha, el diálogo muestra los **días equivalentes** que agrega respecto de la vigencia actual. El diálogo advierte explícitamente que la extensión aplica a todos los activos listados y requiere confirmación antes de aplicar el cambio.
 
 ### Información / atributos
 
@@ -861,40 +908,40 @@ Conforme el usuario captura los días, el diálogo muestra la **nueva fecha de f
 | Colaborador dado de baja | Sí | Titular del resguardo; determina el conjunto de activos que la extensión afecta. Dato informativo, no se captura. |
 | Fecha de fin de vigencia vigente | Sí | La más próxima entre los activos en resguardo del colaborador. Dato informativo que se muestra antes de extender. |
 | Activos afectados | Sí | Lista de los activos del colaborador en estatus Resguardo en Sitio sobre los que se aplicará la nueva fecha. Dato calculado, no se captura. |
-| Días adicionales de vigencia | Sí | Número entero mayor a cero que se suma a la fecha de fin de vigencia vigente del resguardo. |
-| Nueva fecha de fin de vigencia resultante | Sí | Dato calculado que el sistema muestra antes de confirmar; no se captura. |
+| Nueva fecha de fin de vigencia | Sí | Fecha que el usuario selecciona en el calendario. Deberá ser posterior a la fecha de fin de vigencia vigente del resguardo —y a la más lejana registrada entre los activos del colaborador— y posterior a la fecha del servidor. |
+| Días equivalentes agregados | Sí | Diferencia en días entre la fecha seleccionada y la fecha de fin de vigencia vigente. Dato calculado que el sistema muestra antes de confirmar y registra en la bitácora; no se captura. |
 | Motivo de la extensión | Sí | Texto libre que justifica por qué se conservan los equipos más tiempo en sitio. |
 | Usuario que extiende | Sí | Se toma del usuario autenticado; no se captura. |
 | Fecha y hora de la extensión | Sí | Se toma del servidor; no se captura. |
 
 ### Operaciones
 
-- Agregar días de vigencia adicionales al resguardo de un colaborador.
+- Extender la vigencia del resguardo de un colaborador seleccionando en el calendario una nueva fecha de fin de vigencia.
 - Consultar el historial de extensiones desde el bloque "Resguardo" y desde la bitácora de cada activo.
 
 ---
 
 ## HU-5.1 — Extensión de la vigencia del resguardo
 
-Como coordinador de Cómputo, quiero agregar días de vigencia al resguardo de un colaborador capturando cuántos días y por qué, para conservar sus equipos en sitio cuando hay una contratación en curso, sin que el sistema los mande a recolección antes de tiempo.
+Como coordinador de Cómputo, quiero extender la vigencia del resguardo de un colaborador seleccionando en un calendario la nueva fecha de fin de vigencia y capturando el motivo, para conservar sus equipos en sitio cuando hay una contratación en curso, sin que el sistema los mande a recolección antes de tiempo.
 
 ### Reglas de negocio
 
 **RN-5.1** La acción de extender solo estará disponible sobre activos cuyo estatus vigente sea **Resguardo en Sitio**, desde el bloque "Resguardo" definido en RF-06.
 
-**RN-5.2** Los días adicionales de vigencia deberán ser un número entero mayor a cero; el sistema rechazará cualquier otro valor. La nueva fecha de fin de vigencia se calculará sumando esos días a la fecha de fin de vigencia vigente del resguardo del colaborador y, si el resultado no es posterior a la fecha del servidor —caso que ocurre cuando la vigencia ya venció y los días agregados no alcanzan a superar el día actual—, el sistema rechazará la extensión e indicará cuántos días se requieren como mínimo.
+**RN-5.2** La nueva fecha de fin de vigencia deberá **seleccionarse en un calendario** y será obligatoria. El sistema únicamente aceptará fechas **posteriores a la fecha de fin de vigencia vigente** del resguardo del colaborador —la que resultó de los días configurados en la variable de sistema de RF-02 o de la última extensión aplicada— y **posteriores a la fecha del servidor**. Deberá rechazar cualquier fecha anterior o igual a esas, incluidas las del pasado, e informar cuál es la fecha mínima permitida. Las fechas no permitidas deberán presentarse deshabilitadas en el calendario, y la validación deberá aplicarse también en el servidor, de modo que una fecha enviada por otra vía se rechace igual.
 
 **RN-5.3** El motivo de la extensión será obligatorio; sin motivo capturado la extensión no podrá aplicarse.
 
 **RN-5.4** La extensión no requerirá autorización de un tercero ni generará ticket alguno: se aplica en el momento en que el usuario facultado la confirma.
 
-**RN-5.5** La extensión se aplicará a **todos los activos en estatus Resguardo en Sitio del colaborador dado de baja** titular del activo desde el que se ejecuta la acción, no únicamente a ese activo. El sistema sobrescribe en todos ellos la fecha de fin de vigencia con la nueva fecha resultante, de modo que al terminar la operación todos comparten la misma fecha.
+**RN-5.5** La extensión se aplicará a **todos los activos en estatus Resguardo en Sitio del colaborador dado de baja** titular del activo desde el que se ejecuta la acción, no únicamente a ese activo. El sistema escribe en todos ellos la fecha seleccionada, de modo que al terminar la operación todos comparten la misma fecha de fin de vigencia.
 
-**RN-5.6** La **fecha de fin de vigencia del resguardo del colaborador** será la más próxima entre las registradas en sus activos en resguardo, que es la que detona el ticket conforme a RN-4.4. Es sobre esa fecha, y no sobre la del activo desde el que se abre el diálogo, que se suman los días adicionales.
+**RN-5.6** La **fecha de fin de vigencia del resguardo del colaborador** será la más próxima entre las registradas en sus activos en resguardo, que es la que detona el ticket conforme a RN-4.4 y la que el diálogo presenta como vigente. Cuando los activos conserven fechas distintas, la **fecha mínima que el calendario habilitará** será el día siguiente a la más lejana de ellas, para que la nueva fecha no acorte la vigencia de ningún activo; cuando todos comparten la misma fecha, ese mínimo coincide con la fecha vigente del resguardo.
 
-**RN-5.7** Antes de confirmar, el sistema deberá mostrar al usuario el colaborador titular del resguardo y la lista de activos que la extensión afectará, junto con la nueva fecha resultante.
+**RN-5.7** Antes de confirmar, el sistema deberá mostrar al usuario el colaborador titular del resguardo y la lista de activos que la extensión afectará, junto con la fecha de fin de vigencia vigente, la nueva fecha seleccionada y los días equivalentes que agrega.
 
-**RN-5.8** Un resguardo podrá extenderse más de una vez; cada extensión parte de la fecha de fin de vigencia vigente en ese momento y se registra de forma independiente.
+**RN-5.8** Un resguardo podrá extenderse más de una vez; cada extensión toma como fecha mínima permitida la fecha de fin de vigencia vigente en ese momento y se registra de forma independiente.
 
 **RN-5.9** La extensión **sobrescribe la fecha de fin de vigencia registrada en cada activo**; no crea una fecha paralela. A partir de ese momento, esa es la única fecha que gobierna la evaluación de vencimiento de RF-04.
 
@@ -902,7 +949,7 @@ Como coordinador de Cómputo, quiero agregar días de vigencia al resguardo de u
 
 **RN-5.11** Si ya existe un ticket vigente de "Recolección por Resguardo" para el colaborador, la extensión no estará disponible: primero deberá cancelarse ese ticket. El sistema informará al usuario esta condición.
 
-**RN-5.12** Cada extensión deberá registrarse en la bitácora de **cada activo afectado**, indicando los días adicionales agregados, la fecha de fin de vigencia anterior de ese activo, la nueva fecha resultante, el motivo capturado, el usuario que la aplicó, la fecha y hora del cambio y la cantidad de activos que abarcó la operación.
+**RN-5.12** Cada extensión deberá registrarse en la bitácora de **cada activo afectado**, indicando la fecha de fin de vigencia anterior de ese activo, la nueva fecha seleccionada, los días equivalentes que se agregaron, el motivo capturado, el usuario que la aplicó, la fecha y hora del cambio y la cantidad de activos que abarcó la operación.
 
 **RN-5.13** La acción de extender la vigencia estará protegida por un **permiso propio y administrable**, independiente de los permisos de consulta y edición del activo de cómputo: contar con estos últimos no habilita por sí solo la extensión. Únicamente el personal al que se le haya otorgado ese permiso podrá ejecutar la acción; para el resto, no se muestra en el bloque "Resguardo" ni puede ejecutarse por otra vía. El permiso se asigna desde la administración de roles y permisos del sistema, sin requerir despliegue de código, y su verificación se realiza en el servidor en cada ejecución, no solo en la interfaz.
 
@@ -912,48 +959,48 @@ Como coordinador de Cómputo, quiero agregar días de vigencia al resguardo de u
 
 **CA-5.1.1 — Extensión exitosa sobre todos los activos del colaborador**
 Dado un colaborador con tres activos en estatus Resguardo en Sitio y fecha de fin de vigencia el 16 de septiembre
-Cuando el usuario facultado abre la acción desde uno de ellos, captura 14 días adicionales, escribe el motivo y confirma
-Entonces el sistema aplica la extensión a los tres activos, la fecha de fin de vigencia de todos pasa a ser el 30 de septiembre y el cambio queda registrado en la bitácora de cada uno con los días agregados y el motivo.
+Cuando el usuario facultado abre la acción desde uno de ellos, selecciona el 30 de septiembre en el calendario, escribe el motivo y confirma
+Entonces el sistema aplica la extensión a los tres activos, la fecha de fin de vigencia de todos pasa a ser el 30 de septiembre y el cambio queda registrado en la bitácora de cada uno con la fecha anterior, la nueva fecha, los 14 días equivalentes y el motivo.
 
 **CA-5.1.2 — Vista previa del alcance de la extensión**
 Dado un colaborador con tres activos en resguardo
-Cuando el usuario facultado abre la acción de agregar días de vigencia desde uno de ellos
-Entonces el diálogo muestra el colaborador titular del resguardo, la fecha de fin de vigencia vigente, los días restantes y la lista de los tres activos que la extensión afectará.
+Cuando el usuario facultado abre la acción de extender la vigencia desde uno de ellos
+Entonces el diálogo muestra el colaborador titular del resguardo, la fecha de fin de vigencia vigente, los días restantes, la lista de los tres activos que la extensión afectará y el calendario con las fechas no permitidas deshabilitadas.
 
-**CA-5.1.3 — La extensión parte de la fecha más próxima del colaborador**
+**CA-5.1.3 — Fecha mínima cuando los activos tienen fechas distintas**
 Dado un colaborador con dos activos en resguardo, uno con fecha de fin de vigencia el 16 de septiembre y otro el 20 de septiembre
-Cuando el usuario captura 14 días adicionales desde el activo que vence el 20 de septiembre y confirma
-Entonces ambos activos quedan con fecha de fin de vigencia del 30 de septiembre, calculada sobre el 16 de septiembre por ser la más próxima.
+Cuando el usuario abre la acción desde cualquiera de los dos
+Entonces el calendario no permite seleccionar fechas anteriores o iguales al 20 de septiembre —la más lejana de las dos, para no acortar la vigencia de ese activo—, y al seleccionar el 30 de septiembre y confirmar ambos activos quedan con esa fecha.
 
 **CA-5.1.4 — Visibilidad de la acción por estatus**
 Dado un activo cuyo estatus vigente no es Resguardo en Sitio
 Cuando el usuario consulta el activo
-Entonces el bloque "Resguardo" no se muestra y, con él, tampoco la acción de agregar días de vigencia.
+Entonces el bloque "Resguardo" no se muestra y, con él, tampoco la acción de extender la vigencia.
 
 **CA-5.1.5 — Motivo obligatorio**
-Dado que el usuario captura los días adicionales sin escribir el motivo
+Dado que el usuario seleccionó la nueva fecha de fin de vigencia sin escribir el motivo
 Cuando intenta confirmar la extensión
 Entonces el sistema no permite continuar y solicita capturar el motivo.
 
-**CA-5.1.6 — Validación de días inválidos**
-Dado un resguardo vigente
-Cuando el usuario captura cero, un número negativo o un valor no numérico como días adicionales e intenta confirmar
-Entonces el sistema impide la extensión e informa que los días adicionales deben ser un número entero mayor a cero.
+**CA-5.1.6 — Fecha anterior o igual a la vigencia actual**
+Dado un resguardo cuya fecha de fin de vigencia es el 16 de septiembre y la fecha del servidor es el 10 de septiembre
+Cuando el usuario intenta seleccionar el 16 de septiembre, una fecha anterior a esa o dejar la fecha vacía
+Entonces el calendario presenta esas fechas deshabilitadas y, si la fecha llega por otra vía, el sistema impide la extensión e informa que la nueva fecha debe ser posterior al 16 de septiembre.
 
-**CA-5.1.7 — Días insuficientes sobre una vigencia ya vencida**
+**CA-5.1.7 — Fecha en el pasado sobre una vigencia ya vencida**
 Dado un colaborador cuya fecha de fin de vigencia fue el 10 de septiembre y la fecha del servidor es el 20 de septiembre
-Cuando el usuario captura 5 días adicionales e intenta confirmar
-Entonces el sistema impide la extensión e informa que el resultado quedaría en el pasado, indicando el mínimo de días requerido para superar el día actual.
+Cuando el usuario intenta seleccionar el 15 de septiembre
+Entonces el sistema impide la extensión e informa que la nueva fecha debe ser posterior al día actual, siendo el 21 de septiembre la mínima permitida.
 
-**CA-5.1.8 — Vista previa de la nueva fecha y confirmación**
+**CA-5.1.8 — Días equivalentes y confirmación**
 Dado un resguardo con fecha de fin de vigencia el 16 de septiembre
-Cuando el usuario captura 14 días adicionales
-Entonces el diálogo muestra el 30 de septiembre como nueva fecha de fin de vigencia resultante, y las fechas de los activos no se modifican hasta que el usuario confirme explícitamente la extensión.
+Cuando el usuario selecciona el 30 de septiembre en el calendario
+Entonces el diálogo muestra que la extensión agrega 14 días, y las fechas de los activos no se modifican hasta que el usuario confirme explícitamente la extensión.
 
 **CA-5.1.9 — Extensiones sucesivas**
 Dado un resguardo cuya fecha de fin de vigencia ya fue extendida al 30 de septiembre
-Cuando el usuario agrega 15 días adicionales capturando el motivo
-Entonces la fecha de fin de vigencia de todos los activos del colaborador pasa a ser el 15 de octubre y la bitácora de cada uno conserva ambos registros, con sus días agregados, su fecha anterior, su nueva fecha y su motivo.
+Cuando el usuario selecciona el 15 de octubre capturando el motivo
+Entonces la fecha de fin de vigencia de todos los activos del colaborador pasa a ser el 15 de octubre, el calendario había impedido seleccionar cualquier fecha igual o anterior al 30 de septiembre y la bitácora de cada activo conserva ambos registros, con su fecha anterior, su nueva fecha, sus días equivalentes y su motivo.
 
 **CA-5.1.10 — Extensión bloqueada por ticket vigente**
 Dado un colaborador que ya tiene un ticket vigente de "Recolección por Resguardo"
@@ -978,12 +1025,12 @@ Entonces cada uno conserva su fecha de resguardo del 1 de septiembre y su estatu
 **CA-5.1.14 — Consulta del historial de extensiones**
 Dado un resguardo con dos extensiones aplicadas
 Cuando un usuario consulta la bitácora de cualquiera de los activos afectados
-Entonces visualiza ambas extensiones con la fecha anterior, la nueva fecha, el motivo, el usuario que las aplicó, la fecha y hora del cambio y la cantidad de activos que abarcó cada operación.
+Entonces visualiza ambas extensiones con la fecha anterior, la nueva fecha, los días equivalentes, el motivo, el usuario que las aplicó, la fecha y hora del cambio y la cantidad de activos que abarcó cada operación.
 
 **CA-5.1.15 — El permiso de extensión es independiente del de consulta del activo**
 Dado un usuario con permiso para consultar y editar activos de cómputo pero sin el permiso de extensión del resguardo
 Cuando consulta un activo en estatus Resguardo en Sitio
-Entonces visualiza el bloque "Resguardo" completo, pero la acción "Agregar días de vigencia" no se muestra ni puede ejecutarse.
+Entonces visualiza el bloque "Resguardo" completo, pero la acción "Extender vigencia" no se muestra ni puede ejecutarse.
 
 ---
 
@@ -1007,7 +1054,7 @@ Reunir en un solo lugar del activo toda la información de su resguardo —quié
 
 ## Descripción
 
-El sistema deberá incorporar en la pantalla del **activo de cómputo** un bloque llamado **"Resguardo"**, que se muestre **únicamente cuando el estatus vigente del activo sea Resguardo en Sitio** y que presente, en modo de solo lectura, la información del resguardo vigente. Desde este bloque se ejecuta además la acción de agregar días de vigencia descrita en RF-05.
+El sistema deberá incorporar en la pantalla del **activo de cómputo** un bloque llamado **"Resguardo"**, que se muestre **únicamente cuando el estatus vigente del activo sea Resguardo en Sitio** y que presente, en modo de solo lectura, la información del resguardo vigente. Desde este bloque se ejecuta además la acción de extender la vigencia descrita en RF-05.
 
 Hoy esa información existe pero está repartida: el custodio y su centro de trabajo viven en el diagnóstico del ticket que originó el resguardo, la autorización vive en el registro de autorización, y las fechas viven en el activo. Reconstruirla obliga a abrir tres pantallas distintas. Este bloque la concentra.
 
@@ -1015,7 +1062,7 @@ Hoy esa información existe pero está repartida: el custodio y su centro de tra
 
 El bloque se ubica en el detalle del activo de cómputo, junto a los demás bloques de información del equipo. Su visibilidad está condicionada al estatus **Resguardo en Sitio**: cuando el activo no está en resguardo, el bloque no se muestra en absoluto, no aparece vacío ni deshabilitado.
 
-Toda la información es de **consulta**; el bloque no permite editar ningún dato directamente. La única acción disponible es **"Agregar días de vigencia"** (RF-05), sujeta a los permisos definidos en RN-5.13.
+Toda la información es de **consulta**; el bloque no permite editar ningún dato directamente. La única acción disponible es **"Extender vigencia"** (RF-05), que abre el calendario para seleccionar la nueva fecha de fin de vigencia, sujeta a los permisos definidos en RN-5.13.
 
 Cuando la vigencia ya venció, el bloque deberá señalarlo de forma visible junto a la fecha de fin, indicando los días transcurridos desde el vencimiento.
 
@@ -1045,7 +1092,7 @@ Información complementaria del bloque:
 ### Operaciones
 
 - Consultar la información del resguardo vigente.
-- Agregar días de vigencia adicionales (RF-05).
+- Extender la vigencia del resguardo seleccionando una nueva fecha de fin de vigencia (RF-05).
 
 ---
 
@@ -1073,7 +1120,7 @@ Como coordinador de Cómputo, quiero ver en el propio activo quién lo tiene res
 
 **RN-6.9** Cuando el proceso automático de RF-04 ya generó el ticket de "Recolección por Resguardo" del colaborador, el bloque mostrará su folio.
 
-**RN-6.10** La acción "Agregar días de vigencia" solo se mostrará a los usuarios con el permiso definido en RN-5.13; para el resto, el bloque se muestra en modo de consulta.
+**RN-6.10** La acción "Extender vigencia" solo se mostrará a los usuarios con el permiso definido en RN-5.13; para el resto, el bloque se muestra en modo de consulta.
 
 **RN-6.11** Cuando el activo sale del resguardo —por reasignación, recolección, baja o cancelación— el bloque deja de mostrarse, en consistencia con la limpieza de fechas establecida en RN-3.4. La información del resguardo concluido permanece consultable en la bitácora del activo.
 
@@ -1114,17 +1161,17 @@ Entonces el bloque se muestra con la leyenda de dato no disponible en el campo d
 **CA-6.1.7 — Solo lectura**
 Dado que el usuario consulta el bloque "Resguardo"
 Cuando intenta modificar cualquiera de los datos mostrados
-Entonces el sistema no lo permite; la única acción disponible es agregar días de vigencia.
+Entonces el sistema no lo permite; la única acción disponible es extender la vigencia.
 
 **CA-6.1.8 — Acceso a la extensión desde el bloque**
 Dado un usuario con permiso para extender el resguardo
 Cuando consulta el bloque "Resguardo" de un activo en resguardo
-Entonces dispone de la acción "Agregar días de vigencia" descrita en RF-05.
+Entonces dispone de la acción "Extender vigencia" descrita en RF-05.
 
 **CA-6.1.9 — Bloque en modo consulta sin permiso**
 Dado un usuario sin permiso para extender el resguardo
 Cuando consulta el bloque "Resguardo"
-Entonces visualiza toda la información pero la acción "Agregar días de vigencia" no se muestra.
+Entonces visualiza toda la información pero la acción "Extender vigencia" no se muestra.
 
 **CA-6.1.10 — Historial de extensiones**
 Dado un activo cuyo resguardo fue extendido dos veces
@@ -1294,17 +1341,17 @@ Esta columna es un dato derivado, no una fuente: no almacena nada ni modifica el
 | RNF-009 | Zona horaria | Todos los cálculos de días y fechas deberán realizarse con la fecha del servidor y la zona horaria configurada del sistema, comparando fechas sin considerar la hora. |
 | RNF-010 | Extensibilidad | Agregar o retirar una revisión que deba generarse al registrar una baja de personal —incluidas las que deban detonarse marcadas como "No requiere validación"— deberá resolverse por configuración del catálogo "Datos Personales", sin desarrollo ni liberación de código. |
 | RNF-011 | Compatibilidad | La incorporación del campo "No requiere validación" no deberá alterar el comportamiento de los subtickets ya configurados: el 100 % de los registros existentes al momento de la liberación deberá quedar **sin marcar**, conservando la validación tanto al generar como al cerrar. |
-| RNF-012 | Confiabilidad de la generación | El 100 % de las bajas de personal registradas a partir de la liberación deberá producir un subticket por cada registro activo y marcado como "No requiere validación" —tres al arranque—, sin importar la completitud del expediente del colaborador. Toda ausencia deberá quedar registrada como error en la bitácora técnica y reintentarse en la siguiente corrida. |
+| RNF-012 | Confiabilidad de la generación | El 100 % de las bajas de personal registradas a partir de la liberación deberá producir un subticket por cada registro activo y marcado como "No requiere validación" —dos al arranque—, sin importar la completitud del expediente del colaborador. Toda ausencia deberá quedar registrada como error en la bitácora técnica y reintentarse en la siguiente corrida. |
 
 ## Matriz de trazabilidad
 
 | Objetivo de negocio | RF | HU | Reglas de negocio | Criterios de aceptación |
 |---------------------|----|----|-------------------|--------------------------|
-| Que las revisiones de telefonía, reserva de IP y antivirus, y HostName se detonen solas al registrar una baja, sin desarrollo y sin depender de la información capturada | RF-01 | HU-1.1 | RN-1.1 a RN-1.11 | CA-1.1.1 a CA-1.1.9 |
+| Que las revisiones de telefonía y reserva de IP, y la de remoción del monitoreo de antivirus, se detonen solas al registrar una baja, sin desarrollo y sin depender de la información capturada | RF-01 | HU-1.1 | RN-1.1 a RN-1.11 | CA-1.1.1 a CA-1.1.9 |
 | Que un subticket cuya atención se ejecuta fuera del sistema se abra siempre y pueda cerrarse sin quedar abierto indefinidamente | RF-01 | HU-1.2 | RN-1.12 a RN-1.20 | CA-1.2.1 a CA-1.2.8 |
 | Que el negocio ajuste la política de resguardo sin depender de desarrollo | RF-02 | HU-2.1 | RN-2.1 a RN-2.8 | CA-2.1.1 a CA-2.1.6 |
 | Que todo resguardo tenga desde el primer día un plazo definido y consultable | RF-03 | HU-3.1 | RN-3.1 a RN-3.6 | CA-3.1.1 a CA-3.1.6 |
-| Garantizar la recuperación del activo cuando el resguardo vence, sin depender de la memoria de una persona | RF-04 | HU-4.1 | RN-4.1 a RN-4.17 | CA-4.1.1 a CA-4.1.19 |
+| Garantizar la recuperación del activo cuando el resguardo vence, sin depender de la memoria de una persona | RF-04 | HU-4.1 | RN-4.1 a RN-4.18 | CA-4.1.1 a CA-4.1.19 |
 | Conservar los equipos más tiempo en sitio cuando el negocio lo justifica, sin perder el control automático | RF-05 | HU-5.1 | RN-5.1 a RN-5.14 | CA-5.1.1 a CA-5.1.15 |
 | Entender la situación de un equipo resguardado sin recorrer varias pantallas | RF-06 | HU-6.1 | RN-6.1 a RN-6.12 | CA-6.1.1 a CA-6.1.14 |
 | Recolectar en una sola coordinación todos los equipos de un colaborador dado de baja | RF-04, RF-05 | HU-4.1, HU-5.1 | RN-4.3, RN-4.4, RN-5.5 | CA-4.1.1, CA-4.1.4, CA-5.1.1 |
@@ -1330,7 +1377,7 @@ Esta columna es un dato derivado, no una fuente: no almacena nada ni modifica el
 
 **SUP-07** La extensión de la fecha de fin de vigencia no requiere flujo de autorización porque la ejecuta un rol de confianza del área de Cómputo; el control se basa en un permiso propio, el motivo obligatorio y la bitácora, no en una cadena de aprobaciones.
 
-**SUP-08** No se define un límite máximo de días por extensión ni un número máximo de extensiones por activo; el negocio confirmó que por ahora no se requiere una figura formal de prórroga.
+**SUP-08** No se define una fecha máxima que el calendario pueda alcanzar ni un número máximo de extensiones por activo; la única restricción es la fecha mínima de RN-5.2. El negocio confirmó que por ahora no se requiere una figura formal de prórroga.
 
 **SUP-09** Los activos que al momento de la puesta en marcha ya estén en resguardo con el periodo de vigencia vencido no se procesan: su recolección se gestiona de forma manual con la funcionalidad ya existente. La fecha de corte se define como la fecha de liberación de esta funcionalidad.
 
@@ -1348,17 +1395,25 @@ Esta columna es un dato derivado, no una fuente: no almacena nada ni modifica el
 
 **SUP-16** El mecanismo que genera el ticket principal de baja de personal y un subticket por cada registro activo del catálogo "Datos Personales" ya opera en producción. RF-01 agrega registros de configuración y el campo "No requiere validación"; del mecanismo solo modifica el punto en que decide si el subticket procede, para que respete esa marca. No cambia la periodicidad con la que se ejecuta.
 
-**SUP-17** Los departamentos **Coordinación de Redes y Telecomunicaciones** y **Coordinación de Servidores y Bases de Datos** ya existen, están activos y tienen responsable asignado. Si alguno no cumpliera esas condiciones, deberá corregirse antes de dar de alta los registros, conforme a RN-1.2.
+**SUP-17** El departamento **Coordinación de Redes y Telecomunicaciones**, al que se dirigen los dos registros nuevos, ya existe, está activo y tiene responsable asignado. Si no cumpliera esas condiciones, deberá corregirse antes de dar de alta los registros, conforme a RN-1.2. El subticket de baja de Directorio Activo conserva el departamento que tiene configurado hoy: RF-01 no lo cambia.
 
-**SUP-18** El **Hostname** y el **Directorio Activo** que deben llevar dos de los tres subtickets ya existen en el expediente del colaborador y se toman de ahí cuando están capturados; RF-01 no crea campos nuevos en el expediente y, al estar esos registros marcados como "No requiere validación", tampoco exige que estén capturados para generar el subticket.
+**SUP-18** Los datos que llevan los dos subtickets nuevos ya existen en el expediente del colaborador y se toman de ahí cuando están capturados; RF-01 no crea campos nuevos en el expediente y, al estar los dos registros marcados como "No requiere validación", tampoco exige que estén capturados para generar el subticket. Los datos de cada registro provienen de **un solo apartado**, que es lo que el catálogo admite: la Dirección IP y el HostName se toman del apartado de direcciones IP del activo de cómputo del colaborador —donde el HostName corresponde al nombre de red del equipo—, y el Usuario de Directorio Activo y el Host Name se toman del apartado de Directorio Activo. Esa correspondencia debe confirmarse con el equipo de desarrollo antes de capturar los registros, porque de ella depende que ambos datos puedan transcribirse sin desarrollo.
 
-**SUP-19** Los tres subtickets se atienden con el flujo de tickets internos ya existente: no requieren estatus, pantallas ni notificaciones nuevas. El de baja de la reserva de IP y remoción del monitoreo de antivirus cubre dos acciones en un solo ticket, y su cierre da por atendidas ambas: el sistema no lleva control separado de cada una, porque las ejecuta la misma persona sobre el mismo equipo.
+**SUP-19** Los dos subtickets nuevos se atienden con el flujo de tickets internos ya existente: no requieren estatus, pantallas ni notificaciones nuevas. El de revisión de activos de telefonía y reserva de la dirección IP cubre dos acciones en un solo ticket, y su cierre da por atendidas ambas: el sistema no lleva control separado de cada una, porque las ejecuta la misma persona sobre el mismo equipo. La desactivación del HostName tampoco requiere ticket propio: se atiende con el subticket de baja de los directorios activos, que transcribe el nombre del equipo del colaborador y también opera con el flujo vigente.
 
 **SUP-20** La marca "No requiere validación" se define como un dato del **registro de configuración** y no del subticket generado; por eso ponerla o quitarla alcanza también a los subtickets ya abiertos y a las bajas siguientes (RN-1.17). Si el negocio necesitara congelar el valor al momento de generar el subticket, deberá plantearse como un cambio posterior.
 
 **SUP-21** La marca "No requiere validación" gobierna con un solo valor los dos momentos en que hoy se aplica la validación —la generación y el cierre—, porque en las revisiones que se resuelven fuera de Business Suite ambas condiciones sobran por la misma razón. Si el negocio identificara después un caso que deba generarse siempre pero sí validar al cerrar, o al revés, deberá plantearse como un cambio posterior que separe el campo en dos.
 
-**SUP-22** Un registro marcado como "No requiere validación" genera su subticket en **toda** baja de personal que llegue por la sincronización de nómina, sin distinguir el motivo de la baja, el centro de trabajo, el departamento ni si el colaborador tenía o no equipo asignado. El negocio confirmó que ese es el comportamiento deseado para las tres revisiones del arranque: prefiere un subticket que se cierre sin hallazgos a una revisión que nunca se abra.
+**SUP-22** Un registro marcado como "No requiere validación" genera su subticket en **toda** baja de personal que llegue por la sincronización de nómina, sin distinguir el motivo de la baja, el centro de trabajo, el departamento ni si el colaborador tenía o no equipo asignado. El negocio confirmó que ese es el comportamiento deseado para las dos revisiones del arranque: prefiere un subticket que se cierre sin hallazgos a una revisión que nunca se abra.
+
+**SUP-23** La desactivación del HostName se atiende junto con la baja de los directorios activos del colaborador, por lo que no se configura como revisión propia: del subticket que ya se detona para esa baja solo se ajusta el asunto, para que declare las dos acciones y transcriba el nombre del equipo del colaborador además de su usuario de Directorio Activo. Ese registro conserva su departamento, su apartado y su comportamiento de validación actuales; con ello, la desactivación del HostName queda condicionada a que el colaborador tenga registro de Directorio Activo en su expediente, conforme a RGO-13.
+
+**SUP-24** El subticket se asigna al **responsable del departamento** configurado en el registro. Ese responsable es un dato administrable del catálogo de departamentos, de modo que dirigir cada subticket a Víctor Hugo Gómez Aguiluz, a Cesar Rafael Figueroa López y a Juan Carlos Segovia Espinoza se resuelve por configuración, sin desarrollo: basta que el departamento que se capture en cada registro tenga configurada a esa persona como responsable.
+
+**SUP-25** El bloque **LISTADO** del asunto no se captura renglón por renglón: el sistema lo arma al generar el subticket con los datos configurados en "datos que se transcriben al subticket", repitiendo el renglón por cada registro que encuentre en el apartado del expediente —por eso el subticket de baja de Directorio Activo puede mostrar varios nombres de equipo—. La etiqueta de cada renglón es el nombre del dato configurado, de modo que los datos deberán capturarse con el nombre exacto con el que existen en el apartado para que el listado se lea como lo definió el negocio.
+
+**SUP-26** El detalle del ticket de recolección puede contener activos que ya no están en estatus Resguardo en Sitio —porque se recolectaron o se reasignaron antes de que el plazo venciera—, ya que su propósito es mostrar el inventario completo del colaborador conforme a RN-4.4. Esos renglones son informativos: la recolección física se ejecuta sobre los activos que siguen en resguardo, y el ticket no cambia el estatus de ninguno (RN-4.10). Debe validarse con el equipo de desarrollo que el detalle del ticket interno admita activos en cualquier estatus, del mismo modo que SUP-15 valida que admita varios activos.
 
 ## Dependencias
 
@@ -1378,7 +1433,7 @@ Esta columna es un dato derivado, no una fuente: no almacena nada ni modifica el
 
 **DEP-08** Catálogo "Datos Personales" operando y accesible al administrador del sistema, y proceso automático de tickets por baja de personal habilitado; de ellos depende por completo RF-01.
 
-**DEP-09** Departamentos Coordinación de Redes y Telecomunicaciones y Coordinación de Servidores y Bases de Datos activos y con responsable asignado, porque es a ese responsable a quien se asignan los subtickets.
+**DEP-09** Departamento Coordinación de Redes y Telecomunicaciones activo y con responsable asignado, porque es a ese responsable a quien se asignan los dos subtickets nuevos.
 
 **DEP-10** Ambiente de pruebas en el que sea posible simular una baja de personal vía nómina y disparar a demanda el proceso automático de tickets por baja, requisito para ejecutar los casos de prueba de RF-01 que dependen de esa generación.
 
@@ -1392,7 +1447,7 @@ Esta columna es un dato derivado, no una fuente: no almacena nada ni modifica el
 
 **RGO-04** Que el negocio reasigne el equipo físicamente pero no lo registre en el sistema, provocando un ticket de recolección de un equipo que ya está en uso. *Mitigación:* el bloque "Resguardo" del activo (RF-06) muestra la fecha de fin de vigencia y los días restantes, lo que permite detectar el caso antes del vencimiento; si el ticket ya se generó, basta cancelarlo y registrar la reasignación, conforme a RN-4.7 y RN-5.11.
 
-**RGO-05** Al no existir límite de extensiones, un activo podría permanecer indefinidamente en resguardo mediante extensiones sucesivas, desvirtuando el propósito del periodo de vigencia. *Mitigación:* motivo obligatorio y bitácora de extensiones que permiten revisar el uso de la acción; si el negocio detecta abuso, puede incorporarse después un límite de días o de número de extensiones.
+**RGO-05** Al no existir una fecha máxima ni un límite de extensiones, un activo podría permanecer indefinidamente en resguardo mediante extensiones sucesivas, desvirtuando el propósito del periodo de vigencia. *Mitigación:* motivo obligatorio y bitácora de extensiones que permiten revisar el uso de la acción; si el negocio detecta abuso, puede incorporarse después una fecha máxima permitida en el calendario o un límite de número de extensiones.
 
 **RGO-06** Los resguardos históricos vencidos que quedan fuera del proceso por la fecha de corte podrían no recolectarse nunca si nadie los atiende manualmente. *Mitigación:* generar un listado de esos activos al momento de la puesta en marcha y acordar con el área de Cómputo su recolección o su regularización por la vía manual.
 
@@ -1402,11 +1457,13 @@ Esta columna es un dato derivado, no una fuente: no almacena nada ni modifica el
 
 **RGO-09** Marcar un registro como "No requiere validación" permite cerrar sus subtickets con el expediente sin depurar, lo que podría dejar información del colaborador dado de baja viva dentro del sistema. *Mitigación:* la marca se pone registro por registro, se reserva para las revisiones que se ejecutan fuera de Business Suite (RN-1.11), el campo nace sin marcar (RN-1.16) y solo el administrador puede cambiarlo, con registro en bitácora (RN-1.20).
 
-**RGO-10** Un departamento destino sin responsable asignado dejaría el subticket sin persona que lo atienda. *Mitigación:* la validación de RN-1.2 impide guardar la configuración en ese estado, y DEP-09 obliga a revisar los dos departamentos antes de dar de alta los registros.
+**RGO-10** Un departamento destino sin responsable asignado dejaría el subticket sin persona que lo atienda. *Mitigación:* la validación de RN-1.2 impide guardar la configuración en ese estado, y DEP-09 obliga a revisar el departamento destino antes de dar de alta los registros.
 
 **RGO-11** Al detonarse siempre, los subtickets de los registros marcados incrementan la carga de tickets por cada baja de personal en los departamentos destino, incluidos los casos en que no hay nada que revisar. *Mitigación:* el negocio asumió ese costo de forma explícita (SUP-22), porque prefiere un subticket que se cierre sin hallazgos a una revisión que nunca se abra; además esos subtickets se cierran sin validación (RN-1.14), de modo que uno sin hallazgos se cierra de inmediato, y el negocio puede dar de baja el registro para dejar de generarlo sin requerir desarrollo (RN-1.9).
 
 **RGO-12** Marcar por error como "No requiere validación" un registro cuya revisión sí se depura dentro de Business Suite haría que sus subtickets se cerraran sin depurar el apartado. *Mitigación:* el campo es visible como columna en el listado del catálogo, su cambio queda en bitácora (RN-1.20) y se corrige quitando la marca, lo que aplica de inmediato a los subtickets abiertos y a las bajas siguientes (RN-1.17).
+
+**RGO-13** La desactivación del HostName deja de tener subticket propio y viaja en el subticket ya existente de baja de los directorios activos, que **sí** valida información: si el colaborador no tiene registro de Directorio Activo en su expediente, ese subticket no se genera y la desactivación no llega a solicitarse. *Mitigación:* el nombre del equipo se captura en ese mismo apartado, de modo que un colaborador sin registro de Directorio Activo tampoco tiene HostName registrado; el asunto declara expresamente las dos acciones, de modo que el responsable sabe que ambas van incluidas; y si el negocio necesita que la desactivación se solicite en toda baja, se resuelve marcando ese registro como "No requiere validación" o dándolo de alta como registro propio, por configuración y sin desarrollo (RN-1.1, RN-1.12).
 
 ## Casos de prueba
 
@@ -1416,53 +1473,53 @@ Todas las fechas y cantidades que aparecen en los casos son las mismas que usan 
 
 ### Casos de prueba de RF-01 — Configuración de los subtickets automáticos por baja de personal
 
-**CP-001 — Alta del subticket de revisión de telefonía y directorio telefónico (camino feliz)**
-Verifica: CA-1.1.1 · RN-1.3, RN-1.6, RN-1.11
+**CP-001 — Alta del registro de revisión de activos de telefonía y baja de la reserva de IP (camino feliz)**
+Verifica: CA-1.1.1 · RN-1.3, RN-1.4, RN-1.5, RN-1.11
 Dado que el administrador ingresa al catálogo "Datos Personales"
-Cuando da de alta el registro de revisión de activos de telefonía y datos del directorio telefónico, con departamento Coordinación de Redes y Telecomunicaciones, con los datos del expediente de telefonía del colaborador como datos a transcribir y marcando "No requiere validación"
-Entonces el sistema guarda el registro en estatus Activo y lo muestra en el listado del catálogo con la marca puesta.
+Cuando da de alta un único registro para la revisión de activos de telefonía y la baja de la reserva de IP, con departamento Coordinación de Redes y Telecomunicaciones, con Dirección IP y HostName como datos a transcribir, con un mensaje que declara las dos acciones y marcando "No requiere validación"
+Entonces el sistema guarda un solo registro en estatus Activo con esos dos datos configurados y lo muestra en el listado del catálogo con la marca puesta.
 
-**CP-002 — Alta del subticket de baja de la reserva de IP y remoción del monitoreo de antivirus (camino feliz)**
-Verifica: CA-1.1.2 · RN-1.3, RN-1.4, RN-1.5, RN-1.11
+**CP-002 — Alta del registro de remoción del monitoreo de antivirus (camino feliz)**
+Verifica: CA-1.1.2 · RN-1.3, RN-1.5, RN-1.11
 Dado que el administrador ingresa al catálogo "Datos Personales"
-Cuando da de alta un único registro para la baja de la reserva de IP y la remoción del monitoreo de antivirus, con departamento Coordinación de Redes y Telecomunicaciones, con Hostname y Directorio Activo como datos a transcribir, con un mensaje que declara las dos acciones y marcando "No requiere validación"
-Entonces el sistema guarda un solo registro en estatus Activo con esos dos datos configurados y con la marca puesta.
+Cuando da de alta el registro de remoción del monitoreo de antivirus, con departamento Coordinación de Redes y Telecomunicaciones, con Usuario de Directorio Activo y Host Name como datos a transcribir y marcando "No requiere validación"
+Entonces el sistema guarda el registro en estatus Activo con esos dos datos configurados y con la marca puesta.
 
-**CP-003 — Un solo subticket para reserva de IP y antivirus (escenario alternativo)**
-Verifica: CA-1.1.2, CA-1.1.4 · RN-1.4
-Dado que el registro de baja de la reserva de IP y remoción del monitoreo de antivirus está activo y marcado
+**CP-003 — Un solo subticket para telefonía y reserva de IP (escenario alternativo)**
+Verifica: CA-1.1.1, CA-1.1.4 · RN-1.4
+Dado que el registro de revisión de activos de telefonía y baja de la reserva de IP está activo y marcado
 Cuando el proceso automático se ejecuta para una baja de personal
 Entonces se genera **un solo** subticket que declara las dos acciones en su mensaje, no dos subtickets separados, y su cierre da por atendidas ambas.
 
-**CP-004 — Alta del subticket de desactivación del HostName (camino feliz)**
-Verifica: CA-1.1.3 · RN-1.3, RN-1.5, RN-1.11
-Dado que el administrador ingresa al catálogo "Datos Personales"
-Cuando da de alta el registro de desactivación del HostName con departamento Coordinación de Servidores y Bases de Datos, con Hostname y Directorio Activo como datos a transcribir y marcando "No requiere validación"
-Entonces el sistema guarda el registro en estatus Activo y dirigido a Coordinación de Servidores y Bases de Datos, no a Coordinación de Redes y Telecomunicaciones.
+**CP-004 — Ajuste del subticket existente de baja de Directorio Activo (camino feliz)**
+Verifica: CA-1.1.3 · RN-1.6
+Dado el registro ya existente del catálogo que detona el subticket de baja de Directorio Activo
+Cuando el administrador ajusta su asunto al texto definido por el negocio, en el que se declaran la baja de los directorios activos y la desactivación del HostName, y se transcriben el nombre del equipo y el usuario de Directorio Activo, y guarda
+Entonces el sistema conserva el registro con su departamento, su apartado y su marca de validación actuales, no se crea ningún registro nuevo para la desactivación del HostName, y los subtickets que se generen a partir de ese registro nacen con ese asunto y con el listado de los equipos registrados al colaborador.
 
-**CP-005 — Generación de los tres subtickets al registrarse la baja (camino feliz)**
+**CP-005 — Generación de los dos subtickets nuevos al registrarse la baja (camino feliz)**
 Verifica: CA-1.1.4 · RN-1.8, RN-1.13
-Dado que los tres registros están activos y marcados como "No requiere validación", y un colaborador queda en estatus Cancelado por la sincronización de nómina
+Dado que los dos registros nuevos están activos y marcados como "No requiere validación", y un colaborador queda en estatus Cancelado por la sincronización de nómina
 Cuando el proceso automático de tickets por baja de personal se ejecuta
-Entonces se crea el ticket principal de la baja y exactamente tres subtickets colgados de él, dos asignados al responsable de Coordinación de Redes y Telecomunicaciones y uno al de Coordinación de Servidores y Bases de Datos, todos abiertos al mismo tiempo y sin que ninguno espere el cierre de otro.
+Entonces se crea el ticket principal de la baja y, colgados de él, exactamente dos subtickets a partir de esos registros —uno de telefonía y reserva de IP y uno de remoción de antivirus—, ambos asignados al responsable de Coordinación de Redes y Telecomunicaciones, abiertos al mismo tiempo, sin que ninguno espere el cierre de otro y sin afectar los subtickets de los demás registros del catálogo.
 
-**CP-006 — Datos del colaborador transcritos al subticket (camino feliz)**
-Verifica: CA-1.1.2, CA-1.1.4 · RN-1.5
-Dado un colaborador dado de baja cuyo expediente registra el Hostname y el Directorio Activo de su equipo
-Cuando el proceso automático genera el subticket de reserva de IP y antivirus y el de desactivación del HostName
-Entonces cada uno de los dos subtickets muestra en su cuerpo el nombre del colaborador, su RFC y el Hostname y el Directorio Activo registrados, sin que el responsable tenga que consultarlos en otra pantalla.
+**CP-006 — Datos del colaborador transcritos a cada subticket (camino feliz)**
+Verifica: CA-1.1.1, CA-1.1.2, CA-1.1.4 · RN-1.5
+Dado un colaborador dado de baja cuyo expediente registra la Dirección IP y el HostName de su equipo y su Usuario de Directorio Activo
+Cuando el proceso automático genera el subticket de telefonía y reserva de IP y el de remoción de antivirus
+Entonces el primero muestra en su cuerpo el nombre del colaborador, su RFC, la Dirección IP y el HostName, y el segundo el nombre, el RFC, el Usuario de Directorio Activo y el Host Name, sin que el responsable tenga que consultarlos en otra pantalla.
 
 **CP-007 — Alta de una revisión nueva después de la puesta en marcha (extensibilidad)**
 Verifica: CA-1.1.5 · RN-1.1, RN-1.11
-Dado un ambiente con la funcionalidad ya liberada y los tres registros del arranque operando
-Cuando el administrador da de alta un cuarto registro para una revisión distinta, con su departamento destino y marcando "No requiere validación"
-Entonces la siguiente baja de personal genera también ese cuarto subticket, sin que haya mediado desarrollo ni liberación de código.
+Dado un ambiente con la funcionalidad ya liberada y los dos registros del arranque operando
+Cuando el administrador da de alta un tercer registro para una revisión distinta, con su departamento destino y marcando "No requiere validación"
+Entonces la siguiente baja de personal genera también ese subticket, sin que haya mediado desarrollo ni liberación de código.
 
 **CP-008 — Corridas sucesivas sin subtickets duplicados (idempotencia)**
 Verifica: CA-1.1.6 · RN-1.7, RN-1.18
-Dado que los tres subtickets ya se generaron para la baja de un colaborador y siguen en proceso
+Dado que los dos subtickets nuevos ya se generaron para la baja de un colaborador y siguen en proceso
 Cuando el proceso automático se ejecuta dos veces más
-Entonces no se crean subtickets adicionales para esa baja y siguen existiendo exactamente tres, aunque los tres registros estén marcados.
+Entonces no se crean subtickets adicionales para esa baja y siguen existiendo exactamente dos, aunque los dos registros estén marcados.
 
 **CP-009 — Departamento destino inactivo (escenario de error)**
 Verifica: CA-1.1.7 · RN-1.2
@@ -1478,7 +1535,7 @@ Entonces el sistema impide el guardado e informa que el departamento debe contar
 
 **CP-011 — Registro sin datos a transcribir ni apartado configurado (validación)**
 Verifica: CA-1.1.2 · RN-1.5
-Dado que el administrador captura el registro de baja de la reserva de IP y remoción del monitoreo de antivirus sin indicar el apartado del expediente ni los datos a transcribir
+Dado que el administrador captura el registro de remoción del monitoreo de antivirus sin indicar el apartado del expediente ni los datos a transcribir
 Cuando intenta guardar
 Entonces el sistema impide el guardado e informa que esos datos son obligatorios, aunque el registro esté marcado como "No requiere validación".
 
@@ -1496,26 +1553,26 @@ Entonces al primero el sistema le impide el acceso o no le muestra la opción, y
 
 **CP-014 — Marcado de un registro como "No requiere validación" (camino feliz)**
 Verifica: CA-1.2.1 · RN-1.12
-Dado que el administrador edita el registro de baja de la reserva de IP y remoción del monitoreo de antivirus
+Dado que el administrador edita el registro de revisión de activos de telefonía y baja de la reserva de IP
 Cuando marca "No requiere validación" y guarda
 Entonces el sistema almacena la marca y el registro queda visible en el catálogo como marcado, tanto para generar como para cerrar.
 
 **CP-015 — Generación con el apartado vacío en un registro marcado (camino feliz)**
 Verifica: CA-1.2.2 · RN-1.13
-Dado un colaborador dado de baja cuyo expediente no tiene registrados el Hostname ni el Directorio Activo, y los registros de reserva de IP y antivirus y de HostName marcados
+Dado un colaborador dado de baja cuyo expediente no tiene registrados la Dirección IP, el HostName ni el Usuario de Directorio Activo, y los dos registros nuevos marcados
 Cuando el proceso automático se ejecuta
 Entonces los dos subtickets se generan de todos modos, y cada uno indica en su cuerpo que esos datos no están registrados en el expediente.
 
 **CP-016 — Generación con solo uno de los dos datos registrados (dato límite)**
 Verifica: CA-1.2.2 · RN-1.13
-Dado un colaborador dado de baja cuyo expediente registra el Hostname pero no el Directorio Activo
-Cuando el proceso automático genera los dos subtickets que llevan esos datos
-Entonces cada subticket muestra el Hostname registrado e indica que el Directorio Activo no está capturado, sin que la generación se detenga por el dato faltante.
+Dado un colaborador dado de baja cuyo expediente registra la Dirección IP de su equipo pero no su HostName
+Cuando el proceso automático genera el subticket de telefonía y reserva de IP
+Entonces el subticket muestra la Dirección IP registrada e indica que el HostName no está capturado, sin que la generación se detenga por el dato faltante.
 
 **CP-017 — Cierre de un subticket marcado con información aún activa en el apartado (camino feliz)**
 Verifica: CA-1.2.3 · RN-1.14
-Dado un subticket de baja de la reserva de IP y remoción del monitoreo de antivirus generado a partir de un registro marcado, cuyo colaborador dado de baja todavía tiene información activa en el apartado configurado
-Cuando el responsable registra su atención de las dos acciones y solicita el cierre
+Dado un subticket de remoción del monitoreo de antivirus generado a partir de un registro marcado, cuyo colaborador dado de baja todavía tiene información activa en el apartado configurado
+Cuando el responsable registra su atención y solicita el cierre
 Entonces el sistema cierra el subticket sin reevaluar el apartado y sin mostrar el mensaje de que aún contiene información del colaborador.
 
 **CP-018 — Registro sin marcar: subticket no generado por apartado vacío (escenario alternativo)**
@@ -1696,7 +1753,7 @@ Entonces el sistema registra la fecha de fin de vigencia aplicando los 15 días 
 Verifica: CA-4.1.1 · RN-4.3 · RN-4.4
 Dado un colaborador dado de baja con tres activos en estatus Resguardo en Sitio, fecha de resguardo del 1 de septiembre y fecha de fin de vigencia del 16 de septiembre
 Cuando el proceso automático se ejecuta el 16 de septiembre
-Entonces el sistema crea un único ticket interno con motivo "Recolección por Resguardo" que incluye los tres activos, lo asigna al responsable del departamento encargado de recolecciones y lo deja en estatus En Proceso con estatus interno Recibido.
+Entonces el sistema crea un único ticket interno con motivo "Recolección por Resguardo" que incluye en su detalle todos los activos que el colaborador tenía asignados antes de su baja, lo asigna al responsable del departamento encargado de recolecciones y lo deja en estatus En Proceso con estatus interno Recibido.
 
 **CP-047 — Creación del ticket cuando el vencimiento ya pasó (escenario alternativo)**
 Verifica: CA-4.1.1 · RN-4.4
@@ -1717,14 +1774,14 @@ Cuando el sistema crea el ticket de "Recolección por Resguardo"
 Entonces el solicitante del ticket es esa persona, con su departamento y su centro de trabajo, y el ticket queda asignado al responsable de recolecciones configurado en RF-02.
 
 **CP-050 — Detalle completo de los activos del ticket (camino feliz)**
-Verifica: CA-4.1.3 · RN-4.17
-Dado que el sistema creó el ticket de "Recolección por Resguardo" de un colaborador con tres activos en resguardo
+Verifica: CA-4.1.3 · RN-4.4, RN-4.17
+Dado que el sistema creó el ticket de "Recolección por Resguardo" de un colaborador que antes de su baja tenía cuatro activos asignados, de los cuales tres siguen en resguardo y uno ya se había recolectado
 Cuando el responsable asignado lo consulta
-Entonces visualiza el colaborador dado de baja y un renglón por cada activo con etiqueta, número de serie, descripción, centro de trabajo, personal que lo resguarda, fecha de resguardo y fecha de fin de vigencia, además de la observación con la fecha que originó la recolección y la cantidad de activos incluidos.
+Entonces visualiza el colaborador dado de baja y un renglón por cada uno de los cuatro activos con etiqueta, número de serie, descripción, estatus vigente, centro de trabajo, personal que lo resguarda, fecha de resguardo y fecha de fin de vigencia, además de la observación de que el ticket se generó automáticamente por vencimiento del resguardo, con la fecha que lo originó y la cantidad de activos incluidos.
 
 **CP-051 — Ningún activo del colaborador queda fuera del ticket (escenario alternativo)**
 Verifica: CA-4.1.4 · RN-4.4
-Dado un colaborador con tres activos que entraron en resguardo en momentos distintos, con fechas de fin de vigencia del 16, 20 y 25 de septiembre
+Dado un colaborador que antes de su baja tenía tres activos asignados, que entraron en resguardo en momentos distintos y con fechas de fin de vigencia del 16, 20 y 25 de septiembre
 Cuando el proceso automático se ejecuta el 16 de septiembre
 Entonces el ticket creado incluye los tres activos en su detalle, no únicamente el que venció ese día.
 
@@ -1871,86 +1928,86 @@ Entonces el sistema aplica las mismas reglas de visibilidad y permisos que a cua
 **CP-075 — Extensión aplicada a todos los activos del colaborador (camino feliz)**
 Verifica: CA-5.1.1 · RN-5.5
 Dado un colaborador con tres activos en estatus Resguardo en Sitio y fecha de fin de vigencia el 16 de septiembre
-Cuando el usuario facultado abre la acción desde uno de ellos, captura 14 días adicionales, escribe el motivo y confirma
+Cuando el usuario facultado abre la acción desde uno de ellos, selecciona el 30 de septiembre en el calendario, escribe el motivo y confirma
 Entonces la fecha de fin de vigencia de los tres activos pasa a ser el 30 de septiembre.
 
 **CP-076 — Registro de la extensión en la bitácora de cada activo (trazabilidad)**
 Verifica: CA-5.1.1 · RN-5.12
-Dado que el usuario facultado acaba de extender 14 días la vigencia del resguardo de un colaborador con tres activos
+Dado que el usuario facultado acaba de extender al 30 de septiembre la vigencia del resguardo de un colaborador con tres activos que vencía el 16 de septiembre
 Cuando consulta la bitácora de cada uno de los tres activos
-Entonces encuentra en todas el registro con los 14 días agregados, la fecha anterior del 16 de septiembre, la nueva fecha del 30 de septiembre, el motivo capturado, el usuario que la aplicó, la fecha y hora del cambio y la cantidad de activos que abarcó la operación.
+Entonces encuentra en todas el registro con la fecha anterior del 16 de septiembre, la nueva fecha del 30 de septiembre, los 14 días equivalentes agregados, el motivo capturado, el usuario, la fecha y hora del cambio y la cantidad de activos que abarcó la operación.
 
 **CP-077 — Vista previa del alcance de la extensión (camino feliz)**
 Verifica: CA-5.1.2 · RN-5.7
 Dado un colaborador con tres activos en resguardo
-Cuando el usuario facultado abre la acción de agregar días de vigencia desde uno de ellos
-Entonces el diálogo muestra el colaborador titular del resguardo, la fecha de fin de vigencia vigente, los días restantes y la lista de los tres activos que la extensión afectará.
+Cuando el usuario facultado abre la acción de extender la vigencia desde uno de ellos
+Entonces el diálogo muestra el colaborador titular del resguardo, la fecha de fin de vigencia vigente, los días restantes, la lista de los tres activos que la extensión afectará y el calendario con las fechas no permitidas deshabilitadas.
 
-**CP-078 — La extensión parte de la fecha más próxima del colaborador (dato límite)**
+**CP-078 — Fecha mínima cuando los activos tienen fechas distintas (dato límite)**
 Verifica: CA-5.1.3 · RN-5.6
 Dado un colaborador con dos activos en resguardo, uno con fecha de fin de vigencia el 16 de septiembre y otro el 20 de septiembre
-Cuando el usuario captura 14 días adicionales desde el activo que vence el 20 de septiembre y confirma
-Entonces ambos activos quedan con fecha de fin de vigencia del 30 de septiembre, calculada sobre el 16 de septiembre por ser la más próxima.
+Cuando el usuario abre la acción desde el activo que vence el 16 de septiembre e intenta seleccionar el 18 de septiembre
+Entonces el calendario tiene deshabilitada esa fecha, porque el mínimo permitido es el 21 de septiembre —el día siguiente a la más lejana de las dos—, y al seleccionar el 30 de septiembre y confirmar ambos activos quedan con esa fecha.
 
 **CP-079 — Las fechas de los activos quedan alineadas tras la extensión (escenario alternativo)**
 Verifica: CA-5.1.3 · RN-5.5
 Dado un colaborador con tres activos en resguardo con fechas de fin de vigencia distintas
 Cuando el usuario aplica una extensión
-Entonces los tres activos quedan con la misma fecha de fin de vigencia resultante.
+Entonces los tres activos quedan con la misma fecha de fin de vigencia seleccionada.
 
 **CP-080 — La acción no está disponible en otro estatus (escenario alternativo)**
 Verifica: CA-5.1.4 · RN-5.1
 Dado un activo cuyo estatus vigente es Asignado, No Asignado o cualquier otro distinto de Resguardo en Sitio
 Cuando el usuario facultado consulta el activo
-Entonces el bloque "Resguardo" no se muestra y, con él, tampoco la acción de agregar días de vigencia.
+Entonces el bloque "Resguardo" no se muestra y, con él, tampoco la acción de extender la vigencia.
 
 **CP-081 — Motivo de la extensión obligatorio (validación)**
 Verifica: CA-5.1.5 · RN-5.3
-Dado que el usuario captura 14 días adicionales sin escribir el motivo
+Dado que el usuario seleccionó el 30 de septiembre como nueva fecha de fin de vigencia sin escribir el motivo
 Cuando intenta confirmar la extensión
 Entonces el sistema no permite continuar y solicita capturar el motivo.
 
-**CP-082 — Días adicionales en cero o negativos (validación)**
+**CP-082 — Fecha igual o anterior a la vigencia actual (validación)**
+Verifica: CA-5.1.6 · RN-5.2
+Dado un resguardo cuya fecha de fin de vigencia es el 16 de septiembre y la fecha del servidor es el 10 de septiembre
+Cuando el usuario intenta seleccionar el 16 de septiembre y después el 12 de septiembre
+Entonces el calendario presenta ambas fechas deshabilitadas y, si la fecha se envía por otra vía, el sistema impide la extensión e informa que la nueva fecha debe ser posterior al 16 de septiembre.
+
+**CP-083 — Nueva fecha vacía o inválida (validación)**
 Verifica: CA-5.1.6 · RN-5.2
 Dado un resguardo vigente
-Cuando el usuario captura 0 y luego -7 como días adicionales e intenta confirmar
-Entonces el sistema impide la extensión en ambos casos e informa que los días adicionales deben ser un número entero mayor a cero.
+Cuando el usuario intenta confirmar sin seleccionar fecha, o envía un valor que no corresponde a una fecha válida
+Entonces el sistema impide la extensión e informa que la nueva fecha de fin de vigencia es obligatoria y debe ser una fecha posterior a la vigencia actual.
 
-**CP-083 — Días adicionales no numéricos o con decimales (validación)**
-Verifica: CA-5.1.6 · RN-5.2
-Dado un resguardo vigente
-Cuando el usuario captura un texto o el valor 7.5 como días adicionales e intenta confirmar
-Entonces el sistema impide la extensión e informa que los días adicionales deben ser un número entero mayor a cero.
-
-**CP-084 — Días insuficientes sobre una vigencia ya vencida (escenario de error)**
+**CP-084 — Fecha en el pasado sobre una vigencia ya vencida (escenario de error)**
 Verifica: CA-5.1.7 · RN-5.2
 Dado un colaborador cuya fecha de fin de vigencia fue el 10 de septiembre y la fecha del servidor es el 20 de septiembre
-Cuando el usuario captura 5 días adicionales e intenta confirmar
-Entonces el sistema impide la extensión e informa que el resultado quedaría en el pasado, indicando el mínimo de días requerido para superar el día actual.
+Cuando el usuario intenta seleccionar el 15 de septiembre
+Entonces el sistema impide la extensión e informa que la nueva fecha debe ser posterior al día actual, siendo el 21 de septiembre la mínima permitida.
 
-**CP-085 — Días suficientes sobre una vigencia ya vencida (escenario alternativo)**
+**CP-085 — Fecha válida sobre una vigencia ya vencida (escenario alternativo)**
 Verifica: CA-5.1.7 · RN-5.2
 Dado el mismo colaborador con fecha de fin de vigencia del 10 de septiembre y fecha del servidor del 20 de septiembre
-Cuando el usuario captura 15 días adicionales, escribe el motivo y confirma
+Cuando el usuario selecciona el 25 de septiembre, escribe el motivo y confirma
 Entonces el sistema aplica la extensión y la nueva fecha de fin de vigencia queda el 25 de septiembre, posterior al día actual.
 
-**CP-086 — Vista previa de la nueva fecha antes de confirmar (camino feliz)**
+**CP-086 — Días equivalentes antes de confirmar (camino feliz)**
 Verifica: CA-5.1.8
 Dado un resguardo con fecha de fin de vigencia el 16 de septiembre
-Cuando el usuario captura 14 días adicionales
-Entonces el diálogo muestra el 30 de septiembre como nueva fecha de fin de vigencia resultante y las fechas de los activos no se modifican hasta que el usuario confirme explícitamente.
+Cuando el usuario selecciona el 30 de septiembre en el calendario
+Entonces el diálogo muestra que la extensión agrega 14 días y las fechas de los activos no se modifican hasta que el usuario confirme explícitamente la extensión.
 
 **CP-087 — Cancelación del diálogo sin aplicar la extensión (escenario alternativo)**
 Verifica: CA-5.1.8
-Dado que el usuario capturó 14 días adicionales y el motivo pero no ha confirmado
+Dado que el usuario seleccionó el 30 de septiembre y capturó el motivo pero no ha confirmado
 Cuando cierra o cancela el diálogo
-Entonces la fecha de fin de vigencia de todos los activos del colaborador permanece en el 16 de septiembre y no se registra ninguna extensión en las bitácoras.
+Entonces la fecha de fin de vigencia de todos los activos del colaborador permanece en el 16 de septiembre y no se registra ninguna extensión en la bitácora.
 
 **CP-088 — Extensiones sucesivas sobre el mismo resguardo (escenario alternativo)**
 Verifica: CA-5.1.9 · RN-5.8
 Dado un resguardo cuya fecha de fin de vigencia ya fue extendida al 30 de septiembre
-Cuando el usuario agrega 15 días adicionales capturando el motivo
-Entonces la fecha de fin de vigencia de todos los activos del colaborador pasa a ser el 15 de octubre y la bitácora de cada uno conserva ambos registros.
+Cuando el usuario intenta seleccionar el 25 de septiembre y después selecciona el 15 de octubre capturando el motivo
+Entonces el calendario tenía deshabilitado el 25 de septiembre por ser anterior a la vigencia extendida, la fecha de fin de vigencia de todos los activos pasa a ser el 15 de octubre y la bitácora de cada uno conserva ambos registros con su fecha anterior, su nueva fecha, sus días equivalentes y su motivo.
 
 **CP-089 — Extensión bloqueada por un ticket de recolección vigente (escenario de error)**
 Verifica: CA-5.1.10 · RN-5.11
@@ -1961,14 +2018,14 @@ Entonces el sistema impide la extensión e informa que primero debe cancelarse e
 **CP-090 — Extensión disponible tras cancelar el ticket de recolección (escenario alternativo)**
 Verifica: CA-5.1.10 · RN-5.11
 Dado un colaborador cuyo ticket de "Recolección por Resguardo" acaba de cancelarse y que conserva activos en estatus Resguardo en Sitio
-Cuando el usuario facultado captura los días adicionales y el motivo y confirma
+Cuando el usuario facultado selecciona la nueva fecha de fin de vigencia, captura el motivo y confirma
 Entonces el sistema aplica la extensión y actualiza la fecha de fin de vigencia de todos sus activos.
 
 **CP-091 — La acción no se muestra a un usuario sin permiso (permisos)**
 Verifica: CA-5.1.11 · RN-5.13
 Dado un usuario sin permiso para extender el resguardo
 Cuando consulta un activo en estatus Resguardo en Sitio
-Entonces la acción "Agregar días de vigencia" no se muestra.
+Entonces la acción "Extender vigencia" no se muestra.
 
 **CP-092 — Bloqueo por permisos ante un acceso directo (permisos)**
 Verifica: CA-5.1.11 · RN-5.13
@@ -1998,25 +2055,25 @@ Entonces cada uno conserva su fecha de resguardo del 1 de septiembre y su estatu
 Verifica: CA-5.1.14 · RN-5.12
 Dado un resguardo con dos extensiones aplicadas
 Cuando un usuario consulta la bitácora de cualquiera de los activos afectados
-Entonces visualiza ambas extensiones con la fecha anterior, la nueva fecha, el motivo, el usuario que las aplicó, la fecha y hora del cambio y la cantidad de activos que abarcó cada operación.
+Entonces visualiza ambas extensiones con la fecha anterior, la nueva fecha, los días equivalentes, el motivo, el usuario que las aplicó, la fecha y hora del cambio y la cantidad de activos que abarcó cada operación.
 
 **CP-097 — La extensión no requiere autorización ni genera ticket (camino feliz)**
 Verifica: CA-5.1.1 · RN-5.4
 Dado un resguardo vigente y un usuario con el permiso correspondiente
-Cuando confirma la extensión con su motivo
+Cuando confirma la extensión con su fecha y su motivo
 Entonces la nueva fecha queda aplicada en ese momento, sin solicitar autorización a un tercero y sin generar ningún ticket.
 
 **CP-098 — El permiso de extensión es independiente del de consulta del activo (permisos)**
 Verifica: CA-5.1.15 · RN-5.13
 Dado un usuario con permiso para consultar y editar activos de cómputo pero sin el permiso de extensión del resguardo
 Cuando consulta un activo en estatus Resguardo en Sitio
-Entonces visualiza el bloque "Resguardo" completo, pero la acción "Agregar días de vigencia" no se muestra ni puede ejecutarse.
+Entonces visualiza el bloque "Resguardo" completo, pero la acción "Extender vigencia" no se muestra ni puede ejecutarse.
 
 **CP-099 — Otorgamiento del permiso desde la administración de roles (permisos)**
 Verifica: CA-5.1.15 · RN-5.13
 Dado un usuario sin el permiso de extensión del resguardo al que el administrador se lo otorga desde la administración de roles y permisos
 Cuando el usuario vuelve a consultar un activo en estatus Resguardo en Sitio
-Entonces la acción "Agregar días de vigencia" ya se muestra y puede ejecutarla, sin que haya sido necesario un despliegue de código.
+Entonces la acción "Extender vigencia" ya se muestra y puede ejecutarla, sin que haya sido necesario un despliegue de código.
 
 **CP-100 — Verificación del permiso en el servidor (permisos)**
 Verifica: CA-5.1.15 · RN-5.13
@@ -2078,19 +2135,19 @@ Entonces el bloque se muestra con la leyenda de dato no disponible en el campo d
 Verifica: CA-6.1.7 · RN-6.2
 Dado que el usuario consulta el bloque "Resguardo"
 Cuando intenta modificar cualquiera de los datos mostrados
-Entonces el sistema no lo permite y la única acción disponible es agregar días de vigencia.
+Entonces el sistema no lo permite y la única acción disponible es extender la vigencia.
 
 **CP-110 — Acceso a la extensión desde el bloque con permiso (permisos)**
 Verifica: CA-6.1.8 · RN-6.10
 Dado un usuario con permiso para extender el resguardo
 Cuando consulta el bloque "Resguardo" de un activo en resguardo
-Entonces dispone de la acción "Agregar días de vigencia" descrita en RF-05.
+Entonces dispone de la acción "Extender vigencia" descrita en RF-05.
 
 **CP-111 — Bloque en modo consulta para un usuario sin permiso (permisos)**
 Verifica: CA-6.1.9 · RN-6.10
 Dado un usuario sin permiso para extender el resguardo
 Cuando consulta el bloque "Resguardo"
-Entonces visualiza toda la información del resguardo pero la acción "Agregar días de vigencia" no se muestra.
+Entonces visualiza toda la información del resguardo pero la acción "Extender vigencia" no se muestra.
 
 **CP-112 — Historial de extensiones en el bloque (camino feliz)**
 Verifica: CA-6.1.10 · RN-6.8
@@ -2226,8 +2283,8 @@ La tabla evidencia que los 86 criterios de aceptación del documento quedan cubi
 
 | CA | Caso(s) de prueba | Escenarios cubiertos |
 | --- | --- | --- |
-| CA-1.1.1 | CP-001 | Camino feliz |
-| CA-1.1.2 | CP-002, CP-003, CP-006, CP-011 | Camino feliz, Alternativo, Validación |
+| CA-1.1.1 | CP-001, CP-003, CP-006 | Camino feliz, Alternativo |
+| CA-1.1.2 | CP-002, CP-006, CP-011 | Camino feliz, Validación |
 | CA-1.1.3 | CP-004 | Camino feliz |
 | CA-1.1.4 | CP-003, CP-005, CP-006 | Camino feliz, Alternativo |
 | CA-1.1.5 | CP-007 | Extensibilidad |
@@ -2321,10 +2378,11 @@ No quedan preguntas abiertas para el negocio: todos los puntos que estaban pendi
 
 ### Puntos resueltos por el negocio
 
-- **Subtickets automáticos por baja de personal:** las revisiones de telefonía y directorio telefónico, de baja de la reserva de IP y remoción del monitoreo de antivirus, y de desactivación del HostName se resuelven **por configuración** del catálogo "Datos Personales", con los departamentos destino y los datos que definió el negocio; no requieren desarrollo (RN-1.3, RN-1.5, RN-1.11). Son **tres** subtickets, no cuatro: la reserva de IP y el antivirus se atienden en uno solo, porque van al mismo departamento y se ejecutan sobre el mismo equipo (RN-1.4). El mismo catálogo queda disponible para configurar después cualquier otra revisión que deba detonarse al registrar una baja (RN-1.1, CA-1.1.5).
-- **Validación de información en los subtickets nuevos:** no se exige, ni para generarlos ni para cerrarlos. Se agrega en el catálogo el campo **"No requiere validación"**, que se marca registro por registro: el subticket marcado se detona en toda baja sin evaluar el expediente del colaborador y se cierra sin reevaluarlo, porque su atención se ejecuta en herramientas externas a Business Suite (RN-1.13, RN-1.14). Los tres registros del arranque se dan de alta con la marca puesta (RN-1.11) y los registros ya existentes quedan sin marcar, conservando la validación (RN-1.16).
+- **Subtickets automáticos por baja de personal:** son **dos** registros nuevos en el catálogo "Datos Personales", no tres ni cuatro. El primero fusiona la revisión de activos de telefonía y datos del directorio telefónico con la reserva de la dirección IP, porque ambas se resuelven sobre el mismo equipo; el segundo queda solo con la remoción del monitoreo de antivirus (RN-1.3, RN-1.4). Los dos se resuelven **por configuración** del catálogo, con el departamento destino, el asunto y los datos que definió el negocio —Dirección IP y HostName en el primero, Usuario de Directorio Activo y Host Name en el segundo—; no requieren desarrollo (RN-1.5, RN-1.11). La **desactivación del HostName no genera registro nuevo**: se ajusta el asunto del subticket que ya se detona para la baja de los directorios activos, que ahora declara también esa desactivación y transcribe el nombre del equipo del colaborador (RN-1.6). El mismo catálogo queda disponible para configurar después cualquier otra revisión que deba detonarse al registrar una baja (RN-1.1, CA-1.1.5).
+- **Validación de información en los subtickets nuevos:** no se exige, ni para generarlos ni para cerrarlos. Se agrega en el catálogo el campo **"No requiere validación"**, que se marca registro por registro: el subticket marcado se detona en toda baja sin evaluar el expediente del colaborador y se cierra sin reevaluarlo, porque su atención se ejecuta en herramientas externas a Business Suite (RN-1.13, RN-1.14). Los **dos** registros del arranque se dan de alta con la marca puesta (RN-1.11); los registros ya existentes quedan sin marcar y conservan la validación (RN-1.16), incluido el de baja de Directorio Activo, del que solo se ajusta el mensaje.
 - **Prórroga formal:** no se requiere. Se implementa únicamente la opción de extender la vigencia del resguardo (RF-05), sin flujo de solicitud ni autorización.
-- **Agrupación del ticket de recolección:** se genera **un ticket por colaborador dado de baja**, con el detalle de todos sus activos en resguardo, sin separar por centro de trabajo (RN-4.3, RN-4.4).
+- **Mecanismo de la extensión:** la nueva vigencia se define **seleccionando una fecha en un calendario**, no capturando una cantidad de días, porque el negocio razona el resguardo contra una fecha concreta. El calendario solo habilita fechas que efectivamente extienden el plazo: quedan deshabilitadas las anteriores o iguales a la fecha de fin de vigencia vigente —la que resultó de los días configurados en la variable de sistema— y las anteriores al día actual, de modo que una extensión no pueda acortar la vigencia ni dejarla en el pasado (RN-5.2, RN-5.6).
+- **Agrupación del ticket de recolección:** se genera **un ticket por colaborador dado de baja**, en estatus En Proceso y con el detalle de todos los activos que ese colaborador tenía asignados antes de su baja —no solo los que siguen en resguardo—, sin separar por centro de trabajo (RN-4.3, RN-4.4, RN-4.18).
 - **Solicitante del ticket:** el ticket nace a nombre de **quien autorizó el resguardo en sitio**, con su departamento y su centro de trabajo, porque el colaborador dado de baja queda en estatus Cancelado y no puede figurar como solicitante (RN-4.5). La autorización del resguardo la otorga una sola persona (SUP-14).
 - **Alcance de la extensión:** extender la vigencia aplica a **todos los activos en resguardo del colaborador**, no a un activo suelto, para que el plazo quede alineado con el ticket único que genera RF-04 (RN-5.5, RN-5.6).
 - **Permiso de extensión:** basta con que el permiso sea **configurable** desde la administración de roles y permisos (RN-5.13). El documento no fija qué roles lo reciben: esa asignación es una decisión operativa que el negocio ajusta sin modificar el requerimiento.
