@@ -61,6 +61,8 @@ nav:
         - Requerimiento Funcional: Proyectos/ONU/VisibilidadFiscal/Documento_Requerimientos_Funcionales_Interplantas.md
       - Foliación Caja Operativa:
         - Requerimiento Funcional: Proyectos/ONU/Foliacion-Caja-Operativa/RF-Foliacion-Caja-Financiera.md
+      - Inmobiliaria Facturación:
+        - Requerimiento Funcional: "Proyectos/ONU/Inmobiliaria Facturación/Requerimientos_Funcionales_Facturacion_Inmobiliaria_CFDI.md"
   - Documentación BSuite:
     - Catálogos:
       - Gestión TI:
