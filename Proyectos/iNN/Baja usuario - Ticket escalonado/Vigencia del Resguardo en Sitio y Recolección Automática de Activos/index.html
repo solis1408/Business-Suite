@@ -3506,7 +3506,7 @@
 <p>El objetivo es que cualquier persona del negocio entienda, sin consultar otro documento, qué subtickets nacen al registrar una baja de personal, cuáles están marcados como "No requiere validación" —y por lo tanto se detonan siempre y se cierran sin revisar el expediente—, cómo agregar otros después sin desarrollo, cuándo un activo en resguardo está por vencer, qué pasa el día del vencimiento, cómo se gana tiempo cuando se necesita y cómo se detiene el proceso si el equipo se reasigna antes de esa fecha.</p>
 <h2 id="2-alcance-del-documento">2. Alcance del documento<a class="headerlink" href="#2-alcance-del-documento" title="Permanent link">&para;</a></h2>
 <p><strong>Incluye:</strong>
-- La configuración, en el catálogo "Datos Personales", de los <strong>dos</strong> subtickets que el sistema debe generar automáticamente al registrar la baja de un colaborador —revisión de activos de telefonía y datos del directorio telefónico junto con la reserva de la dirección IP, en un solo subticket; y remoción del monitoreo de antivirus—, cada uno con su departamento destino, su asunto y los datos del colaborador que debe transcribir al subticket: Dirección IP y HostName en el primero, Usuario de Directorio Activo y Host Name en el segundo. Se incluye además el <strong>ajuste del asunto del subticket ya existente de baja de los directorios activos</strong>, que pasa a declarar también la desactivación del HostName y a transcribir el nombre del equipo del colaborador, sin que esa desactivación requiera un registro propio. La lista es la del arranque, no un límite: el mismo catálogo permite configurar después cualquier otra revisión que deba detonarse al registrar una baja.
+- La configuración, en el catálogo "Datos Personales", de los <strong>dos</strong> subtickets que el sistema debe generar automáticamente al registrar la baja de un colaborador —revisión de activos de telefonía y datos del directorio telefónico junto con la reserva de la dirección IP, en un solo subticket; y remoción del monitoreo de antivirus—, cada uno con su departamento destino, su asunto y los datos del colaborador que debe transcribir al subticket: Dirección IP y HostName en el primero, Usuario de Directorio Activo y Host Name en el segundo. En los tres asuntos —los dos nuevos y el ajustado— el listado enlista <strong>todos</strong> los registros que el colaborador tenga de cada dato —en el caso de la IP, todos los activos que cuenten con una, con nombre del activo e IP— y muestra <strong>NA</strong> cuando no tenga ninguno. Se incluye además el <strong>ajuste del asunto del subticket ya existente de baja de los directorios activos</strong>, que pasa a declarar también la desactivación del HostName y a transcribir el nombre del equipo del colaborador, sin que esa desactivación requiera un registro propio. La lista es la del arranque, no un límite: el mismo catálogo permite configurar después cualquier otra revisión que deba detonarse al registrar una baja.
 - El campo <strong>"No requiere validación"</strong> en ese mismo catálogo, que se marca por registro. Los registros <strong>marcados</strong> generan su subticket <strong>siempre</strong> —sin evaluar el expediente del colaborador— y lo <strong>cierran sin validación</strong>. Los dos subtickets del arranque se dan de alta con esa marca puesta; los registros sin marcar —entre ellos el de baja de Directorio Activo— conservan el comportamiento actual.
 - La configuración administrable de los días de vigencia del resguardo en sitio, del departamento/personal encargado de las recolecciones y de la fecha de corte a partir de la cual el proceso opera.
 - El registro en el activo de la fecha de inicio y la fecha de fin de vigencia del resguardo.
@@ -3662,7 +3662,7 @@
 </tr>
 <tr>
 <td>Dirección IP</td>
-<td>Dirección de red registrada al equipo de cómputo del colaborador. Es uno de los dos datos que lleva el subticket de revisión de activos de telefonía y baja de la reserva de IP, y con ella el responsable identifica en la red la reserva que debe liberar.</td>
+<td>Dirección de red registrada al equipo de cómputo del colaborador. Es uno de los dos datos que lleva el subticket de revisión de activos de telefonía y baja de la reserva de IP, y con ella el responsable identifica en la red la reserva que debe liberar. Un colaborador puede tener varios activos con dirección IP: el subticket los enlista todos, con el nombre del activo y su IP, y muestra NA si no tiene ninguno (RN-1.21, RN-1.22).</td>
 </tr>
 <tr>
 <td>HostName</td>
@@ -3869,7 +3869,7 @@
 <tr>
 <td>Datos que se transcriben al subticket</td>
 <td>Sí</td>
-<td>Lista de los datos de ese apartado que el sistema copia al cuerpo del subticket, para que el responsable no tenga que buscarlos en otra pantalla. Se transcriben los que estén registrados, esté el registro marcado o no.</td>
+<td>Lista de los datos de ese apartado que el sistema copia al cuerpo del subticket, para que el responsable no tenga que buscarlos en otra pantalla. De cada dato se transcriben <strong>todos</strong> los registros que el colaborador tenga en el apartado y, cuando no tenga ninguno, el renglón se llena con <strong>NA</strong>, esté el registro marcado o no (RN-1.21, RN-1.22).</td>
 </tr>
 <tr>
 <td>Mensaje del subticket</td>
@@ -3910,19 +3910,26 @@
 <td>1</td>
 <td>Revisión de activos de telefonía y datos del directorio telefónico, y reserva de la dirección IP del equipo del colaborador</td>
 <td>Coordinación de Redes y Telecomunicaciones</td>
-<td>Dirección IP, HostName</td>
+<td>Dirección IP —<strong>todos</strong> los activos del colaborador que tengan IP, con nombre del activo e IP— y HostName —<strong>todos</strong> los que tenga registrados—. Si no tiene ninguno, <strong>NA</strong></td>
 <td>Marcado</td>
 </tr>
 <tr>
 <td>2</td>
 <td>Remoción del monitoreo de antivirus del equipo del colaborador</td>
 <td>Coordinación de Redes y Telecomunicaciones</td>
-<td>Usuario de Directorio Activo, Host Name</td>
+<td>Usuario de Directorio Activo y Host Name —<strong>todos</strong> los que tenga registrados—. Si no tiene ninguno, <strong>NA</strong></td>
 <td>Marcado</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Asunto con el que nace cada subticket.</strong> Cada registro se da de alta con el texto que se muestra a continuación, tal como el negocio lo definió. Los espacios entre llaves <code>{ }</code> los sustituye el sistema al generar el subticket: el primero con el <strong>nombre del colaborador</strong> dado de baja, el segundo con su <strong>RFC</strong>, y los del bloque <strong>LISTADO</strong> con los datos configurados en "datos que se transcriben al subticket". El listado no se captura renglón por renglón: el sistema lo arma solo, con los datos que estén registrados en el apartado del expediente, y la etiqueta de cada renglón es el nombre del dato configurado.</p>
+<p><strong>Asunto con el que nace cada subticket.</strong> Cada registro se da de alta con el texto que se muestra a continuación, tal como el negocio lo definió. Los espacios entre llaves <code>{ }</code> los sustituye el sistema al generar el subticket: el primero con el <strong>nombre del colaborador</strong> dado de baja, el segundo con su <strong>RFC</strong>, y los del bloque <strong>LISTADO</strong> con los datos configurados en "datos que se transcriben al subticket". El listado no se captura renglón por renglón: el sistema lo arma solo con la información del apartado del expediente, y la etiqueta de cada renglón es el nombre del dato configurado.</p>
+<p><strong>El listado es completo o dice NA.</strong> El parámetro de cada renglón del bloque LISTADO no se llena con un solo valor: el sistema lo llena con <strong>todos</strong> los registros que el colaborador tenga de ese dato y, cuando no tiene ninguno, con la leyenda <strong>NA</strong>. En concreto, y para los tres asuntos de este requerimiento:</p>
+<ul>
+<li><strong>Dirección IP.</strong> El renglón se llena con <strong>todos los activos del colaborador que cuenten con una dirección IP</strong>, indicando de cada uno el <strong>nombre del activo y su IP</strong>, para que el responsable sepa a qué equipo pertenece cada reserva que debe liberar. Si el colaborador <strong>no tiene ningún activo con IP</strong>, el renglón se llena con <strong>NA</strong>.</li>
+<li><strong>HostName.</strong> El renglón se llena con <strong>todos los HostName</strong> que el colaborador tenga registrados. Si no tiene ninguno, con <strong>NA</strong>.</li>
+<li><strong>Directorio Activo.</strong> El renglón se llena con <strong>todos los usuarios de directorio activo</strong> que el colaborador tenga registrados. Si no tiene ninguno, con <strong>NA</strong>.</li>
+</ul>
+<p>El renglón <strong>nunca se omite</strong>: aunque el colaborador no tenga el dato, el subticket nace con el renglón y con <strong>NA</strong>, de modo que el responsable distinga "el colaborador no tiene nada registrado" de "el sistema no me mostró el dato". La regla queda formalizada en RN-1.21 y RN-1.22, y <strong>no cambia la captura del asunto</strong>: las plantillas se dan de alta tal como el negocio las definió, con un <code>{ }</code> por renglón.</p>
 <table>
 <thead>
 <tr>
@@ -3965,15 +3972,15 @@ HostName: { }
 <div class="highlight"><pre><span></span><code>BUEN DÍA, SE NOTIFICA BAJA DE PERSONAL CON NOMBRE: { } Y RFC: { } EN NÓMINA DE RECURSOS HUMANOS, ES NECESARIO REALIZAR LA BAJA DE LOS DIRECTORIOS ACTIVOS Y DESACTIVACIÓN DE HOSTNAME.
 LISTADO:
 NombreEquipo: { }
-NombreEquipo: { }
 DirectorioActivo:  { }
 </code></pre></div>
-<p>El listado del tercer subticket muestra el <strong>NombreEquipo</strong> en dos renglones porque un colaborador puede tener más de un equipo registrado en el directorio activo: el sistema repite el renglón por cada registro que encuentre en el apartado, de modo que el responsable ve todos los equipos que debe atender. Son esos nombres de equipo los que indican sobre qué HostName aplica la desactivación que el asunto declara.</p>
+<p><strong>Qué llega en el parámetro de cada renglón.</strong> El asunto se captura tal como está arriba: cada <code>{ }</code> es un parámetro que el sistema llena al generar el subticket, y es ahí donde aplican las reglas de enlistado y de NA —no se capturan renglones adicionales en la plantilla—. En el renglón de <strong>IP</strong> el parámetro se llena con <strong>todos los activos del colaborador que cuenten con una dirección IP</strong>, indicando de cada uno el <strong>nombre del activo y su IP</strong>; en los de <strong>HostName</strong> y <strong>DirectorioActivo</strong>, con <strong>todos</strong> los que el colaborador tenga registrados. Cuando el colaborador no tiene ningún registro de ese dato, el parámetro se llena con <strong>NA</strong> y el renglón se conserva en el asunto.</p>
+<p>En el tercer subticket, el renglón de <strong>NombreEquipo</strong> se captura una sola vez, igual que los demás: un colaborador puede tener más de un equipo registrado en el directorio activo y el responsable debe verlos todos, pero eso lo resuelve el parámetro al enlistarlos, no la captura de renglones repetidos. Son esos nombres de equipo los que indican sobre qué HostName aplica la desactivación que el asunto declara. La regla de NA aplica dato por dato también aquí: si el colaborador tiene usuario de directorio activo pero ningún equipo registrado, el renglón de NombreEquipo se llena con <strong>NA</strong>. Lo que no cambia en ese tercer subticket es su condición de generación —al no estar marcado como "No requiere validación", solo nace cuando el colaborador tiene información en el apartado de Directorio Activo (RGO-13)—: el <strong>NA</strong> describe cómo se llena un dato sin registros, no sustituye esa validación.</p>
 <p><strong>El subticket se asigna al responsable del departamento configurado en el registro.</strong> Ese responsable es un dato administrable del catálogo de departamentos, de modo que para que cada uno de los tres subtickets llegue a la persona indicada arriba basta con que el departamento capturado en su registro tenga configurada a esa persona como responsable, conforme a SUP-24.</p>
 <p>La revisión de los activos de telefonía y la baja de la reserva de IP se resuelven en <strong>un solo subticket</strong> y no en dos: ambas se dirigen al mismo departamento, se resuelven sobre el mismo equipo del colaborador y las atiende la misma persona en la misma sesión de trabajo. Separarlas duplicaba el trámite sin agregar control, y obligaba a cerrar dos tickets por un trabajo que se hace de una vez. El subticket declara las dos acciones en su mensaje, y su cierre da por atendidas ambas. La remoción del monitoreo de antivirus, en cambio, queda como subticket propio: se ejecuta en la consola del antivirus y se coteja contra el usuario de Directorio Activo del colaborador, no contra su dirección de red.</p>
-<p><strong>Los datos de cada registro provienen de un solo apartado del expediente</strong>, que es lo que el catálogo admite —un registro apunta a un apartado y transcribe los datos de ese apartado—. En el registro 1, la Dirección IP y el HostName se toman del apartado de direcciones IP del activo de cómputo del colaborador, donde el HostName corresponde al nombre de red del equipo. En el registro 2, el Usuario de Directorio Activo y el Host Name se toman del apartado de Directorio Activo. Esa correspondencia debe confirmarse con el equipo de desarrollo antes de capturar los registros, conforme a SUP-18: de ella depende que ambos datos de cada subticket puedan transcribirse sin desarrollo.</p>
+<p><strong>Los datos de cada registro provienen de un solo apartado del expediente</strong>, que es lo que el catálogo admite —un registro apunta a un apartado y transcribe los datos de ese apartado—. En el registro 1, la Dirección IP y el HostName se toman del apartado de direcciones IP del activo de cómputo del colaborador, donde el HostName corresponde al nombre de red del equipo. En el registro 2, el Usuario de Directorio Activo y el Host Name se toman del apartado de Directorio Activo. Esa correspondencia debe confirmarse con el equipo de desarrollo antes de capturar los registros, conforme a SUP-18: de ella depende que ambos datos de cada subticket puedan transcribirse sin desarrollo. El apartado puede tener <strong>varios registros</strong> para el mismo colaborador —varios activos con IP, varios equipos, varios usuarios de directorio—: el subticket los enlista todos, y cuando el apartado no tiene ninguno el renglón se muestra con <strong>NA</strong> (RN-1.21, RN-1.22).</p>
 <p><strong>Ajuste del subticket de baja de Directorio Activo.</strong> La desactivación del HostName <strong>no se da de alta como registro nuevo</strong>. El sistema ya detona un subticket para la baja de los directorios activos del colaborador, y esa desactivación la atiende el mismo responsable sobre el mismo registro del directorio; por eso lo único que se hace es <strong>ajustar el asunto de ese registro</strong> al texto del punto 3 de arriba, en el que el subticket declara las dos acciones —la baja de los directorios activos y la desactivación del HostName— y transcribe el nombre del equipo junto con el usuario de Directorio Activo, de modo que ambas se atiendan en la misma sesión de trabajo. Ese registro conserva su departamento, su apartado, sus datos a transcribir y su comportamiento de validación actuales: no se marca como "No requiere validación", porque la baja del usuario sí se depura dentro de Business Suite. La consecuencia de esa decisión queda registrada en RGO-13.</p>
-<p>Al estar los dos registros nuevos marcados, sus subtickets nacen en <strong>toda</strong> baja de personal, tenga o no el colaborador su Dirección IP, su HostName o su Usuario de Directorio Activo capturados en el expediente. Nacen colgados del ticket principal de la baja, en la misma corrida del proceso automático y junto con los subtickets que estén configurados sin la marca —entre ellos el de baja de Directorio Activo—. Ninguno depende del cierre de otro: se abren todos a la vez y cada responsable atiende el suyo por su cuenta.</p>
+<p>Al estar los dos registros nuevos marcados, sus subtickets nacen en <strong>toda</strong> baja de personal, tenga o no el colaborador su Dirección IP, su HostName o su Usuario de Directorio Activo capturados en el expediente —cuando no los tiene, el listado del asunto muestra <strong>NA</strong> en el renglón correspondiente—. Nacen colgados del ticket principal de la baja, en la misma corrida del proceso automático y junto con los subtickets que estén configurados sin la marca —entre ellos el de baja de Directorio Activo—. Ninguno depende del cierre de otro: se abren todos a la vez y cada responsable atiende el suyo por su cuenta.</p>
 <p>Esta lista es la del arranque, no un límite: si mañana el negocio identifica otra revisión que deba detonarse en toda baja —de sistemas, de accesos físicos, de licencias—, se resuelve con un registro más en este mismo catálogo y la marca puesta, sin desarrollo.</p>
 <h3 id="operaciones">Operaciones<a class="headerlink" href="#operaciones" title="Permanent link">&para;</a></h3>
 <p>El administrador del sistema deberá poder:
@@ -3994,7 +4001,7 @@ DirectorioActivo:  { }
     E -- No --&gt; G[No se genera subticket para ese registro]
     E -- Sí --&gt; F
     F -- Sí --&gt; G
-    F -- No --&gt; H[Crear el subticket y asignarlo al responsable&lt;br/&gt;del departamento configurado, transcribiendo&lt;br/&gt;los datos que estén registrados]
+    F -- No --&gt; H[Crear el subticket y asignarlo al responsable&lt;br/&gt;del departamento configurado, enlistando todos&lt;br/&gt;los registros de cada dato configurado&lt;br/&gt;y mostrando NA en el dato sin registros]
     H --&gt; I[El responsable atiende y solicita el cierre]
     I --&gt; J{¿El registro está marcado&lt;br/&gt;como No requiere validación?}
     J -- Sí --&gt; L[El subticket se cierra]
@@ -4009,26 +4016,34 @@ DirectorioActivo:  { }
 <p><strong>RN-1.2</strong> El departamento destino de cada registro deberá estar activo y contar con un responsable asignado, porque el subticket se asigna a ese responsable; si no cumple ambas condiciones, la configuración no podrá guardarse.</p>
 <p><strong>RN-1.3</strong> Cada registro deberá dirigirse al departamento que tenga configurada como responsable a la persona que debe atender su subticket, porque es a ese responsable a quien el sistema lo asigna: el de revisión de activos de telefonía y reserva de la dirección IP a <strong>Víctor Hugo Gómez Aguiluz</strong> y el de remoción del monitoreo de antivirus a <strong>Cesar Rafael Figueroa López</strong>, ambos de <strong>Coordinación de Redes y Telecomunicaciones</strong>. La desactivación del HostName no se dirige a un departamento propio: se atiende en el subticket ya existente de baja de los directorios activos, asignado a <strong>Juan Carlos Segovia Espinoza</strong>, que conserva el departamento que tiene configurado hoy.</p>
 <p><strong>RN-1.4</strong> La revisión de los activos de telefonía y la baja de la reserva de IP deberán resolverse en un <strong>único subticket</strong>, no en dos: ambas se dirigen al mismo departamento y se resuelven sobre el mismo equipo del colaborador. Ese subticket deberá declarar las dos acciones en su mensaje, y su cierre deberá dar por atendidas ambas. La remoción del monitoreo de antivirus deberá quedar como un subticket propio, porque se ejecuta en una consola distinta y se coteja contra otros datos del expediente.</p>
-<p><strong>RN-1.5</strong> El subticket de revisión de activos de telefonía y baja de la reserva de IP deberá incluir en su cuerpo la <strong>Dirección IP</strong> y el <strong>HostName</strong> del colaborador dado de baja; el de remoción del monitoreo de antivirus deberá incluir el <strong>Usuario de Directorio Activo</strong> y el <strong>Host Name</strong>. Los datos se transcriben cuando estén registrados en el expediente; cuando alguno no lo esté, el subticket deberá generarse igual e indicar en su cuerpo que el dato no está registrado, conforme a RN-1.13.</p>
+<p><strong>RN-1.5</strong> El subticket de revisión de activos de telefonía y baja de la reserva de IP deberá incluir en su cuerpo la <strong>Dirección IP</strong> y el <strong>HostName</strong> del colaborador dado de baja; el de remoción del monitoreo de antivirus deberá incluir el <strong>Usuario de Directorio Activo</strong> y el <strong>Host Name</strong>. De cada dato deberán enlistarse <strong>todos</strong> los registros que el colaborador tenga y, cuando no tenga ninguno, deberá mostrarse <strong>NA</strong>, conforme a RN-1.21 y RN-1.22; la ausencia del dato no deberá impedir la generación del subticket, conforme a RN-1.13.</p>
 <p><strong>RN-1.6</strong> La desactivación del HostName <strong>no deberá configurarse como un registro nuevo</strong> del catálogo: del registro ya existente que detona el subticket de baja de los directorios activos únicamente se ajustará el asunto, al texto definido por el negocio, en el que se declaran esa baja y la desactivación del HostName y se transcriben el nombre del equipo del colaborador —donde viaja el HostName— y su usuario de Directorio Activo. Ese registro conservará su departamento, su apartado del expediente, sus datos a transcribir y su comportamiento de validación actuales.</p>
 <p><strong>RN-1.7</strong> El sistema no deberá generar un segundo subticket cuando ya exista uno en proceso para la misma baja, el mismo registro de configuración y el mismo ticket principal, de modo que las corridas sucesivas del proceso automático no produzcan duplicados. Esta regla aplica por igual a los registros marcados y a los que no lo están.</p>
 <p><strong>RN-1.8</strong> Los subtickets deberán nacer colgados del ticket principal de la baja de personal y sin dependencia entre sí: ninguno espera el cierre de otro para abrirse, y la falla de uno no deberá impedir la generación de los demás ni la del ticket principal.</p>
 <p><strong>RN-1.9</strong> Un registro en estatus Baja no deberá generar subtickets nuevos, esté marcado o no; los subtickets ya generados a partir de ese registro se conservan y pueden cerrarse con normalidad.</p>
 <p><strong>RN-1.10</strong> El alta, la edición y la baja de los registros de este catálogo deberán estar restringidas al administrador del sistema y quedar registradas en la bitácora de auditoría, indicando el valor anterior, el valor nuevo, el usuario que hizo el cambio y la fecha y hora en que lo realizó.</p>
 <p><strong>RN-1.11</strong> La puesta en marcha de las dos revisiones del arranque, el ajuste del mensaje del subticket de baja de Directorio Activo y la incorporación de cualquier revisión que el negocio agregue después deberán resolverse por configuración del catálogo, sin desarrollo ni liberación de código. La única excepción es el campo "No requiere validación" que se describe en HU-1.2, que se desarrolla una sola vez y queda disponible para todos los registros, presentes y futuros. Los dos registros nuevos deberán darse de alta con el campo <strong>"No requiere validación" marcado</strong>, de modo que sus subtickets se detonen en toda baja y puedan cerrarse sin validación, conforme a HU-1.2.</p>
+<p><strong>RN-1.21</strong> El listado del asunto deberá mostrar <strong>todos</strong> los registros que el colaborador dado de baja tenga de cada dato configurado, sin límite, de modo que el responsable atienda el inventario completo y no únicamente el primer registro que encuentre el sistema. La regla aplica sobre el <strong>parámetro</strong> que el sistema sustituye al generar el subticket, sin modificar la captura del asunto —cada renglón se captura una sola vez, con su <code>{ }</code>—. En particular:</p>
+<ul>
+<li><strong>Dirección IP:</strong> deberán enlistarse <strong>todos los activos del colaborador que cuenten con una dirección IP</strong>, indicando de cada uno el <strong>nombre del activo y su dirección IP</strong>, para que el responsable identifique a qué equipo corresponde cada reserva que debe liberar.</li>
+<li><strong>HostName:</strong> deberán enlistarse <strong>todos los HostName</strong> que el colaborador tenga registrados.</li>
+<li><strong>Usuario de Directorio Activo:</strong> deberán enlistarse <strong>todos los usuarios de directorio activo</strong> que el colaborador tenga registrados.</li>
+</ul>
+<p>Esta regla aplica a los tres asuntos del requerimiento —el de IP y activos de telefonía, el de remoción de antivirus y el de baja de Directorio Activo— y a cualquier registro que el negocio configure después con esos datos.</p>
+<p><strong>RN-1.22</strong> Cuando el colaborador <strong>no tenga ningún registro</strong> de un dato configurado —ningún activo con dirección IP, ningún HostName o ningún usuario de directorio activo—, el parámetro de ese renglón deberá llenarse con la leyenda <strong>NA</strong>. El renglón <strong>no deberá omitirse</strong> ni dejarse en blanco, para que el responsable distinga "el colaborador no tiene nada registrado" de "el dato no se transcribió", y el <strong>NA no deberá impedir la generación del subticket</strong> en los registros marcados como "No requiere validación", conforme a RN-1.13. Cada dato se evalúa por separado: un mismo asunto puede llevar varios renglones enlistados en un dato y NA en otro. El <strong>NA</strong> describe únicamente cómo se muestra un dato sin registros y <strong>no modifica las condiciones de generación</strong> de los registros sin marcar, que siguen sujetas a RN-1.15.</p>
 <h3 id="criterios-de-aceptación">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación" title="Permanent link">&para;</a></h3>
 <p><strong>CA-1.1.1 — Alta del subticket de revisión de activos de telefonía y baja de la reserva de IP</strong>
 Dado que el administrador ingresa al catálogo "Datos Personales"
 Cuando da de alta <strong>un único registro</strong> para la revisión de activos de telefonía y la baja de la reserva de IP, con departamento Coordinación de Redes y Telecomunicaciones, con Dirección IP y HostName como datos a transcribir, con un mensaje que declara las dos acciones y con "No requiere validación" marcado
-Entonces el sistema guarda un solo registro en estatus Activo para ambas acciones, y los subtickets que se generen a partir de él incluirán en su cuerpo la Dirección IP y el HostName del colaborador cuando estén registrados.</p>
+Entonces el sistema guarda un solo registro en estatus Activo para ambas acciones, y los subtickets que se generen a partir de él enlistarán en su cuerpo todos los activos del colaborador que cuenten con dirección IP —con el nombre del activo y su IP— y todos sus HostName registrados, o la leyenda NA en el dato del que no tenga ninguno.</p>
 <p><strong>CA-1.1.2 — Alta del subticket de remoción del monitoreo de antivirus</strong>
 Dado que el administrador da de alta el registro de remoción del monitoreo de antivirus
 Cuando lo configura con departamento Coordinación de Redes y Telecomunicaciones, con Usuario de Directorio Activo y Host Name como datos a transcribir y con "No requiere validación" marcado
-Entonces el sistema guarda el registro en estatus Activo, y los subtickets que se generen a partir de él incluirán en su cuerpo el Usuario de Directorio Activo y el Host Name del colaborador cuando estén registrados.</p>
+Entonces el sistema guarda el registro en estatus Activo, y los subtickets que se generen a partir de él enlistarán en su cuerpo todos los usuarios de directorio activo y todos los Host Name que el colaborador tenga registrados, o la leyenda NA en el dato del que no tenga ninguno.</p>
 <p><strong>CA-1.1.3 — Ajuste del subticket existente de baja de Directorio Activo</strong>
 Dado el registro ya existente del catálogo que detona el subticket de baja de los directorios activos
 Cuando el administrador ajusta su asunto al texto definido por el negocio, en el que se declaran la baja de los directorios activos y la desactivación del HostName, y se transcriben el nombre del equipo y el usuario de Directorio Activo
-Entonces el sistema conserva ese registro con su departamento, su apartado y su comportamiento de validación actuales, no se da de alta ningún registro nuevo para la desactivación del HostName, y los subtickets que se generen a partir de ese registro nacen con ese asunto y con el listado de los equipos registrados al colaborador.</p>
+Entonces el sistema conserva ese registro con su departamento, su apartado y su comportamiento de validación actuales, no se da de alta ningún registro nuevo para la desactivación del HostName, y los subtickets que se generen a partir de ese registro nacen con ese asunto y con el listado de <strong>todos</strong> los equipos y <strong>todos</strong> los usuarios de directorio activo registrados al colaborador, mostrando NA en el dato del que no tenga ningún registro.</p>
 <p><strong>CA-1.1.4 — Generación de los dos subtickets nuevos al registrarse la baja</strong>
 Dado que los dos registros nuevos están activos y marcados como "No requiere validación", y un colaborador queda en estatus Cancelado por la sincronización de nómina
 Cuando el proceso automático de tickets por baja de personal se ejecuta
@@ -4053,12 +4068,20 @@ Entonces no genera subtickets a partir de ese registro, aunque estuviera marcado
 Dado un usuario del área de Cómputo sin permiso de administración del sistema
 Cuando intenta dar de alta o modificar un registro del catálogo "Datos Personales"
 Entonces el sistema se lo impide; y cuando el cambio lo realiza el administrador, la bitácora de auditoría registra el valor anterior, el valor nuevo, el usuario y la fecha y hora del cambio.</p>
+<p><strong>CA-1.1.10 — Listado completo de los activos con IP, de los HostName y de los directorios activos</strong>
+Dado un colaborador dado de baja que tiene tres activos asignados, dos de ellos con dirección IP, y dos equipos con HostName y dos usuarios de directorio activo registrados en su expediente
+Cuando el proceso automático genera los subtickets
+Entonces en el renglón de IP del subticket de IP y activos de telefonía aparecen <strong>los dos</strong> activos que tienen dirección IP, cada uno con su nombre y su dirección IP y sin incluir el activo que no tiene IP, y en el de HostName <strong>los dos</strong> HostName registrados; y en el de remoción de antivirus y en el de baja de Directorio Activo aparecen <strong>los dos</strong> HostName y <strong>los dos</strong> usuarios de directorio activo, de modo que el responsable ve todos los registros que debe atender y no solo el primero.</p>
+<p><strong>CA-1.1.11 — Leyenda NA cuando el colaborador no tiene el dato</strong>
+Dado un colaborador dado de baja que no tiene ningún activo con dirección IP, ningún HostName y ningún usuario de directorio activo registrados
+Cuando el proceso automático genera los subtickets a partir de los registros marcados
+Entonces cada asunto conserva sus renglones y llena cada uno con la leyenda <strong>NA</strong> —<code>IP: NA</code>, <code>HostName: NA</code>, <code>DirectorioActivo: NA</code>, <code>NombreEquipo: NA</code>—, ningún renglón se omite ni queda en blanco, y la generación del subticket no se detiene por el dato faltante.</p>
 <hr />
 <h2 id="hu-12--subtickets-marcados-como-no-requiere-validación">HU-1.2 — Subtickets marcados como "No requiere validación"<a class="headerlink" href="#hu-12--subtickets-marcados-como-no-requiere-validación" title="Permanent link">&para;</a></h2>
 <p>Como responsable de un subticket generado por una baja de personal, quiero que las revisiones que se resuelven fuera del sistema se abran en toda baja y pueda cerrarlas sin depender del expediente del colaborador, para no perder revisiones cuando la información está incompleta ni quedarme con tickets abiertos de forma indefinida por una validación que nunca se va a cumplir.</p>
 <h3 id="reglas-de-negocio_1">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_1" title="Permanent link">&para;</a></h3>
 <p><strong>RN-1.12</strong> El catálogo "Datos Personales" deberá contar con un campo <strong>"No requiere validación"</strong> que se marque por registro. Esa marca deberá gobernar los dos momentos en que hoy se aplica la validación de información: la generación del subticket y su cierre.</p>
-<p><strong>RN-1.13</strong> Cuando el registro esté <strong>marcado</strong>, el sistema deberá generar su subticket <strong>siempre</strong>, en toda baja de personal, sin evaluar el apartado del expediente ni el criterio de consulta configurados. Los datos configurados para transcribirse deberán copiarse al cuerpo del subticket cuando estén registrados; cuando no lo estén, el subticket deberá generarse igual e indicar que el dato no está registrado.</p>
+<p><strong>RN-1.13</strong> Cuando el registro esté <strong>marcado</strong>, el sistema deberá generar su subticket <strong>siempre</strong>, en toda baja de personal, sin evaluar el apartado del expediente ni el criterio de consulta configurados. De cada dato configurado deberán transcribirse al cuerpo del subticket <strong>todos</strong> los registros que el colaborador tenga; cuando no tenga ninguno, el subticket deberá generarse igual y mostrar ese renglón con <strong>NA</strong>, conforme a RN-1.21 y RN-1.22.</p>
 <p><strong>RN-1.14</strong> Cuando el registro esté <strong>marcado</strong>, el sistema no deberá reevaluar el apartado al cerrar el subticket, y el cierre deberá permitirse aunque el colaborador siga teniendo información activa ahí.</p>
 <p><strong>RN-1.15</strong> Cuando el registro esté <strong>sin marcar</strong>, el sistema deberá conservar íntegro el comportamiento actual: generar el subticket únicamente cuando el colaborador tenga información en el apartado configurado, y al intentar cerrarlo reevaluar ese apartado e impedir el cierre —informando que aún contiene información del colaborador— mientras la conserve.</p>
 <p><strong>RN-1.16</strong> El campo deberá nacer <strong>sin marcar</strong>, de modo que los registros ya existentes al momento de la liberación conserven exactamente el comportamiento que tienen hoy, tanto al generar como al cerrar, y que un registro nuevo solo se comporte distinto si el administrador lo marca expresamente.</p>
@@ -4074,7 +4097,7 @@ Entonces el sistema almacena la marca, y los subtickets de ese registro se gener
 <p><strong>CA-1.2.2 — Generación en una baja sin información en el apartado</strong>
 Dado un colaborador dado de baja cuyo expediente no tiene registrados la Dirección IP, el HostName ni el Usuario de Directorio Activo, y los dos registros nuevos marcados
 Cuando el proceso automático se ejecuta
-Entonces el sistema genera los dos subtickets de todos modos, y cada uno indica en su cuerpo que esos datos no están registrados en el expediente.</p>
+Entonces el sistema genera los dos subtickets de todos modos, y cada uno muestra en su cuerpo el renglón correspondiente con la leyenda <strong>NA</strong> en lugar del dato, sin omitir renglones, conforme a RN-1.22.</p>
 <p><strong>CA-1.2.3 — Cierre de un subticket marcado con información aún activa en el apartado</strong>
 Dado un subticket de revisión de activos de telefonía y baja de la reserva de IP, generado a partir de un registro marcado, cuyo colaborador dado de baja todavía tiene información activa en el apartado configurado
 Cuando el responsable registra su atención de las dos acciones y solicita el cierre
@@ -5128,6 +5151,13 @@ Esta columna es un dato derivado, no una fuente: no almacena nada ni modifica el
 <td>CA-1.1.1 a CA-1.1.9</td>
 </tr>
 <tr>
+<td>Que el responsable vea en el asunto todos los activos con IP, todos los HostName y todos los directorios activos del colaborador, o NA cuando no tenga ninguno</td>
+<td>RF-01</td>
+<td>HU-1.1</td>
+<td>RN-1.5, RN-1.21, RN-1.22</td>
+<td>CA-1.1.10, CA-1.1.11</td>
+</tr>
+<tr>
 <td>Que un subticket cuya atención se ejecuta fuera del sistema se abra siempre y pueda cerrarse sin quedar abierto indefinidamente</td>
 <td>RF-01</td>
 <td>HU-1.2</td>
@@ -5238,7 +5268,7 @@ Esta columna es un dato derivado, no una fuente: no almacena nada ni modifica el
 <p><strong>SUP-22</strong> Un registro marcado como "No requiere validación" genera su subticket en <strong>toda</strong> baja de personal que llegue por la sincronización de nómina, sin distinguir el motivo de la baja, el centro de trabajo, el departamento ni si el colaborador tenía o no equipo asignado. El negocio confirmó que ese es el comportamiento deseado para las dos revisiones del arranque: prefiere un subticket que se cierre sin hallazgos a una revisión que nunca se abra.</p>
 <p><strong>SUP-23</strong> La desactivación del HostName se atiende junto con la baja de los directorios activos del colaborador, por lo que no se configura como revisión propia: del subticket que ya se detona para esa baja solo se ajusta el asunto, para que declare las dos acciones y transcriba el nombre del equipo del colaborador además de su usuario de Directorio Activo. Ese registro conserva su departamento, su apartado y su comportamiento de validación actuales; con ello, la desactivación del HostName queda condicionada a que el colaborador tenga registro de Directorio Activo en su expediente, conforme a RGO-13.</p>
 <p><strong>SUP-24</strong> El subticket se asigna al <strong>responsable del departamento</strong> configurado en el registro. Ese responsable es un dato administrable del catálogo de departamentos, de modo que dirigir cada subticket a Víctor Hugo Gómez Aguiluz, a Cesar Rafael Figueroa López y a Juan Carlos Segovia Espinoza se resuelve por configuración, sin desarrollo: basta que el departamento que se capture en cada registro tenga configurada a esa persona como responsable.</p>
-<p><strong>SUP-25</strong> El bloque <strong>LISTADO</strong> del asunto no se captura renglón por renglón: el sistema lo arma al generar el subticket con los datos configurados en "datos que se transcriben al subticket", repitiendo el renglón por cada registro que encuentre en el apartado del expediente —por eso el subticket de baja de Directorio Activo puede mostrar varios nombres de equipo—. La etiqueta de cada renglón es el nombre del dato configurado, de modo que los datos deberán capturarse con el nombre exacto con el que existen en el apartado para que el listado se lea como lo definió el negocio.</p>
+<p><strong>SUP-25</strong> El bloque <strong>LISTADO</strong> del asunto se captura con un <code>{ }</code> por renglón, y cada <code>{ }</code> es un <strong>parámetro</strong> que el sistema llena al generar el subticket con los datos configurados en "datos que se transcriben al subticket". Ese llenado incluye <strong>todos</strong> los registros que encuentre en el apartado del expediente —por eso un subticket puede mostrar varios activos con IP, varios nombres de equipo o varios usuarios de directorio activo— y la leyenda <strong>NA</strong> cuando no encuentre ninguno, conforme a RN-1.21 y RN-1.22. La etiqueta de cada renglón es el nombre del dato configurado, de modo que los datos deberán capturarse con el nombre exacto con el que existen en el apartado para que el listado se lea como lo definió el negocio. Se asume que el parámetro del renglón de IP puede resolver <strong>nombre del activo y dirección IP</strong> de cada activo, que es lo que el negocio requiere; si el catálogo solo admitiera el valor de un campo, esa composición deberá confirmarse con el equipo de desarrollo junto con la correspondencia de apartados de SUP-18.</p>
 <p><strong>SUP-26</strong> El detalle del ticket de recolección puede contener activos que ya no están en estatus Resguardo en Sitio —porque se recolectaron o se reasignaron antes de que el plazo venciera—, ya que su propósito es mostrar el inventario completo del colaborador conforme a RN-4.4. Esos renglones son informativos: la recolección física se ejecuta sobre los activos que siguen en resguardo, y el ticket no cambia el estatus de ninguno (RN-4.10). Debe validarse con el equipo de desarrollo que el detalle del ticket interno admita activos en cualquier estatus, del mismo modo que SUP-15 valida que admita varios activos.</p>
 <h2 id="dependencias">Dependencias<a class="headerlink" href="#dependencias" title="Permanent link">&para;</a></h2>
 <p><strong>DEP-01</strong> Departamento encargado de recolecciones dado de alta, activo y con responsable asignado.</p>
@@ -5295,10 +5325,10 @@ Dado que los dos registros nuevos están activos y marcados como "No requiere va
 Cuando el proceso automático de tickets por baja de personal se ejecuta
 Entonces se crea el ticket principal de la baja y, colgados de él, exactamente dos subtickets a partir de esos registros —uno de telefonía y reserva de IP y uno de remoción de antivirus—, ambos asignados al responsable de Coordinación de Redes y Telecomunicaciones, abiertos al mismo tiempo, sin que ninguno espere el cierre de otro y sin afectar los subtickets de los demás registros del catálogo.</p>
 <p><strong>CP-006 — Datos del colaborador transcritos a cada subticket (camino feliz)</strong>
-Verifica: CA-1.1.1, CA-1.1.2, CA-1.1.4 · RN-1.5
-Dado un colaborador dado de baja cuyo expediente registra la Dirección IP y el HostName de su equipo y su Usuario de Directorio Activo
+Verifica: CA-1.1.1, CA-1.1.2, CA-1.1.4, CA-1.1.10 · RN-1.5, RN-1.21
+Dado un colaborador dado de baja cuyo expediente registra tres activos asignados —dos con dirección IP y uno sin ella—, dos HostName y dos usuarios de Directorio Activo
 Cuando el proceso automático genera el subticket de telefonía y reserva de IP y el de remoción de antivirus
-Entonces el primero muestra en su cuerpo el nombre del colaborador, su RFC, la Dirección IP y el HostName, y el segundo el nombre, el RFC, el Usuario de Directorio Activo y el Host Name, sin que el responsable tenga que consultarlos en otra pantalla.</p>
+Entonces el primero muestra en su cuerpo el nombre del colaborador, su RFC, <strong>los dos</strong> activos con dirección IP —cada uno con su nombre y su IP, sin el activo que no tiene IP— y <strong>los dos</strong> HostName; y el segundo el nombre, el RFC, <strong>los dos</strong> usuarios de Directorio Activo y <strong>los dos</strong> Host Name, sin que el responsable tenga que consultarlos en otra pantalla.</p>
 <p><strong>CP-007 — Alta de una revisión nueva después de la puesta en marcha (extensibilidad)</strong>
 Verifica: CA-1.1.5 · RN-1.1, RN-1.11
 Dado un ambiente con la funcionalidad ya liberada y los dos registros del arranque operando
@@ -5339,16 +5369,16 @@ Verifica: CA-1.2.1 · RN-1.12
 Dado que el administrador edita el registro de revisión de activos de telefonía y baja de la reserva de IP
 Cuando marca "No requiere validación" y guarda
 Entonces el sistema almacena la marca y el registro queda visible en el catálogo como marcado, tanto para generar como para cerrar.</p>
-<p><strong>CP-015 — Generación con el apartado vacío en un registro marcado (camino feliz)</strong>
-Verifica: CA-1.2.2 · RN-1.13
-Dado un colaborador dado de baja cuyo expediente no tiene registrados la Dirección IP, el HostName ni el Usuario de Directorio Activo, y los dos registros nuevos marcados
+<p><strong>CP-015 — Generación con el apartado vacío en un registro marcado: listado en NA (camino feliz)</strong>
+Verifica: CA-1.2.2, CA-1.1.11 · RN-1.13, RN-1.22
+Dado un colaborador dado de baja que no tiene ningún activo con dirección IP, ningún HostName ni ningún Usuario de Directorio Activo registrados, y los dos registros nuevos marcados
 Cuando el proceso automático se ejecuta
-Entonces los dos subtickets se generan de todos modos, y cada uno indica en su cuerpo que esos datos no están registrados en el expediente.</p>
-<p><strong>CP-016 — Generación con solo uno de los dos datos registrados (dato límite)</strong>
-Verifica: CA-1.2.2 · RN-1.13
-Dado un colaborador dado de baja cuyo expediente registra la Dirección IP de su equipo pero no su HostName
+Entonces los dos subtickets se generan de todos modos y cada uno llena sus renglones con la leyenda <strong>NA</strong> —<code>IP: NA</code>, <code>HostName: NA</code>, <code>DirectorioActivo: NA</code>—, sin que ningún renglón se omita ni quede en blanco.</p>
+<p><strong>CP-016 — Generación con un dato enlistado y el otro en NA (dato límite)</strong>
+Verifica: CA-1.2.2, CA-1.1.10, CA-1.1.11 · RN-1.13, RN-1.21, RN-1.22
+Dado un colaborador dado de baja que tiene dos activos con dirección IP pero ningún HostName registrado
 Cuando el proceso automático genera el subticket de telefonía y reserva de IP
-Entonces el subticket muestra la Dirección IP registrada e indica que el HostName no está capturado, sin que la generación se detenga por el dato faltante.</p>
+Entonces el subticket muestra en el renglón de IP <strong>los dos</strong> activos con dirección IP, cada uno con su nombre y su IP, y el renglón de HostName con <strong>NA</strong>, sin que la generación se detenga por el dato faltante y sin que la ausencia de un dato afecte el enlistado del otro.</p>
 <p><strong>CP-017 — Cierre de un subticket marcado con información aún activa en el apartado (camino feliz)</strong>
 Verifica: CA-1.2.3 · RN-1.14
 Dado un subticket de remoción del monitoreo de antivirus generado a partir de un registro marcado, cuyo colaborador dado de baja todavía tiene información activa en el apartado configurado
@@ -5936,7 +5966,7 @@ Dado un usuario con permiso para consultar el listado de activos de cómputo y s
 Cuando consulta el listado
 Entonces visualiza la columna de días restantes de resguardo con normalidad, porque el requerimiento no introduce permisos nuevos.</p>
 <h3 id="trazabilidad-de-la-cobertura-de-pruebas">Trazabilidad de la cobertura de pruebas<a class="headerlink" href="#trazabilidad-de-la-cobertura-de-pruebas" title="Permanent link">&para;</a></h3>
-<p>La tabla evidencia que los 86 criterios de aceptación del documento quedan cubiertos por al menos un caso de prueba, e indica qué tipo de escenarios cubre cada uno.</p>
+<p>La tabla evidencia que los 88 criterios de aceptación del documento quedan cubiertos por al menos un caso de prueba, e indica qué tipo de escenarios cubre cada uno.</p>
 <table>
 <thead>
 <tr>
@@ -5990,6 +6020,16 @@ Entonces visualiza la columna de días restantes de resguardo con normalidad, po
 <td>CA-1.1.9</td>
 <td>CP-013</td>
 <td>Permisos, Trazabilidad</td>
+</tr>
+<tr>
+<td>CA-1.1.10</td>
+<td>CP-006, CP-016</td>
+<td>Camino feliz, Dato límite</td>
+</tr>
+<tr>
+<td>CA-1.1.11</td>
+<td>CP-015, CP-016</td>
+<td>Camino feliz, Dato límite</td>
 </tr>
 <tr>
 <td>CA-1.2.1</td>
@@ -6384,6 +6424,7 @@ Entonces visualiza la columna de días restantes de resguardo con normalidad, po
 <h3 id="puntos-resueltos-por-el-negocio">Puntos resueltos por el negocio<a class="headerlink" href="#puntos-resueltos-por-el-negocio" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Subtickets automáticos por baja de personal:</strong> son <strong>dos</strong> registros nuevos en el catálogo "Datos Personales", no tres ni cuatro. El primero fusiona la revisión de activos de telefonía y datos del directorio telefónico con la reserva de la dirección IP, porque ambas se resuelven sobre el mismo equipo; el segundo queda solo con la remoción del monitoreo de antivirus (RN-1.3, RN-1.4). Los dos se resuelven <strong>por configuración</strong> del catálogo, con el departamento destino, el asunto y los datos que definió el negocio —Dirección IP y HostName en el primero, Usuario de Directorio Activo y Host Name en el segundo—; no requieren desarrollo (RN-1.5, RN-1.11). La <strong>desactivación del HostName no genera registro nuevo</strong>: se ajusta el asunto del subticket que ya se detona para la baja de los directorios activos, que ahora declara también esa desactivación y transcribe el nombre del equipo del colaborador (RN-1.6). El mismo catálogo queda disponible para configurar después cualquier otra revisión que deba detonarse al registrar una baja (RN-1.1, CA-1.1.5).</li>
+<li><strong>Contenido del listado de los asuntos:</strong> los asuntos se capturan tal como el negocio los definió —un <code>{ }</code> por renglón—; lo que se precisa es <strong>con qué se llena ese parámetro</strong>, que no es un solo valor por dato. Donde el asunto pide <strong>IP</strong> se enlistan <strong>todos los activos del colaborador que cuenten con una dirección IP</strong>, indicando de cada uno el <strong>nombre del activo y su IP</strong>; donde pide <strong>HostName</strong> o <strong>Directorio Activo</strong> se enlistan <strong>todos</strong> los que el colaborador tenga registrados. Cuando no tiene ninguno, el renglón se llena con <strong>NA</strong> y nunca se omite, para que el responsable distinga que el colaborador no tiene nada registrado (RN-1.21, RN-1.22, CA-1.1.10, CA-1.1.11).</li>
 <li><strong>Validación de información en los subtickets nuevos:</strong> no se exige, ni para generarlos ni para cerrarlos. Se agrega en el catálogo el campo <strong>"No requiere validación"</strong>, que se marca registro por registro: el subticket marcado se detona en toda baja sin evaluar el expediente del colaborador y se cierra sin reevaluarlo, porque su atención se ejecuta en herramientas externas a Business Suite (RN-1.13, RN-1.14). Los <strong>dos</strong> registros del arranque se dan de alta con la marca puesta (RN-1.11); los registros ya existentes quedan sin marcar y conservan la validación (RN-1.16), incluido el de baja de Directorio Activo, del que solo se ajusta el mensaje.</li>
 <li><strong>Prórroga formal:</strong> no se requiere. Se implementa únicamente la opción de extender la vigencia del resguardo (RF-05), sin flujo de solicitud ni autorización.</li>
 <li><strong>Mecanismo de la extensión:</strong> la nueva vigencia se define <strong>seleccionando una fecha en un calendario</strong>, no capturando una cantidad de días, porque el negocio razona el resguardo contra una fecha concreta. El calendario solo habilita fechas que efectivamente extienden el plazo: quedan deshabilitadas las anteriores o iguales a la fecha de fin de vigencia vigente —la que resultó de los días configurados en la variable de sistema— y las anteriores al día actual, de modo que una extensión no pueda acortar la vigencia ni dejarla en el pasado (RN-5.2, RN-5.6).</li>
