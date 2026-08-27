@@ -2,8 +2,8 @@
 
 | Campo   | Valor        |
 |---------|--------------|
-| Versión | 1.0          |
-| Fecha   | 2026-08-26   |
+| Versión | 1.1          |
+| Fecha   | 2026-08-27   |
 | Estado  | Definición   |
 | Módulo  | Facturación Inmobiliaria — Gestión de CFDIs (Factura, Nota de Crédito, Abono, Anticipo) |
 | Autor   | Análisis de Negocio |
@@ -14,22 +14,22 @@
 
 Este documento describe los requerimientos funcionales para fortalecer la gestión de Comprobantes Fiscales Digitales por Internet (CFDI) en el sistema de Facturación Inmobiliaria de Grupo Reyes. Traduce el Documento de Alcance Funcional recibido (tipo Sistema Nuevo / Mejora Evolutiva) en requerimientos verificables, con sus historias de usuario, reglas de negocio y criterios de aceptación, de modo que pueda usarse como base de backlog de desarrollo.
 
-El documento describe los siguientes requerimientos funcionales:
+El documento describe los siguientes requerimientos funcionales, agrupados primero en **Emisión** y después en **Cancelación**:
 
-- **RF-01** — Cancelación de CFDI emitido para sustitución.
-- **RF-02** — Emisión de CFDI dentro del plazo permitido (72 horas) y timbrado.
-- **RF-03** — Exclusión del motivo "Global" en cancelación de Abonos y Anticipos.
-- **RF-04** — Cancelación general de CFDI (motivo, observaciones y periodo fiscal).
-- **RF-05** — Emisión de CFDI por sustitución.
-- **RF-06** — Emisión de CFDI en diferentes monedas y tipo de cambio.
-- **RF-07** — Emisión de Factura.
+**Emisión**
+- **RF-01** — Emisión de CFDI dentro del plazo permitido (72 horas) y timbrado.
+- **RF-02** — Emisión de CFDI por sustitución.
+- **RF-03** — Emisión de CFDI en diferentes monedas y tipo de cambio.
+- **RF-04** — Emisión de Nota de Crédito.
+
+**Cancelación**
+- **RF-05** — Cancelación general de CFDI (motivo, observaciones y periodo fiscal).
+- **RF-06** — Cancelación de CFDI emitido para sustitución.
+- **RF-07** — Exclusión del motivo "Global" en cancelación de Abonos y Anticipos.
 - **RF-08** — Cancelación de Factura.
-- **RF-09** — Emisión de Abono.
-- **RF-10** — Cancelación de Abono.
-- **RF-11** — Emisión de Anticipo.
-- **RF-12** — Cancelación de Anticipo.
-- **RF-13** — Emisión de Nota de Crédito.
-- **RF-14** — Cancelación de Nota de Crédito.
+- **RF-09** — Cancelación de Abono.
+- **RF-10** — Cancelación de Anticipo.
+- **RF-11** — Cancelación de Nota de Crédito.
 
 ## 2. Alcance del documento
 
@@ -98,86 +98,103 @@ stateDiagram-v2
     Cancelado --> [*]
 ```
 
-El diagrama aplica de forma general a los cuatro tipos de CFDI; el sub-estatus **Rechazado** y su espera de 24 horas son exclusivos de Factura (ver RF-08), y algunos CFDI de Anticipo/Abono generados automáticamente nacen directamente en estatus Cancelado (ver RF-11).
+El diagrama aplica de forma general a los cuatro tipos de CFDI; el sub-estatus **Rechazado** y su espera de 24 horas son exclusivos de Factura (ver RF-11), y algunos CFDI de Anticipo/Abono generados automáticamente nacen directamente en estatus Cancelado (ver RF-06).
 
 ## 6. Índice de requerimientos
 
-> **Navegación rápida:** cada identificador RF en la primera columna es un enlace que lleva directamente al detalle del requerimiento. Hacer clic para ir al RF.
+> **Navegación rápida:** cada identificador RF en la primera columna es un enlace que lleva directamente al detalle del requerimiento. Hacer clic para ir al RF. Los requerimientos se listan primero de **Emisión** y después de **Cancelación**.
 
 | RF | Título | Sistema | Aplica a |
 |----|--------|---------|----------|
-| [RF-01](#rf-01) | Cancelación de CFDI emitido para sustitución | Facturación Inmobiliaria | Factura, NC, Abono, Anticipo |
-| [RF-02](#rf-02) | Emisión de CFDI dentro del plazo permitido y timbrado | Facturación Inmobiliaria | Factura, NC, Abono, Anticipo |
-| [RF-03](#rf-03) | Exclusión del motivo "Global" en cancelación de Abonos y Anticipos | Facturación Inmobiliaria | Abono, Anticipo |
-| [RF-04](#rf-04) | Cancelación general de CFDI (motivo, observaciones y periodo fiscal) | Facturación Inmobiliaria | Factura, NC, Abono, Anticipo |
-| [RF-05](#rf-05) | Emisión de CFDI por sustitución | Facturación Inmobiliaria | Factura, NC, Abono, Anticipo |
-| [RF-06](#rf-06) | Emisión de CFDI en diferentes monedas y tipo de cambio | Facturación Inmobiliaria | Factura, NC, Abono, Anticipo |
-| [RF-07](#rf-07) | Emisión de Factura | Facturación Inmobiliaria | Factura |
+| [RF-01](#rf-01) | Emisión de CFDI dentro del plazo permitido y timbrado | Facturación Inmobiliaria | Factura, NC, Abono, Anticipo |
+| [RF-02](#rf-02) | Emisión de CFDI por sustitución | Facturación Inmobiliaria | Factura, NC, Abono, Anticipo |
+| [RF-03](#rf-03) | Emisión de CFDI en diferentes monedas y tipo de cambio | Facturación Inmobiliaria | Factura, NC, Abono, Anticipo |
+| [RF-04](#rf-04) | Emisión de Nota de Crédito | Facturación Inmobiliaria | Nota de Crédito |
+| [RF-05](#rf-05) | Cancelación general de CFDI (motivo, observaciones y periodo fiscal) | Facturación Inmobiliaria | Factura, NC, Abono, Anticipo |
+| [RF-06](#rf-06) | Cancelación de CFDI emitido para sustitución | Facturación Inmobiliaria | Factura, NC, Abono, Anticipo |
+| [RF-07](#rf-07) | Exclusión del motivo "Global" en cancelación de Abonos y Anticipos | Facturación Inmobiliaria | Abono, Anticipo |
 | [RF-08](#rf-08) | Cancelación de Factura | Facturación Inmobiliaria | Factura |
-| [RF-09](#rf-09) | Emisión de Abono | Facturación Inmobiliaria | Abono |
-| [RF-10](#rf-10) | Cancelación de Abono | Facturación Inmobiliaria | Abono |
-| [RF-11](#rf-11) | Emisión de Anticipo | Facturación Inmobiliaria | Anticipo |
-| [RF-12](#rf-12) | Cancelación de Anticipo | Facturación Inmobiliaria | Anticipo |
-| [RF-13](#rf-13) | Emisión de Nota de Crédito | Facturación Inmobiliaria | Nota de Crédito |
-| [RF-14](#rf-14) | Cancelación de Nota de Crédito | Facturación Inmobiliaria | Nota de Crédito |
+| [RF-09](#rf-09) | Cancelación de Abono | Facturación Inmobiliaria | Abono |
+| [RF-10](#rf-10) | Cancelación de Anticipo | Facturación Inmobiliaria | Anticipo |
+| [RF-11](#rf-11) | Cancelación de Nota de Crédito | Facturación Inmobiliaria | Nota de Crédito |
+
+## 7. Reglas de Negocio — Vista General
+
+> Esta sección da visibilidad consolidada a las **43 reglas de negocio** documentadas (derivadas de las 55 reglas del Documento de Alcance Funcional fuente, reagrupadas y sin duplicados), organizadas en el mismo orden Emisión → Cancelación del índice. Cada regla vive también dentro de su RF/HU correspondiente (sección `### Reglas de negocio`); esta tabla es un mapa rápido de consulta, no reemplaza el detalle.
+
+### 7.1 Reglas de negocio de Emisión (general)
+
+| RN | Regla | RF |
+|----|-------|----|
+| RN-1.1 | La emisión de CFDIs (Factura, NC, Anticipo, Abono) no podrá exceder 72 horas respecto de la fecha y hora actual. | 
+| RN-1.2 | Si el CFDI excede las 72 horas, se permite su cancelación siempre que haya quedado guardado, requiriendo motivo. | 
+| RN-1.3 | El CFDI podrá timbrarse automática o manualmente si su estatus ≠ Cancelado, EstatusTimbrado = Pendiente y no excede 72 horas desde su emisión. | 
+| RN-1.4 | El timbrado manual requiere un permiso especial. | 
+| RN-1.5 | Al timbrarse el CFDI, el sistema envía automáticamente el documento al correo del cliente. | 
+| RN-2.1 | El CFDI emitido por sustitución deberá estar relacionado con un CFDI previamente cancelado. | 
+| RN-2.2 | El CFDI sustituido y el CFDI sustituto deberán corresponder al mismo cliente. | 
+| RN-2.3 | La fecha de emisión del CFDI sustituto sólo podrá ser la fecha actual. | 
+| RN-2.4 | La fecha de timbrado del CFDI sustituto será la fecha actual. | 
+| RN-3.1 | Al emitir CFDIs con moneda extranjera, el sistema deberá aplicar el tipo de cambio correspondiente. | 
+
+### 7.2 Reglas de negocio de Emisión por tipo de documento
+
+| RN | Regla | RF |
+|----|-------|----|
+| RN-4.1 | La Factura automática generada desde Entrega no permite agregar ni eliminar renglones manualmente. 
+| RN-4.2 | Si se aplica como forma de pago un saldo de NC interna (no timbrada), se exige aplicar el 100%; no se admite aplicación parcial. |
+| RN-4.3 | La Factura debe tener al menos un detalle y al menos una forma de pago para poder emitirse. | 
+| RN-4.4 | Debe existir congruencia entre el Método de Pago y las Formas de Pago capturadas. |
+| RN-4.5 | El folio de la Factura se conforma con la serie de Sucursal + tipo de documento (Consignación = V, Fiscal = F). | 
+| RN-5.1 | El Método de Pago del Abono siempre es fijo a "Pago en Parcialidades/Diferido" (PPD) desde su creación. | 
+| RN-5.2 | El remanente no aplicado del Abono genera Anticipo si supera el máximo de la Factura. | 
+| RN-6.1 | El Anticipo no tiene líneas de detalle; es un documento de un solo importe, impuesto y total. | 
+| RN-6.2 | El Método de Pago del Anticipo siempre es fijo a "Pago en una sola exhibición" (PUE). | 
+| RN-6.3 | Un Anticipo de Egreso automático (por Abono o cancelación de Anticipo) nace directamente Cancelado. | 
+| RN-6.4 | El Anticipo de Egreso generado por aplicación a Factura no genera movimiento propio en GenerarTransaccion. | 
+| RN-6.5 | El Anticipo de Ingreso automático (por remanente de Abono) nunca es cancelable manualmente. | 
+| RN-6.6 | Aplicar un Anticipo genera automáticamente su "Anticipo de Egreso" (comprobante CFDI de la aplicación). | 
+| RN-7.1 | Al aplicar una NC interna, se clona automáticamente a una NC fiscal nueva ligada a la Factura, y la interna se cancela. | 
+| RN-7.2 | La NC debe permitir el tipo "Diferencia / Descuento", aplicado al importe de la Factura. | 
+| RN-7.3 | La NC debe permitir el tipo "Descuento por Concepto", prorrateado entre las partidas de la Factura según su peso proporcional. | 
+| RN-7.4 | El tipo "Cancelación" de NC representa contablemente el CFDI de Egreso emitido al cancelar una Factura ya timbrada. | 
+| RN-7.5 | Todos los tipos de NC requieren un permiso especial distinto entre sí. | 
+| RN-7.6 | La Factura relacionada a la NC debe estar Finalizada y Timbrada. |
+| RN-7.7 | Las NC siempre se timbran con Método de Pago PUE (nunca PPD), según Anexo 20 SAT, aunque la Factura origen sea a crédito. | 
+| RN-7.8 | El folio de la NC se conforma por serie según tipo de documento (Fiscal/Interno/Interplanta), con prefijo de Sucursal. | 
+| RN-7.9 | Las NC se generan automáticamente en devoluciones de cliente y en cascadas de cancelación de Factura. | 
+
+### 7.3 Reglas de negocio de Cancelación (general)
+
+| RN | Regla | RF |
+|----|-------|----|
+| RN-8.1 | Toda cancelación de CFDI requiere capturar motivo y observaciones antes de confirmar la operación. | 
+| RN-8.2 | Podrán cancelarse CFDIs de meses anteriores si corresponden a un periodo o ejercicio fiscal no cerrado ni declarado. | 
+| RN-8.3 | La opción de cancelar el timbre está deshabilitada en la interfaz de Factura; sólo el job automático puede ejecutarla. | 
+| RN-9.1 | El CFDI no podrá cancelarse si su estatus es "Buzón Tributario" o "Cancelado". | 
+| RN-9.2 | La cancelación de un CFDI emitido para sustitución sólo procede si el comprobante está vigente. | 
+| RN-10.1 | El motivo "04 - Global" no debe estar disponible entre las opciones para cancelar Abonos y Anticipos. | 
+| RN-10.2 | Si el motivo "04 - Global" queda disponible y es seleccionado, el sistema debe impedir la ejecución de la cancelación. | 
+
+### 7.4 Reglas de negocio de Cancelación por tipo de documento
+
+| RN | Regla | RF |
+|----|-------|----|
+| RN-11.1 | No podrá cancelarse una Factura con NC relacionada; primero deberá cancelarse la NC. | 
+| RN-11.2 | Se permite cancelar una Factura hasta 3 veces por defecto; al tercer intento cambia a Rechazado y debe esperarse 24h para reintentar. | 
+| RN-11.3 | La Factura podrá cancelarse únicamente con los motivos "01", "02", "03" y "04". | 
+| RN-12.1 | El Abono no es cancelable si está en estatus "Pendiente de timbrar". | 
+| RN-12.2 | Cancelar un Abono que generó Anticipo obliga a cancelar en cascada dicho Anticipo. | 
+| RN-12.3 | Al cancelar el Abono, se revierte la Parcialidad SAT de cada Factura afectada. |
+| RN-12.4 | El Abono podrá cancelarse únicamente con los motivos "01", "02" y "03". | 
+| RN-13.1 | El Anticipo podrá cancelarse únicamente con los motivos "01", "02" y "03". | 
+| RN-14.1 | La NC podrá cancelarse únicamente con los motivos "01", "02" y "03". | 
 
 ---
 ---
 
 <a id="rf-01"></a>
-# RF-01 — Cancelación de CFDI emitido para sustitución
-
-| Campo        | Valor       |
-|--------------|-------------|
-| Prioridad    | Must        |
-| Estado       | Definición  |
-| Dependencias | Ninguna     |
-
-## Objetivo
-Permitir que un usuario con permisos adecuados cancele un CFDI que fue emitido para sustitución, manteniendo la correcta gestión y trazabilidad de los comprobantes fiscales.
-
-## Descripción
-El sistema deberá permitir la cancelación de CFDIs (Factura, Nota de Crédito, Abono y Anticipo) que hayan sido emitidos para sustitución, siempre que el usuario cuente con los permisos correspondientes y el comprobante cumpla con las reglas de negocio establecidas para su cancelación.
-
-## HU-1.1 — Cancelar CFDI emitido para sustitución
-
-Como usuario con permisos para gestionar CFDIs, quiero cancelar CFDIs (Factura, Nota de Crédito, Anticipo o Abono) que hayan sido emitidos para sustitución, para mantener la correcta gestión y trazabilidad de los comprobantes fiscales conforme a los permisos y reglas de negocio establecidas.
-
-### Reglas de negocio
-
-**RN-1.1** El CFDI no podrá cancelarse si su estatus es "Buzón Tributario" o "Cancelado".
-
-**RN-1.2** La cancelación de un CFDI emitido para sustitución sólo procederá si dicho comprobante se encuentra vigente.
-
-### Criterios de Aceptación
-
-**CA-1.1.1 — Cancelación exitosa de CFDI vigente emitido para sustitución**
-Dado que el usuario cuenta con permisos para gestionar CFDIs y el comprobante (Factura, Nota de Crédito, Abono o Anticipo) fue emitido para sustitución y se encuentra vigente
-Cuando el usuario solicita la cancelación
-Entonces el sistema permite la cancelación y actualiza el estatus del CFDI a Cancelado.
-
-**CA-1.1.2 — Motivos de cancelación permitidos según tipo de CFDI**
-Dado que el usuario cancela un CFDI emitido para sustitución
-Cuando selecciona el motivo de cancelación
-Entonces el sistema únicamente ofrece los motivos "01 - Errores con relación", "02 - Errores sin relación" y "03 - No se llevó a cabo la operación" para Nota de Crédito, Abono y Anticipo, y adicionalmente "04 - Operación relacionada a una factura global" para Factura.
-
-**CA-1.1.3 — Bloqueo por estatus no cancelable**
-Dado que el CFDI se encuentra en estatus "Buzón Tributario" o "Cancelado"
-Cuando el usuario intenta cancelarlo
-Entonces el sistema impide la operación e informa que el comprobante no es cancelable en su estatus actual.
-
-**CA-1.1.4 — Sin permisos suficientes**
-Dado que el usuario no cuenta con los permisos requeridos para gestionar CFDIs
-Cuando intenta ejecutar la cancelación
-Entonces el sistema rechaza la operación e informa que no cuenta con los permisos necesarios.
-
----
-
-**Regla transversal:**
-Este requerimiento comparte reglas con RF-04 (Cancelación general de CFDI) y con RF-05 (Emisión de CFDI por sustitución): un CFDI sólo puede sustituirse si el original quedó previamente cancelado por esta vía.
-
-<a id="rf-02"></a>
-# RF-02 — Emisión de CFDI dentro del plazo permitido y timbrado
+# RF-01 — Emisión de CFDI dentro del plazo permitido y timbrado
 
 | Campo        | Valor       |
 |--------------|-------------|
@@ -191,148 +208,59 @@ Garantizar que la emisión y el timbrado de los CFDIs se realicen dentro de los 
 ## Descripción
 El sistema deberá permitir la emisión de CFDIs (Factura, Nota de Crédito, Anticipo y Abono) siempre que la fecha de emisión no exceda 72 horas respecto de la fecha y hora actual, y deberá gestionar el timbrado automático o manual de dichos comprobantes conforme a las reglas de negocio y de permisos aplicables.
 
-## HU-2.1 — Emitir CFDI dentro del plazo permitido
+## HU-1.1 — Emitir CFDI dentro del plazo permitido
 
 Como usuario autorizado para la emisión de CFDIs, quiero emitir CFDIs de tipo Factura, Nota de Crédito, Anticipo y Abono dentro del plazo permitido, para garantizar que la emisión de los comprobantes fiscales se realice conforme a la regla de negocio establecida respecto a la fecha y hora actual.
 
 ### Reglas de negocio
 
-**RN-2.1** La emisión de CFDIs (Factura, Nota de Crédito, Anticipo y Abono) no podrá exceder 72 horas respecto de la fecha y hora actual.
+**RN-1.1** La emisión de CFDIs (Factura, Nota de Crédito, Anticipo y Abono) no podrá exceder 72 horas respecto de la fecha y hora actual.
 
-**RN-2.2** Si el CFDI excede las 72 horas, se permite su cancelación siempre que haya quedado guardado, requiriendo capturar el motivo de cancelación.
+**RN-1.2** Si el CFDI excede las 72 horas, se permite su cancelación siempre que haya quedado guardado, requiriendo capturar el motivo de cancelación.
 
-**RN-2.3** El CFDI podrá timbrarse automática o manualmente siempre que su estatus sea distinto de Cancelado, su EstatusTimbrado sea Pendiente y no hayan transcurrido más de 72 horas desde su emisión.
+**RN-1.3** El CFDI podrá timbrarse automática o manualmente siempre que su estatus sea distinto de Cancelado, su EstatusTimbrado sea Pendiente y no hayan transcurrido más de 72 horas desde su emisión.
 
-**RN-2.4** El timbrado manual requiere un permiso especial.
+**RN-1.4** El timbrado manual requiere un permiso especial.
 
-**RN-2.5** Al timbrarse el CFDI, el sistema envía automáticamente el documento CFDI por correo electrónico al cliente.
+**RN-1.5** Al timbrarse el CFDI, el sistema envía automáticamente el documento CFDI por correo electrónico al cliente.
 
 ### Criterios de Aceptación
 
-**CA-2.1.1 — Emisión dentro del plazo**
+**CA-1.1.1 — Emisión dentro del plazo**
 Dado que el usuario está autorizado para emitir CFDIs y la fecha/hora de emisión no excede 72 horas respecto de la fecha y hora actual
 Cuando confirma la emisión del CFDI (Factura, Nota de Crédito, Anticipo o Abono)
 Entonces el sistema genera el comprobante correctamente.
 
-**CA-2.1.2 — Cancelación por vencimiento del plazo de emisión**
+**CA-1.1.2 — Cancelación por vencimiento del plazo de emisión**
 Dado que un CFDI guardado excedió las 72 horas permitidas para su emisión
 Cuando el usuario solicita su cancelación indicando el motivo correspondiente
 Entonces el sistema permite cancelarlo.
 
-**CA-2.1.3 — Timbrado automático dentro de condiciones válidas**
+**CA-1.1.3 — Timbrado automático dentro de condiciones válidas**
 Dado que el CFDI tiene estatus distinto de Cancelado, EstatusTimbrado en Pendiente y no ha excedido 72 horas desde su emisión
 Cuando el proceso automático de timbrado se ejecuta
 Entonces el sistema timbra el CFDI sin intervención manual.
 
-**CA-2.1.4 — Timbrado manual con permiso especial**
+**CA-1.1.4 — Timbrado manual con permiso especial**
 Dado que el usuario intenta timbrar manualmente un CFDI
 Cuando no cuenta con el permiso especial requerido
 Entonces el sistema rechaza la operación e informa que se requiere permiso especial.
 
-**CA-2.1.5 — Envío automático del CFDI timbrado**
+**CA-1.1.5 — Envío automático del CFDI timbrado**
 Dado que un CFDI fue timbrado exitosamente
 Cuando concluye el proceso de timbrado
 Entonces el sistema envía automáticamente el documento CFDI al correo electrónico registrado del cliente.
 
-<a id="rf-03"></a>
-# RF-03 — Exclusión del motivo "Global" en cancelación de Abonos y Anticipos
+[⬆ Volver al índice](#6-índice-de-requerimientos)
+
+<a id="rf-02"></a>
+# RF-02 — Emisión de CFDI por sustitución
 
 | Campo        | Valor       |
 |--------------|-------------|
 | Prioridad    | Must        |
 | Estado       | Definición  |
-| Dependencias | RF-04       |
-
-## Objetivo
-Evitar que se ejecuten cancelaciones de Abonos y Anticipos utilizando un motivo no permitido para ese tipo de comprobante.
-
-## Descripción
-El sistema deberá eliminar el motivo "Global" de las opciones disponibles para la cancelación de Abonos y Anticipos; en caso de que dicho motivo permanezca disponible por alguna condición excepcional, el sistema deberá impedir que la cancelación se ejecute cuando ese motivo sea seleccionado.
-
-## HU-3.1 — Restringir el motivo "Global" en cancelación de Abonos y Anticipos
-
-Como usuario responsable de la gestión de Abonos y Anticipos, quiero que el motivo de cancelación "Global" no esté disponible como opción de cancelación, para evitar que se ejecuten cancelaciones utilizando un motivo no permitido.
-
-### Reglas de negocio
-
-**RN-3.1** El motivo de cancelación "04 - Global" no debe estar disponible entre las opciones para cancelar Abonos y Anticipos.
-
-**RN-3.2** Si el motivo "04 - Global" llegara a estar disponible y es seleccionado, el sistema debe impedir la ejecución de la cancelación.
-
-### Criterios de Aceptación
-
-**CA-3.1.1 — Motivo Global no disponible**
-Dado que el usuario cancela un Abono o un Anticipo
-Cuando visualiza los motivos de cancelación disponibles
-Entonces el sistema no muestra el motivo "04 - Global" entre las opciones.
-
-**CA-3.1.2 — Bloqueo ante motivo Global forzado**
-Dado que, por una condición excepcional, el motivo "04 - Global" quedó disponible y fue seleccionado por el usuario
-Cuando el usuario intenta confirmar la cancelación
-Entonces el sistema impide la ejecución de la cancelación e informa que el motivo no es válido para ese tipo de comprobante.
-
-<a id="rf-04"></a>
-# RF-04 — Cancelación general de CFDI (motivo, observaciones y periodo fiscal)
-
-| Campo        | Valor       |
-|--------------|-------------|
-| Prioridad    | Must        |
-| Estado       | Definición  |
-| Dependencias | RF-01       |
-
-## Objetivo
-Permitir la cancelación de Facturas, Notas de Crédito, Abonos y Anticipos que cumplan con las condiciones fiscales y de captura establecidas.
-
-## Descripción
-El sistema deberá permitir solicitar la cancelación de Facturas, Notas de Crédito, Abonos y Anticipos que correspondan a un periodo o ejercicio fiscal no cerrado ni declarado, exigiendo la captura de motivo y observaciones antes de confirmar la operación. La cancelación del timbre no estará disponible desde la interfaz de Factura; sólo el proceso automático podrá ejecutarla.
-
-## HU-4.1 — Cancelar CFDI con motivo, observaciones y validación de periodo fiscal
-
-Como usuario responsable de la gestión y administración de CFDIs, quiero solicitar la cancelación de Facturas, Notas de Crédito, Abonos y Anticipos, para corregir o cancelar comprobantes fiscales que cumplan con las condiciones establecidas para su cancelación.
-
-### Reglas de negocio
-
-**RN-4.1** Toda cancelación de CFDI (Factura, Nota de Crédito, Abono o Anticipo) requiere capturar el motivo de cancelación y las observaciones antes de confirmar la operación.
-
-**RN-4.2** Podrán cancelarse CFDIs de meses anteriores siempre que correspondan a un periodo o ejercicio fiscal no cerrado ni declarado.
-
-**RN-4.3** La opción de cancelar el timbre está deshabilitada en la interfaz de Factura; únicamente el job automático puede ejecutar esa cancelación.
-
-### Criterios de Aceptación
-
-**CA-4.1.1 — Cancelación con motivo y observaciones completos**
-Dado que el usuario captura el motivo de cancelación y las observaciones requeridas
-Cuando confirma la cancelación de un CFDI de un periodo fiscal no cerrado
-Entonces el sistema ejecuta la cancelación y registra el motivo y las observaciones capturadas.
-
-**CA-4.1.2 — Bloqueo por falta de motivo u observaciones**
-Dado que el usuario intenta confirmar la cancelación sin capturar el motivo o las observaciones
-Cuando presiona confirmar
-Entonces el sistema impide la operación y solicita completar la información obligatoria.
-
-**CA-4.1.3 — Bloqueo por periodo fiscal cerrado**
-Dado que el CFDI corresponde a un periodo o ejercicio fiscal ya cerrado o declarado
-Cuando el usuario intenta cancelarlo
-Entonces el sistema impide la cancelación e informa que el periodo se encuentra cerrado.
-
-**CA-4.1.4 — Cancelación de timbre restringida al proceso automático**
-Dado que un usuario intenta cancelar el timbre de una Factura desde la interfaz
-Cuando busca la opción correspondiente
-Entonces el sistema no la muestra disponible, dado que esta acción sólo puede ejecutarla el job automático.
-
----
-
-**Regla transversal:**
-Este requerimiento es la base de las cancelaciones específicas por tipo de documento (RF-08 Factura, RF-10 Abono, RF-12 Anticipo, RF-14 Nota de Crédito): la validación de periodo fiscal y la captura de motivo/observaciones aplica a todas ellas.
-
-<a id="rf-05"></a>
-# RF-05 — Emisión de CFDI por sustitución
-
-| Campo        | Valor       |
-|--------------|-------------|
-| Prioridad    | Must        |
-| Estado       | Definición  |
-| Dependencias | RF-01       |
+| Dependencias | RF-09       |
 
 ## Objetivo
 Permitir corregir o reemplazar un CFDI mediante la emisión de un nuevo comprobante por sustitución, manteniendo la relación con el original.
@@ -340,49 +268,51 @@ Permitir corregir o reemplazar un CFDI mediante la emisión de un nuevo comproba
 ## Descripción
 El sistema deberá permitir emitir un nuevo CFDI por sustitución de un comprobante previamente cancelado, de tipo Factura, Nota de Crédito, Abono o Anticipo, conservando la información del original, validando la información requerida y estableciendo la relación entre ambos comprobantes.
 
-## HU-5.1 — Emitir CFDI por sustitución
+## HU-2.1 — Emitir CFDI por sustitución
 
 Como usuario responsable de la emisión y administración de CFDIs, quiero emitir un nuevo CFDI por sustitución de un comprobante previamente emitido, para corregir o reemplazar un CFDI que requiera ser sustituido, manteniendo la relación entre el comprobante original y el nuevo comprobante.
 
 ### Reglas de negocio
 
-**RN-5.1** El CFDI emitido por sustitución deberá estar relacionado con un CFDI previamente cancelado.
+**RN-2.1** El CFDI emitido por sustitución deberá estar relacionado con un CFDI previamente cancelado.
 
-**RN-5.2** El CFDI sustituido y el CFDI sustituto deberán corresponder al mismo cliente.
+**RN-2.2** El CFDI sustituido y el CFDI sustituto deberán corresponder al mismo cliente.
 
-**RN-5.3** La fecha de emisión del CFDI sustituto sólo podrá ser la fecha actual.
+**RN-2.3** La fecha de emisión del CFDI sustituto sólo podrá ser la fecha actual.
 
-**RN-5.4** La fecha de timbrado del CFDI sustituto será la fecha actual.
+**RN-2.4** La fecha de timbrado del CFDI sustituto será la fecha actual.
 
 ### Criterios de Aceptación
 
-**CA-5.1.1 — Selección y generación del CFDI sustituto**
+**CA-2.1.1 — Selección y generación del CFDI sustituto**
 Dado que el usuario selecciona un CFDI previamente cancelado de tipo Factura, Nota de Crédito, Abono o Anticipo
 Cuando genera el nuevo comprobante por sustitución conservando la información del original y ajustando lo necesario
 Entonces el sistema crea el nuevo CFDI relacionándolo con el comprobante original y le asigna la fecha actual como fecha de emisión y de timbrado.
 
-**CA-5.1.2 — Mismo cliente entre CFDI sustituido y sustituto**
+**CA-2.1.2 — Mismo cliente entre CFDI sustituido y sustituto**
 Dado que el usuario emite un CFDI por sustitución
 Cuando el cliente del comprobante sustituto no coincide con el del CFDI sustituido
 Entonces el sistema impide la emisión e informa que ambos comprobantes deben corresponder al mismo cliente.
 
-**CA-5.1.3 — CFDI original no cancelado**
+**CA-2.1.3 — CFDI original no cancelado**
 Dado que el usuario intenta emitir un CFDI por sustitución de un comprobante que no se encuentra cancelado
 Cuando confirma la operación
 Entonces el sistema impide la emisión e informa que sólo pueden sustituirse CFDIs previamente cancelados.
 
-**CA-5.1.4 — Sustitución entre tipos no permitidos**
+**CA-2.1.4 — Sustitución entre tipos no permitidos**
 Dado que el usuario intenta sustituir un CFDI por un tipo de comprobante no permitido por las reglas de negocio (p. ej. Factura por Nota de Crédito)
 Cuando confirma la selección
 Entonces el sistema impide la operación e informa el motivo.
 
-**CA-5.1.5 — Validación de información incompleta**
+**CA-2.1.5 — Validación de información incompleta**
 Dado que la información requerida para la emisión del CFDI sustituto está incompleta o no es válida
 Cuando el usuario intenta emitirlo
 Entonces el sistema impide la emisión y muestra al usuario el motivo correspondiente.
 
-<a id="rf-06"></a>
-# RF-06 — Emisión de CFDI en diferentes monedas y tipo de cambio
+[⬆ Volver al índice](#6-índice-de-requerimientos)
+
+<a id="rf-03"></a>
+# RF-03 — Emisión de CFDI en diferentes monedas y tipo de cambio
 
 | Campo        | Valor       |
 |--------------|-------------|
@@ -396,101 +326,262 @@ Permitir realizar operaciones comerciales en la moneda correspondiente a cada tr
 ## Descripción
 El sistema deberá permitir generar Facturas, Notas de Crédito, Abonos y Anticipos utilizando diferentes monedas, aplicando el tipo de cambio correspondiente cuando la moneda seleccionada sea distinta de la moneda base, y calculando subtotal, descuentos, impuestos y total conforme a dicha moneda.
 
-## HU-6.1 — Emitir CFDI en diferentes monedas
+## HU-3.1 — Emitir CFDI en diferentes monedas
 
 Como usuario responsable de la emisión de CFDIs, quiero generar Facturas, Notas de Crédito, Abonos y Anticipos utilizando diferentes monedas, para realizar operaciones comerciales en la moneda correspondiente a cada transacción y generar el comprobante fiscal con la información monetaria correcta.
 
 ### Reglas de negocio
 
-**RN-6.1** Al emitir CFDIs con moneda extranjera, el sistema deberá aplicar el tipo de cambio correspondiente.
+**RN-3.1** Al emitir CFDIs con moneda extranjera, el sistema deberá aplicar el tipo de cambio correspondiente.
 
 ### Criterios de Aceptación
 
-**CA-6.1.1 — Emisión en moneda distinta a la base con tipo de cambio aplicado**
+**CA-3.1.1 — Emisión en moneda distinta a la base con tipo de cambio aplicado**
 Dado que el usuario selecciona una moneda extranjera para el CFDI
 Cuando confirma la emisión
 Entonces el sistema obtiene o calcula el tipo de cambio correspondiente, lo registra en el CFDI y calcula subtotal, descuentos, impuestos y total en dicha moneda.
 
-**CA-6.1.2 — Emisión en moneda base**
+**CA-3.1.2 — Emisión en moneda base**
 Dado que el usuario selecciona la moneda base de la operación
 Cuando confirma la emisión
 Entonces el sistema genera el CFDI sin requerir tipo de cambio adicional.
 
-**CA-6.1.3 — Moneda o tipo de cambio inválidos**
+**CA-3.1.3 — Moneda o tipo de cambio inválidos**
 Dado que la moneda seleccionada no está habilitada para el tipo de operación o el tipo de cambio no cumple las reglas establecidas
 Cuando el usuario intenta emitir el CFDI
 Entonces el sistema impide la emisión e informa el motivo al usuario.
 
-**CA-6.1.4 — Confirmación previa a la emisión**
+**CA-3.1.4 — Confirmación previa a la emisión**
 Dado que el sistema calculó la moneda, el tipo de cambio y los importes del CFDI
 Cuando el usuario revisa la información antes de confirmar
 Entonces el sistema le permite validar los datos y, al confirmar, emite el CFDI o informa el motivo si ocurre un error.
 
-<a id="rf-07"></a>
-# RF-07 — Emisión de Factura
+[⬆ Volver al índice](#6-índice-de-requerimientos)
+
+<a id="rf-04"></a>
+# RF-04 — Emisión de Nota de Crédito
 
 | Campo        | Valor       |
 |--------------|-------------|
 | Prioridad    | Must        |
 | Estado       | Definición  |
-| Dependencias | RF-02, RF-06 |
+| Dependencias | RF-04       |
 
 ## Objetivo
-Garantizar que la emisión de Facturas cumpla con la información mínima requerida y con la conformación correcta del folio.
+Garantizar que la emisión de Notas de Crédito respete el tipo seleccionado, los permisos especiales requeridos y las reglas fiscales de método de pago y folio.
 
 ## Descripción
-El sistema deberá permitir emitir Facturas exigiendo al menos un detalle y al menos una forma de pago, validando la congruencia entre el Método de Pago y las Formas de Pago capturadas, y conformando el folio según la serie determinada por Sucursal y tipo de documento. Las Facturas generadas automáticamente desde una Entrega no permitirán modificación manual de renglones.
+El sistema deberá permitir emitir Notas de Crédito de tipo Devolución, Diferencia de Precio, Descuento, Descuento por Concepto y Cancelación, exigiendo un permiso especial distinto para cada tipo, validando que la Factura relacionada esté Finalizada y Timbrada, y timbrando siempre con Método de Pago PUE.
 
-### Información / atributos
-| Campo | Obligatorio | Descripción |
-|-------|--------------|--------------|
-| Detalle (renglones) | Sí | Al menos un renglón de la Factura. |
-| Forma de pago | Sí | Al menos una forma de pago aplicada. |
-| Método de pago | Sí | Debe ser congruente con las formas de pago capturadas. |
-| Serie / folio | Generado por el sistema | Definido por Sucursal + tipo de documento (Consignación = V, Fiscal = F). |
+## HU-4.1 — Emitir Nota de Crédito por tipo
 
-## HU-7.1 — Emitir Factura con información completa
-
-Como usuario responsable de la emisión de CFDIs, quiero emitir una Factura capturando su detalle y su forma de pago, para generar el comprobante fiscal correspondiente a la venta o servicio realizado.
+Como usuario responsable de la emisión de CFDIs, quiero emitir una Nota de Crédito del tipo correspondiente (Devolución, Diferencia de Precio, Descuento, Descuento por Concepto o Cancelación), para ajustar el importe o representar contablemente la cancelación de una Factura conforme a las reglas fiscales aplicables.
 
 ### Reglas de negocio
 
-**RN-7.1** La Factura automática generada desde Entrega no permite agregar ni eliminar renglones manualmente.
+**RN-4.1** Al aplicar una Nota de Crédito interna a una Factura, el sistema la clona automáticamente en una Nota de Crédito fiscal nueva ligada a esa Factura, y cancela la NC interna.
 
-**RN-7.2** Si se aplica como forma de pago un saldo de Nota de Crédito interna (no timbrada), se exige aplicar el 100% de dicho saldo; no se admite aplicación parcial.
+**RN-4.2** La Nota de Crédito debe permitir seleccionar el tipo "Diferencia / Descuento", aplicado al importe de la Factura.
 
-**RN-7.3** La Factura debe tener al menos un detalle y al menos una forma de pago para poder emitirse.
+**RN-4.3** La Nota de Crédito debe permitir seleccionar el tipo "Descuento por Concepto", prorrateando el descuento global entre las partidas de la Factura según su peso proporcional, conforme a la fórmula documentada.
 
-**RN-7.4** Debe existir congruencia entre el Método de Pago y las Formas de Pago capturadas.
+**RN-4.4** El tipo "Cancelación" de Nota de Crédito representa contablemente el CFDI de Egreso emitido al cancelar una Factura ya timbrada.
 
-**RN-7.5** El folio de la Factura se conforma con la serie determinada por Sucursal y tipo de documento (Consignación = V, Fiscal = F).
+**RN-4.5** Todos los tipos de Nota de Crédito (Devolución, Diferencia de Precio, Descuento, Descuento por Concepto, Cancelación) requieren un permiso especial distinto entre sí.
+
+**RN-4.6** La Factura relacionada a la Nota de Crédito debe estar en estatus Finalizado y Timbrado.
+
+**RN-4.7** Las Notas de Crédito siempre se timbran con Método de Pago PUE (nunca PPD), conforme al Anexo 20 del SAT, aunque la Factura origen sea a crédito.
+
+**RN-4.8** El folio de la Nota de Crédito se conforma por serie según tipo de documento (Fiscal, Interno, Interplanta), con prefijo de Sucursal.
+
+**RN-4.9** Las Notas de Crédito se generan automáticamente en devoluciones de cliente y en cascadas de cancelación de Factura (clonación de NC interna).
 
 ### Criterios de Aceptación
 
-**CA-7.1.1 — Emisión de Factura con datos completos**
-Dado que la Factura cuenta con al menos un detalle, al menos una forma de pago y congruencia entre Método de Pago y Formas de Pago
-Cuando el usuario confirma la emisión
-Entonces el sistema genera la Factura asignando el folio conforme a la serie de la Sucursal y el tipo de documento.
+**CA-4.1.1 — Emisión manual de Nota de Crédito**
+Dado que el usuario cuenta con el permiso especial correspondiente al tipo de Nota de Crédito y la Factura relacionada está Finalizada y Timbrada
+Cuando confirma la emisión seleccionando el tipo aplicable (Devolución, Diferencia de Precio, Descuento, Descuento por Concepto o Cancelación)
+Entonces el sistema genera la Nota de Crédito con Método de Pago PUE y el folio conforme a la serie de Sucursal y tipo de documento.
 
-**CA-7.1.2 — Bloqueo por falta de detalle o forma de pago**
-Dado que la Factura no tiene al menos un detalle o al menos una forma de pago
-Cuando el usuario intenta emitirla
-Entonces el sistema impide la emisión e informa la información faltante.
+**CA-4.1.2 — Bloqueo por falta de permiso especial**
+Dado que el usuario no cuenta con el permiso especial requerido para el tipo de Nota de Crédito seleccionado
+Cuando intenta emitirla
+Entonces el sistema impide la operación e informa que se requiere el permiso correspondiente.
 
-**CA-7.1.3 — Incongruencia entre método y forma de pago**
-Dado que el Método de Pago capturado no es congruente con las Formas de Pago seleccionadas
-Cuando el usuario intenta emitir la Factura
-Entonces el sistema impide la emisión e informa la incongruencia.
+**CA-4.1.3 — Bloqueo por Factura no finalizada o no timbrada**
+Dado que la Factura relacionada no se encuentra en estatus Finalizado y Timbrado
+Cuando el usuario intenta emitir la Nota de Crédito
+Entonces el sistema impide la emisión.
 
-**CA-7.1.4 — Aplicación parcial de saldo de NC interna no permitida**
-Dado que el usuario aplica como forma de pago un saldo de Nota de Crédito interna no timbrada
-Cuando intenta aplicar únicamente una parte de dicho saldo
-Entonces el sistema impide la operación y exige aplicar el 100% del saldo disponible.
+**CA-4.1.4 — Clonación de NC interna al aplicarse**
+Dado que el usuario aplica una Nota de Crédito interna a una Factura
+Cuando confirma la aplicación
+Entonces el sistema genera automáticamente una Nota de Crédito fiscal nueva ligada a la Factura y cancela la Nota de Crédito interna original.
 
-**CA-7.1.5 — Restricción de edición en Factura automática**
-Dado que la Factura fue generada automáticamente desde una Entrega
-Cuando el usuario intenta agregar o eliminar renglones manualmente
-Entonces el sistema no permite dicha modificación.
+**CA-4.1.5 — Generación automática en devoluciones y cascadas de cancelación**
+Dado que ocurre una devolución de cliente o una cancelación de Factura que dispara la clonación de una NC interna
+Cuando el proceso correspondiente se ejecuta
+Entonces el sistema genera automáticamente la Nota de Crédito sin intervención manual del usuario.
+
+---
+
+**Regla transversal:**
+Este requerimiento se relaciona con RF-11 (Cancelación de Factura): la cancelación de una Factura ya timbrada puede disparar la generación automática de una Nota de Crédito tipo Cancelación.
+
+[⬆ Volver al índice](#6-índice-de-requerimientos)
+
+---
+---
+
+<a id="rf-05"></a>
+# RF-05 — Cancelación general de CFDI (motivo, observaciones y periodo fiscal)
+
+| Campo        | Valor       |
+|--------------|-------------|
+| Prioridad    | Must        |
+| Estado       | Definición  |
+| Dependencias | RF-09       |
+
+## Objetivo
+Permitir la cancelación de Facturas, Notas de Crédito, Abonos y Anticipos que cumplan con las condiciones fiscales y de captura establecidas.
+
+## Descripción
+El sistema deberá permitir solicitar la cancelación de Facturas, Notas de Crédito, Abonos y Anticipos que correspondan a un periodo o ejercicio fiscal no cerrado ni declarado, exigiendo la captura de motivo y observaciones antes de confirmar la operación. La cancelación del timbre no estará disponible desde la interfaz de Factura; sólo el proceso automático podrá ejecutarla.
+
+## HU-5.1 — Cancelar CFDI con motivo, observaciones y validación de periodo fiscal
+
+Como usuario responsable de la gestión y administración de CFDIs, quiero solicitar la cancelación de Facturas, Notas de Crédito, Abonos y Anticipos, para corregir o cancelar comprobantes fiscales que cumplan con las condiciones establecidas para su cancelación.
+
+### Reglas de negocio
+
+**RN-5.1** Toda cancelación de CFDI (Factura, Nota de Crédito, Abono o Anticipo) requiere capturar el motivo de cancelación y las observaciones antes de confirmar la operación.
+
+**RN-5.2** Podrán cancelarse CFDIs de meses anteriores siempre que correspondan a un periodo o ejercicio fiscal no cerrado ni declarado.
+
+**RN-5.3** La opción de cancelar el timbre está deshabilitada en la interfaz de Factura; únicamente el job automático puede ejecutar esa cancelación.
+
+### Criterios de Aceptación
+
+**CA-5.1.1 — Cancelación con motivo y observaciones completos**
+Dado que el usuario captura el motivo de cancelación y las observaciones requeridas
+Cuando confirma la cancelación de un CFDI de un periodo fiscal no cerrado
+Entonces el sistema ejecuta la cancelación y registra el motivo y las observaciones capturadas.
+
+**CA-5.1.2 — Bloqueo por falta de motivo u observaciones**
+Dado que el usuario intenta confirmar la cancelación sin capturar el motivo o las observaciones
+Cuando presiona confirmar
+Entonces el sistema impide la operación y solicita completar la información obligatoria.
+
+**CA-5.1.3 — Bloqueo por periodo fiscal cerrado**
+Dado que el CFDI corresponde a un periodo o ejercicio fiscal ya cerrado o declarado
+Cuando el usuario intenta cancelarlo
+Entonces el sistema impide la cancelación e informa que el periodo se encuentra cerrado.
+
+**CA-5.1.4 — Cancelación de timbre restringida al proceso automático**
+Dado que un usuario intenta cancelar el timbre de una Factura desde la interfaz
+Cuando busca la opción correspondiente
+Entonces el sistema no la muestra disponible, dado que esta acción sólo puede ejecutarla el job automático.
+
+---
+
+**Regla transversal:**
+Este requerimiento es la base de las cancelaciones específicas por tipo de documento (RF-11 Factura, RF-12 Abono, RF-13 Anticipo, RF-14 Nota de Crédito): la validación de periodo fiscal y la captura de motivo/observaciones aplica a todas ellas.
+
+[⬆ Volver al índice](#6-índice-de-requerimientos)
+
+<a id="rf-06"></a>
+# RF-06 — Cancelación de CFDI emitido para sustitución
+
+| Campo        | Valor       |
+|--------------|-------------|
+| Prioridad    | Must        |
+| Estado       | Definición  |
+| Dependencias | Ninguna     |
+
+## Objetivo
+Permitir que un usuario con permisos adecuados cancele un CFDI que fue emitido para sustitución, manteniendo la correcta gestión y trazabilidad de los comprobantes fiscales.
+
+## Descripción
+El sistema deberá permitir la cancelación de CFDIs (Factura, Nota de Crédito, Abono y Anticipo) que hayan sido emitidos para sustitución, siempre que el usuario cuente con los permisos correspondientes y el comprobante cumpla con las reglas de negocio establecidas para su cancelación.
+
+## HU-6.1 — Cancelar CFDI emitido para sustitución
+
+Como usuario con permisos para gestionar CFDIs, quiero cancelar CFDIs (Factura, Nota de Crédito, Anticipo o Abono) que hayan sido emitidos para sustitución, para mantener la correcta gestión y trazabilidad de los comprobantes fiscales conforme a los permisos y reglas de negocio establecidas.
+
+### Reglas de negocio
+
+**RN-6.1** El CFDI no podrá cancelarse si su estatus es "Buzón Tributario" o "Cancelado".
+
+**RN-6.2** La cancelación de un CFDI emitido para sustitución sólo procederá si dicho comprobante se encuentra vigente.
+
+### Criterios de Aceptación
+
+**CA-6.1.1 — Cancelación exitosa de CFDI vigente emitido para sustitución**
+Dado que el usuario cuenta con permisos para gestionar CFDIs y el comprobante (Factura, Nota de Crédito, Abono o Anticipo) fue emitido para sustitución y se encuentra vigente
+Cuando el usuario solicita la cancelación
+Entonces el sistema permite la cancelación y actualiza el estatus del CFDI a Cancelado.
+
+**CA-6.1.2 — Motivos de cancelación permitidos según tipo de CFDI**
+Dado que el usuario cancela un CFDI emitido para sustitución
+Cuando selecciona el motivo de cancelación
+Entonces el sistema únicamente ofrece los motivos "01 - Errores con relación", "02 - Errores sin relación" y "03 - No se llevó a cabo la operación" para Nota de Crédito, Abono y Anticipo, y adicionalmente "04 - Operación relacionada a una factura global" para Factura.
+
+**CA-6.1.3 — Bloqueo por estatus no cancelable**
+Dado que el CFDI se encuentra en estatus "Buzón Tributario" o "Cancelado"
+Cuando el usuario intenta cancelarlo
+Entonces el sistema impide la operación e informa que el comprobante no es cancelable en su estatus actual.
+
+**CA-6.1.4 — Sin permisos suficientes**
+Dado que el usuario no cuenta con los permisos requeridos para gestionar CFDIs
+Cuando intenta ejecutar la cancelación
+Entonces el sistema rechaza la operación e informa que no cuenta con los permisos necesarios.
+
+---
+
+**Regla transversal:**
+Este requerimiento comparte reglas con RF-08 (Cancelación general de CFDI) y con RF-02 (Emisión de CFDI por sustitución): un CFDI sólo puede sustituirse si el original quedó previamente cancelado por esta vía.
+
+[⬆ Volver al índice](#6-índice-de-requerimientos)
+
+<a id="rf-07"></a>
+# RF-07 — Exclusión del motivo "Global" en cancelación de Abonos y Anticipos
+
+| Campo        | Valor       |
+|--------------|-------------|
+| Prioridad    | Must        |
+| Estado       | Definición  |
+| Dependencias | RF-08       |
+
+## Objetivo
+Evitar que se ejecuten cancelaciones de Abonos y Anticipos utilizando un motivo no permitido para ese tipo de comprobante.
+
+## Descripción
+El sistema deberá eliminar el motivo "Global" de las opciones disponibles para la cancelación de Abonos y Anticipos; en caso de que dicho motivo permanezca disponible por alguna condición excepcional, el sistema deberá impedir que la cancelación se ejecute cuando ese motivo sea seleccionado.
+
+## HU-7.1 — Restringir el motivo "Global" en cancelación de Abonos y Anticipos
+
+Como usuario responsable de la gestión de Abonos y Anticipos, quiero que el motivo de cancelación "Global" no esté disponible como opción de cancelación, para evitar que se ejecuten cancelaciones utilizando un motivo no permitido.
+
+### Reglas de negocio
+
+**RN-7.1** El motivo de cancelación "04 - Global" no debe estar disponible entre las opciones para cancelar Abonos y Anticipos.
+
+**RN-7.2** Si el motivo "04 - Global" llegara a estar disponible y es seleccionado, el sistema debe impedir la ejecución de la cancelación.
+
+### Criterios de Aceptación
+
+**CA-7.1.1 — Motivo Global no disponible**
+Dado que el usuario cancela un Abono o un Anticipo
+Cuando visualiza los motivos de cancelación disponibles
+Entonces el sistema no muestra el motivo "04 - Global" entre las opciones.
+
+**CA-7.1.2 — Bloqueo ante motivo Global forzado**
+Dado que, por una condición excepcional, el motivo "04 - Global" quedó disponible y fue seleccionado por el usuario
+Cuando el usuario intenta confirmar la cancelación
+Entonces el sistema impide la ejecución de la cancelación e informa que el motivo no es válido para ese tipo de comprobante.
+
+[⬆ Volver al índice](#6-índice-de-requerimientos)
 
 <a id="rf-08"></a>
 # RF-08 — Cancelación de Factura
@@ -499,7 +590,7 @@ Entonces el sistema no permite dicha modificación.
 |--------------|-------------|
 | Prioridad    | Must        |
 | Estado       | Definición  |
-| Dependencias | RF-04, RF-14 |
+| Dependencias | RF-08, RF-14 |
 
 ## Objetivo
 Controlar las condiciones y el número de intentos permitidos para la cancelación de una Factura.
@@ -546,56 +637,16 @@ Entonces el sistema impide el intento e informa el tiempo de espera restante.
 **Regla transversal:**
 La cancelación de Factura depende de RF-14 (Cancelación de Nota de Crédito): si existe una NC relacionada, debe resolverse primero esa cancelación.
 
+[⬆ Volver al índice](#6-índice-de-requerimientos)
+
 <a id="rf-09"></a>
-# RF-09 — Emisión de Abono
+# RF-09 — Cancelación de Abono
 
 | Campo        | Valor       |
 |--------------|-------------|
 | Prioridad    | Must        |
 | Estado       | Definición  |
-| Dependencias | RF-11       |
-
-## Objetivo
-Garantizar que la emisión de Abonos respete el método de pago fijo y gestione correctamente el remanente no aplicado.
-
-## Descripción
-El sistema deberá permitir emitir Abonos fijando siempre el Método de Pago como "Pago en Parcialidades/Diferido" (PPD), y deberá generar automáticamente un Anticipo cuando el remanente no aplicado del Abono supere el importe máximo de la Factura relacionada.
-
-## HU-9.1 — Emitir Abono con método de pago fijo
-
-Como usuario responsable de la gestión de Abonos, quiero emitir un Abono aplicable a una o varias Facturas, para registrar el pago recibido del cliente conforme a las reglas de negocio establecidas.
-
-### Reglas de negocio
-
-**RN-9.1** El Método de Pago del Abono siempre es fijo a "Pago en Parcialidades/Diferido" (PPD) desde su creación.
-
-**RN-9.2** Si el remanente no aplicado del Abono supera el máximo de la Factura, dicho remanente genera un Anticipo.
-
-### Criterios de Aceptación
-
-**CA-9.1.1 — Emisión de Abono con método de pago PPD**
-Dado que el usuario emite un Abono
-Cuando confirma la operación
-Entonces el sistema fija el Método de Pago como PPD sin permitir modificarlo.
-
-**CA-9.1.2 — Generación de Anticipo por remanente**
-Dado que el remanente no aplicado del Abono excede el importe máximo de la Factura relacionada
-Cuando el sistema procesa la aplicación del Abono
-Entonces genera automáticamente un Anticipo por dicho remanente.
-
-**CA-9.1.3 — Aplicación completa sin remanente**
-Dado que el importe del Abono es aplicado en su totalidad a la Factura sin excedente
-Cuando el sistema procesa la aplicación
-Entonces no genera ningún Anticipo adicional.
-
-<a id="rf-10"></a>
-# RF-10 — Cancelación de Abono
-
-| Campo        | Valor       |
-|--------------|-------------|
-| Prioridad    | Must        |
-| Estado       | Definición  |
-| Dependencias | RF-04, RF-12 |
+| Dependencias | RF-08, RF-13 |
 
 ## Objetivo
 Controlar la cancelación de Abonos y su efecto en cascada sobre Anticipos y sobre la Parcialidad SAT de las Facturas afectadas.
@@ -603,33 +654,33 @@ Controlar la cancelación de Abonos y su efecto en cascada sobre Anticipos y sob
 ## Descripción
 El sistema deberá permitir cancelar un Abono siempre que no se encuentre en estatus "Pendiente de timbrar", revirtiendo la Parcialidad SAT de las Facturas afectadas y cancelando en cascada cualquier Anticipo que dicho Abono haya generado.
 
-## HU-10.1 — Cancelar Abono con reversión de Parcialidad SAT
+## HU-9.1 — Cancelar Abono con reversión de Parcialidad SAT
 
 Como usuario responsable de la gestión de Abonos, quiero cancelar un Abono emitido, para corregir un pago registrado por error manteniendo consistente la información fiscal de las Facturas afectadas.
 
 ### Reglas de negocio
 
-**RN-10.1** El Abono no es cancelable si se encuentra en estatus "Pendiente de timbrar".
+**RN-9.1** El Abono no es cancelable si se encuentra en estatus "Pendiente de timbrar".
 
-**RN-10.2** Cancelar un Abono que generó un Anticipo obliga a cancelar en cascada (interna o fiscalmente) dicho Anticipo.
+**RN-9.2** Cancelar un Abono que generó un Anticipo obliga a cancelar en cascada (interna o fiscalmente) dicho Anticipo.
 
-**RN-10.3** Al cancelar el Abono, se revierte la Parcialidad SAT de cada Factura afectada.
+**RN-9.3** Al cancelar el Abono, se revierte la Parcialidad SAT de cada Factura afectada.
 
-**RN-10.4** El Abono podrá cancelarse únicamente con los motivos "01 - Errores con relación", "02 - Errores sin relación" y "03 - No se llevó a cabo la operación".
+**RN-9.4** El Abono podrá cancelarse únicamente con los motivos "01 - Errores con relación", "02 - Errores sin relación" y "03 - No se llevó a cabo la operación".
 
 ### Criterios de Aceptación
 
-**CA-10.1.1 — Cancelación exitosa de Abono timbrado**
+**CA-9.1.1 — Cancelación exitosa de Abono timbrado**
 Dado que el Abono se encuentra timbrado y el usuario captura un motivo válido ("01", "02" o "03")
 Cuando confirma la cancelación
 Entonces el sistema cancela el Abono, revierte la Parcialidad SAT de las Facturas afectadas y, si el Abono generó un Anticipo, cancela dicho Anticipo en cascada.
 
-**CA-10.1.2 — Bloqueo por estatus Pendiente de timbrar**
+**CA-9.1.2 — Bloqueo por estatus Pendiente de timbrar**
 Dado que el Abono se encuentra en estatus "Pendiente de timbrar"
 Cuando el usuario intenta cancelarlo
 Entonces el sistema impide la cancelación.
 
-**CA-10.1.3 — Motivo no válido para Abono**
+**CA-9.1.3 — Motivo no válido para Abono**
 Dado que el usuario intenta cancelar un Abono seleccionando un motivo distinto de "01", "02" o "03"
 Cuando confirma la operación
 Entonces el sistema impide la cancelación e informa que el motivo no es válido para este tipo de comprobante.
@@ -637,199 +688,85 @@ Entonces el sistema impide la cancelación e informa que el motivo no es válido
 ---
 
 **Regla transversal:**
-La cancelación de un Abono impacta directamente a RF-12 (Cancelación de Anticipo) cuando existe un Anticipo generado por remanente.
+La cancelación de un Abono impacta directamente a RF-13 (Cancelación de Anticipo) cuando existe un Anticipo generado por remanente.
 
-<a id="rf-11"></a>
-# RF-11 — Emisión de Anticipo
+[⬆ Volver al índice](#6-índice-de-requerimientos)
 
-| Campo        | Valor       |
-|--------------|-------------|
-| Prioridad    | Must        |
-| Estado       | Definición  |
-| Dependencias | RF-09       |
-
-## Objetivo
-Garantizar la correcta generación de Anticipos, tanto de Ingreso como de Egreso, conforme a su naturaleza de documento de un único importe.
-
-## Descripción
-El sistema deberá permitir emitir Anticipos como documentos de un solo importe, impuesto y total (sin líneas de detalle), fijando el Método de Pago como "Pago en una sola exhibición" (PUE), y generando automáticamente el Anticipo de Egreso correspondiente al aplicarse.
-
-## HU-11.1 — Emitir Anticipo de un solo importe
-
-Como usuario responsable de la emisión de CFDIs, quiero emitir un Anticipo con un único importe, para registrar el cobro anticipado del cliente conforme a las reglas fiscales aplicables.
-
-### Reglas de negocio
-
-**RN-11.1** El Anticipo no tiene líneas de detalle; es un documento de un solo importe, impuesto y total.
-
-**RN-11.2** El Método de Pago del Anticipo siempre es fijo a "Pago en una sola exhibición" (PUE).
-
-**RN-11.3** Un Anticipo de Egreso automático (originado por Abono o por cancelación de Anticipo) nace directamente en estatus Cancelado.
-
-**RN-11.4** El Anticipo de Egreso generado por aplicación a Factura no genera movimiento propio en GenerarTransaccion.
-
-**RN-11.5** El Anticipo de Ingreso generado automáticamente por remanente de Abono nunca es cancelable manualmente.
-
-**RN-11.6** Al aplicar un Anticipo, el sistema genera automáticamente su "Anticipo de Egreso" (comprobante CFDI de la aplicación).
-
-### Criterios de Aceptación
-
-**CA-11.1.1 — Emisión de Anticipo con un solo importe**
-Dado que el usuario emite un Anticipo
-Cuando confirma la operación
-Entonces el sistema genera el CFDI con un único importe, impuesto y total, sin líneas de detalle, y fija el Método de Pago como PUE.
-
-**CA-11.1.2 — Generación automática del Anticipo de Egreso al aplicar**
-Dado que el usuario aplica un Anticipo a una Factura
-Cuando confirma la aplicación
-Entonces el sistema genera automáticamente el Anticipo de Egreso correspondiente en estatus Cancelado, sin registrar movimiento propio en GenerarTransaccion.
-
-**CA-11.1.3 — Restricción de cancelación manual del Anticipo de Ingreso automático**
-Dado que el Anticipo de Ingreso fue generado automáticamente por remanente de un Abono
-Cuando el usuario intenta cancelarlo manualmente
-Entonces el sistema impide la operación.
-
-<a id="rf-12"></a>
-# RF-12 — Cancelación de Anticipo
+<a id="rf-10"></a>
+# RF-10 — Cancelación de Anticipo
 
 | Campo        | Valor       |
 |--------------|-------------|
 | Prioridad    | Must        |
 | Estado       | Definición  |
-| Dependencias | RF-04, RF-10 |
+| Dependencias | RF-08, RF-12 |
 
 ## Objetivo
 Permitir cancelar Anticipos capturados por error, utilizando únicamente los motivos válidos para este tipo de comprobante.
 
 ## Descripción
-El sistema deberá permitir cancelar un Anticipo utilizando únicamente los motivos "01 - Errores con relación", "02 - Errores sin relación" y "03 - No se llevó a cabo la operación", conforme a las reglas de cancelación general definidas en RF-04.
+El sistema deberá permitir cancelar un Anticipo utilizando únicamente los motivos "01 - Errores con relación", "02 - Errores sin relación" y "03 - No se llevó a cabo la operación", conforme a las reglas de cancelación general definidas en RF-08.
 
-## HU-12.1 — Cancelar Anticipo con motivo válido
+## HU-10.1 — Cancelar Anticipo con motivo válido
 
 Como usuario responsable de la gestión de Anticipos, quiero cancelar un Anticipo emitido por error, para corregir el comprobante fiscal utilizando un motivo válido.
 
 ### Reglas de negocio
 
-**RN-12.1** El Anticipo podrá cancelarse únicamente con los motivos "01 - Errores con relación", "02 - Errores sin relación" y "03 - No se llevó a cabo la operación".
+**RN-10.1** El Anticipo podrá cancelarse únicamente con los motivos "01 - Errores con relación", "02 - Errores sin relación" y "03 - No se llevó a cabo la operación".
 
 ### Criterios de Aceptación
 
-**CA-12.1.1 — Cancelación de Anticipo con motivo válido**
+**CA-10.1.1 — Cancelación de Anticipo con motivo válido**
 Dado que el usuario captura un motivo de cancelación válido ("01", "02" o "03") para un Anticipo
 Cuando confirma la cancelación
 Entonces el sistema cancela el Anticipo.
 
-**CA-12.1.2 — Motivo no válido para Anticipo**
+**CA-10.1.2 — Motivo no válido para Anticipo**
 Dado que el usuario selecciona un motivo distinto a los permitidos para el Anticipo
 Cuando intenta confirmar la cancelación
 Entonces el sistema impide la operación e informa que el motivo no es válido.
 
-<a id="rf-13"></a>
-# RF-13 — Emisión de Nota de Crédito
+[⬆ Volver al índice](#6-índice-de-requerimientos)
+
+<a id="rf-11"></a>
+# RF-11 — Cancelación de Nota de Crédito
 
 | Campo        | Valor       |
 |--------------|-------------|
 | Prioridad    | Must        |
 | Estado       | Definición  |
-| Dependencias | RF-07       |
-
-## Objetivo
-Garantizar que la emisión de Notas de Crédito respete el tipo seleccionado, los permisos especiales requeridos y las reglas fiscales de método de pago y folio.
-
-## Descripción
-El sistema deberá permitir emitir Notas de Crédito de tipo Devolución, Diferencia de Precio, Descuento, Descuento por Concepto y Cancelación, exigiendo un permiso especial distinto para cada tipo, validando que la Factura relacionada esté Finalizada y Timbrada, y timbrando siempre con Método de Pago PUE.
-
-## HU-13.1 — Emitir Nota de Crédito por tipo
-
-Como usuario responsable de la emisión de CFDIs, quiero emitir una Nota de Crédito del tipo correspondiente (Devolución, Diferencia de Precio, Descuento, Descuento por Concepto o Cancelación), para ajustar el importe o representar contablemente la cancelación de una Factura conforme a las reglas fiscales aplicables.
-
-### Reglas de negocio
-
-**RN-13.1** Al aplicar una Nota de Crédito interna a una Factura, el sistema la clona automáticamente en una Nota de Crédito fiscal nueva ligada a esa Factura, y cancela la NC interna.
-
-**RN-13.2** La Nota de Crédito debe permitir seleccionar el tipo "Diferencia / Descuento", aplicado al importe de la Factura.
-
-**RN-13.3** La Nota de Crédito debe permitir seleccionar el tipo "Descuento por Concepto", prorrateando el descuento global entre las partidas de la Factura según su peso proporcional, conforme a la fórmula documentada.
-
-**RN-13.4** El tipo "Cancelación" de Nota de Crédito representa contablemente el CFDI de Egreso emitido al cancelar una Factura ya timbrada.
-
-**RN-13.5** Todos los tipos de Nota de Crédito (Devolución, Diferencia de Precio, Descuento, Descuento por Concepto, Cancelación) requieren un permiso especial distinto entre sí.
-
-**RN-13.6** La Factura relacionada a la Nota de Crédito debe estar en estatus Finalizado y Timbrado.
-
-**RN-13.7** Las Notas de Crédito siempre se timbran con Método de Pago PUE (nunca PPD), conforme al Anexo 20 del SAT, aunque la Factura origen sea a crédito.
-
-**RN-13.8** El folio de la Nota de Crédito se conforma por serie según tipo de documento (Fiscal, Interno, Interplanta), con prefijo de Sucursal.
-
-**RN-13.9** Las Notas de Crédito se generan automáticamente en devoluciones de cliente y en cascadas de cancelación de Factura (clonación de NC interna).
-
-### Criterios de Aceptación
-
-**CA-13.1.1 — Emisión manual de Nota de Crédito**
-Dado que el usuario cuenta con el permiso especial correspondiente al tipo de Nota de Crédito y la Factura relacionada está Finalizada y Timbrada
-Cuando confirma la emisión seleccionando el tipo aplicable (Devolución, Diferencia de Precio, Descuento, Descuento por Concepto o Cancelación)
-Entonces el sistema genera la Nota de Crédito con Método de Pago PUE y el folio conforme a la serie de Sucursal y tipo de documento.
-
-**CA-13.1.2 — Bloqueo por falta de permiso especial**
-Dado que el usuario no cuenta con el permiso especial requerido para el tipo de Nota de Crédito seleccionado
-Cuando intenta emitirla
-Entonces el sistema impide la operación e informa que se requiere el permiso correspondiente.
-
-**CA-13.1.3 — Bloqueo por Factura no finalizada o no timbrada**
-Dado que la Factura relacionada no se encuentra en estatus Finalizado y Timbrado
-Cuando el usuario intenta emitir la Nota de Crédito
-Entonces el sistema impide la emisión.
-
-**CA-13.1.4 — Clonación de NC interna al aplicarse**
-Dado que el usuario aplica una Nota de Crédito interna a una Factura
-Cuando confirma la aplicación
-Entonces el sistema genera automáticamente una Nota de Crédito fiscal nueva ligada a la Factura y cancela la Nota de Crédito interna original.
-
-**CA-13.1.5 — Generación automática en devoluciones y cascadas de cancelación**
-Dado que ocurre una devolución de cliente o una cancelación de Factura que dispara la clonación de una NC interna
-Cuando el proceso correspondiente se ejecuta
-Entonces el sistema genera automáticamente la Nota de Crédito sin intervención manual del usuario.
-
----
-
-**Regla transversal:**
-Este requerimiento se relaciona con RF-08 (Cancelación de Factura): la cancelación de una Factura ya timbrada puede disparar la generación automática de una Nota de Crédito tipo Cancelación.
-
-<a id="rf-14"></a>
-# RF-14 — Cancelación de Nota de Crédito
-
-| Campo        | Valor       |
-|--------------|-------------|
-| Prioridad    | Must        |
-| Estado       | Definición  |
-| Dependencias | RF-04       |
+| Dependencias | RF-08       |
 
 ## Objetivo
 Permitir cancelar Notas de Crédito emitidas por error, utilizando únicamente los motivos válidos para este tipo de comprobante.
 
 ## Descripción
-El sistema deberá permitir cancelar una Nota de Crédito utilizando únicamente los motivos "01 - Errores con relación", "02 - Errores sin relación" y "03 - No se llevó a cabo la operación", conforme a las reglas de cancelación general definidas en RF-04.
+El sistema deberá permitir cancelar una Nota de Crédito utilizando únicamente los motivos "01 - Errores con relación", "02 - Errores sin relación" y "03 - No se llevó a cabo la operación", conforme a las reglas de cancelación general definidas en RF-08.
 
-## HU-14.1 — Cancelar Nota de Crédito con motivo válido
+## HU-11.1 — Cancelar Nota de Crédito con motivo válido
 
 Como usuario responsable de la gestión de Notas de Crédito, quiero cancelar una Nota de Crédito emitida por error, para corregir el comprobante fiscal utilizando un motivo válido.
 
 ### Reglas de negocio
 
-**RN-14.1** La Nota de Crédito podrá cancelarse únicamente con los motivos "01 - Errores con relación", "02 - Errores sin relación" y "03 - No se llevó a cabo la operación".
+**RN-11.1** La Nota de Crédito podrá cancelarse únicamente con los motivos "01 - Errores con relación", "02 - Errores sin relación" y "03 - No se llevó a cabo la operación".
 
 ### Criterios de Aceptación
 
-**CA-14.1.1 — Cancelación de Nota de Crédito con motivo válido**
+**CA-11.1.1 — Cancelación de Nota de Crédito con motivo válido**
 Dado que el usuario captura un motivo de cancelación válido ("01", "02" o "03") para una Nota de Crédito
 Cuando confirma la cancelación
 Entonces el sistema la cancela.
 
-**CA-14.1.2 — Motivo no válido**
+**CA-11.1.2 — Motivo no válido**
 Dado que el usuario selecciona un motivo distinto a los permitidos para la Nota de Crédito
 Cuando intenta confirmar la cancelación
 Entonces el sistema impide la operación e informa que el motivo no es válido.
 
+[⬆ Volver al índice](#6-índice-de-requerimientos)
+
+<a id="rf-11"></a>
 ---
 ---
 
@@ -856,20 +793,20 @@ Entonces el sistema impide la operación e informa que el motivo no es válido.
 
 | Objetivo de negocio | RF | Historia | Criterio de aceptación | Prioridad | Estado |
 |---------------------|-----|----------|------------------------|-----------|--------|
-| OBJ-1 Garantizar el cumplimiento fiscal en la emisión y cancelación de CFDIs | RF-01 | HU-1.1 | CA-1.1.1 | Must | Propuesto |
-| OBJ-1 | RF-04 | HU-4.1 | CA-4.1.1, CA-4.1.3 | Must | Propuesto |
-| OBJ-1 | RF-13 | HU-13.1 | CA-13.1.1, CA-13.1.3 | Must | Propuesto |
+| OBJ-1 Garantizar el cumplimiento fiscal en la emisión y cancelación de CFDIs | RF-08 | HU-8.1 | CA-8.1.1, CA-8.1.3 | Must | Propuesto |
+| OBJ-1 | RF-09 | HU-9.1 | CA-9.1.1 | Must | Propuesto |
+| OBJ-1 | RF-07 | HU-7.1 | CA-7.1.1, CA-7.1.3 | Must | Propuesto |
 | OBJ-1 | RF-14 | HU-14.1 | CA-14.1.1 | Must | Propuesto |
-| OBJ-2 Controlar y limitar los plazos y condiciones de emisión/cancelación de comprobantes | RF-02 | HU-2.1 | CA-2.1.1, CA-2.1.2 | Must | Propuesto |
-| OBJ-2 | RF-03 | HU-3.1 | CA-3.1.1 | Must | Propuesto |
-| OBJ-2 | RF-08 | HU-8.1 | CA-8.1.3, CA-8.1.4 | Must | Propuesto |
-| OBJ-2 | RF-10 | HU-10.1 | CA-10.1.2 | Must | Propuesto |
-| OBJ-2 | RF-12 | HU-12.1 | CA-12.1.1 | Must | Propuesto |
-| OBJ-3 Habilitar el manejo de múltiples monedas y tipos de cambio | RF-06 | HU-6.1 | CA-6.1.1 | Must | Propuesto |
-| OBJ-4 Mantener trazabilidad y control de permisos sobre las operaciones de CFDI | RF-05 | HU-5.1 | CA-5.1.1, CA-5.1.2 | Must | Propuesto |
-| OBJ-4 | RF-07 | HU-7.1 | CA-7.1.1 | Must | Propuesto |
-| OBJ-4 | RF-09 | HU-9.1 | CA-9.1.1, CA-9.1.2 | Must | Propuesto |
-| OBJ-4 | RF-11 | HU-11.1 | CA-11.1.1, CA-11.1.2 | Must | Propuesto |
+| OBJ-2 Controlar y limitar los plazos y condiciones de emisión/cancelación de comprobantes | RF-01 | HU-1.1 | CA-1.1.1, CA-1.1.2 | Must | Propuesto |
+| OBJ-2 | RF-10 | HU-10.1 | CA-10.1.1 | Must | Propuesto |
+| OBJ-2 | RF-11 | HU-11.1 | CA-11.1.3, CA-11.1.4 | Must | Propuesto |
+| OBJ-2 | RF-12 | HU-12.1 | CA-12.1.2 | Must | Propuesto |
+| OBJ-2 | RF-13 | HU-13.1 | CA-13.1.1 | Must | Propuesto |
+| OBJ-3 Habilitar el manejo de múltiples monedas y tipos de cambio | RF-03 | HU-3.1 | CA-3.1.1 | Must | Propuesto |
+| OBJ-4 Mantener trazabilidad y control de permisos sobre las operaciones de CFDI | RF-02 | HU-2.1 | CA-2.1.1, CA-2.1.2 | Must | Propuesto |
+| OBJ-4 | RF-04 | HU-4.1 | CA-4.1.1 | Must | Propuesto |
+| OBJ-4 | RF-05 | HU-5.1 | CA-5.1.1, CA-5.1.2 | Must | Propuesto |
+| OBJ-4 | RF-06 | HU-6.1 | CA-6.1.1, CA-6.1.2 | Must | Propuesto |
 
 Estados sugeridos: Propuesto → Aprobado → En desarrollo → Verificado.
 
@@ -881,7 +818,7 @@ Estados sugeridos: Propuesto → Aprobado → En desarrollo → Verificado.
 |----|----------|---------------------|
 | SUP-01 | Las secciones de Información General del documento fuente (nombre de proyecto, número de solicitud, prioridad, responsables y fecha) no fueron completadas; se documentan como pendientes de confirmación. | El documento no podrá formalizarse ni entrar a planeación de sprint sin estos datos. |
 | SUP-02 | El área de negocio corresponde a "Otras unidades de negocio" (Inmobiliaria), sin mayor detalle adicional en el documento fuente. | Podría requerirse ajustar el alcance si existieran otras áreas involucradas. |
-| SUP-03 | Las reglas 41 a 43 del documento fuente, clasificadas bajo el proceso "Cancelar Anticipo" pero redactadas con el texto "El Abono deberá permitir cancelar…", se interpretan como reglas de cancelación de Anticipo (RF-12), asumiendo un error de captura en el documento original. | Si las reglas realmente aplicaban a Abono, RF-10 y RF-12 deberán ajustarse. |
+| SUP-03 | Las reglas 41 a 43 del documento fuente, clasificadas bajo el proceso "Cancelar Anticipo" pero redactadas con el texto "El Abono deberá permitir cancelar…", se interpretan como reglas de cancelación de Anticipo (RF-13), asumiendo un error de captura en el documento original. | Si las reglas realmente aplicaban a Abono, RF-12 y RF-13 deberán ajustarse. |
 | SUP-04 | No se definieron requerimientos no funcionales en el documento fuente (sección marcada "NA"); se proponen RNF mínimos (ver sección correspondiente) sujetos a validación del negocio. | El sistema podría entregarse sin criterios de auditoría, seguridad o disponibilidad formalmente acordados. |
 | SUP-05 | Las prioridades MoSCoW no fueron indicadas en el documento fuente; se asignaron como Must dado el carácter fiscal/regulatorio del proyecto, sujeto a confirmación del Product Owner. | El orden de construcción del backlog podría no reflejar las prioridades reales del negocio. |
 
@@ -898,7 +835,7 @@ Estados sugeridos: Propuesto → Aprobado → En desarrollo → Verificado.
 | ID | Riesgo | Prob. | Impacto | Mitigación |
 |----|--------|-------|---------|------------|
 | RGO-01 | Cambios en las disposiciones fiscales del SAT (Anexo 20, reglas de cancelación) que impacten las reglas de negocio documentadas. | Media | Alto | Monitoreo normativo periódico y diseño parametrizable de las reglas fiscales. |
-| RGO-02 | Inconsistencia de datos en la tabla de reglas de negocio del documento fuente (ver SUP-03) que derive en una implementación incorrecta de RF-12. | Media | Medio | Validar con negocio el contenido exacto de las reglas 41-43 antes de iniciar el desarrollo de RF-12. |
+| RGO-02 | Inconsistencia de datos en la tabla de reglas de negocio del documento fuente (ver SUP-03) que derive en una implementación incorrecta de RF-13. | Media | Medio | Validar con negocio el contenido exacto de las reglas 41-43 antes de iniciar el desarrollo de RF-13. |
 | RGO-03 | Falta de definición formal de requerimientos no funcionales puede derivar en un sistema que no cumpla expectativas de desempeño, seguridad o disponibilidad. | Media | Medio | Validar y formalizar los RNF propuestos con negocio y arquitectura antes de iniciar el desarrollo. |
 
 ## Preguntas abiertas
