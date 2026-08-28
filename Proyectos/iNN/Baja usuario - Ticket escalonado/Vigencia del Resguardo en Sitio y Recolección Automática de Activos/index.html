@@ -3465,11 +3465,11 @@
 <tbody>
 <tr>
 <td>Versión</td>
-<td>1.13</td>
+<td>1.14</td>
 </tr>
 <tr>
 <td>Fecha</td>
-<td>2026-08-22</td>
+<td>2026-08-28</td>
 </tr>
 <tr>
 <td>Estado</td>
@@ -3495,7 +3495,7 @@
 <p><strong>RF-01 — Configuración de los subtickets automáticos por baja de personal</strong>, que deja operando dos revisiones nuevas —activos de telefonía y datos del directorio telefónico junto con la reserva de la dirección IP, en un solo subticket; y remoción del monitoreo de antivirus— mediante el alta de registros en el catálogo "Datos Personales", ajusta el asunto del subticket que ya se detona para la baja de los directorios activos para que declare también la desactivación del HostName, y agrega en ese catálogo el campo <strong>"No requiere validación"</strong>: los registros marcados se detonan siempre y se cierran sin validar la información del colaborador. El mecanismo queda abierto para configurar después cualquier otra revisión que deba generarse al registrar una baja, sin desarrollo.</p>
 </li>
 <li>
-<p><strong>RF-02 — Parametrización de la vigencia del resguardo</strong>, que hace administrable los días de vigencia, el destino del ticket de recolección y la fecha a partir de la cual el proceso empieza a operar, sin requerir cambios de desarrollo.</p>
+<p><strong>RF-02 — Parametrización de la vigencia del resguardo</strong>, que hace administrable la cantidad de días que un activo puede permanecer en resguardo en sitio, sin requerir cambios de desarrollo.</p>
 </li>
 <li><strong>RF-03 — Registro de las fechas de vigencia del resguardo</strong>, que garantiza que todo activo que entra en resguardo quede con su fecha de inicio y su fecha de fin de vigencia guardadas desde el primer momento.</li>
 <li><strong>RF-04 — Generación automática del ticket "Recolección por Resguardo"</strong>, que al vencer el periodo de vigencia crea de manera desatendida un ticket de recolección por colaborador, con el detalle de todos sus equipos en resguardo, y lo asigna al personal y departamento encargados de recolectar activos.</li>
@@ -3508,7 +3508,7 @@
 <p><strong>Incluye:</strong>
 - La configuración, en el catálogo "Datos Personales", de los <strong>dos</strong> subtickets que el sistema debe generar automáticamente al registrar la baja de un colaborador —revisión de activos de telefonía y datos del directorio telefónico junto con la reserva de la dirección IP, en un solo subticket; y remoción del monitoreo de antivirus—, cada uno con su departamento destino, su asunto y los datos del colaborador que debe transcribir al subticket: Dirección IP y HostName en el primero, Usuario de Directorio Activo y Host Name en el segundo. En los tres asuntos —los dos nuevos y el ajustado— el listado enlista <strong>todos</strong> los registros que el colaborador tenga de cada dato —en el caso de la IP, todos los activos que cuenten con una, con nombre del activo e IP— y muestra <strong>NA</strong> cuando no tenga ninguno. Se incluye además el <strong>ajuste del asunto del subticket ya existente de baja de los directorios activos</strong>, que pasa a declarar también la desactivación del HostName y a transcribir el nombre del equipo del colaborador, sin que esa desactivación requiera un registro propio. La lista es la del arranque, no un límite: el mismo catálogo permite configurar después cualquier otra revisión que deba detonarse al registrar una baja.
 - El campo <strong>"No requiere validación"</strong> en ese mismo catálogo, que se marca por registro. Los registros <strong>marcados</strong> generan su subticket <strong>siempre</strong> —sin evaluar el expediente del colaborador— y lo <strong>cierran sin validación</strong>. Los dos subtickets del arranque se dan de alta con esa marca puesta; los registros sin marcar —entre ellos el de baja de Directorio Activo— conservan el comportamiento actual.
-- La configuración administrable de los días de vigencia del resguardo en sitio, del departamento/personal encargado de las recolecciones y de la fecha de corte a partir de la cual el proceso opera.
+- La configuración administrable de los <strong>días de vigencia del resguardo en sitio</strong>, única variable de sistema que este documento da de alta.
 - El registro en el activo de la fecha de inicio y la fecha de fin de vigencia del resguardo.
 - La creación automática y desatendida (job programado) del ticket de recolección identificado como <strong>"Recolección por Resguardo"</strong>, generado <strong>uno por colaborador dado de baja</strong>, que nace en estatus <strong>En Proceso</strong> y lleva en su detalle todos los activos que el colaborador tenía asignados antes de su baja, a nombre de quien autorizó el resguardo y asignado al responsable de recolecciones.
 - La opción de <strong>extender la vigencia</strong> del resguardo de un colaborador <strong>seleccionando la nueva fecha de fin de vigencia en un calendario</strong>, que se aplica a todos sus activos en resguardo, <strong>restringida por un permiso propio</strong>, con validación de la fecha mínima permitida, motivo obligatorio y registro en bitácora.
@@ -3518,7 +3518,7 @@
 - El registro en bitácora de las extensiones otorgadas y del ticket generado automáticamente.</p>
 <p><strong>No incluye:</strong>
 - Un flujo de prórroga con solicitud y autorización: la extensión de la fecha es una acción directa del rol facultado, sin cadena de aprobaciones.
-- El tratamiento de los resguardos cuyo periodo de vigencia ya venció antes de la puesta en marcha de esta funcionalidad; esos activos quedan fuera del proceso automático conforme a la fecha de corte definida en RF-02.
+- El tratamiento de los resguardos que ya estaban en curso antes de la puesta en marcha de esta funcionalidad; esos activos quedan sin fecha de fin de vigencia registrada y, por eso, fuera del proceso automático (RN-4.2, RN-4.16 y SUP-09).
 - El proceso operativo de recolección física del activo (levantamiento, traslado, entrada a almacén, responsiva), que continúa operando con la funcionalidad ya existente de recolección de activos.
 - El flujo de baja del colaborador vía nómina y el <strong>mecanismo</strong> que genera el ticket principal y sus subtickets, que ya existen y no se modifican: RF-01 únicamente da de alta dos registros nuevos en el catálogo que gobierna ese mecanismo, ajusta el mensaje de un registro ya existente —el de baja de Directorio Activo— y agrega el campo "No requiere validación", que exenta de la validación al generar y al cerrar. Para los requerimientos de resguardo, el documento parte de que el activo ya quedó en estatus <strong>Resguardo en Sitio</strong>.
 - El contenido operativo de las revisiones nuevas —cómo se libera una reserva de IP, cómo se remueve el agente de antivirus, cómo se desactiva un HostName en el directorio activo o cómo se coteja el control interno de telefonía—, que se ejecuta en las herramientas de cada especialidad y no dentro de Business Suite.
@@ -3535,7 +3535,7 @@
 <tbody>
 <tr>
 <td>Administrador del sistema</td>
-<td>Mantiene la configuración del sistema: los subtickets que se generan al registrar una baja de personal —con su departamento destino, los datos que transcriben y la marca "No requiere validación"— y los parámetros del resguardo: días de vigencia, departamento y personal encargados de recolecciones, motivo del ticket y fecha de corte del proceso.</td>
+<td>Mantiene la configuración del sistema: los subtickets que se generan al registrar una baja de personal —con su departamento destino, los datos que transcriben y la marca "No requiere validación"— y los <strong>días de vigencia del resguardo en sitio</strong>.</td>
 </tr>
 <tr>
 <td>Coordinación de Redes y Telecomunicaciones</td>
@@ -3611,10 +3611,6 @@
 <tr>
 <td>Extensión del resguardo</td>
 <td>Acción que mueve hacia adelante la fecha de fin de vigencia del resguardo de un colaborador, seleccionando la nueva fecha en un calendario y aplicándola a todos sus activos en resguardo, para conservarlos más tiempo en sitio. La nueva fecha solo puede ser posterior a la vigente y al día actual. No requiere autorización de un tercero, pero exige capturar un motivo y queda registrada en la bitácora del activo.</td>
-</tr>
-<tr>
-<td>Fecha de corte</td>
-<td>Fecha configurable a partir de la cual el proceso automático empieza a considerar los resguardos. Los activos cuya fecha de resguardo sea anterior a ella quedan fuera del proceso, evitando que los resguardos históricos ya vencidos generen tickets al momento de la puesta en marcha.</td>
 </tr>
 <tr>
 <td>Recolección por Resguardo</td>
@@ -3704,7 +3700,7 @@
     EnRecoleccion --&gt; [*]</code></pre>
 <p>Y este diagrama muestra la decisión que ejecuta el proceso automático cada vez que corre:</p>
 <pre class="mermaid"><code>flowchart TD
-    A[Job diario de resguardos] --&gt; B[Obtener activos en Resguardo en Sitio con fecha de resguardo válida&lt;br/&gt;y posterior a la fecha de corte]
+    A[Job diario de resguardos] --&gt; B[Obtener activos en Resguardo en Sitio&lt;br/&gt;con fecha de fin de vigencia registrada]
     B --&gt; C[Agrupar los activos por colaborador dado de baja]
     C --&gt; D[Tomar la fecha de fin de vigencia más próxima&lt;br/&gt;entre los activos de cada colaborador]
     D --&gt; F{¿Esa fecha ya se cumplió o pasó?}
@@ -4151,11 +4147,11 @@ Este requerimiento es independiente de los seis siguientes: comparte con ellos e
 </tbody>
 </table>
 <h2 id="objetivo_1">Objetivo<a class="headerlink" href="#objetivo_1" title="Permanent link">&para;</a></h2>
-<p>Permitir que el negocio defina y ajuste, sin intervención de desarrollo, cuántos días puede permanecer un activo en resguardo en sitio, a quién se le asigna el ticket de recolección y a partir de qué fecha empieza a operar el proceso.</p>
+<p>Permitir que el negocio defina y ajuste, sin intervención de desarrollo, cuántos días puede permanecer un activo en resguardo en sitio.</p>
 <h2 id="descripción_1">Descripción<a class="headerlink" href="#descripción_1" title="Permanent link">&para;</a></h2>
-<p>El sistema deberá exponer como <strong>configuración administrable</strong> los parámetros que gobiernan la vigencia del resguardo en sitio, de manera que el negocio pueda modificarlos desde la administración de variables del sistema sin requerir despliegue de código.</p>
-<p>Los parámetros administrables son los <strong>días de vigencia del resguardo</strong>, el <strong>departamento encargado de las recolecciones</strong> al que se asigna el ticket, el <strong>motivo</strong> con el que se identifica el ticket generado y la <strong>fecha de corte</strong> a partir de la cual el proceso automático empieza a considerar los resguardos.</p>
-<p>Estos parámetros son insumo de los demás requerimientos: RF-03 los aplica al registrar las fechas del resguardo, y RF-04 los consulta en cada ejecución del proceso automático.</p>
+<p>El sistema deberá exponer como <strong>configuración administrable</strong> los <strong>días de vigencia del resguardo en sitio</strong>, de manera que el negocio pueda modificarlos sin requerir despliegue de código. La consulta y la edición del valor se hacen desde la <strong>pantalla de administración de variables del sistema, que ya existe</strong>: este requerimiento no agrega pantallas ni operaciones nuevas, se limita al alta de la variable.</p>
+<p>Es el <strong>único parámetro que este documento da de alta</strong>. El departamento encargado de las recolecciones y el motivo con el que se identifica el ticket generado no se configuran aquí: ambos ya existen en el sistema —el primero en el catálogo de departamentos, con su responsable asignado; el segundo en el catálogo de motivos de ticket— y RF-04 los consume de ahí, sin una variable nueva de por medio.</p>
+<p>Este parámetro es insumo de RF-03, que lo aplica al registrar las fechas del resguardo en el activo.</p>
 <h3 id="información--atributos_1">Información / atributos<a class="headerlink" href="#información--atributos_1" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -4171,25 +4167,10 @@ Este requerimiento es independiente de los seis siguientes: comparte con ellos e
 <td>Sí</td>
 <td>Número entero de días naturales que un activo puede permanecer en resguardo en sitio, contados desde la fecha de resguardo. Es el valor que el sistema suma para calcular la fecha de fin de vigencia al iniciar el resguardo. Lo define el negocio; el documento usa 15 como ejemplo.</td>
 </tr>
-<tr>
-<td>Departamento encargado de recolecciones</td>
-<td>Sí</td>
-<td>Departamento al que pertenece el responsable que atenderá el ticket de recolección. Debe estar activo y tener un responsable asignado.</td>
-</tr>
-<tr>
-<td>Motivo del ticket de recolección</td>
-<td>Sí</td>
-<td>Texto/clave con el que se identifica el ticket generado automáticamente: "Recolección por Resguardo".</td>
-</tr>
-<tr>
-<td>Fecha de corte del proceso</td>
-<td>Sí</td>
-<td>Fecha a partir de la cual el proceso automático considera los resguardos. Los activos con fecha de resguardo anterior quedan excluidos, de modo que los resguardos históricos ya vencidos no generen tickets. Valor inicial propuesto: la fecha de puesta en marcha de la funcionalidad.</td>
-</tr>
 </tbody>
 </table>
-<h3 id="claves-de-las-variables-de-sistema">Claves de las variables de sistema<a class="headerlink" href="#claves-de-las-variables-de-sistema" title="Permanent link">&para;</a></h3>
-<p>Las variables de sistema se identifican por una <strong>clave de máximo 15 caracteres</strong>, límite ya establecido en el catálogo actual. Se proponen las siguientes claves, sujetas a validación del equipo de desarrollo para no colisionar con las existentes:</p>
+<h3 id="clave-de-la-variable-de-sistema">Clave de la variable de sistema<a class="headerlink" href="#clave-de-la-variable-de-sistema" title="Permanent link">&para;</a></h3>
+<p>Las variables de sistema se identifican por una <strong>clave de máximo 15 caracteres</strong>, límite ya establecido en el catálogo actual. Se propone la siguiente clave, sujeta a validación del equipo de desarrollo para no colisionar con las existentes:</p>
 <table>
 <thead>
 <tr>
@@ -4206,72 +4187,33 @@ Este requerimiento es independiente de los seis siguientes: comparte con ellos e
 <td>Entero</td>
 <td>15</td>
 </tr>
-<tr>
-<td>Departamento encargado de recolecciones</td>
-<td><code>CLADEPRECOLEC</code></td>
-<td>Texto (clave de departamento)</td>
-<td>Sin valor; obligatorio configurarlo</td>
-</tr>
-<tr>
-<td>Motivo del ticket de recolección</td>
-<td><code>MOTTKTRECRESG</code></td>
-<td>Texto</td>
-<td>Recolección por Resguardo</td>
-</tr>
-<tr>
-<td>Fecha de corte del proceso</td>
-<td><code>FECHACORTRESG</code></td>
-<td>Fecha</td>
-<td>Fecha de puesta en marcha</td>
-</tr>
 </tbody>
 </table>
-<p>El sistema ya cuenta con un mecanismo que <strong>crea la variable con su valor por omisión la primera vez que se consulta</strong>, por lo que no se requiere una carga previa de datos para los parámetros que tienen valor inicial definido. Existe además un precedente directo del enfoque de fecha de corte: la variable que define desde cuándo se aplica la regla de importación de bóvedas de licencias.</p>
-<h3 id="operaciones_1">Operaciones<a class="headerlink" href="#operaciones_1" title="Permanent link">&para;</a></h3>
-<p>El administrador deberá poder:
-- Consultar los valores vigentes de cada parámetro.
-- Editar los valores.
-- Consultar la bitácora de cambios de cada parámetro (valor anterior, valor nuevo, quién y cuándo).</p>
+<p>El sistema ya cuenta con un mecanismo que <strong>crea la variable con su valor por omisión la primera vez que se consulta</strong>, por lo que no se requiere una carga previa de datos ni una regla para el caso de que el parámetro no exista: la primera consulta lo deja creado con su valor inicial.</p>
 <hr />
 <h2 id="hu-21--configuración-de-los-días-de-vigencia-del-resguardo">HU-2.1 — Configuración de los días de vigencia del resguardo<a class="headerlink" href="#hu-21--configuración-de-los-días-de-vigencia-del-resguardo" title="Permanent link">&para;</a></h2>
-<p>Como administrador del sistema, quiero configurar los días de vigencia del resguardo en sitio y el destino del ticket de recolección, para que el negocio pueda ajustar la política de resguardo cuando cambien sus tiempos operativos sin depender del área de desarrollo.</p>
+<p>Como administrador del sistema, quiero configurar los días de vigencia del resguardo en sitio, para que el negocio pueda ajustar la política de resguardo cuando cambien sus tiempos operativos sin depender del área de desarrollo.</p>
 <h3 id="reglas-de-negocio_2">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_2" title="Permanent link">&para;</a></h3>
 <p><strong>RN-2.1</strong> Los días de vigencia del resguardo deberán ser un número entero mayor a cero, expresado en días naturales.</p>
-<p><strong>RN-2.2</strong> El departamento encargado de recolecciones deberá estar activo y tener un responsable asignado; si no cumple ambas condiciones, la configuración no podrá guardarse.</p>
-<p><strong>RN-2.3</strong> Si algún parámetro obligatorio no está configurado, el sistema deberá utilizar el valor por omisión definido (vigencia 15 días) y dejar registro de que se está operando con valores por omisión.</p>
-<p><strong>RN-2.4</strong> Todo cambio en cualquiera de estos parámetros deberá registrarse en la bitácora de auditoría indicando el valor anterior, el valor nuevo, el usuario que lo modificó y la fecha y hora del cambio.</p>
-<p><strong>RN-2.5</strong> Un cambio en los días de vigencia del resguardo aplicará <strong>únicamente a los resguardos que inicien después del cambio</strong>: los activos que ya están en resguardo conservan la fecha de fin de vigencia que se les registró, sin recálculo retroactivo. Los cambios en el departamento de recolecciones y en el motivo del ticket sí aplican de inmediato, a partir de la siguiente ejecución del proceso automático.</p>
-<p><strong>RN-2.6</strong> La fecha de corte deberá ser obligatoria y, mientras no se configure explícitamente, el sistema tomará como fecha de corte la fecha de puesta en marcha de la funcionalidad; en ningún caso el proceso automático operará sin una fecha de corte definida.</p>
-<p><strong>RN-2.7</strong> La configuración será <strong>única y general para toda la empresa</strong>: no se parametriza por centro de trabajo, sucursal, departamento ni tipo de activo. Todos los resguardos que inicien bajo una misma configuración quedan sujetos a los mismos días de vigencia.</p>
-<p><strong>RN-2.8</strong> Los días de vigencia del resguardo serán una <strong>cantidad configurable por el negocio</strong>. El valor que aparece en este documento es ilustrativo, sirve para ejemplificar los criterios de aceptación y no constituye un compromiso funcional; el valor definitivo se establece al configurar el sistema.</p>
+<p><strong>RN-2.2</strong> Un cambio en los días de vigencia del resguardo aplicará <strong>únicamente a los resguardos que inicien después del cambio</strong>: los activos que ya están en resguardo conservan la fecha de fin de vigencia que se les registró, sin recálculo retroactivo.</p>
+<p><strong>RN-2.3</strong> La configuración será <strong>única y general para toda la empresa</strong>: no se parametriza por centro de trabajo, sucursal, departamento ni tipo de activo. Todos los resguardos que inicien bajo una misma configuración quedan sujetos a los mismos días de vigencia.</p>
+<p><strong>RN-2.4</strong> Los días de vigencia del resguardo serán una <strong>cantidad configurable por el negocio</strong>. El valor que aparece en este documento es ilustrativo, sirve para ejemplificar los criterios de aceptación y no constituye un compromiso funcional; el valor definitivo se establece al configurar el sistema.</p>
 <h3 id="criterios-de-aceptación_2">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_2" title="Permanent link">&para;</a></h3>
 <p><strong>CA-2.1.1 — Consulta de la configuración vigente</strong>
 Dado que el administrador ingresa a la configuración del sistema
-Cuando consulta los parámetros de resguardo en sitio
-Entonces visualiza los días de vigencia, el departamento encargado de recolecciones, el motivo del ticket y la fecha de corte configurados.</p>
+Cuando consulta el parámetro de resguardo en sitio
+Entonces visualiza los días de vigencia configurados.</p>
 <p><strong>CA-2.1.2 — Edición de los días de vigencia y no retroactividad</strong>
 Dado que los días de vigencia están configurados en 15 y existe un activo en resguardo desde el 1 de septiembre con fecha de fin de vigencia registrada el 16 de septiembre
 Cuando el administrador cambia los días de vigencia a 20 y guarda
-Entonces el sistema almacena el nuevo valor y lo registra en la bitácora de auditoría con el valor anterior, el activo que ya estaba en resguardo conserva su fecha de fin de vigencia del 16 de septiembre, y los activos que entren en resguardo a partir de ese momento reciben una fecha de fin de vigencia a 20 días.</p>
+Entonces el sistema almacena el nuevo valor, el activo que ya estaba en resguardo conserva su fecha de fin de vigencia del 16 de septiembre, y los activos que entren en resguardo a partir de ese momento reciben una fecha de fin de vigencia a 20 días.</p>
 <p><strong>CA-2.1.3 — Validación de días de vigencia inválidos</strong>
 Dado que el administrador captura como días de vigencia un valor igual a cero o negativo
 Cuando intenta guardar
 Entonces el sistema impide el guardado e informa que los días de vigencia deben ser un número entero mayor a cero.</p>
-<p><strong>CA-2.1.4 — Validación del departamento encargado de recolecciones</strong>
-Dado que el administrador selecciona como departamento encargado de recolecciones uno que está inactivo o que no tiene responsable asignado
-Cuando intenta guardar
-Entonces el sistema impide el guardado e informa que el departamento debe estar activo y contar con un responsable.</p>
-<p><strong>CA-2.1.5 — Operación con valores por omisión</strong>
-Dado que los días de vigencia no han sido configurados
-Cuando el proceso automático se ejecuta
-Entonces utiliza 15 días de vigencia y deja registro de que operó con el valor por omisión.</p>
-<p><strong>CA-2.1.6 — Exclusión de resguardos anteriores a la fecha de corte</strong>
-Dado que la fecha de corte está configurada en el 1 de octubre y existen activos en resguardo con fecha de resguardo del 5 de julio
-Cuando el proceso automático se ejecuta
-Entonces esos activos no se consideran: no se les genera ticket de recolección, aun cuando su periodo de vigencia ya haya vencido.</p>
 <hr />
 <p><strong>Regla transversal:</strong>
-Este requerimiento es prerrequisito de los requerimientos de resguardo: RF-03 aplica los días de vigencia al registrar las fechas del resguardo, y RF-04 y RF-05 leen de aquí el departamento de recolecciones, el motivo del ticket y la fecha de corte. Ninguna de esas funcionalidades debe llevar tiempos, destinos, motivos ni fechas de corte fijos en código.</p>
+Este requerimiento es prerrequisito de RF-03, que aplica los días de vigencia al registrar la fecha de fin de vigencia del resguardo. Ninguna funcionalidad de resguardo debe llevar ese plazo fijo en código. El departamento encargado de recolecciones y el motivo del ticket que consume RF-04 no forman parte de esta configuración: se toman de los catálogos que ya existen en el sistema.</p>
 <h2 id="---_2">---<a class="headerlink" href="#---_2" title="Permanent link">&para;</a></h2>
 <p><a id="rf-03"></a></p>
 <h1 id="rf-03--registro-de-las-fechas-de-vigencia-del-resguardo">RF-03 — Registro de las Fechas de Vigencia del Resguardo<a class="headerlink" href="#rf-03--registro-de-las-fechas-de-vigencia-del-resguardo" title="Permanent link">&para;</a></h1>
@@ -4324,7 +4266,7 @@ Este requerimiento es prerrequisito de los requerimientos de resguardo: RF-03 ap
 </tr>
 </tbody>
 </table>
-<h3 id="operaciones_2">Operaciones<a class="headerlink" href="#operaciones_2" title="Permanent link">&para;</a></h3>
+<h3 id="operaciones_1">Operaciones<a class="headerlink" href="#operaciones_1" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Registrar ambas fechas al iniciar el resguardo.</li>
 <li>Limpiar ambas fechas al salir del resguardo.</li>
@@ -4336,7 +4278,7 @@ Este requerimiento es prerrequisito de los requerimientos de resguardo: RF-03 ap
 <h3 id="reglas-de-negocio_3">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_3" title="Permanent link">&para;</a></h3>
 <p><strong>RN-3.1</strong> En el momento en que un activo queda en estatus <strong>Resguardo en Sitio</strong>, el sistema deberá registrar en el activo la <strong>fecha de resguardo</strong> con la fecha del servidor y la <strong>fecha de fin de vigencia</strong> con esa misma fecha más los días de vigencia configurados.</p>
 <p><strong>RN-3.2</strong> Ambas fechas se registrarán en la misma operación: ningún activo podrá quedar en estatus Resguardo en Sitio con alguna de las dos fechas vacía.</p>
-<p><strong>RN-3.3</strong> Los días de vigencia que se aplican son los configurados <strong>en el momento de iniciar el resguardo</strong>; conforme a RN-2.5, un cambio posterior de ese parámetro no altera la fecha ya registrada.</p>
+<p><strong>RN-3.3</strong> Los días de vigencia que se aplican son los configurados <strong>en el momento de iniciar el resguardo</strong>; conforme a RN-2.2, un cambio posterior de ese parámetro no altera la fecha ya registrada.</p>
 <p><strong>RN-3.4</strong> Cuando el activo sale del resguardo —por reasignación, recolección, baja o cancelación— ambas fechas deberán limpiarse, de modo que un activo fuera de resguardo nunca conserve una vigencia vigente.</p>
 <p><strong>RN-3.5</strong> El registro de ambas fechas deberá quedar asentado en la bitácora del activo, indicando la fecha de resguardo, la fecha de fin de vigencia y los días de vigencia aplicados.</p>
 <p><strong>RN-3.6</strong> Si un activo entra en resguardo más de una vez a lo largo de su vida, cada nuevo resguardo registrará fechas nuevas que sustituyen a las anteriores; el historial de resguardos previos permanece en la bitácora del activo.</p>
@@ -4389,14 +4331,14 @@ La fecha de fin de vigencia que produce este requerimiento es el único dato con
 </tr>
 <tr>
 <td>Dependencias</td>
-<td>RF-02, RF-03</td>
+<td>RF-03</td>
 </tr>
 </tbody>
 </table>
 <h2 id="objetivo_3">Objetivo<a class="headerlink" href="#objetivo_3" title="Permanent link">&para;</a></h2>
 <p>Garantizar que ningún activo se quede en resguardo en sitio más allá del periodo de vigencia autorizado, creando de manera automática y desatendida <strong>un ticket de recolección por cada colaborador dado de baja</strong>, que nace en estatus <strong>En Proceso</strong> y reúne en su detalle todos los activos que ese colaborador tenía asignados antes de su baja, asignado al personal y departamento responsables de ejecutar la recolección.</p>
 <h2 id="descripción_3">Descripción<a class="headerlink" href="#descripción_3" title="Permanent link">&para;</a></h2>
-<p>El sistema deberá contar con un proceso automático (job) que se ejecute periódicamente y que, cuando se agota el periodo de vigencia del resguardo de un colaborador dado de baja, cree un <strong>ticket interno</strong> identificado con el motivo <strong>"Recolección por Resguardo"</strong> y lo asigne al responsable del departamento encargado de las recolecciones configurado en RF-02.</p>
+<p>El sistema deberá contar con un proceso automático (job) que se ejecute periódicamente y que, cuando se agota el periodo de vigencia del resguardo de un colaborador dado de baja, cree un <strong>ticket interno</strong> identificado con el motivo <strong>"Recolección por Resguardo"</strong> y lo asigne al responsable del departamento encargado de las recolecciones que el sistema ya tiene definido.</p>
 <p>El ticket se genera <strong>por colaborador, no por activo</strong>: un solo ticket reúne en su detalle <strong>todos los activos que ese colaborador tenía asignados antes de su baja</strong>, no únicamente los que quedaron en resguardo en sitio. La razón es que el resguardo nace de la baja de una persona y se resuelve por persona —cuando llega el reemplazo se le entrega el equipo completo—, de modo que la recolección se coordina una sola vez con el custodio en lugar de abrir un ticket por cada pieza. Por la misma razón el ticket agrupa todos los activos del colaborador aunque estén en centros de trabajo distintos.</p>
 <p>Lo que <strong>detona</strong> el ticket sigue siendo el vencimiento del periodo de vigencia del resguardo; lo que cambia es la amplitud de su <strong>detalle</strong>. Cada renglón muestra el estatus vigente del activo, de modo que el responsable de recolecciones tenga a la vista el inventario completo de la persona —qué sigue en resguardo y debe recuperar, y qué ya salió por recolección o por reasignación— sin reconstruirlo desde el expediente del colaborador ni consultar activo por activo.</p>
 <p>El ticket nace en estatus <strong>En Proceso</strong>, con estatus interno Recibido: llega a la bandeja del responsable de recolecciones listo para atenderse, sin pasar por ningún estatus previo de borrador, de autorización o de revisión.</p>
@@ -4444,12 +4386,12 @@ La fecha de fin de vigencia que produce este requerimiento es el único dato con
 <tr>
 <td>Personal asignado (responsable)</td>
 <td>Sí</td>
-<td>Responsable del departamento encargado de recolecciones configurado en RF-02.</td>
+<td>Responsable del departamento encargado de recolecciones ya definido en el sistema.</td>
 </tr>
 <tr>
 <td>Departamento</td>
 <td>Sí</td>
-<td>Departamento encargado de recolecciones configurado en RF-02.</td>
+<td>Departamento encargado de recolecciones ya definido en el sistema.</td>
 </tr>
 <tr>
 <td>Observaciones</td>
@@ -4463,7 +4405,7 @@ La fecha de fin de vigencia que produce este requerimiento es el único dato con
 </tr>
 </tbody>
 </table>
-<h3 id="operaciones_3">Operaciones<a class="headerlink" href="#operaciones_3" title="Permanent link">&para;</a></h3>
+<h3 id="operaciones_2">Operaciones<a class="headerlink" href="#operaciones_2" title="Permanent link">&para;</a></h3>
 <p>El proceso automático deberá, en cada ejecución:
 - Identificar los colaboradores con activos en resguardo cuyo periodo de vigencia ya venció.
 - Reunir, para cada uno de esos colaboradores, todos los activos que tenía asignados antes de su baja, con el estatus que cada uno tenga en ese momento.
@@ -4475,10 +4417,10 @@ La fecha de fin de vigencia que produce este requerimiento es el único dato con
 <p>Como responsable de recolecciones, quiero que el sistema genere y me asigne automáticamente un ticket de "Recolección por Resguardo" con todos los equipos de un colaborador en cuanto se agota el periodo de vigencia de su resguardo, para recuperarlos en una sola coordinación y sin depender de que alguien recuerde solicitarlo.</p>
 <h3 id="reglas-de-negocio_4">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_4" title="Permanent link">&para;</a></h3>
 <p><strong>RN-4.1</strong> El proceso automático deberá ejecutarse de forma desatendida al menos una vez al día, sin intervención de ninguna persona.</p>
-<p><strong>RN-4.2</strong> Para <strong>detonar</strong> el ticket se considerarán únicamente los activos cuyo estatus vigente sea <strong>Resguardo en Sitio</strong> y cuya fecha de resguardo sea válida e igual o posterior a la fecha de corte configurada en RF-02. La integración del detalle del ticket es más amplia y se rige por RN-4.4.</p>
+<p><strong>RN-4.2</strong> Para <strong>detonar</strong> el ticket se considerarán únicamente los activos cuyo estatus vigente sea <strong>Resguardo en Sitio</strong>, con fecha de resguardo válida y con <strong>fecha de fin de vigencia registrada</strong>. La integración del detalle del ticket es más amplia y se rige por RN-4.4.</p>
 <p><strong>RN-4.3</strong> El ticket se generará <strong>por colaborador dado de baja</strong>: el proceso agrupa por colaborador todos los activos que tenía asignados antes de su baja y crea un único ticket para el conjunto, sin importar el centro de trabajo en el que se encuentre físicamente cada activo.</p>
 <p><strong>RN-4.4</strong> El ticket de un colaborador se creará cuando la <strong>más próxima de las fechas de fin de vigencia</strong> de sus activos en resguardo sea igual o anterior a la fecha del servidor, y deberá incluir en su detalle <strong>todos los activos que ese colaborador tenía asignados antes de su baja</strong>, no únicamente los que siguen en resguardo ni únicamente los vencidos. Cada renglón deberá mostrar el <strong>estatus vigente</strong> del activo, de modo que el responsable distinga los que debe recolectar de los que ya salieron del resguardo por recolección o por reasignación. Ningún activo del colaborador queda fuera del ticket.</p>
-<p><strong>RN-4.5</strong> El ticket nacerá a nombre de <strong>quien autorizó el resguardo en sitio</strong>: su personal, su departamento y su centro de trabajo son los datos del solicitante. Se asignará al responsable del departamento encargado de recolecciones y llevará el motivo "Recolección por Resguardo", ambos configurados en RF-02.</p>
+<p><strong>RN-4.5</strong> El ticket nacerá a nombre de <strong>quien autorizó el resguardo en sitio</strong>: su personal, su departamento y su centro de trabajo son los datos del solicitante. Se asignará al responsable del departamento encargado de recolecciones y llevará el motivo "Recolección por Resguardo", ambos ya existentes en el sistema.</p>
 <p><strong>RN-4.6</strong> No podrá existir más de un ticket vigente de "Recolección por Resguardo" para el mismo colaborador: si ya existe uno en proceso, el sistema no creará otro, sin importar cuántas veces se ejecute el proceso ni cuántos activos de ese colaborador venzan después.</p>
 <p><strong>RN-4.7</strong> Si el ticket de "Recolección por Resguardo" previo de un colaborador fue cancelado y este conserva activos en estatus Resguardo en Sitio con el periodo de vigencia vencido, el sistema deberá generar un nuevo ticket en la siguiente ejecución, con los activos que sigan en resguardo en ese momento.</p>
 <p><strong>RN-4.8</strong> Si el departamento encargado de recolecciones no está configurado, está inactivo o no tiene responsable asignado, el proceso no creará el ticket para ningún colaborador, registrará el error en la bitácora técnica y deberá volver a intentarlo en la siguiente ejecución.</p>
@@ -4489,7 +4431,7 @@ La fecha de fin de vigencia que produce este requerimiento es el único dato con
 <p><strong>RN-4.13</strong> Cada ticket generado automáticamente deberá quedar registrado en la bitácora de auditoría del ticket y en la bitácora de <strong>cada uno de los activos que estén en resguardo al momento de generarlo</strong>, indicando que se originó por vencimiento del resguardo en sitio, con la fecha de resguardo, la fecha de fin de vigencia y el periodo de vigencia aplicado.</p>
 <p><strong>RN-4.14</strong> El ticket generado automáticamente se opera con el mismo flujo, permisos y estatus que cualquier otro ticket interno de cómputo; este requerimiento no crea estatus nuevos ni un flujo paralelo de atención.</p>
 <p><strong>RN-4.15</strong> Mientras todos los activos en resguardo de un colaborador tengan una fecha de fin de vigencia posterior a la fecha del servidor, el proceso no creará ticket para ese colaborador. Conforme a RN-5.5, una extensión mueve la fecha de todos los activos del colaborador a la vez, de modo que aplaza el ticket completo y no deja activos sueltos que puedan detonarlo antes de tiempo.</p>
-<p><strong>RN-4.16</strong> Los activos cuya fecha de resguardo sea anterior a la fecha de corte configurada no se considerarán para <strong>detonar</strong> el ticket, aunque su periodo de vigencia esté vencido; su recolección se gestiona de forma manual con la funcionalidad ya existente. Cuando el colaborador tenga además activos que sí detonen el ticket, esos activos aparecerán en el <strong>detalle</strong> con su estatus vigente, conforme a RN-4.4, para que el responsable tenga a la vista el inventario completo de la persona.</p>
+<p><strong>RN-4.16</strong> Los activos en resguardo que <strong>no tengan registrada la fecha de fin de vigencia</strong> —los que ya estaban en resguardo antes de la puesta en marcha de esta funcionalidad— no se considerarán para <strong>detonar</strong> el ticket; su recolección se gestiona de forma manual con la funcionalidad ya existente. Cuando el colaborador tenga además activos que sí detonen el ticket, esos activos aparecerán en el <strong>detalle</strong> con su estatus vigente, conforme a RN-4.4, para que el responsable tenga a la vista el inventario completo de la persona.</p>
 <p><strong>RN-4.17</strong> Las observaciones del ticket deberán indicar la fecha de fin de vigencia que originó la recolección, la cantidad de activos incluidos y, cuando el resguardo tuvo extensiones, señalar que la fecha fue extendida.</p>
 <p><strong>RN-4.18</strong> El ticket deberá crearse en estatus <strong>En Proceso</strong>, con estatus interno Recibido, de modo que nazca listo para atenderse: no pasa por ningún estatus previo de borrador, de autorización ni de revisión, y el responsable de recolecciones lo recibe directamente en su bandeja de trabajo.</p>
 <h3 id="criterios-de-aceptación_4">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_4" title="Permanent link">&para;</a></h3>
@@ -4500,7 +4442,7 @@ Entonces el sistema crea un único ticket interno con motivo "Recolección por R
 <p><strong>CA-4.1.2 — El ticket nace a nombre de quien autorizó el resguardo</strong>
 Dado un colaborador cuyo resguardo en sitio fue autorizado por una persona registrada en el registro de autorización
 Cuando el sistema crea el ticket de "Recolección por Resguardo"
-Entonces el solicitante del ticket es esa persona, con su departamento y su centro de trabajo, y el ticket queda asignado al responsable de recolecciones configurado en RF-02.</p>
+Entonces el solicitante del ticket es esa persona, con su departamento y su centro de trabajo, y el ticket queda asignado al responsable de recolecciones definido en el sistema.</p>
 <p><strong>CA-4.1.3 — Detalle de activos del ticket</strong>
 Dado que el sistema creó el ticket de "Recolección por Resguardo" de un colaborador que antes de su baja tenía cuatro activos asignados, de los cuales tres siguen en resguardo y uno ya se había recolectado
 Cuando el responsable asignado lo consulta
@@ -4565,10 +4507,10 @@ Entonces no crea el ticket de "Recolección por Resguardo" para ese colaborador,
 Dado el mismo colaborador con fecha de fin de vigencia extendida al 30 de septiembre y sin extensiones posteriores
 Cuando el proceso automático se ejecuta el 30 de septiembre
 Entonces crea el ticket de "Recolección por Resguardo" con todos sus activos y sus observaciones indican que la fecha de fin de vigencia fue extendida.</p>
-<p><strong>CA-4.1.19 — Activos anteriores a la fecha de corte</strong>
-Dado un colaborador con activos en resguardo cuya fecha de resguardo es anterior a la fecha de corte configurada y con el periodo de vigencia vencido
+<p><strong>CA-4.1.19 — Activos en resguardo sin fecha de fin de vigencia</strong>
+Dado un colaborador cuyos activos quedaron en resguardo antes de la puesta en marcha de la funcionalidad y no tienen registrada la fecha de fin de vigencia
 Cuando el proceso automático se ejecuta
-Entonces no crea ningún ticket de recolección para ese colaborador y esos activos tampoco integran el detalle de ningún otro ticket.</p>
+Entonces no crea ningún ticket de recolección para ese colaborador, porque ninguno de sus activos puede detonarlo.</p>
 <hr />
 <p><strong>Regla transversal:</strong>
 Este requerimiento reutiliza el flujo de tickets internos y el proceso de recolección de activos ya existentes: no crea estatus nuevos para el activo ni para el ticket, y su aporte es el disparo automático, la agrupación por colaborador y la asignación al responsable de recolecciones. El ticket generado convive con los tickets de baja de personal que el sistema ya crea a partir de la cancelación por nómina, sin sustituirlos ni depender de ellos.</p>
@@ -4666,7 +4608,7 @@ Este requerimiento reutiliza el flujo de tickets internos y el proceso de recole
 </tr>
 </tbody>
 </table>
-<h3 id="operaciones_4">Operaciones<a class="headerlink" href="#operaciones_4" title="Permanent link">&para;</a></h3>
+<h3 id="operaciones_3">Operaciones<a class="headerlink" href="#operaciones_3" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Extender la vigencia del resguardo de un colaborador seleccionando en el calendario una nueva fecha de fin de vigencia.</li>
 <li>Consultar el historial de extensiones desde el bloque "Resguardo" y desde la bitácora de cada activo.</li>
@@ -4684,7 +4626,7 @@ Este requerimiento reutiliza el flujo de tickets internos y el proceso de recole
 <p><strong>RN-5.7</strong> Antes de confirmar, el sistema deberá mostrar al usuario el colaborador titular del resguardo y la lista de activos que la extensión afectará, junto con la fecha de fin de vigencia vigente, la nueva fecha seleccionada y los días equivalentes que agrega.</p>
 <p><strong>RN-5.8</strong> Un resguardo podrá extenderse más de una vez; cada extensión toma como fecha mínima permitida la fecha de fin de vigencia vigente en ese momento y se registra de forma independiente.</p>
 <p><strong>RN-5.9</strong> La extensión <strong>sobrescribe la fecha de fin de vigencia registrada en cada activo</strong>; no crea una fecha paralela. A partir de ese momento, esa es la única fecha que gobierna la evaluación de vencimiento de RF-04.</p>
-<p><strong>RN-5.10</strong> Un cambio posterior en los días de vigencia configurados en RF-02 no modificará la fecha de fin de vigencia de ningún activo que ya esté en resguardo, tenga o no una extensión aplicada, conforme a RN-2.5.</p>
+<p><strong>RN-5.10</strong> Un cambio posterior en los días de vigencia configurados en RF-02 no modificará la fecha de fin de vigencia de ningún activo que ya esté en resguardo, tenga o no una extensión aplicada, conforme a RN-2.2.</p>
 <p><strong>RN-5.11</strong> Si ya existe un ticket vigente de "Recolección por Resguardo" para el colaborador, la extensión no estará disponible: primero deberá cancelarse ese ticket. El sistema informará al usuario esta condición.</p>
 <p><strong>RN-5.12</strong> Cada extensión deberá registrarse en la bitácora de <strong>cada activo afectado</strong>, indicando la fecha de fin de vigencia anterior de ese activo, la nueva fecha seleccionada, los días equivalentes que se agregaron, el motivo capturado, el usuario que la aplicó, la fecha y hora del cambio y la cantidad de activos que abarcó la operación.</p>
 <p><strong>RN-5.13</strong> La acción de extender la vigencia estará protegida por un <strong>permiso propio y administrable</strong>, independiente de los permisos de consulta y edición del activo de cómputo: contar con estos últimos no habilita por sí solo la extensión. Únicamente el personal al que se le haya otorgado ese permiso podrá ejecutar la acción; para el resto, no se muestra en el bloque "Resguardo" ni puede ejecutarse por otra vía. El permiso se asigna desde la administración de roles y permisos del sistema, sin requerir despliegue de código, y su verificación se realiza en el servidor en cada ejecución, no solo en la interfaz.</p>
@@ -4867,7 +4809,7 @@ La extensión es el único mecanismo previsto para ganar tiempo sin sacar los ac
 </tr>
 </tbody>
 </table>
-<h3 id="operaciones_5">Operaciones<a class="headerlink" href="#operaciones_5" title="Permanent link">&para;</a></h3>
+<h3 id="operaciones_4">Operaciones<a class="headerlink" href="#operaciones_4" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Consultar la información del resguardo vigente.</li>
 <li>Extender la vigencia del resguardo seleccionando una nueva fecha de fin de vigencia (RF-05).</li>
@@ -5000,7 +4942,7 @@ Este bloque es la ventana de consulta del resguardo, no su origen: no crea ni mo
 </tr>
 </tbody>
 </table>
-<h3 id="operaciones_6">Operaciones<a class="headerlink" href="#operaciones_6" title="Permanent link">&para;</a></h3>
+<h3 id="operaciones_5">Operaciones<a class="headerlink" href="#operaciones_5" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Consultar los días restantes de resguardo desde el listado de activos de cómputo.</li>
 <li>Ordenar y filtrar el listado por esa columna con el comportamiento estándar del listado.</li>
@@ -5092,7 +5034,7 @@ Esta columna es un dato derivado, no una fuente: no almacena nada ni modifica el
 <tr>
 <td>RNF-005</td>
 <td>Configurabilidad</td>
-<td>El 100 % de los tiempos, destinos y motivos de este proceso deberá ser modificable desde la administración del sistema, sin requerir despliegue de código.</td>
+<td>Los días de vigencia del resguardo deberán ser modificables desde la administración del sistema, sin requerir despliegue de código.</td>
 </tr>
 <tr>
 <td>RNF-006</td>
@@ -5168,8 +5110,8 @@ Esta columna es un dato derivado, no una fuente: no almacena nada ni modifica el
 <td>Que el negocio ajuste la política de resguardo sin depender de desarrollo</td>
 <td>RF-02</td>
 <td>HU-2.1</td>
-<td>RN-2.1 a RN-2.8</td>
-<td>CA-2.1.1 a CA-2.1.6</td>
+<td>RN-2.1 a RN-2.4</td>
+<td>CA-2.1.1 a CA-2.1.3</td>
 </tr>
 <tr>
 <td>Que todo resguardo tenga desde el primer día un plazo definido y consultable</td>
@@ -5228,11 +5170,11 @@ Esta columna es un dato derivado, no una fuente: no almacena nada ni modifica el
 <td>CA-4.1.2, CA-4.1.12</td>
 </tr>
 <tr>
-<td>No afectar los resguardos históricos ya vencidos al poner en marcha la funcionalidad</td>
-<td>RF-02, RF-04</td>
-<td>HU-2.1, HU-4.1</td>
-<td>RN-2.6, RN-4.2, RN-4.16</td>
-<td>CA-2.1.6, CA-4.1.19</td>
+<td>No afectar los resguardos que ya estaban en curso al poner en marcha la funcionalidad</td>
+<td>RF-04</td>
+<td>HU-4.1</td>
+<td>RN-4.2, RN-4.16</td>
+<td>CA-4.1.19</td>
 </tr>
 <tr>
 <td>Mantener evidencia auditable de extensiones y tickets automáticos</td>
@@ -5252,9 +5194,9 @@ Esta columna es un dato derivado, no una fuente: no almacena nada ni modifica el
 <p><strong>SUP-06</strong> El personal que resguarda el equipo y el centro de trabajo del resguardo se toman del diagnóstico con causa "Resguardo en Sitio" que originó el resguardo.</p>
 <p><strong>SUP-07</strong> La extensión de la fecha de fin de vigencia no requiere flujo de autorización porque la ejecuta un rol de confianza del área de Cómputo; el control se basa en un permiso propio, el motivo obligatorio y la bitácora, no en una cadena de aprobaciones.</p>
 <p><strong>SUP-08</strong> No se define una fecha máxima que el calendario pueda alcanzar ni un número máximo de extensiones por activo; la única restricción es la fecha mínima de RN-5.2. El negocio confirmó que por ahora no se requiere una figura formal de prórroga.</p>
-<p><strong>SUP-09</strong> Los activos que al momento de la puesta en marcha ya estén en resguardo con el periodo de vigencia vencido no se procesan: su recolección se gestiona de forma manual con la funcionalidad ya existente. La fecha de corte se define como la fecha de liberación de esta funcionalidad.</p>
+<p><strong>SUP-09</strong> Los activos que al momento de la puesta en marcha ya estén en resguardo no se procesan, porque quedan sin fecha de fin de vigencia registrada: su recolección se gestiona de forma manual con la funcionalidad ya existente. No se define una variable de fecha de corte; el filtro es la ausencia de esa fecha, conforme a RN-4.2 y RN-4.16.</p>
 <p><strong>SUP-10</strong> La fecha de fin de vigencia es un <strong>dato nuevo</strong> que debe agregarse al activo; la fecha de resguardo ya existe en el sistema y se reutiliza tal cual. Los activos que ya estén en resguardo al momento de la liberación quedarán sin fecha de fin de vigencia, lo cual es consistente con SUP-09: no se procesan.</p>
-<p><strong>SUP-11</strong> Las claves de las variables de sistema propuestas en RF-02 respetan el límite de 15 caracteres del catálogo actual, pero deberán validarse contra las claves existentes antes de implementarse para descartar colisiones.</p>
+<p><strong>SUP-11</strong> La clave de la variable de sistema propuesta en RF-02 respeta el límite de 15 caracteres del catálogo actual, pero deberá validarse contra las claves existentes antes de implementarse para descartar colisiones.</p>
 <p><strong>SUP-12</strong> El personal que resguarda el equipo y el colaborador dado de baja <strong>no se obtienen del activo</strong>, porque al entrar en resguardo el activo pierde su personal asignado y su departamento; ambos datos se recuperan del diagnóstico con causa "Resguardo en Sitio" que originó el resguardo, conforme a SUP-06.</p>
 <p><strong>SUP-13</strong> No se contempla una regla especial para el caso en que el colaborador dado de baja sea <strong>recontratado</strong>. Si eso ocurre, el equipo se le reasigna con la funcionalidad de asignación ya existente, lo que saca al activo del resguardo y detiene el proceso por sí solo; una regla adicional por reactivación duplicaría un mecanismo que ya opera.</p>
 <p><strong>SUP-14</strong> La autorización del resguardo en sitio la otorga <strong>una sola persona</strong>: la relación entre resguardo y autorizador es 1 a 1. Sobre ese supuesto se define que el ticket nace a nombre del autorizador (RN-4.5). Si el negocio habilita más adelante varios autorizadores, deberá definirse cuál de ellos figura como solicitante.</p>
@@ -5282,12 +5224,12 @@ Esta columna es un dato derivado, no una fuente: no almacena nada ni modifica el
 <p><strong>DEP-09</strong> Departamento Coordinación de Redes y Telecomunicaciones activo y con responsable asignado, porque es a ese responsable a quien se asignan los dos subtickets nuevos.</p>
 <p><strong>DEP-10</strong> Ambiente de pruebas en el que sea posible simular una baja de personal vía nómina y disparar a demanda el proceso automático de tickets por baja, requisito para ejecutar los casos de prueba de RF-01 que dependen de esa generación.</p>
 <h2 id="riesgos">Riesgos<a class="headerlink" href="#riesgos" title="Permanent link">&para;</a></h2>
-<p><strong>RGO-01</strong> Activos que hoy ya están en resguardo con el periodo de vigencia vencido podrían generar una carga inicial grande de tickets en la primera ejecución. <em>Mitigación:</em> resuelto mediante la fecha de corte de RF-02 (RN-2.6, RN-4.2 y RN-4.16): el proceso solo considera resguardos a partir de la fecha de puesta en marcha, por lo que los históricos vencidos se atienden de forma manual.</p>
+<p><strong>RGO-01</strong> Activos que hoy ya están en resguardo con el periodo de vigencia vencido podrían generar una carga inicial grande de tickets en la primera ejecución. <em>Mitigación:</em> esos activos quedan sin fecha de fin de vigencia registrada, y RN-4.2 y RN-4.16 exigen esa fecha para detonar el ticket, por lo que los resguardos históricos se atienden de forma manual.</p>
 <p><strong>RGO-02</strong> Activos en resguardo sin fecha de resguardo válida o sin custodio registrado quedarían fuera del proceso o generarían tickets incompletos. <em>Mitigación:</em> depurar la información antes de habilitar la funcionalidad y reportar los activos con datos faltantes.</p>
-<p><strong>RGO-03</strong> Unos días de vigencia mal configurados (por ejemplo, 1 día) generarían recolecciones prematuras masivas. <em>Mitigación:</em> validación de RN-2.1, bitácora de cambios y restricción del permiso de configuración al administrador.</p>
+<p><strong>RGO-03</strong> Unos días de vigencia mal configurados (por ejemplo, 1 día) generarían recolecciones prematuras masivas. <em>Mitigación:</em> validación de RN-2.1 y restricción del permiso de configuración al administrador.</p>
 <p><strong>RGO-04</strong> Que el negocio reasigne el equipo físicamente pero no lo registre en el sistema, provocando un ticket de recolección de un equipo que ya está en uso. <em>Mitigación:</em> el bloque "Resguardo" del activo (RF-06) muestra la fecha de fin de vigencia y los días restantes, lo que permite detectar el caso antes del vencimiento; si el ticket ya se generó, basta cancelarlo y registrar la reasignación, conforme a RN-4.7 y RN-5.11.</p>
 <p><strong>RGO-05</strong> Al no existir una fecha máxima ni un límite de extensiones, un activo podría permanecer indefinidamente en resguardo mediante extensiones sucesivas, desvirtuando el propósito del periodo de vigencia. <em>Mitigación:</em> motivo obligatorio y bitácora de extensiones que permiten revisar el uso de la acción; si el negocio detecta abuso, puede incorporarse después una fecha máxima permitida en el calendario o un límite de número de extensiones.</p>
-<p><strong>RGO-06</strong> Los resguardos históricos vencidos que quedan fuera del proceso por la fecha de corte podrían no recolectarse nunca si nadie los atiende manualmente. <em>Mitigación:</em> generar un listado de esos activos al momento de la puesta en marcha y acordar con el área de Cómputo su recolección o su regularización por la vía manual.</p>
+<p><strong>RGO-06</strong> Los resguardos históricos que quedan fuera del proceso por no tener fecha de fin de vigencia podrían no recolectarse nunca si nadie los atiende manualmente. <em>Mitigación:</em> generar un listado de esos activos al momento de la puesta en marcha y acordar con el área de Cómputo su recolección o su regularización por la vía manual.</p>
 <p><strong>RGO-07</strong> Un colaborador con activos en varios centros de trabajo genera un solo ticket que obliga a coordinar la recolección en más de una ubicación. <em>Mitigación:</em> el detalle del ticket indica el centro de trabajo y el custodio de cada activo, de modo que el responsable puede planear las visitas; si la operación lo demanda, el negocio puede evaluar después la separación por centro de trabajo.</p>
 <p><strong>RGO-08</strong> Los resguardos sin autorizador registrado no generarán ticket y podrían quedar sin recolectar de forma indefinida. <em>Mitigación:</em> RN-4.9 obliga a registrar el motivo en la bitácora técnica y a reintentar en cada corrida; conviene revisar ese registro al poner en marcha la funcionalidad y depurar los resguardos sin autorización.</p>
 <p><strong>RGO-09</strong> Marcar un registro como "No requiere validación" permite cerrar sus subtickets con el expediente sin depurar, lo que podría dejar información del colaborador dado de baja viva dentro del sistema. <em>Mitigación:</em> la marca se pone registro por registro, se reserva para las revisiones que se ejecutan fuera de Business Suite (RN-1.11), el campo nace sin marcar (RN-1.16) y solo el administrador puede cambiarlo, con registro en bitácora (RN-1.20).</p>
@@ -5297,7 +5239,7 @@ Esta columna es un dato derivado, no una fuente: no almacena nada ni modifica el
 <p><strong>RGO-13</strong> La desactivación del HostName deja de tener subticket propio y viaja en el subticket ya existente de baja de los directorios activos, que <strong>sí</strong> valida información: si el colaborador no tiene registro de Directorio Activo en su expediente, ese subticket no se genera y la desactivación no llega a solicitarse. <em>Mitigación:</em> el nombre del equipo se captura en ese mismo apartado, de modo que un colaborador sin registro de Directorio Activo tampoco tiene HostName registrado; el asunto declara expresamente las dos acciones, de modo que el responsable sabe que ambas van incluidas; y si el negocio necesita que la desactivación se solicite en toda baja, se resuelve marcando ese registro como "No requiere validación" o dándolo de alta como registro propio, por configuración y sin desarrollo (RN-1.1, RN-1.12).</p>
 <h2 id="casos-de-prueba">Casos de prueba<a class="headerlink" href="#casos-de-prueba" title="Permanent link">&para;</a></h2>
 <p>Esta sección reúne los casos de prueba que verifican los criterios de aceptación de todo el documento. Sirve como base para las pruebas funcionales del negocio y para las pruebas de QA: cada caso indica explícitamente qué criterio de aceptación comprueba y, cuando aplica, la regla de negocio que lo respalda. La cobertura es total —ningún criterio de aceptación queda sin al menos un caso de prueba— y de cada criterio se derivan además los escenarios alternativos, de error, de validación y de permisos que implica. Al cierre de la sección se incluye la tabla de cobertura que hace visible esa correspondencia.</p>
-<p>Todas las fechas y cantidades que aparecen en los casos son las mismas que usan los criterios de aceptación —vigencia de 15 días— y son ilustrativas conforme a RN-2.8 y SUP-03; al ejecutar las pruebas deben sustituirse por los valores realmente configurados.</p>
+<p>Todas las fechas y cantidades que aparecen en los casos son las mismas que usan los criterios de aceptación —vigencia de 15 días— y son ilustrativas conforme a RN-2.4 y SUP-03; al ejecutar las pruebas deben sustituirse por los valores realmente configurados.</p>
 <h3 id="casos-de-prueba-de-rf-01--configuración-de-los-subtickets-automáticos-por-baja-de-personal">Casos de prueba de RF-01 — Configuración de los subtickets automáticos por baja de personal<a class="headerlink" href="#casos-de-prueba-de-rf-01--configuración-de-los-subtickets-automáticos-por-baja-de-personal" title="Permanent link">&para;</a></h3>
 <p><strong>CP-001 — Alta del registro de revisión de activos de telefonía y baja de la reserva de IP (camino feliz)</strong>
 Verifica: CA-1.1.1 · RN-1.3, RN-1.4, RN-1.5, RN-1.11
@@ -5412,561 +5354,521 @@ Entonces el sistema impide las tres cosas —la marca no alcanza a las demás co
 <h3 id="casos-de-prueba-de-rf-02--parametrización-de-la-vigencia-del-resguardo">Casos de prueba de RF-02 — Parametrización de la vigencia del resguardo<a class="headerlink" href="#casos-de-prueba-de-rf-02--parametrización-de-la-vigencia-del-resguardo" title="Permanent link">&para;</a></h3>
 <p><strong>CP-023 — Consulta de la configuración vigente (camino feliz)</strong>
 Verifica: CA-2.1.1
-Dado que están configurados 15 días de vigencia, el departamento encargado de recolecciones y el motivo "Recolección por Resguardo"
-Cuando el administrador ingresa a la configuración del sistema y consulta los parámetros de resguardo en sitio
-Entonces visualiza los tres parámetros con los valores configurados, además de la fecha de corte del proceso.</p>
+Dado que están configurados 15 días de vigencia del resguardo
+Cuando el administrador ingresa a la configuración del sistema y consulta el parámetro de resguardo en sitio
+Entonces visualiza los 15 días de vigencia configurados.</p>
 <p><strong>CP-024 — Consulta de la configuración sin permiso de administración (permisos)</strong>
 Verifica: CA-2.1.1
 Dado un usuario del área de Cómputo sin permiso de administración del sistema
-Cuando intenta abrir la configuración de los parámetros de resguardo en sitio
-Entonces el sistema no le muestra la opción o le impide el acceso, y no puede consultar ni modificar los parámetros.</p>
+Cuando intenta abrir la configuración del parámetro de resguardo en sitio
+Entonces el sistema no le muestra la opción o le impide el acceso, y no puede consultar ni modificar el parámetro.</p>
 <p><strong>CP-025 — Cambio de los días de vigencia aplicado a los resguardos nuevos (camino feliz)</strong>
-Verifica: CA-2.1.2 · RN-2.5
+Verifica: CA-2.1.2 · RN-2.2
 Dado que los días de vigencia están configurados en 15
 Cuando el administrador los cambia a 20, guarda, y un activo entra en resguardo el 20 de septiembre
 Entonces el sistema almacena el nuevo valor y la fecha de fin de vigencia de ese activo se registra el 10 de octubre, a 20 días de su fecha de resguardo.</p>
 <p><strong>CP-026 — No retroactividad sobre un resguardo ya iniciado (escenario alternativo)</strong>
-Verifica: CA-2.1.2 · RN-2.5
+Verifica: CA-2.1.2 · RN-2.2
 Dado un activo en resguardo desde el 1 de septiembre con fecha de fin de vigencia registrada el 16 de septiembre
 Cuando el administrador cambia los días de vigencia de 15 a 20 y guarda
 Entonces la fecha de fin de vigencia de ese activo sigue siendo el 16 de septiembre, sin recálculo retroactivo.</p>
-<p><strong>CP-027 — Bitácora del cambio de parámetros (trazabilidad)</strong>
-Verifica: CA-2.1.2 · RN-2.4
-Dado que los días de vigencia están configurados en 15
-Cuando el administrador los cambia a 20 y guarda
-Entonces la bitácora de auditoría registra el valor anterior 15, el valor nuevo 20, el usuario que hizo el cambio y la fecha y hora en que lo realizó.</p>
-<p><strong>CP-028 — Días de vigencia en cero (validación)</strong>
+<p><strong>CP-027 — Días de vigencia en cero (validación)</strong>
 Verifica: CA-2.1.3 · RN-2.1
 Dado que el administrador captura 0 como días de vigencia del resguardo
 Cuando intenta guardar
 Entonces el sistema impide el guardado e informa que los días de vigencia deben ser un número entero mayor a cero.</p>
-<p><strong>CP-029 — Días de vigencia negativos o no enteros (validación)</strong>
+<p><strong>CP-028 — Días de vigencia negativos o no enteros (validación)</strong>
 Verifica: CA-2.1.3 · RN-2.1
 Dado que el administrador captura -5 y luego 7.5 como días de vigencia del resguardo
 Cuando intenta guardar en cada caso
 Entonces el sistema impide el guardado en ambos e informa que los días de vigencia deben ser un número entero mayor a cero.</p>
-<p><strong>CP-030 — Departamento de recolecciones inactivo (escenario de error)</strong>
-Verifica: CA-2.1.4 · RN-2.2
-Dado que el administrador selecciona como departamento encargado de recolecciones uno que está inactivo
-Cuando intenta guardar
-Entonces el sistema impide el guardado e informa que el departamento debe estar activo y contar con un responsable.</p>
-<p><strong>CP-031 — Departamento de recolecciones sin responsable asignado (escenario de error)</strong>
-Verifica: CA-2.1.4 · RN-2.2
-Dado que el administrador selecciona un departamento activo pero sin responsable asignado
-Cuando intenta guardar
-Entonces el sistema impide el guardado e informa que el departamento debe contar con un responsable.</p>
-<p><strong>CP-032 — Operación con días de vigencia por omisión (escenario alternativo)</strong>
-Verifica: CA-2.1.5 · RN-2.3
-Dado que los días de vigencia del resguardo no han sido configurados
-Cuando el proceso automático se ejecuta
-Entonces opera con 15 días de vigencia y deja registro en la bitácora técnica de que utilizó el valor por omisión.</p>
-<p><strong>CP-033 — Fecha de corte no configurada explícitamente (validación)</strong>
-Verifica: CA-2.1.6 · RN-2.6
-Dado que la fecha de corte del proceso no ha sido configurada explícitamente
-Cuando el proceso automático se ejecuta
-Entonces toma como fecha de corte la fecha de puesta en marcha de la funcionalidad y en ningún caso opera sin una fecha de corte definida.</p>
-<p><strong>CP-034 — Exclusión de resguardos anteriores a la fecha de corte (escenario alternativo)</strong>
-Verifica: CA-2.1.6
-Dado que la fecha de corte está configurada en el 1 de octubre y existe un activo en resguardo con fecha de resguardo del 5 de julio y vigencia vencida
-Cuando el proceso automático se ejecuta
-Entonces ese activo no se considera y no se le genera ticket de recolección.</p>
-<p><strong>CP-035 — Resguardo iniciado exactamente en la fecha de corte (dato límite)</strong>
-Verifica: CA-2.1.6 · RN-4.2
-Dado que la fecha de corte está configurada en el 1 de octubre y existe un activo cuya fecha de resguardo es precisamente el 1 de octubre
-Cuando el proceso automático se ejecuta
-Entonces ese activo sí se considera, porque la condición incluye las fechas de resguardo iguales o posteriores a la fecha de corte.</p>
-<p><strong>CP-036 — La configuración es única y general para toda la empresa (escenario alternativo)</strong>
-Verifica: CA-2.1.1 · RN-2.7
+<p><strong>CP-029 — La configuración es única y general para toda la empresa (escenario alternativo)</strong>
+Verifica: CA-2.1.1 · RN-2.3
 Dado que existen activos en resguardo en centros de trabajo, departamentos y tipos de activo distintos
 Cuando el administrador consulta la configuración
 Entonces existe una sola configuración de días de vigencia aplicable a todos, sin posibilidad de parametrizar por centro de trabajo, sucursal, departamento ni tipo de activo.</p>
 <h3 id="casos-de-prueba-de-rf-03--registro-de-las-fechas-de-vigencia-del-resguardo">Casos de prueba de RF-03 — Registro de las fechas de vigencia del resguardo<a class="headerlink" href="#casos-de-prueba-de-rf-03--registro-de-las-fechas-de-vigencia-del-resguardo" title="Permanent link">&para;</a></h3>
-<p><strong>CP-037 — Registro de ambas fechas al iniciar el resguardo (camino feliz)</strong>
+<p><strong>CP-030 — Registro de ambas fechas al iniciar el resguardo (camino feliz)</strong>
 Verifica: CA-3.1.1 · RN-3.1
 Dado que los días de vigencia están configurados en 15 y la fecha del servidor es el 1 de septiembre
 Cuando un activo queda en estatus Resguardo en Sitio
 Entonces el sistema registra en el activo la fecha de resguardo del 1 de septiembre y la fecha de fin de vigencia del 16 de septiembre.</p>
-<p><strong>CP-038 — Registro con una vigencia configurada distinta (escenario alternativo)</strong>
+<p><strong>CP-031 — Registro con una vigencia configurada distinta (escenario alternativo)</strong>
 Verifica: CA-3.1.1 · RN-3.1
 Dado que los días de vigencia están configurados en 30 y la fecha del servidor es el 1 de septiembre
 Cuando un activo queda en estatus Resguardo en Sitio
 Entonces su fecha de fin de vigencia se registra el 1 de octubre, a 30 días de la fecha de resguardo.</p>
-<p><strong>CP-039 — Ningún resguardo con fechas vacías (validación)</strong>
+<p><strong>CP-032 — Ningún resguardo con fechas vacías (validación)</strong>
 Verifica: CA-3.1.2 · RN-3.2
 Dado un activo que acaba de quedar en estatus Resguardo en Sitio
 Cuando se consulta el activo
 Entonces tiene registradas la fecha de resguardo y la fecha de fin de vigencia, sin que ninguna de las dos esté vacía.</p>
-<p><strong>CP-040 — Se aplica la configuración vigente al momento de iniciar (escenario alternativo)</strong>
+<p><strong>CP-033 — Se aplica la configuración vigente al momento de iniciar (escenario alternativo)</strong>
 Verifica: CA-3.1.3 · RN-3.3
 Dado que los días de vigencia se cambiaron de 15 a 20 el 5 de septiembre
 Cuando un activo queda en resguardo el 6 de septiembre
 Entonces su fecha de fin de vigencia se registra a 20 días de su fecha de resguardo, aplicando la configuración vigente en ese momento.</p>
-<p><strong>CP-041 — Limpieza de fechas al reasignar el activo (camino feliz)</strong>
+<p><strong>CP-034 — Limpieza de fechas al reasignar el activo (camino feliz)</strong>
 Verifica: CA-3.1.4 · RN-3.4
 Dado un activo en resguardo con fecha de resguardo del 1 de septiembre y fecha de fin de vigencia del 16 de septiembre
 Cuando el activo se reasigna a un nuevo colaborador y queda en estatus Asignado
 Entonces el sistema limpia ambas fechas y el activo deja de ser considerado por el proceso automático.</p>
-<p><strong>CP-042 — Limpieza de fechas por recolección, baja o cancelación (escenarios alternativos)</strong>
+<p><strong>CP-035 — Limpieza de fechas por recolección, baja o cancelación (escenarios alternativos)</strong>
 Verifica: CA-3.1.4 · RN-3.4
 Dado un activo en resguardo con sus dos fechas registradas
 Cuando el activo se recolecta, se da de baja o se cancela
 Entonces en cada caso el sistema limpia la fecha de resguardo y la fecha de fin de vigencia, de modo que ningún activo fuera de resguardo conserve una vigencia vigente.</p>
-<p><strong>CP-043 — Registro del resguardo en la bitácora del activo (trazabilidad)</strong>
+<p><strong>CP-036 — Registro del resguardo en la bitácora del activo (trazabilidad)</strong>
 Verifica: CA-3.1.5 · RN-3.5
 Dado que un activo acaba de quedar en resguardo en sitio con 15 días de vigencia
 Cuando un usuario consulta la bitácora del activo
 Entonces encuentra el registro con la fecha de resguardo, la fecha de fin de vigencia y los 15 días de vigencia aplicados.</p>
-<p><strong>CP-044 — Segundo resguardo del mismo activo (escenario alternativo)</strong>
+<p><strong>CP-037 — Segundo resguardo del mismo activo (escenario alternativo)</strong>
 Verifica: CA-3.1.6 · RN-3.6
 Dado un activo que estuvo en resguardo del 1 al 10 de septiembre, salió por reasignación y vuelve a quedar en resguardo el 1 de octubre
 Cuando el sistema registra el nuevo resguardo
 Entonces las fechas registradas corresponden al resguardo del 1 de octubre y la bitácora conserva el registro del resguardo anterior.</p>
-<p><strong>CP-045 — Inicio del resguardo sin parámetro de vigencia configurado (escenario de error)</strong>
-Verifica: CA-3.1.1 · RN-2.3
-Dado que los días de vigencia del resguardo no están configurados
-Cuando un activo queda en estatus Resguardo en Sitio
-Entonces el sistema registra la fecha de fin de vigencia aplicando los 15 días por omisión y deja registro de que operó con el valor por omisión, sin dejar el activo sin fecha.</p>
 <h3 id="casos-de-prueba-de-rf-04--generación-automática-del-ticket-recolección-por-resguardo">Casos de prueba de RF-04 — Generación automática del ticket "Recolección por Resguardo"<a class="headerlink" href="#casos-de-prueba-de-rf-04--generación-automática-del-ticket-recolección-por-resguardo" title="Permanent link">&para;</a></h3>
-<p><strong>CP-046 — Creación de un ticket único por colaborador (camino feliz)</strong>
+<p><strong>CP-038 — Creación de un ticket único por colaborador (camino feliz)</strong>
 Verifica: CA-4.1.1 · RN-4.3 · RN-4.4
 Dado un colaborador dado de baja con tres activos en estatus Resguardo en Sitio, fecha de resguardo del 1 de septiembre y fecha de fin de vigencia del 16 de septiembre
 Cuando el proceso automático se ejecuta el 16 de septiembre
 Entonces el sistema crea un único ticket interno con motivo "Recolección por Resguardo" que incluye en su detalle todos los activos que el colaborador tenía asignados antes de su baja, lo asigna al responsable del departamento encargado de recolecciones y lo deja en estatus En Proceso con estatus interno Recibido.</p>
-<p><strong>CP-047 — Creación del ticket cuando el vencimiento ya pasó (escenario alternativo)</strong>
+<p><strong>CP-039 — Creación del ticket cuando el vencimiento ya pasó (escenario alternativo)</strong>
 Verifica: CA-4.1.1 · RN-4.4
-Dado un colaborador con activos en resguardo cuya fecha de fin de vigencia fue el 16 de septiembre, posterior a la fecha de corte, y que aún no tiene ticket de recolección
+Dado un colaborador con activos en resguardo cuya fecha de fin de vigencia fue el 16 de septiembre y que aún no tiene ticket de recolección
 Cuando el proceso automático se ejecuta el 20 de septiembre
 Entonces el sistema crea el ticket de "Recolección por Resguardo", porque la condición considera las fechas de fin de vigencia iguales o anteriores a la fecha del servidor.</p>
-<p><strong>CP-048 — Colaborador con un solo activo en resguardo (dato límite)</strong>
+<p><strong>CP-040 — Colaborador con un solo activo en resguardo (dato límite)</strong>
 Verifica: CA-4.1.1 · RN-4.3
 Dado un colaborador con un único activo en estatus Resguardo en Sitio y el periodo de vigencia vencido
 Cuando el proceso automático se ejecuta
 Entonces crea un ticket con ese único activo en su detalle, con la misma estructura que un ticket de varios activos.</p>
-<p><strong>CP-049 — El solicitante del ticket es quien autorizó el resguardo (camino feliz)</strong>
+<p><strong>CP-041 — El solicitante del ticket es quien autorizó el resguardo (camino feliz)</strong>
 Verifica: CA-4.1.2 · RN-4.5
 Dado un colaborador cuyo resguardo en sitio fue autorizado por una persona registrada en el registro de autorización
 Cuando el sistema crea el ticket de "Recolección por Resguardo"
-Entonces el solicitante del ticket es esa persona, con su departamento y su centro de trabajo, y el ticket queda asignado al responsable de recolecciones configurado en RF-02.</p>
-<p><strong>CP-050 — Detalle completo de los activos del ticket (camino feliz)</strong>
+Entonces el solicitante del ticket es esa persona, con su departamento y su centro de trabajo, y el ticket queda asignado al responsable de recolecciones definido en el sistema.</p>
+<p><strong>CP-042 — Detalle completo de los activos del ticket (camino feliz)</strong>
 Verifica: CA-4.1.3 · RN-4.4, RN-4.17
 Dado que el sistema creó el ticket de "Recolección por Resguardo" de un colaborador que antes de su baja tenía cuatro activos asignados, de los cuales tres siguen en resguardo y uno ya se había recolectado
 Cuando el responsable asignado lo consulta
 Entonces visualiza el colaborador dado de baja y un renglón por cada uno de los cuatro activos con etiqueta, número de serie, descripción, estatus vigente, centro de trabajo, personal que lo resguarda, fecha de resguardo y fecha de fin de vigencia, además de la observación de que el ticket se generó automáticamente por vencimiento del resguardo, con la fecha que lo originó y la cantidad de activos incluidos.</p>
-<p><strong>CP-051 — Ningún activo del colaborador queda fuera del ticket (escenario alternativo)</strong>
+<p><strong>CP-043 — Ningún activo del colaborador queda fuera del ticket (escenario alternativo)</strong>
 Verifica: CA-4.1.4 · RN-4.4
 Dado un colaborador que antes de su baja tenía tres activos asignados, que entraron en resguardo en momentos distintos y con fechas de fin de vigencia del 16, 20 y 25 de septiembre
 Cuando el proceso automático se ejecuta el 16 de septiembre
 Entonces el ticket creado incluye los tres activos en su detalle, no únicamente el que venció ese día.</p>
-<p><strong>CP-052 — Activos del colaborador en centros de trabajo distintos (escenario alternativo)</strong>
+<p><strong>CP-044 — Activos del colaborador en centros de trabajo distintos (escenario alternativo)</strong>
 Verifica: CA-4.1.5 · RN-4.3
 Dado un colaborador con dos activos en resguardo ubicados en centros de trabajo distintos y con el periodo de vigencia vencido
 Cuando el proceso automático se ejecuta
 Entonces genera un único ticket con ambos activos y el detalle indica el centro de trabajo de cada uno.</p>
-<p><strong>CP-053 — No se crea el ticket antes del vencimiento (escenario alternativo)</strong>
+<p><strong>CP-045 — No se crea el ticket antes del vencimiento (escenario alternativo)</strong>
 Verifica: CA-4.1.6 · RN-4.4
 Dado un colaborador cuyos activos en resguardo tienen fecha de fin de vigencia el 16 de septiembre
 Cuando el proceso automático se ejecuta el 15 de septiembre
 Entonces el sistema no crea ningún ticket para ese colaborador.</p>
-<p><strong>CP-054 — Sin duplicidad de tickets en ejecuciones sucesivas (escenario de error)</strong>
+<p><strong>CP-046 — Sin duplicidad de tickets en ejecuciones sucesivas (escenario de error)</strong>
 Verifica: CA-4.1.7 · RN-4.6
 Dado un colaborador cuyo resguardo venció y que ya tiene un ticket vigente de "Recolección por Resguardo" en proceso
 Cuando el proceso automático se ejecuta nuevamente al día siguiente
 Entonces el sistema no crea un segundo ticket para ese colaborador.</p>
-<p><strong>CP-055 — Un ticket vigente en cualquier estatus impide la duplicidad (escenario alternativo)</strong>
+<p><strong>CP-047 — Un ticket vigente en cualquier estatus impide la duplicidad (escenario alternativo)</strong>
 Verifica: CA-4.1.7 · RN-4.6
 Dado un colaborador cuyo ticket de "Recolección por Resguardo" se encuentra en un estatus vigente distinto de Recibido, por ejemplo En Validación
 Cuando el proceso automático se ejecuta
 Entonces tampoco crea un ticket adicional, porque ya existe un ticket vigente para ese colaborador.</p>
-<p><strong>CP-056 — Un activo que vence después no genera un segundo ticket (escenario alternativo)</strong>
+<p><strong>CP-048 — Un activo que vence después no genera un segundo ticket (escenario alternativo)</strong>
 Verifica: CA-4.1.7 · RN-4.6
 Dado un colaborador con un ticket vigente de "Recolección por Resguardo" y un activo cuyo vencimiento se cumple días después
 Cuando el proceso automático se ejecuta en esa fecha posterior
 Entonces no crea un segundo ticket, porque ese activo ya estaba incluido en el detalle del ticket vigente.</p>
-<p><strong>CP-057 — Regeneración del ticket tras su cancelación (escenario alternativo)</strong>
+<p><strong>CP-049 — Regeneración del ticket tras su cancelación (escenario alternativo)</strong>
 Verifica: CA-4.1.8 · RN-4.7
 Dado un colaborador que conserva dos activos en estatus Resguardo en Sitio con el periodo de vigencia vencido y cuyo ticket de "Recolección por Resguardo" fue cancelado
 Cuando el proceso automático se ejecuta
 Entonces crea un nuevo ticket de "Recolección por Resguardo" con los dos activos que siguen en resguardo.</p>
-<p><strong>CP-058 — Interrupción por reasignación de todos los equipos (escenario alternativo)</strong>
+<p><strong>CP-050 — Interrupción por reasignación de todos los equipos (escenario alternativo)</strong>
 Verifica: CA-4.1.9 · RN-4.2
 Dado un colaborador cuyos activos en resguardo vencían el 16 de septiembre y que el 12 de septiembre se reasignan a un nuevo colaborador, quedando en estatus Asignado
 Cuando el proceso automático se ejecuta el 16 de septiembre y en las ejecuciones siguientes
 Entonces el sistema no crea ningún ticket de "Recolección por Resguardo" para ese colaborador.</p>
-<p><strong>CP-059 — Reasignación parcial de los equipos (escenario alternativo)</strong>
+<p><strong>CP-051 — Reasignación parcial de los equipos (escenario alternativo)</strong>
 Verifica: CA-4.1.10 · RN-4.4
 Dado un colaborador con tres activos en resguardo, de los cuales uno se reasigna a un nuevo colaborador antes del vencimiento
 Cuando el proceso automático crea el ticket al vencer el resguardo
 Entonces el ticket incluye únicamente los dos activos que siguen en estatus Resguardo en Sitio.</p>
-<p><strong>CP-060 — Departamento de recolecciones mal configurado (escenario de error)</strong>
+<p><strong>CP-052 — Departamento de recolecciones mal configurado (escenario de error)</strong>
 Verifica: CA-4.1.11 · RN-4.8
 Dado que el departamento encargado de recolecciones no está configurado, está inactivo o no tiene responsable asignado
 Cuando el proceso automático se ejecuta y encuentra colaboradores con el periodo de vigencia vencido
 Entonces no crea ningún ticket y registra el error en la bitácora técnica.</p>
-<p><strong>CP-061 — Reintento tras corregir la configuración del departamento (escenario alternativo)</strong>
+<p><strong>CP-053 — Reintento tras corregir la configuración del departamento (escenario alternativo)</strong>
 Verifica: CA-4.1.11 · RN-4.8
 Dado que el proceso no pudo crear los tickets por un departamento de recolecciones sin responsable y que el administrador ya asignó el responsable
 Cuando el proceso automático se ejecuta en la siguiente corrida
 Entonces crea los tickets pendientes de los colaboradores con el periodo de vigencia vencido.</p>
-<p><strong>CP-062 — Resguardo sin autorizador registrado (escenario de error)</strong>
+<p><strong>CP-054 — Resguardo sin autorizador registrado (escenario de error)</strong>
 Verifica: CA-4.1.12 · RN-4.9
 Dado un colaborador con el periodo de vigencia vencido cuyo registro de autorización del resguardo no está disponible o no tiene una persona autorizadora válida
 Cuando el proceso automático se ejecuta
 Entonces no crea el ticket de ese colaborador, registra el motivo en la bitácora técnica y continúa con los demás colaboradores.</p>
-<p><strong>CP-063 — Creación del ticket tras regularizar la autorización (escenario alternativo)</strong>
+<p><strong>CP-055 — Creación del ticket tras regularizar la autorización (escenario alternativo)</strong>
 Verifica: CA-4.1.12 · RN-4.9
 Dado un colaborador cuyo ticket no se generó por falta de autorizador y cuyo registro de autorización ya fue regularizado
 Cuando el proceso automático se ejecuta en una corrida posterior
 Entonces crea el ticket a nombre del autorizador registrado.</p>
-<p><strong>CP-064 — Un error en un colaborador no detiene el proceso (escenario de error)</strong>
+<p><strong>CP-056 — Un error en un colaborador no detiene el proceso (escenario de error)</strong>
 Verifica: CA-4.1.13 · RN-4.11
 Dado que existen cinco colaboradores con el periodo de vigencia vencido y uno de ellos provoca un error al procesarse
 Cuando el proceso automático se ejecuta
 Entonces el sistema crea los tickets de los cuatro colaboradores restantes, registra el error del fallido y lo reintenta en la siguiente ejecución.</p>
-<p><strong>CP-065 — Los activos no cambian de estatus al crearse el ticket (camino feliz)</strong>
+<p><strong>CP-057 — Los activos no cambian de estatus al crearse el ticket (camino feliz)</strong>
 Verifica: CA-4.1.14 · RN-4.10
 Dado que el sistema creó el ticket de "Recolección por Resguardo" de un colaborador con tres activos
 Cuando se consultan los tres activos inmediatamente después
 Entonces todos siguen en estatus Resguardo en Sitio y solo cambiarán a En Recolección cuando se ejecute el proceso de recolección ya existente.</p>
-<p><strong>CP-066 — Ejecución única en ambiente con varios servidores (escenario de error)</strong>
+<p><strong>CP-058 — Ejecución única en ambiente con varios servidores (escenario de error)</strong>
 Verifica: CA-4.1.15 · RN-4.12
 Dado que el sistema opera con más de un servidor de aplicación
 Cuando el proceso automático se dispara al mismo tiempo en todos ellos
 Entonces solo una instancia procesa los colaboradores y no se generan tickets duplicados.</p>
-<p><strong>CP-067 — Registro del ticket automático en la bitácora de cada activo (trazabilidad)</strong>
+<p><strong>CP-059 — Registro del ticket automático en la bitácora de cada activo (trazabilidad)</strong>
 Verifica: CA-4.1.16 · RN-4.13
 Dado que el sistema creó un ticket de "Recolección por Resguardo" con tres activos
 Cuando un usuario consulta la bitácora del ticket y la de cada uno de los tres activos
 Entonces encuentra en todas ellas el registro que indica que el ticket se originó automáticamente por vencimiento del resguardo en sitio, con la fecha de resguardo, la fecha de fin de vigencia y el periodo de vigencia aplicado.</p>
-<p><strong>CP-068 — La extensión aplaza el ticket completo (escenario alternativo)</strong>
+<p><strong>CP-060 — La extensión aplaza el ticket completo (escenario alternativo)</strong>
 Verifica: CA-4.1.17 · RN-4.15
 Dado un colaborador cuyo resguardo vencía el 16 de septiembre y cuya vigencia se extendió al 30 de septiembre
 Cuando el proceso automático se ejecuta el 17 de septiembre
 Entonces no crea el ticket de "Recolección por Resguardo" para ese colaborador, porque la extensión movió la fecha de todos sus activos.</p>
-<p><strong>CP-069 — Creación del ticket al vencer la fecha extendida (camino feliz)</strong>
+<p><strong>CP-061 — Creación del ticket al vencer la fecha extendida (camino feliz)</strong>
 Verifica: CA-4.1.18 · RN-4.17
 Dado el mismo colaborador con fecha de fin de vigencia extendida al 30 de septiembre y sin extensiones posteriores
 Cuando el proceso automático se ejecuta el 30 de septiembre
 Entonces crea el ticket de "Recolección por Resguardo" con todos sus activos y sus observaciones indican la fecha vigente y señalan que fue extendida.</p>
-<p><strong>CP-070 — Activos anteriores a la fecha de corte (escenario alternativo)</strong>
+<p><strong>CP-062 — Activos en resguardo sin fecha de fin de vigencia (escenario alternativo)</strong>
 Verifica: CA-4.1.19 · RN-4.16
-Dado un colaborador con activos en resguardo cuya fecha de resguardo es anterior a la fecha de corte configurada y con el periodo de vigencia vencido
+Dado un colaborador cuyos activos quedaron en resguardo antes de la puesta en marcha y no tienen registrada la fecha de fin de vigencia
 Cuando el proceso automático se ejecuta
 Entonces no crea ningún ticket de recolección para ese colaborador y su recolección se gestiona de forma manual.</p>
-<p><strong>CP-071 — Activo anterior a la fecha de corte no integra el detalle (dato límite)</strong>
+<p><strong>CP-063 — El activo sin fecha de fin de vigencia no detona el ticket (dato límite)</strong>
 Verifica: CA-4.1.19 · RN-4.16
-Dado un colaborador con dos activos en resguardo, uno con fecha de resguardo anterior a la fecha de corte y otro posterior, y con el periodo de vigencia vencido
+Dado un colaborador con dos activos en resguardo, uno sin fecha de fin de vigencia registrada y otro con esa fecha ya vencida
 Cuando el proceso automático crea el ticket
-Entonces el detalle incluye únicamente el activo cuya fecha de resguardo es igual o posterior a la fecha de corte.</p>
-<p><strong>CP-072 — Colaborador en resguardo sin fecha de resguardo válida (escenario de error)</strong>
+Entonces lo detona únicamente el activo con fecha de fin de vigencia vencida, y el activo sin esa fecha aparece de todos modos en el detalle con su estatus vigente, conforme a RN-4.4.</p>
+<p><strong>CP-064 — Colaborador en resguardo sin fecha de resguardo válida (escenario de error)</strong>
 Verifica: CA-4.1.19 · RN-4.2
 Dado un activo en estatus Resguardo en Sitio cuya fecha de resguardo está vacía
 Cuando el proceso automático se ejecuta
 Entonces ese activo no se considera ni para detonar el ticket ni para integrar su detalle, y su omisión queda registrada en la bitácora técnica.</p>
-<p><strong>CP-073 — Ejecución desatendida del proceso (camino feliz)</strong>
+<p><strong>CP-065 — Ejecución desatendida del proceso (camino feliz)</strong>
 Verifica: CA-4.1.1 · RN-4.1
 Dado que el proceso automático está habilitado y existen colaboradores con el periodo de vigencia vencido
 Cuando transcurre un día natural sin que ninguna persona intervenga
 Entonces el proceso se ejecuta por sí solo al menos una vez y genera los tickets correspondientes.</p>
-<p><strong>CP-074 — El ticket automático se opera con el flujo y los permisos existentes (permisos)</strong>
+<p><strong>CP-066 — El ticket automático se opera con el flujo y los permisos existentes (permisos)</strong>
 Verifica: CA-4.1.3 · RN-4.14
 Dado un ticket de "Recolección por Resguardo" generado automáticamente
 Cuando un usuario sin permiso sobre los tickets internos de cómputo intenta consultarlo o atenderlo
 Entonces el sistema aplica las mismas reglas de visibilidad y permisos que a cualquier otro ticket interno y le impide el acceso, sin estatus ni flujo especiales.</p>
 <h3 id="casos-de-prueba-de-rf-05--extensión-de-la-vigencia-del-resguardo">Casos de prueba de RF-05 — Extensión de la vigencia del resguardo<a class="headerlink" href="#casos-de-prueba-de-rf-05--extensión-de-la-vigencia-del-resguardo" title="Permanent link">&para;</a></h3>
-<p><strong>CP-075 — Extensión aplicada a todos los activos del colaborador (camino feliz)</strong>
+<p><strong>CP-067 — Extensión aplicada a todos los activos del colaborador (camino feliz)</strong>
 Verifica: CA-5.1.1 · RN-5.5
 Dado un colaborador con tres activos en estatus Resguardo en Sitio y fecha de fin de vigencia el 16 de septiembre
 Cuando el usuario facultado abre la acción desde uno de ellos, selecciona el 30 de septiembre en el calendario, escribe el motivo y confirma
 Entonces la fecha de fin de vigencia de los tres activos pasa a ser el 30 de septiembre.</p>
-<p><strong>CP-076 — Registro de la extensión en la bitácora de cada activo (trazabilidad)</strong>
+<p><strong>CP-068 — Registro de la extensión en la bitácora de cada activo (trazabilidad)</strong>
 Verifica: CA-5.1.1 · RN-5.12
 Dado que el usuario facultado acaba de extender al 30 de septiembre la vigencia del resguardo de un colaborador con tres activos que vencía el 16 de septiembre
 Cuando consulta la bitácora de cada uno de los tres activos
 Entonces encuentra en todas el registro con la fecha anterior del 16 de septiembre, la nueva fecha del 30 de septiembre, los 14 días equivalentes agregados, el motivo capturado, el usuario, la fecha y hora del cambio y la cantidad de activos que abarcó la operación.</p>
-<p><strong>CP-077 — Vista previa del alcance de la extensión (camino feliz)</strong>
+<p><strong>CP-069 — Vista previa del alcance de la extensión (camino feliz)</strong>
 Verifica: CA-5.1.2 · RN-5.7
 Dado un colaborador con tres activos en resguardo
 Cuando el usuario facultado abre la acción de extender la vigencia desde uno de ellos
 Entonces el diálogo muestra el colaborador titular del resguardo, la fecha de fin de vigencia vigente, los días restantes, la lista de los tres activos que la extensión afectará y el calendario con las fechas no permitidas deshabilitadas.</p>
-<p><strong>CP-078 — Fecha mínima cuando los activos tienen fechas distintas (dato límite)</strong>
+<p><strong>CP-070 — Fecha mínima cuando los activos tienen fechas distintas (dato límite)</strong>
 Verifica: CA-5.1.3 · RN-5.6
 Dado un colaborador con dos activos en resguardo, uno con fecha de fin de vigencia el 16 de septiembre y otro el 20 de septiembre
 Cuando el usuario abre la acción desde el activo que vence el 16 de septiembre e intenta seleccionar el 18 de septiembre
 Entonces el calendario tiene deshabilitada esa fecha, porque el mínimo permitido es el 21 de septiembre —el día siguiente a la más lejana de las dos—, y al seleccionar el 30 de septiembre y confirmar ambos activos quedan con esa fecha.</p>
-<p><strong>CP-079 — Las fechas de los activos quedan alineadas tras la extensión (escenario alternativo)</strong>
+<p><strong>CP-071 — Las fechas de los activos quedan alineadas tras la extensión (escenario alternativo)</strong>
 Verifica: CA-5.1.3 · RN-5.5
 Dado un colaborador con tres activos en resguardo con fechas de fin de vigencia distintas
 Cuando el usuario aplica una extensión
 Entonces los tres activos quedan con la misma fecha de fin de vigencia seleccionada.</p>
-<p><strong>CP-080 — La acción no está disponible en otro estatus (escenario alternativo)</strong>
+<p><strong>CP-072 — La acción no está disponible en otro estatus (escenario alternativo)</strong>
 Verifica: CA-5.1.4 · RN-5.1
 Dado un activo cuyo estatus vigente es Asignado, No Asignado o cualquier otro distinto de Resguardo en Sitio
 Cuando el usuario facultado consulta el activo
 Entonces el bloque "Resguardo" no se muestra y, con él, tampoco la acción de extender la vigencia.</p>
-<p><strong>CP-081 — Motivo de la extensión obligatorio (validación)</strong>
+<p><strong>CP-073 — Motivo de la extensión obligatorio (validación)</strong>
 Verifica: CA-5.1.5 · RN-5.3
 Dado que el usuario seleccionó el 30 de septiembre como nueva fecha de fin de vigencia sin escribir el motivo
 Cuando intenta confirmar la extensión
 Entonces el sistema no permite continuar y solicita capturar el motivo.</p>
-<p><strong>CP-082 — Fecha igual o anterior a la vigencia actual (validación)</strong>
+<p><strong>CP-074 — Fecha igual o anterior a la vigencia actual (validación)</strong>
 Verifica: CA-5.1.6 · RN-5.2
 Dado un resguardo cuya fecha de fin de vigencia es el 16 de septiembre y la fecha del servidor es el 10 de septiembre
 Cuando el usuario intenta seleccionar el 16 de septiembre y después el 12 de septiembre
 Entonces el calendario presenta ambas fechas deshabilitadas y, si la fecha se envía por otra vía, el sistema impide la extensión e informa que la nueva fecha debe ser posterior al 16 de septiembre.</p>
-<p><strong>CP-083 — Nueva fecha vacía o inválida (validación)</strong>
+<p><strong>CP-075 — Nueva fecha vacía o inválida (validación)</strong>
 Verifica: CA-5.1.6 · RN-5.2
 Dado un resguardo vigente
 Cuando el usuario intenta confirmar sin seleccionar fecha, o envía un valor que no corresponde a una fecha válida
 Entonces el sistema impide la extensión e informa que la nueva fecha de fin de vigencia es obligatoria y debe ser una fecha posterior a la vigencia actual.</p>
-<p><strong>CP-084 — Fecha en el pasado sobre una vigencia ya vencida (escenario de error)</strong>
+<p><strong>CP-076 — Fecha en el pasado sobre una vigencia ya vencida (escenario de error)</strong>
 Verifica: CA-5.1.7 · RN-5.2
 Dado un colaborador cuya fecha de fin de vigencia fue el 10 de septiembre y la fecha del servidor es el 20 de septiembre
 Cuando el usuario intenta seleccionar el 15 de septiembre
 Entonces el sistema impide la extensión e informa que la nueva fecha debe ser posterior al día actual, siendo el 21 de septiembre la mínima permitida.</p>
-<p><strong>CP-085 — Fecha válida sobre una vigencia ya vencida (escenario alternativo)</strong>
+<p><strong>CP-077 — Fecha válida sobre una vigencia ya vencida (escenario alternativo)</strong>
 Verifica: CA-5.1.7 · RN-5.2
 Dado el mismo colaborador con fecha de fin de vigencia del 10 de septiembre y fecha del servidor del 20 de septiembre
 Cuando el usuario selecciona el 25 de septiembre, escribe el motivo y confirma
 Entonces el sistema aplica la extensión y la nueva fecha de fin de vigencia queda el 25 de septiembre, posterior al día actual.</p>
-<p><strong>CP-086 — Días equivalentes antes de confirmar (camino feliz)</strong>
+<p><strong>CP-078 — Días equivalentes antes de confirmar (camino feliz)</strong>
 Verifica: CA-5.1.8
 Dado un resguardo con fecha de fin de vigencia el 16 de septiembre
 Cuando el usuario selecciona el 30 de septiembre en el calendario
 Entonces el diálogo muestra que la extensión agrega 14 días y las fechas de los activos no se modifican hasta que el usuario confirme explícitamente la extensión.</p>
-<p><strong>CP-087 — Cancelación del diálogo sin aplicar la extensión (escenario alternativo)</strong>
+<p><strong>CP-079 — Cancelación del diálogo sin aplicar la extensión (escenario alternativo)</strong>
 Verifica: CA-5.1.8
 Dado que el usuario seleccionó el 30 de septiembre y capturó el motivo pero no ha confirmado
 Cuando cierra o cancela el diálogo
 Entonces la fecha de fin de vigencia de todos los activos del colaborador permanece en el 16 de septiembre y no se registra ninguna extensión en la bitácora.</p>
-<p><strong>CP-088 — Extensiones sucesivas sobre el mismo resguardo (escenario alternativo)</strong>
+<p><strong>CP-080 — Extensiones sucesivas sobre el mismo resguardo (escenario alternativo)</strong>
 Verifica: CA-5.1.9 · RN-5.8
 Dado un resguardo cuya fecha de fin de vigencia ya fue extendida al 30 de septiembre
 Cuando el usuario intenta seleccionar el 25 de septiembre y después selecciona el 15 de octubre capturando el motivo
 Entonces el calendario tenía deshabilitado el 25 de septiembre por ser anterior a la vigencia extendida, la fecha de fin de vigencia de todos los activos pasa a ser el 15 de octubre y la bitácora de cada uno conserva ambos registros con su fecha anterior, su nueva fecha, sus días equivalentes y su motivo.</p>
-<p><strong>CP-089 — Extensión bloqueada por un ticket de recolección vigente (escenario de error)</strong>
+<p><strong>CP-081 — Extensión bloqueada por un ticket de recolección vigente (escenario de error)</strong>
 Verifica: CA-5.1.10 · RN-5.11
 Dado un colaborador que ya tiene un ticket vigente de "Recolección por Resguardo"
 Cuando el usuario intenta extender la vigencia del resguardo desde cualquiera de sus activos
 Entonces el sistema impide la extensión e informa que primero debe cancelarse el ticket de recolección.</p>
-<p><strong>CP-090 — Extensión disponible tras cancelar el ticket de recolección (escenario alternativo)</strong>
+<p><strong>CP-082 — Extensión disponible tras cancelar el ticket de recolección (escenario alternativo)</strong>
 Verifica: CA-5.1.10 · RN-5.11
 Dado un colaborador cuyo ticket de "Recolección por Resguardo" acaba de cancelarse y que conserva activos en estatus Resguardo en Sitio
 Cuando el usuario facultado selecciona la nueva fecha de fin de vigencia, captura el motivo y confirma
 Entonces el sistema aplica la extensión y actualiza la fecha de fin de vigencia de todos sus activos.</p>
-<p><strong>CP-091 — La acción no se muestra a un usuario sin permiso (permisos)</strong>
+<p><strong>CP-083 — La acción no se muestra a un usuario sin permiso (permisos)</strong>
 Verifica: CA-5.1.11 · RN-5.13
 Dado un usuario sin permiso para extender el resguardo
 Cuando consulta un activo en estatus Resguardo en Sitio
 Entonces la acción "Extender vigencia" no se muestra.</p>
-<p><strong>CP-092 — Bloqueo por permisos ante un acceso directo (permisos)</strong>
+<p><strong>CP-084 — Bloqueo por permisos ante un acceso directo (permisos)</strong>
 Verifica: CA-5.1.11 · RN-5.13
 Dado un usuario sin permiso para extender el resguardo
 Cuando intenta ejecutar la acción por acceso directo o mediante una llamada al servicio
 Entonces el sistema impide la operación y las fechas de fin de vigencia de los activos no se modifican.</p>
-<p><strong>CP-093 — Efecto de la extensión sobre el proceso automático (camino feliz)</strong>
+<p><strong>CP-085 — Efecto de la extensión sobre el proceso automático (camino feliz)</strong>
 Verifica: CA-5.1.12 · RN-5.9
 Dado un colaborador cuya fecha de fin de vigencia se extendió del 16 al 30 de septiembre
 Cuando el proceso automático se ejecuta entre el 17 y el 29 de septiembre
 Entonces no crea el ticket de recolección por la fecha original y evalúa el resguardo contra el 30 de septiembre.</p>
-<p><strong>CP-094 — Un cambio posterior de la configuración no altera la fecha extendida (escenario alternativo)</strong>
+<p><strong>CP-086 — Un cambio posterior de la configuración no altera la fecha extendida (escenario alternativo)</strong>
 Verifica: CA-5.1.12 · RN-5.10
 Dado un resguardo cuya fecha de fin de vigencia se extendió al 30 de septiembre
 Cuando el administrador cambia después los días de vigencia configurados de 15 a 25
 Entonces la fecha de fin de vigencia de los activos sigue siendo el 30 de septiembre, sin recálculo por el cambio de configuración.</p>
-<p><strong>CP-095 — Las fechas de resguardo y los estatus se conservan (camino feliz)</strong>
+<p><strong>CP-087 — Las fechas de resguardo y los estatus se conservan (camino feliz)</strong>
 Verifica: CA-5.1.13 · RN-5.14
 Dado un colaborador con activos cuya fecha de resguardo es el 1 de septiembre y cuya fecha de fin de vigencia se extendió
 Cuando se consultan los activos después de la extensión
 Entonces cada uno conserva su fecha de resguardo del 1 de septiembre y su estatus sigue siendo Resguardo en Sitio.</p>
-<p><strong>CP-096 — Consulta del historial de extensiones en la bitácora (trazabilidad)</strong>
+<p><strong>CP-088 — Consulta del historial de extensiones en la bitácora (trazabilidad)</strong>
 Verifica: CA-5.1.14 · RN-5.12
 Dado un resguardo con dos extensiones aplicadas
 Cuando un usuario consulta la bitácora de cualquiera de los activos afectados
 Entonces visualiza ambas extensiones con la fecha anterior, la nueva fecha, los días equivalentes, el motivo, el usuario que las aplicó, la fecha y hora del cambio y la cantidad de activos que abarcó cada operación.</p>
-<p><strong>CP-097 — La extensión no requiere autorización ni genera ticket (camino feliz)</strong>
+<p><strong>CP-089 — La extensión no requiere autorización ni genera ticket (camino feliz)</strong>
 Verifica: CA-5.1.1 · RN-5.4
 Dado un resguardo vigente y un usuario con el permiso correspondiente
 Cuando confirma la extensión con su fecha y su motivo
 Entonces la nueva fecha queda aplicada en ese momento, sin solicitar autorización a un tercero y sin generar ningún ticket.</p>
-<p><strong>CP-098 — El permiso de extensión es independiente del de consulta del activo (permisos)</strong>
+<p><strong>CP-090 — El permiso de extensión es independiente del de consulta del activo (permisos)</strong>
 Verifica: CA-5.1.15 · RN-5.13
 Dado un usuario con permiso para consultar y editar activos de cómputo pero sin el permiso de extensión del resguardo
 Cuando consulta un activo en estatus Resguardo en Sitio
 Entonces visualiza el bloque "Resguardo" completo, pero la acción "Extender vigencia" no se muestra ni puede ejecutarse.</p>
-<p><strong>CP-099 — Otorgamiento del permiso desde la administración de roles (permisos)</strong>
+<p><strong>CP-091 — Otorgamiento del permiso desde la administración de roles (permisos)</strong>
 Verifica: CA-5.1.15 · RN-5.13
 Dado un usuario sin el permiso de extensión del resguardo al que el administrador se lo otorga desde la administración de roles y permisos
 Cuando el usuario vuelve a consultar un activo en estatus Resguardo en Sitio
 Entonces la acción "Extender vigencia" ya se muestra y puede ejecutarla, sin que haya sido necesario un despliegue de código.</p>
-<p><strong>CP-100 — Verificación del permiso en el servidor (permisos)</strong>
+<p><strong>CP-092 — Verificación del permiso en el servidor (permisos)</strong>
 Verifica: CA-5.1.15 · RN-5.13
 Dado un usuario sin el permiso de extensión del resguardo que invoca directamente el servicio de extensión, evitando la interfaz
 Cuando el servidor recibe la petición
 Entonces la rechaza por falta de permiso y las fechas de fin de vigencia de los activos no se modifican.</p>
 <h3 id="casos-de-prueba-de-rf-06--bloque-resguardo-en-la-pantalla-del-activo">Casos de prueba de RF-06 — Bloque "Resguardo" en la pantalla del activo<a class="headerlink" href="#casos-de-prueba-de-rf-06--bloque-resguardo-en-la-pantalla-del-activo" title="Permanent link">&para;</a></h3>
-<p><strong>CP-101 — Visibilidad del bloque en un activo resguardado (camino feliz)</strong>
+<p><strong>CP-093 — Visibilidad del bloque en un activo resguardado (camino feliz)</strong>
 Verifica: CA-6.1.1 · RN-6.1
 Dado un activo cuyo estatus vigente es Resguardo en Sitio
 Cuando el usuario consulta el detalle del activo
 Entonces se muestra el bloque "Resguardo" con la información del resguardo vigente.</p>
-<p><strong>CP-102 — Ocultamiento del bloque por estatus (escenario alternativo)</strong>
+<p><strong>CP-094 — Ocultamiento del bloque por estatus (escenario alternativo)</strong>
 Verifica: CA-6.1.2 · RN-6.1
 Dado un activo cuyo estatus vigente es Asignado, No Asignado o cualquier otro distinto de Resguardo en Sitio
 Cuando el usuario consulta el detalle del activo
 Entonces el bloque "Resguardo" no se muestra, ni siquiera vacío o deshabilitado.</p>
-<p><strong>CP-103 — Contenido principal del bloque (camino feliz)</strong>
+<p><strong>CP-095 — Contenido principal del bloque (camino feliz)</strong>
 Verifica: CA-6.1.3
 Dado un activo en resguardo con custodio y autorización registrados
 Cuando el usuario consulta el bloque "Resguardo"
 Entonces visualiza la fecha de inicio del resguardo, la fecha de fin de vigencia, los días restantes, el responsable del resguardo, el centro de trabajo y quién autorizó con su fecha de autorización.</p>
-<p><strong>CP-104 — El custodio y el centro de trabajo provienen del diagnóstico (escenario alternativo)</strong>
+<p><strong>CP-096 — El custodio y el centro de trabajo provienen del diagnóstico (escenario alternativo)</strong>
 Verifica: CA-6.1.3 · RN-6.3
 Dado un activo en resguardo que, por estar resguardado, ya no tiene personal asignado ni departamento en el propio activo
 Cuando el usuario consulta el bloque "Resguardo"
 Entonces el responsable del resguardo y el centro de trabajo se muestran tomados del diagnóstico con causa "Resguardo en Sitio" que originó el resguardo.</p>
-<p><strong>CP-105 — Resguardo con varios autorizadores (escenario alternativo)</strong>
+<p><strong>CP-097 — Resguardo con varios autorizadores (escenario alternativo)</strong>
 Verifica: CA-6.1.4 · RN-6.4
 Dado un resguardo que fue autorizado por más de una persona
 Cuando el usuario consulta el bloque "Resguardo"
 Entonces visualiza a todos los autorizadores, cada uno con su fecha de autorización y su orden de autorización.</p>
-<p><strong>CP-106 — Días restantes de una vigencia por vencer (camino feliz)</strong>
+<p><strong>CP-098 — Días restantes de una vigencia por vencer (camino feliz)</strong>
 Verifica: CA-6.1.3 · RN-6.6
 Dado un activo con fecha de fin de vigencia el 16 de septiembre y fecha del servidor del 11 de septiembre
 Cuando el usuario consulta el bloque "Resguardo"
 Entonces el bloque indica que faltan 5 días para el vencimiento.</p>
-<p><strong>CP-107 — Vigencia vencida (escenario alternativo)</strong>
+<p><strong>CP-099 — Vigencia vencida (escenario alternativo)</strong>
 Verifica: CA-6.1.5 · RN-6.6
 Dado un activo cuya fecha de fin de vigencia fue el 16 de septiembre y la fecha del servidor es el 20 de septiembre
 Cuando el usuario consulta el bloque "Resguardo"
 Entonces el bloque señala que la vigencia está vencida e indica que han transcurrido 4 días desde el vencimiento.</p>
-<p><strong>CP-108 — Dato del resguardo no disponible (escenario de error)</strong>
+<p><strong>CP-100 — Dato del resguardo no disponible (escenario de error)</strong>
 Verifica: CA-6.1.6 · RN-6.7
 Dado un activo en resguardo que no tiene registrado un personal que resguarda
 Cuando el usuario consulta el bloque "Resguardo"
 Entonces el bloque se muestra con la leyenda de dato no disponible en el campo del responsable y con el resto de la información completa.</p>
-<p><strong>CP-109 — El bloque es de solo lectura (validación)</strong>
+<p><strong>CP-101 — El bloque es de solo lectura (validación)</strong>
 Verifica: CA-6.1.7 · RN-6.2
 Dado que el usuario consulta el bloque "Resguardo"
 Cuando intenta modificar cualquiera de los datos mostrados
 Entonces el sistema no lo permite y la única acción disponible es extender la vigencia.</p>
-<p><strong>CP-110 — Acceso a la extensión desde el bloque con permiso (permisos)</strong>
+<p><strong>CP-102 — Acceso a la extensión desde el bloque con permiso (permisos)</strong>
 Verifica: CA-6.1.8 · RN-6.10
 Dado un usuario con permiso para extender el resguardo
 Cuando consulta el bloque "Resguardo" de un activo en resguardo
 Entonces dispone de la acción "Extender vigencia" descrita en RF-05.</p>
-<p><strong>CP-111 — Bloque en modo consulta para un usuario sin permiso (permisos)</strong>
+<p><strong>CP-103 — Bloque en modo consulta para un usuario sin permiso (permisos)</strong>
 Verifica: CA-6.1.9 · RN-6.10
 Dado un usuario sin permiso para extender el resguardo
 Cuando consulta el bloque "Resguardo"
 Entonces visualiza toda la información del resguardo pero la acción "Extender vigencia" no se muestra.</p>
-<p><strong>CP-112 — Historial de extensiones en el bloque (camino feliz)</strong>
+<p><strong>CP-104 — Historial de extensiones en el bloque (camino feliz)</strong>
 Verifica: CA-6.1.10 · RN-6.8
 Dado un activo cuyo resguardo fue extendido dos veces
 Cuando el usuario consulta el bloque "Resguardo"
 Entonces visualiza ambas extensiones con los días agregados, la fecha anterior, la nueva fecha, el motivo, el usuario que la aplicó y la fecha del cambio.</p>
-<p><strong>CP-113 — Resguardo sin extensiones (escenario alternativo)</strong>
+<p><strong>CP-105 — Resguardo sin extensiones (escenario alternativo)</strong>
 Verifica: CA-6.1.11 · RN-6.8
 Dado un activo en resguardo al que no se le ha aplicado ninguna extensión
 Cuando el usuario consulta el bloque "Resguardo"
 Entonces el historial de extensiones no se muestra.</p>
-<p><strong>CP-114 — Folio del ticket de recolección en el bloque (camino feliz)</strong>
+<p><strong>CP-106 — Folio del ticket de recolección en el bloque (camino feliz)</strong>
 Verifica: CA-6.1.12 · RN-6.9
 Dado un activo cuyo resguardo venció y para el que el sistema ya generó el ticket "Recolección por Resguardo"
 Cuando el usuario consulta el bloque "Resguardo"
 Entonces visualiza el folio de ese ticket.</p>
-<p><strong>CP-115 — Activo sin ticket de recolección generado (escenario alternativo)</strong>
+<p><strong>CP-107 — Activo sin ticket de recolección generado (escenario alternativo)</strong>
 Verifica: CA-6.1.12 · RN-6.9
 Dado un activo en resguardo cuya vigencia aún no vence y que no tiene ticket de "Recolección por Resguardo"
 Cuando el usuario consulta el bloque "Resguardo"
 Entonces el bloque no muestra folio de ticket de recolección.</p>
-<p><strong>CP-116 — El bloque desaparece al salir del resguardo (escenario alternativo)</strong>
+<p><strong>CP-108 — El bloque desaparece al salir del resguardo (escenario alternativo)</strong>
 Verifica: CA-6.1.13 · RN-6.11
 Dado un activo en resguardo que se reasigna a un nuevo colaborador
 Cuando el usuario consulta el activo después de la reasignación
 Entonces el bloque "Resguardo" ya no se muestra.</p>
-<p><strong>CP-117 — La información del resguardo concluido permanece en la bitácora (trazabilidad)</strong>
+<p><strong>CP-109 — La información del resguardo concluido permanece en la bitácora (trazabilidad)</strong>
 Verifica: CA-6.1.13 · RN-6.11
 Dado un activo que salió del resguardo por reasignación, recolección, baja o cancelación
 Cuando el usuario consulta la bitácora del activo
 Entonces encuentra la información del resguardo concluido, aunque el bloque "Resguardo" ya no se muestre.</p>
-<p><strong>CP-118 — Las fechas del bloque reflejan la extensión aplicada (escenario alternativo)</strong>
+<p><strong>CP-110 — Las fechas del bloque reflejan la extensión aplicada (escenario alternativo)</strong>
 Verifica: CA-6.1.3 · RN-6.5
 Dado un activo cuya fecha de fin de vigencia se extendió del 16 al 30 de septiembre
 Cuando el usuario consulta el bloque "Resguardo"
 Entonces la fecha de fin de vigencia mostrada es el 30 de septiembre y los días restantes se calculan contra esa fecha.</p>
-<p><strong>CP-119 — Otros activos del colaborador visibles en el bloque (camino feliz)</strong>
+<p><strong>CP-111 — Otros activos del colaborador visibles en el bloque (camino feliz)</strong>
 Verifica: CA-6.1.14 · RN-6.12
 Dado un activo en resguardo cuyo colaborador dado de baja tiene otros dos activos también en estatus Resguardo en Sitio
 Cuando el usuario consulta el bloque "Resguardo"
 Entonces visualiza esos dos activos como parte del mismo resguardo, con la indicación de que comparten la vigencia y el ticket de recolección.</p>
 <h3 id="casos-de-prueba-de-rf-07--días-restantes-de-resguardo-en-el-listado-de-activos">Casos de prueba de RF-07 — Días restantes de resguardo en el listado de activos<a class="headerlink" href="#casos-de-prueba-de-rf-07--días-restantes-de-resguardo-en-el-listado-de-activos" title="Permanent link">&para;</a></h3>
-<p><strong>CP-120 — Días restantes de un activo en resguardo (camino feliz)</strong>
+<p><strong>CP-112 — Días restantes de un activo en resguardo (camino feliz)</strong>
 Verifica: CA-7.1.1 · RN-7.3
 Dado un activo en estatus Resguardo en Sitio con fecha de resguardo del 1 de septiembre y fecha de fin de vigencia del 16 de septiembre, y la fecha del servidor es el 11 de septiembre
 Cuando el usuario consulta el listado de activos de cómputo
 Entonces la columna de días restantes de resguardo muestra 5 para ese activo.</p>
-<p><strong>CP-121 — Celda vacía en un activo que no está en resguardo (escenario alternativo)</strong>
+<p><strong>CP-113 — Celda vacía en un activo que no está en resguardo (escenario alternativo)</strong>
 Verifica: CA-7.1.2 · RN-7.2
 Dado un activo cuyo estatus vigente es Asignado, No Asignado, En Recolección o Cancelado
 Cuando el usuario consulta el listado de activos de cómputo
 Entonces la columna de días restantes de resguardo se muestra vacía para ese activo, no en cero ni con un guion.</p>
-<p><strong>CP-122 — La columna se vacía al salir del resguardo (escenario alternativo)</strong>
+<p><strong>CP-114 — La columna se vacía al salir del resguardo (escenario alternativo)</strong>
 Verifica: CA-7.1.3 · RN-7.2
 Dado un activo en resguardo que muestra 5 días restantes en el listado y que se reasigna a un nuevo colaborador
 Cuando el usuario vuelve a consultar el listado
 Entonces la celda de ese activo aparece vacía, en consistencia con la limpieza de fechas de RN-3.4.</p>
-<p><strong>CP-123 — Vigencia vencida (escenario alternativo)</strong>
+<p><strong>CP-115 — Vigencia vencida (escenario alternativo)</strong>
 Verifica: CA-7.1.4 · RN-7.5
 Dado un activo en resguardo cuya fecha de fin de vigencia fue el 16 de septiembre y la fecha del servidor es el 20 de septiembre
 Cuando el usuario consulta el listado de activos de cómputo
 Entonces la columna señala que la vigencia está vencida e indica que han transcurrido 4 días desde el vencimiento.</p>
-<p><strong>CP-124 — Último día de vigencia (dato límite)</strong>
+<p><strong>CP-116 — Último día de vigencia (dato límite)</strong>
 Verifica: CA-7.1.5 · RN-7.5
 Dado un activo en resguardo cuya fecha de fin de vigencia es el 16 de septiembre y la fecha del servidor es el 16 de septiembre
 Cuando el usuario consulta el listado de activos de cómputo
 Entonces la columna muestra cero días restantes y no presenta el activo como vencido.</p>
-<p><strong>CP-125 — Cálculo sin considerar la hora (dato límite)</strong>
+<p><strong>CP-117 — Cálculo sin considerar la hora (dato límite)</strong>
 Verifica: CA-7.1.1 · RN-7.3
 Dado un activo en resguardo con fecha de fin de vigencia el 16 de septiembre
 Cuando el usuario consulta el listado el 11 de septiembre, tanto en la primera hora del día como en la última
 Entonces en ambos casos la columna muestra 5 días restantes, porque la comparación se hace sobre fechas y no sobre horas.</p>
-<p><strong>CP-126 — La columna refleja la extensión aplicada (camino feliz)</strong>
+<p><strong>CP-118 — La columna refleja la extensión aplicada (camino feliz)</strong>
 Verifica: CA-7.1.6 · RN-7.4
 Dado un activo cuya fecha de fin de vigencia se extendió del 16 al 30 de septiembre y la fecha del servidor es el 20 de septiembre
 Cuando el usuario consulta el listado de activos de cómputo
 Entonces la columna muestra 10 días restantes, calculados contra la fecha extendida.</p>
-<p><strong>CP-127 — Un cambio de configuración no altera la columna (escenario alternativo)</strong>
+<p><strong>CP-119 — Un cambio de configuración no altera la columna (escenario alternativo)</strong>
 Verifica: CA-7.1.6 · RN-7.4
 Dado un activo en resguardo con fecha de fin de vigencia registrada el 16 de septiembre
 Cuando el administrador cambia los días de vigencia configurados en RF-02 de 15 a 25
 Entonces la columna sigue calculando los días restantes contra el 16 de septiembre, sin recálculo por el cambio de configuración.</p>
-<p><strong>CP-128 — Consistencia con el bloque "Resguardo" (camino feliz)</strong>
+<p><strong>CP-120 — Consistencia con el bloque "Resguardo" (camino feliz)</strong>
 Verifica: CA-7.1.7 · RN-7.6
 Dado un activo en resguardo que en el listado muestra 5 días restantes
 Cuando el usuario abre el detalle de ese activo y consulta el bloque "Resguardo"
 Entonces el bloque muestra los mismos 5 días restantes.</p>
-<p><strong>CP-129 — Activo en resguardo sin fecha de fin de vigencia (escenario de error)</strong>
+<p><strong>CP-121 — Activo en resguardo sin fecha de fin de vigencia (escenario de error)</strong>
 Verifica: CA-7.1.8 · RN-7.7
 Dado un activo en estatus Resguardo en Sitio cuyo resguardo inició antes de la puesta en marcha de la funcionalidad y que no tiene registrada la fecha de fin de vigencia
 Cuando el usuario consulta el listado de activos de cómputo
 Entonces la celda de ese activo se muestra vacía, sin error, y el resto del listado se consulta con normalidad.</p>
-<p><strong>CP-130 — La columna es de solo lectura (validación)</strong>
+<p><strong>CP-122 — La columna es de solo lectura (validación)</strong>
 Verifica: CA-7.1.9 · RN-7.8
 Dado que el usuario consulta el listado de activos de cómputo
 Cuando intenta capturar o modificar el valor de la columna de días restantes de resguardo
 Entonces el sistema no lo permite.</p>
-<p><strong>CP-131 — Orden del listado por días restantes (escenario alternativo)</strong>
+<p><strong>CP-123 — Orden del listado por días restantes (escenario alternativo)</strong>
 Verifica: CA-7.1.1 · RN-7.1
 Dado un listado con varios activos en resguardo con distintos días restantes
 Cuando el usuario ordena el listado por la columna de días restantes de resguardo
 Entonces los activos se ordenan por ese valor y los que no están en resguardo se agrupan aparte por tener la celda vacía.</p>
-<p><strong>CP-132 — Visibilidad del listado sin permisos adicionales (permisos)</strong>
+<p><strong>CP-124 — Visibilidad del listado sin permisos adicionales (permisos)</strong>
 Verifica: CA-7.1.2 · RN-7.9
 Dado un usuario con permiso para consultar el listado de activos de cómputo y sin ningún permiso adicional de resguardo
 Cuando consulta el listado
 Entonces visualiza la columna de días restantes de resguardo con normalidad, porque el requerimiento no introduce permisos nuevos.</p>
 <h3 id="trazabilidad-de-la-cobertura-de-pruebas">Trazabilidad de la cobertura de pruebas<a class="headerlink" href="#trazabilidad-de-la-cobertura-de-pruebas" title="Permanent link">&para;</a></h3>
-<p>La tabla evidencia que los 88 criterios de aceptación del documento quedan cubiertos por al menos un caso de prueba, e indica qué tipo de escenarios cubre cada uno.</p>
+<p>La tabla evidencia que los 85 criterios de aceptación del documento quedan cubiertos por al menos un caso de prueba, e indica qué tipo de escenarios cubre cada uno.</p>
 <table>
 <thead>
 <tr>
@@ -6073,352 +5975,337 @@ Entonces visualiza la columna de días restantes de resguardo con normalidad, po
 </tr>
 <tr>
 <td>CA-2.1.1</td>
-<td>CP-023, CP-024, CP-036</td>
+<td>CP-023, CP-024, CP-029</td>
 <td>Camino feliz, Permisos, Alternativo</td>
 </tr>
 <tr>
 <td>CA-2.1.2</td>
-<td>CP-025, CP-026, CP-027</td>
-<td>Camino feliz, Alternativo, Trazabilidad</td>
+<td>CP-025, CP-026</td>
+<td>Camino feliz, Alternativo</td>
 </tr>
 <tr>
 <td>CA-2.1.3</td>
-<td>CP-028, CP-029</td>
+<td>CP-027, CP-028</td>
 <td>Validación</td>
 </tr>
 <tr>
-<td>CA-2.1.4</td>
-<td>CP-030, CP-031</td>
-<td>Error</td>
-</tr>
-<tr>
-<td>CA-2.1.5</td>
-<td>CP-032</td>
-<td>Alternativo</td>
-</tr>
-<tr>
-<td>CA-2.1.6</td>
-<td>CP-033, CP-034, CP-035</td>
-<td>Validación, Alternativo, Dato límite</td>
-</tr>
-<tr>
 <td>CA-3.1.1</td>
-<td>CP-037, CP-038, CP-045</td>
-<td>Camino feliz, Alternativo, Error</td>
+<td>CP-030, CP-031</td>
+<td>Camino feliz, Alternativo</td>
 </tr>
 <tr>
 <td>CA-3.1.2</td>
-<td>CP-039</td>
+<td>CP-032</td>
 <td>Validación</td>
 </tr>
 <tr>
 <td>CA-3.1.3</td>
-<td>CP-040</td>
+<td>CP-033</td>
 <td>Alternativo</td>
 </tr>
 <tr>
 <td>CA-3.1.4</td>
-<td>CP-041, CP-042</td>
+<td>CP-034, CP-035</td>
 <td>Camino feliz, Alternativos</td>
 </tr>
 <tr>
 <td>CA-3.1.5</td>
-<td>CP-043</td>
+<td>CP-036</td>
 <td>Trazabilidad</td>
 </tr>
 <tr>
 <td>CA-3.1.6</td>
-<td>CP-044</td>
+<td>CP-037</td>
 <td>Alternativo</td>
 </tr>
 <tr>
 <td>CA-4.1.1</td>
-<td>CP-046, CP-047, CP-048, CP-073</td>
+<td>CP-038, CP-039, CP-040, CP-065</td>
 <td>Camino feliz, Alternativo, Dato límite</td>
 </tr>
 <tr>
 <td>CA-4.1.2</td>
-<td>CP-049</td>
+<td>CP-041</td>
 <td>Camino feliz</td>
 </tr>
 <tr>
 <td>CA-4.1.3</td>
-<td>CP-050, CP-074</td>
+<td>CP-042, CP-066</td>
 <td>Camino feliz, Permisos</td>
 </tr>
 <tr>
 <td>CA-4.1.4</td>
-<td>CP-051</td>
+<td>CP-043</td>
 <td>Alternativo</td>
 </tr>
 <tr>
 <td>CA-4.1.5</td>
-<td>CP-052</td>
+<td>CP-044</td>
 <td>Alternativo</td>
 </tr>
 <tr>
 <td>CA-4.1.6</td>
-<td>CP-053</td>
+<td>CP-045</td>
 <td>Alternativo</td>
 </tr>
 <tr>
 <td>CA-4.1.7</td>
-<td>CP-054, CP-055, CP-056</td>
+<td>CP-046, CP-047, CP-048</td>
 <td>Error, Alternativo</td>
 </tr>
 <tr>
 <td>CA-4.1.8</td>
-<td>CP-057</td>
+<td>CP-049</td>
 <td>Alternativo</td>
 </tr>
 <tr>
 <td>CA-4.1.9</td>
-<td>CP-058</td>
+<td>CP-050</td>
 <td>Alternativo</td>
 </tr>
 <tr>
 <td>CA-4.1.10</td>
-<td>CP-059</td>
+<td>CP-051</td>
 <td>Alternativo</td>
 </tr>
 <tr>
 <td>CA-4.1.11</td>
-<td>CP-060, CP-061</td>
+<td>CP-052, CP-053</td>
 <td>Error, Alternativo</td>
 </tr>
 <tr>
 <td>CA-4.1.12</td>
-<td>CP-062, CP-063</td>
+<td>CP-054, CP-055</td>
 <td>Error, Alternativo</td>
 </tr>
 <tr>
 <td>CA-4.1.13</td>
-<td>CP-064</td>
+<td>CP-056</td>
 <td>Error</td>
 </tr>
 <tr>
 <td>CA-4.1.14</td>
-<td>CP-065</td>
+<td>CP-057</td>
 <td>Camino feliz</td>
 </tr>
 <tr>
 <td>CA-4.1.15</td>
-<td>CP-066</td>
+<td>CP-058</td>
 <td>Error</td>
 </tr>
 <tr>
 <td>CA-4.1.16</td>
-<td>CP-067</td>
+<td>CP-059</td>
 <td>Trazabilidad</td>
 </tr>
 <tr>
 <td>CA-4.1.17</td>
-<td>CP-068</td>
+<td>CP-060</td>
 <td>Alternativo</td>
 </tr>
 <tr>
 <td>CA-4.1.18</td>
-<td>CP-069</td>
+<td>CP-061</td>
 <td>Camino feliz</td>
 </tr>
 <tr>
 <td>CA-4.1.19</td>
-<td>CP-070, CP-071, CP-072</td>
+<td>CP-062, CP-063, CP-064</td>
 <td>Alternativo, Dato límite, Error</td>
 </tr>
 <tr>
 <td>CA-5.1.1</td>
-<td>CP-075, CP-076, CP-097</td>
+<td>CP-067, CP-068, CP-089</td>
 <td>Camino feliz, Trazabilidad</td>
 </tr>
 <tr>
 <td>CA-5.1.2</td>
-<td>CP-077</td>
+<td>CP-069</td>
 <td>Camino feliz</td>
 </tr>
 <tr>
 <td>CA-5.1.3</td>
-<td>CP-078, CP-079</td>
+<td>CP-070, CP-071</td>
 <td>Dato límite, Alternativo</td>
 </tr>
 <tr>
 <td>CA-5.1.4</td>
-<td>CP-080</td>
+<td>CP-072</td>
 <td>Alternativo</td>
 </tr>
 <tr>
 <td>CA-5.1.5</td>
-<td>CP-081</td>
+<td>CP-073</td>
 <td>Validación</td>
 </tr>
 <tr>
 <td>CA-5.1.6</td>
-<td>CP-082, CP-083</td>
+<td>CP-074, CP-075</td>
 <td>Validación</td>
 </tr>
 <tr>
 <td>CA-5.1.7</td>
-<td>CP-084, CP-085</td>
+<td>CP-076, CP-077</td>
 <td>Error, Alternativo</td>
 </tr>
 <tr>
 <td>CA-5.1.8</td>
-<td>CP-086, CP-087</td>
+<td>CP-078, CP-079</td>
 <td>Camino feliz, Alternativo</td>
 </tr>
 <tr>
 <td>CA-5.1.9</td>
-<td>CP-088</td>
+<td>CP-080</td>
 <td>Alternativo</td>
 </tr>
 <tr>
 <td>CA-5.1.10</td>
-<td>CP-089, CP-090</td>
+<td>CP-081, CP-082</td>
 <td>Error, Alternativo</td>
 </tr>
 <tr>
 <td>CA-5.1.11</td>
-<td>CP-091, CP-092</td>
+<td>CP-083, CP-084</td>
 <td>Permisos</td>
 </tr>
 <tr>
 <td>CA-5.1.12</td>
-<td>CP-093, CP-094</td>
+<td>CP-085, CP-086</td>
 <td>Camino feliz, Alternativo</td>
 </tr>
 <tr>
 <td>CA-5.1.13</td>
-<td>CP-095</td>
+<td>CP-087</td>
 <td>Camino feliz</td>
 </tr>
 <tr>
 <td>CA-5.1.14</td>
-<td>CP-096</td>
+<td>CP-088</td>
 <td>Trazabilidad</td>
 </tr>
 <tr>
 <td>CA-5.1.15</td>
-<td>CP-098, CP-099, CP-100</td>
+<td>CP-090, CP-091, CP-092</td>
 <td>Permisos</td>
 </tr>
 <tr>
 <td>CA-6.1.1</td>
-<td>CP-101</td>
+<td>CP-093</td>
 <td>Camino feliz</td>
 </tr>
 <tr>
 <td>CA-6.1.2</td>
-<td>CP-102</td>
+<td>CP-094</td>
 <td>Alternativo</td>
 </tr>
 <tr>
 <td>CA-6.1.3</td>
-<td>CP-103, CP-104, CP-106, CP-118</td>
+<td>CP-095, CP-096, CP-098, CP-110</td>
 <td>Camino feliz, Alternativo</td>
 </tr>
 <tr>
 <td>CA-6.1.4</td>
-<td>CP-105</td>
+<td>CP-097</td>
 <td>Alternativo</td>
 </tr>
 <tr>
 <td>CA-6.1.5</td>
-<td>CP-107</td>
+<td>CP-099</td>
 <td>Alternativo</td>
 </tr>
 <tr>
 <td>CA-6.1.6</td>
-<td>CP-108</td>
+<td>CP-100</td>
 <td>Error</td>
 </tr>
 <tr>
 <td>CA-6.1.7</td>
-<td>CP-109</td>
+<td>CP-101</td>
 <td>Validación</td>
 </tr>
 <tr>
 <td>CA-6.1.8</td>
-<td>CP-110</td>
+<td>CP-102</td>
 <td>Permisos</td>
 </tr>
 <tr>
 <td>CA-6.1.9</td>
-<td>CP-111</td>
+<td>CP-103</td>
 <td>Permisos</td>
 </tr>
 <tr>
 <td>CA-6.1.10</td>
-<td>CP-112</td>
+<td>CP-104</td>
 <td>Camino feliz</td>
 </tr>
 <tr>
 <td>CA-6.1.11</td>
-<td>CP-113</td>
+<td>CP-105</td>
 <td>Alternativo</td>
 </tr>
 <tr>
 <td>CA-6.1.12</td>
-<td>CP-114, CP-115</td>
+<td>CP-106, CP-107</td>
 <td>Camino feliz, Alternativo</td>
 </tr>
 <tr>
 <td>CA-6.1.13</td>
-<td>CP-116, CP-117</td>
+<td>CP-108, CP-109</td>
 <td>Alternativo, Trazabilidad</td>
 </tr>
 <tr>
 <td>CA-6.1.14</td>
-<td>CP-119</td>
+<td>CP-111</td>
 <td>Camino feliz</td>
 </tr>
 <tr>
 <td>CA-7.1.1</td>
-<td>CP-120, CP-125, CP-131</td>
+<td>CP-112, CP-117, CP-123</td>
 <td>Camino feliz, Dato límite, Alternativo</td>
 </tr>
 <tr>
 <td>CA-7.1.2</td>
-<td>CP-121, CP-132</td>
+<td>CP-113, CP-124</td>
 <td>Alternativo, Permisos</td>
 </tr>
 <tr>
 <td>CA-7.1.3</td>
-<td>CP-122</td>
+<td>CP-114</td>
 <td>Alternativo</td>
 </tr>
 <tr>
 <td>CA-7.1.4</td>
-<td>CP-123</td>
+<td>CP-115</td>
 <td>Alternativo</td>
 </tr>
 <tr>
 <td>CA-7.1.5</td>
-<td>CP-124</td>
+<td>CP-116</td>
 <td>Dato límite</td>
 </tr>
 <tr>
 <td>CA-7.1.6</td>
-<td>CP-126, CP-127</td>
+<td>CP-118, CP-119</td>
 <td>Camino feliz, Alternativo</td>
 </tr>
 <tr>
 <td>CA-7.1.7</td>
-<td>CP-128</td>
+<td>CP-120</td>
 <td>Camino feliz</td>
 </tr>
 <tr>
 <td>CA-7.1.8</td>
-<td>CP-129</td>
+<td>CP-121</td>
 <td>Error</td>
 </tr>
 <tr>
 <td>CA-7.1.9</td>
-<td>CP-130</td>
+<td>CP-122</td>
 <td>Validación</td>
 </tr>
 </tbody>
 </table>
-<p>Los casos que dependen de la ejecución del proceso automático de tickets por baja de personal (CP-005 a CP-008, CP-012 y CP-015 a CP-022) requieren poder simular una baja de nómina y disparar ese proceso a demanda en el ambiente de pruebas, conforme a DEP-10. Los casos que dependen de la ejecución del proceso automático de resguardos (CP-032 a CP-035, CP-046 a CP-048, CP-051 a CP-064, CP-066, CP-068 a CP-073 y CP-093) requieren poder disparar el proceso a demanda o simular la fecha del servidor en el ambiente de pruebas; ese es el único prerrequisito técnico de esta sección y queda registrado como DEP-06.</p>
+<p>Los casos que dependen de la ejecución del proceso automático de tickets por baja de personal (CP-005 a CP-008, CP-012 y CP-015 a CP-022) requieren poder simular una baja de nómina y disparar ese proceso a demanda en el ambiente de pruebas, conforme a DEP-10. Los casos que dependen de la ejecución del proceso automático de resguardos (CP-038 a CP-040, CP-043 a CP-056, CP-058, CP-060 a CP-065 y CP-085) requieren poder disparar el proceso a demanda o simular la fecha del servidor en el ambiente de pruebas; ese es el único prerrequisito técnico de esta sección y queda registrado como DEP-06.</p>
 <h2 id="preguntas-abiertas">Preguntas abiertas<a class="headerlink" href="#preguntas-abiertas" title="Permanent link">&para;</a></h2>
 <p>No quedan preguntas abiertas para el negocio: todos los puntos que estaban pendientes de definición fueron resueltos y se listan a continuación. Los supuestos que aún requieren validación técnica antes de implementar se señalan en la sección de Supuestos, en particular SUP-15 sobre el detalle de varios activos en el ticket interno.</p>
 <h3 id="puntos-resueltos-por-el-negocio">Puntos resueltos por el negocio<a class="headerlink" href="#puntos-resueltos-por-el-negocio" title="Permanent link">&para;</a></h3>
@@ -6435,9 +6322,9 @@ Entonces visualiza la columna de días restantes de resguardo con normalidad, po
 <li><strong>Notificación de la extensión:</strong> no se requiere notificar por correo la extensión de la vigencia a nadie. El registro en la bitácora de cada activo afectado es control suficiente (RN-5.12).</li>
 <li><strong>Listado o monitor de activos en resguardo:</strong> no se requiere una <strong>pantalla dedicada</strong>. La visibilidad sobre el conjunto se resuelve con la columna de días restantes de resguardo que RF-07 agrega al listado principal de activos, y el detalle de cada resguardo con el bloque "Resguardo" de la pantalla del activo (RF-06).</li>
 <li><strong>Aviso previo al vencimiento:</strong> no se requiere. El negocio determinó que no se enviarán correos de aviso antes del fin de la vigencia, por lo que tampoco existe una variable de días de anticipación ni una plantilla de correo de aviso. El seguimiento se hace desde el bloque "Resguardo" del activo (RF-06) y el control se conserva íntegro en la generación automática del ticket al vencimiento (RF-04), que no depende de que nadie vigile el plazo.</li>
-<li><strong>Resguardos históricos:</strong> no se afectan los resguardos pasados ni los ya vencidos. El proceso automático opera a partir de la fecha de corte configurada en RF-02 (RN-2.6, RN-4.2 y RN-4.16).</li>
-<li><strong>Alcance de la configuración:</strong> es <strong>general para toda la empresa</strong>; no se parametriza por centro de trabajo, sucursal, departamento ni tipo de activo (RN-2.7).</li>
-<li><strong>Valores de los plazos:</strong> los días de vigencia son <strong>configurables</strong>; el valor que usa el documento es un ejemplo para hacer verificables los criterios de aceptación, no un valor comprometido (RN-2.8, SUP-03).</li>
+<li><strong>Resguardos históricos:</strong> no se afectan los resguardos pasados ni los ya vencidos. No se crea una variable de fecha de corte: el proceso automático solo considera los activos que tienen registrada su fecha de fin de vigencia, dato que nace con esta funcionalidad, por lo que los resguardos anteriores quedan fuera por sí solos (RN-4.2 y RN-4.16).</li>
+<li><strong>Alcance de la configuración:</strong> es <strong>general para toda la empresa</strong>; no se parametriza por centro de trabajo, sucursal, departamento ni tipo de activo (RN-2.3).</li>
+<li><strong>Valores de los plazos:</strong> los días de vigencia son <strong>configurables</strong>; el valor que usa el documento es un ejemplo para hacer verificables los criterios de aceptación, no un valor comprometido (RN-2.4, SUP-03).</li>
 <li><strong>Recontratación del colaborador dado de baja:</strong> no requiere regla especial. Al reasignarle el equipo con la funcionalidad existente, el activo sale del resguardo y el proceso se detiene por sí solo (SUP-13).</li>
 </ul>
 
