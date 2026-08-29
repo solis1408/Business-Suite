@@ -22,7 +22,7 @@ Este documento describe los siete requerimientos funcionales necesarios para cer
 
 - **RF-02 — Parametrización de la vigencia del resguardo**, que hace administrable la cantidad de días que un activo puede permanecer en resguardo en sitio, sin requerir cambios de desarrollo.
 - **RF-03 — Registro de las fechas de vigencia del resguardo**, que garantiza que todo activo que entra en resguardo quede con su fecha de inicio y su fecha de fin de vigencia guardadas desde el primer momento.
-- **RF-04 — Generación automática del ticket "Recolección por Resguardo"**, que al vencer el periodo de vigencia crea de manera desatendida un ticket de recolección por colaborador, con el detalle de todos sus equipos en resguardo, y lo asigna al personal y departamento encargados de recolectar activos.
+- **RF-04 — Generación automática del ticket "Recolección por Resguardo"**, que al vencer el periodo de vigencia crea de manera desatendida un ticket de recolección por colaborador, con todos los equipos que tenía asignados antes de su baja registrados en el diagnóstico del ticket, y lo asigna al personal y departamento encargados de recolectar activos.
 - **RF-05 — Extensión de la vigencia del resguardo**, que permite mover hacia adelante la fecha de fin de vigencia de los equipos de un colaborador seleccionando la nueva fecha en un calendario, cuando el negocio necesita conservarlos más tiempo en sitio, sin detener ni alterar el resto del proceso.
 - **RF-06 — Bloque "Resguardo" en la pantalla del activo**, que concentra en un solo lugar la información del resguardo —responsable, quién autorizó, fecha de inicio y fecha de fin de vigencia— y desde donde se extiende su vigencia.
 - **RF-07 — Días restantes de resguardo en el listado de activos**, que agrega al inventario una columna con los días que le quedan de resguardo a cada equipo, para detectar los próximos a vencer sin abrir activo por activo.
@@ -36,7 +36,7 @@ El objetivo es que cualquier persona del negocio entienda, sin consultar otro do
 - El campo **"No requiere validación"** en ese mismo catálogo, que se marca por registro. Los registros **marcados** generan su subticket **siempre** —sin evaluar el expediente del colaborador— y lo **cierran sin validación**. Los dos subtickets del arranque se dan de alta con esa marca puesta; los registros sin marcar —entre ellos el de baja de Directorio Activo— conservan el comportamiento actual.
 - La configuración administrable de los **días de vigencia del resguardo en sitio**, única variable de sistema que este documento da de alta.
 - El registro en el activo de la fecha de inicio y la fecha de fin de vigencia del resguardo.
-- La creación automática y desatendida (job programado) del ticket de recolección identificado como **"Recolección por Resguardo"**, generado **uno por colaborador dado de baja**, que nace en estatus **En Proceso** y lleva en su detalle todos los activos que el colaborador tenía asignados antes de su baja, a nombre de quien autorizó el resguardo y asignado al responsable de recolecciones.
+- La creación automática y desatendida (job programado) del ticket de recolección identificado como **"Recolección por Resguardo"**, generado **uno por colaborador dado de baja**, que nace en estatus **En Proceso** y registra en su **diagnóstico** todos los activos que el colaborador tenía asignados antes de su baja, a nombre de quien autorizó el resguardo y asignado al responsable de recolecciones.
 - La opción de **extender la vigencia** del resguardo de un colaborador **seleccionando la nueva fecha de fin de vigencia en un calendario**, que se aplica a todos sus activos en resguardo, **restringida por un permiso propio**, con validación de la fecha mínima permitida, motivo obligatorio y registro en bitácora.
 - Un **bloque "Resguardo" en la pantalla del activo**, visible solo cuando el equipo está en resguardo, que reúne la información del resguardo y desde el cual se extiende su vigencia.
 - Una **columna de días restantes de resguardo en el listado principal de activos**, que se llena únicamente cuando el equipo está en resguardo en sitio.
@@ -78,7 +78,7 @@ El objetivo es que cualquier persona del negocio entienda, sin consultar otro do
 | Días de vigencia del resguardo | Cantidad de días naturales, configurable en una variable del sistema, que un activo puede permanecer en resguardo en sitio antes de que deba recolectarse. El valor lo define el negocio al configurar; en los ejemplos de este documento se usan 15 días. Cuando el documento habla del "periodo de vigencia" se refiere a este plazo. |
 | Fecha de fin de vigencia del resguardo | Fecha límite del resguardo. **Es un dato que se guarda en el activo**, no un cálculo que se rehace cada vez: se registra al iniciar el resguardo sumando a la fecha de resguardo los días de vigencia configurados, y solo cambia si se otorga una extensión. Es la fecha contra la que se evalúa el vencimiento y se genera la recolección. |
 | Extensión del resguardo | Acción que mueve hacia adelante la fecha de fin de vigencia del resguardo de un colaborador, seleccionando la nueva fecha en un calendario y aplicándola a todos sus activos en resguardo, para conservarlos más tiempo en sitio. La nueva fecha solo puede ser posterior a la vigente y al día actual. No requiere autorización de un tercero, pero exige capturar un motivo y queda registrada en la bitácora del activo. |
-| Recolección por Resguardo | Motivo con el que se identifica el ticket que el sistema crea automáticamente al vencer el periodo de vigencia, para recuperar los equipos de un colaborador que quedaron en resguardo en sitio y no fueron reasignados. Se genera **un ticket por colaborador**, en estatus En Proceso y con todos los activos que ese colaborador tenía asignados antes de su baja en el detalle. |
+| Recolección por Resguardo | Motivo con el que se identifica el ticket que el sistema crea automáticamente al vencer el periodo de vigencia, para recuperar los equipos de un colaborador que quedaron en resguardo en sitio y no fueron reasignados. Se genera **un ticket por colaborador**, en estatus En Proceso y con todos los activos que ese colaborador tenía asignados antes de su baja registrados en su diagnóstico. |
 | Autorizador del resguardo | Persona que aprobó el resguardo en sitio y que figura como solicitante del ticket de recolección. Se toma del registro de autorización del resguardo. |
 | Ticket interno | Registro de atención del área de Cómputo que se genera dentro del sistema (no lo levanta el usuario final) y que se asigna a un responsable para su ejecución. |
 | Job | Proceso automático que el sistema ejecuta de forma periódica y desatendida, sin que ninguna persona lo dispare. |
@@ -102,7 +102,7 @@ Este documento aplica sobre dos entidades distintas, según el requerimiento.
 
 RF-01 aplica sobre el **registro de configuración del catálogo "Datos Personales"** y sobre el **subticket de baja de personal** que ese registro produce. Para el registro de configuración, el **estatus inicial** es Activo desde su alta y su **estatus terminal** es Baja, cuando el negocio decide que ese subticket deje de generarse. Para el subticket, el estatus inicial es el estatus con el que nacen los subtickets de baja de personal (En Proceso) y el terminal es Finalizado o Cancelado, conforme al flujo de tickets internos ya existente. La marca "No requiere validación" no cambia esos estatus: cambia únicamente si el subticket llega a existir y qué exige el sistema para llevarlo al estatus terminal.
 
-Los requerimientos RF-02 a RF-07 aplican sobre el **activo de cómputo** que quedó en resguardo en sitio como consecuencia de la baja de un colaborador, y producen como resultado un **ticket interno de cómputo** con motivo "Recolección por Resguardo", que se genera **uno por colaborador dado de baja**, nace en estatus En Proceso y reúne en su detalle todos los activos que ese colaborador tenía asignados antes de su baja.
+Los requerimientos RF-02 a RF-07 aplican sobre el **activo de cómputo** que quedó en resguardo en sitio como consecuencia de la baja de un colaborador, y producen como resultado un **ticket interno de cómputo** con motivo "Recolección por Resguardo", que se genera **uno por colaborador dado de baja**, nace en estatus En Proceso y reúne en su diagnóstico todos los activos que ese colaborador tenía asignados antes de su baja.
 
 Para el activo, el **estatus inicial** que activa este proceso es **Resguardo en Sitio**, acompañado de dos fechas que definen la vigencia del resguardo: la **fecha de resguardo**, que marca el inicio, y la **fecha de fin de vigencia**, que marca el límite. Ambas se registran en el activo en el momento en que entra en resguardo: la primera con la fecha del día y la segunda sumándole los días de vigencia configurados. El proceso descrito termina cuando el activo sale de ese estatus, ya sea porque se reasignó a un nuevo colaborador (**Asignado**) o porque entró al proceso de recolección (**En Recolección**) derivado del ticket generado.
 
@@ -669,15 +669,15 @@ La fecha de fin de vigencia que produce este requerimiento es el único dato con
 
 ## Objetivo
 
-Garantizar que ningún activo se quede en resguardo en sitio más allá del periodo de vigencia autorizado, creando de manera automática y desatendida **un ticket de recolección por cada colaborador dado de baja**, que nace en estatus **En Proceso** y reúne en su detalle todos los activos que ese colaborador tenía asignados antes de su baja, asignado al personal y departamento responsables de ejecutar la recolección.
+Garantizar que ningún activo se quede en resguardo en sitio más allá del periodo de vigencia autorizado, creando de manera automática y desatendida **un ticket de recolección por cada colaborador dado de baja**, que nace en estatus **En Proceso** y reúne en su **diagnóstico** todos los activos que ese colaborador tenía asignados antes de su baja, asignado al personal y departamento responsables de ejecutar la recolección.
 
 ## Descripción
 
 El sistema deberá contar con un proceso automático (job) que se ejecute periódicamente y que, cuando se agota el periodo de vigencia del resguardo de un colaborador dado de baja, cree un **ticket interno** identificado con el motivo **"Recolección por Resguardo"** y lo asigne al responsable del departamento encargado de las recolecciones que el sistema ya tiene definido.
 
-El ticket se genera **por colaborador, no por activo**: un solo ticket reúne en su detalle **todos los activos que ese colaborador tenía asignados antes de su baja**, no únicamente los que quedaron en resguardo en sitio. La razón es que el resguardo nace de la baja de una persona y se resuelve por persona —cuando llega el reemplazo se le entrega el equipo completo—, de modo que la recolección se coordina una sola vez con el custodio en lugar de abrir un ticket por cada pieza. Por la misma razón el ticket agrupa todos los activos del colaborador aunque estén en centros de trabajo distintos.
+El ticket se genera **por colaborador, no por activo**: un solo ticket registra en su **diagnóstico** todos los activos que ese colaborador tenía asignados antes de su baja, no únicamente los que quedaron en resguardo en sitio. La razón es que el resguardo nace de la baja de una persona y se resuelve por persona —cuando llega el reemplazo se le entrega el equipo completo—, de modo que la recolección se coordina una sola vez con el custodio en lugar de abrir un ticket por cada pieza. Por la misma razón el ticket agrupa todos los activos del colaborador aunque estén en centros de trabajo distintos.
 
-Lo que **detona** el ticket sigue siendo el vencimiento del periodo de vigencia del resguardo; lo que cambia es la amplitud de su **detalle**. Cada renglón muestra el estatus vigente del activo, de modo que el responsable de recolecciones tenga a la vista el inventario completo de la persona —qué sigue en resguardo y debe recuperar, y qué ya salió por recolección o por reasignación— sin reconstruirlo desde el expediente del colaborador ni consultar activo por activo.
+Lo que **detona** el ticket sigue siendo el vencimiento del periodo de vigencia del resguardo; lo que cambia es la amplitud de su **diagnóstico**: los activos se registran en ese apartado del ticket interno, con un renglón por activo. Cada renglón muestra el estatus vigente del activo, de modo que el responsable de recolecciones tenga a la vista el inventario completo de la persona —qué sigue en resguardo y debe recuperar, y qué ya salió por recolección o por reasignación— sin reconstruirlo desde el expediente del colaborador ni consultar activo por activo.
 
 El ticket nace en estatus **En Proceso**, con estatus interno Recibido: llega a la bandeja del responsable de recolecciones listo para atenderse, sin pasar por ningún estatus previo de borrador, de autorización o de revisión.
 
@@ -692,7 +692,7 @@ El ticket nace **a nombre de quien autorizó el resguardo en sitio**: esa person
 | Departamento del solicitante | Sí | Departamento de quien autorizó el resguardo. |
 | Centro de trabajo del solicitante | Sí | Centro de trabajo de quien autorizó el resguardo. |
 | Colaborador dado de baja | Sí | Colaborador que tenía asignados los activos antes de la baja; es el criterio con el que se agrupa el ticket. |
-| Detalle de activos | Sí | Un renglón por cada activo que el colaborador tenía asignado antes de su baja, con etiqueta de activo, número de serie, descripción, estatus vigente del activo, centro de trabajo donde se encuentra, personal que lo resguarda, fecha de resguardo y fecha de fin de vigencia. |
+| Diagnóstico (activos del colaborador) | Sí | Un renglón en el diagnóstico del ticket por cada activo que el colaborador tenía asignado antes de su baja, con etiqueta de activo, número de serie, descripción, estatus vigente del activo, centro de trabajo donde se encuentra, personal que lo resguarda, fecha de resguardo y fecha de fin de vigencia. |
 | Personal asignado (responsable) | Sí | Responsable del departamento encargado de recolecciones ya definido en el sistema. |
 | Departamento | Sí | Departamento encargado de recolecciones ya definido en el sistema. |
 | Observaciones | Sí | Texto que indica que el ticket se generó automáticamente por vencimiento del resguardo en sitio, con la fecha de fin de vigencia que lo originó y la cantidad de activos incluidos. |
@@ -704,7 +704,7 @@ El proceso automático deberá, en cada ejecución:
 - Identificar los colaboradores con activos en resguardo cuyo periodo de vigencia ya venció.
 - Reunir, para cada uno de esos colaboradores, todos los activos que tenía asignados antes de su baja, con el estatus que cada uno tenga en ese momento.
 - Verificar que no exista ya un ticket vigente de "Recolección por Resguardo" para ese colaborador.
-- Crear el ticket con su detalle de activos, tomar del registro de autorización los datos del solicitante y asignarlo al responsable de recolecciones.
+- Crear el ticket registrando sus activos en el diagnóstico, tomar del registro de autorización los datos del solicitante y asignarlo al responsable de recolecciones.
 - Registrar el resultado de la ejecución, incluyendo los colaboradores y activos procesados y los omitidos con su razón.
 
 ---
@@ -717,17 +717,17 @@ Como responsable de recolecciones, quiero que el sistema genere y me asigne auto
 
 **RN-4.1** El proceso automático deberá ejecutarse de forma desatendida al menos una vez al día, sin intervención de ninguna persona.
 
-**RN-4.2** Para **detonar** el ticket se considerarán únicamente los activos cuyo estatus vigente sea **Resguardo en Sitio**, con fecha de resguardo válida y con **fecha de fin de vigencia registrada**. La integración del detalle del ticket es más amplia y se rige por RN-4.4.
+**RN-4.2** Para **detonar** el ticket se considerarán únicamente los activos cuyo estatus vigente sea **Resguardo en Sitio**, con fecha de resguardo válida y con **fecha de fin de vigencia registrada**. La integración del diagnóstico del ticket es más amplia y se rige por RN-4.4.
 
 **RN-4.3** El ticket se generará **por colaborador dado de baja**: el proceso agrupa por colaborador todos los activos que tenía asignados antes de su baja y crea un único ticket para el conjunto, sin importar el centro de trabajo en el que se encuentre físicamente cada activo.
 
-**RN-4.4** El ticket de un colaborador se creará cuando la **más próxima de las fechas de fin de vigencia** de sus activos en resguardo sea igual o anterior a la fecha del servidor, y deberá incluir en su detalle **todos los activos que ese colaborador tenía asignados antes de su baja**, no únicamente los que siguen en resguardo ni únicamente los vencidos. Cada renglón deberá mostrar el **estatus vigente** del activo, de modo que el responsable distinga los que debe recolectar de los que ya salieron del resguardo por recolección o por reasignación. Ningún activo del colaborador queda fuera del ticket.
+**RN-4.4** El ticket de un colaborador se creará cuando la **más próxima de las fechas de fin de vigencia** de sus activos en resguardo sea igual o anterior a la fecha del servidor, y deberá registrar en su **diagnóstico** todos los activos que ese colaborador tenía asignados antes de su baja, no únicamente los que siguen en resguardo ni únicamente los vencidos. Cada renglón deberá mostrar el **estatus vigente** del activo, de modo que el responsable distinga los que debe recolectar de los que ya salieron del resguardo por recolección o por reasignación. Ningún activo del colaborador queda fuera del ticket.
 
 **RN-4.5** El ticket nacerá a nombre de **quien autorizó el resguardo en sitio**: su personal, su departamento y su centro de trabajo son los datos del solicitante. Se asignará al responsable del departamento encargado de recolecciones y llevará el motivo "Recolección por Resguardo", ambos ya existentes en el sistema.
 
 **RN-4.6** No podrá existir más de un ticket vigente de "Recolección por Resguardo" para el mismo colaborador: si ya existe uno en proceso, el sistema no creará otro, sin importar cuántas veces se ejecute el proceso ni cuántos activos de ese colaborador venzan después.
 
-**RN-4.7** Si el ticket de "Recolección por Resguardo" previo de un colaborador fue cancelado y este conserva activos en estatus Resguardo en Sitio con el periodo de vigencia vencido, el sistema deberá generar un nuevo ticket en la siguiente ejecución, con los activos que sigan en resguardo en ese momento.
+**RN-4.7** Si el ticket de "Recolección por Resguardo" previo de un colaborador fue cancelado y este conserva activos en estatus Resguardo en Sitio con el periodo de vigencia vencido, el sistema deberá generar un nuevo ticket en la siguiente ejecución, cuyo diagnóstico se integra conforme a RN-4.4: todos los activos que el colaborador tenía asignados antes de su baja, con el estatus vigente de cada uno.
 
 **RN-4.8** Si el departamento encargado de recolecciones no está configurado, está inactivo o no tiene responsable asignado, el proceso no creará el ticket para ningún colaborador, registrará el error en la bitácora técnica y deberá volver a intentarlo en la siguiente ejecución.
 
@@ -745,7 +745,7 @@ Como responsable de recolecciones, quiero que el sistema genere y me asigne auto
 
 **RN-4.15** Mientras todos los activos en resguardo de un colaborador tengan una fecha de fin de vigencia posterior a la fecha del servidor, el proceso no creará ticket para ese colaborador. Conforme a RN-5.5, una extensión mueve la fecha de todos los activos del colaborador a la vez, de modo que aplaza el ticket completo y no deja activos sueltos que puedan detonarlo antes de tiempo.
 
-**RN-4.16** Los activos en resguardo que **no tengan registrada la fecha de fin de vigencia** —los que ya estaban en resguardo antes de la puesta en marcha de esta funcionalidad— no se considerarán para **detonar** el ticket; su recolección se gestiona de forma manual con la funcionalidad ya existente. Cuando el colaborador tenga además activos que sí detonen el ticket, esos activos aparecerán en el **detalle** con su estatus vigente, conforme a RN-4.4, para que el responsable tenga a la vista el inventario completo de la persona.
+**RN-4.16** Los activos en resguardo que **no tengan registrada la fecha de fin de vigencia** —los que ya estaban en resguardo antes de la puesta en marcha de esta funcionalidad— no se considerarán para **detonar** el ticket; su recolección se gestiona de forma manual con la funcionalidad ya existente. Cuando el colaborador tenga además activos que sí detonen el ticket, esos activos aparecerán en el **diagnóstico** con su estatus vigente, conforme a RN-4.4, para que el responsable tenga a la vista el inventario completo de la persona.
 
 **RN-4.17** Las observaciones del ticket deberán indicar la fecha de fin de vigencia que originó la recolección, la cantidad de activos incluidos y, cuando el resguardo tuvo extensiones, señalar que la fecha fue extendida.
 
@@ -756,27 +756,27 @@ Como responsable de recolecciones, quiero que el sistema genere y me asigne auto
 **CA-4.1.1 — Creación de un ticket único por colaborador al vencer el periodo de vigencia**
 Dado un colaborador dado de baja con tres activos en estatus Resguardo en Sitio, con fecha de resguardo del 1 de septiembre y un periodo de vigencia de 15 días
 Cuando el proceso automático se ejecuta el 16 de septiembre
-Entonces el sistema crea un único ticket interno con motivo "Recolección por Resguardo" que incluye en su detalle todos los activos que el colaborador tenía asignados antes de su baja, lo asigna al responsable del departamento encargado de recolecciones y lo deja en estatus **En Proceso** con estatus interno Recibido.
+Entonces el sistema crea un único ticket interno con motivo "Recolección por Resguardo" que registra en su diagnóstico todos los activos que el colaborador tenía asignados antes de su baja, lo asigna al responsable del departamento encargado de recolecciones y lo deja en estatus **En Proceso** con estatus interno Recibido.
 
 **CA-4.1.2 — El ticket nace a nombre de quien autorizó el resguardo**
 Dado un colaborador cuyo resguardo en sitio fue autorizado por una persona registrada en el registro de autorización
 Cuando el sistema crea el ticket de "Recolección por Resguardo"
 Entonces el solicitante del ticket es esa persona, con su departamento y su centro de trabajo, y el ticket queda asignado al responsable de recolecciones definido en el sistema.
 
-**CA-4.1.3 — Detalle de activos del ticket**
+**CA-4.1.3 — Diagnóstico con los activos del colaborador**
 Dado que el sistema creó el ticket de "Recolección por Resguardo" de un colaborador que antes de su baja tenía cuatro activos asignados, de los cuales tres siguen en resguardo y uno ya se había recolectado
 Cuando el responsable asignado lo consulta
-Entonces visualiza el colaborador dado de baja y un renglón por cada uno de los cuatro activos con su etiqueta, número de serie, descripción, estatus vigente, centro de trabajo, personal que lo resguarda, fecha de resguardo y fecha de fin de vigencia, además de la observación de que el ticket se generó automáticamente por vencimiento del resguardo, con la fecha que lo originó y la cantidad de activos incluidos.
+Entonces visualiza el colaborador dado de baja y, en el diagnóstico del ticket, un renglón por cada uno de los cuatro activos con su etiqueta, número de serie, descripción, estatus vigente, centro de trabajo, personal que lo resguarda, fecha de resguardo y fecha de fin de vigencia, además de la observación de que el ticket se generó automáticamente por vencimiento del resguardo, con la fecha que lo originó y la cantidad de activos incluidos.
 
 **CA-4.1.4 — Ningún activo del colaborador queda fuera del ticket**
 Dado un colaborador que antes de su baja tenía tres activos asignados, que entraron en resguardo en momentos distintos y de los cuales solo uno alcanzó su fecha de fin de vigencia
 Cuando el proceso automático se ejecuta ese día
-Entonces el ticket creado incluye los tres activos en su detalle, no únicamente el que venció.
+Entonces el ticket creado incluye los tres activos en su diagnóstico, no únicamente el que venció.
 
 **CA-4.1.5 — Activos en centros de trabajo distintos**
 Dado un colaborador con dos activos en resguardo ubicados en centros de trabajo distintos
 Cuando el proceso automático crea el ticket
-Entonces genera un único ticket con ambos activos y el detalle indica el centro de trabajo de cada uno.
+Entonces genera un único ticket con ambos activos y el diagnóstico indica el centro de trabajo de cada uno.
 
 **CA-4.1.6 — No se crea el ticket antes del vencimiento**
 Dado un colaborador cuyos activos en resguardo tienen fecha de fin de vigencia el 16 de septiembre
@@ -791,7 +791,7 @@ Entonces el sistema no crea un segundo ticket para ese colaborador.
 **CA-4.1.8 — Regeneración tras la cancelación del ticket**
 Dado un colaborador que conserva activos en estatus Resguardo en Sitio con el periodo de vigencia vencido y cuyo ticket de "Recolección por Resguardo" fue cancelado
 Cuando el proceso automático se ejecuta
-Entonces el sistema crea un nuevo ticket de "Recolección por Resguardo" con los activos que siguen en resguardo.
+Entonces el sistema crea un nuevo ticket de "Recolección por Resguardo" cuyo diagnóstico vuelve a incluir todos los activos que el colaborador tenía asignados antes de su baja, con el estatus vigente de cada uno.
 
 **CA-4.1.9 — Interrupción por reasignación de los equipos**
 Dado un colaborador cuyos activos en resguardo vencían el 16 de septiembre y que el 12 de septiembre se reasignan a un nuevo colaborador, quedando en estatus Asignado
@@ -801,7 +801,7 @@ Entonces el sistema no crea ningún ticket de "Recolección por Resguardo" para 
 **CA-4.1.10 — Reasignación parcial de los equipos**
 Dado un colaborador con tres activos en resguardo, de los cuales uno se reasigna a un nuevo colaborador antes del vencimiento
 Cuando el proceso automático crea el ticket al vencer el resguardo
-Entonces el ticket incluye únicamente los dos activos que siguen en estatus Resguardo en Sitio.
+Entonces el diagnóstico del ticket incluye los tres activos: los dos que siguen en estatus Resguardo en Sitio y el reasignado con su estatus vigente Asignado, y la recolección física se ejecuta únicamente sobre los dos primeros.
 
 **CA-4.1.11 — Departamento de recolecciones mal configurado**
 Dado que el departamento encargado de recolecciones no está configurado o no tiene responsable asignado
@@ -1384,7 +1384,7 @@ Esta columna es un dato derivado, no una fuente: no almacena nada ni modifica el
 
 **SUP-14** La autorización del resguardo en sitio la otorga **una sola persona**: la relación entre resguardo y autorizador es 1 a 1. Sobre ese supuesto se define que el ticket nace a nombre del autorizador (RN-4.5). Si el negocio habilita más adelante varios autorizadores, deberá definirse cuál de ellos figura como solicitante.
 
-**SUP-15** El ticket interno de cómputo admite un **detalle de varios activos**; este requerimiento utiliza esa capacidad, no la crea. Debe validarse con el equipo de desarrollo antes de implementar, porque de ella depende que el ticket se genere por colaborador y no por activo.
+**SUP-15** El **diagnóstico** del ticket interno de cómputo admite **varios activos**; este requerimiento utiliza esa capacidad, no la crea. Debe validarse con el equipo de desarrollo antes de implementar, porque de ella depende que el ticket se genere por colaborador y no por activo.
 
 **SUP-16** El mecanismo que genera el ticket principal de baja de personal y un subticket por cada registro activo del catálogo "Datos Personales" ya opera en producción. RF-01 agrega registros de configuración y el campo "No requiere validación"; del mecanismo solo modifica el punto en que decide si el subticket procede, para que respete esa marca. No cambia la periodicidad con la que se ejecuta.
 
@@ -1406,7 +1406,9 @@ Esta columna es un dato derivado, no una fuente: no almacena nada ni modifica el
 
 **SUP-25** El bloque **LISTADO** del asunto se captura con un `{ }` por renglón, y cada `{ }` es un **parámetro** que el sistema llena al generar el subticket con los datos configurados en "datos que se transcriben al subticket". Ese llenado incluye **todos** los registros que encuentre en el apartado del expediente —por eso un subticket puede mostrar varios activos con IP, varios nombres de equipo o varios usuarios de directorio activo— y la leyenda **NA** cuando no encuentre ninguno, conforme a RN-1.21 y RN-1.22. La etiqueta de cada renglón es el nombre del dato configurado, de modo que los datos deberán capturarse con el nombre exacto con el que existen en el apartado para que el listado se lea como lo definió el negocio. Se asume que el parámetro del renglón de IP puede resolver **nombre del activo y dirección IP** de cada activo, que es lo que el negocio requiere; si el catálogo solo admitiera el valor de un campo, esa composición deberá confirmarse con el equipo de desarrollo junto con la correspondencia de apartados de SUP-18.
 
-**SUP-26** El detalle del ticket de recolección puede contener activos que ya no están en estatus Resguardo en Sitio —porque se recolectaron o se reasignaron antes de que el plazo venciera—, ya que su propósito es mostrar el inventario completo del colaborador conforme a RN-4.4. Esos renglones son informativos: la recolección física se ejecuta sobre los activos que siguen en resguardo, y el ticket no cambia el estatus de ninguno (RN-4.10). Debe validarse con el equipo de desarrollo que el detalle del ticket interno admita activos en cualquier estatus, del mismo modo que SUP-15 valida que admita varios activos.
+**SUP-26** El diagnóstico del ticket de recolección puede contener activos que ya no están en estatus Resguardo en Sitio —porque se recolectaron o se reasignaron antes de que el plazo venciera—, ya que su propósito es mostrar el inventario completo del colaborador conforme a RN-4.4. Esos renglones son informativos: la recolección física se ejecuta sobre los activos que siguen en resguardo, y el ticket no cambia el estatus de ninguno (RN-4.10). Debe validarse con el equipo de desarrollo que el diagnóstico del ticket interno admita activos en cualquier estatus, del mismo modo que SUP-15 valida que admita varios activos.
+
+**SUP-27** El **diagnóstico** del ticket de recolección lo escribe el proceso automático al crear el ticket, sin captura de un técnico: el job registra ahí un renglón por activo con los datos de RN-4.4. Debe validarse con el equipo de desarrollo que el diagnóstico pueda generarse de forma desatendida y sin exigir una causa de recolección por renglón, dado que este ticket no diagnostica el equipo, sino que lista el inventario del colaborador que debe recuperarse.
 
 ## Dependencias
 
@@ -1444,7 +1446,7 @@ Esta columna es un dato derivado, no una fuente: no almacena nada ni modifica el
 
 **RGO-06** Los resguardos históricos que quedan fuera del proceso por no tener fecha de fin de vigencia podrían no recolectarse nunca si nadie los atiende manualmente. *Mitigación:* generar un listado de esos activos al momento de la puesta en marcha y acordar con el área de Cómputo su recolección o su regularización por la vía manual.
 
-**RGO-07** Un colaborador con activos en varios centros de trabajo genera un solo ticket que obliga a coordinar la recolección en más de una ubicación. *Mitigación:* el detalle del ticket indica el centro de trabajo y el custodio de cada activo, de modo que el responsable puede planear las visitas; si la operación lo demanda, el negocio puede evaluar después la separación por centro de trabajo.
+**RGO-07** Un colaborador con activos en varios centros de trabajo genera un solo ticket que obliga a coordinar la recolección en más de una ubicación. *Mitigación:* el diagnóstico del ticket indica el centro de trabajo y el custodio de cada activo, de modo que el responsable puede planear las visitas; si la operación lo demanda, el negocio puede evaluar después la separación por centro de trabajo.
 
 **RGO-08** Los resguardos sin autorizador registrado no generarán ticket y podrían quedar sin recolectar de forma indefinida. *Mitigación:* RN-4.9 obliga a registrar el motivo en la bitácora técnica y a reintentar en cada corrida; conviene revisar ese registro al poner en marcha la funcionalidad y depurar los resguardos sin autorización.
 
@@ -1698,7 +1700,7 @@ Entonces las fechas registradas corresponden al resguardo del 1 de octubre y la 
 Verifica: CA-4.1.1 · RN-4.3 · RN-4.4
 Dado un colaborador dado de baja con tres activos en estatus Resguardo en Sitio, fecha de resguardo del 1 de septiembre y fecha de fin de vigencia del 16 de septiembre
 Cuando el proceso automático se ejecuta el 16 de septiembre
-Entonces el sistema crea un único ticket interno con motivo "Recolección por Resguardo" que incluye en su detalle todos los activos que el colaborador tenía asignados antes de su baja, lo asigna al responsable del departamento encargado de recolecciones y lo deja en estatus En Proceso con estatus interno Recibido.
+Entonces el sistema crea un único ticket interno con motivo "Recolección por Resguardo" que registra en su diagnóstico todos los activos que el colaborador tenía asignados antes de su baja, lo asigna al responsable del departamento encargado de recolecciones y lo deja en estatus En Proceso con estatus interno Recibido.
 
 **CP-039 — Creación del ticket cuando el vencimiento ya pasó (escenario alternativo)**
 Verifica: CA-4.1.1 · RN-4.4
@@ -1710,7 +1712,7 @@ Entonces el sistema crea el ticket de "Recolección por Resguardo", porque la co
 Verifica: CA-4.1.1 · RN-4.3
 Dado un colaborador con un único activo en estatus Resguardo en Sitio y el periodo de vigencia vencido
 Cuando el proceso automático se ejecuta
-Entonces crea un ticket con ese único activo en su detalle, con la misma estructura que un ticket de varios activos.
+Entonces crea un ticket con ese único activo en su diagnóstico, con la misma estructura que un ticket de varios activos.
 
 **CP-041 — El solicitante del ticket es quien autorizó el resguardo (camino feliz)**
 Verifica: CA-4.1.2 · RN-4.5
@@ -1718,23 +1720,23 @@ Dado un colaborador cuyo resguardo en sitio fue autorizado por una persona regis
 Cuando el sistema crea el ticket de "Recolección por Resguardo"
 Entonces el solicitante del ticket es esa persona, con su departamento y su centro de trabajo, y el ticket queda asignado al responsable de recolecciones definido en el sistema.
 
-**CP-042 — Detalle completo de los activos del ticket (camino feliz)**
+**CP-042 — Diagnóstico completo con los activos del colaborador (camino feliz)**
 Verifica: CA-4.1.3 · RN-4.4, RN-4.17
 Dado que el sistema creó el ticket de "Recolección por Resguardo" de un colaborador que antes de su baja tenía cuatro activos asignados, de los cuales tres siguen en resguardo y uno ya se había recolectado
 Cuando el responsable asignado lo consulta
-Entonces visualiza el colaborador dado de baja y un renglón por cada uno de los cuatro activos con etiqueta, número de serie, descripción, estatus vigente, centro de trabajo, personal que lo resguarda, fecha de resguardo y fecha de fin de vigencia, además de la observación de que el ticket se generó automáticamente por vencimiento del resguardo, con la fecha que lo originó y la cantidad de activos incluidos.
+Entonces visualiza el colaborador dado de baja y, en el diagnóstico del ticket, un renglón por cada uno de los cuatro activos con etiqueta, número de serie, descripción, estatus vigente, centro de trabajo, personal que lo resguarda, fecha de resguardo y fecha de fin de vigencia, además de la observación de que el ticket se generó automáticamente por vencimiento del resguardo, con la fecha que lo originó y la cantidad de activos incluidos.
 
 **CP-043 — Ningún activo del colaborador queda fuera del ticket (escenario alternativo)**
 Verifica: CA-4.1.4 · RN-4.4
 Dado un colaborador que antes de su baja tenía tres activos asignados, que entraron en resguardo en momentos distintos y con fechas de fin de vigencia del 16, 20 y 25 de septiembre
 Cuando el proceso automático se ejecuta el 16 de septiembre
-Entonces el ticket creado incluye los tres activos en su detalle, no únicamente el que venció ese día.
+Entonces el ticket creado incluye los tres activos en su diagnóstico, no únicamente el que venció ese día.
 
 **CP-044 — Activos del colaborador en centros de trabajo distintos (escenario alternativo)**
 Verifica: CA-4.1.5 · RN-4.3
 Dado un colaborador con dos activos en resguardo ubicados en centros de trabajo distintos y con el periodo de vigencia vencido
 Cuando el proceso automático se ejecuta
-Entonces genera un único ticket con ambos activos y el detalle indica el centro de trabajo de cada uno.
+Entonces genera un único ticket con ambos activos y el diagnóstico indica el centro de trabajo de cada uno.
 
 **CP-045 — No se crea el ticket antes del vencimiento (escenario alternativo)**
 Verifica: CA-4.1.6 · RN-4.4
@@ -1758,13 +1760,13 @@ Entonces tampoco crea un ticket adicional, porque ya existe un ticket vigente pa
 Verifica: CA-4.1.7 · RN-4.6
 Dado un colaborador con un ticket vigente de "Recolección por Resguardo" y un activo cuyo vencimiento se cumple días después
 Cuando el proceso automático se ejecuta en esa fecha posterior
-Entonces no crea un segundo ticket, porque ese activo ya estaba incluido en el detalle del ticket vigente.
+Entonces no crea un segundo ticket, porque ese activo ya estaba incluido en el diagnóstico del ticket vigente.
 
 **CP-049 — Regeneración del ticket tras su cancelación (escenario alternativo)**
 Verifica: CA-4.1.8 · RN-4.7
 Dado un colaborador que conserva dos activos en estatus Resguardo en Sitio con el periodo de vigencia vencido y cuyo ticket de "Recolección por Resguardo" fue cancelado
 Cuando el proceso automático se ejecuta
-Entonces crea un nuevo ticket de "Recolección por Resguardo" con los dos activos que siguen en resguardo.
+Entonces crea un nuevo ticket de "Recolección por Resguardo" cuyo diagnóstico incluye todos los activos que el colaborador tenía asignados antes de su baja, con el estatus vigente de cada uno.
 
 **CP-050 — Interrupción por reasignación de todos los equipos (escenario alternativo)**
 Verifica: CA-4.1.9 · RN-4.2
@@ -1776,7 +1778,7 @@ Entonces el sistema no crea ningún ticket de "Recolección por Resguardo" para 
 Verifica: CA-4.1.10 · RN-4.4
 Dado un colaborador con tres activos en resguardo, de los cuales uno se reasigna a un nuevo colaborador antes del vencimiento
 Cuando el proceso automático crea el ticket al vencer el resguardo
-Entonces el ticket incluye únicamente los dos activos que siguen en estatus Resguardo en Sitio.
+Entonces el diagnóstico del ticket incluye los tres activos: los dos que siguen en estatus Resguardo en Sitio y el reasignado con su estatus vigente Asignado.
 
 **CP-052 — Departamento de recolecciones mal configurado (escenario de error)**
 Verifica: CA-4.1.11 · RN-4.8
@@ -1848,13 +1850,13 @@ Entonces no crea ningún ticket de recolección para ese colaborador y su recole
 Verifica: CA-4.1.19 · RN-4.16
 Dado un colaborador con dos activos en resguardo, uno sin fecha de fin de vigencia registrada y otro con esa fecha ya vencida
 Cuando el proceso automático crea el ticket
-Entonces lo detona únicamente el activo con fecha de fin de vigencia vencida, y el activo sin esa fecha aparece de todos modos en el detalle con su estatus vigente, conforme a RN-4.4.
+Entonces lo detona únicamente el activo con fecha de fin de vigencia vencida, y el activo sin esa fecha aparece de todos modos en el diagnóstico con su estatus vigente, conforme a RN-4.4.
 
 **CP-064 — Colaborador en resguardo sin fecha de resguardo válida (escenario de error)**
 Verifica: CA-4.1.19 · RN-4.2
 Dado un activo en estatus Resguardo en Sitio cuya fecha de resguardo está vacía
 Cuando el proceso automático se ejecuta
-Entonces ese activo no se considera ni para detonar el ticket ni para integrar su detalle, y su omisión queda registrada en la bitácora técnica.
+Entonces ese activo no se considera ni para detonar el ticket ni para integrar su diagnóstico, y su omisión queda registrada en la bitácora técnica.
 
 **CP-065 — Ejecución desatendida del proceso (camino feliz)**
 Verifica: CA-4.1.1 · RN-4.1
@@ -2318,7 +2320,7 @@ Los casos que dependen de la ejecución del proceso automático de tickets por b
 
 ## Preguntas abiertas
 
-No quedan preguntas abiertas para el negocio: todos los puntos que estaban pendientes de definición fueron resueltos y se listan a continuación. Los supuestos que aún requieren validación técnica antes de implementar se señalan en la sección de Supuestos, en particular SUP-15 sobre el detalle de varios activos en el ticket interno.
+No quedan preguntas abiertas para el negocio: todos los puntos que estaban pendientes de definición fueron resueltos y se listan a continuación. Los supuestos que aún requieren validación técnica antes de implementar se señalan en la sección de Supuestos, en particular SUP-15 sobre el diagnóstico con varios activos en el ticket interno.
 
 ### Puntos resueltos por el negocio
 
@@ -2327,7 +2329,7 @@ No quedan preguntas abiertas para el negocio: todos los puntos que estaban pendi
 - **Validación de información en los subtickets nuevos:** no se exige, ni para generarlos ni para cerrarlos. Se agrega en el catálogo el campo **"No requiere validación"**, que se marca registro por registro: el subticket marcado se detona en toda baja sin evaluar el expediente del colaborador y se cierra sin reevaluarlo, porque su atención se ejecuta en herramientas externas a Business Suite (RN-1.13, RN-1.14). Los **dos** registros del arranque se dan de alta con la marca puesta (RN-1.11); los registros ya existentes quedan sin marcar y conservan la validación (RN-1.16), incluido el de baja de Directorio Activo, del que solo se ajusta el mensaje.
 - **Prórroga formal:** no se requiere. Se implementa únicamente la opción de extender la vigencia del resguardo (RF-05), sin flujo de solicitud ni autorización.
 - **Mecanismo de la extensión:** la nueva vigencia se define **seleccionando una fecha en un calendario**, no capturando una cantidad de días, porque el negocio razona el resguardo contra una fecha concreta. El calendario solo habilita fechas que efectivamente extienden el plazo: quedan deshabilitadas las anteriores o iguales a la fecha de fin de vigencia vigente —la que resultó de los días configurados en la variable de sistema— y las anteriores al día actual, de modo que una extensión no pueda acortar la vigencia ni dejarla en el pasado (RN-5.2, RN-5.6).
-- **Agrupación del ticket de recolección:** se genera **un ticket por colaborador dado de baja**, en estatus En Proceso y con el detalle de todos los activos que ese colaborador tenía asignados antes de su baja —no solo los que siguen en resguardo—, sin separar por centro de trabajo (RN-4.3, RN-4.4, RN-4.18).
+- **Agrupación del ticket de recolección:** se genera **un ticket por colaborador dado de baja**, en estatus En Proceso y con todos los activos que ese colaborador tenía asignados antes de su baja registrados en su diagnóstico —no solo los que siguen en resguardo—, sin separar por centro de trabajo (RN-4.3, RN-4.4, RN-4.18).
 - **Solicitante del ticket:** el ticket nace a nombre de **quien autorizó el resguardo en sitio**, con su departamento y su centro de trabajo, porque el colaborador dado de baja queda en estatus Cancelado y no puede figurar como solicitante (RN-4.5). La autorización del resguardo la otorga una sola persona (SUP-14).
 - **Alcance de la extensión:** extender la vigencia aplica a **todos los activos en resguardo del colaborador**, no a un activo suelto, para que el plazo quede alineado con el ticket único que genera RF-04 (RN-5.5, RN-5.6).
 - **Permiso de extensión:** basta con que el permiso sea **configurable** desde la administración de roles y permisos (RN-5.13). El documento no fija qué roles lo reciben: esa asignación es una decisión operativa que el negocio ajusta sin modificar el requerimiento.
