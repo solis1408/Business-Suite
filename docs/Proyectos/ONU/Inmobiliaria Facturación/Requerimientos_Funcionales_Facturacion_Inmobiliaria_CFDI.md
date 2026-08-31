@@ -2,8 +2,8 @@
 
 | Campo   | Valor        |
 |---------|--------------|
-| Versión | 1.1          |
-| Fecha   | 2026-08-27   |
+| Versión | 1.2          |
+| Fecha   | 2026-08-31   |
 | Estado  | Definición   |
 | Módulo  | Facturación Inmobiliaria — Gestión de CFDIs (Factura, Nota de Crédito, Abono, Anticipo) |
 | Autor   | Análisis de Negocio |
@@ -23,13 +23,13 @@ El documento describe los siguientes requerimientos funcionales, agrupados prime
 - **RF-04** — Emisión de Nota de Crédito.
 
 **Cancelación**
-- **RF-05** — Cancelación general de CFDI (motivo, observaciones y periodo fiscal).
+- **RF-05** — Cancelación general de CFDI (información obligatoria diferenciada: Fiscal vs. No Fiscal).
 - **RF-06** — Cancelación de CFDI emitido para sustitución.
 - **RF-07** — Exclusión del motivo "Global" en cancelación de Abonos y Anticipos.
-- **RF-08** — Cancelación de Factura.
-- **RF-09** — Cancelación de Abono.
-- **RF-10** — Cancelación de Anticipo.
-- **RF-11** — Cancelación de Nota de Crédito.
+- **RF-08** — Cancelación de Factura fiscal.
+- **RF-09** — Cancelación de Abono fiscal.
+- **RF-10** — Cancelación de Anticipo fiscal.
+- **RF-11** — Cancelación de Nota de Crédito fiscal.
 
 ## 2. Alcance del documento
 
@@ -62,6 +62,7 @@ El documento describe los siguientes requerimientos funcionales, agrupados prime
 | Término / Sigla | Definición |
 |-----------------|------------|
 | CFDI | Comprobante Fiscal Digital por Internet. En este documento incluye Factura, Nota de Crédito (NC), Abono y Anticipo. |
+| CFDI Fiscal | Comprobante que ya fue Timbrado ante el SAT y cuenta con folio fiscal y UUID asignado. Se distingue de un documento interno (p. ej. Nota de Crédito Interna o Interplanta) que no ha sido enviado al SAT y por tanto no constituye un comprobante fiscal cancelable ante dicha autoridad. |
 | Timbrado | Proceso mediante el cual el CFDI recibe validez fiscal ante el SAT. |
 | Estatus Timbrado | Atributo del CFDI que indica si está Pendiente o ya fue Timbrado. |
 | Buzón Tributario | Estatus del CFDI que indica que se encuentra en trámite de revisión/atención ante autoridad fiscal; en dicho estatus el CFDI no es cancelable. |
@@ -110,13 +111,13 @@ El diagrama aplica de forma general a los cuatro tipos de CFDI; el sub-estatus *
 | [RF-02](#rf-02) | Emisión de CFDI por sustitución | Facturación Inmobiliaria | Factura, NC, Abono, Anticipo |
 | [RF-03](#rf-03) | Emisión de CFDI en diferentes monedas y tipo de cambio | Facturación Inmobiliaria | Factura, NC, Abono, Anticipo |
 | [RF-04](#rf-04) | Emisión de Nota de Crédito | Facturación Inmobiliaria | Nota de Crédito |
-| [RF-05](#rf-05) | Cancelación general de CFDI (motivo, observaciones y periodo fiscal) | Facturación Inmobiliaria | Factura, NC, Abono, Anticipo |
+| [RF-05](#rf-05) | Cancelación general de CFDI (información obligatoria diferenciada: Fiscal vs. No Fiscal) | Facturación Inmobiliaria | Factura, NC, Abono, Anticipo |
 | [RF-06](#rf-06) | Cancelación de CFDI emitido para sustitución | Facturación Inmobiliaria | Factura, NC, Abono, Anticipo |
 | [RF-07](#rf-07) | Exclusión del motivo "Global" en cancelación de Abonos y Anticipos | Facturación Inmobiliaria | Abono, Anticipo |
-| [RF-08](#rf-08) | Cancelación de Factura | Facturación Inmobiliaria | Factura |
-| [RF-09](#rf-09) | Cancelación de Abono | Facturación Inmobiliaria | Abono |
-| [RF-10](#rf-10) | Cancelación de Anticipo | Facturación Inmobiliaria | Anticipo |
-| [RF-11](#rf-11) | Cancelación de Nota de Crédito | Facturación Inmobiliaria | Nota de Crédito |
+| [RF-08](#rf-08) | Cancelación de Factura fiscal | Facturación Inmobiliaria | Factura (fiscal, Timbrada) |
+| [RF-09](#rf-09) | Cancelación de Abono fiscal | Facturación Inmobiliaria | Abono (fiscal, Timbrado) |
+| [RF-10](#rf-10) | Cancelación de Anticipo fiscal | Facturación Inmobiliaria | Anticipo (fiscal, Timbrado) |
+| [RF-11](#rf-11) | Cancelación de Nota de Crédito fiscal | Facturación Inmobiliaria | Nota de Crédito (tipo Fiscal) |
 
 ## 7. Reglas de Negocio — Vista General
 
@@ -168,7 +169,7 @@ El diagrama aplica de forma general a los cuatro tipos de CFDI; el sub-estatus *
 
 | RN | Regla | RF |
 |----|-------|----|
-| RN-8.1 | Toda cancelación de CFDI requiere capturar motivo y observaciones antes de confirmar la operación. | 
+| RN-8.1 | Toda cancelación de CFDI requiere capturar Observaciones; si la cancelación es de tipo Fiscal, además requiere Motivo de cancelación y Periodo fiscal. | 
 | RN-8.2 | Podrán cancelarse CFDIs de meses anteriores si corresponden a un periodo o ejercicio fiscal no cerrado ni declarado. | 
 | RN-8.3 | La opción de cancelar el timbre está deshabilitada en la interfaz de Factura; sólo el job automático puede ejecutarla. | 
 | RN-9.1 | El CFDI no podrá cancelarse si su estatus es "Buzón Tributario" o "Cancelado". | 
@@ -435,7 +436,7 @@ Este requerimiento se relaciona con RF-11 (Cancelación de Factura): la cancelac
 ---
 
 <a id="rf-05"></a>
-# RF-05 — Cancelación general de CFDI (motivo, observaciones y periodo fiscal)
+# RF-05 — Cancelación general de CFDI (información obligatoria diferenciada: Fiscal vs. No Fiscal)
 
 | Campo        | Valor       |
 |--------------|-------------|
@@ -444,54 +445,65 @@ Este requerimiento se relaciona con RF-11 (Cancelación de Factura): la cancelac
 | Dependencias | RF-09       |
 
 ## Objetivo
-Permitir la cancelación de Facturas, Notas de Crédito, Abonos y Anticipos que cumplan con las condiciones fiscales y de captura establecidas.
+Asegurar que, al cancelar un CFDI, el sistema solicite como obligatoria la información correcta según el tipo de cancelación —Fiscal o No Fiscal—, evitando tanto la falta de datos fiscales requeridos como la solicitud de datos innecesarios en cancelaciones no fiscales.
 
 ## Descripción
-El sistema deberá permitir solicitar la cancelación de Facturas, Notas de Crédito, Abonos y Anticipos que correspondan a un periodo o ejercicio fiscal no cerrado ni declarado, exigiendo la captura de motivo y observaciones antes de confirmar la operación. La cancelación del timbre no estará disponible desde la interfaz de Factura; sólo el proceso automático podrá ejecutarla.
+El sistema deberá diferenciar la información obligatoria a capturar al cancelar un CFDI (Factura, Nota de Crédito, Abono o Anticipo) según el tipo de cancelación:
 
-## HU-5.1 — Cancelar CFDI con motivo, observaciones y validación de periodo fiscal
+- Si la cancelación es de tipo **Fiscal**, el sistema exigirá capturar **Motivo de cancelación**, **Observaciones**.
+- Si la cancelación **no** es de tipo Fiscal, el sistema únicamente exigirá capturar **Observaciones**.
 
-Como usuario responsable de la gestión y administración de CFDIs, quiero solicitar la cancelación de Facturas, Notas de Crédito, Abonos y Anticipos, para corregir o cancelar comprobantes fiscales que cumplan con las condiciones establecidas para su cancelación.
+En ambos casos, la cancelación sólo podrá confirmarse una vez capturada la información obligatoria correspondiente a su tipo.
+
+## HU-5.1 — Cancelar CFDI capturando la información obligatoria según el tipo de cancelación
+
+Como usuario responsable de la gestión y administración de CFDIs, quiero que el sistema me solicite únicamente la información obligatoria correspondiente al tipo de cancelación —Fiscal o No Fiscal— del CFDI que estoy cancelando, para completar la cancelación con los datos que el negocio exige en cada caso, sin capturar información innecesaria.
 
 ### Reglas de negocio
 
-**RN-5.1** Toda cancelación de CFDI (Factura, Nota de Crédito, Abono o Anticipo) requiere capturar el motivo de cancelación y las observaciones antes de confirmar la operación.
+**RN-5.1** Cuando la cancelación del CFDI sea de tipo **Fiscal**, el sistema deberá exigir como obligatorios los siguientes datos antes de permitir confirmar la operación: Motivo de cancelación, Observaciones.
 
-**RN-5.2** Podrán cancelarse CFDIs de meses anteriores siempre que correspondan a un periodo o ejercicio fiscal no cerrado ni declarado.
+**RN-5.2** Cuando la cancelación del CFDI **no** sea de tipo Fiscal, el sistema únicamente exigirá como obligatorio el dato de Observaciones; no deberá solicitar Motivo de cancelación.
 
-**RN-5.3** La opción de cancelar el timbre está deshabilitada en la interfaz de Factura; únicamente el job automático puede ejecutar esa cancelación.
+**RN-5.3** Para cancelaciones de tipo Fiscal, podrán cancelarse CFDIs de meses anteriores siempre que el Periodo fiscal capturado corresponda a un periodo o ejercicio fiscal no cerrado ni declarado.
+
 
 ### Criterios de Aceptación
 
-**CA-5.1.1 — Cancelación con motivo y observaciones completos**
-Dado que el usuario captura el motivo de cancelación y las observaciones requeridas
-Cuando confirma la cancelación de un CFDI de un periodo fiscal no cerrado
-Entonces el sistema ejecuta la cancelación y registra el motivo y las observaciones capturadas.
+**CA-5.1.1 — Cancelación Fiscal con información completa**
+Dado que el usuario cancela un CFDI de tipo Fiscal y captura Motivo de cancelación, Observaciones
+Cuando confirma la cancelación
+Entonces el sistema ejecuta la cancelación y registra el motivo, las observaciones capturados.
 
-**CA-5.1.2 — Bloqueo por falta de motivo u observaciones**
-Dado que el usuario intenta confirmar la cancelación sin capturar el motivo o las observaciones
+**CA-5.1.2 — Bloqueo por información fiscal incompleta**
+Dado que el usuario intenta cancelar un CFDI de tipo Fiscal sin capturar el Motivo de cancelación, las Observaciones o el Periodo fiscal
 Cuando presiona confirmar
-Entonces el sistema impide la operación y solicita completar la información obligatoria.
+Entonces el sistema impide la operación y le solicita completar el dato o datos obligatorios faltantes.
 
-**CA-5.1.3 — Bloqueo por periodo fiscal cerrado**
-Dado que el CFDI corresponde a un periodo o ejercicio fiscal ya cerrado o declarado
+**CA-5.1.3 — Cancelación No Fiscal únicamente con Observaciones**
+Dado que el usuario cancela un CFDI que no es de tipo Fiscal y captura las Observaciones correspondientes
+Cuando confirma la cancelación
+Entonces el sistema ejecuta la cancelación sin solicitar Motivo de cancelación ni Periodo fiscal, y registra únicamente las observaciones capturadas.
+
+**CA-5.1.4 — Bloqueo por falta de Observaciones en cancelación No Fiscal**
+Dado que el usuario intenta cancelar un CFDI que no es de tipo Fiscal sin capturar Observaciones
+Cuando presiona confirmar
+Entonces el sistema impide la operación y le solicita capturar las Observaciones.
+
+**CA-5.1.5 — Bloqueo por Periodo fiscal cerrado (cancelación Fiscal)**
+Dado que el CFDI de tipo Fiscal corresponde a un periodo o ejercicio fiscal ya cerrado o declarado
 Cuando el usuario intenta cancelarlo
 Entonces el sistema impide la cancelación e informa que el periodo se encuentra cerrado.
-
-**CA-5.1.4 — Cancelación de timbre restringida al proceso automático**
-Dado que un usuario intenta cancelar el timbre de una Factura desde la interfaz
-Cuando busca la opción correspondiente
-Entonces el sistema no la muestra disponible, dado que esta acción sólo puede ejecutarla el job automático.
 
 ---
 
 **Regla transversal:**
-Este requerimiento es la base de las cancelaciones específicas por tipo de documento (RF-11 Factura, RF-12 Abono, RF-13 Anticipo, RF-14 Nota de Crédito): la validación de periodo fiscal y la captura de motivo/observaciones aplica a todas ellas.
+Este requerimiento es la base de las cancelaciones específicas por tipo de documento (RF-08 Factura, RF-09 Abono, RF-10 Anticipo, RF-11 Nota de Crédito): la diferenciación entre información obligatoria Fiscal (motivo, observaciones y periodo fiscal) y No Fiscal (sólo observaciones) aplica a todas ellas.
 
 [⬆ Volver al índice](#6-índice-de-requerimientos)
 
 <a id="rf-06"></a>
-# RF-06 — Cancelación de CFDI emitido para sustitución
+# RF-06 — Cancelación de CFDI fiscal emitido para sustitución
 
 | Campo        | Valor       |
 |--------------|-------------|
@@ -584,7 +596,7 @@ Entonces el sistema impide la ejecución de la cancelación e informa que el mot
 [⬆ Volver al índice](#6-índice-de-requerimientos)
 
 <a id="rf-08"></a>
-# RF-08 — Cancelación de Factura
+# RF-08 — Cancelación de Factura fiscal
 
 | Campo        | Valor       |
 |--------------|-------------|
@@ -593,14 +605,14 @@ Entonces el sistema impide la ejecución de la cancelación e informa que el mot
 | Dependencias | RF-08, RF-14 |
 
 ## Objetivo
-Controlar las condiciones y el número de intentos permitidos para la cancelación de una Factura.
+Controlar las condiciones y el número de intentos permitidos para la cancelación de una Factura fiscal.
 
 ## Descripción
-El sistema deberá permitir cancelar una Factura únicamente cuando no tenga una Nota de Crédito relacionada activa, limitando a 3 los intentos de cancelación; al tercer intento la Factura pasará a estatus Rechazado y deberá esperarse 24 horas antes de un nuevo intento.
+El sistema deberá permitir cancelar una Factura únicamente cuando no tenga una Nota de Crédito relacionada activa, limitando a 3 los intentos de cancelación; al tercer intento la Factura pasará a estatus Rechazado y deberá esperarse 24 horas antes de un nuevo intento. Estas reglas aplican cuando la Factura a cancelar es **fiscal**, es decir, se encuentra Timbrada ante el SAT (con folio fiscal y UUID asignado); la cancelación de una Factura aún Pendiente de timbrar se rige por RN-1.2 y no por este requerimiento.
 
-## HU-8.1 — Cancelar Factura respetando el límite de intentos
+## HU-8.1 — Cancelar Factura fiscal respetando el límite de intentos
 
-Como usuario responsable de la gestión de CFDIs, quiero cancelar una Factura que cumpla con las condiciones establecidas, para corregir comprobantes emitidos por error respetando el control de intentos definido.
+Como usuario responsable de la gestión de CFDIs, quiero cancelar una Factura fiscal que cumpla con las condiciones establecidas, para corregir comprobantes emitidos por error respetando el control de intentos definido.
 
 ### Reglas de negocio
 
@@ -609,6 +621,8 @@ Como usuario responsable de la gestión de CFDIs, quiero cancelar una Factura qu
 **RN-8.2** Se permite cancelar una Factura hasta 3 veces por defecto; al tercer intento cambia a estatus Rechazado, y en ese caso debe esperarse 24 horas antes de volver a intentarlo.
 
 **RN-8.3** La Factura podrá cancelarse únicamente con los motivos "01 - Errores con relación", "02 - Errores sin relación", "03 - No se llevó a cabo la operación" y "04 - Operación relacionada a una factura global".
+
+**RN-8.4** Las reglas de cancelación de Factura descritas en este requerimiento (RN-8.1 a RN-8.3) aplican únicamente cuando la Factura a cancelar es **fiscal**, es decir, se encuentra en estatus Timbrado (cuenta con folio fiscal y UUID asignado por el SAT). La cancelación de una Factura en estatus Pendiente de timbrar no se gestiona mediante este flujo, sino conforme a RN-1.2.
 
 ### Criterios de Aceptación
 
@@ -632,6 +646,11 @@ Dado que una Factura se encuentra en estatus Rechazado
 Cuando el usuario intenta cancelarla antes de que transcurran 24 horas desde el rechazo
 Entonces el sistema impide el intento e informa el tiempo de espera restante.
 
+**CA-8.1.5 — Factura no fiscal (Pendiente de timbrar)**
+Dado que la Factura a cancelar se encuentra en estatus Pendiente de timbrar (aún no es fiscal)
+Cuando el usuario intenta cancelarla mediante el flujo de cancelación de Factura descrito en este requerimiento
+Entonces el sistema no aplica este flujo, dado que únicamente aplica sobre Facturas fiscales (Timbradas); dicha Factura sólo puede cancelarse conforme a RN-1.2 por vencimiento del plazo de emisión.
+
 ---
 
 **Regla transversal:**
@@ -640,7 +659,7 @@ La cancelación de Factura depende de RF-14 (Cancelación de Nota de Crédito): 
 [⬆ Volver al índice](#6-índice-de-requerimientos)
 
 <a id="rf-09"></a>
-# RF-09 — Cancelación de Abono
+# RF-09 — Cancelación de Abono fiscal
 
 | Campo        | Valor       |
 |--------------|-------------|
@@ -649,18 +668,18 @@ La cancelación de Factura depende de RF-14 (Cancelación de Nota de Crédito): 
 | Dependencias | RF-08, RF-13 |
 
 ## Objetivo
-Controlar la cancelación de Abonos y su efecto en cascada sobre Anticipos y sobre la Parcialidad SAT de las Facturas afectadas.
+Controlar la cancelación de Abonos fiscales y su efecto en cascada sobre Anticipos y sobre la Parcialidad SAT de las Facturas afectadas.
 
 ## Descripción
-El sistema deberá permitir cancelar un Abono siempre que no se encuentre en estatus "Pendiente de timbrar", revirtiendo la Parcialidad SAT de las Facturas afectadas y cancelando en cascada cualquier Anticipo que dicho Abono haya generado.
+El sistema deberá permitir cancelar un Abono siempre que no se encuentre en estatus "Pendiente de timbrar", revirtiendo la Parcialidad SAT de las Facturas afectadas y cancelando en cascada cualquier Anticipo que dicho Abono haya generado. Es decir, estas reglas aplican cuando el Abono a cancelar es **fiscal** (ya Timbrado, con folio fiscal y UUID asignado por el SAT); un Abono Pendiente de timbrar no es cancelable por este flujo (ver RN-9.1).
 
-## HU-9.1 — Cancelar Abono con reversión de Parcialidad SAT
+## HU-9.1 — Cancelar Abono fiscal con reversión de Parcialidad SAT
 
 Como usuario responsable de la gestión de Abonos, quiero cancelar un Abono emitido, para corregir un pago registrado por error manteniendo consistente la información fiscal de las Facturas afectadas.
 
 ### Reglas de negocio
 
-**RN-9.1** El Abono no es cancelable si se encuentra en estatus "Pendiente de timbrar".
+**RN-9.1** El Abono no es cancelable si se encuentra en estatus "Pendiente de timbrar"; es decir, la cancelación de Abono descrita en este requerimiento aplica únicamente cuando el Abono a cancelar es **fiscal** (ya Timbrado, con folio fiscal y UUID asignado por el SAT).
 
 **RN-9.2** Cancelar un Abono que generó un Anticipo obliga a cancelar en cascada (interna o fiscalmente) dicho Anticipo.
 
@@ -675,10 +694,10 @@ Dado que el Abono se encuentra timbrado y el usuario captura un motivo válido (
 Cuando confirma la cancelación
 Entonces el sistema cancela el Abono, revierte la Parcialidad SAT de las Facturas afectadas y, si el Abono generó un Anticipo, cancela dicho Anticipo en cascada.
 
-**CA-9.1.2 — Bloqueo por estatus Pendiente de timbrar**
-Dado que el Abono se encuentra en estatus "Pendiente de timbrar"
+**CA-9.1.2 — Bloqueo por estatus Pendiente de timbrar (Abono no fiscal)**
+Dado que el Abono se encuentra en estatus "Pendiente de timbrar" (aún no es fiscal)
 Cuando el usuario intenta cancelarlo
-Entonces el sistema impide la cancelación.
+Entonces el sistema impide la cancelación, dado que este requerimiento aplica únicamente sobre Abonos fiscales (Timbrados).
 
 **CA-9.1.3 — Motivo no válido para Abono**
 Dado que el usuario intenta cancelar un Abono seleccionando un motivo distinto de "01", "02" o "03"
@@ -693,7 +712,7 @@ La cancelación de un Abono impacta directamente a RF-13 (Cancelación de Antici
 [⬆ Volver al índice](#6-índice-de-requerimientos)
 
 <a id="rf-10"></a>
-# RF-10 — Cancelación de Anticipo
+# RF-10 — Cancelación de Anticipo fiscal
 
 | Campo        | Valor       |
 |--------------|-------------|
@@ -702,18 +721,20 @@ La cancelación de un Abono impacta directamente a RF-13 (Cancelación de Antici
 | Dependencias | RF-08, RF-12 |
 
 ## Objetivo
-Permitir cancelar Anticipos capturados por error, utilizando únicamente los motivos válidos para este tipo de comprobante.
+Permitir cancelar Anticipos fiscales capturados por error, utilizando únicamente los motivos válidos para este tipo de comprobante.
 
 ## Descripción
-El sistema deberá permitir cancelar un Anticipo utilizando únicamente los motivos "01 - Errores con relación", "02 - Errores sin relación" y "03 - No se llevó a cabo la operación", conforme a las reglas de cancelación general definidas en RF-08.
+El sistema deberá permitir cancelar un Anticipo utilizando únicamente los motivos "01 - Errores con relación", "02 - Errores sin relación" y "03 - No se llevó a cabo la operación", conforme a las reglas de cancelación general definidas en RF-08. Estas reglas aplican cuando el Anticipo a cancelar es **fiscal**, es decir, se encuentra Timbrado ante el SAT (con folio fiscal y UUID asignado); un Anticipo en estatus Pendiente de timbrar no se cancela mediante este flujo.
 
-## HU-10.1 — Cancelar Anticipo con motivo válido
+## HU-10.1 — Cancelar Anticipo fiscal con motivo válido
 
-Como usuario responsable de la gestión de Anticipos, quiero cancelar un Anticipo emitido por error, para corregir el comprobante fiscal utilizando un motivo válido.
+Como usuario responsable de la gestión de Anticipos, quiero cancelar un Anticipo fiscal emitido por error, para corregir el comprobante fiscal utilizando un motivo válido.
 
 ### Reglas de negocio
 
 **RN-10.1** El Anticipo podrá cancelarse únicamente con los motivos "01 - Errores con relación", "02 - Errores sin relación" y "03 - No se llevó a cabo la operación".
+
+**RN-10.2** La cancelación de Anticipo descrita en este requerimiento aplica únicamente cuando el Anticipo a cancelar es **fiscal**, es decir, se encuentra en estatus Timbrado (cuenta con folio fiscal y UUID asignado por el SAT).
 
 ### Criterios de Aceptación
 
@@ -727,10 +748,15 @@ Dado que el usuario selecciona un motivo distinto a los permitidos para el Antic
 Cuando intenta confirmar la cancelación
 Entonces el sistema impide la operación e informa que el motivo no es válido.
 
+**CA-10.1.3 — Anticipo no fiscal (Pendiente de timbrar)**
+Dado que el Anticipo a cancelar se encuentra en estatus Pendiente de timbrar (aún no es fiscal)
+Cuando el usuario intenta cancelarlo mediante el flujo de cancelación de Anticipo descrito en este requerimiento
+Entonces el sistema impide la operación, dado que este requerimiento aplica únicamente sobre Anticipos fiscales (Timbrados).
+
 [⬆ Volver al índice](#6-índice-de-requerimientos)
 
 <a id="rf-11"></a>
-# RF-11 — Cancelación de Nota de Crédito
+# RF-11 — Cancelación de Nota de Crédito fiscal
 
 | Campo        | Valor       |
 |--------------|-------------|
@@ -739,23 +765,25 @@ Entonces el sistema impide la operación e informa que el motivo no es válido.
 | Dependencias | RF-08       |
 
 ## Objetivo
-Permitir cancelar Notas de Crédito emitidas por error, utilizando únicamente los motivos válidos para este tipo de comprobante.
+Permitir cancelar Notas de Crédito fiscales emitidas por error, utilizando únicamente los motivos válidos para este tipo de comprobante.
 
 ## Descripción
-El sistema deberá permitir cancelar una Nota de Crédito utilizando únicamente los motivos "01 - Errores con relación", "02 - Errores sin relación" y "03 - No se llevó a cabo la operación", conforme a las reglas de cancelación general definidas en RF-08.
+El sistema deberá permitir cancelar una Nota de Crédito utilizando únicamente los motivos "01 - Errores con relación", "02 - Errores sin relación" y "03 - No se llevó a cabo la operación", conforme a las reglas de cancelación general definidas en RF-08. Estas reglas aplican cuando la Nota de Crédito a cancelar es de tipo **Fiscal** (ya Timbrada ante el SAT, con folio fiscal y UUID asignado). No aplican a Notas de Crédito de tipo Interno o Interplanta, las cuales no constituyen un CFDI fiscal; en particular, la NC Interna se cancela de forma automática al clonarse como NC Fiscal (ver RN-4.1), y no mediante este flujo manual.
 
-## HU-11.1 — Cancelar Nota de Crédito con motivo válido
+## HU-11.1 — Cancelar Nota de Crédito fiscal con motivo válido
 
-Como usuario responsable de la gestión de Notas de Crédito, quiero cancelar una Nota de Crédito emitida por error, para corregir el comprobante fiscal utilizando un motivo válido.
+Como usuario responsable de la gestión de Notas de Crédito, quiero cancelar una Nota de Crédito fiscal emitida por error, para corregir el comprobante fiscal utilizando un motivo válido.
 
 ### Reglas de negocio
 
 **RN-11.1** La Nota de Crédito podrá cancelarse únicamente con los motivos "01 - Errores con relación", "02 - Errores sin relación" y "03 - No se llevó a cabo la operación".
 
+**RN-11.2** La cancelación de Nota de Crédito descrita en este requerimiento aplica únicamente cuando la Nota de Crédito a cancelar es de tipo **Fiscal** (Timbrada ante el SAT, con folio fiscal y UUID asignado). Las Notas de Crédito de tipo Interno o Interplanta no son CFDI fiscales y no se cancelan mediante este flujo; la NC Interna, en particular, se cancela automáticamente al aplicarse y clonarse como NC Fiscal, conforme a RN-4.1.
+
 ### Criterios de Aceptación
 
 **CA-11.1.1 — Cancelación de Nota de Crédito con motivo válido**
-Dado que el usuario captura un motivo de cancelación válido ("01", "02" o "03") para una Nota de Crédito
+Dado que el usuario captura un motivo de cancelación válido ("01", "02" o "03") para una Nota de Crédito fiscal
 Cuando confirma la cancelación
 Entonces el sistema la cancela.
 
@@ -763,6 +791,11 @@ Entonces el sistema la cancela.
 Dado que el usuario selecciona un motivo distinto a los permitidos para la Nota de Crédito
 Cuando intenta confirmar la cancelación
 Entonces el sistema impide la operación e informa que el motivo no es válido.
+
+**CA-11.1.3 — Nota de Crédito no fiscal (Interna o Interplanta)**
+Dado que el documento a cancelar es una Nota de Crédito de tipo Interno o Interplanta (no fiscal)
+Cuando el usuario intenta cancelarla mediante el flujo de cancelación de Nota de Crédito fiscal descrito en este requerimiento
+Entonces el sistema no aplica este flujo, dado que dicho documento no constituye un CFDI fiscal; en el caso de la NC Interna, su cancelación ocurre automáticamente al clonarse como NC Fiscal conforme a RN-4.1.
 
 [⬆ Volver al índice](#6-índice-de-requerimientos)
 
