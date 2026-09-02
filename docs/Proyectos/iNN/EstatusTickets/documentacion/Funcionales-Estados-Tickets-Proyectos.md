@@ -65,15 +65,15 @@ Registrar y versionar los requerimientos funcionales de la reestructura de estad
 | [RF-12](#rf-12--adecuación-del-wizard-de-registro-de-ticket-o-solicitud-de-servicio) | Adecuación del wizard de registro de Ticket o Solicitud de Servicio | Monitor CAU | BSuite | Completado | Falcón |
 | [RF-13](#rf-13--registro-automático-de-autorización-al-generar-ticket-o-solicitud-de-servicio) | Registro automático de autorización al generar Ticket o Solicitud de Servicio | Monitor CAU | BSuite | Completado | Falcón |
 | [RF-14](#rf-14--cancelación-del-servicio-desde-el-wizard) | Cancelación del Servicio desde el wizard | Monitor CAU | BSuite | Completado | Falcón |
-| [RF-15](#rf-15--transición-del-ticket-a-proceso-con-la-persona-asignada-del-wizard-y-su-historial-de-asignaciones) | Transición del Ticket a "Proceso" con la Persona Asignada del wizard y su historial de asignaciones | Monitor CAU | BSuite | En Proceso | Jiri |
-| [RF-16](#rf-16--alta-del-estado-ing-traslado) | Alta del Estado "Ing. Traslado" | Catálogos | BSuite | Definición | |
-| [RF-17](#rf-17--transición-del-ticket-a-ing-traslado-y-su-reverso-a-en-proceso) | Transición del Ticket a "Ing. Traslado" y su reverso a "En Proceso" | Monitor CAU | BSuite | Definición | |
-| [RF-18](#rf-18--alta-del-estado-en-espera-del-usuario) | Alta del Estado "En Espera del Usuario" | Catálogos | BSuite | Definición | |
-| [RF-19](#rf-19--transición-del-ticket-a-en-espera-del-usuario-y-su-reverso-a-en-proceso) | Transición del Ticket a "En Espera del Usuario" y su reverso a "En Proceso" | Monitor CAU | BSuite | Definición | |
-| [RF-20](#rf-20--alta-del-estado-en-validación) | Alta del Estado "En Validación" | Catálogos | BSuite | Definición | |
-| [RF-21](#rf-21--transición-del-ticket-a-en-validación-al-cerrarse-un-servicio-que-la-requiere) | Transición del Ticket a "En Validación" al cerrarse un servicio que la requiere | Monitor CAU | BSuite | Definición | |
-| [RF-22](#rf-22--alta-del-estado-autorización-financiera) | Alta del Estado "Autorización Financiera" | Catálogos | BSuite | Definición | |
-| [RF-23](#rf-23--autorización-financiera-del-ticket-a-partir-de-compras-registradas-en-sus-diagnósticos) | Autorización Financiera del Ticket a partir de compras registradas en sus Diagnósticos | Monitor CAU | BSuite | Definición | |
+| [RF-15](#rf-15--transición-del-ticket-a-proceso-con-la-persona-asignada-del-wizard-y-su-historial-de-asignaciones) | Transición del Ticket a "Proceso" con la Persona Asignada del wizard y su historial de asignaciones | Monitor CAU | BSuite/InnoVapp | En Proceso | Jiri |
+| [RF-16](#rf-16--alta-del-estado-ing-traslado) | Alta del Estado "Ing. Traslado" | Catálogos | BSuite | En Proceso | Jiri |
+| [RF-17](#rf-17--transición-del-ticket-a-ing-traslado-y-su-reverso-a-en-proceso) | Transición del Ticket a "Ing. Traslado" y su reverso a "En Proceso" | Monitor CAU | BSuite/InnoVapp | En Proceso | Jiri/Bueno |
+| [RF-18](#rf-18--alta-del-estado-en-espera-del-usuario) | Alta del Estado "En Espera del Usuario" | Catálogos | BSuite | En Proceso | Jiri |
+| [RF-19](#rf-19--transición-del-ticket-a-en-espera-del-usuario-y-su-reverso-a-en-proceso) | Transición del Ticket a "En Espera del Usuario" y su reverso a "En Proceso" | Monitor CAU | BSuite/InnoVapp | En Proceso | Jiri/Bueno |
+| [RF-20](#rf-20--alta-del-estado-en-validación) | Alta del Estado "En Validación" | Catálogos | BSuite | En Proceso | Jiri |
+| [RF-21](#rf-21--transición-del-ticket-a-en-validación-al-cerrarse-un-servicio-que-la-requiere) | Transición del Ticket a "En Validación" al cerrarse un servicio que la requiere | Monitor CAU | BSuite/InnoVapp | En Proceso | Jiri/Bueno |
+| [RF-22](#rf-22--alta-del-estado-autorización-financiera) | Alta del Estado "Autorización Financiera" | Catálogos | BSuite | En Proceso | Jiri |
+| [RF-23](#rf-23--autorización-financiera-del-ticket-a-partir-de-compras-registradas-en-sus-diagnósticos) | Autorización Financiera del Ticket a partir de compras registradas en sus Diagnósticos | Monitor CAU | BSuite | En Proceso | Jiri |
 | [RF-24](#rf-24--job-para-finalizar-tickets-con-plazo-de-validación-vencido) | Job para finalizar Tickets con plazo de validación vencido | Monitor CAU | BSuite | Definición | |
 
 ---
@@ -83,6 +83,7 @@ Registrar y versionar los requerimientos funcionales de la reestructura de estad
 | Campo        | Valor      |
 | ------------ | ---------- |
 | Prioridad    | Alta       |
+| Plataforma   | BSuite     |
 | Asignado       | Falcón |
 | Dependencias | Ninguna    |
 
@@ -237,6 +238,7 @@ El catálogo de Grupos de Estados es prerrequisito de cualquier catálogo de est
 | Campo        | Valor      |
 | ------------ | ---------- |
 | Prioridad    | Alta       |
+| Plataforma   | BSuite     |
 | Asignado       | Falcón |
 | Dependencias | RF-01      |
 
@@ -416,6 +418,7 @@ Un Estado puede pertenecer, de forma opcional, a un Grupo de Estados (RF-01); cu
 | Campo        | Valor      |
 | ------------ | ---------- |
 | Prioridad    | Alta       |
+| Plataforma   | BSuite     |
 | Asignado       | Falcón |
 | Dependencias | Ninguna    |
 
@@ -579,6 +582,7 @@ El catálogo de Motivos de Cancelación es prerrequisito de cualquier acción de
 | Campo        | Valor      |
 | ------------ | ---------- |
 | Prioridad    | Alta       |
+| Plataforma   | BSuite     |
 | Asignado       | Falcón |
 | Dependencias | RF-02      |
 
@@ -649,6 +653,7 @@ Este RF depende del catálogo de Estados (RF-02), y de que el Grupo de Estados s
 | Campo          | Valor        |
 |----------------|--------------|
 | Prioridad      | Media        |
+| Plataforma     | BSuite       |
 | Asignado         | Jiri   |
 | Dependencias   | Ninguna      |
 
@@ -715,6 +720,7 @@ Este RF cubre únicamente el alta de datos en el catálogo de Servicios de Ticke
 | Campo          | Valor        |
 |----------------|--------------|
 | Prioridad      | Media        |
+| Plataforma     | BSuite       |
 | Asignado         | Jiri   |
 | Dependencias   | Ninguna      |
 
@@ -799,6 +805,7 @@ Este RF cubre únicamente el alta de datos en los catálogos de Servicios de Tic
 | Campo          | Valor        |
 |----------------|--------------|
 | Prioridad      | Alta         |
+| Plataforma     | BSuite       |
 | Asignado         | Falcón   |
 | Dependencias   | RF-02, RF-04 |
 
@@ -898,6 +905,7 @@ Este RF depende de que el catálogo de Estados esté completo y vigente (RF-02, 
 | Campo          | Valor        |
 |----------------|--------------|
 | Prioridad      | Alta         |
+| Plataforma     | BSuite       |
 | Asignado         | Falcón   |
 | Dependencias   | RF-07        |
 
@@ -941,6 +949,7 @@ Este RF depende de RF-07 (bitácora obligatoria relacionada al catálogo de Esta
 | Campo          | Valor        |
 |----------------|--------------|
 | Prioridad      | Alta         |
+| Plataforma     | BSuite       |
 | Asignado         | Falcón   |
 | Dependencias   | RF-02, RF-07 |
 
@@ -1005,6 +1014,7 @@ Este RF depende del catálogo de Estados (RF-02) y del mecanismo de bitácora ob
 | Campo          | Valor        |
 |----------------|--------------|
 | Prioridad      | Alta         |
+| Plataforma     | BSuite       |
 | Asignado         | Falcón   |
 | Dependencias   | RF-02, RF-07, RF-08 |
 
@@ -1069,6 +1079,7 @@ Este RF depende del catálogo de Estados (RF-02) para la configuración de "Inve
 | Campo          | Valor        |
 |----------------|--------------|
 | Prioridad      | Alta         |
+| Plataforma     | BSuite       |
 | Asignado         | Jiri   |
 | Dependencias   | RF-07, RF-10 |
 
@@ -1164,6 +1175,7 @@ Este RF depende de que el Servicio Cliente sincronice su propio Estatus con las 
 | Campo          | Valor        |
 |----------------|--------------|
 | Prioridad      | Alta         |
+| Plataforma     | BSuite       |
 | Asignado         | Falcón   |
 | Dependencias   | Ninguna      |
 
@@ -1256,6 +1268,7 @@ Este RF requiere que la Solicitud de Servicio de Equipo de Cómputo sustituya su
 | Campo          | Valor        |
 |----------------|--------------|
 | Prioridad      | Alta         |
+| Plataforma     | BSuite       |
 | Asignado         | Falcón   |
 | Dependencias   | RF-06, RF-07, RF-11 |
 
@@ -1360,6 +1373,7 @@ Este RF depende de RF-11 (las tarjetas "Requiere Autorización" y "En Autorizaci
 | Campo          | Valor        |
 |----------------|--------------|
 | Prioridad      | Alta         |
+| Plataforma     | BSuite       |
 | Asignado         | Falcón   |
 | Dependencias   | RF-02, RF-03, RF-07, RF-12 |
 
@@ -1458,6 +1472,7 @@ Este RF depende del catálogo de Motivos de Cancelación (RF-03) para el motivo 
 | Campo          | Valor        |
 |----------------|--------------|
 | Prioridad      | Alta         |
+| Plataforma     | BSuite/InnoVapp |
 | Asignado         | Jiri   |
 | Dependencias   | RF-07, RF-10, RF-12, RF-13 |
 
@@ -1605,7 +1620,8 @@ Este RF depende de RF-12 (captura de la Persona Asignada en el wizard, hoy sin c
 | Campo          | Valor        |
 |----------------|--------------|
 | Prioridad      | Alta         |
-| Asignado       |              |
+| Plataforma     | BSuite       |
+| Asignado       | Jiri         |
 | Dependencias   | RF-01, RF-02 |
 
 ## Objetivo
@@ -1659,7 +1675,8 @@ El Estado "Ing. Traslado" registrado por este RF es prerrequisito de la transici
 | Campo          | Valor        |
 |----------------|--------------|
 | Prioridad      | Alta         |
-| Asignado       |              |
+| Plataforma     | BSuite/InnoVapp |
+| Asignado       | Jiri/Bueno   |
 | Dependencias   | RF-07, RF-16 |
 
 ## Objetivo
@@ -1772,7 +1789,8 @@ Este RF depende de RF-16 (alta del Estado "Ing. Traslado") y de RF-07 (bitácora
 | Campo          | Valor        |
 |----------------|--------------|
 | Prioridad      | Alta         |
-| Asignado       |              |
+| Plataforma     | BSuite       |
+| Asignado       | Jiri         |
 | Dependencias   | RF-01, RF-02 |
 
 ## Objetivo
@@ -1826,7 +1844,8 @@ El Estado "En Espera del Usuario" registrado por este RF es prerrequisito de la 
 | Campo          | Valor        |
 |----------------|--------------|
 | Prioridad      | Alta         |
-| Asignado       |              |
+| Plataforma     | BSuite/InnoVapp |
+| Asignado       | Jiri/Bueno   |
 | Dependencias   | RF-07, RF-18 |
 
 ## Objetivo
@@ -1939,7 +1958,8 @@ Este RF depende de RF-18 (alta del Estado "En Espera del Usuario") y de RF-07 (b
 | Campo          | Valor        |
 |----------------|--------------|
 | Prioridad      | Alta         |
-| Asignado       |              |
+| Plataforma     | BSuite       |
+| Asignado       | Jiri         |
 | Dependencias   | RF-01, RF-02 |
 
 ## Objetivo
@@ -1993,7 +2013,8 @@ El Estado "En Validación" registrado por este RF es prerrequisito de la transic
 | Campo          | Valor        |
 |----------------|--------------|
 | Prioridad      | Alta         |
-| Asignado       |              |
+| Plataforma     | BSuite/InnoVapp |
+| Asignado       | Jiri/Bueno   |
 | Dependencias   | RF-05, RF-07, RF-20 |
 
 ## Objetivo
@@ -2068,7 +2089,8 @@ Este RF depende de RF-20 (alta del Estado "En Validación"), RF-05 (marca "Requi
 | Campo          | Valor        |
 |----------------|--------------|
 | Prioridad      | Alta         |
-| Asignado       |              |
+| Plataforma     | BSuite       |
+| Asignado       | Jiri         |
 | Dependencias   | RF-01, RF-02 |
 
 ## Objetivo
@@ -2122,7 +2144,8 @@ El Estado "Autorización Financiera" registrado por este RF es prerrequisito de 
 | Campo          | Valor        |
 |----------------|--------------|
 | Prioridad      | Alta         |
-| Asignado       |              |
+| Plataforma     | BSuite       |
+| Asignado       | Jiri         |
 | Dependencias   | RF-01, RF-02, RF-07, RF-22 |
 
 ## Objetivo
@@ -2246,6 +2269,7 @@ Este RF depende de RF-22 (alta del Estado "Autorización Financiera") y de RF-07
 | Campo          | Valor        |
 |----------------|--------------|
 | Prioridad      | Alta         |
+| Plataforma     | BSuite       |
 | Asignado       |              |
 | Dependencias   | RF-05, RF-07, RF-20, RF-21 |
 
