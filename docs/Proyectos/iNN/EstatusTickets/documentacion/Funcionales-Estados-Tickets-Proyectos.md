@@ -3,7 +3,7 @@
 | Campo    | Valor                                        |
 |----------|-----------------------------------------------|
 | Versión  | 1.0                                           |
-| Fecha    | 2026-08-18                                    |
+| Fecha    | 2026-08-19                                    |
 | Estado   | Validación funcional                          |
 | Módulo   | Tickets y Proyectos                            |
 
@@ -13,7 +13,7 @@
 
 | Versión | Fecha      | Descripción del cambio                                                      | Autor           |
 |---------|------------|-------------------------------------------------------------------------------|-----------------|
-| 1.0     | 2026-08-18 | Versión inicial del documento. | José Antonio Solis |
+| 1.0     | 2026-08-19 | Versión inicial del documento. | José Antonio Solis |
 
 ---
 
@@ -49,23 +49,32 @@ Registrar y versionar los requerimientos funcionales de la reestructura de estad
 
 ## 3. Índice de requerimientos
 
-| RF | Título | Grupo | Plataforma | Estatus | Asignado | Fecha estimada |
-|----|--------|-------|------------|---------|----------|-----------------|
-| [RF-01](#rf-01--administración-de-grupos-de-estados) | Administración de Grupos de Estados | Catálogos | BSuite | Completado | Falcón | N/A |
-| [RF-02](#rf-02--administración-de-estados) | Administración de Estados | Catálogos | BSuite | Completado | Falcón | N/A |
-| [RF-03](#rf-03--administración-de-motivos-de-cancelación) | Administración de Motivos de Cancelación | Catálogos | BSuite | Completado | Falcón | N/A |
-| [RF-04](#rf-04--importación-de-los-estados-existentes-al-catálogo) | Importación de los Estados existentes al catálogo | Catálogos | BSuite | Completado | Falcón | N/A |
-| [RF-05](#rf-05--marca-de-validación-en-el-catálogo-de-servicios-de-tickets) | Marca de Validación en el catálogo de Servicios de Tickets | Catálogos | BSuite | En Proceso | Jiri | N/A |
-| [RF-06](#rf-06--marca-de-autorización-en-los-catálogos-de-servicios) | Marca de Autorización en los catálogos de Servicios | Catálogos | BSuite | En Proceso | Jiri | N/A |
-| [RF-07](#rf-07--bitácora-obligatoria-del-servicio-cliente-relacionada-al-catálogo-de-estados) | Bitácora obligatoria del Servicio Cliente relacionada al catálogo de Estados (trigger de base de datos) | Servicio Cliente | BSuite | En Proceso | Falcón | N/A |
-| [RF-08](#rf-08--registro-del-servicio-con-estatus-registrado) | Registro del Servicio con Estatus Registrado | Servicio Cliente | BSuite | Completado | Falcón | N/A |
-| [RF-09](#rf-09--visualización-de-trayectoria-en-mis-tickets) | Visualización de Trayectoria en Mis Tickets | Servicio Cliente | BSuite | Completado | Falcón | N/A |
-| [RF-10](#rf-10--transición-de-registrado-a-investigación-cau-desde-monitor-cau) | Transición de Registrado a Investigación CAU desde Monitor CAU | Monitor CAU | BSuite | Completado | Falcón | N/A |
-| [RF-11](#rf-11--rediseño-de-tarjetas-del-monitor-cau) | Rediseño de tarjetas del Monitor CAU | Monitor CAU | BSuite | Completado | Jiri | N/A |
-| [RF-12](#rf-12--adecuación-del-wizard-de-registro-de-ticket-o-solicitud-de-servicio) | Adecuación del wizard de registro de Ticket o Solicitud de Servicio | Monitor CAU | BSuite | Completado | Falcón | N/A |
-| [RF-13](#rf-13--registro-automático-de-autorización-al-generar-ticket-o-solicitud-de-servicio) | Registro automático de autorización al generar Ticket o Solicitud de Servicio | Monitor CAU | BSuite | Completado | Falcón | N/A |
-| [RF-14](#rf-14--cancelación-del-servicio-desde-el-wizard) | Cancelación del Servicio desde el wizard | Monitor CAU | BSuite | Completado | Falcón | N/A |
-| [RF-15](#rf-15--transición-del-ticket-a-proceso-con-la-persona-asignada-del-wizard-y-su-historial-de-asignaciones) | Transición del Ticket a "Proceso" con la Persona Asignada del wizard y su historial de asignaciones | Monitor CAU | BSuite | En Proceso | Jiri | N/A |
+| RF | Título | Grupo | Plataforma | Estatus | Asignado |
+|----|--------|-------|------------|---------|----------|
+| [RF-01](#rf-01--administración-de-grupos-de-estados) | Administración de Grupos de Estados | Catálogos | BSuite | Completado | Falcón |
+| [RF-02](#rf-02--administración-de-estados) | Administración de Estados | Catálogos | BSuite | Completado | Falcón |
+| [RF-03](#rf-03--administración-de-motivos-de-cancelación) | Administración de Motivos de Cancelación | Catálogos | BSuite | Completado | Falcón |
+| [RF-04](#rf-04--importación-de-los-estados-existentes-al-catálogo) | Importación de los Estados existentes al catálogo | Catálogos | BSuite | Completado | Falcón |
+| [RF-05](#rf-05--marca-de-validación-en-el-catálogo-de-servicios-de-tickets) | Marca de Validación en el catálogo de Servicios de Tickets | Catálogos | BSuite | En Proceso | Jiri |
+| [RF-06](#rf-06--marca-de-autorización-en-los-catálogos-de-servicios) | Marca de Autorización en los catálogos de Servicios | Catálogos | BSuite | En Proceso | Jiri |
+| [RF-07](#rf-07--bitácora-obligatoria-del-servicio-cliente-relacionada-al-catálogo-de-estados) | Bitácora obligatoria del Servicio Cliente relacionada al catálogo de Estados (trigger de base de datos) | Servicio Cliente | BSuite | En Proceso | Falcón |
+| [RF-08](#rf-08--registro-del-servicio-con-estatus-registrado) | Registro del Servicio con Estatus Registrado | Servicio Cliente | BSuite | Completado | Falcón |
+| [RF-09](#rf-09--visualización-de-trayectoria-en-mis-tickets) | Visualización de Trayectoria en Mis Tickets | Servicio Cliente | BSuite | Completado | Falcón |
+| [RF-10](#rf-10--transición-de-registrado-a-investigación-cau-desde-monitor-cau) | Transición de Registrado a Investigación CAU desde Monitor CAU | Monitor CAU | BSuite | Completado | Falcón |
+| [RF-11](#rf-11--rediseño-de-tarjetas-del-monitor-cau) | Rediseño de tarjetas del Monitor CAU | Monitor CAU | BSuite | Completado | Jiri |
+| [RF-12](#rf-12--adecuación-del-wizard-de-registro-de-ticket-o-solicitud-de-servicio) | Adecuación del wizard de registro de Ticket o Solicitud de Servicio | Monitor CAU | BSuite | Completado | Falcón |
+| [RF-13](#rf-13--registro-automático-de-autorización-al-generar-ticket-o-solicitud-de-servicio) | Registro automático de autorización al generar Ticket o Solicitud de Servicio | Monitor CAU | BSuite | Completado | Falcón |
+| [RF-14](#rf-14--cancelación-del-servicio-desde-el-wizard) | Cancelación del Servicio desde el wizard | Monitor CAU | BSuite | Completado | Falcón |
+| [RF-15](#rf-15--transición-del-ticket-a-proceso-con-la-persona-asignada-del-wizard-y-su-historial-de-asignaciones) | Transición del Ticket a "Proceso" con la Persona Asignada del wizard y su historial de asignaciones | Monitor CAU | BSuite | En Proceso | Jiri |
+| [RF-16](#rf-16--alta-del-estado-ing-traslado) | Alta del Estado "Ing. Traslado" | Catálogos | BSuite | Definición | |
+| [RF-17](#rf-17--transición-del-ticket-a-ing-traslado-y-su-reverso-a-en-proceso) | Transición del Ticket a "Ing. Traslado" y su reverso a "En Proceso" | Monitor CAU | BSuite | Definición | |
+| [RF-18](#rf-18--alta-del-estado-en-espera-del-usuario) | Alta del Estado "En Espera del Usuario" | Catálogos | BSuite | Definición | |
+| [RF-19](#rf-19--transición-del-ticket-a-en-espera-del-usuario-y-su-reverso-a-en-proceso) | Transición del Ticket a "En Espera del Usuario" y su reverso a "En Proceso" | Monitor CAU | BSuite | Definición | |
+| [RF-20](#rf-20--alta-del-estado-en-validación) | Alta del Estado "En Validación" | Catálogos | BSuite | Definición | |
+| [RF-21](#rf-21--transición-del-ticket-a-en-validación-al-cerrarse-un-servicio-que-la-requiere) | Transición del Ticket a "En Validación" al cerrarse un servicio que la requiere | Monitor CAU | BSuite | Definición | |
+| [RF-22](#rf-22--alta-del-estado-autorización-financiera) | Alta del Estado "Autorización Financiera" | Catálogos | BSuite | Definición | |
+| [RF-23](#rf-23--autorización-financiera-del-ticket-a-partir-de-compras-registradas-en-sus-diagnósticos) | Autorización Financiera del Ticket a partir de compras registradas en sus Diagnósticos | Monitor CAU | BSuite | Definición | |
+| [RF-24](#rf-24--job-para-finalizar-tickets-con-plazo-de-validación-vencido) | Job para finalizar Tickets con plazo de validación vencido | Monitor CAU | BSuite | Definición | |
 
 ---
 
@@ -74,7 +83,7 @@ Registrar y versionar los requerimientos funcionales de la reestructura de estad
 | Campo        | Valor      |
 | ------------ | ---------- |
 | Prioridad    | Alta       |
-| Estado       | Definición |
+| Asignado       | Falcón |
 | Dependencias | Ninguna    |
 
 ## Objetivo
@@ -228,7 +237,7 @@ El catálogo de Grupos de Estados es prerrequisito de cualquier catálogo de est
 | Campo        | Valor      |
 | ------------ | ---------- |
 | Prioridad    | Alta       |
-| Estado       | Definición |
+| Asignado       | Falcón |
 | Dependencias | RF-01      |
 
 ## Objetivo
@@ -237,7 +246,7 @@ Administrar el catálogo de Estados que utilizan los procesos del sistema, homol
 
 ## Descripción
 
-El sistema permite registrar, consultar, editar, cancelar y reactivar Estados, con el mismo esquema administrativo de RF-01. El Grupo de Estados, el Mensaje corto, el Color y el Ícono son opcionales y sirven para reutilizar significado entre procesos e identificar visualmente al Estado en tarjetas y bitácoras.
+El sistema permite registrar, consultar, editar, cancelar y reactivar Estados, con el mismo esquema administrativo de RF-01. El Grupo de Estados, el Color y el Ícono son opcionales; el Mensaje corto es obligatorio. Todos sirven para reutilizar significado entre procesos e identificar visualmente al Estado en tarjetas y bitácoras.
 
 ---
 
@@ -253,22 +262,20 @@ Como administrador del sistema, quiero registrar nuevos Estados asociados a un G
 
 **RN-2.3** El Grupo de Estados es opcional; cuando se captura, deberá corresponder a un grupo con Estado del Registro = Activo (RF-01).
 
-**RN-2.4** La Descripción será obligatoria.
+**RN-2.4** El Mensaje corto será obligatorio.
 
-**RN-2.5** Todo estado se crea con Estado del Registro = Activo.
+**RN-2.5** El Color es opcional; cuando se captura, se utiliza para identificar visualmente al Estado en las tarjetas y bitácoras de los procesos que lo consumen.
 
-**RN-2.6** Todo alta, edición, cancelación o reactivación realizada en el catálogo de Estados deberá registrarse en la bitácora de auditoría.
+**RN-2.6** El Ícono es opcional; cuando se captura, se utiliza para identificar visualmente al Estado en las tarjetas y bitácoras de los procesos que lo consumen.
 
-**RN-2.7** El Mensaje corto es opcional.
+**RN-2.7** Todo estado se crea con Estado del Registro = Activo.
 
-**RN-2.20** El Color es opcional; cuando se captura, se utiliza para identificar visualmente al Estado en las tarjetas y bitácoras de los procesos que lo consumen.
-
-**RN-2.21** El Ícono es opcional; cuando se captura, se utiliza para identificar visualmente al Estado en las tarjetas y bitácoras de los procesos que lo consumen.
+**RN-2.8** Todo alta, edición, cancelación o reactivación realizada en el catálogo de Estados deberá registrarse en la bitácora de auditoría.
 
 ### Criterios de Aceptación
 
 **CA-2.1.1 — Registro exitoso**
-Dado que el administrador captura una Clave y un Nombre que no existen en el catálogo, junto con la Descripción
+Dado que el administrador captura una Clave y un Nombre que no existen en el catálogo, junto con el Mensaje corto
 Cuando seleccione Registrar
 Entonces el sistema creará el nuevo estado con Estado del Registro = Activo y lo dejará disponible para su consulta, con o sin Grupo de Estados asignado.
 
@@ -288,7 +295,7 @@ Cuando intente registrar el estado
 Entonces el sistema impedirá el registro e indicará que el Grupo de Estados seleccionado debe estar Activo.
 
 **CA-2.1.5 — Campos obligatorios**
-Dado que el administrador no captura la Clave, el Nombre o la Descripción
+Dado que el administrador no captura la Clave, el Nombre o el Mensaje corto
 Cuando intente registrar el estado
 Entonces el sistema impedirá el registro e indicará los campos obligatorios faltantes.
 
@@ -296,27 +303,25 @@ Entonces el sistema impedirá el registro e indicará los campos obligatorios fa
 
 ## US-2.2 — Edición de Estados
 
-Como administrador del sistema, quiero editar la información de un Estado existente, para corregir o actualizar su Nombre, Descripción, Mensaje corto, Color, Ícono o Grupo de Estados sin perder su identificador ni su historial.
+Como administrador del sistema, quiero editar la información de un Estado existente, para corregir o actualizar su Nombre, Mensaje corto, Color, Ícono o Grupo de Estados sin perder su identificador ni su historial.
 
 ### Reglas de negocio
 
-**RN-2.8** La Clave no podrá modificarse una vez creado el estado.
+**RN-2.9** La Clave no podrá modificarse una vez creado el estado.
 
-**RN-2.9** El Nombre podrá editarse siempre que el nuevo valor no coincida (sin distinguir mayúsculas/minúsculas ni espacios) con el de otro estado del catálogo.
+**RN-2.10** El Nombre podrá editarse siempre que el nuevo valor no coincida (sin distinguir mayúsculas/minúsculas ni espacios) con el de otro estado del catálogo.
 
-**RN-2.10** El Grupo de Estados podrá asignarse, reasignarse o retirarse (dejar el estado sin Grupo de Estados); cuando se asigne o reasigne, el grupo indicado deberá tener Estado del Registro = Activo.
+**RN-2.11** El Grupo de Estados podrá asignarse, reasignarse o retirarse (dejar el estado sin Grupo de Estados); cuando se asigne o reasigne, el grupo indicado deberá tener Estado del Registro = Activo.
 
-**RN-2.11** Un estado con Estado del Registro = Cancelado no podrá editarse; primero deberá reactivarse.
+**RN-2.12** Un estado con Estado del Registro = Cancelado no podrá editarse; primero deberá reactivarse.
 
-**RN-2.12** El Mensaje corto puede quedar vacío al editarlo, dado que es opcional.
-
-**RN-2.13** La Descripción no podrá quedar vacía al editarla, dado que es obligatoria.
+**RN-2.13** El Mensaje corto no podrá quedar vacío al editarlo, dado que es obligatorio.
 
 ### Criterios de Aceptación
 
 **CA-2.2.1 — Edición exitosa**
 Dado un estado activo existente
-Cuando el administrador modifique su Nombre, Descripción, Mensaje corto, Color, Ícono y/o Grupo de Estados con datos válidos
+Cuando el administrador modifique su Nombre, Mensaje corto, Color, Ícono y/o Grupo de Estados con datos válidos
 Entonces el sistema actualizará el registro conservando su Clave.
 
 **CA-2.2.2 — Nombre duplicado al editar**
@@ -411,7 +416,7 @@ Un Estado puede pertenecer, de forma opcional, a un Grupo de Estados (RF-01); cu
 | Campo        | Valor      |
 | ------------ | ---------- |
 | Prioridad    | Alta       |
-| Estado       | Definición |
+| Asignado       | Falcón |
 | Dependencias | Ninguna    |
 
 ## Objetivo
@@ -436,11 +441,11 @@ Como administrador del sistema, quiero registrar nuevos Motivos de Cancelación 
 
 **RN-3.3** La Descripción será obligatoria.
 
-**RN-3.4** Todo motivo se crea con Estado del Registro = Activo.
+**RN-3.4** El Motivo de Cancelación cuenta con un indicador "Requiere Especificar", opcional, con valor por defecto No; cuando está en Sí, señala que este motivo exige capturar un detalle adicional en texto libre al utilizarse en una cancelación (por ejemplo, un motivo "Otro").
 
-**RN-3.5** Todo alta, edición, cancelación o reactivación realizada en el catálogo deberá registrarse en la bitácora de auditoría.
+**RN-3.5** Todo motivo se crea con Estado del Registro = Activo.
 
-**RN-3.15** El Motivo de Cancelación cuenta con un indicador "Requiere Especificar", opcional, con valor por defecto No; cuando está en Sí, señala que este motivo exige capturar un detalle adicional en texto libre al utilizarse en una cancelación (por ejemplo, un motivo "Otro").
+**RN-3.6** Todo alta, edición, cancelación o reactivación realizada en el catálogo deberá registrarse en la bitácora de auditoría.
 
 ### Criterios de Aceptación
 
@@ -477,15 +482,15 @@ Como administrador del sistema, quiero editar la información de un Motivo de Ca
 
 ### Reglas de negocio
 
-**RN-3.6** La Clave no podrá modificarse una vez creado el motivo.
+**RN-3.7** La Clave no podrá modificarse una vez creado el motivo.
 
-**RN-3.7** El Nombre podrá editarse siempre que el nuevo valor no coincida (sin distinguir mayúsculas/minúsculas ni espacios) con el de otro motivo del catálogo.
+**RN-3.8** El Nombre podrá editarse siempre que el nuevo valor no coincida (sin distinguir mayúsculas/minúsculas ni espacios) con el de otro motivo del catálogo.
 
-**RN-3.8** Un motivo con Estado del Registro = Cancelado no podrá editarse; primero deberá reactivarse.
+**RN-3.9** Un motivo con Estado del Registro = Cancelado no podrá editarse; primero deberá reactivarse.
 
-**RN-3.9** La Descripción no podrá quedar vacía al editarla, dado que es obligatoria.
+**RN-3.10** La Descripción no podrá quedar vacía al editarla, dado que es obligatoria.
 
-**RN-3.16** El indicador "Requiere Especificar" podrá editarse en cualquier momento sobre un motivo Activo.
+**RN-3.11** El indicador "Requiere Especificar" podrá editarse en cualquier momento sobre un motivo Activo.
 
 ### Criterios de Aceptación
 
@@ -512,11 +517,11 @@ Como administrador del sistema, quiero cancelar un Motivo de Cancelación que ya
 
 ### Reglas de negocio
 
-**RN-3.10** La cancelación es lógica: el sistema no permitirá eliminar físicamente un motivo, únicamente cambiar su Estado del Registro a Cancelado.
+**RN-3.12** La cancelación es lógica: el sistema no permitirá eliminar físicamente un motivo, únicamente cambiar su Estado del Registro a Cancelado.
 
-**RN-3.11** La cancelación de un motivo no modifica ni elimina las cancelaciones de Servicio que ya lo tengan asignado.
+**RN-3.13** La cancelación de un motivo no modifica ni elimina las cancelaciones de Servicio que ya lo tengan asignado.
 
-**RN-3.12** Un motivo cancelado no podrá asignarse a nuevas cancelaciones de Servicio.
+**RN-3.14** Un motivo cancelado no podrá asignarse a nuevas cancelaciones de Servicio.
 
 ### Criterios de Aceptación
 
@@ -538,9 +543,9 @@ Como administrador del sistema, quiero reactivar un Motivo de Cancelación previ
 
 ### Reglas de negocio
 
-**RN-3.13** Un motivo solo podrá reactivarse si su Estado del Registro actual es Cancelado.
+**RN-3.15** Un motivo solo podrá reactivarse si su Estado del Registro actual es Cancelado.
 
-**RN-3.14** Un motivo podrá reactivarse únicamente si no existe otro motivo Activo con el mismo Nombre (sin distinguir mayúsculas/minúsculas ni espacios).
+**RN-3.16** Un motivo podrá reactivarse únicamente si no existe otro motivo Activo con el mismo Nombre (sin distinguir mayúsculas/minúsculas ni espacios).
 
 ### Criterios de Aceptación
 
@@ -574,7 +579,7 @@ El catálogo de Motivos de Cancelación es prerrequisito de cualquier acción de
 | Campo        | Valor      |
 | ------------ | ---------- |
 | Prioridad    | Alta       |
-| Estado       | Definición |
+| Asignado       | Falcón |
 | Dependencias | RF-02      |
 
 ## Objetivo
@@ -644,7 +649,7 @@ Este RF depende del catálogo de Estados (RF-02), y de que el Grupo de Estados s
 | Campo          | Valor        |
 |----------------|--------------|
 | Prioridad      | Media        |
-| Estado         | Definición   |
+| Asignado         | Jiri   |
 | Dependencias   | Ninguna      |
 
 ## Objetivo
@@ -710,7 +715,7 @@ Este RF cubre únicamente el alta de datos en el catálogo de Servicios de Ticke
 | Campo          | Valor        |
 |----------------|--------------|
 | Prioridad      | Media        |
-| Estado         | Definición   |
+| Asignado         | Jiri   |
 | Dependencias   | Ninguna      |
 
 ## Objetivo
@@ -794,7 +799,7 @@ Este RF cubre únicamente el alta de datos en los catálogos de Servicios de Tic
 | Campo          | Valor        |
 |----------------|--------------|
 | Prioridad      | Alta         |
-| Estado         | Definición   |
+| Asignado         | Falcón   |
 | Dependencias   | RF-02, RF-04 |
 
 ## Objetivo
@@ -893,7 +898,7 @@ Este RF depende de que el catálogo de Estados esté completo y vigente (RF-02, 
 | Campo          | Valor        |
 |----------------|--------------|
 | Prioridad      | Alta         |
-| Estado         | Definición   |
+| Asignado         | Falcón   |
 | Dependencias   | RF-07        |
 
 ## Objetivo
@@ -936,7 +941,7 @@ Este RF depende de RF-07 (bitácora obligatoria relacionada al catálogo de Esta
 | Campo          | Valor        |
 |----------------|--------------|
 | Prioridad      | Alta         |
-| Estado         | Definición   |
+| Asignado         | Falcón   |
 | Dependencias   | RF-02, RF-07 |
 
 ## Objetivo
@@ -1000,7 +1005,7 @@ Este RF depende del catálogo de Estados (RF-02) y del mecanismo de bitácora ob
 | Campo          | Valor        |
 |----------------|--------------|
 | Prioridad      | Alta         |
-| Estado         | Definición   |
+| Asignado         | Falcón   |
 | Dependencias   | RF-02, RF-07, RF-08 |
 
 ## Objetivo
@@ -1064,7 +1069,7 @@ Este RF depende del catálogo de Estados (RF-02) para la configuración de "Inve
 | Campo          | Valor        |
 |----------------|--------------|
 | Prioridad      | Alta         |
-| Estado         | Definición   |
+| Asignado         | Jiri   |
 | Dependencias   | RF-07, RF-10 |
 
 ## Objetivo
@@ -1159,7 +1164,7 @@ Este RF depende de que el Servicio Cliente sincronice su propio Estatus con las 
 | Campo          | Valor        |
 |----------------|--------------|
 | Prioridad      | Alta         |
-| Estado         | Definición   |
+| Asignado         | Falcón   |
 | Dependencias   | Ninguna      |
 
 ## Objetivo
@@ -1251,7 +1256,7 @@ Este RF requiere que la Solicitud de Servicio de Equipo de Cómputo sustituya su
 | Campo          | Valor        |
 |----------------|--------------|
 | Prioridad      | Alta         |
-| Estado         | Definición   |
+| Asignado         | Falcón   |
 | Dependencias   | RF-06, RF-07, RF-11 |
 
 ## Objetivo
@@ -1355,8 +1360,8 @@ Este RF depende de RF-11 (las tarjetas "Requiere Autorización" y "En Autorizaci
 | Campo          | Valor        |
 |----------------|--------------|
 | Prioridad      | Alta         |
-| Estado         | Definición   |
-| Dependencias   | RF-03, RF-07, RF-12 |
+| Asignado         | Falcón   |
+| Dependencias   | RF-02, RF-03, RF-07, RF-12 |
 
 ## Objetivo
 
@@ -1453,7 +1458,7 @@ Este RF depende del catálogo de Motivos de Cancelación (RF-03) para el motivo 
 | Campo          | Valor        |
 |----------------|--------------|
 | Prioridad      | Alta         |
-| Estado         | Definición   |
+| Asignado         | Jiri   |
 | Dependencias   | RF-07, RF-10, RF-12, RF-13 |
 
 ## Objetivo
@@ -1487,6 +1492,8 @@ Como analista de negocio, quiero que el Ticket generado desde el wizard transici
 **RN-15.7** Todos los registros de asignación generados conforme a RN-15.4, RN-15.5 y RN-15.6 quedan con Estatus "Atendido".
 
 **RN-15.8** Toda transición de Estatus del Ticket —no solo a "Proceso" conforme a RN-15.1 o RN-15.2, sino cualquier transición de su ciclo de vida— debe quedar registrada en la bitácora de estatus propia del Ticket.
+
+**RN-15.9** Todo registro del historial de asignaciones del Ticket queda relacionado con el registro de la bitácora de estatus propia del Ticket correspondiente al momento (Estatus) al que pertenece dicha asignación: el de Investigación CAU con el registro generado al crearse el Ticket; el de Autorización (cuando aplique) con el registro de la transición a "Requiere Autorización"; y el de Persona Asignada con el registro de la transición a "Proceso".
 
 ### Criterios de Aceptación
 
@@ -1530,37 +1537,822 @@ Dado un Ticket que transiciona de un Estatus a otro, sea a "Proceso" (haya reque
 Cuando dicha transición ocurre
 Entonces queda registrada en la bitácora de estatus propia del Ticket.
 
+**CA-15.1.9 — Relación de cada asignación con su bitácora de estatus**
+Dado un Ticket con su historial de asignaciones (Investigación CAU, Autorización cuando aplique, y Persona Asignada)
+Cuando se consulta cada registro de dicho historial
+Entonces cada uno queda relacionado con el registro de la bitácora de estatus propia del Ticket correspondiente a su momento: Investigación CAU con el registro de creación del Ticket, Autorización con el de la transición a "Requiere Autorización", y Persona Asignada con el de la transición a "Proceso".
+
 ---
 
-## US-15.2 — Sincronización del Estatus del Servicio Cliente a "En Proceso"
+## US-15.2 — Sincronización del Estatus del Servicio Cliente a "Asignado"
 
-Como analista de negocio, quiero que el Estatus del Servicio Cliente refleje que su Ticket relacionado ya se encuentra en Proceso, para que su bitácora conserve trazabilidad completa del ciclo de vida del Servicio, incluyendo el tramo de autorización cuando aplique.
+Como analista de negocio, quiero que el Estatus del Servicio Cliente refleje que su Ticket relacionado ya cuenta con una Persona Asignada, para que su bitácora conserve trazabilidad completa del ciclo de vida del Servicio, incluyendo el tramo de autorización cuando aplique.
 
 ### Reglas de negocio
 
-**RN-15.9** Cuando el Ticket relacionado a un Servicio Cliente transicione a Estatus "Proceso" conforme a RN-15.1 o RN-15.2, el Estatus del Servicio Cliente relacionado se actualiza a "En Proceso".
+**RN-15.10** Cuando el Ticket relacionado a un Servicio Cliente transicione a Estatus "Proceso" conforme a RN-15.1 o RN-15.2, el Estatus del Servicio Cliente relacionado se actualiza a "Asignado" (RF-25); su posterior actualización a "En Proceso" se documenta en RF-26.
 
-**RN-15.10** Toda actualización del Estatus del Servicio Cliente derivada de RN-15.9 debe registrarse en su bitácora, conforme al mecanismo de RF-07.
+**RN-15.11** Toda actualización del Estatus del Servicio Cliente derivada de RN-15.10 debe registrarse en su bitácora, conforme al mecanismo de RF-07.
 
 ### Criterios de Aceptación
 
 **CA-15.2.1 — Sincronización sin autorización**
 Dado un Servicio Cliente que no requiere autorización, cuyo Ticket transiciona directamente a "Proceso" conforme a CA-15.1.1
 Cuando dicha transición ocurre
-Entonces el Estatus del Servicio Cliente relacionado se actualiza a "En Proceso" y queda registrado en su bitácora, conservando en dicha bitácora los movimientos previos "Registrado" e "Investigación CAU".
+Entonces el Estatus del Servicio Cliente relacionado se actualiza a "Asignado" y queda registrado en su bitácora, conservando en dicha bitácora los movimientos previos "Registrado" e "Investigación CAU".
 
 **CA-15.2.2 — Sincronización tras autorización aprobada**
 Dado un Servicio Cliente que requiere autorización, cuyo Ticket transiciona a "Proceso" conforme a CA-15.1.2
 Cuando dicha transición ocurre
-Entonces el Estatus del Servicio Cliente relacionado se actualiza a "En Proceso" y queda registrado en su bitácora, conservando en dicha bitácora los movimientos previos "Registrado", "Requiere Autorización" y/o "En Autorización" según haya aplicado.
+Entonces el Estatus del Servicio Cliente relacionado se actualiza a "Asignado" y queda registrado en su bitácora, conservando en dicha bitácora los movimientos previos "Registrado", "Requiere Autorización" y/o "En Autorización" según haya aplicado.
+
+---
+
+## US-15.3 — Relación retroactiva del historial de asignaciones del año en curso con su bitácora de estatus
+
+Como analista de negocio, quiero que los registros del historial de asignaciones de Tickets generados durante el año en curso también queden relacionados con el registro de bitácora de estatus correspondiente a su momento, para contar con esta trazabilidad también en los Tickets ya existentes de este año, sin necesidad de esperar a que se generen nuevos movimientos.
+
+### Reglas de negocio
+
+**RN-15.12** La relación de RN-15.9 se aplica de forma retroactiva (backfill) únicamente a los registros del historial de asignaciones del Ticket generados durante el año en curso al momento de implementar este RF; los registros de años anteriores no se modifican.
+
+**RN-15.13** El backfill relaciona cada registro histórico del historial de asignaciones con el registro de la bitácora de estatus propia del Ticket correspondiente a su momento, conforme al mismo criterio de RN-15.9.
+
+### Criterios de Aceptación
+
+**CA-15.3.1 — Backfill del año en curso**
+Dado un Ticket con registros del historial de asignaciones generados durante el año en curso, previos a la implementación de este RF
+Cuando se ejecuta el backfill
+Entonces cada uno de esos registros queda relacionado con el registro de bitácora de estatus correspondiente a su momento.
+
+**CA-15.3.2 — Sin backfill de años anteriores**
+Dado un Ticket con registros del historial de asignaciones generados en años anteriores al actual
+Cuando se ejecuta el backfill
+Entonces dichos registros no se modifican ni se relacionan con ningún registro de bitácora.
 
 ---
 
 **Regla transversal:**
-Este RF depende de RF-12 (captura de la Persona Asignada en el wizard, hoy sin consumidor), de RF-10 (identificación del personal y fecha de la transición a "Investigación CAU" que alimenta el primer registro de asignación), de RF-13 (flujo de autorización que antecede a la transición a "Proceso" cuando el Servicio la requiere, incluyendo la transición a "Requiere Autorización" que dispara RN-15.5) y de RF-07 (mecanismo de bitácora obligatoria del Servicio Cliente). El registro de "Autorización" de RN-15.5 requiere que exista previamente un Departamento y un Personal Asignado genéricos reservados para este tramo; su alta es un requisito de datos, no de este RF. El Estatus "Atendido" de RN-15.7 es un valor nuevo para el historial de asignaciones del Ticket: hoy ningún registro de dicho historial transiciona a otro Estatus distinto de su valor inicial; este RF introduce el primer caso de negocio que lo utiliza. La resolución final de la autorización referenciada en RN-15.2 depende de un proveedor externo de autorización; el mecanismo técnico para recibir esa resolución y disparar esta transición se documenta en el documento técnico asociado.
+Este RF depende de RF-12 (captura de la Persona Asignada en el wizard, hoy sin consumidor), de RF-10 (identificación del personal y fecha de la transición a "Investigación CAU" que alimenta el primer registro de asignación), de RF-13 (flujo de autorización que antecede a la transición a "Proceso" cuando el Servicio la requiere, incluyendo la transición a "Requiere Autorización" que dispara RN-15.5) y de RF-07 (mecanismo de bitácora obligatoria del Servicio Cliente). El registro de "Autorización" de RN-15.5 requiere que exista previamente un Departamento y un Personal Asignado genéricos reservados para este tramo; su alta es un requisito de datos, no de este RF. El Estatus "Atendido" de RN-15.7 es un valor nuevo para el historial de asignaciones del Ticket: hoy ningún registro de dicho historial transiciona a otro Estatus distinto de su valor inicial; este RF introduce el primer caso de negocio que lo utiliza. La resolución final de la autorización referenciada en RN-15.2 depende de un proveedor externo de autorización; el mecanismo técnico para recibir esa resolución y disparar esta transición se documenta en el documento técnico asociado. La relación de RN-15.9 identifica, para cada registro del historial de asignaciones, a qué momento del Ticket pertenece; no debe confundirse con un mecanismo para determinar quién estuvo asignado en cualquier Estatus del Ticket en general, ya que solo cubre los tres momentos que generan un registro de asignación (Investigación CAU, Autorización y Persona Asignada) — otras transiciones de Estatus del Ticket (RN-15.8) no generan por sí mismas un nuevo registro de asignación ni, por tanto, una nueva relación. El backfill de US-15.3 es una excepción puntual, acotada al año en curso, al principio general de no modificar históricos (ver Guía de Redacción, sección 9); no aplica a ningún otro RF de este documento. El Estatus "Asignado" de RN-15.10 es de uso exclusivo del Servicio Cliente (RF-25); el Ticket permanece en su propio Estatus "Proceso" durante todo este intervalo, y la transición del Servicio Cliente de "Asignado" a "En Proceso" se documenta en RF-26.
 
 ---
 
+
+---
+
+# RF-16 — Alta del Estado "Ing. Traslado"
+
+| Campo          | Valor        |
+|----------------|--------------|
+| Prioridad      | Alta         |
+| Asignado       |              |
+| Dependencias   | RF-01, RF-02 |
+
+## Objetivo
+
+Registrar "Ing. Traslado" como Grupo de Estados (RF-01) y como Estado (RF-02), prerrequisito de la transición del Ticket descrita en RF-17.
+
+## Descripción
+
+"Ing. Traslado" representa que el ingeniero asignado al Ticket se encuentra en desplazamiento físico para atenderlo. Este RF cubre exclusivamente el alta de datos, dejando el Estado disponible para que lo consuman tanto el Ticket como el Servicio Cliente relacionado, ya que el catálogo de Estados es transversal. Su uso real se documenta en RF-17.
+
+---
+
+## US-16.1 — Alta del Grupo de Estados y del Estado "Ing. Traslado"
+
+Como analista de negocio, quiero que "Ing. Traslado" quede registrado en el catálogo de Grupos de Estados y en el catálogo de Estados, para que el Ticket y el Servicio Cliente puedan transicionar a él sin depender de una definición fija en código.
+
+### Reglas de negocio
+
+**RN-16.1** Debe existir un registro Activo en el catálogo de Grupos de Estados (RF-01) que represente el traslado del ingeniero asignado, previo al alta del Estado.
+
+**RN-16.2** Debe existir un registro Activo en el catálogo de Estados (RF-02) con Nombre "Ing. Traslado", asociado al Grupo de Estados de RN-16.1, con Mensaje corto y Descripción conforme a RF-02.
+
+**RN-16.3** No podrá existir más de un Estado Activo con Nombre "Ing. Traslado" en el catálogo, conforme a la regla de unicidad de RF-02.
+
+**RN-16.4** El mismo Estado "Ing. Traslado" dado de alta por este RF es el que consumen tanto el Ticket como el Servicio Cliente en RF-17, sin duplicar el alta por cada proceso.
+
+### Criterios de Aceptación
+
+**CA-16.1.1 — Alta del Grupo de Estados**
+Dado que no existe un Grupo de Estados que represente el traslado del ingeniero asignado
+Cuando el administrador lo registra conforme a RF-01 (US-1.1)
+Entonces el grupo queda disponible, Activo, para asociarse al Estado "Ing. Traslado".
+
+**CA-16.1.2 — Alta del Estado**
+Dado que existe el Grupo de Estados de CA-16.1.1, Activo
+Cuando el administrador registra el Estado "Ing. Traslado" asociándolo a ese grupo, conforme a RF-02 (US-2.1)
+Entonces el sistema crea el Estado como Activo y disponible para su uso por el Ticket y por el Servicio Cliente.
+
+---
+
+**Regla transversal:**
+El Estado "Ing. Traslado" registrado por este RF es prerrequisito de la transición funcional descrita en RF-17; no modifica el alcance de RF-01 ni de RF-02, a cuyas reglas de alta, unicidad y ciclo de vida queda sujeto como cualquier otro registro de dichos catálogos. Este Estado es un alta nueva, distinta de cualquier estatus fijo ya importado por RF-04: aunque el sistema ya cuenta con estatus de nombre similar usados para logística de traslado de equipo de cómputo, ninguno representa que el ingeniero asignado al Ticket se encuentra en desplazamiento para atenderlo, que es el concepto de negocio que cubre este RF.
+
+---
+
+
+---
+
+# RF-17 — Transición del Ticket a "Ing. Traslado" y su reverso a "En Proceso"
+
+| Campo          | Valor        |
+|----------------|--------------|
+| Prioridad      | Alta         |
+| Asignado       |              |
+| Dependencias   | RF-07, RF-16 |
+
+## Objetivo
+
+Incorporar al Ticket la acción "Ing. Traslado", protegida por un permiso especial y disponible únicamente en Estatus "Proceso", que transiciona el Ticket y refleja el mismo movimiento en el Estatus y la bitácora del Servicio Cliente relacionado, bloqueando la edición del Ticket mientras permanezca en dicho Estatus; y la acción de reverso a "En Proceso", que libera nuevamente la edición.
+
+## Descripción
+
+Hoy el Ticket no cuenta con una forma de indicar que el ingeniero asignado se encuentra en desplazamiento físico. Este RF agrega dos acciones simétricas: "Ing. Traslado" (desde "Proceso", con permiso especial dedicado) y "Regresar a Proceso" (desde "Ing. Traslado", mismo permiso). Ambas transiciones se reflejan en el Estatus y la bitácora del Servicio Cliente relacionado, conforme al mecanismo transversal de RF-07. Mientras el Ticket permanece en "Ing. Traslado", queda bloqueado para cualquier edición o modificación.
+
+---
+
+## US-17.1 — Transición del Ticket a "Ing. Traslado"
+
+Como ingeniero asignado a un Ticket, quiero marcarlo como "Ing. Traslado" mientras me desplazo para atenderlo, para que quede protegido de modificaciones y su estatus refleje correctamente mi situación, tanto en el Ticket como en el Servicio Cliente relacionado.
+
+### Reglas de negocio
+
+**RN-17.1** La acción "Ing. Traslado" solo estará disponible cuando el Ticket se encuentre en Estatus "Proceso".
+
+**RN-17.2** Solo un usuario con el permiso especial dedicado a esta acción podrá ver y ejecutar "Ing. Traslado".
+
+**RN-17.3** Al ejecutar la acción, el Ticket transiciona a Estatus "Ing. Traslado" (RF-16), y dicho movimiento se registra en la bitácora de estatus del Ticket.
+
+**RN-17.4** Al ejecutar la acción, el Estatus del Servicio Cliente relacionado se actualiza a "Ing. Traslado" (el mismo Estado de RF-16), y dicho movimiento se registra en su bitácora, conforme al mecanismo de RF-07.
+
+**RN-17.5** Mientras el Ticket se encuentre en Estatus "Ing. Traslado", queda bloqueado para cualquier edición o modificación de sus campos; la única operación disponible es el reverso a "En Proceso" (US-17.2).
+
+**RN-17.6** La acción "Ing. Traslado" no estará disponible si el Ticket no se encuentra en Estatus "Proceso", ni para usuarios sin el permiso especial de RN-17.2.
+
+### Criterios de Aceptación
+
+**CA-17.1.1 — Acción visible y disponible**
+Dado que el Ticket está en Estatus "Proceso" y el usuario cuenta con el permiso especial dedicado
+Cuando el usuario consulta el Ticket
+Entonces la acción "Ing. Traslado" está visible y disponible para ejecutarse.
+
+**CA-17.1.2 — Acción no visible por estatus inválido**
+Dado que el Ticket no se encuentra en Estatus "Proceso"
+Cuando el usuario consulta el Ticket
+Entonces la acción "Ing. Traslado" no está disponible, sin importar el permiso del usuario.
+
+**CA-17.1.3 — Acción no visible por falta de permiso**
+Dado que el usuario no cuenta con el permiso especial dedicado a esta acción
+Cuando consulta un Ticket en Estatus "Proceso"
+Entonces la acción "Ing. Traslado" no está disponible.
+
+**CA-17.1.4 — Transición exitosa y reflejo en Servicio Cliente**
+Dado que el Ticket está en Estatus "Proceso" y el usuario cuenta con el permiso especial
+Cuando ejecuta la acción "Ing. Traslado"
+Entonces el Ticket transiciona a Estatus "Ing. Traslado", queda registrado en su bitácora, y el Estatus del Servicio Cliente relacionado se actualiza al mismo Estado y queda registrado en su propia bitácora.
+
+**CA-17.1.5 — Bloqueo de edición**
+Dado un Ticket en Estatus "Ing. Traslado"
+Cuando cualquier usuario intenta editar o modificar alguno de sus campos
+Entonces el sistema impide la operación, sin importar el permiso del usuario.
+
+---
+
+## US-17.2 — Reverso del Ticket a "En Proceso"
+
+Como ingeniero asignado a un Ticket, quiero regresarlo a "En Proceso" al concluir mi traslado, para retomar su edición y continuar atendiéndolo, reflejando correctamente el cambio tanto en el Ticket como en el Servicio Cliente relacionado.
+
+### Reglas de negocio
+
+**RN-17.7** La acción "Regresar a Proceso" solo estará disponible cuando el Ticket se encuentre en Estatus "Ing. Traslado".
+
+**RN-17.8** Solo un usuario con el mismo permiso especial de RN-17.2 podrá ver y ejecutar "Regresar a Proceso".
+
+**RN-17.9** Al ejecutar la acción, el Ticket transiciona a Estatus "Proceso", y dicho movimiento se registra en la bitácora de estatus del Ticket.
+
+**RN-17.10** Al ejecutar la acción, el Estatus del Servicio Cliente relacionado regresa al Estatus que tenía inmediatamente antes de la transición a "Ing. Traslado" (RN-17.4), tomado de su propia bitácora, y dicho movimiento se registra en dicha bitácora.
+
+**RN-17.11** Al ejecutar la acción, el Ticket deja de estar bloqueado y vuelve a quedar disponible para su edición conforme a las reglas ya existentes.
+
+### Criterios de Aceptación
+
+**CA-17.2.1 — Acción visible únicamente en Ing. Traslado**
+Dado que el Ticket está en Estatus "Ing. Traslado" y el usuario cuenta con el permiso especial dedicado
+Cuando el usuario consulta el Ticket
+Entonces la acción "Regresar a Proceso" está visible y disponible para ejecutarse.
+
+**CA-17.2.2 — Acción no visible en otro estatus**
+Dado que el Ticket no se encuentra en Estatus "Ing. Traslado"
+Cuando el usuario lo consulta
+Entonces la acción "Regresar a Proceso" no está disponible.
+
+**CA-17.2.3 — Reverso exitoso y reflejo en Servicio Cliente**
+Dado un Ticket en Estatus "Ing. Traslado" y un usuario con el permiso especial
+Cuando ejecuta la acción "Regresar a Proceso"
+Entonces el Ticket transiciona a Estatus "Proceso" y queda registrado en su bitácora, y el Estatus del Servicio Cliente relacionado regresa al que tenía antes de "Ing. Traslado", quedando registrado en su propia bitácora.
+
+**CA-17.2.4 — Edición restablecida**
+Dado un Ticket que acaba de regresar a Estatus "Proceso" mediante esta acción
+Cuando un usuario intenta editarlo
+Entonces el sistema permite la edición conforme a las reglas ya existentes para un Ticket en Proceso.
+
+---
+
+**Regla transversal:**
+Este RF depende de RF-16 (alta del Estado "Ing. Traslado") y de RF-07 (bitácora obligatoria relacionada al catálogo de Estados) para reflejar y registrar el movimiento en el Servicio Cliente. El permiso especial de RN-17.2/RN-17.8 es exclusivo de estas dos acciones y no se generaliza a ninguna otra funcionalidad del Ticket. Queda fuera de alcance de este RF definir si un bloqueo de edición y acciones equivalentes deben existir también para la Solicitud de Servicio.
+
+---
+
+
+---
+
+# RF-18 — Alta del Estado "En Espera del Usuario"
+
+| Campo          | Valor        |
+|----------------|--------------|
+| Prioridad      | Alta         |
+| Asignado       |              |
+| Dependencias   | RF-01, RF-02 |
+
+## Objetivo
+
+Registrar "En Espera del Usuario" como Grupo de Estados (RF-01) y como Estado (RF-02), prerrequisito de la transición del Ticket descrita en RF-19.
+
+## Descripción
+
+"En Espera del Usuario" representa que el Ticket quedó detenido en espera de información adicional (por ejemplo, del cliente o de un tercero) necesaria para continuar su atención. Este RF cubre exclusivamente el alta de datos, dejando el Estado disponible para que lo consuman tanto el Ticket como el Servicio Cliente relacionado. Su uso real se documenta en RF-19.
+
+---
+
+## US-18.1 — Alta del Grupo de Estados y del Estado "En Espera del Usuario"
+
+Como analista de negocio, quiero que "En Espera del Usuario" quede registrado en el catálogo de Grupos de Estados y en el catálogo de Estados, para que el Ticket y el Servicio Cliente puedan transicionar a él sin depender de una definición fija en código.
+
+### Reglas de negocio
+
+**RN-18.1** Debe existir un registro Activo en el catálogo de Grupos de Estados (RF-01) que represente la espera de información, previo al alta del Estado.
+
+**RN-18.2** Debe existir un registro Activo en el catálogo de Estados (RF-02) con Nombre "En Espera del Usuario", asociado al Grupo de Estados de RN-18.1, con Mensaje corto y Descripción conforme a RF-02.
+
+**RN-18.3** No podrá existir más de un Estado Activo con Nombre "En Espera del Usuario" en el catálogo, conforme a la regla de unicidad de RF-02.
+
+**RN-18.4** El mismo Estado "En Espera del Usuario" dado de alta por este RF es el que consumen tanto el Ticket como el Servicio Cliente en RF-19, sin duplicar el alta por cada proceso.
+
+### Criterios de Aceptación
+
+**CA-18.1.1 — Alta del Grupo de Estados**
+Dado que no existe un Grupo de Estados que represente la espera de información
+Cuando el administrador lo registra conforme a RF-01 (US-1.1)
+Entonces el grupo queda disponible, Activo, para asociarse al Estado "En Espera del Usuario".
+
+**CA-18.1.2 — Alta del Estado**
+Dado que existe el Grupo de Estados de CA-18.1.1, Activo
+Cuando el administrador registra el Estado "En Espera del Usuario" asociándolo a ese grupo, conforme a RF-02 (US-2.1)
+Entonces el sistema crea el Estado como Activo y disponible para su uso por el Ticket y por el Servicio Cliente.
+
+---
+
+**Regla transversal:**
+El Estado "En Espera del Usuario" registrado por este RF es prerrequisito de la transición funcional descrita en RF-19; no modifica el alcance de RF-01 ni de RF-02. Es independiente del Estado "Ing. Traslado" (RF-16): ambos son Estados distintos del mismo catálogo transversal. Este Estado es un alta nueva, distinta de cualquier estatus fijo ya importado por RF-04: aunque el sistema ya cuenta con un estatus de nombre similar usado para la espera de recolección de equipo de cómputo asignado, no representa que el Ticket quedó detenido en espera de información adicional del usuario que reporta, que es el concepto de negocio que cubre este RF.
+
+---
+
+
+---
+
+# RF-19 — Transición del Ticket a "En Espera del Usuario" y su reverso a "En Proceso"
+
+| Campo          | Valor        |
+|----------------|--------------|
+| Prioridad      | Alta         |
+| Asignado       |              |
+| Dependencias   | RF-07, RF-18 |
+
+## Objetivo
+
+Incorporar al Ticket la acción "En Espera del Usuario", protegida por un permiso especial propio y disponible únicamente en Estatus "Proceso", que transiciona el Ticket y refleja el mismo movimiento en el Estatus y la bitácora del Servicio Cliente relacionado, bloqueando la edición del Ticket mientras permanezca en dicho Estatus; y la acción de reverso a "En Proceso", que libera nuevamente la edición.
+
+## Descripción
+
+Hoy el Ticket no cuenta con una forma de indicar que quedó detenido en espera de información adicional. Este RF agrega dos acciones simétricas, mecánicamente equivalentes a las de RF-17 pero mediante un permiso especial propio y distinto: "En Espera del Usuario" (desde "Proceso") y "Regresar a Proceso" (desde "En Espera del Usuario"). Ambas transiciones se reflejan en el Estatus y la bitácora del Servicio Cliente relacionado, conforme al mecanismo transversal de RF-07. Mientras el Ticket permanece en este Estatus, queda bloqueado para cualquier edición o modificación.
+
+---
+
+## US-19.1 — Transición del Ticket a "En Espera del Usuario"
+
+Como responsable del Ticket, quiero marcarlo como "En Espera del Usuario" mientras aguardo datos adicionales necesarios para continuar su atención, para que quede protegido de modificaciones y su estatus refleje correctamente dicha espera, tanto en el Ticket como en el Servicio Cliente relacionado.
+
+### Reglas de negocio
+
+**RN-19.1** La acción "En Espera del Usuario" solo estará disponible cuando el Ticket se encuentre en Estatus "Proceso".
+
+**RN-19.2** Solo un usuario con el permiso especial dedicado a esta acción podrá ver y ejecutar "En Espera del Usuario"; este permiso es distinto e independiente del permiso especial de "Ing. Traslado" (RF-17).
+
+**RN-19.3** Al ejecutar la acción, el Ticket transiciona a Estatus "En Espera del Usuario" (RF-18), y dicho movimiento se registra en la bitácora de estatus del Ticket.
+
+**RN-19.4** Al ejecutar la acción, el Estatus del Servicio Cliente relacionado se actualiza a "En Espera del Usuario" (el mismo Estado de RF-18), y dicho movimiento se registra en su bitácora, conforme al mecanismo de RF-07.
+
+**RN-19.5** Mientras el Ticket se encuentre en este Estatus, queda bloqueado para cualquier edición o modificación de sus campos; la única operación disponible es el reverso a "En Proceso" (US-19.2).
+
+**RN-19.6** La acción no estará disponible si el Ticket no se encuentra en Estatus "Proceso", ni para usuarios sin el permiso especial de RN-19.2.
+
+### Criterios de Aceptación
+
+**CA-19.1.1 — Acción visible y disponible**
+Dado que el Ticket está en Estatus "Proceso" y el usuario cuenta con el permiso especial dedicado a "En Espera del Usuario"
+Cuando el usuario consulta el Ticket
+Entonces la acción está visible y disponible para ejecutarse.
+
+**CA-19.1.2 — Acción no visible por estatus inválido**
+Dado que el Ticket no se encuentra en Estatus "Proceso"
+Cuando el usuario consulta el Ticket
+Entonces la acción no está disponible, sin importar el permiso del usuario.
+
+**CA-19.1.3 — Acción no visible por falta de permiso**
+Dado que el usuario no cuenta con el permiso especial dedicado a esta acción
+Cuando consulta un Ticket en Estatus "Proceso"
+Entonces la acción no está disponible, aun cuando dicho usuario cuente con el permiso especial de "Ing. Traslado".
+
+**CA-19.1.4 — Transición exitosa y reflejo en Servicio Cliente**
+Dado que el Ticket está en Estatus "Proceso" y el usuario cuenta con el permiso especial de esta acción
+Cuando ejecuta la acción
+Entonces el Ticket transiciona a Estatus "En Espera del Usuario", queda registrado en su bitácora, y el Estatus del Servicio Cliente relacionado se actualiza al mismo Estado y queda registrado en su propia bitácora.
+
+**CA-19.1.5 — Bloqueo de edición**
+Dado un Ticket en Estatus "En Espera del Usuario"
+Cuando cualquier usuario intenta editar o modificar alguno de sus campos
+Entonces el sistema impide la operación, sin importar el permiso del usuario.
+
+---
+
+## US-19.2 — Reverso del Ticket a "En Proceso"
+
+Como responsable del Ticket, quiero regresarlo a "En Proceso" al recibir la información esperada, para retomar su edición y continuar atendiéndolo, reflejando correctamente el cambio tanto en el Ticket como en el Servicio Cliente relacionado.
+
+### Reglas de negocio
+
+**RN-19.7** La acción "Regresar a Proceso" solo estará disponible cuando el Ticket se encuentre en Estatus "En Espera del Usuario".
+
+**RN-19.8** Solo un usuario con el mismo permiso especial de RN-19.2 podrá ver y ejecutar "Regresar a Proceso".
+
+**RN-19.9** Al ejecutar la acción, el Ticket transiciona a Estatus "Proceso", y dicho movimiento se registra en la bitácora de estatus del Ticket.
+
+**RN-19.10** Al ejecutar la acción, el Estatus del Servicio Cliente relacionado regresa al Estatus que tenía inmediatamente antes de la transición a "En Espera del Usuario" (RN-19.4), tomado de su propia bitácora, y dicho movimiento se registra en dicha bitácora.
+
+**RN-19.11** Al ejecutar la acción, el Ticket deja de estar bloqueado y vuelve a quedar disponible para su edición conforme a las reglas ya existentes.
+
+### Criterios de Aceptación
+
+**CA-19.2.1 — Acción visible únicamente en En Espera del Usuario**
+Dado que el Ticket está en ese Estatus y el usuario cuenta con el permiso especial de esta acción
+Cuando el usuario consulta el Ticket
+Entonces la acción "Regresar a Proceso" está visible y disponible para ejecutarse.
+
+**CA-19.2.2 — Acción no visible en otro estatus**
+Dado que el Ticket no se encuentra en Estatus "En Espera del Usuario"
+Cuando el usuario lo consulta
+Entonces la acción "Regresar a Proceso" no está disponible.
+
+**CA-19.2.3 — Reverso exitoso y reflejo en Servicio Cliente**
+Dado un Ticket en Estatus "En Espera del Usuario" y un usuario con el permiso especial de esta acción
+Cuando ejecuta la acción "Regresar a Proceso"
+Entonces el Ticket transiciona a Estatus "Proceso" y queda registrado en su bitácora, y el Estatus del Servicio Cliente relacionado regresa al que tenía antes, quedando registrado en su propia bitácora.
+
+**CA-19.2.4 — Edición restablecida**
+Dado un Ticket que acaba de regresar a Estatus "Proceso" mediante esta acción
+Cuando un usuario intenta editarlo
+Entonces el sistema permite la edición conforme a las reglas ya existentes para un Ticket en Proceso.
+
+---
+
+**Regla transversal:**
+Este RF depende de RF-18 (alta del Estado "En Espera del Usuario") y de RF-07 (bitácora obligatoria). El permiso especial de RN-19.2/RN-19.8 es exclusivo de estas dos acciones, distinto e independiente del permiso especial de "Ing. Traslado" (RF-17), y no se generaliza a ninguna otra funcionalidad del Ticket. Es mecánicamente equivalente a RF-17, pero ambos Estados y ambos permisos son independientes entre sí. Queda fuera de alcance de este RF definir si un bloqueo de edición y acciones equivalentes deben existir también para la Solicitud de Servicio.
+
+---
+
+
+---
+
+# RF-20 — Alta del Estado "En Validación"
+
+| Campo          | Valor        |
+|----------------|--------------|
+| Prioridad      | Alta         |
+| Asignado       |              |
+| Dependencias   | RF-01, RF-02 |
+
+## Objetivo
+
+Registrar "En Validación" como Grupo de Estados (RF-01) y como Estado (RF-02), prerrequisito de la transición del Ticket descrita en RF-21.
+
+## Descripción
+
+"En Validación" representa que el Ticket fue cerrado con un Tipo de Servicio Interno que exige la confirmación del usuario que reporta antes de darlo por concluido de forma definitiva. Este RF cubre exclusivamente el alta de datos, dejando el Estado disponible para que lo consuman tanto el Ticket como el Servicio Cliente relacionado. Su uso real se documenta en RF-21.
+
+---
+
+## US-20.1 — Alta del Grupo de Estados y del Estado "En Validación"
+
+Como analista de negocio, quiero que "En Validación" quede registrado en el catálogo de Grupos de Estados y en el catálogo de Estados, para que el Ticket y el Servicio Cliente puedan transicionar a él sin depender de una definición fija en código.
+
+### Reglas de Negocio
+
+**RN-20.1** Debe existir un registro Activo en el catálogo de Grupos de Estados (RF-01) que represente la validación del servicio por parte del usuario que reporta, previo al alta del Estado.
+
+**RN-20.2** Debe existir un registro Activo en el catálogo de Estados (RF-02) con Nombre "En Validación", asociado al Grupo de Estados de RN-20.1, con Mensaje corto y Descripción conforme a RF-02.
+
+**RN-20.3** No podrá existir más de un Estado Activo con Nombre "En Validación" en el catálogo, conforme a la regla de unicidad de RF-02.
+
+**RN-20.4** El mismo Estado "En Validación" dado de alta por este RF es el que consumen tanto el Ticket como el Servicio Cliente en RF-21, sin duplicar el alta por cada proceso.
+
+### Criterios de Aceptación
+
+**CA-20.1.1 — Alta del Grupo de Estados**
+Dado que no existe un Grupo de Estados que represente la validación del servicio por parte del usuario que reporta
+Cuando el administrador lo registra conforme a RF-01 (US-1.1)
+Entonces el grupo queda disponible, Activo, para asociarse al Estado "En Validación".
+
+**CA-20.1.2 — Alta del Estado**
+Dado que existe el Grupo de Estados de CA-20.1.1, Activo
+Cuando el administrador registra el Estado "En Validación" asociándolo a ese grupo, conforme a RF-02 (US-2.1)
+Entonces el sistema crea el Estado como Activo y disponible para su uso por el Ticket y por el Servicio Cliente.
+
+---
+
+**Regla transversal:**
+El Estado "En Validación" registrado por este RF es prerrequisito de la transición funcional descrita en RF-21; no modifica el alcance de RF-01 ni de RF-02. Es independiente de los Estados "Ing. Traslado" (RF-16) y "En Espera del Usuario" (RF-18): son tres Estados distintos del mismo catálogo transversal.
+
+---
+
+
+---
+
+# RF-21 — Transición del Ticket a "En Validación" al cerrarse un servicio que la requiere
+
+| Campo          | Valor        |
+|----------------|--------------|
+| Prioridad      | Alta         |
+| Asignado       |              |
+| Dependencias   | RF-05, RF-07, RF-20 |
+
+## Objetivo
+
+Que, al ejecutarse la acción de cerrar el Ticket, el sistema evalúe si el Tipo de Servicio Interno definido en el cierre requiere validación (RF-05), y en ese caso el Ticket transicione a Estatus "En Validación" (RF-20) en lugar de cerrarse, dejando el movimiento registrado en la bitácora del Ticket y reflejado en el Estatus y bitácora del Servicio Cliente relacionado.
+
+## Descripción
+
+Hoy, al cerrar un Ticket, este pasa directamente a su Estatus de cierre sin considerar si el Tipo de Servicio Interno exige confirmación adicional. Este RF conecta la marca "Requiere Validación" (RF-05) con la acción de cierre ya existente: si no requiere validación, el Ticket se cierra sin cambios; si sí la requiere, transiciona a "En Validación" en lugar de cerrarse. La acción con la que el usuario que reporta resuelve la validación (Válido/No Válido) es un requerimiento independiente fuera de este documento; este RF cubre únicamente la transición de entrada y su trazabilidad. Mientras el Ticket permanece en "En Validación", queda bloqueado para cualquier edición, igual que "Ing. Traslado" (RF-17) y "En Espera del Usuario" (RF-19).
+
+---
+
+## US-21.1 — Transición automática del Ticket a "En Validación" al cerrarse
+
+Como analista de negocio, quiero que el Ticket transicione automáticamente a "En Validación" al cerrarse con un Tipo de Servicio Interno que lo requiera, para asegurar que ningún servicio sujeto a validación se dé por concluido sin la confirmación del usuario que reporta.
+
+### Reglas de Negocio
+
+**RN-21.1** Al ejecutarse la acción de cerrar el Ticket, el sistema evalúa la marca "Requiere Validación" (RF-05) del Tipo de Servicio Interno definido en el cierre.
+
+**RN-21.2** Si "Requiere Validación" = No, el Ticket se cierra conforme al comportamiento ya existente, sin transicionar a "En Validación".
+
+**RN-21.3** Si "Requiere Validación" = Sí, el Ticket no se cierra: transiciona a Estatus "En Validación" (RF-20) en lugar del Estatus de cierre, y dicho movimiento se registra en la bitácora de estatus del Ticket.
+
+**RN-21.4** Al transicionar el Ticket a "En Validación" conforme a RN-21.3, el Estatus del Servicio Cliente relacionado se actualiza a "En Validación" (el mismo Estado de RF-20), y dicho movimiento se registra en su bitácora, conforme al mecanismo de RF-07.
+
+**RN-21.5** Mientras el Ticket se encuentre en Estatus "En Validación", queda bloqueado para cualquier edición o modificación de sus campos.
+
+**RN-21.6** Esta regla no define la acción de resolución de la validación (Válido/No Válido) ni el Estatus resultante de cada caso; dicha resolución se documentará en un requerimiento independiente, fuera de este documento.
+
+**RN-21.7** El Ticket incorpora un campo propio "Fecha de Inicio de Validación", capturado automáticamente al transicionar a "En Validación" conforme a RN-21.3, sin captura manual, para uso de un mecanismo de finalización automática por vencimiento de plazo que se documentará en un requerimiento independiente.
+
+### Criterios de Aceptación
+
+**CA-21.1.1 — Cierre normal sin validación requerida**
+Dado que el Tipo de Servicio Interno definido en el cierre del Ticket tiene "Requiere Validación" = No
+Cuando se ejecuta la acción de cerrar el Ticket
+Entonces el Ticket se cierra conforme al comportamiento ya existente, sin transicionar a "En Validación".
+
+**CA-21.1.2 — Transición a En Validación**
+Dado que el Tipo de Servicio Interno definido en el cierre del Ticket tiene "Requiere Validación" = Sí
+Cuando se ejecuta la acción de cerrar el Ticket
+Entonces el Ticket no se cierra y transiciona a Estatus "En Validación", quedando registrado en su bitácora.
+
+**CA-21.1.3 — Reflejo en Servicio Cliente**
+Dado que el Ticket transiciona a "En Validación" conforme a CA-21.1.2
+Cuando dicha transición ocurre
+Entonces el Estatus del Servicio Cliente relacionado se actualiza al mismo Estado y queda registrado en su propia bitácora.
+
+**CA-21.1.4 — Bloqueo de edición**
+Dado un Ticket en Estatus "En Validación"
+Cuando cualquier usuario intenta editar o modificar alguno de sus campos
+Entonces el sistema impide la operación.
+
+**CA-21.1.5 — Fecha de Inicio de Validación**
+Dado un Ticket que transicionó a "En Validación" conforme a CA-21.1.2
+Cuando se consulta el campo Fecha de Inicio de Validación del Ticket
+Entonces contiene la fecha y hora de dicha transición, sin haberse capturado manualmente.
+
+---
+
+**Regla transversal:**
+Este RF depende de RF-20 (alta del Estado "En Validación"), RF-05 (marca "Requiere Validación") y RF-07 (bitácora obligatoria). Queda fuera de alcance la acción de resolución de la validación (Válido/No Válido) y su Estatus resultante, documentada en un requerimiento independiente; el comportamiento ante el vencimiento del tiempo de expiración de RF-05 se documentará en un requerimiento independiente que dependerá de la Fecha de Inicio de Validación de RN-21.7. Queda igualmente fuera de alcance definir si esta transición y su bloqueo deben existir también para la Solicitud de Servicio.
+
+---
+
+
+---
+
+# RF-22 — Alta del Estado "Autorización Financiera"
+
+| Campo          | Valor        |
+|----------------|--------------|
+| Prioridad      | Alta         |
+| Asignado       |              |
+| Dependencias   | RF-01, RF-02 |
+
+## Objetivo
+
+Registrar "Autorización Financiera" como Grupo de Estados (RF-01) y como Estado (RF-02), prerrequisito de la transición del Ticket descrita en RF-23.
+
+## Descripción
+
+"Autorización Financiera" representa que el Ticket quedó a la espera de la resolución de la autorización genérica de compras registradas en sus Diagnósticos. Este RF cubre exclusivamente el alta de datos, dejando el Estado disponible para que lo consuman tanto el Ticket como el Servicio Cliente relacionado. Su uso real se documenta en RF-23. El Estatus "Autorización Rechazada", usado por RF-23 para el caso de rechazo, ya existe en el sistema y se reutiliza sin alta adicional.
+
+---
+
+## US-22.1 — Alta del Grupo de Estados y del Estado "Autorización Financiera"
+
+Como analista de negocio, quiero que "Autorización Financiera" quede registrado en el catálogo de Grupos de Estados y en el catálogo de Estados, para que el Ticket y el Servicio Cliente puedan transicionar a él sin depender de una definición fija en código.
+
+### Reglas de Negocio
+
+**RN-22.1** Debe existir un registro Activo en el catálogo de Grupos de Estados (RF-01) que represente la espera de resolución de una autorización financiera, previo al alta del Estado.
+
+**RN-22.2** Debe existir un registro Activo en el catálogo de Estados (RF-02) con Nombre "Autorización Financiera", asociado al Grupo de Estados de RN-22.1, con Mensaje corto y Descripción conforme a RF-02.
+
+**RN-22.3** No podrá existir más de un Estado Activo con Nombre "Autorización Financiera" en el catálogo, conforme a la regla de unicidad de RF-02.
+
+**RN-22.4** El mismo Estado "Autorización Financiera" dado de alta por este RF es el que consumen tanto el Ticket como el Servicio Cliente en RF-23, sin duplicar el alta por cada proceso.
+
+### Criterios de Aceptación
+
+**CA-22.1.1 — Alta del Grupo de Estados**
+Dado que no existe un Grupo de Estados que represente la espera de resolución de una autorización financiera
+Cuando el administrador lo registra conforme a RF-01 (US-1.1)
+Entonces el grupo queda disponible, Activo, para asociarse al Estado "Autorización Financiera".
+
+**CA-22.1.2 — Alta del Estado**
+Dado que existe el Grupo de Estados de CA-22.1.1, Activo
+Cuando el administrador registra el Estado "Autorización Financiera" asociándolo a ese grupo, conforme a RF-02 (US-2.1)
+Entonces el sistema crea el Estado como Activo y disponible para su uso por el Ticket y por el Servicio Cliente.
+
+---
+
+**Regla transversal:**
+El Estado "Autorización Financiera" registrado por este RF es prerrequisito de la transición funcional descrita en RF-23; no modifica el alcance de RF-01 ni de RF-02. Es independiente de los Estados "Ing. Traslado" (RF-16), "En Espera del Usuario" (RF-18) y "En Validación" (RF-20).
+
+---
+
+
+---
+
+# RF-23 — Autorización Financiera del Ticket a partir de compras registradas en sus Diagnósticos
+
+| Campo          | Valor        |
+|----------------|--------------|
+| Prioridad      | Alta         |
+| Asignado       |              |
+| Dependencias   | RF-01, RF-02, RF-07, RF-22 |
+
+## Objetivo
+
+Habilitar, desde el Ticket, la solicitud de la autorización genérica de compras ("Autorización Financiera") hoy disponible únicamente desde cada Diagnóstico, exigiendo al menos una compra registrada en alguno de los Diagnósticos del Ticket; transicionar el Ticket a Estatus "Autorización Financiera" mientras se resuelve, bloqueando su edición; y reflejar automáticamente el resultado (Autorizado → "En Proceso"; Rechazado → "Autorización Rechazada") en el Ticket, su bitácora, y el Estatus y bitácora del Servicio Cliente relacionado.
+
+## Descripción
+
+Hoy la autorización genérica de compras registradas durante el diagnóstico del Ticket solo puede solicitarse desde cada Diagnóstico de forma individual. Este RF traslada esa misma solicitud al nivel del Ticket, transicionándolo a "Autorización Financiera" (RF-22) mientras se resuelve mediante el mecanismo de autorización genérica ya existente —el mismo que hoy usa "Solicitud de Acceso" (RF-13)—, sin modificarlo. Su resultado (Autorizado/Rechazado) se refleja automáticamente en el Ticket y en el Servicio Cliente relacionado.
+
+---
+
+## US-23.1 — Solicitud de la Autorización Financiera desde el Ticket
+
+Como analista del CAU, quiero poder solicitar la Autorización Financiera directamente desde el Ticket cuando exista al menos una compra registrada en cualquiera de sus Diagnósticos, para no depender de entrar a cada Diagnóstico individual.
+
+### Reglas de Negocio
+
+**RN-23.1** La acción estará disponible en el Ticket cuando exista al menos una compra registrada en cualquiera de sus Diagnósticos activos (no cancelados), sin importar en cuál se haya registrado.
+
+**RN-23.2** La acción solo estará disponible cuando el Ticket se encuentre en Estatus "Proceso".
+
+**RN-23.3** Solo un usuario con el mismo permiso especial ya utilizado hoy para solicitar esta autorización desde el Diagnóstico podrá ver y ejecutar la acción desde el Ticket; este RF no crea un permiso nuevo.
+
+**RN-23.4** Al ejecutarse la acción, el Ticket transiciona a Estatus "Autorización Financiera" (RF-22), y dicho movimiento se registra en la bitácora de estatus del Ticket.
+
+**RN-23.5** Al ejecutarse la acción, el Estatus del Servicio Cliente relacionado se actualiza a "Autorización Financiera" (el mismo Estado de RF-22), y dicho movimiento se registra en su bitácora, conforme al mecanismo de RF-07.
+
+**RN-23.6** Mientras el Ticket se encuentre en Estatus "Autorización Financiera", queda bloqueado para cualquier edición o modificación de sus campos.
+
+**RN-23.7** Esta acción reutiliza el mismo mecanismo y el mismo tipo de autorización genérica ("Autorización Financiera") ya utilizado por el Diagnóstico; no crea un tipo de autorización nuevo.
+
+### Criterios de Aceptación
+
+**CA-23.1.1 — Acción disponible con al menos una compra**
+Dado un Ticket en Estatus "Proceso" con al menos una compra registrada en alguno de sus Diagnósticos activos, y un usuario con el permiso especial correspondiente
+Cuando consulta el Ticket
+Entonces la acción para solicitar la Autorización Financiera está visible y disponible.
+
+**CA-23.1.2 — Acción no disponible sin compras registradas**
+Dado un Ticket en Estatus "Proceso" sin ninguna compra registrada en sus Diagnósticos
+Cuando lo consulta
+Entonces la acción no está disponible.
+
+**CA-23.1.3 — Acción no disponible fuera de Proceso**
+Dado un Ticket que no se encuentra en Estatus "Proceso"
+Cuando lo consulta
+Entonces la acción no está disponible, sin importar si tiene compras registradas.
+
+**CA-23.1.4 — Acción no disponible sin permiso**
+Dado un usuario sin el permiso especial correspondiente
+Cuando consulta un Ticket en Estatus "Proceso" con al menos una compra registrada
+Entonces la acción no está disponible.
+
+**CA-23.1.5 — Transición exitosa y reflejo en Servicio Cliente**
+Dado un Ticket en Estatus "Proceso" con al menos una compra registrada y un usuario con el permiso especial correspondiente
+Cuando ejecuta la acción para solicitar la Autorización Financiera
+Entonces el Ticket transiciona a Estatus "Autorización Financiera", queda registrado en su bitácora, y el Estatus del Servicio Cliente relacionado se actualiza al mismo Estado y queda registrado en su propia bitácora.
+
+**CA-23.1.6 — Bloqueo de edición**
+Dado un Ticket en Estatus "Autorización Financiera"
+Cuando cualquier usuario intenta editar o modificar alguno de sus campos
+Entonces el sistema impide la operación.
+
+---
+
+## US-23.2 — Reflejo automático de la resolución de la Autorización Financiera en el Ticket
+
+Como analista de negocio, quiero que la resolución de la Autorización Financiera (Autorizado o Rechazado) se refleje automáticamente en el Ticket y en el Servicio Cliente relacionado, para que ninguno de los dos quede desincronizado respecto al resultado.
+
+### Reglas de Negocio
+
+**RN-23.8** Cuando la Autorización Financiera vinculada al Ticket se resuelva como Autorizada, mediante el mecanismo de autorización genérica ya existente, el Ticket transiciona automáticamente a Estatus "En Proceso", y dicho movimiento se registra en su bitácora.
+
+**RN-23.9** Al ejecutarse RN-23.8, el Estatus del Servicio Cliente relacionado regresa al Estatus que tenía inmediatamente antes de la transición a "Autorización Financiera" (RN-23.5), tomado de su propia bitácora, y dicho movimiento se registra en dicha bitácora.
+
+**RN-23.10** Al ejecutarse RN-23.8, el Ticket deja de estar bloqueado y vuelve a quedar disponible para su edición conforme a las reglas ya existentes para un Ticket en Proceso.
+
+**RN-23.11** Cuando la Autorización Financiera vinculada al Ticket se resuelva como Rechazada, el Ticket transiciona a Estatus "Autorización Rechazada" (estatus ya existente en el sistema), y dicho movimiento se registra en su bitácora.
+
+**RN-23.12** Al ejecutarse RN-23.11, el Estatus del Servicio Cliente relacionado se actualiza a "Autorización Rechazada", y dicho movimiento se registra en su bitácora.
+
+**RN-23.13** El Estatus "Autorización Rechazada" es terminal para efectos de este RF: no se define ninguna acción de regreso a "En Proceso" ni a ningún otro Estatus.
+
+### Criterios de Aceptación
+
+**CA-23.2.1 — Autorización aprobada**
+Dado un Ticket en Estatus "Autorización Financiera" cuya autorización es resuelta como Autorizada
+Cuando dicha resolución ocurre
+Entonces el Ticket transiciona a Estatus "En Proceso", queda registrado en su bitácora, y el Estatus del Servicio Cliente relacionado regresa al que tenía antes, quedando registrado en su propia bitácora.
+
+**CA-23.2.2 — Autorización rechazada**
+Dado un Ticket en Estatus "Autorización Financiera" cuya autorización es resuelta como Rechazada
+Cuando dicha resolución ocurre
+Entonces el Ticket transiciona a Estatus "Autorización Rechazada", queda registrado en su bitácora, y el Estatus del Servicio Cliente relacionado se actualiza al mismo Estatus, quedando registrado en su propia bitácora.
+
+**CA-23.2.3 — Edición restablecida tras autorización**
+Dado un Ticket que acaba de regresar a Estatus "Proceso" conforme a CA-23.2.1
+Cuando un usuario intenta editarlo
+Entonces el sistema permite la edición conforme a las reglas ya existentes para un Ticket en Proceso.
+
+**CA-23.2.4 — Sin acción de regreso tras el rechazo**
+Dado un Ticket en Estatus "Autorización Rechazada" conforme a CA-23.2.2
+Cuando se consulta el Ticket
+Entonces no existe ninguna acción disponible, dentro del alcance de este RF, para regresarlo a "En Proceso" o a cualquier otro Estatus.
+
+---
+
+**Regla transversal:**
+Este RF depende de RF-22 (alta del Estado "Autorización Financiera") y de RF-07 (bitácora obligatoria). Reutiliza el mismo permiso especial y el mismo mecanismo de autorización genérica ya utilizado hoy por el Diagnóstico; no crea un permiso ni un tipo de autorización nuevos. El Estatus "Autorización Rechazada" ya existe en el sistema y se reutiliza sin alta adicional en el catálogo de Estados. Queda como consideración técnica para el equipo de desarrollo la coexistencia de este flujo con el que el Ticket ya utiliza para su propia "Solicitud de Acceso" (RF-13), dado que ambos se apoyan en el mismo mecanismo genérico de autorización; este RF no prescribe cómo debe resolverse dicha coexistencia.
+
+**Nota — fuera de alcance:** este RF no incorpora ningún mecanismo automático de vencimiento por tolerancia para el Estatus "Autorización Financiera" (a diferencia de "En Validación", que sí lo tiene en RF-24); el Job de cancelación automática existente en el sistema opera sobre Estatus "En Autorización"/"Autorización Rechazada" y es independiente de este flujo, por lo que no aplica aquí. Si se requiere un mecanismo equivalente, es un requerimiento independiente fuera de este documento.
+
+---
+
+
+---
+
+# RF-24 — Job para finalizar Tickets con plazo de validación vencido
+
+| Campo          | Valor        |
+|----------------|--------------|
+| Prioridad      | Alta         |
+| Asignado       |              |
+| Dependencias   | RF-05, RF-07, RF-20, RF-21 |
+
+## Objetivo
+
+Ejecutar, mediante una Tarea Programada (Job) que corre cada hora dentro del horario laboral, la finalización automática de los Tickets en Estatus "En Validación" cuyo plazo de validación —contabilizado únicamente en horas laborales— ya venció, tratando la falta de respuesta del usuario que reporta como una validación implícita "Válido", y reflejando el movimiento en la bitácora del Ticket y en el Estatus y bitácora del Servicio Cliente relacionado.
+
+## Descripción
+
+RF-21 estableció que un Ticket cerrado con un Tipo de Servicio Interno que requiere validación (RF-05) transiciona a "En Validación", registrando su Fecha de Inicio de Validación (RN-21.7). Este RF finaliza automáticamente esos Tickets cuando su plazo vence sin respuesta del usuario que reporta, tratando el silencio como una validación implícita "Válido". El plazo se contabiliza únicamente en horas dentro del horario laboral (ver RN-24.1 y el ejemplo en CA-24.2.5/CA-24.2.6), no en horas de reloj corridas.
+
+---
+
+## US-24.1 — Ejecución del Job dentro del horario laboral
+
+Como analista de negocio, quiero que el Job de finalización de validaciones se ejecute únicamente dentro del horario laboral definido, para que los Tickets no se finalicen fuera de la operación normal del CAU.
+
+### Reglas de Negocio
+
+**RN-24.1** El Job se ejecuta cada hora, únicamente de lunes a viernes entre las 9:00 y las 18:00 horas, y los sábados entre las 9:00 y las 14:00 horas.
+
+**RN-24.2** El Job no se ejecuta los domingos, ni en ningún horario fuera de las ventanas de RN-24.1.
+
+### Criterios de Aceptación
+
+**CA-24.1.1 — Ejecución en horario laboral entre semana**
+Dado que es un día de lunes a viernes y la hora actual se encuentra entre las 9:00 y las 18:00
+Cuando corresponde la ejecución horaria del Job
+Entonces el Job se ejecuta.
+
+**CA-24.1.2 — Ejecución en horario laboral de sábado**
+Dado que es sábado y la hora actual se encuentra entre las 9:00 y las 14:00
+Cuando corresponde la ejecución horaria del Job
+Entonces el Job se ejecuta.
+
+**CA-24.1.3 — Sin ejecución fuera de horario laboral**
+Dado que la hora actual se encuentra fuera de las ventanas de RN-24.1
+Cuando correspondería la ejecución horaria del Job
+Entonces el Job no se ejecuta.
+
+---
+
+## US-24.2 — Finalización automática de Tickets con plazo vencido
+
+Como analista de negocio, quiero que el Job finalice automáticamente los Tickets en "En Validación" cuyo plazo de validación venció, para que ningún Ticket quede indefinidamente a la espera de una confirmación que no llegó.
+
+### Reglas de Negocio
+
+**RN-24.3** En cada ejecución, el Job obtiene los Tickets en Estatus "En Validación".
+
+**RN-24.4** Para cada Ticket obtenido, el Job calcula las horas laborales acumuladas desde su Fecha de Inicio de Validación (RN-21.7) hasta el momento de la ejecución, contando exclusivamente las horas dentro de las ventanas de RN-24.1.
+
+**RN-24.5** Un Ticket se considera con el plazo vencido cuando las horas laborales acumuladas conforme a RN-24.4 son mayores o iguales al Tiempo de Expiración de Validación en Horas (RF-05) del Tipo de Servicio Interno definido en el cierre.
+
+**RN-24.6** Todo Ticket con el plazo vencido transiciona a Estatus "Atendido" (el mismo Estatus de cierre que habría recibido de no requerir validación), tratando la falta de resolución como una validación implícita "Válido".
+
+**RN-24.7** Toda transición ejecutada por el Job conforme a RN-24.6 se registra en la bitácora de estatus del Ticket.
+
+**RN-24.8** Toda transición ejecutada por el Job conforme a RN-24.6 debe reflejarse en el Estatus del Servicio Cliente relacionado, mediante el mismo mecanismo que ya sincroniza dicho Estatus cuando el Ticket se cierra normalmente, y dicho movimiento se registra en su bitácora.
+
+**RN-24.9** Un Ticket en "En Validación" cuyo plazo aún no está vencido no es modificado por el Job.
+
+**RN-24.10** Al finalizar un Ticket, el Job registra como responsable de la atención (Atendió) a un empleado de respaldo configurado para cierres automáticos, siguiendo el mismo mecanismo ya utilizado por el Job de cancelación existente (variable de sistema con el personal encargado de soporte); ningún Ticket queda finalizado sin un responsable identificado.
+
+### Criterios de Aceptación
+
+**CA-24.2.1 — Finalización de Ticket vencido**
+Dado un Ticket en Estatus "En Validación" cuyas horas laborales acumuladas desde su Fecha de Inicio de Validación ya alcanzan el Tiempo de Expiración de Validación en Horas del Tipo de Servicio Interno definido en el cierre
+Cuando el Job se ejecuta
+Entonces el Ticket transiciona a Estatus "Atendido", quedando registrado en su bitácora.
+
+**CA-24.2.2 — Reflejo en Servicio Cliente**
+Dado un Ticket finalizado por el Job conforme a CA-24.2.1
+Cuando dicha finalización ocurre
+Entonces el Estatus del Servicio Cliente relacionado se actualiza conforme al cierre del Ticket y queda registrado en su propia bitácora.
+
+**CA-24.2.3 — Ticket sin plazo vencido no se modifica**
+Dado un Ticket en Estatus "En Validación" cuyas horas laborales acumuladas aún no alcanzan el Tiempo de Expiración de Validación en Horas correspondiente
+Cuando el Job se ejecuta
+Entonces dicho Ticket permanece sin cambios en Estatus "En Validación".
+
+**CA-24.2.4 — Ejecución masiva**
+Dado que existen varios Tickets en Estatus "En Validación" con el plazo vencido al momento de ejecutarse el Job
+Cuando el Job se ejecuta
+Entonces todos ellos son finalizados conforme a CA-24.2.1 y CA-24.2.2 en la misma ejecución.
+
+**CA-24.2.5 — Plazo que abarca un fin de semana**
+Dado un Ticket cuya Fecha de Inicio de Validación es un sábado a las 13:00 y cuyo Tipo de Servicio Interno tiene un Tiempo de Expiración de Validación de 5 horas
+Cuando el Job se ejecuta en cualquier momento entre el sábado a las 14:00 y el lunes antes de las 13:00
+Entonces el Ticket permanece sin cambios en "En Validación", pues solo ha acumulado 1 hora laboral; su plazo se cumple hasta el lunes a las 13:00.
+
+**CA-24.2.6 — Cumplimiento del plazo tras el fin de semana**
+Dado el mismo Ticket de CA-24.2.5
+Cuando el Job se ejecuta el lunes a las 13:00 o después
+Entonces el Ticket transiciona a Estatus "Atendido", conforme a CA-24.2.1.
+
+**CA-24.2.7 — Responsable de la finalización automática**
+Dado un Ticket finalizado por el Job conforme a CA-24.2.1
+Cuando se consulta quién quedó registrado como responsable de la atención
+Entonces corresponde al empleado de respaldo configurado para cierres automáticos, y no queda vacío.
+
+---
+
+**Regla transversal:**
+Este RF depende de RF-05 (Tiempo de Expiración de Validación), RF-07 (bitácora obligatoria), RF-20 (alta del Estado "En Validación") y RF-21 (transición a "En Validación" y Fecha de Inicio de Validación, RN-21.7). La finalización automática de este Job trata siempre la falta de respuesta como una validación implícita "Válido"; no aplica cuando el usuario que reporta resuelve la validación como "No Válido" antes del vencimiento, caso cubierto por el requerimiento independiente referenciado en RF-21. Queda fuera de alcance de este RF definir un mecanismo equivalente para la Solicitud de Servicio.
+
+**Nota técnica:** el cierre de un Ticket dispara lógica adicional (registro de quién atendió, fecha de atención, tipo de servicio interno de cierre) que hoy solo se ejecuta desde la acción de cierre operada por una persona. El desarrollo debe asegurar que la finalización automática de este Job dispare esa misma lógica —incluyendo el responsable de RN-24.10—, en lugar de únicamente cambiar el campo Estatus, para no dejar el Ticket en un estado inconsistente.
 
 ---
 
