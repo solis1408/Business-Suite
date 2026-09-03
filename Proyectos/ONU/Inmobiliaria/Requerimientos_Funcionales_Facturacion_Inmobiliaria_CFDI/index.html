@@ -2000,10 +2000,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-índice-de-requerimientos" class="md-nav__link">
+  <a href="#6-usuarios-y-roles" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6. Índice de requerimientos
+        6. Usuarios y roles
       
     </span>
   </a>
@@ -2011,15 +2011,26 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#7-reglas-de-negocio--vista-general" class="md-nav__link">
+  <a href="#7-índice-de-requerimientos" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7. Reglas de Negocio — Vista General
+        7. Índice de requerimientos
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="7. Reglas de Negocio — Vista General">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-reglas-de-negocio--vista-general" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Reglas de Negocio — Vista General
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Reglas de Negocio — Vista General">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -3526,10 +3537,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-índice-de-requerimientos" class="md-nav__link">
+  <a href="#6-usuarios-y-roles" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6. Índice de requerimientos
+        6. Usuarios y roles
       
     </span>
   </a>
@@ -3537,15 +3548,26 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#7-reglas-de-negocio--vista-general" class="md-nav__link">
+  <a href="#7-índice-de-requerimientos" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7. Reglas de Negocio — Vista General
+        7. Índice de requerimientos
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="7. Reglas de Negocio — Vista General">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-reglas-de-negocio--vista-general" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Reglas de Negocio — Vista General
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Reglas de Negocio — Vista General">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -3813,7 +3835,27 @@
     Rechazado --&gt; Timbrado: Reintento permitido tras 24 horas
     Cancelado --&gt; [*]</code></pre>
 <p>El diagrama aplica de forma general a los cuatro tipos de CFDI; el sub-estatus <strong>Rechazado</strong> y su espera de 24 horas son exclusivos de Factura (ver RF-11), y algunos CFDI de Anticipo/Abono generados automáticamente nacen directamente en estatus Cancelado (ver RF-06).</p>
-<h2 id="6-índice-de-requerimientos">6. Índice de requerimientos<a class="headerlink" href="#6-índice-de-requerimientos" title="Permanent link">&para;</a></h2>
+<h2 id="6-usuarios-y-roles">6. Usuarios y roles<a class="headerlink" href="#6-usuarios-y-roles" title="Permanent link">&para;</a></h2>
+<p>Usuarios registrados para la operación del módulo, con su empleado asociado:</p>
+<table>
+<thead>
+<tr>
+<th>Usuario</th>
+<th>Empleado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>inmfac</td>
+<td>GISELA LOZA GONZALEZ</td>
+</tr>
+<tr>
+<td>inmfac02</td>
+<td>LESLIE KARINA RIVERA DAVILA</td>
+</tr>
+</tbody>
+</table>
+<h2 id="7-índice-de-requerimientos">7. Índice de requerimientos<a class="headerlink" href="#7-índice-de-requerimientos" title="Permanent link">&para;</a></h2>
 <blockquote>
 <p><strong>Navegación rápida:</strong> cada identificador RF en la primera columna es un enlace que lleva directamente al detalle del requerimiento. Hacer clic para ir al RF. Los requerimientos se listan primero de <strong>Emisión</strong> y después de <strong>Cancelación</strong>.</p>
 </blockquote>
@@ -3895,7 +3937,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="7-reglas-de-negocio--vista-general">7. Reglas de Negocio — Vista General<a class="headerlink" href="#7-reglas-de-negocio--vista-general" title="Permanent link">&para;</a></h2>
+<h2 id="8-reglas-de-negocio--vista-general">8. Reglas de Negocio — Vista General<a class="headerlink" href="#8-reglas-de-negocio--vista-general" title="Permanent link">&para;</a></h2>
 <blockquote>
 <p>Esta sección da visibilidad consolidada a las <strong>43 reglas de negocio</strong> documentadas (derivadas de las 55 reglas del Documento de Alcance Funcional fuente, reagrupadas y sin duplicados), organizadas en el mismo orden Emisión → Cancelación del índice. Cada regla vive también dentro de su RF/HU correspondiente (sección <code>### Reglas de negocio</code>); esta tabla es un mapa rápido de consulta, no reemplaza el detalle.</p>
 </blockquote>
@@ -4245,7 +4287,7 @@ Entonces el sistema rechaza la operación e informa que se requiere permiso espe
 Dado que un CFDI fue timbrado exitosamente
 Cuando concluye el proceso de timbrado
 Entonces el sistema envía automáticamente el documento CFDI al correo electrónico registrado del cliente.</p>
-<p><a href="#6-índice-de-requerimientos">⬆ Volver al índice</a></p>
+<p><a href="#7-índice-de-requerimientos">⬆ Volver al índice</a></p>
 <p><a id="rf-02"></a></p>
 <h1 id="rf-02--emisión-de-cfdi-por-sustitución">RF-02 — Emisión de CFDI por sustitución<a class="headerlink" href="#rf-02--emisión-de-cfdi-por-sustitución" title="Permanent link">&para;</a></h1>
 <table>
@@ -4302,7 +4344,7 @@ Entonces el sistema impide la operación e informa el motivo.</p>
 Dado que la información requerida para la emisión del CFDI sustituto está incompleta o no es válida
 Cuando el usuario intenta emitirlo
 Entonces el sistema impide la emisión y muestra al usuario el motivo correspondiente.</p>
-<p><a href="#6-índice-de-requerimientos">⬆ Volver al índice</a></p>
+<p><a href="#7-índice-de-requerimientos">⬆ Volver al índice</a></p>
 <p><a id="rf-03"></a></p>
 <h1 id="rf-03--emisión-de-cfdi-en-diferentes-monedas-y-tipo-de-cambio">RF-03 — Emisión de CFDI en diferentes monedas y tipo de cambio<a class="headerlink" href="#rf-03--emisión-de-cfdi-en-diferentes-monedas-y-tipo-de-cambio" title="Permanent link">&para;</a></h1>
 <table>
@@ -4352,7 +4394,7 @@ Entonces el sistema impide la emisión e informa el motivo al usuario.</p>
 Dado que el sistema calculó la moneda, el tipo de cambio y los importes del CFDI
 Cuando el usuario revisa la información antes de confirmar
 Entonces el sistema le permite validar los datos y, al confirmar, emite el CFDI o informa el motivo si ocurre un error.</p>
-<p><a href="#6-índice-de-requerimientos">⬆ Volver al índice</a></p>
+<p><a href="#7-índice-de-requerimientos">⬆ Volver al índice</a></p>
 <p><a id="rf-04"></a></p>
 <h1 id="rf-04--emisión-de-nota-de-crédito">RF-04 — Emisión de Nota de Crédito<a class="headerlink" href="#rf-04--emisión-de-nota-de-crédito" title="Permanent link">&para;</a></h1>
 <table>
@@ -4417,7 +4459,7 @@ Entonces el sistema genera automáticamente la Nota de Crédito sin intervenció
 <hr />
 <p><strong>Regla transversal:</strong>
 Este requerimiento se relaciona con RF-11 (Cancelación de Factura): la cancelación de una Factura ya timbrada puede disparar la generación automática de una Nota de Crédito tipo Cancelación.</p>
-<p><a href="#6-índice-de-requerimientos">⬆ Volver al índice</a></p>
+<p><a href="#7-índice-de-requerimientos">⬆ Volver al índice</a></p>
 <h2 id="---_1">---<a class="headerlink" href="#---_1" title="Permanent link">&para;</a></h2>
 <p><a id="rf-05"></a></p>
 <h1 id="rf-05--cancelación-general-de-cfdi-información-obligatoria-diferenciada-fiscal-vs-no-fiscal">RF-05 — Cancelación general de CFDI (información obligatoria diferenciada: Fiscal vs. No Fiscal)<a class="headerlink" href="#rf-05--cancelación-general-de-cfdi-información-obligatoria-diferenciada-fiscal-vs-no-fiscal" title="Permanent link">&para;</a></h1>
@@ -4482,7 +4524,7 @@ Entonces el sistema impide la cancelación e informa que el periodo se encuentra
 <hr />
 <p><strong>Regla transversal:</strong>
 Este requerimiento es la base de las cancelaciones específicas por tipo de documento (RF-08 Factura, RF-09 Abono, RF-10 Anticipo, RF-11 Nota de Crédito): la diferenciación entre información obligatoria Fiscal (motivo, observaciones y periodo fiscal) y No Fiscal (sólo observaciones) aplica a todas ellas.</p>
-<p><a href="#6-índice-de-requerimientos">⬆ Volver al índice</a></p>
+<p><a href="#7-índice-de-requerimientos">⬆ Volver al índice</a></p>
 <p><a id="rf-06"></a></p>
 <h1 id="rf-06--cancelación-de-cfdi-fiscal-emitido-para-sustitución">RF-06 — Cancelación de CFDI fiscal emitido para sustitución<a class="headerlink" href="#rf-06--cancelación-de-cfdi-fiscal-emitido-para-sustitución" title="Permanent link">&para;</a></h1>
 <table>
@@ -4536,7 +4578,7 @@ Entonces el sistema rechaza la operación e informa que no cuenta con los permis
 <hr />
 <p><strong>Regla transversal:</strong>
 Este requerimiento comparte reglas con RF-08 (Cancelación general de CFDI) y con RF-02 (Emisión de CFDI por sustitución): un CFDI sólo puede sustituirse si el original quedó previamente cancelado por esta vía.</p>
-<p><a href="#6-índice-de-requerimientos">⬆ Volver al índice</a></p>
+<p><a href="#7-índice-de-requerimientos">⬆ Volver al índice</a></p>
 <p><a id="rf-07"></a></p>
 <h1 id="rf-07--exclusión-del-motivo-global-en-cancelación-de-abonos-y-anticipos">RF-07 — Exclusión del motivo "Global" en cancelación de Abonos y Anticipos<a class="headerlink" href="#rf-07--exclusión-del-motivo-global-en-cancelación-de-abonos-y-anticipos" title="Permanent link">&para;</a></h1>
 <table>
@@ -4579,7 +4621,7 @@ Entonces el sistema no muestra el motivo "04 - Global" entre las opciones.</p>
 Dado que, por una condición excepcional, el motivo "04 - Global" quedó disponible y fue seleccionado por el usuario
 Cuando el usuario intenta confirmar la cancelación
 Entonces el sistema impide la ejecución de la cancelación e informa que el motivo no es válido para ese tipo de comprobante.</p>
-<p><a href="#6-índice-de-requerimientos">⬆ Volver al índice</a></p>
+<p><a href="#7-índice-de-requerimientos">⬆ Volver al índice</a></p>
 <p><a id="rf-08"></a></p>
 <h1 id="rf-08--cancelación-de-factura-fiscal">RF-08 — Cancelación de Factura fiscal<a class="headerlink" href="#rf-08--cancelación-de-factura-fiscal" title="Permanent link">&para;</a></h1>
 <table>
@@ -4639,7 +4681,7 @@ Entonces el sistema no aplica este flujo, dado que únicamente aplica sobre Fact
 <hr />
 <p><strong>Regla transversal:</strong>
 La cancelación de Factura depende de RF-14 (Cancelación de Nota de Crédito): si existe una NC relacionada, debe resolverse primero esa cancelación.</p>
-<p><a href="#6-índice-de-requerimientos">⬆ Volver al índice</a></p>
+<p><a href="#7-índice-de-requerimientos">⬆ Volver al índice</a></p>
 <p><a id="rf-09"></a></p>
 <h1 id="rf-09--cancelación-de-abono-fiscal">RF-09 — Cancelación de Abono fiscal<a class="headerlink" href="#rf-09--cancelación-de-abono-fiscal" title="Permanent link">&para;</a></h1>
 <table>
@@ -4691,7 +4733,7 @@ Entonces el sistema impide la cancelación e informa que el motivo no es válido
 <hr />
 <p><strong>Regla transversal:</strong>
 La cancelación de un Abono impacta directamente a RF-13 (Cancelación de Anticipo) cuando existe un Anticipo generado por remanente.</p>
-<p><a href="#6-índice-de-requerimientos">⬆ Volver al índice</a></p>
+<p><a href="#7-índice-de-requerimientos">⬆ Volver al índice</a></p>
 <p><a id="rf-10"></a></p>
 <h1 id="rf-10--cancelación-de-anticipo-fiscal">RF-10 — Cancelación de Anticipo fiscal<a class="headerlink" href="#rf-10--cancelación-de-anticipo-fiscal" title="Permanent link">&para;</a></h1>
 <table>
@@ -4738,7 +4780,7 @@ Entonces el sistema impide la operación e informa que el motivo no es válido.<
 Dado que el Anticipo a cancelar se encuentra en estatus Pendiente de timbrar (aún no es fiscal)
 Cuando el usuario intenta cancelarlo mediante el flujo de cancelación de Anticipo descrito en este requerimiento
 Entonces el sistema impide la operación, dado que este requerimiento aplica únicamente sobre Anticipos fiscales (Timbrados).</p>
-<p><a href="#6-índice-de-requerimientos">⬆ Volver al índice</a></p>
+<p><a href="#7-índice-de-requerimientos">⬆ Volver al índice</a></p>
 <p><a id="rf-11"></a></p>
 <h1 id="rf-11--cancelación-de-nota-de-crédito-fiscal">RF-11 — Cancelación de Nota de Crédito fiscal<a class="headerlink" href="#rf-11--cancelación-de-nota-de-crédito-fiscal" title="Permanent link">&para;</a></h1>
 <table>
@@ -4785,7 +4827,7 @@ Entonces el sistema impide la operación e informa que el motivo no es válido.<
 Dado que el documento a cancelar es una Nota de Crédito de tipo Interno o Interplanta (no fiscal)
 Cuando el usuario intenta cancelarla mediante el flujo de cancelación de Nota de Crédito fiscal descrito en este requerimiento
 Entonces el sistema no aplica este flujo, dado que dicho documento no constituye un CFDI fiscal; en el caso de la NC Interna, su cancelación ocurre automáticamente al clonarse como NC Fiscal conforme a RN-4.1.</p>
-<p><a href="#6-índice-de-requerimientos">⬆ Volver al índice</a></p>
+<p><a href="#7-índice-de-requerimientos">⬆ Volver al índice</a></p>
 <h2 id="_1"><a id="rf-11"></a><a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <hr />
 <h2 id="requerimientos-no-funcionales-rnf">Requerimientos no funcionales (RNF)<a class="headerlink" href="#requerimientos-no-funcionales-rnf" title="Permanent link">&para;</a></h2>
