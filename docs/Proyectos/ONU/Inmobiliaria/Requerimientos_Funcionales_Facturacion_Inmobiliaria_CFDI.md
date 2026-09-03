@@ -101,7 +101,16 @@ stateDiagram-v2
 
 El diagrama aplica de forma general a los cuatro tipos de CFDI; el sub-estatus **Rechazado** y su espera de 24 horas son exclusivos de Factura (ver RF-11), y algunos CFDI de Anticipo/Abono generados automáticamente nacen directamente en estatus Cancelado (ver RF-06).
 
-## 6. Índice de requerimientos
+## 6. Usuarios y roles
+
+Usuarios registrados para la operación del módulo, con su empleado asociado:
+
+| Usuario   | Empleado                        |
+|-----------|----------------------------------|
+| inmfac    | GISELA LOZA GONZALEZ             |
+| inmfac02  | LESLIE KARINA RIVERA DAVILA      |
+
+## 7. Índice de requerimientos
 
 > **Navegación rápida:** cada identificador RF en la primera columna es un enlace que lleva directamente al detalle del requerimiento. Hacer clic para ir al RF. Los requerimientos se listan primero de **Emisión** y después de **Cancelación**.
 
@@ -119,7 +128,7 @@ El diagrama aplica de forma general a los cuatro tipos de CFDI; el sub-estatus *
 | [RF-10](#rf-10) | Cancelación de Anticipo fiscal | Facturación Inmobiliaria | Anticipo (fiscal, Timbrado) |
 | [RF-11](#rf-11) | Cancelación de Nota de Crédito fiscal | Facturación Inmobiliaria | Nota de Crédito (tipo Fiscal) |
 
-## 7. Reglas de Negocio — Vista General
+## 8. Reglas de Negocio — Vista General
 
 > Esta sección da visibilidad consolidada a las **43 reglas de negocio** documentadas (derivadas de las 55 reglas del Documento de Alcance Funcional fuente, reagrupadas y sin duplicados), organizadas en el mismo orden Emisión → Cancelación del índice. Cada regla vive también dentro de su RF/HU correspondiente (sección `### Reglas de negocio`); esta tabla es un mapa rápido de consulta, no reemplaza el detalle.
 
@@ -252,7 +261,7 @@ Dado que un CFDI fue timbrado exitosamente
 Cuando concluye el proceso de timbrado
 Entonces el sistema envía automáticamente el documento CFDI al correo electrónico registrado del cliente.
 
-[⬆ Volver al índice](#6-índice-de-requerimientos)
+[⬆ Volver al índice](#7-índice-de-requerimientos)
 
 <a id="rf-02"></a>
 # RF-02 — Emisión de CFDI por sustitución
@@ -310,7 +319,7 @@ Dado que la información requerida para la emisión del CFDI sustituto está inc
 Cuando el usuario intenta emitirlo
 Entonces el sistema impide la emisión y muestra al usuario el motivo correspondiente.
 
-[⬆ Volver al índice](#6-índice-de-requerimientos)
+[⬆ Volver al índice](#7-índice-de-requerimientos)
 
 <a id="rf-03"></a>
 # RF-03 — Emisión de CFDI en diferentes monedas y tipo de cambio
@@ -357,7 +366,7 @@ Dado que el sistema calculó la moneda, el tipo de cambio y los importes del CFD
 Cuando el usuario revisa la información antes de confirmar
 Entonces el sistema le permite validar los datos y, al confirmar, emite el CFDI o informa el motivo si ocurre un error.
 
-[⬆ Volver al índice](#6-índice-de-requerimientos)
+[⬆ Volver al índice](#7-índice-de-requerimientos)
 
 <a id="rf-04"></a>
 # RF-04 — Emisión de Nota de Crédito
@@ -430,7 +439,7 @@ Entonces el sistema genera automáticamente la Nota de Crédito sin intervenció
 **Regla transversal:**
 Este requerimiento se relaciona con RF-11 (Cancelación de Factura): la cancelación de una Factura ya timbrada puede disparar la generación automática de una Nota de Crédito tipo Cancelación.
 
-[⬆ Volver al índice](#6-índice-de-requerimientos)
+[⬆ Volver al índice](#7-índice-de-requerimientos)
 
 ---
 ---
@@ -500,7 +509,7 @@ Entonces el sistema impide la cancelación e informa que el periodo se encuentra
 **Regla transversal:**
 Este requerimiento es la base de las cancelaciones específicas por tipo de documento (RF-08 Factura, RF-09 Abono, RF-10 Anticipo, RF-11 Nota de Crédito): la diferenciación entre información obligatoria Fiscal (motivo, observaciones y periodo fiscal) y No Fiscal (sólo observaciones) aplica a todas ellas.
 
-[⬆ Volver al índice](#6-índice-de-requerimientos)
+[⬆ Volver al índice](#7-índice-de-requerimientos)
 
 <a id="rf-06"></a>
 # RF-06 — Cancelación de CFDI fiscal emitido para sustitución
@@ -554,7 +563,7 @@ Entonces el sistema rechaza la operación e informa que no cuenta con los permis
 **Regla transversal:**
 Este requerimiento comparte reglas con RF-08 (Cancelación general de CFDI) y con RF-02 (Emisión de CFDI por sustitución): un CFDI sólo puede sustituirse si el original quedó previamente cancelado por esta vía.
 
-[⬆ Volver al índice](#6-índice-de-requerimientos)
+[⬆ Volver al índice](#7-índice-de-requerimientos)
 
 <a id="rf-07"></a>
 # RF-07 — Exclusión del motivo "Global" en cancelación de Abonos y Anticipos
@@ -593,7 +602,7 @@ Dado que, por una condición excepcional, el motivo "04 - Global" quedó disponi
 Cuando el usuario intenta confirmar la cancelación
 Entonces el sistema impide la ejecución de la cancelación e informa que el motivo no es válido para ese tipo de comprobante.
 
-[⬆ Volver al índice](#6-índice-de-requerimientos)
+[⬆ Volver al índice](#7-índice-de-requerimientos)
 
 <a id="rf-08"></a>
 # RF-08 — Cancelación de Factura fiscal
@@ -656,7 +665,7 @@ Entonces el sistema no aplica este flujo, dado que únicamente aplica sobre Fact
 **Regla transversal:**
 La cancelación de Factura depende de RF-14 (Cancelación de Nota de Crédito): si existe una NC relacionada, debe resolverse primero esa cancelación.
 
-[⬆ Volver al índice](#6-índice-de-requerimientos)
+[⬆ Volver al índice](#7-índice-de-requerimientos)
 
 <a id="rf-09"></a>
 # RF-09 — Cancelación de Abono fiscal
@@ -709,7 +718,7 @@ Entonces el sistema impide la cancelación e informa que el motivo no es válido
 **Regla transversal:**
 La cancelación de un Abono impacta directamente a RF-13 (Cancelación de Anticipo) cuando existe un Anticipo generado por remanente.
 
-[⬆ Volver al índice](#6-índice-de-requerimientos)
+[⬆ Volver al índice](#7-índice-de-requerimientos)
 
 <a id="rf-10"></a>
 # RF-10 — Cancelación de Anticipo fiscal
@@ -753,7 +762,7 @@ Dado que el Anticipo a cancelar se encuentra en estatus Pendiente de timbrar (a�
 Cuando el usuario intenta cancelarlo mediante el flujo de cancelación de Anticipo descrito en este requerimiento
 Entonces el sistema impide la operación, dado que este requerimiento aplica únicamente sobre Anticipos fiscales (Timbrados).
 
-[⬆ Volver al índice](#6-índice-de-requerimientos)
+[⬆ Volver al índice](#7-índice-de-requerimientos)
 
 <a id="rf-11"></a>
 # RF-11 — Cancelación de Nota de Crédito fiscal
@@ -797,7 +806,7 @@ Dado que el documento a cancelar es una Nota de Crédito de tipo Interno o Inter
 Cuando el usuario intenta cancelarla mediante el flujo de cancelación de Nota de Crédito fiscal descrito en este requerimiento
 Entonces el sistema no aplica este flujo, dado que dicho documento no constituye un CFDI fiscal; en el caso de la NC Interna, su cancelación ocurre automáticamente al clonarse como NC Fiscal conforme a RN-4.1.
 
-[⬆ Volver al índice](#6-índice-de-requerimientos)
+[⬆ Volver al índice](#7-índice-de-requerimientos)
 
 <a id="rf-11"></a>
 ---
