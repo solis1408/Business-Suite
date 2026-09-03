@@ -101,7 +101,7 @@ stateDiagram-v2
 
 El diagrama aplica de forma general a los cuatro tipos de CFDI; el sub-estatus **Rechazado** y su espera de 24 horas son exclusivos de Factura (ver RF-11), y algunos CFDI de Anticipo/Abono generados automáticamente nacen directamente en estatus Cancelado (ver RF-06).
 
-## 6. Usuarios y roles
+## 6. Usuarios Involucrados
 
 Usuarios registrados para la operación del módulo, con su empleado asociado:
 
