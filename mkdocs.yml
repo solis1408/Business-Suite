@@ -51,9 +51,8 @@ nav:
           - Contexto: Proyectos/iNN/EstatusTickets/documentacion/diagramas/contexto.md
           - Mapa de estados: Proyectos/iNN/EstatusTickets/documentacion/diagramas/mapa-de-estados.md
           - Ejercicios de Estados Tickets: "Proyectos/iNN/EstatusTickets/documentacion/Ejercicios de Estados Tickets.pdf"
-          - Estatus Equipo de Cómputo: Proyectos/iNN/EstatusTickets/documentacion/Estatus-Equipo-Computo.pdf
-          - Estatus Proyectos Internos: Proyectos/iNN/EstatusTickets/documentacion/Estatus-Proyectos-Internos.pdf
-          - Estatus Proyectos: Proyectos/iNN/EstatusTickets/documentacion/Estatus-Proyectos.pdf
+          - Ejercicios de Equipo Cómputo: "Proyectos/iNN/EstatusTickets/documentacion/Ejercicios de Equipo Cómputo.pdf"
+          - Ejercicios de Solicitudes Servicio: "Proyectos/iNN/EstatusTickets/documentacion/Ejercicios de Solicitudes Servicio.pdf"
         - Funcionales: Proyectos/iNN/EstatusTickets/documentacion/Funcionales-Estados-Tickets-Proyectos.md
         - Técnico: Proyectos/iNN/EstatusTickets/documentacion/Tecnico-Monitor-CAU-Nuevos-Estados.md
       - Baja Usuario - Ticket Escalonado:

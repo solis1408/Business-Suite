@@ -25,6 +25,17 @@
     return Array.from(node.querySelectorAll(":scope > nav.md-nav:not(.md-nav--secondary) > ul > li.md-nav__item"));
   }
 
+  function isPdfLink(href) {
+    return /\.pdf($|\?|#)/i.test(href || "");
+  }
+
+  function applyPdfTarget(link) {
+    if (link && isPdfLink(link.href)) {
+      link.setAttribute("target", "_blank");
+      link.setAttribute("rel", "noopener");
+    }
+  }
+
   function markActive(link, currentPath, className) {
     if (!link) {
       return false;
@@ -50,6 +61,7 @@
     link.href = sourceLink.href;
     link.textContent = getLabel(node);
     markActive(link, currentPath, "bs-main-nav__leaf--active");
+    applyPdfTarget(link);
     return link;
   }
 
@@ -331,6 +343,12 @@
       if (!link) return;
       var href = link.getAttribute("href");
       if (!href) return;
+
+      if (isPdfLink(href)) {
+        applyPdfTarget(link);
+        return;
+      }
+
       var absHref = new URL(href, window.location.href).href;
       var htmlUrl = sidebarHtmlMap[absHref];
       if (!htmlUrl) return;
