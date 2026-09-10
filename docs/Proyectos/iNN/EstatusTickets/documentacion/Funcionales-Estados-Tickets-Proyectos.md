@@ -2,8 +2,8 @@
 
 | Campo    | Valor                                        |
 |----------|-----------------------------------------------|
-| Versión  | 1.0                                           |
-| Fecha    | 2026-08-19                                    |
+| Versión  | 1.1                                           |
+| Fecha    | 2026-09-03                                    |
 | Estado   | Validación funcional                          |
 | Módulo   | Tickets y Proyectos                            |
 
@@ -14,6 +14,7 @@
 | Versión | Fecha      | Descripción del cambio                                                      | Autor           |
 |---------|------------|-------------------------------------------------------------------------------|-----------------|
 | 1.0     | 2026-08-19 | Versión inicial del documento. | José Antonio Solis |
+| 1.1     | 2026-09-03 | Se agregan al índice RF-25 a RF-32; se detallan RF-28 a RF-32 (rechazo automático y flujo de autorización de la Solicitud de Servicio). | José Antonio Solis |
 
 ---
 
@@ -55,17 +56,17 @@ Registrar y versionar los requerimientos funcionales de la reestructura de estad
 | [RF-02](#rf-02--administración-de-estados) | Administración de Estados | Catálogos | BSuite | Completado | Falcón |
 | [RF-03](#rf-03--administración-de-motivos-de-cancelación) | Administración de Motivos de Cancelación | Catálogos | BSuite | Completado | Falcón |
 | [RF-04](#rf-04--importación-de-los-estados-existentes-al-catálogo) | Importación de los Estados existentes al catálogo | Catálogos | BSuite | Completado | Falcón |
-| [RF-05](#rf-05--marca-de-validación-en-el-catálogo-de-servicios-de-tickets) | Marca de Validación en el catálogo de Servicios de Tickets | Catálogos | BSuite | En Proceso | Jiri |
-| [RF-06](#rf-06--marca-de-autorización-en-los-catálogos-de-servicios) | Marca de Autorización en los catálogos de Servicios | Catálogos | BSuite | En Proceso | Jiri |
-| [RF-07](#rf-07--bitácora-obligatoria-del-servicio-cliente-relacionada-al-catálogo-de-estados) | Bitácora obligatoria del Servicio Cliente relacionada al catálogo de Estados (trigger de base de datos) | Servicio Cliente | BSuite | En Proceso | Falcón |
+| [RF-05](#rf-05--marca-de-validación-en-el-catálogo-de-servicios-de-tickets) | Marca de Validación en el catálogo de Servicios de Tickets | Catálogos | BSuite | Completado | Jiri |
+| [RF-06](#rf-06--marca-de-autorización-en-los-catálogos-de-servicios) | Marca de Autorización en los catálogos de Servicios | Catálogos | BSuite | Completado | Jiri |
+| [RF-07](#rf-07--bitácora-obligatoria-del-servicio-cliente-relacionada-al-catálogo-de-estados) | Bitácora obligatoria del Servicio Cliente relacionada al catálogo de Estados (trigger de base de datos) | Servicio Cliente | BSuite | Completado | Falcón |
 | [RF-08](#rf-08--registro-del-servicio-con-estatus-registrado) | Registro del Servicio con Estatus Registrado | Servicio Cliente | BSuite | Completado | Falcón |
-| [RF-09](#rf-09--visualización-de-trayectoria-en-mis-tickets) | Visualización de Trayectoria en Mis Tickets | Servicio Cliente | BSuite | Completado | Falcón |
+| [RF-09](#rf-09--visualización-de-trayectoria-en-mis-tickets) | Visualización de Trayectoria en Mis Tickets | Servicio Cliente | BSuite/InnoVapp | Completado | Falcón/Bueno |
 | [RF-10](#rf-10--transición-de-registrado-a-investigación-cau-desde-monitor-cau) | Transición de Registrado a Investigación CAU desde Monitor CAU | Monitor CAU | BSuite | Completado | Falcón |
 | [RF-11](#rf-11--rediseño-de-tarjetas-del-monitor-cau) | Rediseño de tarjetas del Monitor CAU | Monitor CAU | BSuite | Completado | Jiri |
 | [RF-12](#rf-12--adecuación-del-wizard-de-registro-de-ticket-o-solicitud-de-servicio) | Adecuación del wizard de registro de Ticket o Solicitud de Servicio | Monitor CAU | BSuite | Completado | Falcón |
 | [RF-13](#rf-13--registro-automático-de-autorización-al-generar-ticket-o-solicitud-de-servicio) | Registro automático de autorización al generar Ticket o Solicitud de Servicio | Monitor CAU | BSuite | Completado | Falcón |
 | [RF-14](#rf-14--cancelación-del-servicio-desde-el-wizard) | Cancelación del Servicio desde el wizard | Monitor CAU | BSuite | Completado | Falcón |
-| [RF-15](#rf-15--transición-del-ticket-a-proceso-con-la-persona-asignada-del-wizard-y-su-historial-de-asignaciones) | Transición del Ticket a "Proceso" con la Persona Asignada del wizard y su historial de asignaciones | Monitor CAU | BSuite/InnoVapp | En Proceso | Jiri |
+| [RF-15](#rf-15--transición-del-ticket-a-proceso-con-la-persona-asignada-del-wizard-y-su-historial-de-asignaciones) | Transición del Ticket a "Proceso" con la Persona Asignada del wizard y su historial de asignaciones | Monitor CAU | BSuite/InnoVapp | Completado | Jiri |
 | [RF-16](#rf-16--alta-del-estado-ing-traslado) | Alta del Estado "Ing. Traslado" | Catálogos | BSuite | En Proceso | Jiri |
 | [RF-17](#rf-17--transición-del-ticket-a-ing-traslado-y-su-reverso-a-en-proceso) | Transición del Ticket a "Ing. Traslado" y su reverso a "En Proceso" | Monitor CAU | BSuite/InnoVapp | En Proceso | Jiri/Bueno |
 | [RF-18](#rf-18--alta-del-estado-en-espera-del-usuario) | Alta del Estado "En Espera del Usuario" | Catálogos | BSuite | En Proceso | Jiri |
@@ -75,6 +76,14 @@ Registrar y versionar los requerimientos funcionales de la reestructura de estad
 | [RF-22](#rf-22--alta-del-estado-autorización-financiera) | Alta del Estado "Autorización Financiera" | Catálogos | BSuite | En Proceso | Jiri |
 | [RF-23](#rf-23--autorización-financiera-del-ticket-a-partir-de-compras-registradas-en-sus-diagnósticos) | Autorización Financiera del Ticket a partir de compras registradas en sus Diagnósticos | Monitor CAU | BSuite | En Proceso | Jiri |
 | [RF-24](#rf-24--job-para-finalizar-tickets-con-plazo-de-validación-vencido) | Job para finalizar Tickets con plazo de validación vencido | Monitor CAU | BSuite | Definición | |
+| [RF-25](#rf-25--alta-del-estatus-asignado-del-servicio-cliente) | Alta del Estatus "Asignado" del Servicio Cliente | Servicio Cliente | BSuite | Definición | |
+| [RF-26](#rf-26--transición-del-servicio-cliente-de-asignado-a-en-proceso) | Transición del Servicio Cliente de "Asignado" a "En Proceso" | Servicio Cliente | BSuite | Definición | |
+| [RF-27](#rf-27--actualización-de-la-bitácora) | Actualización de la bitácora | Servicio Cliente | BSuite | Definición | |
+| [RF-28](#rf-28--job-de-rechazo-automático-de-solicitudes-de-servicio) | Job de rechazo automático de Solicitudes de Servicio | Solicitud de Servicio | BSuite | Definición | |
+| [RF-29](#rf-29--alta-del-estatus-análisis-técnico-en-solicitud-de-servicio) | Alta del Estatus "Análisis Técnico" en Solicitud de Servicio | Catálogos | BSuite | Definición | |
+| [RF-30](#rf-30--alta-del-estatus-autorización-interna-inn-en-solicitud-de-servicio) | Alta del Estatus "Autorización Interna INN" en Solicitud de Servicio | Catálogos | BSuite | Definición | |
+| [RF-31](#rf-31--resolución-de-la-autorización-digital-de-la-solicitud-de-servicio) | Resolución de la autorización digital de la Solicitud de Servicio | Solicitud de Servicio | BSuite | Definición | |
+| [RF-32](#rf-32--resolución-de-la-autorización-interna-inn) | Resolución de la Autorización Interna INN | Solicitud de Servicio | BSuite | Definición | |
 
 ---
 
@@ -946,12 +955,12 @@ Este RF depende de RF-07 (bitácora obligatoria relacionada al catálogo de Esta
 
 # RF-09 — Visualización de Trayectoria en Mis Tickets
 
-| Campo          | Valor        |
-|----------------|--------------|
-| Prioridad      | Alta         |
-| Plataforma     | BSuite       |
-| Asignado         | Falcón   |
-| Dependencias   | RF-02, RF-07 |
+| Campo          | Valor           |
+|----------------|-----------------|
+| Prioridad      | Alta            |
+| Plataforma     | BSuite/InnoVapp |
+| Asignado         | Falcón/Bueno |
+| Dependencias   | RF-02, RF-07    |
 
 ## Objetivo
 
@@ -2377,6 +2386,375 @@ Entonces corresponde al empleado de respaldo configurado para cierres automátic
 Este RF depende de RF-05 (Tiempo de Expiración de Validación), RF-07 (bitácora obligatoria), RF-20 (alta del Estado "En Validación") y RF-21 (transición a "En Validación" y Fecha de Inicio de Validación, RN-21.7). La finalización automática de este Job trata siempre la falta de respuesta como una validación implícita "Válido"; no aplica cuando el usuario que reporta resuelve la validación como "No Válido" antes del vencimiento, caso cubierto por el requerimiento independiente referenciado en RF-21. Queda fuera de alcance de este RF definir un mecanismo equivalente para la Solicitud de Servicio.
 
 **Nota técnica:** el cierre de un Ticket dispara lógica adicional (registro de quién atendió, fecha de atención, tipo de servicio interno de cierre) que hoy solo se ejecuta desde la acción de cierre operada por una persona. El desarrollo debe asegurar que la finalización automática de este Job dispare esa misma lógica —incluyendo el responsable de RN-24.10—, en lugar de únicamente cambiar el campo Estatus, para no dejar el Ticket en un estado inconsistente.
+
+---
+
+
+---
+
+# RF-28 — Job de rechazo automático de Solicitudes de Servicio
+
+| Campo          | Valor        |
+|----------------|--------------|
+| Prioridad      | Alta         |
+| Plataforma     | BSuite       |
+| Asignado       |              |
+| Dependencias   | RF-31        |
+
+## Objetivo
+
+Que el Job de cierre automático de Solicitudes de Servicio rechace, en lugar de cancelar, las que llevan demasiado tiempo esperando la resolución de su autorización digital, dejando de modificar las que ya se encuentran rechazadas o desestimadas.
+
+## Descripción
+
+Hoy el Job cancela automáticamente, tras 3 días sin movimiento, toda Solicitud de Servicio detenida en "En Autorización", "Aut. Rechazada", "Rechazado" o "Inviable". Este RF acota su alcance: únicamente actúa sobre las detenidas en "En Autorización", a las que transiciona a "Aut. Rechazada" (RF-31) por falta de respuesta oportuna del proceso de autorización, en lugar de cancelarlas directamente; deja de tocar las otras tres, que conservan su Estatus indefinidamente hasta que otra acción del sistema las modifique.
+
+---
+
+## US-28.1 — Rechazo automático por falta de respuesta de autorización
+
+Como analista de negocio, quiero que la Solicitud de Servicio que lleva 3 días esperando la resolución de su autorización digital se rechace automáticamente, para que ninguna quede indefinidamente pendiente por falta de respuesta.
+
+### Reglas de negocio
+
+**RN-28.1** El Job evalúa únicamente las Solicitudes de Servicio en Estatus "En Autorización" cuya fecha del último cambio de Estatus tiene 3 o más días naturales de antigüedad respecto a la fecha del servidor al momento de la ejecución.
+
+**RN-28.2** Toda Solicitud de Servicio identificada conforme a RN-28.1 transiciona a Estatus "Aut. Rechazada".
+
+**RN-28.3** El Job deja de evaluar y de modificar Solicitudes de Servicio en Estatus "Aut. Rechazada", "Rechazado" o "Inviable"; estas permanecen en su Estatus indefinidamente hasta que otra acción del sistema las modifique.
+
+**RN-28.4** Toda transición ejecutada por el Job conforme a RN-28.2 se registra en la bitácora de estatus de la Solicitud de Servicio y sincroniza el Estatus y la bitácora del Servicio Cliente relacionado, conforme al mecanismo de RF-31.
+
+**RN-28.5** El Job notifica por correo al solicitante y al CAU el rechazo automático, mediante el mismo mecanismo de notificación ya utilizado hoy por el Job para sus cancelaciones automáticas.
+
+### Criterios de Aceptación
+
+**CA-28.1.1 — Rechazo automático por vencimiento**
+Dado que una Solicitud de Servicio está en Estatus "En Autorización" desde hace 3 o más días naturales
+Cuando el Job se ejecuta
+Entonces la Solicitud transiciona a Estatus "Aut. Rechazada", queda registrado en su bitácora, y se notifica al solicitante y al CAU.
+
+**CA-28.1.2 — Solicitud reciente no se modifica**
+Dado que una Solicitud de Servicio está en Estatus "En Autorización" desde hace menos de 3 días naturales
+Cuando el Job se ejecuta
+Entonces la Solicitud permanece sin cambios.
+
+**CA-28.1.3 — Sin efecto sobre Aut. Rechazada, Rechazado o Inviable**
+Dado que una Solicitud de Servicio se encuentra en Estatus "Aut. Rechazada", "Rechazado" o "Inviable", sin importar su antigüedad
+Cuando el Job se ejecuta
+Entonces la Solicitud no se modifica.
+
+**CA-28.1.4 — Reflejo en el Servicio Cliente**
+Dado un rechazo automático conforme a CA-28.1.1
+Cuando dicha transición ocurre
+Entonces el Estatus del Servicio Cliente relacionado se actualiza a "Aut. Rechazada" y queda registrado en su propia bitácora, conforme a RF-31.
+
+---
+
+**Regla transversal:**
+Este RF depende de RF-31, que define "Aut. Rechazada" como destino real de la resolución de autorización y su sincronización con el Estatus y la bitácora del Servicio Cliente; este Job reutiliza ese mismo mecanismo de sincronización sin duplicarlo. A diferencia de su comportamiento previo, este RF ya no cancela ninguna Solicitud de Servicio ni requiere un Motivo de Cancelación.
+
+---
+
+
+---
+
+# RF-29 — Alta del Estatus "Análisis Técnico" en Solicitud de Servicio
+
+| Campo          | Valor        |
+|----------------|--------------|
+| Prioridad      | Alta         |
+| Plataforma     | BSuite       |
+| Asignado       |              |
+| Dependencias   | RF-01, RF-02 |
+
+## Objetivo
+
+Registrar "Análisis Técnico" como Grupo de Estados (RF-01) y como Estado (RF-02), prerrequisito de la transición de la Solicitud de Servicio descrita en RF-31.
+
+## Descripción
+
+"Análisis Técnico" representa la revisión técnica que realiza PMO sobre una Solicitud de Servicio ya autorizada digitalmente, previa a solicitar la autorización de ejecución del proyecto. Su propósito de negocio equivale al de "En Especificación", pero se da de alta como un Estado distinto para no afectar las reglas ya vigentes que hoy dependen específicamente de "En Especificación" (edición de datos del proyecto, presupuesto de almacén, entre otras). Este RF cubre exclusivamente el alta de datos; su comportamiento operativo se documenta en RF-31.
+
+---
+
+## US-29.1 — Alta del Grupo de Estados y del Estado "Análisis Técnico"
+
+Como administrador del sistema, quiero que "Análisis Técnico" quede registrado en el catálogo de Grupos de Estados y en el catálogo de Estados, para que la Solicitud de Servicio pueda transicionar a él sin depender de una definición fija en código.
+
+### Reglas de negocio
+
+**RN-29.1** Debe existir un registro Activo en el catálogo de Grupos de Estados (RF-01) que represente el análisis técnico de la Solicitud de Servicio, previo al alta del Estado.
+
+**RN-29.2** Debe existir un registro Activo en el catálogo de Estados (RF-02) con Nombre "Análisis Técnico", asociado al Grupo de Estados de RN-29.1, con Mensaje corto y Descripción conforme a RF-02.
+
+**RN-29.3** No podrá existir más de un Estado Activo con Nombre "Análisis Técnico" en el catálogo, conforme a la regla de unicidad de RF-02.
+
+**RN-29.4** El Estado "Análisis Técnico" es de uso exclusivo de la Solicitud de Servicio; no sustituye ni modifica el uso del Estado "En Especificación" en ningún otro proceso.
+
+### Criterios de Aceptación
+
+**CA-29.1.1 — Alta del Grupo de Estados**
+Dado que no existe un Grupo de Estados que represente el análisis técnico de la Solicitud de Servicio
+Cuando el administrador lo registra conforme a RF-01 (US-1.1)
+Entonces el grupo queda disponible, Activo, para asociarse al Estado "Análisis Técnico".
+
+**CA-29.1.2 — Alta del Estado**
+Dado que existe el Grupo de Estados de CA-29.1.1, Activo
+Cuando el administrador registra el Estado "Análisis Técnico" asociándolo a ese grupo, conforme a RF-02 (US-2.1)
+Entonces el sistema crea el Estado como Activo y disponible para su uso por la Solicitud de Servicio.
+
+---
+
+**Regla transversal:**
+El Estado "Análisis Técnico" registrado por este RF es prerrequisito de la transición funcional descrita en RF-31; no modifica el alcance de RF-01 ni de RF-02, a cuyas reglas de alta, unicidad y ciclo de vida queda sujeto como cualquier otro registro de dichos catálogos. Toda regla de negocio que hoy aplique a "En Especificación" en la Solicitud de Servicio deberá aplicar también a "Análisis Técnico", conforme se detalla en RF-31.
+
+---
+
+
+---
+
+# RF-30 — Alta del Estatus "Autorización Interna INN" en Solicitud de Servicio
+
+| Campo          | Valor        |
+|----------------|--------------|
+| Prioridad      | Alta         |
+| Plataforma     | BSuite       |
+| Asignado       |              |
+| Dependencias   | RF-01, RF-02 |
+
+## Objetivo
+
+Registrar "Autorización Interna INN" como Grupo de Estados (RF-01) y como Estado (RF-02), prerrequisito de la transición de la Solicitud de Servicio descrita en RF-32.
+
+## Descripción
+
+"Autorización Interna INN" representa que la Solicitud de Servicio, ya con su alcance definido en "Solicitud Autorización", está pendiente de la decisión del área de Innovación y Negocios para autorizar o rechazar la ejecución del proyecto. Este RF cubre exclusivamente el alta de datos; su comportamiento operativo se documenta en RF-32.
+
+---
+
+## US-30.1 — Alta del Grupo de Estados y del Estado "Autorización Interna INN"
+
+Como administrador del sistema, quiero que "Autorización Interna INN" quede registrado en el catálogo de Grupos de Estados y en el catálogo de Estados, para que la Solicitud de Servicio pueda transicionar a él sin depender de una definición fija en código.
+
+### Reglas de negocio
+
+**RN-30.1** Debe existir un registro Activo en el catálogo de Grupos de Estados (RF-01) que represente la autorización interna pendiente del área de Innovación y Negocios, previo al alta del Estado.
+
+**RN-30.2** Debe existir un registro Activo en el catálogo de Estados (RF-02) con Nombre "Autorización Interna INN", asociado al Grupo de Estados de RN-30.1, con Mensaje corto y Descripción conforme a RF-02.
+
+**RN-30.3** No podrá existir más de un Estado Activo con Nombre "Autorización Interna INN" en el catálogo, conforme a la regla de unicidad de RF-02.
+
+### Criterios de Aceptación
+
+**CA-30.1.1 — Alta del Grupo de Estados**
+Dado que no existe un Grupo de Estados que represente la autorización interna pendiente del área de Innovación y Negocios
+Cuando el administrador lo registra conforme a RF-01 (US-1.1)
+Entonces el grupo queda disponible, Activo, para asociarse al Estado "Autorización Interna INN".
+
+**CA-30.1.2 — Alta del Estado**
+Dado que existe el Grupo de Estados de CA-30.1.1, Activo
+Cuando el administrador registra el Estado "Autorización Interna INN" asociándolo a ese grupo, conforme a RF-02 (US-2.1)
+Entonces el sistema crea el Estado como Activo y disponible para su uso por la Solicitud de Servicio.
+
+---
+
+**Regla transversal:**
+El Estado "Autorización Interna INN" registrado por este RF es prerrequisito de la transición funcional descrita en RF-32; no modifica el alcance de RF-01 ni de RF-02, a cuyas reglas de alta, unicidad y ciclo de vida queda sujeto como cualquier otro registro de dichos catálogos.
+
+---
+
+
+---
+
+# RF-31 — Resolución de la autorización digital de la Solicitud de Servicio
+
+| Campo          | Valor                |
+|----------------|----------------------|
+| Prioridad      | Alta                 |
+| Plataforma     | BSuite               |
+| Asignado       |                      |
+| Dependencias   | RF-06, RF-07, RF-13, RF-29 |
+
+## Objetivo
+
+Que, al resolverse la autorización digital de una Solicitud de Servicio en Estatus "En Autorización", el sistema propague dicha resolución a su Estatus —"Análisis Técnico" si fue autorizada, "Aut. Rechazada" si fue rechazada—, sincronizando el Estatus y la bitácora del Servicio Cliente relacionado.
+
+## Descripción
+
+Hoy, cuando el proveedor externo de autorización digital resuelve una solicitud de autorización, el sistema no propaga ese resultado al Estatus de la Solicitud de Servicio, que permanece indefinidamente en "En Autorización" (RF-13) sin importar la resolución. Este RF define, en términos de negocio, el punto en el que dicha resolución debe transicionar la Solicitud de Servicio y el Servicio Cliente relacionado; el mecanismo técnico para recibir la resolución del proveedor externo se documenta en el documento técnico asociado.
+
+---
+
+## US-31.1 — Transición por autorización aprobada
+
+Como analista de negocio, quiero que la Solicitud de Servicio transicione a "Análisis Técnico" en cuanto su autorización digital se resuelva como Autorizada, para que continúe su flujo sin quedar indefinidamente en "En Autorización".
+
+### Reglas de negocio
+
+**RN-31.1** Cuando la autorización digital de una Solicitud de Servicio en Estatus "En Autorización" (RF-13) se resuelve como Autorizada, la Solicitud de Servicio transiciona a Estatus "Análisis Técnico" (RF-29).
+
+**RN-31.2** La Solicitud de Servicio en Estatus "Análisis Técnico" se comporta, para efectos de edición y captura de datos del proyecto, exactamente igual que en Estatus "En Especificación"; toda regla de negocio vigente para "En Especificación" aplica también a "Análisis Técnico".
+
+**RN-31.3** Toda transición conforme a RN-31.1 se registra en la bitácora de estatus de la Solicitud de Servicio.
+
+### Criterios de Aceptación
+
+**CA-31.1.1 — Autorización aprobada**
+Dado que una Solicitud de Servicio está en Estatus "En Autorización"
+Cuando su autorización digital se resuelve como Autorizada
+Entonces la Solicitud transiciona a Estatus "Análisis Técnico" y queda registrado en su bitácora.
+
+**CA-31.1.2 — Comportamiento igual al de "En Especificación"**
+Dado que una Solicitud de Servicio está en Estatus "Análisis Técnico"
+Cuando se consulta o edita la información del proyecto
+Entonces se comporta exactamente igual que si estuviera en Estatus "En Especificación".
+
+---
+
+## US-31.2 — Transición por autorización rechazada
+
+Como analista de negocio, quiero que la Solicitud de Servicio transicione a "Aut. Rechazada" en cuanto su autorización digital se resuelva como Rechazada, para dejar constancia formal del rechazo.
+
+### Reglas de negocio
+
+**RN-31.4** Cuando la autorización digital de una Solicitud de Servicio en Estatus "En Autorización" se resuelve como Rechazada, la Solicitud de Servicio transiciona a Estatus "Aut. Rechazada".
+
+**RN-31.5** Toda transición conforme a RN-31.4 se registra en la bitácora de estatus de la Solicitud de Servicio.
+
+### Criterios de Aceptación
+
+**CA-31.2.1 — Autorización rechazada**
+Dado que una Solicitud de Servicio está en Estatus "En Autorización"
+Cuando su autorización digital se resuelve como Rechazada
+Entonces la Solicitud transiciona a Estatus "Aut. Rechazada" y queda registrado en su bitácora.
+
+---
+
+## US-31.3 — Sincronización del Estatus y bitácora del Servicio Cliente
+
+Como analista de negocio, quiero que el Estatus del Servicio Cliente refleje la resolución de la autorización digital de su Solicitud de Servicio, para mantener consistencia entre ambos registros.
+
+### Reglas de negocio
+
+**RN-31.6** Cuando la Solicitud de Servicio relacionada a un Servicio Cliente transicione a "Análisis Técnico" conforme a RN-31.1, el Estatus del Servicio Cliente relacionado se actualiza a "Análisis Técnico".
+
+**RN-31.7** Cuando la Solicitud de Servicio relacionada a un Servicio Cliente transicione a "Aut. Rechazada" conforme a RN-31.4, el Estatus del Servicio Cliente relacionado se actualiza a "Aut. Rechazada".
+
+**RN-31.8** Toda actualización del Estatus del Servicio Cliente derivada de RN-31.6 o RN-31.7 se registra en su bitácora, conforme al mecanismo de RF-07, extendiendo a estos dos Estatus el mismo mecanismo de sincronización que RF-13 ya estableció para "Requiere Autorización" y "En Autorización".
+
+### Criterios de Aceptación
+
+**CA-31.3.1 — Sincronización a Análisis Técnico**
+Dado que la Solicitud de Servicio de un Servicio Cliente transiciona a "Análisis Técnico"
+Cuando dicha transición ocurre
+Entonces el Estatus del Servicio Cliente relacionado se actualiza a "Análisis Técnico" y queda registrado en su bitácora.
+
+**CA-31.3.2 — Sincronización a Aut. Rechazada**
+Dado que la Solicitud de Servicio de un Servicio Cliente transiciona a "Aut. Rechazada"
+Cuando dicha transición ocurre
+Entonces el Estatus del Servicio Cliente relacionado se actualiza a "Aut. Rechazada" y queda registrado en su bitácora.
+
+---
+
+**Regla transversal:**
+Este RF depende de RF-06 (marca "Requiere Autorización" que determina qué Solicitudes llegan a "En Autorización"), RF-07 (bitácora obligatoria), RF-13 (transición a "Requiere Autorización"/"En Autorización" y su sincronización ya establecida con el Servicio Cliente, que este RF extiende sin repetir) y RF-29 (alta del Estado "Análisis Técnico"). No aplica a la Autorización Interna INN, cuya resolución se documenta en RF-32.
+
+---
+
+
+---
+
+# RF-32 — Resolución de la Autorización Interna INN
+
+| Campo          | Valor                      |
+|----------------|----------------------------|
+| Prioridad      | Alta                       |
+| Plataforma     | BSuite                     |
+| Asignado       |                            |
+| Dependencias   | RF-07, RF-13, RF-30, RF-31 |
+
+## Objetivo
+
+Que la Solicitud de Servicio en Estatus "Autorización Interna INN" transicione a "Autorizado" o a "Aut. Rechazada" según la decisión del área de Innovación y Negocios, sincronizando el Estatus y la bitácora del Servicio Cliente relacionado.
+
+## Descripción
+
+Hoy, al solicitarse la autorización de ejecución de un proyecto, la Solicitud de Servicio pasa directamente de "Solicitud Autorización" a "Autorizado" mediante una sola acción, sin un Estatus intermedio que refleje que la decisión está pendiente. Este RF inserta "Autorización Interna INN" (RF-30) entre ambos: la Solicitud de Servicio transiciona a él automáticamente al solicitarse la autorización de ejecución, y desde ahí el área de Innovación y Negocios la autoriza o la rechaza.
+
+---
+
+## US-32.1 — Transición automática a Autorización Interna INN
+
+Como analista de negocio, quiero que la Solicitud de Servicio quede en "Autorización Interna INN" en cuanto se solicita la autorización de ejecución del proyecto, para reflejar que su decisión está pendiente en lugar de saltar directamente a un resultado.
+
+### Reglas de negocio
+
+**RN-32.1** Al solicitarse la autorización de ejecución de un proyecto mediante la acción existente "Solicitar Autorización de Proyecto" (Estatus "Solicitud Autorización"), la Solicitud de Servicio transiciona automáticamente a Estatus "Autorización Interna INN", sin requerir una acción adicional de quien la solicita.
+
+**RN-32.2** La Solicitud de Servicio permanece en Estatus "Autorización Interna INN" hasta que el área de Innovación y Negocios registre su decisión conforme a US-32.2.
+
+**RN-32.3** Toda transición conforme a RN-32.1 se registra en la bitácora de estatus de la Solicitud de Servicio.
+
+### Criterios de Aceptación
+
+**CA-32.1.1 — Transición automática**
+Dado que una Solicitud de Servicio en Estatus "Solicitud Autorización" solicita la autorización de ejecución del proyecto
+Cuando dicha acción se completa
+Entonces la Solicitud transiciona automáticamente a Estatus "Autorización Interna INN" y queda registrado en su bitácora.
+
+---
+
+## US-32.2 — Autorización o rechazo por Innovación y Negocios
+
+Como integrante del área de Innovación y Negocios, quiero autorizar o rechazar la ejecución de una Solicitud de Servicio en "Autorización Interna INN", para decidir si el proyecto avanza o se rechaza.
+
+### Reglas de negocio
+
+**RN-32.4** Una persona con permiso de autorización de Innovación y Negocios puede, estando la Solicitud de Servicio en "Autorización Interna INN", autorizarla (transición a "Autorizado", conservando el registro de quién autoriza) o rechazarla (transición a "Aut. Rechazada").
+
+**RN-32.5** Una persona sin el permiso de autorización de Innovación y Negocios no puede ejecutar ninguna de las dos acciones de RN-32.4.
+
+**RN-32.6** Toda transición conforme a RN-32.4 se registra en la bitácora de estatus de la Solicitud de Servicio.
+
+### Criterios de Aceptación
+
+**CA-32.2.1 — Autorización por Innovación y Negocios**
+Dado que una Solicitud de Servicio está en Estatus "Autorización Interna INN" y la persona cuenta con el permiso de autorización de Innovación y Negocios
+Cuando la autoriza
+Entonces la Solicitud transiciona a Estatus "Autorizado", conservando el registro de quién autoriza, y queda registrado en su bitácora.
+
+**CA-32.2.2 — Rechazo por Innovación y Negocios**
+Dado que una Solicitud de Servicio está en Estatus "Autorización Interna INN" y la persona cuenta con el permiso de autorización de Innovación y Negocios
+Cuando la rechaza
+Entonces la Solicitud transiciona a Estatus "Aut. Rechazada" y queda registrado en su bitácora.
+
+**CA-32.2.3 — Bloqueo por falta de permiso**
+Dado que una persona no cuenta con el permiso de autorización de Innovación y Negocios
+Cuando intenta autorizar o rechazar una Solicitud de Servicio en "Autorización Interna INN"
+Entonces el sistema no permite la operación.
+
+---
+
+## US-32.3 — Sincronización del Estatus y bitácora del Servicio Cliente
+
+Como analista de negocio, quiero que el Estatus del Servicio Cliente refleje cada transición de este RF, para mantener consistencia entre ambos registros.
+
+### Reglas de negocio
+
+**RN-32.7** Cuando la Solicitud de Servicio relacionada a un Servicio Cliente transicione a "Autorización Interna INN", "Autorizado" o "Aut. Rechazada" conforme a este RF, el Estatus del Servicio Cliente relacionado se actualiza al mismo valor y dicho movimiento se registra en su bitácora, conforme al mecanismo de RF-07, extendiendo el mismo criterio que RF-13 y RF-31 ya establecen para otras transiciones.
+
+### Criterios de Aceptación
+
+**CA-32.3.1 — Sincronización con el Servicio Cliente**
+Dado que la Solicitud de Servicio de un Servicio Cliente transiciona a "Autorización Interna INN", "Autorizado" o "Aut. Rechazada" conforme a este RF
+Cuando dicha transición ocurre
+Entonces el Estatus del Servicio Cliente relacionado se actualiza al mismo valor y queda registrado en su bitácora.
+
+---
+
+**Regla transversal:**
+Este RF depende de RF-07 (bitácora obligatoria), RF-13 y RF-31 (mecanismo de sincronización con el Servicio Cliente que este RF extiende sin repetir) y RF-30 (alta del Estado "Autorización Interna INN"). No debe confundirse con el rechazo automático por falta de respuesta del Job (RF-28), que actúa únicamente sobre "En Autorización", ni con la acción existente "Desestimar" hacia "Inviable", que sigue siendo una vía distinta no modificada por este RF.
 
 ---
 
