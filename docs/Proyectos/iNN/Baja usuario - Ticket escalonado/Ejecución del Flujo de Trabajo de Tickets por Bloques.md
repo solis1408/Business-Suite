@@ -2,8 +2,8 @@
 
 | Campo   | Valor                                                  |
 |---------|--------------------------------------------------------|
-| Versión | 1.8                                                    |
-| Fecha   | 2026-09-08                                             |
+| Versión | 2.1                                                    |
+| Fecha   | 2026-09-11                                             |
 | Estado  | Definición                                             |
 | Módulo  | Innovación & Negocios — Cómputo / Tickets Escalonados  |
 | Autor   | Análisis de Negocio                                    |
@@ -16,20 +16,18 @@ Cuando se asigna equipo de cómputo a un colaborador, el sistema no genera un so
 
 Ese comportamiento tiene un límite que el negocio ya está encontrando: **no existe forma de exigir que un grupo completo de actividades termine antes de que empiece el grupo siguiente**. Si tres actividades deben trabajarse en paralelo y la cuarta solo tiene sentido cuando las tres estén listas, hoy la cuarta se abre en cuanto termina aquella de la que se colgó, sin importar que las otras dos sigan pendientes. El resultado es trabajo que arranca sin sus insumos, retrabajo, y actividades que se dan por buenas sobre información incompleta.
 
-Este documento describe los ocho requerimientos funcionales necesarios para que el flujo de trabajo pueda operar **por bloques**: tandas de actividades que se abren juntas y donde el siguiente bloque no arranca hasta que **todas** las actividades del bloque en curso hayan concluido.
+Este documento describe los seis requerimientos funcionales necesarios para que el flujo de trabajo pueda operar **por bloques**: tandas de actividades que se abren juntas y donde el siguiente bloque no arranca hasta que **todas** las actividades del bloque en curso hayan concluido.
 
 Dentro de un flujo por bloques hay un bloque que no se comporta como los demás: el **bloque principal**, que es el del propio ticket principal. Ese bloque no hace fila: se abre **junto con el primer bloque de actividades**, en el mismo momento en que nace el ticket, porque el ticket principal existe desde el arranque y no tiene sentido que espere a nadie. Y no se cierra cuando le toca su turno, sino **al final**: la etapa principal no puede darse por atendida mientras quede un solo bloque de actividades sin concluir. El bloque principal es, entonces, el paraguas del ticket: el primero que se abre y el último que se cierra.
 
 La ejecución por bloques **no se impone a todos los flujos**. Cada flujo de trabajo decide, desde su propio detalle, con qué mecanismo quiere avanzar: puede conservar el **modo escalonado** con el que opera hoy —etapa contra etapa, mediante el antecesor— o adoptar el **modo por bloques**. Esa elección es lo que permite adoptar el cambio flujo por flujo, sin obligar a reorganizar de golpe procesos que hoy funcionan bien, y es el objeto de RF-01.
 
-- **RF-01 — Selección del modo de ejecución en el detalle del flujo de trabajo**, que agrega en el propio flujo la opción de configurar con qué mecanismo avanza —escalonado por antecesor o por bloques—, determina qué datos y validaciones aplican en cada caso, y deja ese modo sellado en cada ticket al generarlo. Es el requerimiento que envuelve a los siete siguientes: todos ellos describen el comportamiento de un flujo configurado **en modo por bloques**.
+- **RF-01 — Selección del modo de ejecución en el detalle del flujo de trabajo**, que agrega en el propio flujo la opción de configurar con qué mecanismo avanza —escalonado por antecesor o por bloques—, determina qué datos y validaciones aplican en cada caso, y deja ese modo sellado en cada ticket al generarlo. Es el requerimiento que envuelve a los cinco siguientes: todos ellos describen el comportamiento de un flujo configurado **en modo por bloques**.
 - **RF-02 — Definición de bloques en la configuración del flujo de trabajo**, que incorpora el bloque como la unidad que agrupa las etapas y que gobierna el avance, en sustitución de la dependencia etapa contra etapa.
 - **RF-03 — Integridad del armado del flujo por bloques**, que impide guardar configuraciones mal armadas que dejarían tickets detenidos en producción.
 - **RF-04 — Registro y visualización del bloque en el ticket y en sus subtickets**, que lleva el bloque al ticket, lo deja registrado en cada subticket que se genera y hace visible en qué tanda va el trabajo y por qué una etapa todavía no está disponible.
 - **RF-05 — Apertura del bloque principal y activación por barrera del siguiente bloque**, que es el corazón del cambio: el bloque principal y el bloque 1 se abren juntos al generar el ticket, cada bloque siguiente se abre en una sola operación cuando —y solo cuando— el bloque en curso quedó completamente cerrado, y el bloque principal no puede cerrarse hasta que todos los demás concluyan.
-- **RF-06 — Continuidad del flujo ante bloques vacíos o descartados**, que garantiza que un bloque que no aplica al caso no detenga el ticket para siempre.
-- **RF-07 — Condicionamiento de una etapa al resultado de una etapa previa**, que preserva —ahora de forma explícita— la capacidad actual de descartar actividades según cómo se haya resuelto una decisión anterior.
-- **RF-08 — Migración de los flujos configurados y de los tickets en curso**, que convierte lo ya configurado al nuevo esquema y permite liberar el cambio sin detener el trabajo en proceso.
+- **RF-06 — Continuidad del flujo ante bloques vacíos**, que garantiza que un bloque sin actividades aplicables al caso no detenga el ticket para siempre.
 
 El objetivo es que cualquier persona del negocio entienda, sin consultar otro documento, qué es un bloque, cuándo se abre el siguiente, qué pasa cuando una tanda completa no aplica, cómo se configura todo esto, cómo se elige el modo de ejecución de cada flujo y qué ocurre con los tickets que ya estaban abiertos el día de la liberación.
 
@@ -52,7 +50,7 @@ Si alguien solo va a leer una parte de este documento, que sea esta. Todo lo dem
 | Al cerrar una etapa se abren las que colgaban de ella | Al cerrar el bloque completo se abre el siguiente completo |
 | La etapa principal arranca sola; el resto espera a que cierre | El bloque principal y el bloque 1 arrancan juntos |
 | La etapa principal se atiende al inicio | El bloque principal se atiende al final y ese cierre concluye el flujo |
-| La condición se evalúa contra el antecesor, de forma implícita | La condición declara **etapa condicionante + resultado esperado** |
+| Una etapa puede descartarse según el resultado de otra | Una etapa se abre siempre que su bloque se abra: no hay descarte por condición |
 | Una actividad puede arrancar aunque sus insumos sigan abiertos | Ninguna actividad arranca antes de que su tanda anterior esté completa |
 
 ## 2. Alcance del documento
@@ -65,9 +63,9 @@ Si alguien solo va a leer una parte de este documento, que sea esta. Todo lo dem
 - La restricción de la **pestaña de flujo de trabajo al ticket principal** en los tickets que operan por bloques: los subtickets dejan de presentarla y conservan su bloque como dato propio.
 - La **regla de barrera**: apertura del siguiente bloque únicamente cuando todas las etapas del bloque en curso quedaron en un estatus terminal, y apertura simultánea de todas las etapas de ese siguiente bloque con sus respectivos subtickets.
 - El **bloque principal** como bloque paraguas del ticket: se abre junto con el primer bloque de actividades al generar el ticket, permanece abierto durante todo el flujo y **no puede cerrarse hasta que todos los bloques de actividades hayan concluido**.
-- El **avance automático** sobre bloques que quedaron sin etapas aplicables al caso concreto o cuyas etapas se descartaron en su totalidad.
-- El **condicionamiento explícito** de una etapa al resultado registrado en una etapa previa específica, en sustitución del parámetro de activación actual, que dependía del antecesor único.
-- La **conversión de un flujo ya configurado** al esquema de bloques cuando el administrador decide cambiarlo de modo, con reporte de resultado para su validación, y el tratamiento de los **tickets abiertos** al momento de la liberación.
+- El **avance automático** sobre los bloques que quedaron sin etapas aplicables al caso concreto, incluso si son varios consecutivos.
+- El retiro del **condicionamiento de una etapa al resultado de otra**: en modo por bloques el parámetro de activación deja de intervenir y ninguna etapa se descarta por el resultado de una etapa previa.
+- El tratamiento de los **tickets que ya estaban abiertos** al momento de la liberación: no tienen modo sellado y continúan avanzando con la regla escalonada hasta cerrarse.
 - El registro en **bitácora** de la apertura de cada bloque, de la activación de cada etapa y del descarte de cada etapa con su motivo.
 
 **No incluye:**
@@ -79,7 +77,9 @@ Si alguien solo va a leer una parte de este documento, que sea esta. Todo lo dem
 - Nuevos estatus para las etapas ni para los tickets: el requerimiento reutiliza los estatus vigentes.
 - La reingeniería de las pantallas de captura de cada tipo de etapa.
 - El **retiro del modo escalonado**: el modo por antecesor se conserva como una opción válida y soportada del catálogo de flujos, no como un mecanismo en vías de eliminación. La decisión de retirarlo, si algún día se toma, es materia de otro requerimiento.
-- La conversión **masiva y automática** de todos los flujos configurados al modo por bloques: la conversión ocurre flujo por flujo, cuando el administrador lo decide.
+- Ninguna **migración ni conversión automática** de la información ya configurada: no se derivan bloques a partir de las cadenas de antecesor, no hay reporte de conversión ni estado de validación. El bloque de cada etapa lo captura el administrador antes de cambiar el flujo a modo por bloques.
+- Ningún **aviso al área responsable ni al coordinador cuando un bloque completo no aplica** al caso: la omisión queda en la bitácora del ticket y no genera notificación.
+- Ningún cambio en las **notificaciones por correo** de los subtickets: el bloque queda consultable en el subticket y en los listados, pero no se agrega al asunto ni al cuerpo del correo.
 - Ninguna **facultad para brincar, omitir o forzar manualmente** un bloque o una etapa que quedó atorada, ni para hacer avanzar un ticket detenido desde la interfaz. La barrera no admite excepciones: si un ticket queda detenido, la verificación del invariante lo detecta (RF-06) y su corrección la ejecuta el área de desarrollo. Esto es deliberado: una opción de salto convertiría la barrera en una sugerencia y devolvería el problema que el requerimiento viene a resolver.
 
 ## 3. Actores y roles
@@ -91,7 +91,7 @@ Si alguien solo va a leer una parte de este documento, que sea esta. Todo lo dem
 | Coordinador / Jefe de Cómputo | Da seguimiento al avance del flujo de un ticket, revisa los bloques pendientes y detecta desviaciones. |
 | Colaborador solicitante | Persona a la que se le asigna el equipo de cómputo y cuyo expediente se completa a lo largo del flujo. No interviene en la ejecución. |
 | Sistema (motor de flujo) | Mecanismo automático que abre el bloque principal y el primer bloque al generar el ticket, evalúa el cierre de cada bloque, abre el siguiente, genera los subtickets, descarta las etapas que no aplican e impide el cierre del bloque principal mientras queden bloques pendientes. |
-| Equipo de Desarrollo | Área responsable de implementar el cambio, ejecutar la conversión de los flujos existentes y operar el modo de compatibilidad. |
+| Equipo de Desarrollo | Área responsable de implementar el cambio y de atender los tickets que queden detenidos. |
 
 ## 4. Glosario
 
@@ -114,8 +114,7 @@ Si alguien solo va a leer una parte de este documento, que sea esta. Todo lo dem
 | Etapa principal | Etapa marcada como principal en la configuración del flujo. Es la actividad del propio ticket principal y constituye por sí sola el bloque principal. Hay una y solo una por flujo. |
 | Etapa mandatoria | Etapa que siempre forma parte del flujo de un ticket, sin importar qué cuentas o accesos se hayan solicitado. |
 | Etapa condicional | Etapa que solo forma parte del flujo de un ticket cuando la cuenta o acceso al que está asociada fue efectivamente solicitado. Si no se solicitó, la etapa nunca se genera en ese ticket. |
-| Etapa condicionante | Etapa previa cuyo resultado (SI o NA) determina si otra etapa se activa o se descarta. Concepto introducido en RF-07. |
-| Descartar una etapa | Dejar una etapa en estatus Cancelado porque no aplica al caso, sin que nadie la atienda. Una etapa descartada cuenta como concluida y no impide cerrar el bloque ni el ticket. |
+| Descartar una etapa | Dejar una etapa en estatus Cancelado. En modo por bloques ninguna regla del flujo lo produce de forma automática, pero el estatus se conserva en el modelo: una etapa en Cancelado cuenta como concluida y no impide cerrar el bloque ni el ticket. |
 | Ticket principal | Ticket que se genera al asignar el equipo de cómputo y que contiene el flujo de trabajo completo. Es el que concentra todas las etapas. |
 | Subticket | Ticket que el sistema genera automáticamente a partir de una etapa marcada para registrar ticket, dirigido al responsable de esa etapa. Depende del ticket principal y queda registrado con el bloque de la etapa que lo originó. En los tickets que operan por bloques no presenta el flujo de trabajo completo: ese se consulta en el ticket principal. |
 | Grupo escalonado | Nombre con el que el negocio se refiere al bloque cuando se habla del dato que queda registrado en el ticket y en sus subtickets. Es el mismo concepto que **bloque**: la tanda de etapas a la que perteneció la actividad que originó el ticket. |
@@ -148,7 +147,6 @@ stateDiagram-v2
     [*] --> Espera: la etapa se genera al crear el ticket
     [*] --> Activo: la etapa es la principal o pertenece al bloque 1
     Espera --> Activo: se cierra por completo el bloque anterior
-    Espera --> Cancelado: su bloque se abre pero la condición no se cumple
     Activo --> Atendido: el responsable registra la Atención Realizada (SI o NA)
     Atendido --> [*]
     Cancelado --> [*]
@@ -173,14 +171,8 @@ flowchart TD
     C -- No --> E[El bloque queda cerrado: se busca el siguiente bloque con etapas pendientes]
     E --> F{¿Existe un bloque posterior con etapas en Espera?}
     F -- No --> G[Se agotaron los bloques de actividades: la etapa principal queda disponible para atenderse]
-    F -- Sí --> H[Se evalúa cada etapa del bloque encontrado]
-    H --> I{¿La etapa tiene condición y el resultado esperado no se cumplió?}
-    I -- Sí --> J[La etapa se descarta: queda en Cancelado con su motivo]
-    I -- No --> K[La etapa pasa a Activo y genera su subticket con el bloque registrado si lo requiere]
-    J --> L{¿Se descartaron todas las etapas del bloque?}
-    K --> M[Bloque abierto: el flujo continúa aquí]
-    L -- Sí --> E
-    L -- No --> M
+    F -- Sí --> H[Se abren todas las etapas de ese bloque y se generan sus subtickets]
+    H --> M[Bloque abierto: el flujo continúa aquí]
 ```
 
 El tercer diagrama ilustra la diferencia de comportamiento con un ejemplo de cuatro actividades. Arriba, cómo avanza hoy; abajo, cómo avanzaría por bloques. Nótese que la etapa principal arranca al mismo tiempo que el bloque 1 y se cierra después del último bloque.
@@ -219,9 +211,7 @@ flowchart LR
 | [RF-03](#rf-03) | Integridad del armado del flujo por bloques | Business Suite | Flujos de Trabajo / Configuración |
 | [RF-04](#rf-04) | Registro y visualización del bloque en el ticket y en sus subtickets | Business Suite | Tickets de Cómputo |
 | [RF-05](#rf-05) | Apertura del bloque principal y activación por barrera del siguiente bloque | Business Suite | Tickets de Cómputo |
-| [RF-06](#rf-06) | Continuidad del flujo ante bloques vacíos o descartados | Business Suite | Tickets de Cómputo |
-| [RF-07](#rf-07) | Condicionamiento de una etapa al resultado de una etapa previa | Business Suite | Flujos de Trabajo / Tickets de Cómputo |
-| [RF-08](#rf-08) | Migración de los flujos configurados y de los tickets en curso | Business Suite | Transversal / Liberación |
+| [RF-06](#rf-06) | Continuidad del flujo ante bloques vacíos | Business Suite | Tickets de Cómputo |
 
 ---
 ---
@@ -235,7 +225,7 @@ flowchart LR
 | Estado       | Definición |
 | Dependencias | Ninguna    |
 
-> **Habilita y condiciona a RF-02, RF-03, RF-04, RF-05, RF-06, RF-07 y RF-08:** todos ellos describen el comportamiento de un flujo configurado en modo Por bloques.
+> **Habilita y condiciona a RF-02, RF-03, RF-04, RF-05 y RF-06:** todos ellos describen el comportamiento de un flujo configurado en modo Por bloques.
 
 ## Objetivo
 
@@ -246,13 +236,13 @@ Permitir que cada flujo de trabajo decida, desde su propio detalle, con qué mec
 El sistema deberá incorporar, en el **detalle del flujo de trabajo**, un campo **Modo de ejecución** con dos valores posibles y mutuamente excluyentes:
 
 - **Escalonado por antecesor**: el comportamiento vigente. Cada etapa declara de cuál otra depende y arranca en cuanto esa única etapa concluye. No hay bloques ni barreras.
-- **Por bloques**: el comportamiento que describen RF-02 a RF-08. Las etapas se agrupan en tandas numeradas y el siguiente bloque no arranca hasta que todas las etapas del bloque en curso concluyeron.
+- **Por bloques**: el comportamiento que describen RF-02 a RF-06. Las etapas se agrupan en tandas numeradas y el siguiente bloque no arranca hasta que todas las etapas del bloque en curso concluyeron.
 
 El modo de ejecución no es un dato informativo: es **el dato que decide qué reglas aplican** al flujo y a los tickets que genere. De él dependen tres cosas. La primera, **qué se captura en las etapas**: en modo por bloques el bloque es obligatorio y el antecesor no se captura; en modo escalonado el antecesor conserva su papel actual y el bloque no se pide ni se exige. La segunda, **qué se valida al guardar**: las validaciones de armado por bloques de RF-03 solo tienen sentido —y solo se ejecutan— en los flujos por bloques. La tercera, **cómo avanza el ticket**: la barrera de RF-05 y el avance en cadena de RF-06 se aplican únicamente a los tickets generados desde un flujo por bloques.
 
 Los **flujos que ya existen** al momento de la liberación quedan en modo escalonado por antecesor. Esta es una decisión deliberada: nadie cambia de comportamiento sin pedirlo. Los **flujos nuevos** se presentan en modo por bloques por omisión, porque es el esquema al que el negocio quiere migrar, y el administrador puede cambiarlo antes de guardar.
 
-El **cambio de modo** de un flujo ya configurado es la operación más delicada de este requerimiento y tiene reglas distintas en cada dirección. Al pasar de escalonado a bloques, el sistema ejecuta la conversión descrita en RF-08 sobre ese flujo y lo deja **pendiente de validación**: el nuevo modo no surte efecto hasta que el administrador revise y valide el reporte de conversión. Al pasar de bloques a escalonado, el sistema necesita algo que en modo por bloques dejó de capturarse —el antecesor de cada etapa— y por eso **impide el cambio** mientras existan etapas activas sin antecesor, o con una etapa condicionante distinta de su antecesor, señalando cuáles debe completar el administrador antes de reintentarlo.
+El **cambio de modo** de un flujo ya configurado es la operación más delicada de este requerimiento y tiene reglas distintas en cada dirección, pero en las dos el criterio es el mismo: **el sistema no deriva nada por su cuenta**, exige que el dato que el modo nuevo necesita ya esté capturado. Al pasar de escalonado a bloques necesita el bloque de cada etapa, así que **impide el cambio** mientras alguna etapa activa esté sin bloque o el armado no pase las validaciones de RF-03, y al aceptarlo advierte que el antecesor y el parámetro de activación dejan de intervenir. Al pasar de bloques a escalonado necesita el antecesor de cada etapa —que en modo por bloques dejó de capturarse— y por eso impide el cambio mientras existan etapas activas sin antecesor. En ambos casos el sistema enlista lo que el administrador debe completar antes de reintentarlo.
 
 Un cambio de modo **no toca los tickets en curso**. Cada ticket se sella con el modo del flujo en el momento de generarlo y termina de ejecutarse con ese mecanismo, exactamente con el mismo criterio con el que hoy se congela el resto de la configuración. Esto es lo que hace seguro cambiar el modo de un flujo que tiene trabajo en proceso.
 
@@ -261,18 +251,14 @@ Un cambio de modo **no toca los tickets en curso**. Cada ticket se sella con el 
 ```mermaid
 flowchart TD
     A[El administrador cambia el modo de ejecución del flujo] --> B{¿Hacia qué modo?}
-    B -- Hacia Por bloques --> C[Se ejecuta la conversión del flujo RF-08]
-    C --> D{¿La conversión detectó etapas huérfanas?}
-    D -- Sí --> E[Se reportan como inconsistencia: requieren asignación manual de bloque]
-    D -- No --> F[El flujo queda pendiente de validación con su reporte de conversión]
-    E --> F
-    F --> G{¿El administrador valida el reporte?}
-    G -- No, lo descarta --> H[El flujo regresa a modo Escalonado y conserva su configuración previa]
-    G -- Sí --> I[El flujo opera en modo Por bloques: los tickets nuevos nacen sellados por bloques]
-    B -- Hacia Escalonado --> J{¿Todas las etapas activas tienen antecesor y su condicionante coincide con él?}
+    B -- Hacia Por bloques --> C{¿Todas las etapas activas tienen bloque y el armado es válido?}
+    C -- No --> D[Se impide el cambio: se enlistan las etapas sin bloque y los errores de armado]
+    C -- Sí --> E[Se advierte que el antecesor y el parámetro de activación dejan de intervenir, y cuántos tickets abiertos terminarán con el modo anterior]
+    E --> I[El flujo opera en modo Por bloques: los tickets nuevos nacen sellados por bloques]
+    B -- Hacia Escalonado --> J{¿Todas las etapas activas tienen antecesor?}
     J -- No --> K[Se impide el cambio: se enlistan las etapas por completar]
     J -- Sí --> L[El flujo opera en modo Escalonado: los tickets nuevos nacen sellados etapa contra etapa]
-    I --> M[Los tickets ya generados conservan el modo con el que nacieron]
+    I --> M[Los tickets ya generados conservan el modo con el que nacieron y terminan con él]
     L --> M
 ```
 
@@ -281,7 +267,6 @@ flowchart TD
 | Campo | Obligatorio | Descripción |
 |---|---|---|
 | Modo de ejecución del flujo | Sí | Mecanismo con el que avanzan las etapas del flujo. Valores: **Escalonado por antecesor** o **Por bloques**. Valor por omisión: Por bloques en flujos nuevos; Escalonado por antecesor en los flujos que ya existían al liberar. |
-| Estado de validación del modo | Sí, cuando el flujo se cambió a modo por bloques | Indica si la conversión asociada al cambio de modo ya fue validada por el administrador. Mientras esté pendiente, el flujo no opera con el modo nuevo (RF-08). |
 | Modo de ejecución del ticket | Sí | Copia del modo del flujo tomada al generar el ticket. No cambia durante la vida del ticket. |
 | Modo en el catálogo de flujos | Sí | El modo de ejecución se presenta en el detalle del flujo y está disponible como columna y criterio de filtrado en el listado del catálogo. |
 
@@ -295,7 +280,7 @@ El administrador del flujo de trabajo deberá poder:
 
 ### Diseño UX/UI
 
-El modo de ejecución se presenta en el encabezado del detalle del flujo de trabajo, junto con los datos que lo identifican, como una selección de dos opciones con su descripción a la vista, de modo que el administrador entienda qué implica cada una sin consultar documentación. Al cambiarlo, el sistema pide confirmación explícita y advierte del efecto: conversión pendiente de validación en un sentido, exigencia de antecesores en el otro, y en ambos casos que los tickets ya generados no se modifican. En la pestaña de flujo de trabajo del ticket se indica con qué modo opera ese ticket, y el indicador de avance por bloques se muestra únicamente cuando el modo es Por bloques.
+El modo de ejecución se presenta en el encabezado del detalle del flujo de trabajo, junto con los datos que lo identifican, como una selección de dos opciones con su descripción a la vista, de modo que el administrador entienda qué implica cada una sin consultar documentación. Al cambiarlo, el sistema pide confirmación explícita y advierte del efecto: exigencia de bloques capturados y pérdida del parámetro de activación en un sentido, exigencia de antecesores en el otro, y en ambos casos cuántos tickets abiertos van a terminar con el modo anterior, porque los tickets ya generados no se modifican. En la pestaña de flujo de trabajo del ticket se indica con qué modo opera ese ticket, y el indicador de avance por bloques se muestra únicamente cuando el modo es Por bloques.
 
 ---
 
@@ -315,15 +300,15 @@ Como administrador del flujo de trabajo, quiero elegir desde el detalle de cada 
 
 **RN-1.5** El modo de ejecución determinará qué validaciones de armado se ejecutan al guardar el flujo: las validaciones por bloques de RF-03 aplicarán únicamente a los flujos en modo Por bloques, y los flujos en modo Escalonado por antecesor conservarán las validaciones vigentes.
 
-**RN-1.6** El cambio de modo Escalonado por antecesor a modo Por bloques disparará la conversión del flujo descrita en RF-08 y lo dejará pendiente de validación. El modo nuevo no surtirá efecto sobre los tickets que se generen hasta que el administrador valide el reporte de conversión (RN-8.7). Mientras la validación esté pendiente, el administrador podrá descartar la conversión, con lo que el flujo regresará al modo Escalonado por antecesor conservando su configuración previa sin cambios.
+**RN-1.6** El cambio de modo Escalonado por antecesor a modo Por bloques se impedirá mientras alguna etapa activa del flujo esté sin bloque capturado o el armado no cumpla las validaciones de RF-03. El sistema deberá indicar qué etapas requieren bloque y qué debe corregirse. **No existe conversión automática de la configuración**: el bloque de cada etapa lo captura el administrador. Al aceptarse el cambio, el sistema deberá advertir que el antecesor y el parámetro de activación dejan de intervenir, señalando las etapas que tengan parámetro de activación configurado, porque esa condición dejará de evaluarse.
 
-**RN-1.7** El cambio de modo Por bloques a modo Escalonado por antecesor se impedirá mientras existan etapas activas del flujo sin antecesor —salvo la etapa principal— o con una etapa condicionante distinta de su antecesor. El sistema deberá indicar qué etapas requieren completarse y habilitar la captura del antecesor para poder hacerlo.
+**RN-1.7** El cambio de modo Por bloques a modo Escalonado por antecesor se impedirá mientras existan etapas activas del flujo sin antecesor, salvo la etapa principal. El sistema deberá indicar qué etapas requieren completarse y habilitar la captura del antecesor para poder hacerlo.
 
-**RN-1.8** Únicamente el administrador del flujo de trabajo con permiso de configuración podrá consultar y cambiar el modo de ejecución. Ningún otro perfil podrá modificarlo.
+**RN-1.8** Únicamente el administrador del flujo de trabajo con permiso de configuración podrá consultar y cambiar el modo de ejecución. Ningún otro perfil podrá modificarlo, y el cambio no requerirá ninguna autorización adicional dentro del sistema: basta ese permiso, y el cambio queda registrado en bitácora (RN-1.9).
 
 **RN-1.9** Todo cambio de modo de ejecución quedará registrado en la bitácora del flujo de trabajo con fecha, hora, usuario que lo realizó, modo anterior y modo nuevo.
 
-**RN-1.10** El modo de ejecución podrá cambiarse aunque existan tickets abiertos generados a partir de ese flujo, porque esos tickets conservan el modo con el que nacieron (RN-1.12) y el cambio no altera trabajo en proceso.
+**RN-1.10** El modo de ejecución podrá cambiarse aunque existan tickets abiertos generados a partir de ese flujo. Esos tickets terminarán de ejecutarse con el modo con el que nacieron (RN-1.12 y RN-1.13) y los que se generen a partir del cambio nacerán con el modo nuevo. Al confirmar el cambio, el sistema deberá **advertir** cuántos tickets abiertos van a terminar con el modo anterior y permitir consultarlos, sin impedir la operación.
 
 **RN-1.11** El modo de ejecución se presentará en el detalle del flujo y estará disponible como columna y como criterio de filtrado en el listado del catálogo de flujos de trabajo.
 
@@ -349,10 +334,10 @@ Dado un flujo de trabajo configurado antes de la liberación
 Cuando el administrador consulta su detalle después de la liberación
 Entonces el sistema lo muestra en modo Escalonado por antecesor y el flujo continúa generando tickets que avanzan etapa contra etapa, sin bloques ni barreras.
 
-**CA-1.1.5 — Cambio a modo por bloques con conversión pendiente de validación**
-Dado un flujo en modo Escalonado por antecesor con etapas encadenadas por antecesor
+**CA-1.1.5 — Cambio a modo por bloques con los bloques capturados**
+Dado un flujo en modo Escalonado por antecesor cuyas etapas ya tienen su bloque capturado y cuyo armado cumple las validaciones por bloques
 Cuando el administrador cambia el modo a Por bloques y confirma la operación
-Entonces el sistema ejecuta la conversión del flujo, genera el reporte con la asignación de bloques resultante, deja el flujo pendiente de validación y advierte que el modo nuevo no aplicará a los tickets hasta validarlo.
+Entonces el sistema acepta el cambio, advierte que el antecesor y el parámetro de activación dejan de intervenir, y el flujo opera por bloques para los tickets que se generen a partir de ese momento.
 
 **CA-1.1.6 — Cambio a modo escalonado sin antecesores capturados**
 Dado un flujo en modo Por bloques cuyas etapas no tienen antecesor porque el dato dejó de capturarse
@@ -360,7 +345,7 @@ Cuando el administrador intenta cambiar el modo a Escalonado por antecesor
 Entonces el sistema impide el cambio, indica qué etapas requieren antecesor y habilita su captura para poder completarlas.
 
 **CA-1.1.7 — Cambio a modo escalonado con los antecesores completos**
-Dado un flujo en modo Por bloques en el que todas las etapas activas ya tienen antecesor y cuya etapa condicionante coincide con su antecesor
+Dado un flujo en modo Por bloques en el que todas las etapas activas ya tienen antecesor
 Cuando el administrador cambia el modo a Escalonado por antecesor y confirma la operación
 Entonces el sistema acepta el cambio, deja de aplicar las validaciones de armado por bloques y los tickets que se generen a partir de ese momento avanzan etapa contra etapa.
 
@@ -369,7 +354,11 @@ Dado que el administrador con permiso de configuración cambió el modo de ejecu
 Cuando el coordinador de Cómputo consulta la bitácora del flujo
 Entonces encuentra el registro del cambio con la fecha, la hora, el usuario, el modo anterior y el modo nuevo, y el sistema no le habilita a él la opción de modificarlo.
 
----
+**CA-1.1.9 — El cambio de modo procede con tickets abiertos, advirtiéndolo**
+Dado un flujo de trabajo con tres tickets abiertos generados a partir de él
+Cuando el administrador cambia su modo de ejecución y confirma la operación
+Entonces el sistema acepta el cambio, advierte que esos tres tickets abiertos terminarán con el modo anterior, le permite consultarlos, y los tickets que se generen a partir de ese momento nacen con el modo nuevo.
+
 
 ## HU-1.2 — Ejecución del ticket conforme al modo con el que nació
 
@@ -387,6 +376,8 @@ Como coordinador de Cómputo, quiero que cada ticket avance con el modo de ejecu
 
 **RN-1.16** El modo con el que opera un ticket será visible en la pestaña de flujo de trabajo de su ticket principal, para que quien lo consulta sepa con qué reglas está avanzando.
 
+**RN-1.17** Los tickets que se generaron antes de la liberación no tienen modo sellado ni bloques en sus etapas. El sistema los atenderá con las reglas del modo Escalonado por antecesor hasta que cierren, sin requerir intervención manual ni migración de su información. Este tratamiento no tiene fecha de retiro propia: se extingue solo, cuando el último de esos tickets cierra.
+
 ### Criterios de Aceptación
 
 **CA-1.2.1 — El ticket se sella con el modo de su flujo**
@@ -394,10 +385,10 @@ Dado un flujo de trabajo en modo Por bloques, convertido y validado
 Cuando se genera un ticket a partir de la asignación de equipo de cómputo
 Entonces el ticket queda registrado en modo Por bloques y su pestaña de flujo de trabajo presenta las etapas agrupadas con el indicador de avance por bloques.
 
-**CA-1.2.2 — Un cambio de modo en la plantilla no altera un ticket abierto**
-Dado un ticket generado a partir de un flujo que en ese momento estaba en modo Escalonado por antecesor
-Cuando el administrador cambia ese flujo a modo Por bloques y valida su conversión
-Entonces el ticket ya generado conserva el modo Escalonado por antecesor, termina de ejecutarse etapa contra etapa, y el modo nuevo aplica únicamente a los tickets generados a partir de la validación.
+**CA-1.2.2 — Un ticket abierto conserva su modo cuando el flujo cambia**
+Dado un ticket abierto, generado a partir de un flujo que en ese momento estaba en modo Escalonado por antecesor
+Cuando ese flujo se cambia a modo Por bloques mientras ese ticket sigue abierto
+Entonces el ticket ya generado conserva el modo Escalonado por antecesor, termina de ejecutarse etapa contra etapa, y el modo nuevo aplica únicamente a los tickets generados a partir del cambio.
 
 **CA-1.2.3 — Un ticket en modo escalonado avanza etapa contra etapa**
 Dado un ticket en modo Escalonado por antecesor con tres etapas dependientes de una misma etapa previa y una cuarta que depende solo de la primera de ellas
@@ -414,10 +405,15 @@ Dado un ticket en modo Escalonado por antecesor
 Cuando el responsable consulta la pestaña de flujo de trabajo
 Entonces el sistema presenta las etapas con la organización vigente, indica que el ticket opera en modo escalonado y no muestra encabezados de bloque ni indicador del tipo "Bloque 2 de 4".
 
+**CA-1.2.6 — Un ticket sin modo sellado avanza con la regla escalonada**
+Dado un ticket que se generó antes de la liberación, cuyas etapas no tienen bloque ni modo sellado
+Cuando el responsable registra la atención realizada de una de sus etapas
+Entonces el sistema activa las etapas que dependían de ella conforme a la regla escalonada vigente y el ticket continúa su curso hasta cerrarse, sin intervención manual y sin migrar su información.
+
 ---
 
 **Regla transversal:**
-El modo de ejecución es la puerta de entrada de todo este documento. RF-02 a RF-07 describen exclusivamente el comportamiento de un flujo en modo Por bloques y de los tickets sellados con ese modo; RF-08 describe cómo se llega a ese modo desde el escalonado. Un flujo en modo Escalonado por antecesor no ejecuta ninguna de esas reglas y conserva íntegramente su comportamiento actual.
+El modo de ejecución es la puerta de entrada de todo este documento: RF-02 a RF-06 describen exclusivamente el comportamiento de un flujo en modo Por bloques y de los tickets sellados con ese modo. Un flujo en modo Escalonado por antecesor no ejecuta ninguna de esas reglas y conserva íntegramente su comportamiento actual.
 
 ---
 ---
@@ -449,7 +445,7 @@ Dentro de un flujo por bloques, el bloque **sustituye al antecesor como el mecan
 
 El campo **Orden** conserva su lugar, pero cambia de significado: dentro de un bloque ya no expresa secuencia de ejecución, porque todas las etapas del bloque se abren al mismo tiempo. Sirve únicamente para **presentar las etapas en un orden legible** dentro de su bloque, tanto en la configuración como en el ticket.
 
-El campo **Antecesor** deja de capturarse en los flujos en modo por bloques. Se conserva como dato de consulta —histórico— y como insumo de la conversión descrita en RF-08, pero no interviene en la decisión de activar una etapa mientras el flujo opere por bloques. En los flujos en modo escalonado por antecesor el campo sigue capturándose con su comportamiento actual, y volverá a solicitarse si un flujo por bloques se regresa a ese modo (RN-1.7).
+El campo **Antecesor** deja de capturarse en los flujos en modo por bloques. Se conserva como dato de consulta —histórico—, pero no interviene en la decisión de activar una etapa mientras el flujo opere por bloques. En los flujos en modo escalonado por antecesor el campo sigue capturándose con su comportamiento actual, y volverá a solicitarse si un flujo por bloques se regresa a ese modo (RN-1.7).
 
 ### Información / atributos
 
@@ -467,13 +463,12 @@ Estos son **todos los campos del detalle del flujo de trabajo** y lo que se requ
 | Mandatorio | Requerido | Indica que la etapa siempre forma parte del flujo del ticket, sin importar qué cuentas o accesos se hayan solicitado. |
 | Registra ticket | Requerido | Indica si la etapa genera subticket al abrirse su bloque. |
 | Departamento | Opcional | Se conserva como dato de clasificación de la etapa. No interviene en la activación ni en la resolución del responsable, que se resuelve desde la colección de Responsables por unidad de negocio. |
-| Etapa condicionante | Opcional | Etapa de un bloque anterior cuyo resultado determina si esta etapa se activa o se descarta (RF-07). Sustituye la referencia implícita al antecesor: ahora se declara de forma explícita **de cuál** etapa depende. |
-| Resultado esperado | Requerido cuando hay etapa condicionante | Resultado —SI o NA— que debe haberse registrado en la etapa condicionante para que esta etapa se active. Es el actual parámetro de activación, ahora con referencia explícita a la etapa que evalúa. |
+| Parámetro de activación | **No se captura** | En modo por bloques no interviene: ninguna etapa se descarta por el resultado de otra. Se conserva de solo lectura y sigue vigente en modo escalonado. |
 | Antecesor | **No se captura** | En flujos por bloques es una referencia histórica a la etapa de la que dependía en el esquema anterior: solo lectura, no se captura en etapas nuevas y no interviene en la activación (RN-2.7). En flujos en modo escalonado conserva su obligatoriedad y su comportamiento actual. |
 | Estatus | Requerido | Activo o Cancelado dentro del catálogo. Una etapa cancelada no forma parte del flujo. |
 | Responsables | Al menos uno | Colección de responsables por unidad de negocio a quienes se dirige la etapa y su subticket. |
 
-En el **listado de etapas del detalle del flujo**, un flujo en modo Por bloques presenta como columnas el Bloque —como primer criterio de ordenamiento ascendente—, el Orden, el Nombre, la Cuenta, la Etapa condicionante, el Resultado esperado, Principal, Mandatorio y Estatus. El Antecesor **no se presenta** en ese listado cuando el flujo opera por bloques; solo se muestra en los flujos en modo Escalonado por antecesor, donde sigue gobernando la activación.
+En el **listado de etapas del detalle del flujo**, un flujo en modo Por bloques presenta como columnas el Bloque —como primer criterio de ordenamiento ascendente—, el Orden, el Nombre, la Cuenta, Principal, Mandatorio y Estatus. El Antecesor **no se presenta** en ese listado cuando el flujo opera por bloques; solo se muestra en los flujos en modo Escalonado por antecesor, donde sigue gobernando la activación.
 
 ### Operaciones
 
@@ -502,7 +497,7 @@ Como administrador del flujo de trabajo, quiero agrupar las etapas de un flujo e
 
 **RN-2.6** El Orden deberá ser único dentro de un mismo bloque. Dos etapas de bloques distintos podrán tener el mismo Orden sin que ello represente un conflicto.
 
-**RN-2.7** En un flujo en modo Por bloques, el Antecesor deja de gobernar la activación de las etapas: se conserva como dato de consulta y no se captura en etapas nuevas. En un flujo en modo Escalonado por antecesor continúa gobernando la activación, tal como opera hoy.
+**RN-2.7** En un flujo en modo Por bloques, el Antecesor deja de gobernar la activación de las etapas: se conserva como dato de consulta histórico y no se captura en etapas nuevas. En un flujo en modo Escalonado por antecesor continúa gobernando la activación, tal como opera hoy.
 
 ### Criterios de Aceptación
 
@@ -868,7 +863,7 @@ En los tickets sellados en modo Por bloques, el sistema deberá evaluar, **cada 
 
 Mientras el bloque en curso no esté cerrado, **el sistema no modifica ninguna etapa de bloques posteriores**: no las activa, no las cancela y no genera sus subtickets. Esta es la diferencia esencial con el comportamiento actual, donde el cierre de una sola actividad bastaba para abrir a las que dependían de ella.
 
-Cuando el bloque queda cerrado, el sistema abre el siguiente bloque que tenga etapas pendientes **en una sola operación**: todas sus etapas pasan a estar disponibles al mismo tiempo y cada una que esté marcada para registrar ticket genera su subticket dirigido al responsable configurado, registrado con el número de bloque del que proviene. Si una etapa del bloque tiene una condición que no se cumple, se descarta en ese mismo momento (RF-07) y no llega a abrirse.
+Cuando el bloque queda cerrado, el sistema abre el siguiente bloque que tenga etapas pendientes **en una sola operación**: todas sus etapas pasan a estar disponibles al mismo tiempo y cada una que esté marcada para registrar ticket genera su subticket dirigido al responsable configurado, registrado con el número de bloque del que proviene. 
 
 El sistema deberá evitar la generación de subtickets duplicados: si por cualquier razón ya existe un subticket no cancelado asociado a una etapa, no se genera un segundo.
 
@@ -930,10 +925,10 @@ Dado que una etapa del bloque 3 ya tiene un subticket no cancelado asociado
 Cuando el sistema vuelve a evaluar la apertura de ese bloque
 Entonces el sistema no genera un segundo subticket para esa etapa y conserva el existente.
 
-**CA-5.1.5 — Una etapa descartada también cierra el bloque**
-Dado un bloque 2 con dos etapas, de las cuales una quedó en Atendido y la otra fue descartada por el sistema
+**CA-5.1.5 — Una etapa cancelada también cierra el bloque**
+Dado un bloque 2 con dos etapas, de las cuales una quedó en Atendido y la otra en Cancelado
 Cuando se evalúa el estado del bloque
-Entonces el sistema considera el bloque 2 como cerrado y abre el bloque 3, porque una etapa descartada cuenta como concluida.
+Entonces el sistema considera el bloque 2 como cerrado y abre el bloque 3, porque una etapa en Cancelado cuenta como concluida.
 
 **CA-5.1.6 — Cierre del último bloque de actividades**
 Dado un ticket cuyo último bloque de actividades tiene una sola etapa activa
@@ -1012,13 +1007,13 @@ La apertura de un bloque es una operación indivisible: o se abren todas sus eta
 ---
 
 <a id="rf-06"></a>
-# RF-06 — Continuidad del Flujo ante Bloques Vacíos o Descartados
+# RF-06 — Continuidad del Flujo ante Bloques Vacíos
 
-| Campo        | Valor                |
-|--------------|----------------------|
-| Prioridad    | Must                 |
-| Estado       | Definición           |
-| Dependencias | RF-01, RF-05, RF-07  |
+| Campo        | Valor          |
+|--------------|----------------|
+| Prioridad    | Must           |
+| Estado       | Definición     |
+| Dependencias | RF-01, RF-05   |
 
 > **Aplica cuando:** el ticket se generó a partir de un flujo en modo **Por bloques**. El invariante de no bloqueo de RN-6.3, en cambio, se verifica sobre la totalidad de los tickets abiertos, sin importar su modo.
 
@@ -1028,13 +1023,13 @@ Evitar que un bloque que no aplica al caso concreto detenga el ticket de manera 
 
 ## Descripción
 
-Existen dos situaciones en las que un bloque completo puede quedarse sin actividades que ejecutar, y ambas deben resolverse sin intervención humana porque, de no hacerlo, el ticket quedaría detenido para siempre.
+Un bloque completo puede quedarse sin actividades que ejecutar, y esa situación debe resolverse sin intervención humana porque, de no hacerlo, el ticket quedaría detenido para siempre.
 
-La primera es el **bloque sin etapas generadas**. Al crear el ticket, las etapas condicionales cuya cuenta o acceso no fue solicitado nunca llegan a generarse. Si todas las etapas de un bloque eran condicionales y ninguna fue solicitada, ese bloque simplemente no existe en ese ticket. El sistema deberá omitirlo y buscar el siguiente bloque que sí tenga etapas pendientes, en lugar de esperar el cierre de un bloque que no tiene nada que cerrar.
+El caso es el **bloque sin etapas generadas**. Al crear el ticket, las etapas condicionales cuya cuenta o acceso no fue solicitado nunca llegan a generarse. Si todas las etapas de un bloque eran condicionales y ninguna fue solicitada, ese bloque simplemente no existe en ese ticket. El sistema deberá omitirlo y buscar el siguiente bloque que sí tenga etapas pendientes, en lugar de esperar el cierre de un bloque que no tiene nada que cerrar.
 
-La segunda es el **bloque descartado en su totalidad**. Un bloque puede sí tener etapas, pero que todas ellas resulten descartadas al abrirse porque su condición no se cumplió (RF-07). En ese caso el bloque nace y muere en la misma operación, sin que ningún responsable intervenga. El sistema deberá continuar en ese mismo momento con el bloque siguiente, y repetir la evaluación tantas veces como haga falta, hasta abrir un bloque con al menos una etapa activa o hasta agotar los bloques del ticket.
+La omisión debe ser **en cadena**: si el bloque siguiente tampoco tiene etapas en ese ticket, el sistema repite la evaluación tantas veces como haga falta, hasta abrir un bloque con etapas o hasta agotar los bloques del ticket. Sin ese encadenamiento, dos bloques vacíos consecutivos dejarían el ticket esperando un momento que ya pasó, porque nadie volvería a disparar la evaluación del flujo.
 
-Este comportamiento en cadena es indispensable: como el descarte de una etapa no lo ejecuta ninguna persona, nadie volvería a disparar la evaluación del flujo, y el ticket quedaría con etapas en espera de un momento que ya pasó.
+Esta continuidad aplica por igual en los dos momentos en que el sistema busca el siguiente bloque: al **cerrarse un bloque** y al **generarse el ticket**, cuando se abren el bloque principal y el bloque 1 (RN-5.10).
 
 Para hacer verificable que esto se cumple, el requerimiento establece un **invariante de no bloqueo**: mientras un ticket tenga etapas en Espera, deberá existir al menos una etapa en Activo **de un bloque de actividades**. La etapa principal no cuenta para este invariante, porque permanece activa durante todo el flujo y su presencia enmascararía un ticket detenido. Si un ticket incumple esa condición, está detenido y requiere atención. El sistema deberá poder listar los tickets que la incumplan. Ese listado es un **instrumento de detección, no de corrección**: no habilita ninguna acción para brincar el bloque atorado ni para forzar el avance del ticket, porque eso está fuera de alcance (sección 2). La corrección de un ticket detenido la ejecuta el área de desarrollo.
 
@@ -1042,13 +1037,12 @@ Para hacer verificable que esto se cumple, el requerimiento establece un **invar
 
 ```mermaid
 flowchart TD
-    A[Se cierra el bloque en curso] --> B{¿Existe un bloque posterior con etapas pendientes?}
+    A[Se cierra el bloque en curso o se genera el ticket] --> B{¿Existe un bloque posterior con etapas en este ticket?}
     B -- No --> C[Se agotaron los bloques de actividades: la etapa principal queda disponible para atenderse y su cierre concluye el flujo]
-    B -- Sí --> D[Se evalúan las etapas de ese bloque]
-    D --> E{¿Al menos una etapa quedó activa?}
-    E -- Sí --> F[El bloque queda en curso y el flujo se detiene aquí a esperar]
-    E -- No --> G[Todas se descartaron: se registra el motivo]
-    G --> B
+    B -- Sí --> D{¿Ese bloque tiene etapas generadas?}
+    D -- No --> E[El bloque no existe en este ticket: se omite]
+    E --> B
+    D -- Sí --> F[Se abren todas sus etapas con sus subtickets: el bloque queda en curso y el flujo se detiene aquí a esperar]
 ```
 
 ---
@@ -1061,13 +1055,11 @@ Como coordinador de Cómputo, quiero que el flujo continúe por sí solo cuando 
 
 **RN-6.1** Los bloques que no tengan ninguna etapa generada en el ticket se omitirán; el sistema abrirá el siguiente bloque que sí tenga etapas pendientes.
 
-**RN-6.2** Si al abrir un bloque todas sus etapas resultan descartadas, el sistema continuará en la misma operación con el bloque siguiente, y repetirá la evaluación hasta abrir un bloque con al menos una etapa activa o hasta agotar los bloques del ticket.
+**RN-6.2** La omisión se aplicará en cadena y en la misma operación: si el bloque siguiente tampoco tiene etapas en ese ticket, el sistema repetirá la evaluación hasta abrir un bloque con etapas o hasta agotar los bloques del ticket. La regla opera tanto al cerrarse un bloque como al generarse el ticket.
 
 **RN-6.3** Mientras un ticket tenga etapas en estatus Espera, deberá existir al menos una etapa de un bloque de actividades en estatus Activo. La etapa principal no se cuenta para esta verificación. El incumplimiento de esta condición identifica un ticket detenido.
 
-**RN-6.4** Todo descarte de una etapa deberá registrar en la bitácora del ticket el motivo por el que se descartó y la etapa cuyo resultado lo originó, cuando aplique.
-
-**RN-6.5** Cuando el avance en cadena agote todos los bloques de actividades sin dejar ninguna etapa activa, la etapa principal quedará disponible para atenderse (RN-5.14) y el flujo se dará por concluido al registrarse su atención realizada.
+**RN-6.4** Cuando el avance en cadena agote todos los bloques de actividades sin dejar ninguna etapa activa, la etapa principal quedará disponible para atenderse (RN-5.14) y el flujo se dará por concluido al registrarse su atención realizada.
 
 ### Criterios de Aceptación
 
@@ -1076,27 +1068,12 @@ Dado un ticket en el que el bloque 3 no generó ninguna etapa porque ninguna de 
 Cuando se cierra el bloque 2
 Entonces el sistema omite el bloque 3 y abre directamente el bloque 4, dejándolo como bloque en curso.
 
-**CA-6.1.2 — Bloque descartado en su totalidad**
-Dado un ticket cuyo bloque 3 tiene dos etapas, ambas condicionadas a que la etapa de diagnóstico se resolviera con SI, y esa etapa se resolvió con NA
+**CA-6.1.2 — Varios bloques consecutivos sin etapas generadas**
+Dado un ticket en el que ni el bloque 3 ni el bloque 4 generaron etapas porque ninguna de sus cuentas fue solicitada
 Cuando se cierra el bloque 2
-Entonces el sistema descarta las dos etapas del bloque 3, registra el motivo en la bitácora y continúa abriendo el bloque 4 en la misma operación.
+Entonces el sistema omite ambos bloques en la misma operación y abre el bloque 5, sin dejar etapas en espera de un bloque que no existe en ese ticket.
 
-**CA-6.1.3 — Varios bloques consecutivos descartados**
-Dado un ticket cuyos bloques 3 y 4 quedan descartados en su totalidad por no cumplirse sus condiciones
-Cuando se cierra el bloque 2
-Entonces el sistema descarta ambos bloques en la misma operación y abre el bloque 5, sin dejar etapas en espera de un bloque que ya no se abrirá.
-
-**CA-6.1.4 — Todos los bloques restantes quedan descartados**
-Dado un ticket cuyos bloques 3 y 4 son los últimos y ambos quedan descartados en su totalidad
-Cuando se cierra el bloque 2
-Entonces el sistema descarta todas las etapas restantes y deja la etapa principal disponible para atenderse, cuyo cierre concluye el flujo.
-
-**CA-6.1.5 — Registro del motivo del descarte**
-Dado que el sistema descarta una etapa porque la etapa de la que dependía se resolvió con un resultado distinto al esperado
-Cuando el coordinador consulta la bitácora del ticket
-Entonces encuentra el registro del descarte con la fecha, la etapa descartada, la etapa que originó el descarte y el motivo.
-
-**CA-6.1.6 — Detección de tickets detenidos**
+**CA-6.1.3 — Detección de tickets detenidos**
 Dado un ticket con etapas en estatus Espera cuya única etapa en estatus Activo es la etapa principal
 Cuando se ejecuta la verificación del invariante de no bloqueo
 Entonces el sistema incluye ese ticket en el listado de tickets detenidos para su atención.
@@ -1107,245 +1084,7 @@ Entonces el sistema incluye ese ticket en el listado de tickets detenidos para s
 El avance en cadena descrito en este requerimiento y la barrera descrita en RF-05 son la misma operación vista desde dos ángulos: la barrera decide *cuándo* continuar, y este requerimiento decide *hasta dónde* continuar dentro de esa misma decisión. Ninguno de los dos puede implementarse sin el otro sin dejar tickets detenidos.
 
 ---
----
 
-<a id="rf-07"></a>
-# RF-07 — Condicionamiento de una Etapa al Resultado de una Etapa Previa
-
-| Campo        | Valor                |
-|--------------|----------------------|
-| Prioridad    | Must                 |
-| Estado       | Definición           |
-| Dependencias | RF-01, RF-02, RF-05  |
-
-> **Aplica cuando:** el flujo de trabajo está configurado en modo **Por bloques**. En modo Escalonado por antecesor la condición de activación conserva su forma actual: se evalúa contra el antecesor de la etapa.
-
-## Objetivo
-
-Conservar, dentro del esquema de bloques, la capacidad de descartar una actividad cuando la decisión de la que depende se resolvió en sentido contrario, expresando de forma explícita **de cuál** etapa depende y **qué resultado** espera.
-
-## Descripción
-
-Hoy una etapa puede condicionarse al resultado de su antecesor: si el antecesor cerró con un resultado distinto al esperado, la etapa se descarta. Esa capacidad es necesaria y debe conservarse, pero en un flujo en modo por bloques el antecesor deja de gobernar el encadenamiento (RF-02) y la condición se queda sin referencia: en un bloque con varias etapas previas ya no existe "el antecesor" del que hablar. En un flujo en modo escalonado por antecesor nada de esto cambia: la condición se sigue evaluando contra el antecesor, tal como opera hoy.
-
-El sistema deberá, por tanto, permitir que una etapa declare de forma explícita **la etapa condicionante** —cualquier etapa de un bloque anterior— y el **resultado esperado** de esa etapa: SI o NA. Al abrirse el bloque de la etapa condicionada, el sistema compara el resultado registrado en la etapa condicionante contra el esperado: si coinciden, la etapa se activa con normalidad; si no coinciden, la etapa se descarta y no llega a abrirse.
-
-Cuando la etapa condicionante fue a su vez descartada, no existe un resultado que comparar. En ese caso la etapa condicionada **también se descarta**, porque la decisión de la que dependía nunca llegó a tomarse. Este arrastre es el que permite que ramas completas del flujo se poden de forma coherente.
-
-Una etapa sin condición declarada se activa siempre que su bloque se abra. Una etapa mandatoria no puede declararse condicionada, porque las dos definiciones se contradicen: lo mandatorio siempre aplica.
-
-### Información / atributos
-
-| Campo | Obligatorio | Descripción |
-|---|---|---|
-| Etapa condicionante | No | Etapa de un bloque anterior cuyo resultado determina si esta etapa se activa. Si se deja vacía, la etapa se activa siempre que su bloque se abra. |
-| Resultado esperado | Sí, cuando hay etapa condicionante | Resultado que debe haberse registrado en la etapa condicionante para que esta etapa se active. Admite SI o NA. |
-
-### Operaciones
-
-El administrador del flujo de trabajo deberá poder:
-- Seleccionar la etapa condicionante de entre las etapas de bloques anteriores del mismo flujo, y solo de entre ellas.
-- Capturar el resultado esperado cuando haya declarado una etapa condicionante.
-- Retirar la condición, dejando la etapa como incondicional.
-
----
-
-## HU-7.1 — Actividades que solo aplican según el resultado de otra
-
-Como administrador del flujo de trabajo, quiero condicionar una etapa al resultado de una etapa previa específica, para que las actividades que dependen de una decisión no se abran ni generen subtickets cuando esa decisión se resolvió en sentido contrario.
-
-### Reglas de negocio
-
-**RN-7.1** Una etapa podrá declarar a lo sumo una etapa condicionante, con su respectivo resultado esperado.
-
-**RN-7.2** La etapa condicionante deberá pertenecer a un bloque de actividades estrictamente anterior al de la etapa condicionada. En consecuencia, **las etapas del bloque 1 no admiten etapa condicionante**, porque no existe ningún bloque de actividades anterior al suyo: una actividad que deba decidirse según el resultado de otra tiene que configurarse en el bloque 2 o posterior.
-
-**RN-7.3** Cuando se declare una etapa condicionante, el resultado esperado será obligatorio y solo podrá tomar los valores SI o NA.
-
-**RN-7.4** Al abrirse el bloque, si el resultado registrado en la etapa condicionante difiere del resultado esperado, la etapa condicionada se descartará y no se activará ni generará subticket.
-
-**RN-7.5** Si la etapa condicionante fue descartada, la etapa condicionada también se descartará, porque la decisión de la que dependía nunca se tomó.
-
-**RN-7.6** Una etapa sin condicionante declarado se activará siempre que su bloque se abra.
-
-**RN-7.7** Una etapa marcada como mandatoria no podrá declararse condicionada.
-
-**RN-7.8** La etapa principal no podrá declararse etapa condicionante de ninguna otra, porque su resultado se registra al final del flujo (RN-5.13) y no estaría disponible cuando se abren los bloques de actividades. Tampoco podrá declararse condicionada, porque el bloque principal se abre al inicio y no tiene bloques anteriores.
-
-### Criterios de Aceptación
-
-**CA-7.1.1 — Condición cumplida: la etapa se activa**
-Dado que la etapa de diagnóstico del bloque 2 se cerró con resultado SI y que la etapa de configuración del bloque 3 está condicionada a ese mismo resultado
-Cuando se cierra el bloque 2 y se abre el bloque 3
-Entonces el sistema activa la etapa de configuración y genera su subticket.
-
-**CA-7.1.2 — Condición no cumplida: la etapa se descarta**
-Dado que la etapa de diagnóstico del bloque 2 se cerró con resultado NA y que la etapa de configuración del bloque 3 está condicionada al resultado SI
-Cuando se cierra el bloque 2 y se abre el bloque 3
-Entonces el sistema descarta la etapa de configuración, no genera subticket y registra el motivo en la bitácora.
-
-**CA-7.1.3 — Etapa sin condición**
-Dado que una etapa del bloque 3 no tiene etapa condicionante declarada
-Cuando se abre el bloque 3
-Entonces el sistema activa la etapa sin evaluar ninguna condición.
-
-**CA-7.1.4 — Arrastre del descarte**
-Dado que la etapa del bloque 3 fue descartada y que una etapa del bloque 4 está condicionada al resultado de esa etapa descartada
-Cuando se abre el bloque 4
-Entonces el sistema descarta también la etapa del bloque 4 e indica en la bitácora que su etapa condicionante había sido descartada.
-
-**CA-7.1.5 — La etapa condicionante debe ser de un bloque anterior**
-Dado que el administrador captura una etapa del bloque 3
-Cuando intenta seleccionar como condicionante otra etapa del bloque 3 o de un bloque posterior
-Entonces el sistema no ofrece esas etapas en la selección y, de intentarse el guardado, lo impide indicando que la etapa condicionante debe pertenecer a un bloque anterior.
-
-**CA-7.1.6 — Resultado esperado obligatorio**
-Dado que el administrador selecciona una etapa condicionante y deja vacío el resultado esperado
-Cuando intenta guardar la etapa
-Entonces el sistema impide el guardado e informa que el resultado esperado es requerido cuando se declara una etapa condicionante.
-
-**CA-7.1.7 — Etapa mandatoria no puede condicionarse**
-Dado que el administrador marca una etapa como mandatoria
-Cuando intenta declararle una etapa condicionante
-Entonces el sistema impide el guardado e informa que una etapa mandatoria siempre aplica y por lo tanto no admite condición.
-
----
-
-**Regla transversal:**
-El descarte de etapas que se define en este requerimiento es la causa más frecuente de que un bloque completo quede sin actividades, situación que resuelve RF-06. Ambos requerimientos deben liberarse juntos: implementar el condicionamiento sin el avance en cadena dejaría tickets detenidos.
-
----
----
-
-<a id="rf-08"></a>
-# RF-08 — Migración de los Flujos Configurados y de los Tickets en Curso
-
-| Campo        | Valor                      |
-|--------------|----------------------------|
-| Prioridad    | Must                       |
-| Estado       | Definición                 |
-| Dependencias | RF-01, RF-02, RF-05, RF-07 |
-
-> **Aplica cuando:** el administrador cambia un flujo del modo Escalonado por antecesor al modo **Por bloques** (RN-1.6), y para el tratamiento de los tickets que ya estaban abiertos al momento de la liberación.
-
-## Objetivo
-
-Llevar los flujos ya configurados y los tickets abiertos al nuevo esquema sin detener la operación, y sin cambiar de manera involuntaria el comportamiento de procesos que hoy funcionan correctamente.
-
-## Descripción
-
-El cambio a bloques toca dos poblaciones de datos y cada una requiere un tratamiento distinto.
-
-La primera son los **flujos ya configurados**. La conversión de un flujo **no se ejecuta de manera masiva ni automática al liberar**: todos los flujos existentes quedan en modo escalonado por antecesor (RN-1.2) y la conversión se dispara **flujo por flujo, cuando el administrador cambia su modo a Por bloques** (RN-1.6). En ese momento el sistema asigna a cada etapa el bloque que le corresponde según su cadena de dependencias: la etapa principal queda como bloque principal, las etapas que dependían de ella quedan en el bloque 1, y cada etapa restante queda en el bloque inmediato siguiente al de su antecesor. La conversión deberá producir un **reporte del flujo** con la asignación resultante, para que el administrador la revise y la valide antes de darla por buena.
-
-Esa revisión no es un trámite. La conversión mecánica **cambia el comportamiento** cuando un flujo tiene ramas de distinta longitud: actividades que hoy corren desfasadas quedarían sincronizadas en una barrera, que es precisamente lo que se busca, pero el negocio debe confirmar que esa sincronización es la deseada en cada caso. Por eso el reporte debe señalar de manera explícita **qué etapas cambian su momento de arranque** respecto del comportamiento actual.
-
-La conversión deberá trasladar también las condiciones vigentes: la condición que hoy se evalúa contra el antecesor se convierte en una condición referida explícitamente a esa misma etapa, conservando el resultado esperado. De este modo ningún flujo pierde su lógica de ramificación.
-
-La segunda población son los **tickets abiertos** al momento de la liberación. Sus etapas se generaron sin bloque y sin modo sellado, y no pueden reorganizarse sin alterar trabajo en proceso. El sistema deberá operar en **modo de compatibilidad** para ellos: las etapas que no tengan bloque asignado continúan avanzando con la regla anterior, etapa contra etapa, hasta que el ticket se cierre. Para efectos de ejecución, un ticket sin modo sellado se tratará como un ticket en modo Escalonado por antecesor.
-
-Conviene precisar la diferencia entre ese modo de compatibilidad y la elección de modo de RF-01, porque se parecen pero no son lo mismo. El modo de compatibilidad es **transitorio** y existe solo para los tickets que nacieron antes de la liberación; el modo escalonado de RF-01 es una **opción permanente y soportada** del catálogo de flujos. Retirar el modo de compatibilidad —posible cuando ya no queden tickets abiertos sin modo sellado— no implica retirar el modo escalonado, y el sistema deberá permitir consultar cuántos tickets sin modo sellado quedan abiertos para saber cuándo es seguro retirar la ruta transitoria.
-
-### Reglas de conversión
-
-| Situación en el flujo actual | Asignación al convertir |
-|---|---|
-| Etapa marcada como principal | Bloque principal, sin número de bloque |
-| Etapa cuyo antecesor es la etapa principal | Bloque 1 |
-| Etapa con antecesor distinto de la principal | Bloque del antecesor más uno |
-| Etapa con varias rutas hasta la principal | Bloque correspondiente a la ruta más larga, para no adelantarla |
-| Etapa sin antecesor y no principal | Se marca como inconsistencia; requiere asignación manual antes de validar el flujo |
-| Condición de activación contra el antecesor | Etapa condicionante igual al antecesor, con el mismo resultado esperado |
-| Condición de activación contra la etapa principal | Se marca como inconsistencia: la etapa principal no puede ser condicionante (RN-7.8) y la condición requiere revisión manual |
-
----
-
-## HU-8.1 — Conversión de un flujo al cambiarlo a modo por bloques
-
-Como administrador del flujo de trabajo, quiero que al cambiar un flujo a modo por bloques el sistema lo convierta automáticamente y poder revisar el resultado antes de darlo por bueno, para no cambiar sin darme cuenta el comportamiento de un proceso que hoy opera correctamente.
-
-### Reglas de negocio
-
-**RN-8.1** La conversión de un flujo se ejecutará cuando el administrador cambie su modo de ejecución de Escalonado por antecesor a Por bloques (RN-1.6), y no como un proceso masivo al momento de la liberación.
-
-**RN-8.2** El bloque de cada etapa se derivará de su cadena de dependencias: la etapa principal quedará como bloque principal, sin número de bloque; las etapas que dependían directamente de ella se asignarán al bloque 1; y cada etapa restante, al bloque inmediato siguiente al de su antecesor.
-
-**RN-8.3** Cuando una etapa pueda alcanzarse por varias rutas de distinta longitud, se le asignará el bloque correspondiente a la ruta más larga, para no adelantar su arranque respecto de lo que el negocio espera.
-
-**RN-8.4** Las etapas sin antecesor que no sean la principal se reportarán como inconsistencia y requerirán asignación manual de bloque antes de que el flujo pueda validarse.
-
-**RN-8.5** Las condiciones de activación vigentes se convertirán en condición referida explícitamente al antecesor actual, conservando el resultado esperado.
-
-**RN-8.6** La conversión producirá un reporte del flujo convertido que señale la asignación resultante y, de forma explícita, las etapas cuyo momento de arranque cambia respecto del comportamiento actual.
-
-**RN-8.7** Un flujo convertido no entrará en operación en modo Por bloques hasta que el administrador responsable valide su reporte de conversión. Mientras la validación esté pendiente, los tickets que se generen seguirán naciendo en modo Escalonado por antecesor.
-
-### Criterios de Aceptación
-
-**CA-8.1.1 — Conversión de una cadena simple**
-Dado un flujo con una etapa principal, una etapa que depende de ella y una tercera que depende de la segunda
-Cuando se ejecuta la conversión
-Entonces el sistema deja la etapa principal como bloque principal, asigna el bloque 1 a la segunda y el bloque 2 a la tercera, y lo refleja en el reporte de conversión.
-
-**CA-8.1.2 — Conversión de ramas de distinta longitud**
-Dado un flujo en el que una etapa puede alcanzarse por una ruta de dos pasos y por otra de tres
-Cuando se ejecuta la conversión
-Entonces el sistema le asigna el bloque correspondiente a la ruta más larga y señala en el reporte que esa etapa cambia su momento de arranque.
-
-**CA-8.1.3 — Etapa huérfana detectada**
-Dado un flujo que contiene una etapa activa sin antecesor y que no está marcada como principal
-Cuando se ejecuta la conversión
-Entonces el sistema la reporta como inconsistencia, no le asigna bloque automáticamente y marca el flujo como pendiente de asignación manual.
-
-**CA-8.1.4 — Conversión de las condiciones de activación**
-Dado un flujo en el que una etapa se activa solo cuando su antecesor cierra con resultado SI
-Cuando se ejecuta la conversión
-Entonces el sistema declara a ese antecesor como etapa condicionante de la etapa convertida y conserva SI como resultado esperado.
-
-**CA-8.1.5 — El flujo convertido requiere validación**
-Dado un flujo cuya conversión se ejecutó y cuyo reporte no ha sido validado por el administrador
-Cuando se genera un ticket que correspondería a ese flujo
-Entonces el sistema no aplica la configuración convertida y advierte que el flujo está pendiente de validación.
-
----
-
-## HU-8.2 — Continuidad de los tickets abiertos
-
-Como responsable de Cómputo, quiero que los tickets que ya estaban abiertos al momento de la liberación sigan avanzando con normalidad, para no tener que cerrarlos a mano ni perder el trabajo en proceso.
-
-### Reglas de negocio
-
-**RN-8.8** Los tickets cuyas etapas se generaron sin bloque y sin modo sellado continuarán avanzando con la regla anterior de encadenamiento etapa contra etapa hasta su cierre.
-
-**RN-8.9** Los tickets generados a partir de la liberación operarán con la regla que corresponda al modo con el que se sellaron (RN-1.14): con la regla de bloques los generados desde un flujo en modo Por bloques, y con la regla etapa contra etapa los generados desde un flujo en modo Escalonado por antecesor.
-
-**RN-8.10** El sistema deberá permitir consultar cuántos tickets abiertos permanecen operando en modo de compatibilidad, entendidos como los tickets sin modo sellado generados antes de la liberación.
-
-**RN-8.11** El modo de compatibilidad se retirará únicamente cuando no queden tickets abiertos operando bajo él. Su retiro no afecta al modo Escalonado por antecesor, que permanece disponible en el catálogo de flujos.
-
-### Criterios de Aceptación
-
-**CA-8.2.1 — Un ticket abierto antes de la liberación sigue avanzando**
-Dado un ticket generado antes de la liberación, cuyas etapas no tienen bloque asignado
-Cuando el responsable registra la atención realizada de una de sus etapas
-Entonces el sistema activa las etapas que dependían de ella conforme a la regla anterior y el ticket continúa su curso sin intervención manual.
-
-**CA-8.2.2 — Un ticket nuevo opera por bloques**
-Dado un ticket generado después de la liberación a partir de un flujo en modo Por bloques, convertido y validado
-Cuando el responsable registra la atención realizada de una etapa
-Entonces el sistema aplica la regla de barrera por bloques y no la regla anterior.
-
-**CA-8.2.3 — Consulta de tickets en modo de compatibilidad**
-Dado que existen tickets abiertos generados antes de la liberación
-Cuando el equipo de desarrollo consulta el indicador de compatibilidad
-Entonces el sistema informa cuántos tickets abiertos permanecen operando con la regla anterior.
-
----
-
-**Regla transversal:**
-Mientras existan tickets en modo de compatibilidad conviven en el sistema dos rutas de avance por una razón transitoria —tickets sin modo sellado— además de la convivencia permanente que introduce RF-01, donde cada flujo elige su mecanismo. El indicador de RN-8.10 sirve para decidir cuándo retirar la ruta transitoria; la convivencia de modos, en cambio, es una decisión de diseño y no una deuda por pagar.
-
----
 ---
 
 # Requerimientos no funcionales (RNF)
@@ -1371,7 +1110,7 @@ Mientras existan tickets en modo de compatibilidad conviven en el sistema dos ru
 - **Prioridad:** Must
 
 ### RNF-005 — Auditoría: trazabilidad del avance del flujo
-- **Descripción:** Toda apertura de bloque, activación de etapa y descarte de etapa deberá registrarse en la bitácora del ticket con fecha, hora, usuario o proceso que la originó y, en el caso de los descartes, el motivo y la etapa condicionante involucrada.
+- **Descripción:** Toda apertura de bloque, activación de etapa y omisión de un bloque sin etapas deberá registrarse en la bitácora del ticket con fecha, hora y el usuario o proceso que la originó.
 - **Métrica / criterio de verificación:** Revisión de la bitácora de una muestra de 10 tickets con flujo completo; el 100% de las transiciones de estatus de sus etapas debe tener su registro correspondiente.
 - **Prioridad:** Must
 
@@ -1417,15 +1156,13 @@ Esta sección traduce el requerimiento a los objetos que ya existen, para que el
 | Acción | Campo | Detalle |
 |---|---|---|
 | Agregar | Modo de ejecución | Escalonado por antecesor o Por bloques. Es el dato que decide qué reglas aplican (RF-01). |
-| Agregar | Estado de validación de la conversión | Marca el flujo cuya conversión a bloques está pendiente de validar; mientras lo esté, los tickets siguen naciendo en modo escalonado (RN-8.6). |
 
 ### Etapa del flujo — detalle (`ga_tr_flujos_trabajos_det`)
 
 | Acción | Campo | Detalle |
 |---|---|---|
 | Agregar | Bloque | Entero mayor o igual a 1. Queda vacío en la etapa principal, que constituye el bloque principal (RN-2.4). |
-| Agregar | Etapa condicionante | Referencia a otra etapa del mismo flujo, de un bloque anterior (RN-7.2). |
-| Conservar, se reinterpreta | Parámetro de activación | Pasa a llamarse **resultado esperado** y se evalúa contra la etapa condicionante declarada, en lugar de contra el antecesor implícito. El dato guardado no cambia de forma: sigue siendo SI, NA o vacío. |
+| Deja de intervenir | Parámetro de activación | En modo por bloques no se evalúa: ninguna etapa se descarta por el resultado de otra. Se conserva el dato y sigue vigente en modo escalonado. |
 | Conservar, cambia su regla | Orden | Deja de ser único en todo el flujo y pasa a ser único **dentro del bloque**; solo ordena la presentación (RN-2.5, RN-2.6). |
 | Conservar sin cambio | Clave, Nombre, Servicio, Cuenta, Principal, Mandatorio, Registra ticket, Departamento, Estatus, Responsables | Ver el inventario completo en RF-02. |
 | Deja de intervenir | Antecesor | En modo por bloques queda de solo lectura y no participa en la activación; en modo escalonado conserva su comportamiento actual (RN-2.7). |
@@ -1478,13 +1215,10 @@ Dos hallazgos del análisis del código vigente que conviene resolver dentro de 
 | OBJ-1 | RF-05 | HU-5.1 | CA-5.1.9 El bloque 2 no se detona hasta cerrar el bloque 1 | Must | Propuesto |
 | OBJ-1 | RF-05 | HU-5.2 | CA-5.2.1 Rechazo del cierre del bloque principal con bloques pendientes | Must | Propuesto |
 | OBJ-1 | RF-05 | HU-5.2 | CA-5.2.4 El cierre del bloque principal concluye el flujo | Must | Propuesto |
-| OBJ-1 | RF-07 | HU-7.1 | CA-7.1.1 Condición cumplida: la etapa se activa | Must | Propuesto |
 | OBJ-2 Que ningún ticket quede detenido sin salida | RF-06 | HU-6.1 | CA-6.1.1 Bloque sin etapas generadas en el ticket | Must | Propuesto |
-| OBJ-2 | RF-06 | HU-6.1 | CA-6.1.2 Bloque descartado en su totalidad | Must | Propuesto |
-| OBJ-2 | RF-06 | HU-6.1 | CA-6.1.3 Varios bloques consecutivos descartados | Must | Propuesto |
-| OBJ-2 | RF-06 | HU-6.1 | CA-6.1.6 Detección de tickets detenidos | Must | Propuesto |
+| OBJ-2 | RF-06 | HU-6.1 | CA-6.1.2 Varios bloques consecutivos sin etapas generadas | Must | Propuesto |
+| OBJ-2 | RF-06 | HU-6.1 | CA-6.1.3 Detección de tickets detenidos | Must | Propuesto |
 | OBJ-2 | RF-05 | HU-5.2 | CA-5.2.3 La etapa principal queda disponible al concluir el último bloque | Must | Propuesto |
-| OBJ-2 | RF-07 | HU-7.1 | CA-7.1.4 Arrastre del descarte | Must | Propuesto |
 | OBJ-2 | RF-03 | HU-3.1 | CA-3.1.1 Hueco en la numeración de bloques | Must | Propuesto |
 | OBJ-3 Configuración del flujo entendible y a prueba de errores | RF-02 | HU-2.1 | CA-2.1.5 El antecesor ya no se captura | Must | Propuesto |
 | OBJ-3 | RF-02 | HU-2.1 | CA-2.1.6 Presentación agrupada de la configuración | Must | Propuesto |
@@ -1497,18 +1231,14 @@ Dos hallazgos del análisis del código vigente que conviene resolver dentro de 
 | OBJ-3 | RF-04 | HU-4.2 | CA-4.2.4 Consulta y filtrado de los subtickets por bloque | Should | Propuesto |
 | OBJ-3 | RF-04 | HU-4.1 | CA-4.1.6 El subticket de un ticket por bloques no presenta el flujo de trabajo | Must | Propuesto |
 | OBJ-3 | RF-04 | HU-4.1 | CA-4.1.7 El flujo se consulta en el ticket principal | Must | Propuesto |
-| OBJ-3 | RF-07 | HU-7.1 | CA-7.1.5 La etapa condicionante debe ser de un bloque anterior | Must | Propuesto |
 | OBJ-4 Liberar el cambio sin afectar la operación en curso | RF-04 | HU-4.1 | CA-4.1.5 Un cambio en la plantilla no altera un ticket en curso | Must | Propuesto |
 | OBJ-4 | RF-04 | HU-4.2 | CA-4.2.3 El bloque del subticket no cambia al avanzar el flujo | Must | Propuesto |
-| OBJ-4 | RF-08 | HU-8.1 | CA-8.1.2 Conversión de ramas de distinta longitud | Must | Propuesto |
-| OBJ-4 | RF-08 | HU-8.1 | CA-8.1.5 El flujo convertido requiere validación | Must | Propuesto |
-| OBJ-4 | RF-08 | HU-8.2 | CA-8.2.1 Un ticket abierto antes de la liberación sigue avanzando | Must | Propuesto |
-| OBJ-4 | RF-08 | HU-8.2 | CA-8.2.3 Consulta de tickets en modo de compatibilidad | Must | Propuesto |
-| OBJ-4 | RF-01 | HU-1.2 | CA-1.2.2 Un cambio de modo en la plantilla no altera un ticket abierto | Must | Propuesto |
+| OBJ-4 | RF-01 | HU-1.2 | CA-1.2.6 Un ticket sin modo sellado avanza con la regla escalonada | Must | Propuesto |
+| OBJ-4 | RF-01 | HU-1.2 | CA-1.2.2 Un ticket abierto conserva su modo cuando el flujo cambia | Must | Propuesto |
 | OBJ-5 Adoptar la ejecución por bloques flujo por flujo, sin imponerla | RF-01 | HU-1.1 | CA-1.1.1 Configuración de un flujo nuevo en modo por bloques | Must | Propuesto |
 | OBJ-5 | RF-01 | HU-1.1 | CA-1.1.2 Configuración de un flujo en modo escalonado | Must | Propuesto |
 | OBJ-5 | RF-01 | HU-1.1 | CA-1.1.4 Los flujos existentes conservan su comportamiento | Must | Propuesto |
-| OBJ-5 | RF-01 | HU-1.1 | CA-1.1.5 Cambio a modo por bloques con conversión pendiente de validación | Must | Propuesto |
+| OBJ-5 | RF-01 | HU-1.1 | CA-1.1.5 Cambio a modo por bloques con los bloques capturados | Must | Propuesto |
 | OBJ-5 | RF-01 | HU-1.1 | CA-1.1.6 Cambio a modo escalonado sin antecesores capturados | Must | Propuesto |
 | OBJ-5 | RF-01 | HU-1.1 | CA-1.1.8 Registro y restricción del cambio de modo | Must | Propuesto |
 | OBJ-5 | RF-01 | HU-1.2 | CA-1.2.1 El ticket se sella con el modo de su flujo | Must | Propuesto |
@@ -1525,14 +1255,14 @@ Reglas que se reutilizan en más de un requerimiento y que conviene tener a la v
 
 | ID | Regla | Aplica a |
 |----|-------|----------|
-| RN-T.1 | Una etapa se considera concluida cuando queda en Atendido o en Cancelado; ambos estatus cuentan por igual para cerrar un bloque y para cerrar el ticket. | RF-05, RF-06, RF-07 |
+| RN-T.1 | Una etapa se considera concluida cuando queda en Atendido o en Cancelado; ambos estatus cuentan por igual para cerrar un bloque y para cerrar el ticket. | RF-05, RF-06 |
 | RN-T.2 | Solo puede existir un bloque de actividades en curso a la vez dentro de un mismo ticket; el bloque principal permanece abierto en paralelo durante todo el flujo. | RF-04, RF-05 |
-| RN-T.3 | Las etapas del ticket son una copia congelada de la configuración vigente al momento del alta; los cambios posteriores en la plantilla no afectan tickets ya generados. | RF-04, RF-08 |
+| RN-T.3 | Las etapas del ticket son una copia congelada de la configuración vigente al momento del alta; los cambios posteriores en la plantilla no afectan tickets ya generados. | RF-01, RF-04 |
 | RN-T.4 | Mientras un ticket tenga etapas en Espera, debe existir al menos una etapa de un bloque de actividades en Activo; la etapa principal no cuenta para el invariante. | RF-06 |
 | RN-T.5 | Una etapa es editable únicamente cuando pertenece al bloque en curso o al bloque principal, está activa y el usuario pertenece al departamento responsable. | RF-04, RNF-006 |
 | RN-T.6 | Todo subticket generado por el flujo escalonado se registra con el bloque de la etapa que lo originó, y ese valor no cambia durante su vida. | RF-04, RF-05 |
-| RN-T.7 | El modo de ejecución del flujo decide qué reglas aplican: las reglas de bloques operan únicamente sobre flujos en modo Por bloques y sobre los tickets sellados con ese modo. | RF-01, RF-02 a RF-08 |
-| RN-T.8 | Cada ticket se sella al generarse con el modo de ejecución de su flujo y termina de ejecutarse con ese mecanismo; un cambio de modo en la plantilla no altera tickets ya generados. | RF-01, RF-04, RF-08 |
+| RN-T.7 | El modo de ejecución del flujo decide qué reglas aplican: las reglas de bloques operan únicamente sobre flujos en modo Por bloques y sobre los tickets sellados con ese modo. | RF-01, RF-02 a RF-06 |
+| RN-T.8 | Cada ticket se sella al generarse con el modo de ejecución de su flujo y termina de ejecutarse con ese mecanismo; un cambio de modo en la plantilla no altera tickets ya generados. | RF-01, RF-04 |
 | RN-T.9 | En los tickets que operan por bloques, el flujo de trabajo se consulta únicamente en el ticket principal; el subticket solo conserva el bloque con el que se registró. | RF-04 |
 | RN-T.10 | El bloque principal se abre junto con el bloque 1 al generar el ticket y es el último en cerrarse: no admite registrar su atención realizada mientras quede algún bloque de actividades sin concluir. | RF-02, RF-04, RF-05, RF-06 |
 
@@ -1542,13 +1272,12 @@ Reglas que se reutilizan en más de un requerimiento y que conviene tener a la v
 
 | ID | Supuesto | Impacto si es falso |
 |----|----------|---------------------|
-| SUP-01 | Los flujos configurados hoy en producción son pocos y pueden revisarse uno a uno al cambiarlos de modo. | Si son muchos o muy ramificados, la validación de RF-08 se vuelve un proyecto en sí mismo y debe planearse por separado. |
-| SUP-02 | El negocio acepta que dentro de un bloque no exista secuencia: todas sus etapas se abren al mismo tiempo. | Si se requiere secuencia interna, el modelo de bloques no basta y habría que reconsiderar el esquema de dependencias múltiples descartado en el análisis. |
-| SUP-03 | La condición de activación vigente siempre se evalúa contra el antecesor directo de la etapa, sin excepciones en los flujos configurados. | Si existen configuraciones que dependen de otra etapa, la conversión de RF-08 perdería lógica de ramificación y requeriría revisión manual etapa por etapa. |
-| SUP-04 | Los tickets abiertos al momento de la liberación se cierran en un plazo razonable, de modo que el modo de compatibilidad sea temporal. | Si algunos tickets permanecen abiertos indefinidamente, habría que migrarlos de forma asistida o convivir con dos reglas de avance por tiempo indefinido. |
+| SUP-01 | Los flujos configurados hoy en producción son pocos y sus etapas pueden capturarse con su bloque una por una al cambiarlos de modo. | Si son muchos o muy grandes, la captura manual de los bloques se vuelve un trabajo en sí mismo y debe planearse por separado. |
+| SUP-02 | **Confirmado por el negocio:** dentro de un bloque no existe secuencia; todas sus etapas se abren al mismo tiempo. Si alguna actividad debe esperar a otra, se configuran en bloques distintos. | Ya no es un supuesto abierto. Si más adelante apareciera la necesidad de secuencia interna, se resuelve dividiendo el bloque, no cambiando el modelo. |
+| SUP-04 | Los tickets abiertos al momento de la liberación pueden terminar de ejecutarse con la regla escalonada, sin que importe cuánto tarden en cerrarse. | Ninguno: al ser permanente el modo escalonado (SUP-06) y no existir migración, un ticket que permanezca abierto mucho tiempo no obliga a nada; simplemente termina con las reglas con las que nació (RN-1.17). |
 | SUP-05 | Los responsables de etapa continúan cerrando sus actividades mediante el registro de la atención realizada, sin necesidad de una acción nueva. | Si el negocio pide una acción explícita de cierre de bloque, se agrega alcance de interfaz no contemplado en este documento. |
-| SUP-06 | El negocio acepta que ambos modos de ejecución convivan de forma indefinida y que el modo escalonado por antecesor se mantenga soportado, no en vías de retiro. | Si se decide retirar el modo escalonado, habría que planear la conversión de todos los flujos restantes y el alcance de RF-01 se reduce a una etapa de transición. |
-| SUP-07 | Un flujo se cambia de modo con poca frecuencia: es una decisión de diseño del proceso, no una operación cotidiana. | Si el modo se cambiara con frecuencia, la conversión y su validación se volverían un cuello de botella y convendría automatizar la revisión del reporte. |
+| SUP-06 | **Confirmado por el negocio:** ambos modos de ejecución conviven de forma indefinida y el modo escalonado por antecesor se mantiene soportado, sin fecha de retiro. | Si se decide retirar el modo escalonado, habría que planear la conversión de todos los flujos restantes y el alcance de RF-01 se reduce a una etapa de transición. |
+| SUP-07 | Un flujo se cambia de modo con poca frecuencia: es una decisión de diseño del proceso, no una operación cotidiana. | Si el modo se cambiara con frecuencia, convivirían muchas generaciones de tickets con modos distintos del mismo flujo y el diagnóstico operativo se complicaría. |
 
 ---
 
@@ -1556,10 +1285,10 @@ Reglas que se reutilizan en más de un requerimiento y que conviene tener a la v
 
 | ID | Dependencia | De quién / de qué |
 |----|-------------|-------------------|
-| DEP-01 | Inventario y revisión de los flujos de trabajo configurados en producción, para dimensionar la conversión. | Administrador del flujo de trabajo / Innovación & Negocios |
-| DEP-02 | Definición del negocio sobre cómo debe convertirse cada flujo cuando la sincronización por barrera cambie el momento de arranque de una etapa. | Coordinación de Cómputo |
+| DEP-01 | Inventario de los flujos de trabajo configurados en producción, para dimensionar la captura de bloques que implica cambiarlos de modo. | Administrador del flujo de trabajo / Innovación & Negocios |
+| DEP-02 | Definición del negocio sobre cómo se agrupan en bloques las etapas de cada flujo que se lleve a modo por bloques, dado que la sincronización por barrera puede cambiar el momento de arranque de una etapa. | Coordinación de Cómputo |
 | DEP-03 | Ambiente de pruebas con volumen equivalente al productivo para verificar RNF-001 y RNF-002. | Equipo de Infraestructura |
-| DEP-04 | Ventana de liberación acordada, dado que la incorporación del modo de ejecución y la activación del modo de compatibilidad ocurren en el mismo despliegue. | Equipo de Desarrollo / Coordinación de Cómputo |
+| DEP-04 | Ventana de liberación acordada, dado que la incorporación del modo de ejecución y el tratamiento de los tickets abiertos ocurren en el mismo despliegue. | Equipo de Desarrollo / Coordinación de Cómputo |
 | DEP-05 | Decisión del negocio sobre qué flujos se cambian a modo por bloques y en qué orden, dado que la adopción es flujo por flujo. | Coordinación de Cómputo / Administrador del flujo de trabajo |
 
 ---
@@ -1568,39 +1297,37 @@ Reglas que se reutilizan en más de un requerimiento y que conviene tener a la v
 
 | ID | Riesgo | Prob. | Impacto | Mitigación |
 |----|--------|-------|---------|------------|
-| RGO-01 | Que el descarte de una etapa no propague el avance del flujo y deje tickets detenidos sin forma de cerrarse. Es el riesgo principal del cambio, porque el descarte no lo ejecuta ninguna persona y nadie volvería a disparar la evaluación. | Alta | Alto | Implementar RF-06 junto con RF-05 y RF-07, nunca por separado; verificar el invariante de RNF-003 de forma diaria desde el primer día. |
-| RGO-02 | Que la conversión automática de los flujos existentes cambie el comportamiento de procesos que hoy operan correctamente, sin que nadie lo note. | Media | Alto | Reporte de conversión que señale explícitamente las etapas que cambian su momento de arranque, y validación obligatoria del administrador antes de poner el flujo en operación (RN-8.7). |
-| RGO-03 | Que la apertura simultánea de un bloque numeroso genere muchos subtickets a la vez y sature al área responsable. | Media | Medio | Revisar el tamaño de los bloques al validar la conversión; considerar dividir en bloques más pequeños los que superen un umbral acordado con el negocio. |
-| RGO-04 | Que una etapa quede sin responsable resoluble al abrirse un bloque y falle la apertura completa. | Media | Alto | Validar la existencia de responsable activo para todas las etapas del flujo al momento de validar la conversión; definir un responsable de respaldo por flujo. |
-| RGO-05 | Que la convivencia temporal de dos reglas de avance genere confusión operativa o diagnósticos equivocados durante el periodo de compatibilidad. | Media | Medio | Identificar visiblemente en el ticket con qué regla opera; publicar el indicador de RN-8.10 y fijar fecha de revisión para retirar la regla anterior. |
-| RGO-06 | Que el negocio descubra, ya en operación, que dentro de un bloque sí necesitaba secuencia entre algunas actividades. | Baja | Alto | Validar SUP-02 con la Coordinación de Cómputo antes de iniciar el desarrollo, sobre casos reales de los flujos vigentes. |
+| RGO-01 | Que la omisión de un bloque sin etapas no propague el avance del flujo y deje tickets detenidos sin forma de cerrarse. Es el riesgo principal del cambio, porque esa omisión no la ejecuta ninguna persona y nadie volvería a disparar la evaluación. | Alta | Alto | Implementar RF-06 junto con RF-05, nunca por separado; verificar el invariante de RNF-003 de forma diaria desde el primer día. |
+| RGO-02 | Que la captura manual de bloques reproduzca mal la secuencia que el flujo tenía por antecesor y cambie el comportamiento de un proceso que hoy opera correctamente. | Media | Alto | Presentar el flujo agrupado por bloque en la configuración (CA-2.1.6) para que el administrador vea el efecto de su captura antes de cambiar el modo, y advertir los efectos al aceptar el cambio (RN-1.6). |
+| RGO-03 | Que la apertura simultánea de un bloque numeroso genere muchos subtickets a la vez y sature al área responsable. | Media | Medio | El negocio decidió no fijar umbral ni validar el tamaño de los bloques: la revisión del tamaño queda a criterio del administrador al armar el flujo, y el riesgo se atiende si llega a presentarse. |
+| RGO-04 | Que una etapa quede sin responsable resoluble al abrirse un bloque y falle la apertura completa. | Media | Alto | Validar la existencia de responsable activo para todas las etapas del flujo al cambiarlo a modo por bloques; definir un responsable de respaldo por flujo. |
+| RGO-05 | Que la convivencia de dos reglas de avance genere confusión operativa o diagnósticos equivocados, sobre todo con los tickets abiertos antes de la liberación, que no tienen modo sellado. | Media | Medio | Identificar visiblemente en el ticket con qué regla opera (RN-1.16); los tickets sin modo sellado se extinguen solos al cerrarse (RN-1.17). |
+| RGO-06 | Que el negocio descubra, ya en operación, que dentro de un bloque sí necesitaba secuencia entre algunas actividades. | Baja | Medio | Confirmado con el negocio que no existe secuencia dentro del bloque (SUP-02). Si el caso aparece, se resuelve configurando bloques distintos, sin cambiar el modelo. |
 | RGO-07 | Que el mantenimiento de dos mecanismos de avance permanentes duplique el costo de cada cambio posterior al motor de flujo y multiplique los escenarios de prueba. | Alta | Medio | Aislar la decisión de avance en un único punto que consulte el modo sellado del ticket (RNF-011); exigir que toda prueba de regresión del motor se ejecute en ambos modos. |
-| RGO-08 | Que un administrador cambie el modo de un flujo sin entender el efecto y sincronice actividades que el negocio esperaba desfasadas, o al revés. | Media | Alto | Confirmación explícita con advertencia del efecto al cambiar el modo (RF-01, Diseño UX/UI); validación obligatoria del reporte de conversión (RN-8.7); restricción del cambio al perfil administrador (RN-1.8) y bitácora del cambio (RN-1.9). |
-| RGO-09 | Que un flujo quede indefinidamente con su conversión pendiente de validación y el negocio crea que ya opera por bloques cuando sigue generando tickets en modo escalonado. | Media | Medio | Presentar el estado de validación en el detalle y en el listado del catálogo; revisar periódicamente los flujos con conversión pendiente. |
+| RGO-08 | Que un administrador cambie el modo de un flujo sin entender el efecto y sincronice actividades que el negocio esperaba desfasadas, o al revés. | Media | Alto | Confirmación explícita con advertencia del efecto al cambiar el modo (RF-01, Diseño UX/UI); advertencia de los efectos al aceptar el cambio (RN-1.6); restricción del cambio al perfil administrador (RN-1.8) y bitácora del cambio (RN-1.9). |
+| RGO-09 | Que un flujo quede a medio capturar —unas etapas con bloque y otras sin él— y el negocio crea que ya opera por bloques cuando sigue generando tickets en modo escalonado. | Media | Medio | Presentar el modo vigente en el detalle y en el listado del catálogo; impedir el cambio de modo hasta que todas las etapas tengan bloque (RN-1.6). |
 | RGO-10 | Que el bloque principal permanezca activo durante todo el flujo y enmascare tickets detenidos, porque siempre habrá una etapa en Activo. | Alta | Alto | Excluir la etapa principal del invariante de no bloqueo (RN-6.3 y RNF-003), de modo que la verificación exija una etapa activa de un bloque de actividades. |
 | RGO-11 | Que alguien intente cerrar el ticket principal antes de que concluyan los bloques y, al impedírselo el sistema, lo interprete como una falla. | Media | Bajo | Mensaje explícito al rechazar el cierre, con los bloques pendientes a la vista (RN-5.13); indicar en el propio bloque principal que se cierra al final (RF-04, Diseño UX/UI). |
 
 ---
 
-# Preguntas abiertas
+# Decisiones tomadas
 
-1. **¿Qué tanto se usa hoy la condición de activación?** Antes de definir RF-07 es necesario revisar los flujos configurados en producción para saber cuántas etapas tienen condición y contra qué etapa se evalúan. Si prácticamente no se usa, RF-07 podría simplificarse o posponerse. *Responsable sugerido: Administrador del flujo de trabajo.*
+Las preguntas que quedaron abiertas durante el análisis fueron resueltas con el negocio. Quedan aquí registradas con su resolución y el lugar del documento donde surte efecto, para que no se vuelvan a abrir en el desarrollo.
 
-2. **¿Se requiere secuencia dentro de un bloque?** El documento asume que no (SUP-02). Conviene confirmarlo contra los flujos reales antes de desarrollar, porque de requerirse cambiaría el modelo. *Responsable sugerido: Coordinación de Cómputo.*
+| # | Pregunta | Decisión | Dónde aplica |
+|---|---|---|---|
+| 1 | ¿Se conserva la capacidad de condicionar una etapa al resultado de otra? | **No.** Se retira del alcance: en modo por bloques el parámetro de activación deja de intervenir y ninguna etapa se descarta por el resultado de una etapa previa. Sigue vigente en modo escalonado. | Sección 2 (No incluye); inventario de campos de RF-02; advertencia del cambio de modo en RN-1.6 |
+| 2 | ¿Se requiere secuencia entre actividades dentro de un mismo bloque? | **No.** Todas las etapas de un bloque se abren al mismo tiempo. Si una actividad debe esperar a otra, se configuran en bloques distintos. | SUP-02, RGO-06, RN-2.5 |
+| 3 | ¿Debe notificarse cuando un bloque completo no aplica al caso? | **No notificar.** El hecho queda en la bitácora del ticket; no se genera aviso a las áreas ni al coordinador. | Sección 2 (No incluye) |
+| 4 | ¿Qué umbral de etapas por bloque debe vigilarse? | **Sin umbral.** No se valida ni se advierte el tamaño del bloque; la revisión queda a criterio del administrador al armar el flujo. | RGO-03 |
+| 5 | ¿Quién asigna el bloque de las etapas al llevar un flujo a bloques, y con qué plazo? | **El administrador del flujo, sin plazo adicional.** Sin conversión automática, captura el bloque de cada etapa cuando decide cambiar ese flujo; mientras no lo complete, el flujo permanece en modo escalonado y su operación no se altera. | RN-1.6, SUP-01 |
+| 6 | ¿Se permite cambiar el modo de un flujo con tickets abiertos? | **Sí, con advertencia.** Los tickets ya detonados terminan con el modo con el que nacieron y los posteriores nacen con el modo nuevo; al confirmar, el sistema advierte cuántos tickets abiertos seguirán con el modo anterior. | RN-1.10 a RN-1.13, CA-1.1.9 |
+| 7 | ¿Quién autoriza el cambio de modo de un flujo? | **Solo el administrador del flujo** con permiso de configuración. No requiere autorización adicional en el sistema; el cambio queda en bitácora. | RN-1.8, RN-1.9 |
+| 8 | ¿El modo escalonado por antecesor es transitorio o permanente? | **Permanente.** Ambos modos conviven de forma indefinida, sin fecha de retiro. | SUP-06, RGO-07 |
+| 9 | ¿El bloque debe aparecer en el correo de aviso del subticket? | **No.** El bloque queda consultable en el subticket y en los listados; las notificaciones no cambian. | Sección 2 (No incluye) |
 
-3. **¿Debe notificarse al área responsable cuando su bloque completo se descarta?** Hoy el descarte es silencioso. Con bloques, un área podría no enterarse de que su tanda ya no aplica. *Responsable sugerido: Coordinación de Cómputo.*
-
-4. **¿Cuál es el umbral aceptable de etapas por bloque?** Para mitigar RGO-03 conviene acordar un número máximo de subtickets simultáneos que el área puede absorber. *Responsable sugerido: Coordinación de Cómputo.*
-
-5. **¿Qué se hace con los flujos cuya conversión detecte etapas huérfanas?** RN-8.4 los deja pendientes de asignación manual. Falta definir el plazo y quién ejecuta esa asignación. *Responsable sugerido: Administrador del flujo de trabajo.*
-
-6. **¿El modo de ejecución debe poder cambiarse existiendo tickets abiertos del flujo?** El documento asume que sí (RN-1.10), porque cada ticket conserva el modo con el que nació y el cambio no toca trabajo en proceso. Conviene confirmar que el negocio está cómodo con que dos tickets del mismo flujo, abiertos al mismo tiempo, avancen con mecanismos distintos. *Responsable sugerido: Coordinación de Cómputo.*
-
-7. **¿Quién autoriza el cambio de modo de un flujo?** RN-1.8 lo restringe al administrador del flujo de trabajo, pero no define si además requiere autorización de la Coordinación de Cómputo, dado que cambia el comportamiento de un proceso en producción. *Responsable sugerido: Coordinación de Cómputo.*
-
-8. **¿Se contempla retirar algún día el modo escalonado por antecesor?** El documento lo trata como una opción permanente (SUP-06). Si la intención es migrar todo a bloques en el mediano plazo, conviene fijar desde ahora una fecha objetivo y medir el avance, para no cargar de manera indefinida con el mantenimiento de dos mecanismos (RGO-07). *Responsable sugerido: Coordinación de Cómputo / Equipo de Desarrollo.*
-
-9. **¿Debe mostrarse el bloque en la notificación del subticket?** El bloque ya queda registrado en el subticket y disponible en los listados; falta decidir si además se incluye en el asunto o el cuerpo del correo con el que se avisa al responsable, para que ubique la tanda sin entrar al sistema. *Responsable sugerido: Coordinación de Cómputo.*
+Una advertencia sobre la decisión 1, para que quede a la vista de quien desarrolle: hoy el parámetro de activación **sí existe y sí opera** en producción. Al retirarlo del modo por bloques, cualquier flujo que lo tenga configurado pierde su lógica de ramificación en cuanto se cambia de modo, y todas sus etapas se abrirán siempre que se abra su bloque. Por eso el sistema debe advertir esas etapas al aceptar el cambio de modo (RN-1.6), para que el administrador vea el efecto antes de confirmarlo. Conviene contar, antes de desarrollar, cuántas etapas tienen hoy un parámetro de activación distinto de vacío: si son varias, el retiro deja de ser una simplificación y se convierte en un cambio de proceso que el negocio debe confirmar caso por caso.
 
 ---
 
@@ -1774,9 +1501,9 @@ Dado que una etapa del bloque 3 ya tiene un subticket no cancelado asociado
 Cuando el sistema vuelve a evaluar la apertura de ese bloque
 Entonces no genera un segundo subticket y conserva el existente.
 
-**CP-029 — Una etapa descartada también cierra el bloque**
+**CP-029 — Una etapa cancelada también cierra el bloque**
 Verifica: CA-5.1.5 · RN-5.2
-Dado un bloque 2 con dos etapas, una en Atendido y otra descartada por el sistema
+Dado un bloque 2 con dos etapas, una en Atendido y otra en Cancelado
 Cuando se evalúa el estado del bloque
 Entonces el sistema lo considera cerrado y abre el bloque 3.
 
@@ -1816,432 +1543,290 @@ Dado un ticket en el que el bloque 3 no generó ninguna etapa porque ninguna de 
 Cuando se cierra el bloque 2
 Entonces el sistema omite el bloque 3 y abre directamente el bloque 4.
 
-**CP-036 — Bloque descartado en su totalidad**
+**CP-036 — Dos bloques consecutivos sin etapas generadas**
 Verifica: CA-6.1.2 · RN-6.2
-Dado un ticket cuyo bloque 3 tiene dos etapas condicionadas al resultado SI de la etapa de diagnóstico, y esa etapa se cerró con NA
+Dado un ticket en el que ni el bloque 3 ni el bloque 4 generaron etapas
 Cuando se cierra el bloque 2
-Entonces el sistema descarta ambas etapas del bloque 3, registra el motivo y abre el bloque 4 en la misma operación.
+Entonces el sistema omite ambos bloques en la misma operación y abre el bloque 5, sin dejar etapas esperando un bloque que no existe en ese ticket.
 
-**CP-037 — Dos bloques consecutivos descartados**
-Verifica: CA-6.1.3 · RN-6.2
-Dado un ticket cuyos bloques 3 y 4 quedan descartados en su totalidad
-Cuando se cierra el bloque 2
-Entonces el sistema descarta ambos bloques en la misma operación y abre el bloque 5, sin dejar etapas esperando un bloque que ya no se abrirá.
-
-**CP-038 — Todos los bloques restantes quedan descartados**
-Verifica: CA-6.1.4 · RN-6.5
-Dado un ticket cuyos bloques 3 y 4 son los últimos y ambos quedan descartados en su totalidad
-Cuando se cierra el bloque 2
-Entonces el sistema da por concluido el flujo y deja el ticket principal disponible para cerrarse.
-
-**CP-039 — Motivo del descarte registrado en bitácora (auditoría)**
-Verifica: CA-6.1.5 · RN-6.4
-Dado que el sistema descartó una etapa porque su etapa condicionante se resolvió con un resultado distinto al esperado
-Cuando el coordinador consulta la bitácora del ticket
-Entonces encuentra el registro con la fecha, la etapa descartada, la etapa condicionante y el motivo del descarte.
-
-**CP-040 — La verificación detecta un ticket detenido**
-Verifica: CA-6.1.6 · RN-6.3
+**CP-037 — La verificación detecta un ticket detenido**
+Verifica: CA-6.1.3 · RN-6.3
 Dado un ticket con etapas en estatus Espera y ninguna en estatus Activo
 Cuando se ejecuta la verificación del invariante de no bloqueo
 Entonces el sistema incluye ese ticket en el listado de tickets detenidos.
 
-**CP-041 — La verificación no marca un ticket sano (escenario alternativo)**
-Verifica: CA-6.1.6 · RN-6.3
+**CP-038 — La verificación no marca un ticket sano (escenario alternativo)**
+Verifica: CA-6.1.3 · RN-6.3
 Dado un ticket con etapas en Espera y al menos una etapa en Activo
 Cuando se ejecuta la verificación del invariante de no bloqueo
 Entonces el sistema no lo incluye en el listado de tickets detenidos.
 
-**CP-042 — Condición cumplida: la etapa se activa (camino feliz)**
-Verifica: CA-7.1.1 · RN-7.4
-Dado que la etapa de diagnóstico del bloque 2 se cerró con resultado SI y la etapa de configuración del bloque 3 está condicionada a ese resultado
-Cuando se cierra el bloque 2 y se abre el bloque 3
-Entonces el sistema activa la etapa de configuración y genera su subticket.
-
-**CP-043 — Condición no cumplida: la etapa se descarta**
-Verifica: CA-7.1.2 · RN-7.4
-Dado que la etapa de diagnóstico del bloque 2 se cerró con resultado NA y la etapa de configuración del bloque 3 está condicionada al resultado SI
-Cuando se cierra el bloque 2 y se abre el bloque 3
-Entonces el sistema descarta la etapa de configuración, no genera subticket y registra el motivo.
-
-**CP-044 — Etapa sin condición se activa siempre**
-Verifica: CA-7.1.3 · RN-7.6
-Dado que una etapa del bloque 3 no tiene etapa condicionante declarada
-Cuando se abre el bloque 3
-Entonces el sistema la activa sin evaluar condición alguna.
-
-**CP-045 — Arrastre del descarte a la etapa dependiente**
-Verifica: CA-7.1.4 · RN-7.5
-Dado que la etapa del bloque 3 fue descartada y una etapa del bloque 4 está condicionada al resultado de esa etapa
-Cuando se abre el bloque 4
-Entonces el sistema descarta también la etapa del bloque 4 e indica en la bitácora que su etapa condicionante había sido descartada.
-
-**CP-046 — La selección de condicionante se limita a bloques anteriores**
-Verifica: CA-7.1.5 · RN-7.2
-Dado que el administrador captura una etapa del bloque 3
-Cuando abre la selección de etapa condicionante
-Entonces el sistema solo le ofrece etapas de los bloques 1 y 2.
-
-**CP-047 — Rechazo de condicionante del mismo bloque o posterior (validación)**
-Verifica: CA-7.1.5 · RN-7.2
-Dado que el administrador intenta asignar como condicionante de una etapa del bloque 3 otra etapa del bloque 3
-Cuando intenta guardar
-Entonces el sistema impide el guardado e informa que la etapa condicionante debe pertenecer a un bloque anterior.
-
-**CP-048 — Resultado esperado obligatorio (validación)**
-Verifica: CA-7.1.6 · RN-7.3
-Dado que el administrador selecciona una etapa condicionante y deja vacío el resultado esperado
-Cuando intenta guardar la etapa
-Entonces el sistema impide el guardado e informa que el resultado esperado es requerido.
-
-**CP-049 — Etapa mandatoria no admite condición (validación)**
-Verifica: CA-7.1.7 · RN-7.7
-Dado que el administrador marca una etapa como mandatoria
-Cuando intenta declararle una etapa condicionante
-Entonces el sistema impide el guardado e informa que una etapa mandatoria siempre aplica y no admite condición.
-
-**CP-050 — Retiro de la condición de una etapa (escenario alternativo)**
-Verifica: CA-7.1.3 · RN-7.6
-Dado que una etapa del bloque 3 tiene declarada una etapa condicionante y un resultado esperado
-Cuando el administrador retira la etapa condicionante y guarda
-Entonces el sistema deja la etapa como incondicional y, en los tickets que se generen a partir de ese momento, la activa siempre que su bloque se abra.
-
-**CP-051 — Conversión de una cadena simple (camino feliz)**
-Verifica: CA-8.1.1 · RN-8.2
-Dado un flujo con una etapa principal, una etapa que depende de ella y una tercera que depende de la segunda
-Cuando se ejecuta la conversión
-Entonces el sistema deja la etapa principal como bloque principal, asigna el bloque 1 a la segunda y el bloque 2 a la tercera, y lo refleja en el reporte de conversión.
-
-**CP-052 — Conversión de ramas de distinta longitud**
-Verifica: CA-8.1.2 · RN-8.3
-Dado un flujo en el que una etapa puede alcanzarse por una ruta de dos pasos y por otra de tres
-Cuando se ejecuta la conversión
-Entonces el sistema le asigna el bloque correspondiente a la ruta más larga y señala en el reporte que esa etapa cambia su momento de arranque.
-
-**CP-053 — Detección de etapa huérfana (error)**
-Verifica: CA-8.1.3 · RN-8.4
-Dado un flujo que contiene una etapa activa sin antecesor que no está marcada como principal
-Cuando se ejecuta la conversión
-Entonces el sistema la reporta como inconsistencia, no le asigna bloque y marca el flujo como pendiente de asignación manual.
-
-**CP-054 — Conversión de las condiciones de activación**
-Verifica: CA-8.1.4 · RN-8.5
-Dado un flujo en el que una etapa se activa solo cuando su antecesor cierra con resultado SI
-Cuando se ejecuta la conversión
-Entonces el sistema declara a ese antecesor como etapa condicionante y conserva SI como resultado esperado.
-
-**CP-055 — Flujo convertido sin validar no entra en operación (error)**
-Verifica: CA-8.1.5 · RN-8.7
-Dado un flujo cuya conversión se ejecutó y cuyo reporte no ha sido validado por el administrador
-Cuando se genera un ticket que correspondería a ese flujo
-Entonces el sistema no aplica la configuración convertida y advierte que el flujo está pendiente de validación.
-
-**CP-056 — Flujo convertido y validado entra en operación (camino feliz)**
-Verifica: CA-8.1.5 · RN-8.7
-Dado un flujo cuya conversión fue validada por el administrador responsable
-Cuando se genera un ticket que corresponde a ese flujo
-Entonces el sistema aplica la configuración por bloques y abre en una sola operación el bloque principal y el bloque 1.
-
-**CP-057 — Ticket abierto antes de la liberación conserva la regla anterior**
-Verifica: CA-8.2.1 · RN-8.8
-Dado un ticket generado antes de la liberación, cuyas etapas no tienen bloque asignado
-Cuando el responsable registra la atención realizada de una de sus etapas
-Entonces el sistema activa las etapas que dependían de ella conforme a la regla anterior y el ticket continúa su curso sin intervención manual.
-
-**CP-058 — Ticket nuevo opera por bloques**
-Verifica: CA-8.2.2 · RN-8.9
-Dado un ticket generado después de la liberación a partir de un flujo convertido y validado
-Cuando el responsable registra la atención realizada de una etapa que deja pendientes otras del mismo bloque
-Entonces el sistema no abre el siguiente bloque, aplicando la regla de barrera y no la regla anterior.
-
-**CP-059 — Consulta de tickets en modo de compatibilidad**
-Verifica: CA-8.2.3 · RN-8.10
-Dado que existen tickets abiertos generados antes de la liberación
-Cuando el equipo de desarrollo consulta el indicador de compatibilidad
-Entonces el sistema informa cuántos tickets abiertos permanecen operando con la regla anterior.
-
-**CP-060 — El subticket se registra con el bloque de su etapa (camino feliz)**
+**CP-039 — El subticket se registra con el bloque de su etapa (camino feliz)**
 Verifica: CA-4.2.1 · RN-4.6
 Dado un flujo cuyo bloque 2 contiene una etapa marcada para registrar ticket
 Cuando el bloque 2 se abre y el sistema genera el subticket de esa etapa
 Entonces el subticket queda registrado con el bloque 2 y el dato es consultable desde el propio subticket.
 
-**CP-061 — Todos los subtickets de una apertura traen su bloque**
+**CP-040 — Todos los subtickets de una apertura traen su bloque**
 Verifica: CA-4.2.2 · RN-4.6 · RN-4.7
 Dado un bloque 3 con tres etapas marcadas para registrar ticket
 Cuando el sistema abre el bloque 3 y genera los tres subtickets en una sola operación
 Entonces los tres quedan registrados con el bloque 3 y ninguno queda sin bloque.
 
-**CP-062 — El bloque del subticket no cambia al avanzar el flujo**
+**CP-041 — El bloque del subticket no cambia al avanzar el flujo**
 Verifica: CA-4.2.3 · RN-4.8
 Dado un subticket generado desde una etapa del bloque 2 y ya atendido
 Cuando el ticket principal cierra el bloque 2 y abre el bloque 3
 Entonces el subticket conserva el bloque 2 y no adopta el bloque en curso del ticket principal.
 
-**CP-063 — Consulta y filtrado de subtickets por bloque**
+**CP-042 — Consulta y filtrado de subtickets por bloque**
 Verifica: CA-4.2.4 · RN-4.9
 Dado un conjunto de tickets abiertos con subtickets de distintos bloques
 Cuando el coordinador filtra el listado de tickets por el bloque 2
 Entonces el sistema muestra únicamente los subtickets del bloque 2 y presenta el bloque como columna del listado.
 
-**CP-064 — Subticket ajeno al flujo escalonado sin bloque (escenario alternativo)**
+**CP-043 — Subticket ajeno al flujo escalonado sin bloque (escenario alternativo)**
 Verifica: CA-4.2.5 · RN-4.10
 Dado un subticket registrado por una vía distinta al flujo escalonado
 Cuando el usuario lo consulta y lo atiende
 Entonces el sistema lo presenta sin bloque, no lo marca como incompleto y permite su atención y cierre.
 
-**CP-065 — Modo por bloques por omisión en un flujo nuevo (camino feliz)**
+**CP-044 — Modo por bloques por omisión en un flujo nuevo (camino feliz)**
 Verifica: CA-1.1.1 · RN-1.3
 Dado que el administrador registra un flujo de trabajo nuevo
 Cuando consulta el detalle del flujo antes de guardarlo
 Entonces el sistema presenta el modo de ejecución con el valor Por bloques y solicita el bloque en la captura de las etapas.
 
-**CP-066 — Flujo nuevo configurado en modo escalonado (escenario alternativo)**
+**CP-045 — Flujo nuevo configurado en modo escalonado (escenario alternativo)**
 Verifica: CA-1.1.2 · RN-1.4
 Dado que el administrador registra un flujo de trabajo nuevo y selecciona el modo Escalonado por antecesor
 Cuando captura una etapa del flujo
 Entonces el sistema le solicita el antecesor, no le solicita el bloque y guarda la etapa sin exigirlo.
 
-**CP-067 — Rechazo por modo de ejecución sin declarar (validación)**
+**CP-046 — Rechazo por modo de ejecución sin declarar (validación)**
 Verifica: CA-1.1.3 · RN-1.1
 Dado que el administrador intenta guardar un flujo de trabajo sin modo de ejecución declarado
 Cuando selecciona Guardar
 Entonces el sistema impide el guardado e informa que el modo de ejecución es un dato requerido.
 
-**CP-068 — Los flujos existentes quedan en modo escalonado (compatibilidad)**
+**CP-047 — Los flujos existentes quedan en modo escalonado (compatibilidad)**
 Verifica: CA-1.1.4 · RN-1.2
 Dado un flujo de trabajo configurado antes de la liberación
 Cuando el administrador consulta su detalle después de la liberación
 Entonces el sistema lo muestra en modo Escalonado por antecesor, sin bloques asignados y sin cambios en su configuración.
 
-**CP-069 — Las validaciones por bloques no se ejecutan en un flujo escalonado**
+**CP-048 — Las validaciones por bloques no se ejecutan en un flujo escalonado**
 Verifica: CA-1.1.2 · RN-1.5 · RN-3.1
 Dado un flujo en modo Escalonado por antecesor cuyas etapas no tienen bloque asignado
 Cuando el administrador guarda el flujo
 Entonces el sistema acepta el guardado sin señalar huecos de numeración, bloques vacíos ni exigencias sobre el bloque de la etapa principal.
 
-**CP-070 — Cambio a modo por bloques con conversión (camino feliz)**
+**CP-049 — Cambio a modo por bloques con los bloques capturados (camino feliz)**
 Verifica: CA-1.1.5 · RN-1.6
-Dado un flujo en modo Escalonado por antecesor con tres etapas encadenadas por antecesor
+Dado un flujo en modo Escalonado por antecesor cuyas tres etapas ya tienen bloque capturado y cuyo armado es válido
 Cuando el administrador cambia el modo a Por bloques y confirma la operación
-Entonces el sistema ejecuta la conversión, presenta el reporte con los bloques 1, 2 y 3 asignados y deja el flujo pendiente de validación.
+Entonces el sistema acepta el cambio, advierte que el antecesor y el parámetro de activación dejan de intervenir y deja el flujo operando por bloques.
 
-**CP-071 — Flujo con conversión pendiente sigue generando tickets escalonados (error)**
-Verifica: CA-1.1.5 · RN-8.7
-Dado un flujo cuyo cambio a modo Por bloques está pendiente de validación
-Cuando se genera un ticket a partir de ese flujo
-Entonces el sistema lo genera en modo Escalonado por antecesor y advierte que el flujo tiene una conversión pendiente de validación.
-
-**CP-072 — Descarte de la conversión antes de validarla (escenario alternativo)**
-Verifica: CA-1.1.5 · RN-1.6
-Dado un flujo con una conversión a modo Por bloques pendiente de validación
-Cuando el administrador descarta la conversión
-Entonces el sistema regresa el flujo al modo Escalonado por antecesor y conserva su configuración previa sin cambios.
-
-**CP-073 — Rechazo del cambio a escalonado sin antecesores (validación)**
+**CP-050 — Rechazo del cambio a escalonado sin antecesores (validación)**
 Verifica: CA-1.1.6 · RN-1.7
 Dado un flujo en modo Por bloques con cuatro etapas activas sin antecesor capturado
 Cuando el administrador intenta cambiar el modo a Escalonado por antecesor
 Entonces el sistema impide el cambio, enlista las etapas que requieren antecesor y habilita su captura.
 
-**CP-074 — Cambio a escalonado con los antecesores completos (camino feliz)**
+**CP-051 — Cambio a escalonado con los antecesores completos (camino feliz)**
 Verifica: CA-1.1.7 · RN-1.7
-Dado un flujo en modo Por bloques en el que todas las etapas activas tienen antecesor y su etapa condicionante coincide con él
+Dado un flujo en modo Por bloques en el que todas las etapas activas tienen antecesor
 Cuando el administrador cambia el modo a Escalonado por antecesor y confirma la operación
 Entonces el sistema acepta el cambio y los tickets que se generen a partir de ese momento avanzan etapa contra etapa.
 
-**CP-075 — Rechazo del cambio a escalonado por condicionante distinta del antecesor (validación)**
-Verifica: CA-1.1.6 · RN-1.7
-Dado un flujo en modo Por bloques en el que una etapa está condicionada al resultado de una etapa que no es su antecesor
-Cuando el administrador intenta cambiar el modo a Escalonado por antecesor
-Entonces el sistema impide el cambio e informa que esa condición no puede evaluarse en modo escalonado, señalando la etapa involucrada.
-
-**CP-076 — Bitácora del cambio de modo (auditoría)**
+**CP-052 — Bitácora del cambio de modo (auditoría)**
 Verifica: CA-1.1.8 · RN-1.9
 Dado que el administrador cambió el modo de ejecución de un flujo
 Cuando el coordinador de Cómputo consulta la bitácora del flujo
 Entonces encuentra el registro con la fecha, la hora, el usuario, el modo anterior y el modo nuevo.
 
-**CP-077 — Usuario sin permiso no cambia el modo (permisos)**
+**CP-053 — Usuario sin permiso no cambia el modo (permisos)**
 Verifica: CA-1.1.8 · RN-1.8
 Dado un usuario sin permiso de administración de flujos de trabajo
 Cuando abre el detalle de un flujo e intenta cambiar su modo de ejecución
 Entonces el sistema no le habilita la opción e impide cualquier cambio.
 
-**CP-078 — El ticket se sella con el modo de su flujo (camino feliz)**
+**CP-054 — El ticket se sella con el modo de su flujo (camino feliz)**
 Verifica: CA-1.2.1 · RN-1.12
 Dado un flujo en modo Por bloques, convertido y validado
 Cuando se genera un ticket a partir de la asignación de equipo de cómputo
 Entonces el ticket queda registrado en modo Por bloques y presenta sus etapas agrupadas con el indicador de avance.
 
-**CP-079 — Un cambio de modo no altera un ticket abierto**
+**CP-055 — Un ticket abierto antes de la liberación conserva su modo**
 Verifica: CA-1.2.2 · RN-1.13
 Dado un ticket abierto generado cuando su flujo estaba en modo Escalonado por antecesor
-Cuando el administrador cambia ese flujo a modo Por bloques y valida la conversión
+Cuando el administrador cambia ese flujo a modo Por bloques
 Entonces el ticket conserva el modo Escalonado por antecesor y termina de ejecutarse etapa contra etapa.
 
-**CP-080 — Ticket en modo escalonado avanza etapa contra etapa (camino feliz)**
+**CP-056 — Ticket en modo escalonado avanza etapa contra etapa (camino feliz)**
 Verifica: CA-1.2.3 · RN-1.14
 Dado un ticket en modo Escalonado por antecesor con tres etapas dependientes de una misma etapa previa y una cuarta que depende solo de la primera de ellas
 Cuando el responsable registra la atención realizada de esa primera etapa
 Entonces el sistema activa la cuarta etapa de inmediato, sin esperar a que las otras dos concluyan.
 
-**CP-081 — Ticket en modo por bloques se detiene en la barrera**
+**CP-057 — Ticket en modo por bloques se detiene en la barrera**
 Verifica: CA-1.2.4 · RN-1.14
 Dado un ticket en modo Por bloques cuyo bloque 2 tiene tres etapas activas
 Cuando el responsable registra la atención realizada de una de ellas
 Entonces el sistema no activa ninguna etapa del bloque 3 y mantiene el bloque 2 como bloque en curso.
 
-**CP-082 — Presentación del ticket escalonado sin indicador de bloque**
+**CP-058 — Presentación del ticket escalonado sin indicador de bloque**
 Verifica: CA-1.2.5 · RN-1.14 · RN-1.16
 Dado un ticket en modo Escalonado por antecesor
 Cuando el responsable consulta la pestaña de flujo de trabajo
 Entonces el sistema indica que el ticket opera en modo escalonado y no presenta encabezados de bloque ni indicador del tipo "Bloque 2 de 4".
 
-**CP-083 — Un ticket no mezcla los dos mecanismos (escenario límite)**
+**CP-059 — Un ticket no mezcla los dos mecanismos (escenario límite)**
 Verifica: CA-1.2.4 · RN-1.15
 Dado un ticket sellado en modo Por bloques cuyo flujo de origen fue cambiado después a modo Escalonado por antecesor
 Cuando el responsable registra la atención realizada de la última etapa pendiente del bloque en curso
 Entonces el sistema aplica la regla de barrera a la totalidad de las etapas del ticket y en ningún momento activa etapas por antecesor.
 
-**CP-084 — Consulta y filtrado del catálogo por modo de ejecución**
+**CP-060 — Consulta y filtrado del catálogo por modo de ejecución**
 Verifica: CA-1.1.4 · RN-1.11
 Dado un catálogo con flujos configurados en ambos modos
 Cuando el administrador filtra el listado por el modo Por bloques
 Entonces el sistema muestra únicamente los flujos en ese modo y presenta el modo de ejecución como columna del listado.
 
-**CP-085 — El subticket por bloques no presenta la pestaña de flujo de trabajo (camino feliz)**
+**CP-061 — El subticket por bloques no presenta la pestaña de flujo de trabajo (camino feliz)**
 Verifica: CA-4.1.6 · RN-4.5
 Dado un subticket generado por un ticket principal en modo Por bloques
 Cuando el responsable de la etapa lo abre para atenderlo
 Entonces el sistema no presenta la pestaña de flujo de trabajo en ese subticket.
 
-**CP-086 — El subticket conserva su bloque aunque no muestre el flujo**
+**CP-062 — El subticket conserva su bloque aunque no muestre el flujo**
 Verifica: CA-4.1.6 · RN-4.6
 Dado un subticket generado desde una etapa del bloque 2 de un ticket en modo Por bloques
 Cuando el responsable lo consulta
 Entonces el sistema le muestra el bloque 2 como grupo escalonado del subticket y el vínculo al ticket principal, sin presentar el flujo completo.
 
-**CP-087 — El flujo completo se consulta en el ticket principal (camino feliz)**
+**CP-063 — El flujo completo se consulta en el ticket principal (camino feliz)**
 Verifica: CA-4.1.7 · RN-4.5
 Dado el ticket principal en modo Por bloques del que se generaron esos subtickets
 Cuando el coordinador de Cómputo lo consulta
 Entonces el sistema presenta la pestaña de flujo de trabajo con las etapas agrupadas por bloque y el indicador de avance.
 
-**CP-088 — El subticket de un ticket escalonado conserva la pestaña (escenario alternativo)**
+**CP-064 — El subticket de un ticket escalonado conserva la pestaña (escenario alternativo)**
 Verifica: CA-4.1.8 · RN-4.5
 Dado un subticket generado por un ticket principal en modo Escalonado por antecesor
 Cuando el responsable lo abre
 Entonces el sistema conserva la presentación vigente del flujo de trabajo en ese subticket y no aplica la restricción del modo por bloques.
 
-**CP-089 — Apertura conjunta del bloque principal y del bloque 1 (camino feliz)**
+**CP-065 — Apertura conjunta del bloque principal y del bloque 1 (camino feliz)**
 Verifica: CA-5.1.8 · RN-5.10
 Dado un flujo en modo Por bloques con su etapa principal, tres etapas en el bloque 1 y dos en el bloque 2
 Cuando se genera el ticket a partir de la asignación de equipo de cómputo
 Entonces el sistema abre en una sola operación el bloque principal y las tres etapas del bloque 1, genera los subtickets correspondientes y deja las dos etapas del bloque 2 en Espera.
 
-**CP-090 — El bloque principal no retrasa la apertura del bloque 1**
+**CP-066 — El bloque principal no retrasa la apertura del bloque 1**
 Verifica: CA-5.1.8 · RN-5.10
 Dado un ticket recién generado en modo Por bloques
 Cuando el responsable de una etapa del bloque 1 la consulta
 Entonces la encuentra activa y disponible para capturar desde el primer momento, sin necesidad de que la etapa principal se haya atendido.
 
-**CP-091 — El bloque 2 no se detona hasta cerrar el bloque 1 (validación)**
+**CP-067 — El bloque 2 no se detona hasta cerrar el bloque 1 (validación)**
 Verifica: CA-5.1.9 · RN-5.11
 Dado un ticket recién generado cuyo bloque 1 tiene tres etapas activas y cuyo bloque 2 tiene dos etapas en Espera
 Cuando el responsable atiende dos etapas del bloque 1 y la tercera sigue abierta
 Entonces las dos etapas del bloque 2 permanecen en Espera, no se genera ninguno de sus subtickets y el bloque 1 sigue siendo el bloque en curso.
 
-**CP-092 — Rechazo del cierre del bloque principal con bloques pendientes (error)**
+**CP-068 — Rechazo del cierre del bloque principal con bloques pendientes (error)**
 Verifica: CA-5.2.1 · RN-5.13
 Dado un ticket en modo Por bloques cuyo bloque 2 está en curso y cuyo bloque 3 tiene etapas en Espera
 Cuando el responsable de la etapa principal intenta registrar su atención realizada
 Entonces el sistema impide la operación e informa que el bloque principal se cierra al final, señalando los bloques pendientes.
 
-**CP-093 — La etapa principal admite captura sin cerrarse (escenario alternativo)**
+**CP-069 — La etapa principal admite captura sin cerrarse (escenario alternativo)**
 Verifica: CA-5.2.2 · RN-5.13
 Dado el mismo ticket con bloques de actividades pendientes
 Cuando el responsable captura información en la etapa principal y guarda sin registrar la atención realizada
 Entonces el sistema conserva la captura y mantiene la etapa principal en estatus Activo.
 
-**CP-094 — La etapa principal queda disponible al concluir el último bloque (camino feliz)**
+**CP-070 — La etapa principal queda disponible al concluir el último bloque (camino feliz)**
 Verifica: CA-5.2.3 · RN-5.14
 Dado un ticket cuyo último bloque de actividades acaba de quedar cerrado
 Cuando el responsable de la etapa principal la consulta
 Entonces el sistema le permite registrar la atención realizada e indica que no quedan bloques pendientes.
 
-**CP-095 — El cierre del bloque principal concluye el flujo (camino feliz)**
+**CP-071 — El cierre del bloque principal concluye el flujo (camino feliz)**
 Verifica: CA-5.2.4 · RN-5.14 · RN-5.15
 Dado un ticket cuyos bloques de actividades están todos concluidos y cuya etapa principal es la única activa
 Cuando el responsable registra la atención realizada de la etapa principal y guarda
 Entonces el sistema da por concluido el flujo, deja el ticket principal disponible para cerrarse y registra el cierre del bloque principal en la bitácora.
 
-**CP-096 — La etapa principal no enmascara un ticket detenido (error)**
-Verifica: CA-6.1.6 · RN-6.3
+**CP-072 — La etapa principal no enmascara un ticket detenido (error)**
+Verifica: CA-6.1.3 · RN-6.3
 Dado un ticket con etapas en Espera cuya única etapa en Activo es la etapa principal
 Cuando se ejecuta la verificación del invariante de no bloqueo
 Entonces el sistema lo incluye en el listado de tickets detenidos, porque la etapa principal no cuenta como etapa activa para el invariante.
 
-**CP-097 — La etapa principal no admite bloque numerado (validación)**
+**CP-073 — La etapa principal no admite bloque numerado (validación)**
 Verifica: CA-2.1.7 · RN-2.4
 Dado que el administrador marca una etapa como principal en un flujo en modo Por bloques
 Cuando revisa los datos disponibles para captura
 Entonces el sistema no le solicita el bloque, indica que esa etapa constituye el bloque principal y no le permite asignarle un número.
 
-**CP-098 — La etapa principal no puede ser condicionante (validación)**
-Verifica: CA-7.1.5 · RN-7.8
-Dado que el administrador captura una etapa del bloque 2 y abre la selección de etapa condicionante
-Cuando busca la etapa principal entre las opciones
-Entonces el sistema no la ofrece y, de intentarse el guardado con ella, lo impide indicando que el resultado de la etapa principal se registra al final del flujo.
-
-**CP-099 — El bloque principal se presenta aparte en el ticket**
+**CP-074 — El bloque principal se presenta aparte en el ticket**
 Verifica: CA-4.1.9 · RN-4.3
 Dado un ticket recién generado en modo Por bloques
 Cuando el coordinador de Cómputo consulta la pestaña de flujo de trabajo
 Entonces el sistema presenta el bloque principal por separado al inicio, señala que se cierra al final y no lo incluye en el conteo del indicador de avance.
 
-**CP-100 — Bloque 1 sin etapas generadas al arrancar el ticket (escenario alternativo)**
+**CP-075 — Bloque 1 sin etapas generadas al arrancar el ticket (escenario alternativo)**
 Verifica: CA-5.1.10 · RN-5.10 · RN-6.1
 Dado un flujo cuyo bloque 1 se compone solo de etapas condicionales y un ticket donde ninguna de esas cuentas fue solicitada
 Cuando se genera el ticket
 Entonces el sistema abre el bloque principal, omite el bloque 1 y abre el bloque 2 como bloque en curso, sin dejar etapas esperando un bloque que no existe en ese ticket.
 
-**CP-101 — Ticket sin bloques de actividades (escenario límite)**
+**CP-076 — Ticket sin bloques de actividades (escenario límite)**
 Verifica: CA-5.1.11 · RN-5.10
 Dado un ticket en el que ningún bloque de actividades generó etapas
 Cuando el responsable de la etapa principal la consulta
 Entonces la encuentra activa y puede registrar su atención realizada de inmediato, porque no hay bloques pendientes.
+**CP-077 — El cambio de modo advierte los tickets abiertos y procede**
+Verifica: CA-1.1.9 · RN-1.10
+Dado un flujo de trabajo con tres tickets abiertos generados a partir de él
+Cuando el administrador cambia su modo de ejecución y confirma la operación
+Entonces el sistema acepta el cambio, advierte que esos tres tickets abiertos terminarán con el modo anterior, le permite consultarlos, y los tickets que se generen a partir de ese momento nacen con el modo nuevo.
 
-**CP-102 — Una etapa del bloque 1 no admite condicionante (validación)**
-Verifica: CA-7.1.5 · RN-7.2
-Dado que el administrador captura una etapa del bloque 1 en un flujo en modo Por bloques
-Cuando abre la selección de etapa condicionante
-Entonces el sistema no le ofrece ninguna opción e indica que las etapas del bloque 1 no pueden condicionarse porque no existe un bloque anterior.
+**CP-078 — Un ticket abierto antes de la liberación conserva la regla escalonada**
+Verifica: CA-1.2.6 · RN-1.17
+Dado un ticket generado antes de la liberación, cuyas etapas no tienen bloque ni modo sellado
+Cuando el responsable registra la atención realizada de una de sus etapas
+Entonces el sistema activa las etapas que dependían de ella conforme a la regla escalonada y el ticket continúa su curso sin intervención manual.
+
 
 ## Trazabilidad de la cobertura
 
 | CA | Caso(s) de prueba | Escenarios cubiertos |
 | --- | --- | --- |
-| CA-1.1.1 | CP-065 | Camino feliz |
-| CA-1.1.2 | CP-066, CP-069 | Escenario alternativo, Validación |
-| CA-1.1.3 | CP-067 | Validación |
-| CA-1.1.4 | CP-068, CP-084 | Compatibilidad, Visualización y filtrado |
-| CA-1.1.5 | CP-070, CP-071, CP-072 | Camino feliz, Error, Escenario alternativo |
-| CA-1.1.6 | CP-073, CP-075 | Validación (antecesor y condicionante) |
-| CA-1.1.7 | CP-074 | Camino feliz |
-| CA-1.1.8 | CP-076, CP-077 | Auditoría, Permisos |
-| CA-1.2.1 | CP-078 | Camino feliz |
-| CA-1.2.2 | CP-079 | Escenario alternativo (congelación) |
-| CA-1.2.3 | CP-080 | Camino feliz (modo escalonado) |
-| CA-1.2.4 | CP-081, CP-083 | Camino feliz (barrera), Escenario límite |
-| CA-1.2.5 | CP-082 | Visualización |
+| CA-1.1.1 | CP-044 | Camino feliz |
+| CA-1.1.2 | CP-045, CP-048 | Escenario alternativo, Validación |
+| CA-1.1.3 | CP-046 | Validación |
+| CA-1.1.4 | CP-047, CP-060 | Compatibilidad, Visualización y filtrado |
+| CA-1.1.5 | CP-049 | Camino feliz |
+| CA-1.1.6 | CP-050 | Validación (antecesor requerido) |
+| CA-1.1.7 | CP-051 | Camino feliz |
+| CA-1.1.8 | CP-052, CP-053 | Auditoría, Permisos |
+| CA-1.1.9 | CP-077 | Camino feliz (advertencia) |
+| CA-1.2.1 | CP-054 | Camino feliz |
+| CA-1.2.2 | CP-055 | Escenario alternativo (congelación) |
+| CA-1.2.3 | CP-056 | Camino feliz (modo escalonado) |
+| CA-1.2.4 | CP-057, CP-059 | Camino feliz (barrera), Escenario límite |
+| CA-1.2.5 | CP-058 | Visualización |
+| CA-1.2.6 | CP-078 | Camino feliz (compatibilidad) |
 | CA-2.1.1 | CP-001, CP-008 | Camino feliz, Permisos |
 | CA-2.1.2 | CP-002, CP-003 | Validación (obligatoriedad y rango) |
 | CA-2.1.3 | CP-004 | Validación (unicidad dentro del bloque) |
 | CA-2.1.4 | CP-005 | Escenario alternativo |
 | CA-2.1.5 | CP-006 | Camino feliz |
 | CA-2.1.6 | CP-007 | Camino feliz |
-| CA-2.1.7 | CP-097 | Validación |
+| CA-2.1.7 | CP-073 | Validación |
 | CA-3.1.1 | CP-009, CP-010 | Error, Camino feliz |
 | CA-3.1.2 | CP-011 | Validación |
 | CA-3.1.3 | CP-012, CP-013 | Validación, Error |
@@ -2252,15 +1837,15 @@ Entonces el sistema no le ofrece ninguna opción e indica que las etapas del blo
 | CA-4.1.3 | CP-020 | Escenario alternativo |
 | CA-4.1.4 | CP-021, CP-022 | Permisos (por bloque y por departamento) |
 | CA-4.1.5 | CP-023 | Escenario alternativo |
-| CA-4.1.6 | CP-085, CP-086 | Camino feliz, Visualización |
-| CA-4.1.7 | CP-087 | Camino feliz |
-| CA-4.1.8 | CP-088 | Escenario alternativo |
-| CA-4.1.9 | CP-099 | Visualización |
-| CA-4.2.1 | CP-060 | Camino feliz |
-| CA-4.2.2 | CP-061 | Camino feliz (apertura simultánea) |
-| CA-4.2.3 | CP-062 | Escenario alternativo (congelación) |
-| CA-4.2.4 | CP-063 | Visualización y filtrado |
-| CA-4.2.5 | CP-064 | Escenario alternativo |
+| CA-4.1.6 | CP-061, CP-062 | Camino feliz, Visualización |
+| CA-4.1.7 | CP-063 | Camino feliz |
+| CA-4.1.8 | CP-064 | Escenario alternativo |
+| CA-4.1.9 | CP-074 | Visualización |
+| CA-4.2.1 | CP-039 | Camino feliz |
+| CA-4.2.2 | CP-040 | Camino feliz (apertura simultánea) |
+| CA-4.2.3 | CP-041 | Escenario alternativo (congelación) |
+| CA-4.2.4 | CP-042 | Visualización y filtrado |
+| CA-4.2.5 | CP-043 | Escenario alternativo |
 | CA-5.1.1 | CP-024 | Camino feliz (barrera activa) |
 | CA-5.1.2 | CP-025, CP-033 | Camino feliz, Auditoría |
 | CA-5.1.3 | CP-026, CP-027, CP-034 | Camino feliz, Alternativo, Error |
@@ -2268,34 +1853,16 @@ Entonces el sistema no le ofrece ninguna opción e indica que las etapas del blo
 | CA-5.1.5 | CP-029 | Escenario alternativo |
 | CA-5.1.6 | CP-030, CP-031 | Camino feliz, Error |
 | CA-5.1.7 | CP-032 | Camino feliz |
-| CA-5.1.8 | CP-089, CP-090 | Camino feliz (apertura conjunta) |
-| CA-5.1.9 | CP-091 | Validación (barrera del bloque 1) |
-| CA-5.1.10 | CP-100 | Escenario alternativo (bloque vacío al arranque) |
-| CA-5.1.11 | CP-101 | Escenario límite |
-| CA-5.2.1 | CP-092 | Error |
-| CA-5.2.2 | CP-093 | Escenario alternativo |
-| CA-5.2.3 | CP-094 | Camino feliz |
-| CA-5.2.4 | CP-095 | Camino feliz (fin del flujo) |
+| CA-5.1.8 | CP-065, CP-066 | Camino feliz (apertura conjunta) |
+| CA-5.1.9 | CP-067 | Validación (barrera del bloque 1) |
+| CA-5.1.10 | CP-075 | Escenario alternativo (bloque vacío al arranque) |
+| CA-5.1.11 | CP-076 | Escenario límite |
+| CA-5.2.1 | CP-068 | Error |
+| CA-5.2.2 | CP-069 | Escenario alternativo |
+| CA-5.2.3 | CP-070 | Camino feliz |
+| CA-5.2.4 | CP-071 | Camino feliz (fin del flujo) |
 | CA-6.1.1 | CP-035 | Escenario alternativo |
-| CA-6.1.2 | CP-036 | Escenario alternativo |
-| CA-6.1.3 | CP-037 | Escenario alternativo (encadenado) |
-| CA-6.1.4 | CP-038 | Escenario límite |
-| CA-6.1.5 | CP-039 | Auditoría |
-| CA-6.1.6 | CP-040, CP-041, CP-096 | Error, Camino feliz, Error (invariante) |
-| CA-7.1.1 | CP-042 | Camino feliz |
-| CA-7.1.2 | CP-043 | Escenario alternativo |
-| CA-7.1.3 | CP-044, CP-050 | Camino feliz, Alternativo |
-| CA-7.1.4 | CP-045 | Escenario alternativo (arrastre) |
-| CA-7.1.5 | CP-046, CP-047, CP-098, CP-102 | Visibilidad, Validación, Validación (etapa principal y bloque 1) |
-| CA-7.1.6 | CP-048 | Validación |
-| CA-7.1.7 | CP-049 | Validación |
-| CA-8.1.1 | CP-051 | Camino feliz |
-| CA-8.1.2 | CP-052 | Escenario alternativo |
-| CA-8.1.3 | CP-053 | Error |
-| CA-8.1.4 | CP-054 | Camino feliz |
-| CA-8.1.5 | CP-055, CP-056 | Error, Camino feliz |
-| CA-8.2.1 | CP-057 | Camino feliz (compatibilidad) |
-| CA-8.2.2 | CP-058 | Camino feliz |
-| CA-8.2.3 | CP-059 | Camino feliz |
+| CA-6.1.2 | CP-036 | Escenario alternativo (encadenado) |
+| CA-6.1.3 | CP-037, CP-038, CP-072 | Error, Camino feliz, Error (invariante) |
 
-Los 75 criterios de aceptación del documento quedan cubiertos por al menos un caso de prueba; no hay criterios sin cobertura.
+Los 59 criterios de aceptación del documento quedan cubiertos por al menos un caso de prueba; no hay criterios sin cobertura.
