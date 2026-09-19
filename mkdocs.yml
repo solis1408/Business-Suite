@@ -63,6 +63,7 @@ nav:
         - Requerimiento Funcional: Proyectos/ONU/Foliacion-Caja-Operativa/RF-Foliacion-Caja-Financiera.md
       - Inmobiliaria:
         - Módulo Facturación: "Proyectos/ONU/Inmobiliaria/Requerimientos_Funcionales_Facturacion_Inmobiliaria_CFDI.md"
+        - Multiempresa y Multisucursal: "Proyectos/ONU/Inmobiliaria/RF-multiempresa-multisucursal.md"
       - Quinta Maria:
         - Módulo de Facturación: "Proyectos/ONU/Quinta Maria/Requerimientos_Funcionales_Facturacion_QuintaMariaFacturación.md"
   - Documentación BSuite:
