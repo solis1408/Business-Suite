@@ -3514,9 +3514,12 @@
 </table>
 <hr />
 <h2 id="1-propósito-del-documento">1. Propósito del documento<a class="headerlink" href="#1-propósito-del-documento" title="Permanent link">&para;</a></h2>
-<p>Este documento describe los requerimientos funcionales necesarios para que el sistema Inmobiliaria de Grupo Reyes opere de forma <strong>multiempresa</strong> (razones sociales "Vicente Reyes Magaña" y "Grupo Malia") y <strong>multisucursal por empleado</strong>, de modo que un mismo colaborador pueda operar en más de una sucursal/empresa, que los documentos transaccionales (movimientos bancarios, facturas, notas de crédito, abonos, anticipos y transacciones de cuentas por cobrar) permitan elegir la empresa emisora correcta, y que los módulos de Ventas y Facturación, Cuentas por Cobrar e Inmobiliaria puedan consultarse y auditarse por sucursal. Contiene los siguientes requerimientos funcionales:</p>
+<p>Este documento describe los requerimientos funcionales necesarios para que el sistema Inmobiliaria de Grupo Reyes opere bajo un esquema multiempresa —considerando las razones sociales <strong>Vicente Reyes Magaña, Grupo Malia y María Reyes</strong>— y multisucursal-empresa por empleado.</p>
+<p>El sistema deberá permitir que un mismo colaborador opere en más de una sucursal y/o empresa, así como que los documentos transaccionales, tales como <strong>movimientos bancarios y transacciones de cuentas por cobrar</strong>, permitan seleccionar la empresa correspondiente.</p>
+<p>Asimismo, los documentos CFDI, incluyendo <strong>facturas, notas de crédito, abonos y anticipos</strong>, deberán permitir seleccionar y asociar correctamente la empresa emisora que corresponda.</p>
+<p>A continuación, se presentan los requerimientos funcionales que contemplan estas necesidades:</p>
 <ul>
-<li><strong>RF-01</strong> — Configuración de múltiples sucursales para el empleado.</li>
+<li><strong>RF-01</strong> — Configuración de múltiples sucursal y/o empresa para el empleado.</li>
 <li><strong>RF-02</strong> — Cuenta bancaria ligada a sucursal y/o empresa del empleado.</li>
 <li><strong>RF-03</strong> — Apertura de periodos por cuenta bancaria.</li>
 <li><strong>RF-04</strong> — Cierre de periodos por cuenta bancaria.</li>
@@ -3527,25 +3530,26 @@
 <li><strong>RF-09</strong> — Selección de empresa emisora en Anticipos.</li>
 <li><strong>RF-10</strong> — Registro de Transacciones CXC manuales con selección de empresa emisora.</li>
 <li><strong>RF-11</strong> — Filtro por sucursal en consultas del módulo Ventas y Facturación.</li>
-<li><strong>RF-12</strong> — Filtro por sucursal en consultas del módulo Cuentas por Cobrar.</li>
-<li><strong>RF-13</strong> — Captura de Empresa/Sucursal con fines de auditoría en el módulo Inmobiliaria.</li>
-<li><strong>RF-14</strong> — Filtro por sucursal en consultas del módulo Inmobiliaria.</li>
-<li><strong>RF-15</strong> — Regularización de información transaccional histórica a Empresa "Vicente Reyes" y Sucursal "Matriz".</li>
+<li><strong>RF-12</strong> — Regularización de información transaccional histórica a Empresa "Vicente Reyes" y Sucursal "Matriz".</li>
+<li><strong>RF-13</strong> — Configuración de Serie por combinación Documento + Subtipo + Empresa + Régimen Fiscal.</li>
+<li><strong>RF-14</strong> — Alta de la empresa "Maria Reyes" y "Grupo Malia" (puesta en marcha).</li>
+<li><strong>RF-15</strong> — Campo Empresa en el catálogo Pac.</li>
+<li><strong>RF-16</strong> — Resolución del PAC por Empresa emisora al timbrar.</li>
+<li><strong>RF-17</strong> — Configuración del PAC de cada una de las 3 empresas.</li>
 </ul>
 <p>Este documento se basa en la solicitud de negocio recibida (documento de alcance funcional RY-01INN01-FT01) y en una revisión técnica del código fuente actual del sistema, de modo que cada requerimiento describe explícitamente qué existe hoy y qué debe construirse o modificarse.</p>
+<p>Los RF-13 y RF-14 se incorporan del documento <strong>RF-separacion-folios-empresa-regimen-fiscal.md</strong>, referente a la separación de folios de Factura/Nota de Crédito/Anticipo/Abono por Empresa y Régimen Fiscal. Conservan una dependencia externa con los RF-01/RF-02/RF-05 de dicho documento (habilitación de múltiples Regímenes Fiscales por Empresa, selección de Régimen Fiscal Emisor y bloqueo de emisión sin Serie configurada), que no se incluyen en este documento.</p>
 <h2 id="2-alcance-del-documento">2. Alcance del documento<a class="headerlink" href="#2-alcance-del-documento" title="Permanent link">&para;</a></h2>
 <p><strong>Incluye:</strong>
-- La relación N:M entre Empleado y Sucursal, y el concepto de sucursal/empresa predeterminada del empleado.
+- La relación M:M entre Empleado y Sucursal, y el concepto de sucursal/empresa predeterminada del empleado.
 - La apertura/cierre de periodos por cuenta bancaria y el permiso especial asociado.
 - La selección y restricción de la empresa emisora en Movimientos Bancarios, Facturas, Notas de Crédito, Abono, Anticipos y Transacciones CXC.
-- El filtrado por sucursal en las consultas listadas de los módulos Ventas y Facturación, Cuentas por Cobrar e Inmobiliaria.
-- La captura de Empresa/Sucursal con fines de auditoría (solo lectura) en Arrendatario, Renta, Abono, Detalle de Abono, Gasto e Ingreso del módulo Inmobiliaria.
+- El filtrado por sucursal en módulo de consultas.
 - La regularización de datos históricos para que queden ligados a Empresa "Vicente Reyes" y Sucursal "Matriz".
 - La configuración inicial de la empresa "Grupo Malia" (certificados y cuentas bancarias) y el alta de sucursales matriz para ambas empresas, como requerimientos no funcionales de puesta en marcha.</p>
 <p><strong>No incluye:</strong>
 - La separación de listas de precios por razón social (se documenta como requerimiento no funcional que <strong>no</strong> debe implementarse; ver RNF-002 y el riesgo asociado en la sección de Riesgos, dado que el modelo actual de <code>ListaPrecio</code> sí exige una Empresa).
 - Cambios al proceso de sincronización de Empleado/Sucursal contra el sistema externo BSuite (se documenta como dependencia/riesgo, no como alcance de construcción).
-- Rediseño del módulo de nómina/RH del Empleado (<code>EmpresaRH</code>, <code>DepartamentoRH</code>), que es independiente de la Empresa operativa.
 - Integraciones fiscales nuevas (timbrado, buzón tributario) distintas a las ya existentes; solo se ajusta a qué empresa quedan ligados los documentos ya timbrados.</p>
 <h2 id="3-actores-y-roles">3. Actores y roles<a class="headerlink" href="#3-actores-y-roles" title="Permanent link">&para;</a></h2>
 <table>
@@ -3579,7 +3583,8 @@
 </tbody>
 </table>
 <h2 id="4-entidad-a-la-que-aplica">4. Entidad a la que aplica<a class="headerlink" href="#4-entidad-a-la-que-aplica" title="Permanent link">&para;</a></h2>
-<p>Este documento aplica de forma transversal sobre el catálogo <strong>Empleado</strong> (agrega la relación N:M con <strong>Sucursal</strong> y el concepto de sucursal/empresa predeterminada), sobre una nueva entidad <strong>Periodo</strong> ligada a <strong>CuentaBancaria</strong> (estatus inicial <em>Abierto</em>, estatus terminal <em>Cerrado</em>), sobre los procesos transaccionales <strong>MovimientoBancario, Factura, NotaCredito, Abono, Anticipo y Transaccion (CXC)</strong> (que ya heredan campos <code>Empresa</code>/<code>Sucursal</code> de <code>ProcesoBaseObject</code>, y a los que se agrega la posibilidad de edición controlada en UI), y sobre las entidades del módulo Inmobiliaria <strong>InmuebleArrendatario (Contrato/Arrendatario), Renta, AbonoInmobiliaria, AbonoDetalleInmobiliaria, Gasto e Ingreso</strong>, que hoy <strong>no</strong> tienen campos Empresa/Sucursal y a las que se agregan como campos nuevos, de solo consulta, con fines de auditoría.</p>
+<p>Este documento aplica de forma transversal sobre el catálogo <strong>Empleado</strong> (agrega la relación M:M con <strong>Sucursal</strong> y el concepto de sucursal/empresa predeterminada), sobre una nueva entidad <strong>Periodo</strong> ligada a <strong>CuentaBancaria</strong> (estatus inicial <em>Abierto</em>, estatus terminal <em>Cerrado</em>), sobre los procesos transaccionales <strong>MovimientoBancario, Factura, NotaCredito, Abono, Anticipo y Transaccion (CXC)</strong>.</p>
+<p><a id="indice-requerimientos"></a></p>
 <h2 id="5-índice-de-requerimientos">5. Índice de requerimientos<a class="headerlink" href="#5-índice-de-requerimientos" title="Permanent link">&para;</a></h2>
 <blockquote>
 <p><strong>Navegación rápida:</strong> cada identificador RF en la primera columna es un enlace que lleva directamente al detalle del requerimiento. Hacer clic para ir al RF.</p>
@@ -3662,27 +3667,39 @@
 </tr>
 <tr>
 <td><a href="#rf-12">RF-12</a></td>
-<td>Filtro por sucursal en consultas de Cuentas por Cobrar</td>
-<td>Ventas (CXC)</td>
-<td>Consultas/Reportes de CXC</td>
-</tr>
-<tr>
-<td><a href="#rf-13">RF-13</a></td>
-<td>Captura de Empresa/Sucursal con fines de auditoría en Inmobiliaria</td>
-<td>Inmobiliaria</td>
-<td>Arrendatario, Renta, Abono, Detalle de Abono, Gasto, Ingreso</td>
-</tr>
-<tr>
-<td><a href="#rf-14">RF-14</a></td>
-<td>Filtro por sucursal en consultas de Inmobiliaria</td>
-<td>Inmobiliaria</td>
-<td>Consultas/Reportes de Inmobiliaria</td>
-</tr>
-<tr>
-<td><a href="#rf-15">RF-15</a></td>
 <td>Regularización de información transaccional histórica</td>
 <td>Backbone / Ventas / Inmobiliaria</td>
 <td>Movimiento Bancario, Transacción CXC, Factura, Abono, Anticipo</td>
+</tr>
+<tr>
+<td><a href="#rf-13">RF-13</a></td>
+<td>Configuración de Serie por combinación Documento+Subtipo+Empresa+Régimen Fiscal</td>
+<td>Backbone (Catálogos)</td>
+<td>VariableSistema</td>
+</tr>
+<tr>
+<td><a href="#rf-14">RF-14</a></td>
+<td>Alta de la empresa "Maria Reyes" y "Grupo Malia" (puesta en marcha)</td>
+<td>Backbone (Catálogos)</td>
+<td>Empresa, Sucursal, Certificados, Cuenta Bancaria</td>
+</tr>
+<tr>
+<td><a href="#rf-15">RF-15</a></td>
+<td>Campo Empresa en el catálogo Pac</td>
+<td>Backbone (Catálogos-Configuración)</td>
+<td>Catálogo Pac</td>
+</tr>
+<tr>
+<td><a href="#rf-16">RF-16</a></td>
+<td>Resolución del PAC por Empresa emisora al timbrar</td>
+<td>Ventas-Facturación (Timbrado)</td>
+<td>Timbrado (TimbrarJob)</td>
+</tr>
+<tr>
+<td><a href="#rf-17">RF-17</a></td>
+<td>Configuración del PAC de cada una de las 3 empresas (puesta en marcha)</td>
+<td>Backbone (Catálogos-Configuración)</td>
+<td>Catálogo Pac</td>
 </tr>
 </tbody>
 </table>
@@ -3714,7 +3731,7 @@
 <h2 id="objetivo">Objetivo<a class="headerlink" href="#objetivo" title="Permanent link">&para;</a></h2>
 <p>Permitir que un empleado quede relacionado con varias sucursales (de la misma o distinta empresa) en lugar de una sola, y que una de ellas se marque como predeterminada para precargar los procesos que capture.</p>
 <h2 id="descripción">Descripción<a class="headerlink" href="#descripción" title="Permanent link">&para;</a></h2>
-<p>El sistema deberá permitir que el catálogo Empleado soporte una relación de <strong>muchos a muchos</strong> con el catálogo Sucursal, agregando o quitando sucursales vigentes y marcando una de ellas como predeterminada. Actualmente <code>Empleado</code> mantiene una única sucursal (<code>EmpleadoDeSucursal</code>), no editable desde la interfaz porque se sincroniza automáticamente desde el sistema externo BSuite (<code>OidBSuite</code>); este requerimiento reemplaza ese modelo 1:1 por una colección administrable, siguiendo el mismo patrón arquitectónico que ya usa <code>UsuarioConfiguracion</code> para relacionar un usuario con varios almacenes o centros de costo (asociación con tabla intermedia).</p>
+<p>El sistema deberá permitir que el catálogo Empleado soporte una relación de <strong>muchos a muchos</strong> con el catálogo Sucursal, agregando o quitando sucursales vigentes y marcando una de ellas como predeterminada. Actualmente <code>Empleado</code> mantiene una única sucursal (<code>EmpleadoDeSucursal</code>), no editable desde la interfaz porque se sincroniza automáticamente desde el sistema externo BSuite (<code>OidBSuite</code>).</p>
 <h3 id="información--atributos">Información / atributos<a class="headerlink" href="#información--atributos" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -3749,7 +3766,7 @@
 <li>Marcar/desmarcar sucursal como predeterminada.</li>
 </ul>
 <h2 id="hu-11--configurar-múltiples-sucursales-del-empleado">HU-1.1 — Configurar múltiples sucursales del empleado<a class="headerlink" href="#hu-11--configurar-múltiples-sucursales-del-empleado" title="Permanent link">&para;</a></h2>
-<p>Como usuario con rol Administrador del sistema Inmobiliaria, quiero configurar múltiples sucursales para un empleado, para que un mismo colaborador pueda operar procesos en más de una sucursal y empresa sin necesidad de crear un empleado distinto por cada una.</p>
+<p>Como usuario con rol Administrador del sistema Inmobiliaria, quiero configurar múltiples sucursales a un empleado y visualmente mostrar el <strong>listado de Sucursales relacionadas</strong>, para que un mismo colaborador pueda operar procesos en más de una sucursal y empresa sin necesidad de crear un empleado distinto por cada una.</p>
 <h3 id="reglas-de-negocio">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio" title="Permanent link">&para;</a></h3>
 <p><strong>RN-1.1</strong> Solo se pueden relacionar sucursales cuyo estatus sea Activo.</p>
 <p><strong>RN-1.2</strong> No se podrá duplicar la relación de la misma sucursal para un mismo empleado.</p>
@@ -3760,19 +3777,19 @@
 <p><strong>CA-1.1.1 — Agregar sucursal a un empleado</strong>
 Dado que el administrador edita un empleado y selecciona una sucursal en estatus Activo que aún no está relacionada
 Cuando confirma el alta de la relación
-Entonces el sistema agrega la sucursal a la colección de sucursales del empleado y la deja disponible para marcarse como predeterminada.</p>
+Entonces el sistema agrega la sucursal a la Lista de sucursales del empleado y la deja disponible para marcarse como predeterminada.</p>
 <p><strong>CA-1.1.2 — Bloqueo de sucursal inactiva</strong>
 Dado que el administrador intenta relacionar una sucursal cuyo estatus es distinto de Activo
 Cuando busca la sucursal en el selector de alta
 Entonces el sistema no la muestra como opción disponible.</p>
 <p><strong>CA-1.1.3 — Bloqueo de duplicidad</strong>
-Dado que la sucursal "Matriz Vicente Reyes" ya está relacionada al empleado
+Dado que la sucursal ya está relacionada al empleado
 Cuando el administrador intenta agregarla nuevamente
 Entonces el sistema impide el alta duplicada e informa que la sucursal ya está relacionada.</p>
 <p><strong>CA-1.1.4 — Quitar sucursal relacionada</strong>
 Dado que un empleado tiene dos o más sucursales relacionadas y la sucursal a quitar no es la predeterminada
 Cuando el administrador quita la relación
-Entonces el sistema elimina la relación sin afectar la sucursal predeterminada vigente.</p>
+Entonces el sistema elimina de la lista sin afectar la sucursal predeterminada vigente.</p>
 <p><strong>CA-1.1.5 — Empleado sin ninguna sucursal</strong>
 Dado que el administrador intenta guardar un empleado tras quitar su única sucursal relacionada
 Cuando confirma los cambios
@@ -3782,7 +3799,7 @@ Entonces el sistema rechaza el guardado e indica que se requiere al menos una su
 Verifica: CA-1.1.1
 Dado que el empleado "Juan Pérez" tiene relacionada únicamente la sucursal "Matriz Vicente Reyes" (Activa)
 Cuando el administrador agrega la sucursal "Sucursal Norte" (Activa)
-Entonces el empleado queda con dos sucursales relacionadas y ambas son seleccionables como predeterminada.</p>
+Entonces el empleado queda con dos sucursales relacionadas y solo una quedará como predeterminada.</p>
 <p><strong>CP-1.1.2 — Rechazo de sucursal inactiva (validación)</strong>
 Verifica: CA-1.1.2 · RN-1.1
 Dado que la sucursal "Sucursal Sur" tiene estatus Baja
@@ -3845,12 +3862,12 @@ Entonces el sistema no muestra o deshabilita dicha opción.</p>
 </tbody>
 </table>
 <h2 id="hu-12--marcar-una-sucursal-como-predeterminada">HU-1.2 — Marcar una sucursal como predeterminada<a class="headerlink" href="#hu-12--marcar-una-sucursal-como-predeterminada" title="Permanent link">&para;</a></h2>
-<p>Como usuario con rol Administrador del sistema Inmobiliaria, quiero marcar una sucursal como predeterminada dentro de las sucursales relacionadas al empleado, para que los procesos que el empleado capture tomen automáticamente esa sucursal y su empresa como valores iniciales.</p>
+<p>Como usuario con rol Administrador del sistema Inmobiliaria, quiero marcar una sucursal como predeterminada dentro de la <strong>lista de sucursales relacionadas</strong> al empleado, para que los procesos que el empleado capture tomen automáticamente esa sucursal y su empresa como valores iniciales.</p>
 <h3 id="reglas-de-negocio_1">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_1" title="Permanent link">&para;</a></h3>
 <p><strong>RN-1.6</strong> Es requerido que el empleado tenga exactamente una sucursal marcada como predeterminada en todo momento.</p>
 <p><strong>RN-1.7</strong> Al marcar una sucursal como predeterminada, el sistema asigna en el empleado los campos "Sucursal Asignada" y "Empresa Asignada" (esta última calculada a partir de la Empresa dueña de la sucursal); al desmarcarla, ambos campos se limpian hasta que se marque otra.</p>
-<p><strong>RN-1.8</strong> El campo "Empresa Asignada" del empleado no es editable de forma directa: siempre se deriva de la sucursal predeterminada vigente.</p>
-<p><strong>RN-1.9</strong> La sincronización automática con el sistema externo BSuite deja de alimentar la sucursal del empleado: a partir de este requerimiento, el alta, baja y marca de predeterminada de la relación Empleado-Sucursal se administra en su totalidad de forma manual dentro del sistema, sin que un proceso de sincronización externo pueda sobrescribirla.</p>
+<p><strong>RN-1.8</strong> Los campos "Empresa Asignada" y "Sucursal Asignada" en empleado no son editables de forma directa: siempre se deriva de la sucursal predeterminada vigente.</p>
+<p><strong>RN-1.9</strong> La sincronización automática con el sistema externo BSuite deja de alimentar la sucursal del empleado: a partir de este requerimiento, el alta, baja y marca de predeterminada de la relación Empleado-Sucursal se administra en su totalidad de forma manual dentro del sistema por la <strong>lista de sucursales relacionadas</strong>, sin que un proceso de sincronización externo pueda sobrescribirla.</p>
 <h3 id="criterios-de-aceptación_1">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_1" title="Permanent link">&para;</a></h3>
 <p><strong>CA-1.2.1 — Marcar predeterminada</strong>
 Dado que el empleado tiene relacionadas "Matriz Vicente Reyes" y "Sucursal Norte", ninguna marcada como predeterminada
@@ -3919,6 +3936,7 @@ Entonces la relación Empleado-Sucursal y la sucursal predeterminada del emplead
 <hr />
 <p><strong>Regla transversal:</strong>
 El campo "Sucursal Asignada"/"Empresa Asignada" resultante de este RF es la base que usan <code>ProcesoBaseObject</code> y sus derivados (Movimiento Bancario, Factura, Nota de Crédito, Abono, Anticipo, Transacción CXC) para precargar Empresa/Sucursal al crear un documento nuevo (ver RF-05 a RF-10). Decisión de negocio confirmada: la sincronización con BSuite deja de controlar la sucursal del empleado (RN-1.9); la tarea técnica pendiente es coordinar con el equipo responsable de la integración BSuite la desactivación de esa escritura sobre <code>EmpleadoDeSucursal</code> antes de liberar este RF (ver DEP-01).</p>
+<p><a href="#indice-requerimientos">⬆ Volver al índice</a></p>
 <hr />
 <p><a id="rf-02"></a></p>
 <h1 id="rf-02--cuenta-bancaria-ligada-a-sucursal-yo-empresa-del-empleado">RF-02 — Cuenta bancaria ligada a sucursal y/o empresa del empleado<a class="headerlink" href="#rf-02--cuenta-bancaria-ligada-a-sucursal-yo-empresa-del-empleado" title="Permanent link">&para;</a></h1>
@@ -3952,7 +3970,7 @@ El campo "Sucursal Asignada"/"Empresa Asignada" resultante de este RF es la base
 <p>Como usuario con rol Administrador de Inmobiliaria, quiero que al agregar una Cuenta Bancaria se precargue la sucursal predeterminada de mi usuario y pueda cambiarla entre mis sucursales asignadas, para agilizar la captura sin perder control sobre a qué empresa/sucursal queda ligada la cuenta.</p>
 <h3 id="reglas-de-negocio_2">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_2" title="Permanent link">&para;</a></h3>
 <p><strong>RN-2.1</strong> La sucursal relacionada a la cuenta bancaria deberá encontrarse en estatus Activo.</p>
-<p><strong>RN-2.2</strong> El campo Sucursal se precarga con la sucursal predeterminada del empleado en sesión (RF-01, HU-1.2) y el campo Empresa se deriva automáticamente de dicha sucursal.</p>
+<p><strong>RN-2.2</strong> El campo Sucursal se precarga con la sucursal predeterminada del empleado en sesión (RF-01, HU-1.2) y el campo Empresa se deriva automáticamente de dicha sucursal en caso de la acción nueva sucursal.</p>
 <p><strong>RN-2.3</strong> El selector de Sucursal solo debe ofrecer las sucursales relacionadas al empleado en sesión (RF-01); un administrador con permiso especial de "gestión global de catálogos" puede seleccionar cualquier sucursal Activa del sistema.</p>
 <h3 id="criterios-de-aceptación_2">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_2" title="Permanent link">&para;</a></h3>
 <p><strong>CA-2.1.1 — Precarga automática</strong>
@@ -3966,7 +3984,7 @@ Entonces el sistema actualiza también el campo Empresa conforme a la empresa du
 <p><strong>CA-2.1.3 — Restricción de sucursales no asignadas</strong>
 Dado que el empleado en sesión no tiene relacionada la sucursal "Sucursal Malia Centro"
 Cuando intenta seleccionar dicha sucursal en el formulario de Cuenta Bancaria
-Entonces el sistema no la muestra como opción disponible (salvo que el usuario cuente con el permiso especial de gestión global).</p>
+Entonces el sistema no la muestra como opción disponible.</p>
 <h3 id="casos-de-prueba_2">Casos de prueba<a class="headerlink" href="#casos-de-prueba_2" title="Permanent link">&para;</a></h3>
 <p><strong>CP-2.1.1 — Alta con valores precargados (camino feliz)</strong>
 Verifica: CA-2.1.1 · RN-2.2
@@ -4014,6 +4032,7 @@ Entonces el sistema no la ofrece como opción disponible.</p>
 </tr>
 </tbody>
 </table>
+<p><a href="#indice-requerimientos">⬆ Volver al índice</a></p>
 <hr />
 <p><a id="rf-03"></a></p>
 <h1 id="rf-03--apertura-de-periodos-por-cuenta-bancaria">RF-03 — Apertura de periodos por cuenta bancaria<a class="headerlink" href="#rf-03--apertura-de-periodos-por-cuenta-bancaria" title="Permanent link">&para;</a></h1>
@@ -4054,12 +4073,12 @@ El diagrama resume el ciclo de vida de un Periodo: nace en estatus Abierto al ej
 <p><strong>RN-3.1</strong> Al ejecutar "Abrir periodo" el sistema crea automáticamente un periodo Abierto para cada cuenta bancaria ligada a las sucursales/empresa del empleado en sesión que no tenga ya un periodo Abierto vigente.</p>
 <p><strong>RN-3.2</strong> Se permiten como máximo 2 periodos abiertos simultáneos por cuenta bancaria.</p>
 <p><strong>RN-3.3</strong> La acción "Abrir periodo" requiere que el usuario cuente con el permiso especial correspondiente; sin él, la acción no está disponible.</p>
-<p><strong>RN-3.4</strong> La acción aplica tanto a cuentas bancarias de sucursales de la empresa "Vicente Reyes" como de "Grupo Malia", según las sucursales configuradas al empleado.</p>
+<p><strong>RN-3.4</strong> La acción aplica a cuentas bancarias de sucursales de las empresas según las configuradas al empleado.</p>
 <h3 id="criterios-de-aceptación_3">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_3" title="Permanent link">&para;</a></h3>
 <p><strong>CA-3.1.1 — Apertura masiva exitosa</strong>
 Dado que el empleado tiene configuradas 3 cuentas bancarias sin periodo abierto y cuenta con el permiso especial
 Cuando ejecuta la acción "Abrir periodo"
-Entonces el sistema crea un periodo en estatus Abierto para cada una de las 3 cuentas.</p>
+Entonces el sistema crea un periodo en estatus Abierto para cada una de las cuentas.</p>
 <p><strong>CA-3.1.2 — Límite de periodos abiertos</strong>
 Dado que una cuenta bancaria ya tiene 2 periodos en estatus Abierto
 Cuando el usuario ejecuta nuevamente "Abrir periodo"
@@ -4071,7 +4090,7 @@ Entonces el sistema no muestra o deshabilita la acción.</p>
 <p><strong>CA-3.1.4 — Cobertura multiempresa</strong>
 Dado que el empleado tiene configuradas sucursales de "Vicente Reyes" y de "Grupo Malia"
 Cuando ejecuta "Abrir periodo"
-Entonces se abren periodos para las cuentas bancarias de ambas empresas, no solo de una.</p>
+Entonces se abren periodos para las cuentas bancarias de ambas empresas.</p>
 <h3 id="casos-de-prueba_3">Casos de prueba<a class="headerlink" href="#casos-de-prueba_3" title="Permanent link">&para;</a></h3>
 <p><strong>CP-3.1.1 — Apertura exitosa para todas las cuentas del empleado (camino feliz)</strong>
 Verifica: CA-3.1.1 · RN-3.1
@@ -4129,6 +4148,7 @@ Entonces solo se crean periodos para las cuentas sin periodo Abierto vigente; la
 </tr>
 </tbody>
 </table>
+<p><a href="#indice-requerimientos">⬆ Volver al índice</a></p>
 <hr />
 <p><a id="rf-04"></a></p>
 <h1 id="rf-04--cierre-de-periodos-por-cuenta-bancaria">RF-04 — Cierre de periodos por cuenta bancaria<a class="headerlink" href="#rf-04--cierre-de-periodos-por-cuenta-bancaria" title="Permanent link">&para;</a></h1>
@@ -4266,9 +4286,10 @@ Entonces puede registrar Movimientos Bancarios y Transacciones CXC contra ella n
 <hr />
 <p><strong>Regla transversal (RF-03/RF-04):</strong>
 La entidad Periodo es nueva y no reemplaza ningún control existente. Decisión de negocio confirmada: cerrar el periodo de una cuenta bancaria <strong>sí bloquea</strong> la captura de nuevos Movimientos Bancarios y Transacciones CXC contra ella (RN-4.5) hasta que se abra un nuevo periodo; esta validación debe implementarse en la capa de guardado de <code>MovimientoBancario</code> y <code>Transaccion</code>, no solo como advertencia visual. Asimismo, el permiso especial que habilita ambas acciones (RN-3.3 y RN-4.2) es <strong>uno solo</strong>: "Abrir/Cerrar periodo de cuenta bancaria", registrado como una única clave en <code>SpecialPermissionPolicy</code> y validado igual en ambas acciones.</p>
+<p><a href="#indice-requerimientos">⬆ Volver al índice</a></p>
 <hr />
 <p><a id="rf-05"></a></p>
-<h1 id="rf-05--cambio-de-empresasucursal-en-movimientos-bancarios">RF-05 — Cambio de Empresa/Sucursal en Movimientos Bancarios<a class="headerlink" href="#rf-05--cambio-de-empresasucursal-en-movimientos-bancarios" title="Permanent link">&para;</a></h1>
+<h1 id="rf-05--cambio-de-empresa-en-movimientos-bancarios">RF-05 — Cambio de Empresa en Movimientos Bancarios<a class="headerlink" href="#rf-05--cambio-de-empresa-en-movimientos-bancarios" title="Permanent link">&para;</a></h1>
 <table>
 <thead>
 <tr>
@@ -4292,47 +4313,47 @@ La entidad Periodo es nueva y no reemplaza ningún control existente. Decisión 
 </tbody>
 </table>
 <h2 id="objetivo_4">Objetivo<a class="headerlink" href="#objetivo_4" title="Permanent link">&para;</a></h2>
-<p>Permitir editar los campos Sucursal y Empresa de un Movimiento Bancario, precargados según el origen del movimiento o la configuración del empleado.</p>
+<p>Permitir editar el campo Empresa de un Movimiento Bancario, precargado según el origen del movimiento o la configuración del empleado.</p>
 <h2 id="descripción_4">Descripción<a class="headerlink" href="#descripción_4" title="Permanent link">&para;</a></h2>
-<p><code>MovimientoBancario</code> ya tiene el campo <code>Sucursal</code>, pero <strong>no tiene hoy un campo propio <code>Empresa</code></strong> (se infiere indirectamente desde <code>PersonalCaptura.Empresa</code>). Este requerimiento agrega el campo <code>Empresa</code> propio del Movimiento Bancario y define dos formas de precarga: automática, tomando Empresa y Sucursal del documento que originó el movimiento (pago, anticipo, abono o factura relacionados vía <code>fk_pago</code>/<code>fk_anticipo</code>/<code>fk_abono</code>/<code>fk_factura</code>), y manual, tomando como base la Empresa/Sucursal predeterminada del empleado en sesión (RF-01) y permitiendo su edición.</p>
-<h2 id="hu-51--editar-empresasucursal-en-un-movimiento-bancario-manual">HU-5.1 — Editar Empresa/Sucursal en un movimiento bancario manual<a class="headerlink" href="#hu-51--editar-empresasucursal-en-un-movimiento-bancario-manual" title="Permanent link">&para;</a></h2>
-<p>Como usuario con el rol de Facturación del sistema Inmobiliaria, quiero poder editar los campos Sucursal y Empresa en Movimientos Bancarios capturados manualmente, para reflejar correctamente a qué empresa pertenece el movimiento cuando no coincide con la sucursal predeterminada.</p>
+<p><code>MovimientoBancario</code> ya tiene el campo <code>Sucursal</code>, pero <strong>no tiene hoy un campo propio <code>Empresa</code></strong> (se infiere indirectamente desde <code>PersonalCaptura.Empresa</code>). Este requerimiento agrega el campo <code>Empresa</code> propio del Movimiento Bancario y define dos formas de precarga: automática, tomando Empresa del documento que originó el movimiento (pago, anticipo, abono o factura relacionados vía <code>fk_pago</code>/<code>fk_anticipo</code>/<code>fk_abono</code>/<code>fk_factura</code>), y manual, tomando como base la Empresa predeterminada del empleado en sesión (RF-01) y permitiendo su edición.</p>
+<h2 id="hu-51--editar-empresa-en-un-movimiento-bancario-manual">HU-5.1 — Editar Empresa en un movimiento bancario manual<a class="headerlink" href="#hu-51--editar-empresa-en-un-movimiento-bancario-manual" title="Permanent link">&para;</a></h2>
+<p>Como usuario con el rol de Facturación del sistema Inmobiliaria, quiero poder editar el campo Empresa en Movimientos Bancarios capturados manualmente, para reflejar correctamente a qué empresa pertenece el movimiento cuando no coincide con la sucursal - Empresa predeterminada.</p>
 <h3 id="reglas-de-negocio_5">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_5" title="Permanent link">&para;</a></h3>
-<p><strong>RN-5.1</strong> Cuando el Movimiento Bancario se origina automáticamente desde otro documento (pago, anticipo, abono o factura), los campos Empresa y Sucursal se toman del documento origen y no son editables.</p>
-<p><strong>RN-5.2</strong> Cuando el registro del Movimiento Bancario es manual, el sistema precarga Empresa y Sucursal con los valores predeterminados del empleado en sesión y permite su edición.</p>
-<p><strong>RN-5.3</strong> Todo Movimiento Bancario deberá requerir Empresa y Sucursal para poder registrarse, sin importar si es automático o manual.</p>
+<p><strong>RN-5.1</strong> Cuando el Movimiento Bancario se origina automáticamente desde otro documento (pago, anticipo, abono o factura), los campos Empresa se toman del documento origen y no es editable.</p>
+<p><strong>RN-5.2</strong> Cuando el registro del Movimiento Bancario es manual, el sistema precarga Empresa con los valores predeterminados del empleado en sesión y permite su edición.</p>
+<p><strong>RN-5.3</strong> Todo Movimiento Bancario deberá requerir Empresa para poder registrarse, sin importar si es automático o manual.</p>
 <h3 id="criterios-de-aceptación_5">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_5" title="Permanent link">&para;</a></h3>
 <p><strong>CA-5.1.1 — Precarga en movimiento manual</strong>
-Dado que el empleado en sesión tiene como predeterminada la sucursal "Matriz Vicente Reyes"
+Dado que el empleado en sesión tiene como predeterminada la sucursal - empresa "Matriz Vicente Reyes"
 Cuando registra un Movimiento Bancario manual
-Entonces los campos Empresa y Sucursal se precargan con "Vicente Reyes Magaña" y "Matriz Vicente Reyes".</p>
+Entonces el campo empresa  se precargan con "Vicente Reyes Magaña".</p>
 <p><strong>CA-5.1.2 — Edición permitida en movimiento manual</strong>
-Dado que un Movimiento Bancario manual está precargado con "Vicente Reyes Magaña"/"Matriz Vicente Reyes"
-Cuando el usuario cambia Sucursal a "Sucursal Malia Centro" antes de guardar
-Entonces el sistema actualiza también Empresa a "Grupo Malia" conforme a la sucursal elegida.</p>
+Dado que un Movimiento Bancario manual está precargado con "Vicente Reyes Magaña"
+Cuando el usuario cambia a empresa "Grupo Malia"
+Entonces el sistema actualiza a "Grupo Malia" conforme a la elegida.</p>
 <p><strong>CA-5.1.3 — Campos no editables en movimiento automático</strong>
 Dado que un Movimiento Bancario se generó automáticamente a partir de una Factura
 Cuando el usuario abre el movimiento para su consulta
-Entonces los campos Empresa y Sucursal se muestran de solo lectura con los valores heredados de la Factura.</p>
-<p><strong>CA-5.1.4 — Bloqueo por falta de Empresa/Sucursal</strong>
-Dado que el usuario intenta guardar un Movimiento Bancario manual sin seleccionar Empresa o Sucursal
+Entonces los campos Empresa se muestran de solo lectura con los valores heredados de la Factura.</p>
+<p><strong>CA-5.1.4 — Bloqueo por falta de Empresa/</strong>
+Dado que el usuario intenta guardar un Movimiento Bancario manual sin seleccionar Empresa
 Cuando confirma el guardado
-Entonces el sistema rechaza la operación e indica que ambos campos son obligatorios.</p>
+Entonces el sistema rechaza la operación e indica que el campo es obligatorio.</p>
 <h3 id="casos-de-prueba_5">Casos de prueba<a class="headerlink" href="#casos-de-prueba_5" title="Permanent link">&para;</a></h3>
 <p><strong>CP-5.1.1 — Precarga correcta en alta manual (camino feliz)</strong>
 Verifica: CA-5.1.1 · RN-5.2
 Dado que el empleado en sesión tiene predeterminada "Matriz Vicente Reyes"
 Cuando abre el formulario de alta manual de Movimiento Bancario
-Entonces Empresa y Sucursal aparecen precargados con los valores del empleado.</p>
+Entonces Empresa  aparecen precargados con los valores del empleado.</p>
 <p><strong>CP-5.1.2 — Edición exitosa antes de guardar (alternativo)</strong>
 Verifica: CA-5.1.2
 Dado que el movimiento manual está precargado con la sucursal predeterminada
 Cuando el usuario la cambia a otra sucursal de su configuración
-Entonces al guardar el movimiento queda ligado a la nueva Empresa/Sucursal seleccionada.</p>
+Entonces al guardar el movimiento queda ligado a la nueva Empresa/ seleccionada.</p>
 <p><strong>CP-5.1.3 — Movimiento automático es de solo lectura (permisos/reglas)</strong>
 Verifica: CA-5.1.3 · RN-5.1
 Dado que el movimiento se generó automáticamente desde un Abono
-Cuando el usuario intenta modificar Empresa o Sucursal
+Cuando el usuario intenta modificar Empresa 
 Entonces el sistema no permite la edición de esos campos.</p>
 <p><strong>CP-5.1.4 — Bloqueo por campos vacíos (error/validación)</strong>
 Verifica: CA-5.1.4 · RN-5.3
@@ -4370,6 +4391,7 @@ Entonces el sistema impide el guardado e indica que Empresa es obligatoria.</p>
 </tr>
 </tbody>
 </table>
+<p><a href="#indice-requerimientos">⬆ Volver al índice</a></p>
 <hr />
 <p><a id="rf-06"></a></p>
 <h1 id="rf-06--selección-de-empresa-emisora-en-facturas">RF-06 — Selección de empresa emisora en Facturas<a class="headerlink" href="#rf-06--selección-de-empresa-emisora-en-facturas" title="Permanent link">&para;</a></h1>
@@ -4408,7 +4430,7 @@ Entonces el sistema impide el guardado e indica que Empresa es obligatoria.</p>
 <h2 id="hu-61--cambiar-la-empresa-que-emite-la-factura">HU-6.1 — Cambiar la empresa que emite la Factura<a class="headerlink" href="#hu-61--cambiar-la-empresa-que-emite-la-factura" title="Permanent link">&para;</a></h2>
 <p>Como usuario con el rol de Facturación del sistema Inmobiliaria, quiero poder cambiar la empresa que emite en la pantalla Facturas, para emitir correctamente a nombre de "Vicente Reyes Magaña" o "Grupo Malia" según corresponda a la operación.</p>
 <h3 id="reglas-de-negocio_6">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_6" title="Permanent link">&para;</a></h3>
-<p><strong>RN-6.1</strong> La razón social emisor debe precargar únicamente las empresas configuradas al personal en sesión, dejando seleccionada por defecto la correspondiente a la sucursal predeterminada.</p>
+<p><strong>RN-6.1</strong> La razón social emisor debe precargar únicamente las empresas configuradas  por la <strong>lista de sucursales relacionadas</strong> al personal en sesión, dejando seleccionada por defecto la correspondiente a la sucursal predeterminada.</p>
 <p><strong>RN-6.2</strong> En una nueva Factura, el Régimen fiscal Emisor se precarga con "Arrendamiento" cuando la razón social emisor es "Grupo Malia"; en cualquier otro caso, se precarga el régimen fiscal configurado en la Empresa.</p>
 <p><strong>RN-6.3</strong> La Factura y la Transacción CXC relacionada deben corresponder siempre a la misma empresa.</p>
 <p><strong>RN-6.4</strong> No se permite editar la razón social emisor cuando la Factura está en estatus Cancelado o cuando ya está Timbrada.</p>
@@ -4419,7 +4441,7 @@ Entonces el sistema impide el guardado e indica que Empresa es obligatoria.</p>
 <p><strong>CA-6.1.1 — Cambio de razón social permitido</strong>
 Dado que el usuario en sesión tiene configuradas "Vicente Reyes Magaña" y "Grupo Malia"
 Cuando cambia la razón social emisor a "Grupo Malia" en una Factura nueva
-Entonces el sistema actualiza el régimen fiscal emisor a "Arrendamiento" y ajusta el campo Empresa de la Factura.</p>
+Entonces el sistema permite sea editable el campo régimen fiscal emisor y y actualiza por "Arrendamiento" y ajusta el campo Empresa de la Factura.</p>
 <p><strong>CA-6.1.2 — Precarga desde sucursal predeterminada</strong>
 Dado que la sucursal predeterminada del usuario pertenece a "Vicente Reyes Magaña"
 Cuando abre el formulario de una Factura nueva
@@ -4441,7 +4463,7 @@ Entonces el sistema solo ofrece anticipos emitidos por "Grupo Malia" para el mis
 Verifica: CA-6.1.1 · RN-6.2
 Dado que una Factura nueva tiene "Vicente Reyes Magaña" precargado
 Cuando el usuario cambia el emisor a "Grupo Malia"
-Entonces el régimen fiscal emisor cambia automáticamente a "Arrendamiento".</p>
+Entonces el régimen fiscal emisor cambia automáticamente a "Arrendamiento" y permitir sea editable.</p>
 <p><strong>CP-6.1.2 — Precarga según sucursal predeterminada (camino feliz)</strong>
 Verifica: CA-6.1.2 · RN-6.1
 Dado que el usuario en sesión tiene como predeterminada una sucursal de "Vicente Reyes Magaña"
@@ -4511,6 +4533,7 @@ Entonces la Transacción queda registrada con Empresa "Grupo Malia", igual a la 
 <hr />
 <p><strong>Regla transversal:</strong>
 El cálculo automático del Régimen fiscal Emisor "Arrendamiento" para "Grupo Malia" (RN-6.2) no existe hoy en el código: actualmente el régimen/uso CFDI del documento se deriva del Cliente, no de la Empresa emisora. Es funcionalidad nueva que aplica igual en RF-07, RF-08 y RF-09.</p>
+<p><a href="#indice-requerimientos">⬆ Volver al índice</a></p>
 <hr />
 <p><a id="rf-07"></a></p>
 <h1 id="rf-07--selección-de-empresa-emisora-en-notas-de-crédito">RF-07 — Selección de empresa emisora en Notas de Crédito<a class="headerlink" href="#rf-07--selección-de-empresa-emisora-en-notas-de-crédito" title="Permanent link">&para;</a></h1>
@@ -4546,12 +4569,12 @@ El cálculo automático del Régimen fiscal Emisor "Arrendamiento" para "Grupo M
 <p><strong>RN-7.1</strong> Solo se pueden relacionar a la Nota de Crédito facturas emitidas por la misma razón social emisor seleccionada.</p>
 <p><strong>RN-7.2</strong> La Nota de Crédito, la Factura relacionada y la Transacción CXC generada deben corresponder a la misma empresa.</p>
 <p><strong>RN-7.3</strong> No se permite editar la razón social emisor cuando la Nota de Crédito está en estatus Cancelado o cuando ya está Timbrada.</p>
-<p><strong>RN-7.4</strong> Toda Nota de Crédito deberá requerir Empresa y Sucursal de registro para poder emitirse.</p>
+<p><strong>RN-7.4</strong> Toda Nota de Crédito deberá requerir Empresa de registro para poder emitirse.</p>
 <h3 id="criterios-de-aceptación_7">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_7" title="Permanent link">&para;</a></h3>
 <p><strong>CA-7.1.1 — Cambio de razón social permitido</strong>
 Dado que el usuario en sesión tiene configuradas "Vicente Reyes Magaña" y "Grupo Malia"
 Cuando cambia la razón social emisor de una Nota de Crédito nueva a "Grupo Malia"
-Entonces el sistema actualiza el campo Empresa de la nota y limpia cualquier factura relacionada que no pertenezca a esa razón social.</p>
+Entonces el sistema actualiza el campo Empresa de la nota y limpia las facturas relacionadas al documento actual.</p>
 <p><strong>CA-7.1.2 — Restricción de facturas relacionables</strong>
 Dado que la Nota de Crédito tiene como emisor a "Vicente Reyes Magaña"
 Cuando el usuario busca la factura a relacionar
@@ -4612,6 +4635,7 @@ Entonces el sistema impide el registro e indica que la Sucursal es obligatoria.<
 </tr>
 </tbody>
 </table>
+<p><a href="#indice-requerimientos">⬆ Volver al índice</a></p>
 <hr />
 <p><a id="rf-08"></a></p>
 <h1 id="rf-08--selección-de-empresa-emisora-en-abono">RF-08 — Selección de empresa emisora en Abono<a class="headerlink" href="#rf-08--selección-de-empresa-emisora-en-abono" title="Permanent link">&para;</a></h1>
@@ -4652,7 +4676,7 @@ Entonces el sistema impide el registro e indica que la Sucursal es obligatoria.<
 <p><strong>CA-8.1.1 — Cambio de razón social permitido</strong>
 Dado que el usuario en sesión tiene configuradas "Vicente Reyes Magaña" y "Grupo Malia"
 Cuando cambia la razón social emisor de un Abono nuevo a "Grupo Malia"
-Entonces el sistema limpia las facturas relacionadas que no pertenezcan a "Grupo Malia" y ajusta el campo Empresa del Abono.</p>
+Entonces el sistema limpia las facturas relacionadas al documento actual y ajusta el campo Empresa del Abono.</p>
 <p><strong>CA-8.1.2 — Restricción de facturas aplicables</strong>
 Dado que el Abono tiene como emisor a "Vicente Reyes Magaña" para el cliente "Constructora ABC"
 Cuando el usuario busca facturas a aplicar
@@ -4713,6 +4737,7 @@ Entonces el sistema impide el registro e indica que la Sucursal es obligatoria.<
 </tr>
 </tbody>
 </table>
+<p><a href="#indice-requerimientos">⬆ Volver al índice</a></p>
 <hr />
 <p><a id="rf-09"></a></p>
 <h1 id="rf-09--selección-de-empresa-emisora-en-anticipos">RF-09 — Selección de empresa emisora en Anticipos<a class="headerlink" href="#rf-09--selección-de-empresa-emisora-en-anticipos" title="Permanent link">&para;</a></h1>
@@ -4815,6 +4840,7 @@ Entonces la Transacción queda registrada con Empresa "Grupo Malia".</p>
 </tr>
 </tbody>
 </table>
+<p><a href="#indice-requerimientos">⬆ Volver al índice</a></p>
 <hr />
 <p><a id="rf-10"></a></p>
 <h1 id="rf-10--registro-de-transacciones-cxc-manuales-con-selección-de-empresa">RF-10 — Registro de Transacciones CXC manuales con selección de empresa<a class="headerlink" href="#rf-10--registro-de-transacciones-cxc-manuales-con-selección-de-empresa" title="Permanent link">&para;</a></h1>
@@ -4848,8 +4874,8 @@ Entonces la Transacción queda registrada con Empresa "Grupo Malia".</p>
 <p>Como usuario con el rol de Facturación del sistema Inmobiliaria, quiero registrar Transacciones CXC manuales y poder cambiar la empresa que emite, para reflejar ajustes de cartera que no se originan en un documento de venta existente.</p>
 <h3 id="reglas-de-negocio_10">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_10" title="Permanent link">&para;</a></h3>
 <p><strong>RN-10.1</strong> La razón social emisor debe precargar únicamente las empresas configuradas al personal en sesión, dejando seleccionada por defecto la correspondiente a la sucursal predeterminada.</p>
-<p><strong>RN-10.2</strong> Toda Transacción CXC deberá requerir Empresa y Sucursal de registro para poder guardarse.</p>
-<p><strong>RN-10.3</strong> Si el registro de la Transacción es automático (generado desde Factura, Nota de Crédito, Abono o Anticipo), los campos Empresa y Sucursal de registro corresponden a los del documento que le dio origen y no son editables; en su defecto (registro manual), quedan a criterio del usuario dentro de sus empresas configuradas.</p>
+<p><strong>RN-10.2</strong> Toda Transacción CXC deberá requerir Empresa de registro para poder guardarse.</p>
+<p><strong>RN-10.3</strong> Si el registro de la Transacción es automático (generado desde Factura, Nota de Crédito, Abono o Anticipo), los campos Empresa de registro corresponden a los del documento que le dio origen y no son editables; en su defecto (registro manual), quedan a criterio del usuario dentro de sus empresas configuradas.</p>
 <h3 id="criterios-de-aceptación_10">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_10" title="Permanent link">&para;</a></h3>
 <p><strong>CA-10.1.1 — Registro manual con empresa seleccionable</strong>
 Dado que el usuario en sesión tiene configuradas "Vicente Reyes Magaña" y "Grupo Malia"
@@ -4862,7 +4888,7 @@ Entonces la razón social emisor aparece preseleccionada como "Vicente Reyes Mag
 <p><strong>CA-10.1.3 — Transacción automática no editable</strong>
 Dado que la Transacción se generó automáticamente a partir de una Factura
 Cuando el usuario la consulta
-Entonces los campos Empresa y Sucursal se muestran de solo lectura con los valores heredados de la Factura.</p>
+Entonces los campos Empresa se muestran de solo lectura con los valores heredados de la Factura.</p>
 <h3 id="casos-de-prueba_10">Casos de prueba<a class="headerlink" href="#casos-de-prueba_10" title="Permanent link">&para;</a></h3>
 <p><strong>CP-10.1.1 — Registro manual exitoso (camino feliz)</strong>
 Verifica: CA-10.1.1 · RN-10.1
@@ -4910,9 +4936,10 @@ Entonces el sistema no permite la edición de esos campos.</p>
 </tr>
 </tbody>
 </table>
+<p><a href="#indice-requerimientos">⬆ Volver al índice</a></p>
 <hr />
 <p><a id="rf-11"></a></p>
-<h1 id="rf-11--filtro-por-sucursal-en-consultas-de-ventas-y-facturación">RF-11 — Filtro por sucursal en consultas de Ventas y Facturación<a class="headerlink" href="#rf-11--filtro-por-sucursal-en-consultas-de-ventas-y-facturación" title="Permanent link">&para;</a></h1>
+<h1 id="rf-11--filtro-para-las-consultas">RF-11 — Filtro para las consultas<a class="headerlink" href="#rf-11--filtro-para-las-consultas" title="Permanent link">&para;</a></h1>
 <table>
 <thead>
 <tr>
@@ -4936,63 +4963,50 @@ Entonces el sistema no permite la edición de esos campos.</p>
 </tbody>
 </table>
 <h2 id="objetivo_10">Objetivo<a class="headerlink" href="#objetivo_10" title="Permanent link">&para;</a></h2>
-<p>Permitir filtrar las consultas del módulo Ventas y Facturación por una o varias sucursales asignadas al empleado en sesión.</p>
+<p>Permitir filtrar las consultas del módulo Ventas y CXC por sucursal asignada al empleado en sesión.</p>
 <h2 id="descripción_10">Descripción<a class="headerlink" href="#descripción_10" title="Permanent link">&para;</a></h2>
-<p>El sistema deberá agregar un filtro de sucursal (multiselección) a las consultas: CFDI Complemento, CFDI Emitidos, Facturas Emitidas, Detallado Abonos Facturas (Pagado), Detalle de Abono por Factura, Facturas por producto, Ventas Por Factura Pagada, Notas de crédito por producto, Resumen facturas, Resumen Notas de crédito, Facturas Canceladas y Buzón Tributario Interno. La revisión técnica localizó como precedente directo <code>FiltroComportamientoPagoFacturas</code> (namespace Ventas/CXP/Consultas), que ya implementa un filtro multiselección <code>IList&lt;Sucursal&gt; Sucursales</code>; ese es el patrón a replicar en las consultas listadas.</p>
+<p>El sistema deberá permitir filtrar y consultar la información de forma independiente por Empresa en las siguientes rutas de la interfaz gráfica:
+Consultas &gt; CXC &gt; <strong>CFDIs CFDIs Complementos</strong>, 
+Consultas &gt; Ventas &gt; <strong>CFDIs Emitidos</strong></p>
 <h3 id="operaciones_1">Operaciones<a class="headerlink" href="#operaciones_1" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Agregar filtro <code>Sucursales</code> (multiselección) a cada una de las 12 consultas indicadas.</li>
-<li>Restringir las opciones del filtro a sucursales en estatus Activo.</li>
+<li>Agregar filtro <code>Empresa</code> permitir seleccionar la empresas relacionadas por sucursales configuradas a personal en session.</li>
+<li>Restringir las opciones del filtro a empresas en estatus Activo.</li>
 </ul>
 <h2 id="hu-111--filtrar-consultas-de-ventas-por-sucursal">HU-11.1 — Filtrar consultas de Ventas por sucursal<a class="headerlink" href="#hu-111--filtrar-consultas-de-ventas-por-sucursal" title="Permanent link">&para;</a></h2>
-<p>Como usuario con el rol de Facturación del sistema Inmobiliaria, quiero filtrar el módulo de consultas de Ventas por una o varias sucursales asignadas a mi usuario, para revisar únicamente la información de las sucursales que me corresponden.</p>
+<p>Como usuario con el rol de Facturación del sistema Inmobiliaria, quiero filtrar el módulo de consultas de Ventas por empresa asignadas a mi usuario, para revisar únicamente la información de las sucursales que me corresponden.</p>
 <h3 id="reglas-de-negocio_11">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_11" title="Permanent link">&para;</a></h3>
-<p><strong>RN-11.1</strong> El filtro de sucursal permite selección múltiple y solo ofrece sucursales en estatus Activo.</p>
-<p><strong>RN-11.2</strong> Cuando no se selecciona ninguna sucursal en el filtro, la consulta muestra la información de todas las sucursales asignadas al empleado en sesión (comportamiento por defecto, no del sistema completo).</p>
-<p><strong>RN-11.3</strong> El filtro aplica de manera uniforme a las 12 consultas: CFDI Complemento, CFDI Emitidos, Facturas Emitidas, Detallado Abonos Facturas (Pagado), Detalle de Abono por Factura, Facturas por producto, Ventas Por Factura Pagada, Notas de crédito por producto, Resumen facturas, Resumen Notas de crédito, Facturas Canceladas y Buzón Tributario Interno.</p>
+<p><strong>RN-11.1</strong> El filtro de empresa permite selección solo de sucursales empresa en estatus Activo.</p>
+<p><strong>RN-11.2</strong> Cuando no se selecciona ninguna empresa en el filtro, la consulta muestra la información de todas las empresas asignadas al empleado en sesión (comportamiento por defecto, no del sistema completo).</p>
+<p><strong>RN-11.3</strong> El filtro aplica de manera uniforme a las 2 consultas: CFDIs Complementos y CFDIs Emitidos.</p>
 <h3 id="criterios-de-aceptación_11">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_11" title="Permanent link">&para;</a></h3>
 <p><strong>CA-11.1.1 — Filtro disponible y funcional</strong>
 Dado que el usuario abre la consulta "Facturas Emitidas"
-Cuando selecciona la sucursal "Matriz Vicente Reyes" en el filtro
-Entonces la consulta muestra únicamente los registros de esa sucursal.</p>
-<p><strong>CA-11.1.2 — Selección múltiple de sucursales</strong>
-Dado que el usuario tiene asignadas 3 sucursales
-Cuando selecciona 2 de ellas en el filtro de la consulta "Resumen facturas"
-Entonces la consulta muestra la información combinada de ambas sucursales seleccionadas.</p>
-<p><strong>CA-11.1.3 — Comportamiento por defecto sin selección</strong>
-Dado que el usuario no selecciona ninguna sucursal en el filtro
-Cuando ejecuta la consulta "CFDI Emitidos"
-Entonces el sistema muestra la información de todas las sucursales asignadas al empleado en sesión.</p>
-<p><strong>CA-11.1.4 — Solo sucursales activas en el selector</strong>
-Dado que existe una sucursal en estatus Baja asignada históricamente al empleado
-Cuando abre el filtro de sucursal de cualquiera de las 12 consultas
-Entonces dicha sucursal no aparece como opción seleccionable.</p>
+Cuando selecciona la empresa "Matriz Vicente Reyes" en el filtro
+Entonces la consulta muestra únicamente los registros de esa empresa.</p>
+<p><strong>CA-11.1.2 — Selección de empresa</strong>
+Dado que el usuario tiene asignadas N empresas
+Cuando selecciona 1 de ellas.
+Entonces las consultas muestran la información de la empresa seleccionada.</p>
+<p><strong>CA-11.1.3 — Solo empresas activas en el selector</strong>
+Dado que existe una empresa en estatus Baja asignada históricamente al empleado
+Cuando abre el filtro de empresas de cualquiera de las 2 consultas
+Entonces dicha empresa no aparece como opción seleccionable.</p>
 <h3 id="casos-de-prueba_11">Casos de prueba<a class="headerlink" href="#casos-de-prueba_11" title="Permanent link">&para;</a></h3>
-<p><strong>CP-11.1.1 — Filtro por una sucursal (camino feliz)</strong>
+<p><strong>CP-11.1.1 — Filtro por una empresa (camino feliz)</strong>
 Verifica: CA-11.1.1 · RN-11.1
 Dado que el usuario tiene asignadas "Matriz Vicente Reyes" y "Sucursal Norte"
 Cuando filtra "Facturas Emitidas" por "Matriz Vicente Reyes"
-Entonces solo se listan facturas de esa sucursal.</p>
-<p><strong>CP-11.1.2 — Filtro por múltiples sucursales (alternativo)</strong>
-Verifica: CA-11.1.2 · RN-11.1
-Dado que el usuario tiene asignadas 3 sucursales
-Cuando selecciona 2 en el filtro de "Resumen facturas"
-Entonces el resultado incluye registros de ambas sucursales y excluye la tercera.</p>
-<p><strong>CP-11.1.3 — Sin selección muestra todas las asignadas (alternativo)</strong>
-Verifica: CA-11.1.3 · RN-11.2
-Dado que el usuario no aplica ningún filtro de sucursal en "CFDI Emitidos"
-Cuando ejecuta la consulta
-Entonces se listan los registros de todas sus sucursales asignadas, sin incluir sucursales de otros empleados.</p>
-<p><strong>CP-11.1.4 — Sucursal inactiva no seleccionable (validación)</strong>
-Verifica: CA-11.1.4 · RN-11.1
-Dado que la sucursal "Sucursal Antigua" está en estatus Baja
-Cuando el usuario abre el filtro de "Notas de crédito por producto"
-Entonces "Sucursal Antigua" no aparece en el selector.</p>
-<p><strong>CP-11.1.5 — Cobertura del filtro en las 12 consultas (regresión funcional)</strong>
+Entonces solo se listan facturas de la empresa seleccionada.</p>
+<p><strong>CP-11.1.2 — Filtro ninguna empresa</strong>
+Verifica: CA-11.1.1 · RN-11.1
+Dado que el usuario no selecciona empresa
+Entonces se listan facturas de todas las empresas asignadas al empleado en sesión.</p>
+<p><strong>CP-11.1.3 — Cobertura del filtro en las 2 consultas (regresión funcional)</strong>
 Verifica: CA-11.1.1 · RN-11.3
-Dado que se navega, una por una, a las 12 consultas listadas en este RF
+Dado que se navega, una por una, a las 2 consultas listadas en este RF
 Cuando se revisa cada pantalla
-Entonces todas exponen el mismo filtro de sucursal con el mismo comportamiento.</p>
+Entonces todas exponen el mismo filtro de empresa con el mismo comportamiento.</p>
 <table>
 <thead>
 <tr>
@@ -5024,320 +5038,10 @@ Entonces todas exponen el mismo filtro de sucursal con el mismo comportamiento.<
 </tr>
 </tbody>
 </table>
+<p><a href="#indice-requerimientos">⬆ Volver al índice</a></p>
 <hr />
 <p><a id="rf-12"></a></p>
-<h1 id="rf-12--filtro-por-sucursal-en-consultas-de-cuentas-por-cobrar">RF-12 — Filtro por sucursal en consultas de Cuentas por Cobrar<a class="headerlink" href="#rf-12--filtro-por-sucursal-en-consultas-de-cuentas-por-cobrar" title="Permanent link">&para;</a></h1>
-<table>
-<thead>
-<tr>
-<th>Campo</th>
-<th>Valor</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Prioridad</td>
-<td>Should</td>
-</tr>
-<tr>
-<td>Estado</td>
-<td>Definición</td>
-</tr>
-<tr>
-<td>Dependencias</td>
-<td>RF-01</td>
-</tr>
-</tbody>
-</table>
-<h2 id="objetivo_11">Objetivo<a class="headerlink" href="#objetivo_11" title="Permanent link">&para;</a></h2>
-<p>Permitir filtrar las consultas del módulo Cuentas por Cobrar por una o varias sucursales asignadas al empleado en sesión.</p>
-<h2 id="descripción_11">Descripción<a class="headerlink" href="#descripción_11" title="Permanent link">&para;</a></h2>
-<p>El sistema deberá agregar el mismo filtro de sucursal (multiselección) a las consultas: Anticipos aplicados, Antigüedad de saldos, Cobranza general, Cobranza general consulta, Comportamiento de pagos, Concentrado de cobranza, Diario de abonos, Documentos de Cobranza, Relación de facturas, Estado de Cuenta, Estado de Cuenta Detallado y Resumen de movimientos. La revisión técnica encontró que <code>FiltroComportamientoPagos</code> ya implementa el filtro <code>IList&lt;Sucursal&gt; Sucursales</code> (patrón a replicar), mientras que <code>FiltroAntiguedadSaldos</code>, <code>FiltroEstadoCuenta</code>, <code>FiltroEstadoCuentaDetallado</code> y <code>FiltroConcentradoCobranza</code> hoy solo muestran Sucursal como columna de salida, sin filtro de entrada — a estas se les debe agregar el parámetro de filtrado.</p>
-<h2 id="hu-121--filtrar-consultas-de-cuentas-por-cobrar-por-sucursal">HU-12.1 — Filtrar consultas de Cuentas por Cobrar por sucursal<a class="headerlink" href="#hu-121--filtrar-consultas-de-cuentas-por-cobrar-por-sucursal" title="Permanent link">&para;</a></h2>
-<p>Como usuario con el rol de Facturación del sistema Inmobiliaria, quiero filtrar el módulo de consultas de Cuentas por Cobrar por una o varias sucursales asignadas a mi usuario, para revisar la cartera y cobranza de las sucursales que me corresponden.</p>
-<h3 id="reglas-de-negocio_12">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_12" title="Permanent link">&para;</a></h3>
-<p><strong>RN-12.1</strong> El filtro de sucursal permite selección múltiple y solo ofrece sucursales en estatus Activo.</p>
-<p><strong>RN-12.2</strong> Cuando no se selecciona ninguna sucursal en el filtro, la consulta muestra la información de todas las sucursales asignadas al empleado en sesión.</p>
-<p><strong>RN-12.3</strong> El filtro aplica de manera uniforme a las 12 consultas: Anticipos aplicados, Antigüedad de saldos, Cobranza general, Cobranza general consulta, Comportamiento de pagos, Concentrado de cobranza, Diario de abonos, Documentos de Cobranza, Relación de facturas, Estado de Cuenta, Estado de Cuenta Detallado y Resumen de movimientos.</p>
-<h3 id="criterios-de-aceptación_12">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_12" title="Permanent link">&para;</a></h3>
-<p><strong>CA-12.1.1 — Filtro disponible y funcional</strong>
-Dado que el usuario abre la consulta "Estado de Cuenta"
-Cuando selecciona la sucursal "Sucursal Norte" en el filtro
-Entonces la consulta muestra únicamente los saldos y movimientos de esa sucursal.</p>
-<p><strong>CA-12.1.2 — Selección múltiple de sucursales</strong>
-Dado que el usuario tiene asignadas "Matriz Vicente Reyes" y "Sucursal Malia Centro"
-Cuando selecciona ambas en el filtro de "Cobranza general"
-Entonces la consulta muestra la cobranza combinada de ambas sucursales.</p>
-<p><strong>CA-12.1.3 — Comportamiento por defecto sin selección</strong>
-Dado que el usuario no selecciona ninguna sucursal en el filtro
-Cuando ejecuta la consulta "Antigüedad de saldos"
-Entonces el sistema muestra la información de todas las sucursales asignadas al empleado en sesión.</p>
-<h3 id="casos-de-prueba_12">Casos de prueba<a class="headerlink" href="#casos-de-prueba_12" title="Permanent link">&para;</a></h3>
-<p><strong>CP-12.1.1 — Filtro por una sucursal (camino feliz)</strong>
-Verifica: CA-12.1.1 · RN-12.1
-Dado que el usuario tiene asignadas "Matriz Vicente Reyes" y "Sucursal Norte"
-Cuando filtra "Estado de Cuenta" por "Sucursal Norte"
-Entonces solo se listan saldos de esa sucursal.</p>
-<p><strong>CP-12.1.2 — Filtro por múltiples sucursales (alternativo)</strong>
-Verifica: CA-12.1.2 · RN-12.1
-Dado que el usuario tiene asignadas "Matriz Vicente Reyes" y "Sucursal Malia Centro"
-Cuando selecciona ambas en "Cobranza general"
-Entonces el resultado combina la cobranza de ambas sucursales.</p>
-<p><strong>CP-12.1.3 — Sin selección muestra todas las asignadas (alternativo)</strong>
-Verifica: CA-12.1.3 · RN-12.2
-Dado que el usuario no aplica filtro de sucursal en "Antigüedad de saldos"
-Cuando ejecuta la consulta
-Entonces se listan los registros de todas sus sucursales asignadas.</p>
-<p><strong>CP-12.1.4 — Agregar filtro a consultas que hoy solo muestran columna (regresión funcional)</strong>
-Verifica: CA-12.1.1 · RN-12.3
-Dado que "Estado de Cuenta Detallado" y "Concentrado de cobranza" hoy solo exponen Sucursal como columna, sin filtro de entrada
-Cuando se agrega el filtro conforme a este RF
-Entonces ambas consultas permiten filtrar por sucursal igual que el resto de las 12 consultas.</p>
-<p><strong>CP-12.1.5 — Sucursal inactiva no seleccionable (validación)</strong>
-Verifica: RN-12.1
-Dado que la sucursal "Sucursal Antigua" está en estatus Baja
-Cuando el usuario abre el filtro de "Documentos de Cobranza"
-Entonces "Sucursal Antigua" no aparece en el selector.</p>
-<table>
-<thead>
-<tr>
-<th>CA</th>
-<th>Caso(s) de prueba</th>
-<th>Escenarios cubiertos</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>CA-12.1.1</td>
-<td>CP-12.1.1, CP-12.1.4</td>
-<td>Camino feliz, Regresión</td>
-</tr>
-<tr>
-<td>CA-12.1.2</td>
-<td>CP-12.1.2</td>
-<td>Alternativo</td>
-</tr>
-<tr>
-<td>CA-12.1.3</td>
-<td>CP-12.1.3</td>
-<td>Alternativo (default)</td>
-</tr>
-</tbody>
-</table>
-<hr />
-<p><a id="rf-13"></a></p>
-<h1 id="rf-13--captura-de-empresasucursal-con-fines-de-auditoría-en-inmobiliaria">RF-13 — Captura de Empresa/Sucursal con fines de auditoría en Inmobiliaria<a class="headerlink" href="#rf-13--captura-de-empresasucursal-con-fines-de-auditoría-en-inmobiliaria" title="Permanent link">&para;</a></h1>
-<table>
-<thead>
-<tr>
-<th>Campo</th>
-<th>Valor</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Prioridad</td>
-<td>Should</td>
-</tr>
-<tr>
-<td>Estado</td>
-<td>Definición</td>
-</tr>
-<tr>
-<td>Dependencias</td>
-<td>RF-01</td>
-</tr>
-</tbody>
-</table>
-<h2 id="objetivo_12">Objetivo<a class="headerlink" href="#objetivo_12" title="Permanent link">&para;</a></h2>
-<p>Registrar de forma automática, y exclusivamente para fines de auditoría, la Empresa y Sucursal del personal que captura un Arrendatario, Renta, Abono, Detalle de Abono, Gasto o Ingreso en el módulo Inmobiliaria.</p>
-<h2 id="descripción_12">Descripción<a class="headerlink" href="#descripción_12" title="Permanent link">&para;</a></h2>
-<p>Las entidades del módulo Inmobiliaria (<code>InmuebleArrendatario</code>/Arrendatario, <code>Renta</code>, <code>AbonoInmobiliaria</code>, <code>AbonoDetalleInmobiliaria</code>, <code>Gasto</code>, <code>Ingreso</code>) <strong>no tienen hoy</strong> campos Empresa/Sucursal; el módulo opera de forma mono-empresa de facto (por ejemplo, <code>FiltroCobranza</code> hardcodea el parámetro de reporte <code>Empresa = "INMOBILIARIA"</code>). Este requerimiento agrega los campos Empresa y Sucursal a esas seis entidades, asignados automáticamente con el valor de la sucursal/empresa predeterminada del personal en sesión (RF-01) al momento del registro, y los muestra en la interfaz como campos de solo consulta (no editables), sin que tengan efecto en la operación ni en cálculos del módulo.</p>
-<h2 id="hu-131--auditar-empresasucursal-en-registros-de-inmobiliaria">HU-13.1 — Auditar Empresa/Sucursal en registros de Inmobiliaria<a class="headerlink" href="#hu-131--auditar-empresasucursal-en-registros-de-inmobiliaria" title="Permanent link">&para;</a></h2>
-<p>Como usuario con el rol de Facturación del sistema Inmobiliaria, quiero que al registrar un Arrendatario, Renta, Abono, Detalle de Abono, Gasto o Ingreso se capture y almacene la Empresa y Sucursal de quien lo registra, para dejar evidencia de auditoría de en qué empresa/sucursal se originó cada registro inmobiliario.</p>
-<h3 id="reglas-de-negocio_13">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_13" title="Permanent link">&para;</a></h3>
-<p><strong>RN-13.1</strong> Los campos Empresa y Sucursal se asignan automáticamente con el valor de la sucursal y empresa predeterminada del personal en sesión al momento de crear el registro.</p>
-<p><strong>RN-13.2</strong> Los campos Empresa y Sucursal son de solo consulta en la interfaz gráfica; no se permite su edición manual en ningún momento posterior al registro.</p>
-<p><strong>RN-13.3</strong> La regla anterior (RN-13.1 y RN-13.2) aplica de manera idéntica a las seis entidades: Arrendatario, Renta, Abono, Detalle de Abono, Gasto e Ingreso.</p>
-<p><strong>RN-13.4</strong> Los campos Empresa/Sucursal capturados con este RF son exclusivamente informativos/de auditoría: no participan en cálculos de renta, saldos ni en las validaciones operativas existentes del módulo Inmobiliaria.</p>
-<h3 id="criterios-de-aceptación_13">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_13" title="Permanent link">&para;</a></h3>
-<p><strong>CA-13.1.1 — Captura automática al registrar</strong>
-Dado que el personal en sesión tiene como predeterminada la sucursal "Matriz Vicente Reyes"
-Cuando registra un nuevo Arrendatario
-Entonces el registro queda con Empresa "Vicente Reyes Magaña" y Sucursal "Matriz Vicente Reyes" de forma automática.</p>
-<p><strong>CA-13.1.2 — Campos de solo consulta</strong>
-Dado que un registro de Renta ya tiene capturados Empresa y Sucursal
-Cuando el usuario abre el registro para su edición
-Entonces los campos Empresa y Sucursal se muestran deshabilitados/de solo lectura.</p>
-<p><strong>CA-13.1.3 — Cobertura en las seis entidades</strong>
-Dado que se registran, uno por uno, un Arrendatario, una Renta, un Abono, un Detalle de Abono, un Gasto y un Ingreso
-Cuando se revisa cada registro
-Entonces los seis muestran los campos Empresa y Sucursal capturados automáticamente y de solo lectura.</p>
-<p><strong>CA-13.1.4 — Sin efecto en la operación</strong>
-Dado que dos Rentas se registran con Sucursales distintas por personal distinto
-Cuando se calcula el saldo/estatus del contrato de arrendamiento asociado
-Entonces el cálculo no se ve afectado por el valor de Empresa/Sucursal capturado.</p>
-<h3 id="casos-de-prueba_13">Casos de prueba<a class="headerlink" href="#casos-de-prueba_13" title="Permanent link">&para;</a></h3>
-<p><strong>CP-13.1.1 — Captura automática en Arrendatario (camino feliz)</strong>
-Verifica: CA-13.1.1 · RN-13.1
-Dado que el personal en sesión tiene predeterminada "Matriz Vicente Reyes"
-Cuando registra un Arrendatario nuevo
-Entonces el registro queda con Empresa "Vicente Reyes Magaña" y Sucursal "Matriz Vicente Reyes".</p>
-<p><strong>CP-13.1.2 — Captura automática en Gasto e Ingreso (cobertura)</strong>
-Verifica: CA-13.1.3 · RN-13.3
-Dado que el personal en sesión tiene predeterminada "Sucursal Malia Centro"
-Cuando registra un Gasto y luego un Ingreso
-Entonces ambos quedan con Empresa "Grupo Malia" y Sucursal "Sucursal Malia Centro".</p>
-<p><strong>CP-13.1.3 — Bloqueo de edición manual (permisos/regla)</strong>
-Verifica: CA-13.1.2 · RN-13.2
-Dado que un Abono de Inmobiliaria ya tiene Empresa/Sucursal capturados
-Cuando cualquier usuario, incluido un Administrador, intenta modificarlos desde el formulario
-Entonces el sistema no permite el cambio.</p>
-<p><strong>CP-13.1.4 — Sin impacto en cálculo de renta (regla de negocio)</strong>
-Verifica: CA-13.1.4 · RN-13.4
-Dado que dos Rentas del mismo Inmueble tienen distinta Sucursal capturada por auditoría
-Cuando el sistema calcula el saldo pendiente del contrato
-Entonces el resultado del cálculo es el mismo que se obtenía antes de este RF, sin considerar Empresa/Sucursal.</p>
-<p><strong>CP-13.1.5 — Cobertura completa de las seis entidades (regresión funcional)</strong>
-Verifica: CA-13.1.3 · RN-13.3
-Dado que se revisan, una por una, las pantallas de Arrendatario, Renta, Abono, Detalle de Abono, Gasto e Ingreso
-Cuando se registra un caso en cada una
-Entonces las seis muestran Empresa/Sucursal capturados y de solo lectura.</p>
-<table>
-<thead>
-<tr>
-<th>CA</th>
-<th>Caso(s) de prueba</th>
-<th>Escenarios cubiertos</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>CA-13.1.1</td>
-<td>CP-13.1.1</td>
-<td>Camino feliz</td>
-</tr>
-<tr>
-<td>CA-13.1.2</td>
-<td>CP-13.1.3</td>
-<td>Permisos/regla</td>
-</tr>
-<tr>
-<td>CA-13.1.3</td>
-<td>CP-13.1.2, CP-13.1.5</td>
-<td>Cobertura, Regresión</td>
-</tr>
-<tr>
-<td>CA-13.1.4</td>
-<td>CP-13.1.4</td>
-<td>Regla de negocio</td>
-</tr>
-</tbody>
-</table>
-<hr />
-<p><a id="rf-14"></a></p>
-<h1 id="rf-14--filtro-por-sucursal-en-consultas-de-inmobiliaria">RF-14 — Filtro por sucursal en consultas de Inmobiliaria<a class="headerlink" href="#rf-14--filtro-por-sucursal-en-consultas-de-inmobiliaria" title="Permanent link">&para;</a></h1>
-<table>
-<thead>
-<tr>
-<th>Campo</th>
-<th>Valor</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Prioridad</td>
-<td>Should</td>
-</tr>
-<tr>
-<td>Estado</td>
-<td>Definición</td>
-</tr>
-<tr>
-<td>Dependencias</td>
-<td>RF-01, RF-13</td>
-</tr>
-</tbody>
-</table>
-<h2 id="objetivo_13">Objetivo<a class="headerlink" href="#objetivo_13" title="Permanent link">&para;</a></h2>
-<p>Permitir filtrar las consultas del módulo Inmobiliaria por una o varias sucursales asignadas al empleado en sesión.</p>
-<h2 id="descripción_13">Descripción<a class="headerlink" href="#descripción_13" title="Permanent link">&para;</a></h2>
-<p>El sistema deberá agregar un filtro de sucursal (multiselección) a las consultas: Reporte de Balance, Reporte de Cobranza, Reporte de Estado Financiero, Monitor de servicios y Detallado de Gastos. La revisión técnica confirmó que <code>FiltroCobranza</code>/<code>ConsultaCobranza</code> y <code>FiltroMonitorServicio</code> hoy <strong>no</strong> tienen ningún filtro ni columna de sucursal, y que <code>FiltroCobranza</code> incluso fija el parámetro <code>Empresa = "INMOBILIARIA"</code> de forma fija en el reporte; ese valor fijo deberá sustituirse por el filtro dinámico de este RF, que depende de que RF-13 haya incorporado Empresa/Sucursal a las entidades fuente de estos reportes.</p>
-<h2 id="hu-141--filtrar-consultas-de-inmobiliaria-por-sucursal">HU-14.1 — Filtrar consultas de Inmobiliaria por sucursal<a class="headerlink" href="#hu-141--filtrar-consultas-de-inmobiliaria-por-sucursal" title="Permanent link">&para;</a></h2>
-<p>Como usuario con el rol de Facturación del sistema Inmobiliaria, quiero filtrar el módulo de consultas de Inmobiliaria por una o varias sucursales asignadas a mi usuario, para revisar balance, cobranza y gastos de las sucursales que me corresponden.</p>
-<h3 id="reglas-de-negocio_14">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_14" title="Permanent link">&para;</a></h3>
-<p><strong>RN-14.1</strong> El filtro de sucursal permite selección múltiple y solo ofrece sucursales en estatus Activo.</p>
-<p><strong>RN-14.2</strong> Cuando no se selecciona ninguna sucursal en el filtro, la consulta muestra la información de todas las sucursales asignadas al empleado en sesión.</p>
-<p><strong>RN-14.3</strong> El filtro aplica de manera uniforme a las 5 consultas: Reporte de Balance, Reporte de Cobranza, Reporte de Estado Financiero, Monitor de servicios y Detallado de Gastos.</p>
-<p><strong>RN-14.4</strong> El parámetro fijo "INMOBILIARIA" utilizado hoy por el Reporte de Cobranza se sustituye por el filtro dinámico de sucursal/empresa definido en este RF.</p>
-<h3 id="criterios-de-aceptación_14">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_14" title="Permanent link">&para;</a></h3>
-<p><strong>CA-14.1.1 — Filtro disponible y funcional</strong>
-Dado que el usuario abre el "Reporte de Cobranza"
-Cuando selecciona la sucursal "Sucursal Malia Centro" en el filtro
-Entonces el reporte muestra únicamente la cobranza de esa sucursal, en lugar del valor fijo anterior.</p>
-<p><strong>CA-14.1.2 — Selección múltiple de sucursales</strong>
-Dado que el usuario tiene asignadas dos sucursales
-Cuando las selecciona ambas en "Detallado de Gastos"
-Entonces el reporte combina los gastos de ambas sucursales.</p>
-<p><strong>CA-14.1.3 — Comportamiento por defecto sin selección</strong>
-Dado que el usuario no selecciona ninguna sucursal
-Cuando ejecuta "Reporte de Balance"
-Entonces el sistema muestra la información de todas las sucursales asignadas al empleado en sesión.</p>
-<h3 id="casos-de-prueba_14">Casos de prueba<a class="headerlink" href="#casos-de-prueba_14" title="Permanent link">&para;</a></h3>
-<p><strong>CP-14.1.1 — Filtro reemplaza el valor fijo "INMOBILIARIA" (camino feliz)</strong>
-Verifica: CA-14.1.1 · RN-14.4
-Dado que el usuario filtra el "Reporte de Cobranza" por "Sucursal Malia Centro"
-Cuando ejecuta el reporte
-Entonces el resultado corresponde a esa sucursal y ya no al valor fijo "INMOBILIARIA".</p>
-<p><strong>CP-14.1.2 — Filtro por múltiples sucursales (alternativo)</strong>
-Verifica: CA-14.1.2 · RN-14.1
-Dado que el usuario tiene asignadas dos sucursales
-Cuando las selecciona ambas en "Detallado de Gastos"
-Entonces el resultado incluye los gastos de ambas.</p>
-<p><strong>CP-14.1.3 — Sin selección muestra todas las asignadas (alternativo)</strong>
-Verifica: CA-14.1.3 · RN-14.2
-Dado que el usuario no aplica filtro de sucursal en "Reporte de Balance"
-Cuando ejecuta la consulta
-Entonces se listan los registros de todas sus sucursales asignadas.</p>
-<p><strong>CP-14.1.4 — Cobertura del filtro en las 5 consultas (regresión funcional)</strong>
-Verifica: CA-14.1.1 · RN-14.3
-Dado que se navega a las 5 consultas listadas en este RF
-Cuando se revisa cada una
-Entonces todas exponen el mismo filtro de sucursal con el mismo comportamiento.</p>
-<p><strong>CP-14.1.5 — Sucursal inactiva no seleccionable (validación)</strong>
-Verifica: RN-14.1
-Dado que una sucursal está en estatus Baja
-Cuando el usuario abre el filtro de "Monitor de servicios"
-Entonces dicha sucursal no aparece como opción seleccionable.</p>
-<table>
-<thead>
-<tr>
-<th>CA</th>
-<th>Caso(s) de prueba</th>
-<th>Escenarios cubiertos</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>CA-14.1.1</td>
-<td>CP-14.1.1, CP-14.1.4</td>
-<td>Camino feliz, Regresión</td>
-</tr>
-<tr>
-<td>CA-14.1.2</td>
-<td>CP-14.1.2</td>
-<td>Alternativo</td>
-</tr>
-<tr>
-<td>CA-14.1.3</td>
-<td>CP-14.1.3</td>
-<td>Alternativo (default)</td>
-</tr>
-</tbody>
-</table>
-<hr />
-<p><a id="rf-15"></a></p>
-<h1 id="rf-15--regularización-de-información-transaccional-histórica">RF-15 — Regularización de información transaccional histórica<a class="headerlink" href="#rf-15--regularización-de-información-transaccional-histórica" title="Permanent link">&para;</a></h1>
+<h1 id="rf-12--regularización-de-información-transaccional-histórica">RF-12 — Regularización de información transaccional histórica<a class="headerlink" href="#rf-12--regularización-de-información-transaccional-histórica" title="Permanent link">&para;</a></h1>
 <table>
 <thead>
 <tr>
@@ -5360,59 +5064,531 @@ Entonces dicha sucursal no aparece como opción seleccionable.</p>
 </tr>
 </tbody>
 </table>
-<h2 id="objetivo_14">Objetivo<a class="headerlink" href="#objetivo_14" title="Permanent link">&para;</a></h2>
+<h2 id="objetivo_11">Objetivo<a class="headerlink" href="#objetivo_11" title="Permanent link">&para;</a></h2>
 <p>Asegurar que la información transaccional generada antes de esta iniciativa quede ligada de forma consistente a la Empresa "Vicente Reyes" y Sucursal "Matriz", de modo que los nuevos filtros y validaciones por sucursal no dejen huérfanos los registros históricos.</p>
-<h2 id="descripción_14">Descripción<a class="headerlink" href="#descripción_14" title="Permanent link">&para;</a></h2>
+<h2 id="descripción_11">Descripción<a class="headerlink" href="#descripción_11" title="Permanent link">&para;</a></h2>
 <p>El sistema deberá completar (o regularizar) la información de Empresa/Sucursal en los registros históricos de Movimientos Bancarios, Transacciones CXC, Facturas, Abonos y Anticipos generados previamente, ligándolos a la Empresa "Vicente Reyes" y Sucursal "Matriz". Es importante señalar, como hallazgo técnico, que <code>ProcesoBaseObject</code> (clase base de Factura, NotaCredito, Abono, Anticipo y Transaccion) ya autoasigna Empresa/Sucursal desde el empleado creador al momento de la creación (<code>AfterConstruction</code>); por lo tanto, es probable que estos registros históricos ya tengan un valor no nulo, y que la tarea real sea una <strong>corrección/estandarización</strong> hacia "Vicente Reyes"/"Matriz" (en los casos en que el valor difiera o esté vacío) más que un llenado de datos nulos desde cero. Esto debe confirmarse antes de ejecutar la migración (ver PA-03).</p>
-<h2 id="hu-151--regularizar-empresasucursal-de-los-registros-históricos">HU-15.1 — Regularizar Empresa/Sucursal de los registros históricos<a class="headerlink" href="#hu-151--regularizar-empresasucursal-de-los-registros-históricos" title="Permanent link">&para;</a></h2>
-<p>Como usuario con el rol de Facturación del sistema Inmobiliaria, quiero que la información transaccional generada antes de este proyecto quede ligada a la Empresa "Vicente Reyes" y Sucursal "Matriz", para que los reportes y filtros por sucursal (RF-11, RF-12) reflejen el histórico completo sin registros huérfanos.</p>
-<h3 id="reglas-de-negocio_15">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_15" title="Permanent link">&para;</a></h3>
-<p><strong>RN-15.1</strong> Todo registro histórico (previo a la fecha de liberación del proyecto) de Movimiento Bancario, Transacción CXC, Factura, Abono o Anticipo sin Empresa/Sucursal asignada, o con un valor distinto que deba estandarizarse, queda ligado a Empresa "Vicente Reyes" y Sucursal "Matriz".</p>
-<p><strong>RN-15.2</strong> La regularización se ejecuta una sola vez, como proceso de migración previo a la liberación de los RF-05 a RF-10 en producción, y no como una acción recurrente del sistema.</p>
-<p><strong>RN-15.3</strong> La regularización no debe alterar los importes, estatus ni ninguna otra información fiscal/contable de los documentos afectados; únicamente completa/corrige los campos Empresa y Sucursal.</p>
-<h3 id="criterios-de-aceptación_15">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_15" title="Permanent link">&para;</a></h3>
-<p><strong>CA-15.1.1 — Regularización de Movimientos Bancarios históricos</strong>
+<h2 id="hu-121--regularizar-empresasucursal-de-los-registros-históricos">HU-12.1 — Regularizar Empresa/Sucursal de los registros históricos<a class="headerlink" href="#hu-121--regularizar-empresasucursal-de-los-registros-históricos" title="Permanent link">&para;</a></h2>
+<p>Como usuario con el rol de Facturación del sistema Inmobiliaria, quiero que la información transaccional generada antes de este proyecto quede ligada a la Empresa "Vicente Reyes" y Sucursal "Matriz", para que los reportes y filtros por sucursal (RF-11) reflejen el histórico completo sin registros huérfanos.</p>
+<h3 id="reglas-de-negocio_12">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_12" title="Permanent link">&para;</a></h3>
+<p><strong>RN-12.1</strong> Todo registro histórico (previo a la fecha de liberación del proyecto) de Movimiento Bancario, Transacción CXC, Factura, Abono o Anticipo sin Empresa/Sucursal asignada, o con un valor distinto que deba estandarizarse, queda ligado a Empresa "Vicente Reyes" y Sucursal "Matriz".</p>
+<p><strong>RN-12.2</strong> La regularización se ejecuta una sola vez, como proceso de migración previo a la liberación de los RF-05 a RF-10 en producción, y no como una acción recurrente del sistema.</p>
+<p><strong>RN-12.3</strong> La regularización no debe alterar los importes, estatus ni ninguna otra información fiscal/contable de los documentos afectados; únicamente completa/corrige los campos Empresa y Sucursal.</p>
+<h3 id="criterios-de-aceptación_12">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_12" title="Permanent link">&para;</a></h3>
+<p><strong>CA-12.1.1 — Regularización de Movimientos Bancarios históricos</strong>
 Dado que existen Movimientos Bancarios generados antes de la liberación de este proyecto
 Cuando se ejecuta el proceso de regularización
 Entonces todos quedan con Empresa "Vicente Reyes" y Sucursal "Matriz".</p>
-<p><strong>CA-15.1.2 — Regularización de Facturas, Abonos y Anticipos históricos</strong>
+<p><strong>CA-12.1.2 — Regularización de Facturas, Abonos y Anticipos históricos</strong>
 Dado que existen Facturas, Abonos y Anticipos generados antes de la liberación de este proyecto
 Cuando se ejecuta el proceso de regularización
 Entonces todos quedan con Empresa "Vicente Reyes" y Sucursal "Matriz".</p>
-<p><strong>CA-15.1.3 — Regularización de Transacciones CXC históricas</strong>
+<p><strong>CA-12.1.3 — Regularización de Transacciones CXC históricas</strong>
 Dado que existen Transacciones CXC generadas antes de la liberación de este proyecto
 Cuando se ejecuta el proceso de regularización
 Entonces todas quedan con Empresa "Vicente Reyes" y Sucursal "Matriz".</p>
-<p><strong>CA-15.1.4 — Preservación de datos fiscales/contables</strong>
+<p><strong>CA-12.1.4 — Preservación de datos fiscales/contables</strong>
 Dado que un documento histórico se regulariza con este proceso
 Cuando se compara antes y después de la ejecución
 Entonces el importe, estatus, folio y demás datos fiscales del documento permanecen sin cambios; solo Empresa y Sucursal se ven afectados.</p>
-<h3 id="casos-de-prueba_15">Casos de prueba<a class="headerlink" href="#casos-de-prueba_15" title="Permanent link">&para;</a></h3>
-<p><strong>CP-15.1.1 — Regularización exitosa de Movimientos Bancarios (camino feliz)</strong>
-Verifica: CA-15.1.1 · RN-15.1
+<h3 id="casos-de-prueba_12">Casos de prueba<a class="headerlink" href="#casos-de-prueba_12" title="Permanent link">&para;</a></h3>
+<p><strong>CP-12.1.1 — Regularización exitosa de Movimientos Bancarios (camino feliz)</strong>
+Verifica: CA-12.1.1 · RN-12.1
 Dado un lote de Movimientos Bancarios generados antes del corte del proyecto
 Cuando se ejecuta la regularización
 Entonces todos aparecen con Empresa "Vicente Reyes" y Sucursal "Matriz".</p>
-<p><strong>CP-15.1.2 — Regularización exitosa de Facturas/Abonos/Anticipos (camino feliz)</strong>
-Verifica: CA-15.1.2 · RN-15.1
+<p><strong>CP-12.1.2 — Regularización exitosa de Facturas/Abonos/Anticipos (camino feliz)</strong>
+Verifica: CA-12.1.2 · RN-12.1
 Dado un lote de Facturas, Abonos y Anticipos históricos
 Cuando se ejecuta la regularización
 Entonces todos aparecen con Empresa "Vicente Reyes" y Sucursal "Matriz".</p>
-<p><strong>CP-15.1.3 — Regularización exitosa de Transacciones CXC (camino feliz)</strong>
-Verifica: CA-15.1.3 · RN-15.1
+<p><strong>CP-12.1.3 — Regularización exitosa de Transacciones CXC (camino feliz)</strong>
+Verifica: CA-12.1.3 · RN-12.1
 Dado un lote de Transacciones CXC históricas
 Cuando se ejecuta la regularización
 Entonces todas aparecen con Empresa "Vicente Reyes" y Sucursal "Matriz".</p>
-<p><strong>CP-15.1.4 — No se alteran importes ni estatus (validación de integridad)</strong>
-Verifica: CA-15.1.4 · RN-15.3
+<p><strong>CP-12.1.4 — No se alteran importes ni estatus (validación de integridad)</strong>
+Verifica: CA-12.1.4 · RN-12.3
 Dado que la Factura FAC-00010 histórica tiene importe $15,000 y estatus Timbrado antes de la regularización
 Cuando se ejecuta el proceso
 Entonces conserva el mismo importe y estatus, y solo se actualizan Empresa/Sucursal.</p>
-<p><strong>CP-15.1.5 — Documentos posteriores a la liberación no se ven afectados (alternativo)</strong>
-Verifica: RN-15.2
+<p><strong>CP-12.1.5 — Documentos posteriores a la liberación no se ven afectados (alternativo)</strong>
+Verifica: RN-12.2
 Dado que existen Facturas creadas después de la liberación del proyecto, ya con Empresa/Sucursal elegidos por el usuario (RF-06)
 Cuando se ejecuta el proceso de regularización
 Entonces esos documentos no se modifican.</p>
+<table>
+<thead>
+<tr>
+<th>CA</th>
+<th>Caso(s) de prueba</th>
+<th>Escenarios cubiertos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CA-12.1.1</td>
+<td>CP-12.1.1</td>
+<td>Camino feliz</td>
+</tr>
+<tr>
+<td>CA-12.1.2</td>
+<td>CP-12.1.2</td>
+<td>Camino feliz</td>
+</tr>
+<tr>
+<td>CA-12.1.3</td>
+<td>CP-12.1.3</td>
+<td>Camino feliz</td>
+</tr>
+<tr>
+<td>CA-12.1.4</td>
+<td>CP-12.1.4, CP-12.1.5</td>
+<td>Validación de integridad, Alternativo</td>
+</tr>
+</tbody>
+</table>
+<p><a href="#indice-requerimientos">⬆ Volver al índice</a></p>
+<hr />
+<p><a id="rf-13"></a></p>
+<h1 id="rf-13--configuración-de-serie-por-combinación-documento--empresa--régimen-fiscal">RF-13 — Configuración de Serie por combinación Documento + Empresa + Régimen Fiscal<a class="headerlink" href="#rf-13--configuración-de-serie-por-combinación-documento--empresa--régimen-fiscal" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>RF-01 (externo, documento RF-separacion-folios-empresa-regimen-fiscal.md)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_12">Objetivo<a class="headerlink" href="#objetivo_12" title="Permanent link">&para;</a></h2>
+<p>Permitir configurar una Serie propia para cada combinación de Documento (Factura/NotaCredito/Anticipo/Abono) de modo que cada RFC emisor y cada régimen fiscal administren su numeración de forma completamente independiente.</p>
+<h2 id="descripción_12">Descripción<a class="headerlink" href="#descripción_12" title="Permanent link">&para;</a></h2>
+<p>Cuando se habilita un nuevo régimen fiscal a una Empresa el sistema debe asegurar la existencia de una serie por cada combinación</p>
+<table>
+<thead>
+<tr>
+<th>DOCUMENTO</th>
+<th>EMPRESA</th>
+<th>REGIMEN FISCAL</th>
+<th>SERIE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FACTURA</td>
+<td>VICENTE REYES</td>
+<td>ARRENDAMIENTO</td>
+<td>A</td>
+</tr>
+<tr>
+<td>FACTURA</td>
+<td>VICENTE REYES</td>
+<td>INGRESOS POR INTERESES</td>
+<td>I</td>
+</tr>
+<tr>
+<td>FACTURA</td>
+<td>VICENTE REYES</td>
+<td>PERSONAS FÍSICAS CON ACTIVIDADES EMPRESARIALES Y PROFESIONALES</td>
+<td>E</td>
+</tr>
+<tr>
+<td>FACTURA</td>
+<td>GRUPO MALIA</td>
+<td>ARRENDAMIENTO</td>
+<td>Pendiente</td>
+</tr>
+<tr>
+<td>FACTURA</td>
+<td>GRUPO MALIA</td>
+<td>INGRESOS POR INTERESES</td>
+<td>Pendiente</td>
+</tr>
+<tr>
+<td>FACTURA</td>
+<td>GRUPO MALIA</td>
+<td>PERSONAS FÍSICAS CON ACTIVIDADES EMPRESARIALES Y PROFESIONALES</td>
+<td>Pendiente</td>
+</tr>
+<tr>
+<td>FACTURA</td>
+<td>MARIA REYES</td>
+<td>ARRENDAMIENTO</td>
+<td>Pendiente</td>
+</tr>
+<tr>
+<td>FACTURA</td>
+<td>MARIA REYES</td>
+<td>INGRESOS POR INTERESES</td>
+<td>Pendiente</td>
+</tr>
+<tr>
+<td>FACTURA</td>
+<td>MARIA REYES</td>
+<td>PERSONAS FÍSICAS CON ACTIVIDADES EMPRESARIALES Y PROFESIONALES</td>
+<td>Pendiente</td>
+</tr>
+<tr>
+<td>NOTA CREDITO</td>
+<td>VICENTE REYES</td>
+<td>ARRENDAMIENTO</td>
+<td>Pendiente</td>
+</tr>
+<tr>
+<td>NOTA CREDITO</td>
+<td>VICENTE REYES</td>
+<td>INGRESOS POR INTERESES</td>
+<td>Pendiente</td>
+</tr>
+<tr>
+<td>NOTA CREDITO</td>
+<td>VICENTE REYES</td>
+<td>PERSONAS FÍSICAS CON ACTIVIDADES EMPRESARIALES Y PROFESIONALES</td>
+<td>Pendiente</td>
+</tr>
+<tr>
+<td>NOTA CREDITO</td>
+<td>GRUPO MALIA</td>
+<td>ARRENDAMIENTO</td>
+<td>Pendiente</td>
+</tr>
+<tr>
+<td>NOTA CREDITO</td>
+<td>GRUPO MALIA</td>
+<td>INGRESOS POR INTERESES</td>
+<td>Pendiente</td>
+</tr>
+<tr>
+<td>NOTA CREDITO</td>
+<td>GRUPO MALIA</td>
+<td>PERSONAS FÍSICAS CON ACTIVIDADES EMPRESARIALES Y PROFESIONALES</td>
+<td>Pendiente</td>
+</tr>
+<tr>
+<td>NOTA CREDITO</td>
+<td>MARIA REYES</td>
+<td>ARRENDAMIENTO</td>
+<td>Pendiente</td>
+</tr>
+<tr>
+<td>NOTA CREDITO</td>
+<td>MARIA REYES</td>
+<td>INGRESOS POR INTERESES</td>
+<td>Pendiente</td>
+</tr>
+<tr>
+<td>NOTA CREDITO</td>
+<td>MARIA REYES</td>
+<td>PERSONAS FÍSICAS CON ACTIVIDADES EMPRESARIALES Y PROFESIONALES</td>
+<td>Pendiente</td>
+</tr>
+<tr>
+<td>ANTICIPO</td>
+<td>VICENTE REYES</td>
+<td>ARRENDAMIENTO</td>
+<td>Pendiente</td>
+</tr>
+<tr>
+<td>ANTICIPO</td>
+<td>VICENTE REYES</td>
+<td>INGRESOS POR INTERESES</td>
+<td>Pendiente</td>
+</tr>
+<tr>
+<td>ANTICIPO</td>
+<td>VICENTE REYES</td>
+<td>PERSONAS FÍSICAS CON ACTIVIDADES EMPRESARIALES Y PROFESIONALES</td>
+<td>Pendiente</td>
+</tr>
+<tr>
+<td>ANTICIPO</td>
+<td>GRUPO MALIA</td>
+<td>ARRENDAMIENTO</td>
+<td>Pendiente</td>
+</tr>
+<tr>
+<td>ANTICIPO</td>
+<td>GRUPO MALIA</td>
+<td>INGRESOS POR INTERESES</td>
+<td>Pendiente</td>
+</tr>
+<tr>
+<td>ANTICIPO</td>
+<td>GRUPO MALIA</td>
+<td>PERSONAS FÍSICAS CON ACTIVIDADES EMPRESARIALES Y PROFESIONALES</td>
+<td>Pendiente</td>
+</tr>
+<tr>
+<td>ANTICIPO</td>
+<td>MARIA REYES</td>
+<td>ARRENDAMIENTO</td>
+<td>Pendiente</td>
+</tr>
+<tr>
+<td>ANTICIPO</td>
+<td>MARIA REYES</td>
+<td>INGRESOS POR INTERESES</td>
+<td>Pendiente</td>
+</tr>
+<tr>
+<td>ANTICIPO</td>
+<td>MARIA REYES</td>
+<td>PERSONAS FÍSICAS CON ACTIVIDADES EMPRESARIALES Y PROFESIONALES</td>
+<td>Pendiente</td>
+</tr>
+<tr>
+<td>ABONO</td>
+<td>VICENTE REYES</td>
+<td>ARRENDAMIENTO</td>
+<td>B</td>
+</tr>
+<tr>
+<td>ABONO</td>
+<td>VICENTE REYES</td>
+<td>INGRESOS POR INTERESES</td>
+<td>B</td>
+</tr>
+<tr>
+<td>ABONO</td>
+<td>VICENTE REYES</td>
+<td>PERSONAS FÍSICAS CON ACTIVIDADES EMPRESARIALES Y PROFESIONALES</td>
+<td>B</td>
+</tr>
+<tr>
+<td>ABONO</td>
+<td>GRUPO MALIA</td>
+<td>ARRENDAMIENTO</td>
+<td>Pendiente</td>
+</tr>
+<tr>
+<td>ABONO</td>
+<td>GRUPO MALIA</td>
+<td>INGRESOS POR INTERESES</td>
+<td>Pendiente</td>
+</tr>
+<tr>
+<td>ABONO</td>
+<td>GRUPO MALIA</td>
+<td>PERSONAS FÍSICAS CON ACTIVIDADES EMPRESARIALES Y PROFESIONALES</td>
+<td>Pendiente</td>
+</tr>
+<tr>
+<td>ABONO</td>
+<td>MARIA REYES</td>
+<td>ARRENDAMIENTO</td>
+<td>Pendiente</td>
+</tr>
+<tr>
+<td>ABONO</td>
+<td>MARIA REYES</td>
+<td>INGRESOS POR INTERESES</td>
+<td>Pendiente</td>
+</tr>
+<tr>
+<td>ABONO</td>
+<td>MARIA REYES</td>
+<td>PERSONAS FÍSICAS CON ACTIVIDADES EMPRESARIALES Y PROFESIONALES</td>
+<td>Pendiente</td>
+</tr>
+</tbody>
+</table>
+<h2 id="hu-131--considerar-la-serie-correspondiente-para-la-generación-de-folios">HU-13.1 — Considerar la serie correspondiente para la generación de folios.<a class="headerlink" href="#hu-131--considerar-la-serie-correspondiente-para-la-generación-de-folios" title="Permanent link">&para;</a></h2>
+<p>Como usuario con rol Administrador del sistema Inmobiliaria, quiero que el sistema gestione las Serie correspondiente para la generación de folios en los documentos Factura, Nota Crédito, Abono y Anticipo.</p>
+<h3 id="reglas-de-negocio_13">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_13" title="Permanent link">&para;</a></h3>
+<p><strong>RN-13.1</strong> Al habilitar un régimen fiscal a una Empresa El documento conservara la separacion de folios por empresa y regimen-fiscal.</p>
+<p><strong>RN-13.2</strong> El valor (Serie) de cada combinación debe ser distinto entre combinaciones para evitar que dos combinaciones compartan consecutivo.</p>
+<h3 id="criterios-de-aceptación_13">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_13" title="Permanent link">&para;</a></h3>
+<p><strong>CA-13.1.1 — No duplicación de claves existentes</strong>
+Dado que la clave <code>SERIEFACTURAF_VRM_606</code> ya existe con Serie "A" configurada
+Cuando se vuelve a evaluar la generación automática para esa misma combinación
+Entonces el sistema no sobrescribe ni duplica la fila existente.</p>
+<h3 id="casos-de-prueba_13">Casos de prueba<a class="headerlink" href="#casos-de-prueba_13" title="Permanent link">&para;</a></h3>
+<p><strong>CP-13.1.1 — Generación automática folios (camino feliz)</strong>
+Verifica: CA-13.1.1 · RN-13.1
+Con base en la tabla antes mencionada, validar que cada combinación de documento, empresa y régimen fiscal cuente con su propia serie.</p>
+<table>
+<thead>
+<tr>
+<th>CA</th>
+<th>Caso(s) de prueba</th>
+<th>Escenarios cubiertos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CA-13.1.1</td>
+<td>CP-13.1.1</td>
+<td>Camino feliz</td>
+</tr>
+<tr>
+<td>CA-13.1.2</td>
+<td>CP-13.1.2</td>
+<td>Alternativo</td>
+</tr>
+<tr>
+<td>CA-13.1.3</td>
+<td>CP-13.1.3</td>
+<td>Error/validación</td>
+</tr>
+</tbody>
+</table>
+<p><a href="#indice-requerimientos">⬆ Volver al índice</a></p>
+<hr />
+<p><a id="rf-14"></a></p>
+<h1 id="rf-14--alta-de-la-empresa-maria-reyes-y-grupo-malia">RF-14 — Alta de la empresa "Maria Reyes" y "Grupo Malia"<a class="headerlink" href="#rf-14--alta-de-la-empresa-maria-reyes-y-grupo-malia" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Should</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>RF-01 (externo, documento RF-separacion-folios-empresa-regimen-fiscal.md); RF-13</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_13">Objetivo<a class="headerlink" href="#objetivo_13" title="Permanent link">&para;</a></h2>
+<p>Configurar en el sistema la nueva razón social "Maria Reyes" y"Grupo Malia" (aún no registrada en el catálogo <code>Empresa</code> a la fecha de este documento), para que pueda operar bajo el esquema de folios separados por Empresa.</p>
+<h2 id="descripción_13">Descripción<a class="headerlink" href="#descripción_13" title="Permanent link">&para;</a></h2>
+<p>Al igual que "Grupo Malia" la Empresa "Maria Reyes" se requiere el registro de empresas de sus certificados de sello digital (<code>EmpresaCertificado</code>) y PAC activo, al menos una cuenta bancaria, y su sucursal matriz. Una vez dada de alta, deben generarse (RF-13) y configurarse las Series correspondientes a cada combinación Documento+Régimen Fiscal habilitado para esta nueva Empresa antes de poder emitir documentos.</p>
+<h2 id="hu-141--dar-de-alta-la-empresa-maria-reyes-y-grupo-malia">HU-14.1 — Dar de alta la empresa  "Maria Reyes" y "Grupo Malia"<a class="headerlink" href="#hu-141--dar-de-alta-la-empresa-maria-reyes-y-grupo-malia" title="Permanent link">&para;</a></h2>
+<p>Como usuario con rol Administrador del sistema Inmobiliaria, quiero dar de alta la razón social  "Maria Reyes" y"Grupo Malia" con su información fiscal, certificados, cuenta bancaria y sucursal matriz, para que el sistema pueda emitir documentos a su nombre bajo el nuevo esquema de folios.</p>
+<h3 id="reglas-de-negocio_14">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_14" title="Permanent link">&para;</a></h3>
+<p><strong>RN-14.1</strong> La Empresa  "Maria Reyes" y "Grupo Malia" debe darse de alta con al menos un régimen fiscal habilitado y su predeterminado (RF-01 del documento RF-separacion-folios-empresa-regimen-fiscal.md).</p>
+<p><strong>RN-14.2</strong> Debe contar con al menos un certificado de sello digital vigente y un PAC activo antes de poder timbrar documentos (<code>Empresa.GetCurrentCertificate()</code>, <code>Empresa.cs:360-371</code>, ya exige esto para cualquier Empresa).</p>
+<p><strong>RN-14.3</strong> Debe configurarse al menos una Sucursal de tipo Matriz asociada a "Maria Reyes" antes de poder operar (mismo patrón exigido para "Grupo Malia").</p>
+<h3 id="criterios-de-aceptación_14">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_14" title="Permanent link">&para;</a></h3>
+<p><strong>CA-14.1.1 — Alta completa de la Empresa</strong>
+Dado que  "Maria Reyes" y "Grupo Malia" no existe en el catálogo Empresa
+Cuando el administrador la da de alta con RFC, régimen(es) fiscal(es), certificado vigente, cuenta bancaria y sucursal matriz
+Entonces la Empresa queda disponible para seleccionarse como emisora en Factura, Nota de Crédito, Anticipo y Abono (RF-06 a RF-09 de este documento).</p>
+<p><strong>CA-14.1.2 — Bloqueo de timbrado sin certificado vigente</strong>
+Dado que " "Maria Reyes" y "Grupo Malia" no tiene un certificado de sello digital vigente
+Cuando se intenta timbrar un documento a su nombre
+Entonces el sistema rechaza el timbrado indicando que la Empresa no cuenta con un certificado vigente (comportamiento ya existente en <code>GetCurrentCertificate()</code>).</p>
+<h3 id="casos-de-prueba_14">Casos de prueba<a class="headerlink" href="#casos-de-prueba_14" title="Permanent link">&para;</a></h3>
+<p><strong>CP-14.1.2 — Bloqueo de timbrado sin certificado (error/regla)</strong>
+Verifica: CA-14.1.2 · RN-14.2
+Dado que  "Maria Reyes" y "Grupo Malia" aún no tiene certificado vigente cargado
+Cuando se intenta timbrar una Factura a su nombre
+Entonces el sistema rechaza la operación con el mensaje de certificado no vigente.</p>
+<table>
+<thead>
+<tr>
+<th>CA</th>
+<th>Caso(s) de prueba</th>
+<th>Escenarios cubiertos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CA-14.1.1</td>
+<td>CP-14.1.1</td>
+<td>Camino feliz</td>
+</tr>
+<tr>
+<td>CA-14.1.2</td>
+<td>CP-14.1.2</td>
+<td>Error/regla</td>
+</tr>
+</tbody>
+</table>
+<p><a href="#indice-requerimientos">⬆ Volver al índice</a></p>
+<hr />
+<p><a id="rf-15"></a></p>
+<h1 id="rf-15--campo-empresa-en-el-catálogo-pac">RF-15 — Campo Empresa en el catálogo Pac<a class="headerlink" href="#rf-15--campo-empresa-en-el-catálogo-pac" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>Ninguna</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_14">Objetivo<a class="headerlink" href="#objetivo_14" title="Permanent link">&para;</a></h2>
+<p>Que cada registro del catálogo <code>Pac</code> declare explícitamente a qué Empresa pertenece, dejando de depender de la ruta indirecta Certificado→Pacs para saber de quién es cada PAC.</p>
+<h2 id="descripción_14">Descripción<a class="headerlink" href="#descripción_14" title="Permanent link">&para;</a></h2>
+<p>Que cada registro del catálogo Pac declare explícitamente a qué Empresa pertenece, dejando de depender de la ruta indirecta Certificado→Pacs para saber de quién es cada PAC.</p>
+<h2 id="hu-151--asociar-cada-pac-a-una-única-empresa">HU-15.1 — Asociar cada PAC a una única Empresa<a class="headerlink" href="#hu-151--asociar-cada-pac-a-una-única-empresa" title="Permanent link">&para;</a></h2>
+<p>Como Administrador del sistema Inmobiliaria, quiero asociar cada PAC a una única Empresa al darlo de alta, para identificar sin ambigüedad qué proveedor de certificación timbra los documentos de cada razón social.</p>
+<h3 id="reglas-de-negocio_15">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_15" title="Permanent link">&para;</a></h3>
+<p><strong>RN-15.1</strong> El campo Empresa es obligatorio en el catálogo <code>Pac</code>.</p>
+<p><strong>RN-15.2</strong> La relación es uno a uno: una Empresa no puede tener más de un Pac asociado, y un Pac no puede estar asociado a más de una Empresa (unicidad de la FK Empresa en <code>Pac</code>).</p>
+<p><strong>RN-15.3</strong> Solo se pueden asociar Empresas en estatus Activo.</p>
+<p><strong>RN-15.4</strong> No se permite eliminar o inactivar un Pac si su Empresa asociada está Activa y no tiene otro Pac de respaldo configurado; el sistema debe advertir que esa Empresa se quedaría sin proveedor de timbrado.</p>
+<h3 id="criterios-de-aceptación_15">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_15" title="Permanent link">&para;</a></h3>
+<p><strong>CA-15.1.1 — Alta de Pac con Empresa</strong>
+Dado que el administrador da de alta un nuevo Pac
+Cuando captura la información del proveedor y selecciona la Empresa "Vicente Reyes"
+Entonces el sistema guarda el Pac asociado a "Vicente Reyes" y lo muestra en su ficha.</p>
+<p><strong>CA-15.1.2 — Bloqueo de doble asociación</strong>
+Dado que "Vicente Reyes" ya tiene un Pac asociado
+Cuando el administrador intenta asociar esa misma Empresa a un segundo Pac
+Entonces el sistema rechaza el guardado e indica que la Empresa ya tiene un PAC configurado.</p>
+<p><strong>CA-15.1.3 — Bloqueo de Empresa inactiva</strong>
+Dado que una Empresa está en estatus Inactivo
+Cuando el administrador abre el selector de Empresa en el alta de un Pac
+Entonces dicha Empresa no aparece como opción disponible.</p>
+<h3 id="casos-de-prueba_15">Casos de prueba<a class="headerlink" href="#casos-de-prueba_15" title="Permanent link">&para;</a></h3>
+<p><strong>CP-15.1.1 — Alta exitosa de Pac con Empresa (camino feliz)</strong>
+Verifica: CA-15.1.1 · RN-15.1
+Dado que el administrador registra un Pac nuevo y selecciona "Vicente Reyes" como Empresa
+Cuando confirma el alta
+Entonces el Pac queda guardado y ligado a "Vicente Reyes".</p>
+<p><strong>CP-15.1.2 — Bloqueo de doble asociación (error/validación)</strong>
+Verifica: CA-15.1.2 · RN-15.2
+Dado que "Vicente Reyes" ya tiene el Pac "PAC-VR" asociado
+Cuando el administrador intenta asociar "Vicente Reyes" a un segundo Pac "PAC-VR2"
+Entonces el sistema rechaza el guardado e informa que la Empresa ya tiene un PAC configurado.</p>
+<p><strong>CP-15.1.3 — Bloqueo de Empresa inactiva (validación)</strong>
+Verifica: CA-15.1.3 · RN-15.3
+Dado que la Empresa "Empresa Demo" está en estatus Inactivo
+Cuando el administrador abre el selector de Empresa en el alta de un Pac
+Entonces "Empresa Demo" no aparece entre las opciones disponibles.</p>
+<p><strong>CP-15.1.4 — Advertencia al inactivar el único Pac de una Empresa (regla de negocio)</strong>
+Verifica: CA-15.1.4 · RN-15.4
+Dado que "Grupo Malia" solo tiene el Pac "PAC-Malia" activo
+Cuando el administrador intenta inactivarlo
+Entonces el sistema muestra la advertencia de que "Grupo Malia" quedaría sin PAC y solicita confirmación o bloquea la acción.</p>
 <table>
 <thead>
 <tr>
@@ -5430,23 +5606,217 @@ Entonces esos documentos no se modifican.</p>
 <tr>
 <td>CA-15.1.2</td>
 <td>CP-15.1.2</td>
-<td>Camino feliz</td>
+<td>Error/validación</td>
 </tr>
 <tr>
 <td>CA-15.1.3</td>
 <td>CP-15.1.3</td>
-<td>Camino feliz</td>
+<td>Validación</td>
 </tr>
 <tr>
 <td>CA-15.1.4</td>
-<td>CP-15.1.4, CP-15.1.5</td>
-<td>Validación de integridad, Alternativo</td>
+<td>CP-15.1.4</td>
+<td>Regla de negocio</td>
 </tr>
 </tbody>
 </table>
+<p><a href="#indice-requerimientos">⬆ Volver al índice</a></p>
+<hr />
+<p><a id="rf-16"></a></p>
+<h1 id="rf-16--resolución-del-pac-por-empresa-emisora-al-timbrar">RF-16 — Resolución del PAC por Empresa emisora al timbrar<a class="headerlink" href="#rf-16--resolución-del-pac-por-empresa-emisora-al-timbrar" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>RF-15</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_15">Objetivo<a class="headerlink" href="#objetivo_15" title="Permanent link">&para;</a></h2>
+<p>Que al timbrar una Factura, Nota de Crédito, Anticipo o Abono, el sistema identifique la Empresa (razón social) que emite el documento y use el PAC ligado directamente a esa Empresa (RF-15) para el timbrado, en lugar de resolverlo por la vía indirecta actual del certificado.</p>
+<h2 id="descripción_15">Descripción<a class="headerlink" href="#descripción_15" title="Permanent link">&para;</a></h2>
+<p>Que al timbrar una Factura, Nota de Crédito, Anticipo o Abono, el sistema identifique la Empresa (razón social) que emite el documento y use el PAC ligado directamente a esa Empresa (RF-15) para el timbrado, en lugar de resolverlo por la vía indirecta actual del certificado.</p>
+<h2 id="hu-161--timbrar-con-el-pac-de-la-empresa-emisora">HU-16.1 — Timbrar con el PAC de la Empresa emisora<a class="headerlink" href="#hu-161--timbrar-con-el-pac-de-la-empresa-emisora" title="Permanent link">&para;</a></h2>
+<p>Como usuario con rol Facturación, quiero que al timbrar cualquier documento el sistema use automáticamente el PAC de la Empresa emisora, para que el timbrado se realice siempre con el proveedor correcto sin intervención manual ni riesgo de usar el PAC de otra razón social.</p>
+<h3 id="reglas-de-negocio_16">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_16" title="Permanent link">&para;</a></h3>
+<p><strong>RN-16.1</strong> Al timbrar Factura, Nota de Crédito, Anticipo o Abono, el sistema determina la Empresa emisora del documento (<code>doc.Empresa</code>) y usa el Pac asociado a esa Empresa (RF-15) para el timbrado.</p>
+<p><strong>RN-16.2</strong> Esta lógica es única y uniforme para los 4 tipos de documento, ya que todos comparten el mismo mecanismo de timbrado (<code>TimbrarJob</code> sobre <code>IDocumentoTimbrable</code>).</p>
+<p><strong>RN-16.3</strong> Si la Empresa emisora del documento no tiene un Pac asociado, o su Pac está Inactivo, el sistema bloquea el timbrado e indica qué Empresa no cuenta con un PAC configurado.</p>
+<p><strong>RN-16.4</strong> El certificado de sello digital (CSD) usado para sellar el CFDI sigue determinándose de forma independiente mediante <code>Empresa.GetCurrentCertificate()</code>, sin cambios.</p>
+<h3 id="criterios-de-aceptación_16">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_16" title="Permanent link">&para;</a></h3>
+<p><strong>CA-16.1.1 — Timbrado con el PAC correcto (Factura)</strong>
+Dado que la Factura tiene como Empresa emisora a "Grupo Malia", y "Grupo Malia" tiene asociado el Pac "PAC-Malia"
+Cuando el sistema timbra la Factura
+Entonces el timbrado se envía usando las credenciales de "PAC-Malia".</p>
+<p><strong>CA-16.1.2 — Consistencia entre tipos de documento</strong>
+Dado que "Vicente Reyes" tiene asociado el Pac "PAC-VR"
+Cuando se timbra una Factura, una Nota de Crédito, un Anticipo y un Abono, todos emitidos por "Vicente Reyes"
+Entonces los 4 documentos se timbran usando "PAC-VR".</p>
+<p><strong>CA-16.1.3 — Bloqueo por Empresa sin PAC</strong>
+Dado que la Empresa "María Reyes" aún no tiene un Pac asociado
+Cuando se intenta timbrar un documento emitido por "María Reyes"
+Entonces el sistema rechaza el timbrado e indica que "María Reyes" no tiene un PAC configurado.</p>
+<p><strong>CA-16.1.4 — No se mezclan PACs entre Empresas</strong>
+Dado que "Vicente Reyes" usa "PAC-VR" y "Grupo Malia" usa "PAC-Malia"
+Cuando se timbra un documento de "Grupo Malia"
+Entonces el sistema nunca utiliza las credenciales de "PAC-VR" para ese documento.</p>
+<h3 id="casos-de-prueba_16">Casos de prueba<a class="headerlink" href="#casos-de-prueba_16" title="Permanent link">&para;</a></h3>
+<p><strong>CP-16.1.1 — Timbrado exitoso con el PAC de la Empresa (camino feliz)</strong>
+Verifica: CA-16.1.1 · RN-16.1
+Dado que la Factura FAC-00500 tiene como emisor a "Grupo Malia" y esta tiene asociado "PAC-Malia"
+Cuando se ejecuta el timbrado
+Entonces la petición se envía con las credenciales de "PAC-Malia".</p>
+<p><strong>CP-16.1.2 — Consistencia entre los 4 tipos de documento (regresión funcional)</strong>
+Verifica: CA-16.1.2 · RN-16.2
+Dado que "Vicente Reyes" tiene asociado "PAC-VR"
+Cuando se timbran, una por una, una Factura, una Nota de Crédito, un Anticipo y un Abono emitidos por "Vicente Reyes"
+Entonces los 4 documentos usan "PAC-VR" para el timbrado.</p>
+<p><strong>CP-16.1.3 — Bloqueo de timbrado por Empresa sin PAC (error/regla)</strong>
+Verifica: CA-16.1.3 · RN-16.3
+Dado que "María Reyes" no tiene ningún Pac asociado
+Cuando se intenta timbrar una Factura emitida por "María Reyes"
+Entonces el sistema rechaza el timbrado e indica que "María Reyes" no tiene un PAC configurado.</p>
+<p><strong>CP-16.1.4 — No se mezclan credenciales entre Empresas (validación de integridad)</strong>
+Verifica: CA-16.1.4 · RN-16.1
+Dado que "Vicente Reyes" usa "PAC-VR" y "Grupo Malia" usa "PAC-Malia"
+Cuando se timbra un documento de "Grupo Malia"
+Entonces la petición de timbrado nunca incluye las credenciales de "PAC-VR".</p>
+<p><strong>CP-16.1.5 — El CSD no se ve afectado por el cambio de PAC (regla de negocio)</strong>
+Verifica: RN-16.4
+Dado que la resolución del PAC cambia a la nueva lógica de este RF
+Cuando se timbra un documento
+Entonces el certificado de sello digital sigue determinándose por <code>GetCurrentCertificate()</code> sin cambios.</p>
+<table>
+<thead>
+<tr>
+<th>CA</th>
+<th>Caso(s) de prueba</th>
+<th>Escenarios cubiertos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CA-16.1.1</td>
+<td>CP-16.1.1</td>
+<td>Camino feliz</td>
+</tr>
+<tr>
+<td>CA-16.1.2</td>
+<td>CP-16.1.2</td>
+<td>Regresión funcional</td>
+</tr>
+<tr>
+<td>CA-16.1.3</td>
+<td>CP-16.1.3</td>
+<td>Error/regla</td>
+</tr>
+<tr>
+<td>CA-16.1.4</td>
+<td>CP-16.1.4, CP-16.1.5</td>
+<td>Validación de integridad, Regla de negocio</td>
+</tr>
+</tbody>
+</table>
+<p><a href="#indice-requerimientos">⬆ Volver al índice</a></p>
+<hr />
+<p><a id="rf-17"></a></p>
+<h1 id="rf-17--configuración-del-pac-de-cada-una-de-las-3-empresas-puesta-en-marcha">RF-17 — Configuración del PAC de cada una de las 3 empresas (puesta en marcha)<a class="headerlink" href="#rf-17--configuración-del-pac-de-cada-una-de-las-3-empresas-puesta-en-marcha" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Should</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>RF-15</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo_16">Objetivo<a class="headerlink" href="#objetivo_16" title="Permanent link">&para;</a></h2>
+<p>Dejar configurados los 3 Pacs del grupo, cada uno asociado a su Empresa correspondiente, para que el esquema de timbrado por Empresa (RF-16) pueda operar desde su liberación.</p>
+<h2 id="descripción_16">Descripción<a class="headerlink" href="#descripción_16" title="Permanent link">&para;</a></h2>
+<p>Tarea de puesta en marcha: configurar en el catálogo <code>Pac</code> un registro Activo por cada una de las 3 razones sociales del grupo (Vicente Reyes, Grupo Malia y María Reyes), con las credenciales de producción propias del contrato de cada Empresa con su proveedor de certificación.</p>
+<h2 id="hu-171--configurar-el-pac-de-las-3-empresas-del-grupo">HU-17.1 — Configurar el PAC de las 3 empresas del grupo<a class="headerlink" href="#hu-171--configurar-el-pac-de-las-3-empresas-del-grupo" title="Permanent link">&para;</a></h2>
+<p>Como Administrador del sistema Inmobiliaria, quiero configurar el PAC correspondiente a "Vicente Reyes", "Grupo Malia" y "María Reyes", para que cada una pueda timbrar sus documentos con su propio proveedor de certificación.</p>
+<h3 id="reglas-de-negocio_17">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_17" title="Permanent link">&para;</a></h3>
+<p><strong>RN-17.1</strong> Deben existir 3 registros Pac Activos, cada uno asociado a una Empresa distinta: Vicente Reyes, Grupo Malia y María Reyes.</p>
+<p><strong>RN-17.2</strong> El Pac de "María Reyes" solo puede configurarse una vez que dicha Empresa exista en el catálogo <code>Empresa</code> (alta cubierta por RF-14 de este documento / RF-06 de <code>RF-separacion-folios-empresa-regimen-fiscal.md</code>).</p>
+<p><strong>RN-17.3</strong> Cada Pac debe capturarse con las credenciales de producción (URL de timbrado, usuario, contraseña) propias del contrato de esa Empresa con su proveedor.</p>
+<h3 id="criterios-de-aceptación_17">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_17" title="Permanent link">&para;</a></h3>
+<p><strong>CA-17.1.1 — Las 3 empresas quedan operativas</strong>
+Dado que se completó la configuración de los 3 Pacs
+Cuando se timbra un documento de cada una de las 3 Empresas
+Entonces cada uno se timbra correctamente con el PAC correspondiente a su Empresa.</p>
+<p><strong>CA-17.1.2 — María Reyes bloqueada hasta tener PAC</strong>
+Dado que "María Reyes" ya existe como Empresa pero su Pac aún no se ha configurado
+Cuando se intenta timbrar un documento a su nombre
+Entonces el sistema lo bloquea conforme a RN-16.3 (RF-16), hasta que se configure su Pac.</p>
+<h3 id="casos-de-prueba_17">Casos de prueba<a class="headerlink" href="#casos-de-prueba_17" title="Permanent link">&para;</a></h3>
+<p><strong>CP-17.1.1 — Las 3 empresas timbran con su propio PAC (camino feliz)</strong>
+Verifica: CA-17.1.1 · RN-17.1
+Dado que "Vicente Reyes", "Grupo Malia" y "María Reyes" tienen cada una su Pac Activo configurado
+Cuando se timbra un documento de prueba de cada Empresa
+Entonces cada documento se timbra con el PAC correspondiente a su Empresa.</p>
+<p><strong>CP-17.1.2 — Bloqueo mientras María Reyes no tenga PAC (error/regla)</strong>
+Verifica: CA-17.1.2 · RN-17.2
+Dado que "María Reyes" ya existe en el catálogo Empresa pero aún no tiene Pac asociado
+Cuando se intenta timbrar un documento a su nombre
+Entonces el sistema rechaza el timbrado conforme a RN-16.3, indicando que "María Reyes" no tiene un PAC configurado.</p>
+<p><strong>CP-17.1.3 — Credenciales de producción propias por Empresa (validación)</strong>
+Verifica: RN-17.3
+Dado que se configura el Pac de "Grupo Malia"
+Cuando se capturan la URL, usuario y contraseña de timbrado
+Entonces corresponden al contrato específico de "Grupo Malia" con su proveedor, distintas a las de las otras 2 empresas.</p>
+<table>
+<thead>
+<tr>
+<th>CA</th>
+<th>Caso(s) de prueba</th>
+<th>Escenarios cubiertos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CA-17.1.1</td>
+<td>CP-17.1.1, CP-17.1.3</td>
+<td>Camino feliz, Validación</td>
+</tr>
+<tr>
+<td>CA-17.1.2</td>
+<td>CP-17.1.2</td>
+<td>Error/regla</td>
+</tr>
+</tbody>
+</table>
+<p><a href="#indice-requerimientos">⬆ Volver al índice</a></p>
 <hr />
 <h2 id="requerimientos-no-funcionales-rnf">Requerimientos no funcionales (RNF)<a class="headerlink" href="#requerimientos-no-funcionales-rnf" title="Permanent link">&para;</a></h2>
-<h3 id="rnf-001--configuración-inicial-empresa-grupo-malia">RNF-001 — Configuración inicial: Empresa "Grupo Malia"<a class="headerlink" href="#rnf-001--configuración-inicial-empresa-grupo-malia" title="Permanent link">&para;</a></h3>
+<h3 id="rnf-001--configuración-inicial-empresa-grupo-malia-y-maria-reyes">RNF-001 — Configuración inicial: Empresa "Grupo Malia" y "Maria Reyes"<a class="headerlink" href="#rnf-001--configuración-inicial-empresa-grupo-malia-y-maria-reyes" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Descripción:</strong> Antes de liberar RF-06 a RF-10, la empresa "Grupo Malia" debe estar dada de alta en el catálogo <code>Empresa</code> con Certificados de sello digital (CSD) vigentes y sus Cuentas Bancarias configuradas, de forma equivalente a como hoy está configurada "Vicente Reyes".</li>
 <li><strong>Métrica / criterio de verificación:</strong> Se emite y timbra exitosamente al menos un documento de prueba (Factura o Anticipo) a nombre de "Grupo Malia" en ambiente de pruebas antes de pasar a producción.</li>
@@ -5474,7 +5844,7 @@ Entonces esos documentos no se modifican.</p>
 </ul>
 <h3 id="rnf-005--desempeño-de-los-filtros-de-sucursal-en-consultas">RNF-005 — Desempeño de los filtros de sucursal en consultas<a class="headerlink" href="#rnf-005--desempeño-de-los-filtros-de-sucursal-en-consultas" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>Descripción:</strong> Agregar el filtro de sucursal a las consultas de RF-11, RF-12 y RF-14 no debe degradar su tiempo de respuesta actual.</li>
+<li><strong>Descripción:</strong> Agregar el filtro de sucursal a las consultas de RF-11 no debe degradar su tiempo de respuesta actual.</li>
 <li><strong>Métrica / criterio de verificación:</strong> El 95% de las ejecuciones de estas consultas con filtro de sucursal aplicado responde en un tiempo igual o menor al que tenían antes de este proyecto, medido con el mismo volumen de datos de referencia.</li>
 <li><strong>Prioridad:</strong> Should</li>
 </ul>
@@ -5580,14 +5950,6 @@ Entonces esos documentos no se modifican.</p>
 <td>Propuesto</td>
 </tr>
 <tr>
-<td>OBJ-4 Dotar de trazabilidad/auditoría por empresa y sucursal al módulo Inmobiliaria</td>
-<td>RF-13</td>
-<td>HU-13.1</td>
-<td>CA-13.1.1</td>
-<td>Should</td>
-<td>Propuesto</td>
-</tr>
-<tr>
 <td>OBJ-5 Habilitar supervisión y reportes segmentados por sucursal</td>
 <td>RF-11</td>
 <td>HU-11.1</td>
@@ -5596,27 +5958,35 @@ Entonces esos documentos no se modifican.</p>
 <td>Propuesto</td>
 </tr>
 <tr>
-<td>OBJ-5</td>
+<td>OBJ-6 Consistencia histórica de la información al migrar al nuevo modelo</td>
 <td>RF-12</td>
 <td>HU-12.1</td>
 <td>CA-12.1.1</td>
-<td>Should</td>
+<td>Must</td>
 <td>Propuesto</td>
 </tr>
 <tr>
-<td>OBJ-5</td>
-<td>RF-14</td>
-<td>HU-14.1</td>
-<td>CA-14.1.1</td>
-<td>Should</td>
-<td>Propuesto</td>
-</tr>
-<tr>
-<td>OBJ-6 Consistencia histórica de la información al migrar al nuevo modelo</td>
+<td>OBJ-7 Timbrar cada documento con el PAC de su Empresa emisora, sin depender de la ruta indirecta vía certificado</td>
 <td>RF-15</td>
 <td>HU-15.1</td>
 <td>CA-15.1.1</td>
 <td>Must</td>
+<td>Propuesto</td>
+</tr>
+<tr>
+<td>OBJ-7</td>
+<td>RF-16</td>
+<td>HU-16.1</td>
+<td>CA-16.1.1</td>
+<td>Must</td>
+<td>Propuesto</td>
+</tr>
+<tr>
+<td>OBJ-7</td>
+<td>RF-17</td>
+<td>HU-17.1</td>
+<td>CA-17.1.1</td>
+<td>Should</td>
 <td>Propuesto</td>
 </tr>
 </tbody>
@@ -5666,13 +6036,18 @@ Entonces esos documentos no se modifican.</p>
 </tr>
 <tr>
 <td>SUP-02</td>
-<td>Los registros históricos de Movimientos Bancarios, Transacciones CXC, Facturas, Abonos y Anticipos ya tienen un valor de Empresa/Sucursal poblado (heredado del creador vía <code>ProcesoBaseObject</code>), por lo que RF-15 es una estandarización y no un llenado desde nulo.</td>
+<td>Los registros históricos de Movimientos Bancarios, Transacciones CXC, Facturas, Abonos y Anticipos ya tienen un valor de Empresa/Sucursal poblado (heredado del creador vía <code>ProcesoBaseObject</code>), por lo que RF-12 es una estandarización y no un llenado desde nulo.</td>
 <td>Si existen registros con Empresa/Sucursal nulos (por ejemplo, cargas iniciales o importaciones directas a base de datos), el script de regularización debe contemplar también el caso NULL, no solo el de reasignación.</td>
 </tr>
 <tr>
 <td>SUP-03</td>
 <td>El negocio confirma que "Matriz" es el nombre exacto de la sucursal a la que deben quedar ligados los registros históricos, y que dicha sucursal ya existe o se crea como parte de RNF-003.</td>
-<td>Si el nombre real difiere, deberá ajustarse el criterio de aceptación de RF-15 y el script de migración.</td>
+<td>Si el nombre real difiere, deberá ajustarse el criterio de aceptación de RF-12 y el script de migración.</td>
+</tr>
+<tr>
+<td>SUP-04</td>
+<td>Los Pacs existentes hoy ya están ligados de forma indirecta a una Empresa vía <code>EmpresaCertificado.Pacs</code>, por lo que llenar el nuevo campo Empresa (RF-15) es una asignación consistente con esa relación existente y no una captura desde cero.</td>
+<td>Si existen Pacs sin una asociación clara o compartidos entre certificados de distintas Empresas, se requiere un proceso de descubrimiento manual con negocio para determinar su dueño antes de activar RF-16.</td>
 </tr>
 </tbody>
 </table>
@@ -5700,6 +6075,11 @@ Entonces esos documentos no se modifican.</p>
 <td>DEP-03</td>
 <td>Cambio de modelo de datos en <code>ListaPrecio</code> (volver <code>Empresa</code> opcional) antes de poder cumplir el RNF-002 de lista compartida; debe planearse junto con pruebas de regresión sobre las validaciones de unicidad/vigencia existentes.</td>
 <td>Equipo de desarrollo / Dirección de Sistemas</td>
+</tr>
+<tr>
+<td>DEP-04</td>
+<td>El Pac de "María Reyes" (RF-17) depende de que dicha Empresa ya exista en el catálogo <code>Empresa</code> (RF-14 de este documento / RF-06 de <code>RF-separacion-folios-empresa-regimen-fiscal.md</code>); no puede configurarse antes.</td>
+<td>Área de Finanzas/Administración de Grupo Reyes + equipo de desarrollo</td>
 </tr>
 </tbody>
 </table>
@@ -5730,18 +6110,11 @@ Entonces esos documentos no se modifican.</p>
 <td>Cubrir con pruebas de regresión específicas la validación de unicidad de <code>ListaPrecio</code> antes y después del cambio, incluyendo el caso de listas ya existentes por Empresa conviviendo con listas globales nuevas.</td>
 </tr>
 <tr>
-<td>RGO-03</td>
-<td>El módulo Inmobiliaria no maneja hoy Empresa/Sucursal en ninguna de sus seis entidades principales (RF-13); el esfuerzo de agregar el campo, migrarlo y no afectar cálculos existentes (RN-13.4) puede subestimarse.</td>
-<td>Media</td>
-<td>Alto</td>
-<td>Dedicar una fase de pruebas de regresión específica sobre cálculos de renta/saldos del módulo Inmobiliaria tras agregar los campos nuevos.</td>
-</tr>
-<tr>
 <td>RGO-04</td>
 <td>Cambios frecuentes de alcance sobre qué reportes exactos requieren filtro de sucursal (algunos nombres del documento de negocio no tienen una clase homónima exacta en el código, ver PA-01).</td>
 <td>Media</td>
 <td>Medio</td>
-<td>Confirmar con negocio, pantalla por pantalla, el nombre exacto de cada reporte antes de iniciar el desarrollo de RF-11/RF-12/RF-14.</td>
+<td>Confirmar con negocio, pantalla por pantalla, el nombre exacto de cada reporte antes de iniciar el desarrollo de RF-11.</td>
 </tr>
 <tr>
 <td>RGO-05</td>
@@ -5749,6 +6122,13 @@ Entonces esos documentos no se modifican.</p>
 <td>Media</td>
 <td>Alto</td>
 <td>Definir con negocio qué debe pasar cuando un documento automático (Factura/Abono/Anticipo) genera un Movimiento Bancario contra una cuenta sin periodo Abierto: ¿se bloquea también la Factura, o el Movimiento Bancario se genera igual y solo se bloquea la captura manual? Ver PA-02.</td>
+</tr>
+<tr>
+<td>RGO-06</td>
+<td>El documento <code>Pago</code> (CXP) también implementa <code>IDocumentoTimbrable</code> y comparte el mismo <code>TimbrarJob</code>/<code>Empresa.GetCurrentPac()</code>; si en la práctica también se timbra con PAC, heredaría automáticamente el comportamiento de RF-16 aunque no fue solicitado explícitamente en su alcance (que solo cubre Factura, Nota de Crédito, Anticipo y Abono).</td>
+<td>Media</td>
+<td>Medio</td>
+<td>Confirmar con negocio si <code>Pago</code> debe incluirse explícitamente en el alcance de RF-16 o excluirse a propósito antes de liberar.</td>
 </tr>
 </tbody>
 </table>
@@ -5764,7 +6144,7 @@ Entonces esos documentos no se modifican.</p>
 <tbody>
 <tr>
 <td>PA-01</td>
-<td>Para los reportes "CFDI Complemento", "CFDI Emitidos", "Buzón Tributario Interno", "Relación de facturas", "Diario de abonos", "Documentos de Cobranza", "Reporte de Balance/Estado Financiero" y "Detallado de Gastos", no se localizó en el código una clase con nombre exactamente homónimo: ¿cuál es la pantalla/reporte real del sistema que corresponde a cada nombre de negocio?</td>
+<td>Para los reportes "CFDI Complemento", "CFDI Emitidos" y "Buzón Tributario Interno", no se localizó en el código una clase con nombre exactamente homónimo: ¿cuál es la pantalla/reporte real del sistema que corresponde a cada nombre de negocio?</td>
 <td>Equipo de desarrollo + Negocio (usuarias inmfac/inmfac02)</td>
 </tr>
 <tr>
