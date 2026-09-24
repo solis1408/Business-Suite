@@ -3514,42 +3514,21 @@
 </table>
 <hr />
 <h2 id="1-propósito-del-documento">1. Propósito del documento<a class="headerlink" href="#1-propósito-del-documento" title="Permanent link">&para;</a></h2>
-<p>Este documento describe los requerimientos funcionales necesarios para que el sistema Inmobiliaria de Grupo Reyes opere bajo un esquema multiempresa —considerando las razones sociales <strong>Vicente Reyes Magaña, Grupo Malia y María Reyes</strong>— y multisucursal-empresa por empleado.</p>
-<p>El sistema deberá permitir que un mismo colaborador opere en más de una sucursal y/o empresa, así como que los documentos transaccionales, tales como <strong>movimientos bancarios y transacciones de cuentas por cobrar</strong>, permitan seleccionar la empresa correspondiente.</p>
+<p>Este documento describe los requerimientos funcionales necesarios para que el sistema Inmobiliaria de Grupo Reyes opere bajo un esquema multiempresa —considerando las razones sociales <strong>Vicente Reyes Magaña, Grupo Malia y María Reyes</strong>.</p>
+<p>El sistema deberá permitir que un mismo colaborador opere en más de una empresa, así como que los documentos transaccionales, tales como <strong>movimientos bancarios y transacciones de cuentas por cobrar</strong>, permitan seleccionar la empresa correspondiente.</p>
 <p>Asimismo, los documentos CFDI, incluyendo <strong>facturas, notas de crédito, abonos y anticipos</strong>, deberán permitir seleccionar y asociar correctamente la empresa emisora que corresponda.</p>
-<p>A continuación, se presentan los requerimientos funcionales que contemplan estas necesidades:</p>
-<ul>
-<li><strong>RF-01</strong> — Configuración de múltiples sucursal y/o empresa para el empleado.</li>
-<li><strong>RF-02</strong> — Cuenta bancaria ligada a sucursal y/o empresa del empleado.</li>
-<li><strong>RF-03</strong> — Apertura de periodos por cuenta bancaria.</li>
-<li><strong>RF-04</strong> — Cierre de periodos por cuenta bancaria.</li>
-<li><strong>RF-05</strong> — Cambio de Empresa/Sucursal en Movimientos Bancarios.</li>
-<li><strong>RF-06</strong> — Selección de empresa emisora en Facturas.</li>
-<li><strong>RF-07</strong> — Selección de empresa emisora en Notas de Crédito.</li>
-<li><strong>RF-08</strong> — Selección de empresa emisora en Abono.</li>
-<li><strong>RF-09</strong> — Selección de empresa emisora en Anticipos.</li>
-<li><strong>RF-10</strong> — Registro de Transacciones CXC manuales con selección de empresa emisora.</li>
-<li><strong>RF-11</strong> — Filtro por sucursal en consultas del módulo Ventas y Facturación.</li>
-<li><strong>RF-12</strong> — Regularización de información transaccional histórica a Empresa "Vicente Reyes" y Sucursal "Matriz".</li>
-<li><strong>RF-13</strong> — Configuración de Serie por combinación Documento + Subtipo + Empresa + Régimen Fiscal.</li>
-<li><strong>RF-14</strong> — Alta de la empresa "Maria Reyes" y "Grupo Malia" (puesta en marcha).</li>
-<li><strong>RF-15</strong> — Campo Empresa en el catálogo Pac.</li>
-<li><strong>RF-16</strong> — Resolución del PAC por Empresa emisora al timbrar.</li>
-<li><strong>RF-17</strong> — Configuración del PAC de cada una de las 3 empresas.</li>
-</ul>
-<p>Este documento se basa en la solicitud de negocio recibida (documento de alcance funcional RY-01INN01-FT01) y en una revisión técnica del código fuente actual del sistema, de modo que cada requerimiento describe explícitamente qué existe hoy y qué debe construirse o modificarse.</p>
-<p>Los RF-13 y RF-14 se incorporan del documento <strong>RF-separacion-folios-empresa-regimen-fiscal.md</strong>, referente a la separación de folios de Factura/Nota de Crédito/Anticipo/Abono por Empresa y Régimen Fiscal. Conservan una dependencia externa con los RF-01/RF-02/RF-05 de dicho documento (habilitación de múltiples Regímenes Fiscales por Empresa, selección de Régimen Fiscal Emisor y bloqueo de emisión sin Serie configurada), que no se incluyen en este documento.</p>
+<p>Este documento se basa en la solicitud del negocio y en el detalle de las necesidades recopiladas, complementados con la revisión técnica del código fuente actual del sistema.</p>
 <h2 id="2-alcance-del-documento">2. Alcance del documento<a class="headerlink" href="#2-alcance-del-documento" title="Permanent link">&para;</a></h2>
 <p><strong>Incluye:</strong>
-- La relación M:M entre Empleado y Sucursal, y el concepto de sucursal/empresa predeterminada del empleado.
-- La apertura/cierre de periodos por cuenta bancaria y el permiso especial asociado.
+- La relación 1:M entre Empleado y Sucursal que permite determinar la empresa asociada, la cual puede corresponder a la sucursal predeterminada del empleado.
+- La apertura/cierre de periodos de las empresas.
 - La selección y restricción de la empresa emisora en Movimientos Bancarios, Facturas, Notas de Crédito, Abono, Anticipos y Transacciones CXC.
-- El filtrado por sucursal en módulo de consultas.
+- El filtrado por empresa en módulo de consultas.
 - La regularización de datos históricos para que queden ligados a Empresa "Vicente Reyes" y Sucursal "Matriz".
-- La configuración inicial de la empresa "Grupo Malia" (certificados y cuentas bancarias) y el alta de sucursales matriz para ambas empresas, como requerimientos no funcionales de puesta en marcha.</p>
+- La configuración inicial de la empresa "Grupo Malia" y "María Reyes" (certificados y cuentas bancarias) y el alta de sucursales matriz para ambas empresas, como requerimientos no funcionales de puesta en marcha.</p>
 <p><strong>No incluye:</strong>
-- La separación de listas de precios por razón social (se documenta como requerimiento no funcional que <strong>no</strong> debe implementarse; ver RNF-002 y el riesgo asociado en la sección de Riesgos, dado que el modelo actual de <code>ListaPrecio</code> sí exige una Empresa).
-- Cambios al proceso de sincronización de Empleado/Sucursal contra el sistema externo BSuite (se documenta como dependencia/riesgo, no como alcance de construcción).
+- La separación de listas de precios por razón social (se documenta como requerimiento no funcional que <strong>no</strong> debe implementarse; Dado que el modelo actual de <code>ListaPrecio</code> sí exige una Empresa).
+- Cambios en la lógica de los procesos que utilizan los campos "Empresa" y "Sucursal" de la entidad Empleado.
 - Integraciones fiscales nuevas (timbrado, buzón tributario) distintas a las ya existentes; solo se ajusta a qué empresa quedan ligados los documentos ya timbrados.</p>
 <h2 id="3-actores-y-roles">3. Actores y roles<a class="headerlink" href="#3-actores-y-roles" title="Permanent link">&para;</a></h2>
 <table>
@@ -3583,7 +3562,7 @@
 </tbody>
 </table>
 <h2 id="4-entidad-a-la-que-aplica">4. Entidad a la que aplica<a class="headerlink" href="#4-entidad-a-la-que-aplica" title="Permanent link">&para;</a></h2>
-<p>Este documento aplica de forma transversal sobre el catálogo <strong>Empleado</strong> (agrega la relación M:M con <strong>Sucursal</strong> y el concepto de sucursal/empresa predeterminada), sobre una nueva entidad <strong>Periodo</strong> ligada a <strong>CuentaBancaria</strong> (estatus inicial <em>Abierto</em>, estatus terminal <em>Cerrado</em>), sobre los procesos transaccionales <strong>MovimientoBancario, Factura, NotaCredito, Abono, Anticipo y Transaccion (CXC)</strong>.</p>
+<p>Este documento aplica de forma transversal sobre el catálogo <strong>Empleado</strong> (agrega la relación 1:M con <strong>Sucursal</strong>  predeterminada), sobre una nueva entidad <strong>Periodo</strong> ligada a <strong>CuentaBancaria</strong> (estatus inicial <em>Abierto</em>, estatus terminal <em>Cerrado</em>), sobre los procesos transaccionales <strong>MovimientoBancario, Factura, NotaCredito, Abono, Anticipo y Transaccion (CXC)</strong>.</p>
 <p><a id="indice-requerimientos"></a></p>
 <h2 id="5-índice-de-requerimientos">5. Índice de requerimientos<a class="headerlink" href="#5-índice-de-requerimientos" title="Permanent link">&para;</a></h2>
 <blockquote>
@@ -3601,31 +3580,31 @@
 <tbody>
 <tr>
 <td><a href="#rf-01">RF-01</a></td>
-<td>Configuración de múltiples sucursales para el empleado</td>
+<td>Relación uno a múltiples sucursales para el empleado</td>
 <td>Backbone (Seguridad)</td>
 <td>Catálogo Empleado</td>
 </tr>
 <tr>
 <td><a href="#rf-02">RF-02</a></td>
-<td>Cuenta bancaria ligada a sucursal y/o empresa del empleado</td>
+<td>Cuentas Bancarias inhabilitar la selección de la empresa y permitir la selección de la sucursal</td>
 <td>Backbone (Catálogos)</td>
 <td>Catálogo CuentaBancaria</td>
 </tr>
 <tr>
 <td><a href="#rf-03">RF-03</a></td>
-<td>Apertura de periodos por cuenta bancaria</td>
+<td>Apertura de períodos para cuentas bancarias</td>
 <td>Backbone (Catálogos)</td>
 <td>Cuenta Bancaria / Periodo</td>
 </tr>
 <tr>
 <td><a href="#rf-04">RF-04</a></td>
-<td>Cierre de periodos por cuenta bancaria</td>
+<td>Cierre de períodos para cuentas bancarias</td>
 <td>Backbone (Catálogos)</td>
 <td>Cuenta Bancaria / Periodo</td>
 </tr>
 <tr>
 <td><a href="#rf-05">RF-05</a></td>
-<td>Cambio de Empresa/Sucursal en Movimientos Bancarios</td>
+<td>Permitir guardar Empresa y Sucursal en Movimientos Bancarios</td>
 <td>Ventas (CXP)</td>
 <td>Movimiento Bancario</td>
 </tr>
@@ -3705,7 +3684,7 @@
 </table>
 <h2 id="---">---<a class="headerlink" href="#---" title="Permanent link">&para;</a></h2>
 <p><a id="rf-01"></a></p>
-<h1 id="rf-01--configuración-de-múltiples-sucursales-para-el-empleado">RF-01 — Configuración de múltiples sucursales para el empleado<a class="headerlink" href="#rf-01--configuración-de-múltiples-sucursales-para-el-empleado" title="Permanent link">&para;</a></h1>
+<h1 id="rf-01--relación-uno-a-múltiples-sucursales-para-el-empleado">RF-01 — Relación uno a múltiples sucursales para el empleado<a class="headerlink" href="#rf-01--relación-uno-a-múltiples-sucursales-para-el-empleado" title="Permanent link">&para;</a></h1>
 <table>
 <thead>
 <tr>
@@ -3729,9 +3708,9 @@
 </tbody>
 </table>
 <h2 id="objetivo">Objetivo<a class="headerlink" href="#objetivo" title="Permanent link">&para;</a></h2>
-<p>Permitir que un empleado quede relacionado con varias sucursales (de la misma o distinta empresa) en lugar de una sola, y que una de ellas se marque como predeterminada para precargar los procesos que capture.</p>
+<p>Permitir que un empleado se relacione con varias sucursales de distintas empresas y que una de las sucursales de la lista pueda marcarse como predeterminada.</p>
 <h2 id="descripción">Descripción<a class="headerlink" href="#descripción" title="Permanent link">&para;</a></h2>
-<p>El sistema deberá permitir que el catálogo Empleado soporte una relación de <strong>muchos a muchos</strong> con el catálogo Sucursal, agregando o quitando sucursales vigentes y marcando una de ellas como predeterminada. Actualmente <code>Empleado</code> mantiene una única sucursal (<code>EmpleadoDeSucursal</code>), no editable desde la interfaz porque se sincroniza automáticamente desde el sistema externo BSuite (<code>OidBSuite</code>).</p>
+<p>El sistema deberá permitir que el catálogo Empleado soporte una relación de <strong>uno a muchos</strong> con el catálogo Sucursal, agregando o quitando sucursales vigentes y marcando una de ellas como predeterminada.</p>
 <h3 id="información--atributos">Información / atributos<a class="headerlink" href="#información--atributos" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -3765,19 +3744,20 @@
 <li>Quitar relación de sucursal a empleado.</li>
 <li>Marcar/desmarcar sucursal como predeterminada.</li>
 </ul>
-<h2 id="hu-11--configurar-múltiples-sucursales-del-empleado">HU-1.1 — Configurar múltiples sucursales del empleado<a class="headerlink" href="#hu-11--configurar-múltiples-sucursales-del-empleado" title="Permanent link">&para;</a></h2>
-<p>Como usuario con rol Administrador del sistema Inmobiliaria, quiero configurar múltiples sucursales a un empleado y visualmente mostrar el <strong>listado de Sucursales relacionadas</strong>, para que un mismo colaborador pueda operar procesos en más de una sucursal y empresa sin necesidad de crear un empleado distinto por cada una.</p>
+<h2 id="hu-11--configurar-múltiples-sucursales-a-empleado">HU-1.1 — Configurar múltiples sucursales a empleado<a class="headerlink" href="#hu-11--configurar-múltiples-sucursales-a-empleado" title="Permanent link">&para;</a></h2>
+<p>Como usuario con rol Administrador del sistema Inmobiliaria, quiero configurar múltiples sucursales a un empleado y visualmente mostrar el <strong>listado de Sucursales relacionadas</strong>, para que un mismo colaborador pueda operar procesos en más de una sucursal y empresas relacionadas sin necesidad de crear un empleado distinto por cada una.</p>
 <h3 id="reglas-de-negocio">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio" title="Permanent link">&para;</a></h3>
 <p><strong>RN-1.1</strong> Solo se pueden relacionar sucursales cuyo estatus sea Activo.</p>
-<p><strong>RN-1.2</strong> No se podrá duplicar la relación de la misma sucursal para un mismo empleado.</p>
+<p><strong>RN-1.2</strong> No se podrá duplicar la relación de la misma sucursal mismo empleado.</p>
 <p><strong>RN-1.3</strong> Todo empleado deberá tener relacionada al menos una sucursal; el sistema no permite guardar un empleado sin ninguna sucursal relacionada.</p>
-<p><strong>RN-1.4</strong> Se permite relacionar sucursales de cualquier empresa configurada en el sistema (no se restringe a una sola razón social por empleado).</p>
-<p><strong>RN-1.5</strong> Al quitar la relación de una sucursal marcada como predeterminada, el sistema exige que el usuario marque otra sucursal como predeterminada antes de guardar (ver RN-1.7 en HU-1.2).</p>
+<p><strong>RN-1.4</strong> Se permite relacionar sucursales de cualquier empresa configurada en el sistema.</p>
+<p><strong>RN-1.5</strong> Al quitar la relación de una sucursal marcada como predeterminada, el sistema exige que el usuario marque otra sucursal como predeterminada antes de guardar.</p>
+<p><strong>RN-1.6</strong> <strong>En la relación Empleado–Sucursal, no se permitirá configurar más de una sucursal asociada a una misma empresa.</strong></p>
 <h3 id="criterios-de-aceptación">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación" title="Permanent link">&para;</a></h3>
 <p><strong>CA-1.1.1 — Agregar sucursal a un empleado</strong>
 Dado que el administrador edita un empleado y selecciona una sucursal en estatus Activo que aún no está relacionada
 Cuando confirma el alta de la relación
-Entonces el sistema agrega la sucursal a la Lista de sucursales del empleado y la deja disponible para marcarse como predeterminada.</p>
+Entonces el sistema agrega la sucursal a la Lista de sucursales en empleado y la deja disponible para marcarse como predeterminada.</p>
 <p><strong>CA-1.1.2 — Bloqueo de sucursal inactiva</strong>
 Dado que el administrador intenta relacionar una sucursal cuyo estatus es distinto de Activo
 Cuando busca la sucursal en el selector de alta
@@ -3787,13 +3767,25 @@ Dado que la sucursal ya está relacionada al empleado
 Cuando el administrador intenta agregarla nuevamente
 Entonces el sistema impide el alta duplicada e informa que la sucursal ya está relacionada.</p>
 <p><strong>CA-1.1.4 — Quitar sucursal relacionada</strong>
-Dado que un empleado tiene dos o más sucursales relacionadas y la sucursal a quitar no es la predeterminada
+Dado que un empleado tiene una o más sucursales relacionadas y la sucursal a quitar no es la predeterminada
 Cuando el administrador quita la relación
 Entonces el sistema elimina de la lista sin afectar la sucursal predeterminada vigente.</p>
 <p><strong>CA-1.1.5 — Empleado sin ninguna sucursal</strong>
 Dado que el administrador intenta guardar un empleado tras quitar su única sucursal relacionada
 Cuando confirma los cambios
 Entonces el sistema rechaza el guardado e indica que se requiere al menos una sucursal relacionada.</p>
+<p><strong>CA-1.1.6 — Empleado sin sucursal Predeterminada</strong>
+<strong>Dado que el administrador intenta guardar un empleado con sucursales relacionadas pero sin predeterminada
+Cuando confirma los cambios
+Entonces el sistema rechaza el guardado e indica que se requiere una sucursal predeterminada.</strong></p>
+<p><strong>CA-1.1.7 — Restricción de múltiples sucursales misma empresa</strong>
+<strong>Dado que una empresa ya tiene una sucursal configurada en la relación Empleado–Sucursal–Empresa,
+cuando el usuario intente configurar una segunda sucursal para la misma empresa,
+entonces el sistema deberá impedir el registro de la segunda sucursal.</strong></p>
+<p><strong>CA-1.1.8 — Mensaje de validación para múltiples sucursales misma empresa</strong>
+Dado que la empresa ya tiene una sucursal configurada,
+cuando el usuario intente asociar otra sucursal,
+entonces el sistema deberá mostrar un mensaje indicando que la empresa ya cuenta con una sucursal configurada y no permitir guardar la operación.</p>
 <h3 id="casos-de-prueba">Casos de prueba<a class="headerlink" href="#casos-de-prueba" title="Permanent link">&para;</a></h3>
 <p><strong>CP-1.1.1 — Alta exitosa de sucursal adicional (camino feliz)</strong>
 Verifica: CA-1.1.1
@@ -3825,6 +3817,14 @@ Verifica: CA-1.1.1
 Dado que un usuario sin el rol Administrador abre la ficha de un empleado
 Cuando busca la opción para agregar/quitar sucursales
 Entonces el sistema no muestra o deshabilita dicha opción.</p>
+<p><strong>CP-1.1.7 — No permitir múltiples sucursales por empresa</strong>
+Verifica: CA-1.1.7
+Dado que una empresa tiene una sucursal configurada en la relación Empleado–Sucursal–Empresa
+Y existe una segunda sucursal disponible para configurar
+Cuando el usuario intente asociar la segunda sucursal a la misma empresa
+Entonces el sistema deberá impedir el registro
+Y deberá mostrar un mensaje indicando que la empresa ya cuenta con una sucursal configurada
+Y la configuración existente deberá mantenerse sin modificaciones.</p>
 <table>
 <thead>
 <tr>
@@ -3865,7 +3865,7 @@ Entonces el sistema no muestra o deshabilita dicha opción.</p>
 <p>Como usuario con rol Administrador del sistema Inmobiliaria, quiero marcar una sucursal como predeterminada dentro de la <strong>lista de sucursales relacionadas</strong> al empleado, para que los procesos que el empleado capture tomen automáticamente esa sucursal y su empresa como valores iniciales.</p>
 <h3 id="reglas-de-negocio_1">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_1" title="Permanent link">&para;</a></h3>
 <p><strong>RN-1.6</strong> Es requerido que el empleado tenga exactamente una sucursal marcada como predeterminada en todo momento.</p>
-<p><strong>RN-1.7</strong> Al marcar una sucursal como predeterminada, el sistema asigna en el empleado los campos "Sucursal Asignada" y "Empresa Asignada" (esta última calculada a partir de la Empresa dueña de la sucursal); al desmarcarla, ambos campos se limpian hasta que se marque otra.</p>
+<p><strong>RN-1.7</strong> <strong>Al marcar una sucursal como predeterminada, el sistema asigna en el empleado los campos "Sucursal Asignada" y "Empresa Asignada" (esta última calculada a partir de la Empresa dueña de la sucursal); al desmarcarla, ambos campos se limpian hasta que se marque otra.</strong></p>
 <p><strong>RN-1.8</strong> Los campos "Empresa Asignada" y "Sucursal Asignada" en empleado no son editables de forma directa: siempre se deriva de la sucursal predeterminada vigente.</p>
 <p><strong>RN-1.9</strong> La sincronización automática con el sistema externo BSuite deja de alimentar la sucursal del empleado: a partir de este requerimiento, el alta, baja y marca de predeterminada de la relación Empleado-Sucursal se administra en su totalidad de forma manual dentro del sistema por la <strong>lista de sucursales relacionadas</strong>, sin que un proceso de sincronización externo pueda sobrescribirla.</p>
 <h3 id="criterios-de-aceptación_1">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_1" title="Permanent link">&para;</a></h3>
@@ -3939,7 +3939,7 @@ El campo "Sucursal Asignada"/"Empresa Asignada" resultante de este RF es la base
 <p><a href="#indice-requerimientos">⬆ Volver al índice</a></p>
 <hr />
 <p><a id="rf-02"></a></p>
-<h1 id="rf-02--cuenta-bancaria-ligada-a-sucursal-yo-empresa-del-empleado">RF-02 — Cuenta bancaria ligada a sucursal y/o empresa del empleado<a class="headerlink" href="#rf-02--cuenta-bancaria-ligada-a-sucursal-yo-empresa-del-empleado" title="Permanent link">&para;</a></h1>
+<h1 id="rf-02--en-cuentas-bancarias-inhabilitar-la-selección-de-la-empresa-y-permitir-la-selección-de-la-sucursal">RF-02 — En Cuentas Bancarias inhabilitar la selección de la empresa y permitir la selección de la sucursal<a class="headerlink" href="#rf-02--en-cuentas-bancarias-inhabilitar-la-selección-de-la-empresa-y-permitir-la-selección-de-la-sucursal" title="Permanent link">&para;</a></h1>
 <table>
 <thead>
 <tr>
@@ -3963,28 +3963,29 @@ El campo "Sucursal Asignada"/"Empresa Asignada" resultante de este RF es la base
 </tbody>
 </table>
 <h2 id="objetivo_1">Objetivo<a class="headerlink" href="#objetivo_1" title="Permanent link">&para;</a></h2>
-<p>Permitir que, al agregar una cuenta bancaria, el sistema precargue la sucursal/empresa según la configuración del empleado en sesión y permita modificarla dentro de las sucursales que tiene asignadas.</p>
+<p>Permitir que, al agregar y editar una cuenta bancaria, el sistema precargue en campo sucursal las sucursales activas en sistema y a partir de la sucursal seleccionada determina la empresa.</p>
 <h2 id="descripción_1">Descripción<a class="headerlink" href="#descripción_1" title="Permanent link">&para;</a></h2>
-<p>El catálogo <code>CuentaBancaria</code> <strong>ya cuenta hoy</strong> con los campos <code>Empresa</code> y <code>Sucursal</code> como llaves foráneas requeridas (con regla de unicidad de cuenta "efectivo"/"remisión" acotada por sucursal). Por lo tanto, el trabajo de este requerimiento no es agregar los campos, sino ajustar la experiencia de captura: precargar Sucursal (y, por consecuencia, Empresa) con los valores predeterminados del empleado en sesión y permitir que el usuario los cambie únicamente entre las sucursales que tiene relacionadas (RF-01), en vez de mostrar el catálogo completo de sucursales del sistema.</p>
+<p>Ajustar la experiencia de captura para que, al agregar o editar una cuenta bancaria, el sistema precargue las sucursales activas disponibles. A partir de la sucursal seleccionada, determinar automáticamente la empresa correspondiente.</p>
 <h2 id="hu-21--precargar-y-editar-la-sucursal-de-la-cuenta-bancaria">HU-2.1 — Precargar y editar la sucursal de la cuenta bancaria<a class="headerlink" href="#hu-21--precargar-y-editar-la-sucursal-de-la-cuenta-bancaria" title="Permanent link">&para;</a></h2>
-<p>Como usuario con rol Administrador de Inmobiliaria, quiero que al agregar una Cuenta Bancaria se precargue la sucursal predeterminada de mi usuario y pueda cambiarla entre mis sucursales asignadas, para agilizar la captura sin perder control sobre a qué empresa/sucursal queda ligada la cuenta.</p>
+<p>Como usuario con rol Administrador de Inmobiliaria, quiero que al agregar una Cuenta Bancaria se precargue las sucursales activas en sistema, a partir de la sucursal seleccionada determinar y colocar la empresa.</p>
 <h3 id="reglas-de-negocio_2">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_2" title="Permanent link">&para;</a></h3>
 <p><strong>RN-2.1</strong> La sucursal relacionada a la cuenta bancaria deberá encontrarse en estatus Activo.</p>
-<p><strong>RN-2.2</strong> El campo Sucursal se precarga con la sucursal predeterminada del empleado en sesión (RF-01, HU-1.2) y el campo Empresa se deriva automáticamente de dicha sucursal en caso de la acción nueva sucursal.</p>
-<p><strong>RN-2.3</strong> El selector de Sucursal solo debe ofrecer las sucursales relacionadas al empleado en sesión (RF-01); un administrador con permiso especial de "gestión global de catálogos" puede seleccionar cualquier sucursal Activa del sistema.</p>
+<p><strong>RN-2.2</strong> El selector Sucursal tiene como opciones las sucursales activas en sistema.</p>
+<p><strong>RN-2.3</strong> El selector de Empresa no es editable y se precarga a partir de la sucursal seleccionada.</p>
+<p><strong>RN-2.3</strong> Cuando la acción sea "Nueva cuenta bancaria", entonces el sistema seleccionará automáticamente la sucursal predeterminada del empleado</p>
 <h3 id="criterios-de-aceptación_2">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_2" title="Permanent link">&para;</a></h3>
 <p><strong>CA-2.1.1 — Precarga automática</strong>
 Dado que el empleado en sesión tiene como predeterminada la sucursal "Matriz Vicente Reyes"
 Cuando abre el formulario de alta de Cuenta Bancaria
 Entonces los campos Sucursal y Empresa se precargan con "Matriz Vicente Reyes" y "Vicente Reyes Magaña" respectivamente.</p>
 <p><strong>CA-2.1.2 — Cambio dentro de las sucursales asignadas</strong>
-Dado que el empleado en sesión tiene relacionadas "Matriz Vicente Reyes" y "Sucursal Norte"
-Cuando cambia el campo Sucursal a "Sucursal Norte" antes de guardar
-Entonces el sistema actualiza también el campo Empresa conforme a la empresa dueña de "Sucursal Norte".</p>
+Dado que está permitido seleccionar cualquier sucursal y que en el catálogo se encuentran las sucursales "Matriz Vicente Reyes" y "Sucursal Norte",
+Cuando el usuario cambia la Sucursal a "Sucursal Norte" antes de guardar,
+Entonces el sistema actualiza también el campo Empresa de acuerdo con la empresa propietaria de Sucursal Norte.</p>
 <p><strong>CA-2.1.3 — Restricción de sucursales no asignadas</strong>
-Dado que el empleado en sesión no tiene relacionada la sucursal "Sucursal Malia Centro"
-Cuando intenta seleccionar dicha sucursal en el formulario de Cuenta Bancaria
-Entonces el sistema no la muestra como opción disponible.</p>
+Dado que está permitido seleccionar cualquier sucursal activa en el sistema,
+Cuando el usuario intenta seleccionar una sucursal en el formulario de Cuenta Bancaria,
+Entonces el sistema muestra todas las sucursales activas en el sistema.</p>
 <h3 id="casos-de-prueba_2">Casos de prueba<a class="headerlink" href="#casos-de-prueba_2" title="Permanent link">&para;</a></h3>
 <p><strong>CP-2.1.1 — Alta con valores precargados (camino feliz)</strong>
 Verifica: CA-2.1.1 · RN-2.2
@@ -3993,15 +3994,10 @@ Cuando registra una Cuenta Bancaria sin modificar Sucursal/Empresa
 Entonces la cuenta queda ligada a "Matriz Vicente Reyes" / "Vicente Reyes Magaña".</p>
 <p><strong>CP-2.1.2 — Cambio de sucursal permitida (alternativo)</strong>
 Verifica: CA-2.1.2
-Dado que el empleado tiene asignadas "Matriz Vicente Reyes" y "Sucursal Norte"
+Dado que en catálogo se encuentran las sucursales "Matriz Vicente Reyes" y "Sucursal Norte"
 Cuando cambia la Sucursal a "Sucursal Norte" en el alta de la cuenta
 Entonces la cuenta queda ligada a "Sucursal Norte" y su Empresa correspondiente.</p>
-<p><strong>CP-2.1.3 — Bloqueo de sucursal no asignada (permisos/validación)</strong>
-Verifica: CA-2.1.3 · RN-2.3
-Dado que el empleado no tiene relacionada "Sucursal Malia Centro"
-Cuando abre el selector de Sucursal en el alta de Cuenta Bancaria
-Entonces "Sucursal Malia Centro" no aparece entre las opciones.</p>
-<p><strong>CP-2.1.4 — Rechazo de sucursal inactiva (validación)</strong>
+<p><strong>CP-2.1.3 — Rechazo de sucursal inactiva (validación)</strong>
 Verifica: RN-2.1
 Dado que la sucursal "Sucursal Sur" está en estatus Baja
 Cuando el usuario intenta seleccionarla para la Cuenta Bancaria
@@ -4035,7 +4031,7 @@ Entonces el sistema no la ofrece como opción disponible.</p>
 <p><a href="#indice-requerimientos">⬆ Volver al índice</a></p>
 <hr />
 <p><a id="rf-03"></a></p>
-<h1 id="rf-03--apertura-de-periodos-por-cuenta-bancaria">RF-03 — Apertura de periodos por cuenta bancaria<a class="headerlink" href="#rf-03--apertura-de-periodos-por-cuenta-bancaria" title="Permanent link">&para;</a></h1>
+<h1 id="rf-03--apertura-de-períodos-para-cuentas-bancarias">RF-03 — Apertura de períodos para cuentas bancarias<a class="headerlink" href="#rf-03--apertura-de-períodos-para-cuentas-bancarias" title="Permanent link">&para;</a></h1>
 <table>
 <thead>
 <tr>
@@ -4059,28 +4055,28 @@ Entonces el sistema no la ofrece como opción disponible.</p>
 </tbody>
 </table>
 <h2 id="objetivo_2">Objetivo<a class="headerlink" href="#objetivo_2" title="Permanent link">&para;</a></h2>
-<p>Permitir abrir, de forma masiva, un periodo operativo por cada cuenta bancaria ligada a las sucursales/empresa del empleado en sesión.</p>
+<p>Permitir la apertura masiva de períodos para todas las empresas activas vinculadas a las empresas configuradas para el usuario</p>
 <h2 id="descripción_2">Descripción<a class="headerlink" href="#descripción_2" title="Permanent link">&para;</a></h2>
-<p>El sistema deberá permitir abrir un <strong>periodo</strong> por cada cuenta bancaria ligada a la empresa configurada al usuario. Actualmente <strong>no existe</strong> en el sistema el concepto de Periodo/PeriodoContable: es una entidad nueva a construir, asociada a <code>CuentaBancaria</code>, con estatus Abierto/Cerrado, límite de periodos abiertos simultáneos y control por permiso especial (aprovechando el catálogo <code>SpecialPermissionPolicy</code> ya existente en el sistema para extensiones de este tipo).</p>
+<p>Esta funcionalidad permitirá realizar la apertura masiva de períodos para todas las empresas activas que se encuentren vinculadas a las empresas configuradas para el usuario, facilitando la gestión de períodos de manera ágil y centralizada, sin necesidad de realizar el proceso de forma individual para cada empresa.</p>
 <p><pre class="mermaid"><code>stateDiagram-v2
     [*] --&gt; Abierto: Abrir periodo
     Abierto --&gt; Cerrado: Cerrar periodo
     Cerrado --&gt; [*]</code></pre>
 El diagrama resume el ciclo de vida de un Periodo: nace en estatus Abierto al ejecutar la acción de este RF y termina en Cerrado mediante la acción de RF-04; no se contempla reapertura dentro de este alcance.</p>
-<h2 id="hu-31--abrir-periodos-de-las-cuentas-bancarias-de-mis-sucursales">HU-3.1 — Abrir periodos de las cuentas bancarias de mis sucursales<a class="headerlink" href="#hu-31--abrir-periodos-de-las-cuentas-bancarias-de-mis-sucursales" title="Permanent link">&para;</a></h2>
-<p>Como usuario con rol Ventas y Facturación del sistema Inmobiliaria, quiero abrir de un solo clic el periodo de todas las cuentas bancarias ligadas a las empresas/sucursales configuradas a mi usuario, para agilizar el inicio de operación sin abrir cuenta por cuenta.</p>
+<h2 id="hu-31--abrir-periodos-de-las-cuentas-bancarias-de-mis-empresas">HU-3.1 — Abrir periodos de las cuentas bancarias de mis empresas<a class="headerlink" href="#hu-31--abrir-periodos-de-las-cuentas-bancarias-de-mis-empresas" title="Permanent link">&para;</a></h2>
+<p>Como usuario con rol Ventas y Facturación del sistema Inmobiliaria, quiero abrir de un solo clic el periodo de todas las cuentas bancarias ligadas a las empresas configuradas a mi usuario, para agilizar el inicio de operación sin abrir cuenta por cuenta.</p>
 <h3 id="reglas-de-negocio_3">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_3" title="Permanent link">&para;</a></h3>
-<p><strong>RN-3.1</strong> Al ejecutar "Abrir periodo" el sistema crea automáticamente un periodo Abierto para cada cuenta bancaria ligada a las sucursales/empresa del empleado en sesión que no tenga ya un periodo Abierto vigente.</p>
-<p><strong>RN-3.2</strong> Se permiten como máximo 2 periodos abiertos simultáneos por cuenta bancaria.</p>
+<p><strong>RN-3.1</strong> Al ejecutar "Abrir periodo" el sistema crea automáticamente un periodo Abierto para cada cuenta bancaria ligada a las empresas del empleado en sesión que no tenga ya un periodo Abierto vigente.</p>
+<p><strong>RN-3.2</strong> Se permite un máximo de 2 períodos abiertos simultáneamente por empresa y cuenta bancaria.</p>
 <p><strong>RN-3.3</strong> La acción "Abrir periodo" requiere que el usuario cuente con el permiso especial correspondiente; sin él, la acción no está disponible.</p>
-<p><strong>RN-3.4</strong> La acción aplica a cuentas bancarias de sucursales de las empresas según las configuradas al empleado.</p>
+<p><strong>RN-3.4</strong> Se permite visualizar los períodos abiertos y cerrados de las empresas vinculadas al usuario.</p>
 <h3 id="criterios-de-aceptación_3">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_3" title="Permanent link">&para;</a></h3>
 <p><strong>CA-3.1.1 — Apertura masiva exitosa</strong>
-Dado que el empleado tiene configuradas 3 cuentas bancarias sin periodo abierto y cuenta con el permiso especial
+Dado que el empleado tiene configuradas 3 empresas y 3 cuentas bancarias uno a uno y sin periodo abierto y cuenta con el permiso especial
 Cuando ejecuta la acción "Abrir periodo"
 Entonces el sistema crea un periodo en estatus Abierto para cada una de las cuentas.</p>
 <p><strong>CA-3.1.2 — Límite de periodos abiertos</strong>
-Dado que una cuenta bancaria ya tiene 2 periodos en estatus Abierto
+Dado que una empresa ya tiene 2 periodos en estatus Abierto
 Cuando el usuario ejecuta nuevamente "Abrir periodo"
 Entonces el sistema omite esa cuenta e informa que alcanzó el máximo de periodos abiertos permitidos.</p>
 <p><strong>CA-3.1.3 — Usuario sin permiso especial</strong>
@@ -4090,7 +4086,9 @@ Entonces el sistema no muestra o deshabilita la acción.</p>
 <p><strong>CA-3.1.4 — Cobertura multiempresa</strong>
 Dado que el empleado tiene configuradas sucursales de "Vicente Reyes" y de "Grupo Malia"
 Cuando ejecuta "Abrir periodo"
-Entonces se abren periodos para las cuentas bancarias de ambas empresas.</p>
+Entonces se abren periodos para ambas empresas.</p>
+<p><strong>CA-3.1.5 — Periodos Visibles</strong>
+Dado que el empleado tiene configurada la empresa "Vicente Reyes", solo podrá visualizar los períodos correspondientes a dicha empresa "Vicente Reyes".</p>
 <h3 id="casos-de-prueba_3">Casos de prueba<a class="headerlink" href="#casos-de-prueba_3" title="Permanent link">&para;</a></h3>
 <p><strong>CP-3.1.1 — Apertura exitosa para todas las cuentas del empleado (camino feliz)</strong>
 Verifica: CA-3.1.1 · RN-3.1
@@ -4117,6 +4115,11 @@ Verifica: CA-3.1.1 · RN-3.1
 Dado que una cuenta ya tiene 1 periodo Abierto y las demás no tienen ninguno
 Cuando el usuario ejecuta "Abrir periodo" nuevamente
 Entonces solo se crean periodos para las cuentas sin periodo Abierto vigente; la cuenta con periodo ya abierto no se duplica.</p>
+<p><strong>CP-3.1.5 — Re-ejecución no duplica periodos vigentes (alternativo)</strong>
+Verifica: CA-3.1.5 · RN-3.4
+Dado que el usuario solo tiene configurada la empresa "Vicente Reyes",
+cuando visualice la pantalla de "Saldo Mensual Bancario",
+entonces solo podrá visualizar los períodos correspondientes a la empresa "Vicente Reyes".</p>
 <table>
 <thead>
 <tr>
@@ -4175,48 +4178,34 @@ Entonces solo se crean periodos para las cuentas sin periodo Abierto vigente; la
 </tbody>
 </table>
 <h2 id="objetivo_3">Objetivo<a class="headerlink" href="#objetivo_3" title="Permanent link">&para;</a></h2>
-<p>Permitir cerrar, de forma masiva, el periodo operativo vigente de cada cuenta bancaria ligada a las sucursales/empresa del empleado en sesión.</p>
+<p>Permitir cerrar el periodo seleccionado las empresas vinculadas a las empresas configuradas para el usuario.</p>
 <h2 id="descripción_3">Descripción<a class="headerlink" href="#descripción_3" title="Permanent link">&para;</a></h2>
-<p>El sistema deberá permitir cerrar el periodo Abierto de cada cuenta bancaria ligada a la empresa configurada al usuario, con el mismo alcance multiempresa y control de permiso especial que la apertura (RF-03).</p>
+<p>El sistema deberá permitir cerrar los periodos abiertos por cada empresa ligada a la  configurada al usuario.</p>
 <h2 id="hu-41--cerrar-periodos-de-las-cuentas-bancarias-de-mis-sucursales">HU-4.1 — Cerrar periodos de las cuentas bancarias de mis sucursales<a class="headerlink" href="#hu-41--cerrar-periodos-de-las-cuentas-bancarias-de-mis-sucursales" title="Permanent link">&para;</a></h2>
-<p>Como usuario con rol Ventas y Facturación del sistema Inmobiliaria, quiero cerrar de un solo clic el periodo vigente de todas las cuentas bancarias ligadas a las empresas/sucursales configuradas a mi usuario, para concluir la operación del periodo sin cerrar cuenta por cuenta.</p>
+<p>Como usuario con rol de Ventas y Facturación del sistema Inmobiliaria, quiero cerrar el período seleccionado de una empresa, incluyendo todas las cuentas bancarias asociadas a dicho período.</p>
 <h3 id="reglas-de-negocio_4">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_4" title="Permanent link">&para;</a></h3>
-<p><strong>RN-4.1</strong> Al ejecutar "Cerrar periodo" el sistema aplica el cierre al periodo Abierto más reciente de cada cuenta bancaria ligada a las sucursales/empresa del empleado en sesión.</p>
+<p><strong>RN-4.1</strong> Al ejecutar la opción "Cerrar período", el sistema aplica el cierre al período abierto más reciente de cada cuenta bancaria asociada a la empresa vinculada al empleado en sesión.</p>
 <p><strong>RN-4.2</strong> La acción "Cerrar periodo" requiere que el usuario cuente con el permiso especial correspondiente; sin él, la acción no está disponible.</p>
-<p><strong>RN-4.3</strong> La acción aplica tanto a cuentas bancarias de sucursales de la empresa "Vicente Reyes" como de "Grupo Malia", según las sucursales configuradas al empleado.</p>
-<p><strong>RN-4.4</strong> Una cuenta bancaria sin ningún periodo Abierto se omite de la operación de cierre sin generar error que detenga el resto del proceso.</p>
-<p><strong>RN-4.5</strong> Mientras una cuenta bancaria no tenga ningún periodo en estatus Abierto (es decir, su periodo más reciente está Cerrado), el sistema no permite capturar nuevos Movimientos Bancarios ni Transacciones CXC contra esa cuenta; la captura se reactiva automáticamente al abrir un nuevo periodo (RF-03).</p>
+<p><strong>RN-4.3</strong>  La acción "Cerrar periodo" solo aplica a períodos abiertos.</p>
+<p><strong>RN-4.4</strong> Mientras una cuenta bancaria no tenga ningún periodo en estatus Abierto (es decir, su periodo más reciente está Cerrado), el sistema no permite capturar nuevos Movimientos Bancarios ni Transacciones CXC contra esa cuenta; la captura se reactiva automáticamente al abrir un nuevo periodo.</p>
 <h3 id="criterios-de-aceptación_4">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_4" title="Permanent link">&para;</a></h3>
 <p><strong>CA-4.1.1 — Cierre masivo exitoso</strong>
-Dado que el empleado tiene 3 cuentas bancarias con periodo Abierto y cuenta con el permiso especial
+Dado que el empleado selecciona un periodo que tiene 3 cuentas bancarias con periodo Abierto y cuenta con el permiso especial
 Cuando ejecuta la acción "Cerrar periodo"
 Entonces el sistema cambia el estatus de los 3 periodos a Cerrado.</p>
 <p><strong>CA-4.1.2 — Usuario sin permiso especial</strong>
 Dado que el usuario en sesión no cuenta con el permiso especial de cierre de periodos
 Cuando intenta acceder a la acción "Cerrar periodo"
 Entonces el sistema no muestra o deshabilita la acción.</p>
-<p><strong>CA-4.1.3 — Cuenta sin periodo abierto</strong>
-Dado que una de las cuentas bancarias del empleado no tiene ningún periodo Abierto
-Cuando se ejecuta "Cerrar periodo"
-Entonces esa cuenta se omite del proceso y las demás cuentas con periodo Abierto sí se cierran correctamente.</p>
-<p><strong>CA-4.1.4 — Cobertura multiempresa</strong>
-Dado que el empleado tiene sucursales/cuentas con periodo Abierto en "Vicente Reyes" y "Grupo Malia"
-Cuando ejecuta "Cerrar periodo"
-Entonces se cierran los periodos de cuentas de ambas empresas en la misma operación.</p>
-<p><strong>CA-4.1.5 — Bloqueo de captura con periodo Cerrado</strong>
-Dado que la cuenta bancaria "BBVA-Matriz" tiene su periodo más reciente en estatus Cerrado
-Cuando un usuario intenta registrar un Movimiento Bancario o una Transacción CXC contra esa cuenta
-Entonces el sistema rechaza la captura e indica que la cuenta no tiene un periodo Abierto vigente.</p>
-<p><strong>CA-4.1.6 — Reactivación de captura al reabrir periodo</strong>
-Dado que la cuenta "BBVA-Matriz" tenía su periodo Cerrado y bloqueada la captura
-Cuando se abre un nuevo periodo para esa cuenta (RF-03)
-Entonces el sistema vuelve a permitir el registro de Movimientos Bancarios y Transacciones CXC contra ella.</p>
+<p><strong>CA-4.1.3 — Cobertura multiempresa</strong>
+Dado que el empleado tiene empresas con períodos abiertos en "Vicente Reyes" y "Grupo Malia",
+entonces se deberá permitir seleccionar periodos-empresa para acceder a la acción "Cerrar período".</p>
 <h3 id="casos-de-prueba_4">Casos de prueba<a class="headerlink" href="#casos-de-prueba_4" title="Permanent link">&para;</a></h3>
 <p><strong>CP-4.1.1 — Cierre exitoso para todas las cuentas del empleado (camino feliz)</strong>
 Verifica: CA-4.1.1 · RN-4.1
-Dado que el empleado tiene 3 cuentas con periodo Abierto y el permiso especial habilitado
+Dado que el empleado tiene 3 cuentas bancarias en el mismo periodo Abierto y el permiso especial habilitado
 Cuando ejecuta "Cerrar periodo"
-Entonces los 3 periodos cambian a estatus Cerrado.</p>
+Entonces todos cambian a estatus Cerrado.</p>
 <p><strong>CP-4.1.2 — Usuario sin permiso especial no ve la acción (permisos)</strong>
 Verifica: CA-4.1.2 · RN-4.2
 Dado que el usuario en sesión no tiene asignado el permiso especial de cierre
@@ -4227,12 +4216,7 @@ Verifica: CA-4.1.3 · RN-4.4
 Dado que la cuenta "Santander-Norte" no tiene periodo Abierto y las demás sí
 Cuando el usuario ejecuta "Cerrar periodo"
 Entonces "Santander-Norte" se omite y el resto de las cuentas cierra su periodo sin que el proceso se detenga.</p>
-<p><strong>CP-4.1.4 — Cierre cubre ambas empresas (multiempresa)</strong>
-Verifica: CA-4.1.4 · RN-4.3
-Dado que existen cuentas con periodo Abierto en sucursales de "Vicente Reyes" y "Grupo Malia" del mismo empleado
-Cuando ejecuta "Cerrar periodo"
-Entonces ambas quedan Cerradas en la misma operación.</p>
-<p><strong>CP-4.1.5 — Bloqueo de captura con cuenta en periodo Cerrado (error/regla)</strong>
+<p><strong>CP-4.1.4 — Bloqueo de captura con cuenta en periodo Cerrado (error/regla)</strong>
 Verifica: CA-4.1.5 · RN-4.5
 Dado que la cuenta "BBVA-Matriz" no tiene ningún periodo Abierto
 Cuando un usuario intenta registrar un Movimiento Bancario contra "BBVA-Matriz"
@@ -4289,7 +4273,7 @@ La entidad Periodo es nueva y no reemplaza ningún control existente. Decisión 
 <p><a href="#indice-requerimientos">⬆ Volver al índice</a></p>
 <hr />
 <p><a id="rf-05"></a></p>
-<h1 id="rf-05--cambio-de-empresa-en-movimientos-bancarios">RF-05 — Cambio de Empresa en Movimientos Bancarios<a class="headerlink" href="#rf-05--cambio-de-empresa-en-movimientos-bancarios" title="Permanent link">&para;</a></h1>
+<h1 id="rf-05--permitir-guardar-empresa-y-sucursal-en-movimientos-bancarios">RF-05 — Permitir guardar Empresa y Sucursal en Movimientos Bancarios<a class="headerlink" href="#rf-05--permitir-guardar-empresa-y-sucursal-en-movimientos-bancarios" title="Permanent link">&para;</a></h1>
 <table>
 <thead>
 <tr>
@@ -4313,15 +4297,15 @@ La entidad Periodo es nueva y no reemplaza ningún control existente. Decisión 
 </tbody>
 </table>
 <h2 id="objetivo_4">Objetivo<a class="headerlink" href="#objetivo_4" title="Permanent link">&para;</a></h2>
-<p>Permitir editar el campo Empresa de un Movimiento Bancario, precargado según el origen del movimiento o la configuración del empleado.</p>
+<p>Permitir guardar Empresa y Sucursal en Movimiento Bancario, precargado según el origen del movimiento o la configuración del empleado.</p>
 <h2 id="descripción_4">Descripción<a class="headerlink" href="#descripción_4" title="Permanent link">&para;</a></h2>
-<p><code>MovimientoBancario</code> ya tiene el campo <code>Sucursal</code>, pero <strong>no tiene hoy un campo propio <code>Empresa</code></strong> (se infiere indirectamente desde <code>PersonalCaptura.Empresa</code>). Este requerimiento agrega el campo <code>Empresa</code> propio del Movimiento Bancario y define dos formas de precarga: automática, tomando Empresa del documento que originó el movimiento (pago, anticipo, abono o factura relacionados vía <code>fk_pago</code>/<code>fk_anticipo</code>/<code>fk_abono</code>/<code>fk_factura</code>), y manual, tomando como base la Empresa predeterminada del empleado en sesión (RF-01) y permitiendo su edición.</p>
+<p>Permitir que el sistema guarde la Empresa y Sucursal asociadas a cada Movimiento Bancario. Estos datos deberán precargarse automáticamente de acuerdo con el origen del movimiento. En el caso de movimientos registrados manualmente, deberán corresponder a la configuración de Empresa y Sucursal del empleado en sesión.</p>
 <h2 id="hu-51--editar-empresa-en-un-movimiento-bancario-manual">HU-5.1 — Editar Empresa en un movimiento bancario manual<a class="headerlink" href="#hu-51--editar-empresa-en-un-movimiento-bancario-manual" title="Permanent link">&para;</a></h2>
-<p>Como usuario con el rol de Facturación del sistema Inmobiliaria, quiero poder editar el campo Empresa en Movimientos Bancarios capturados manualmente, para reflejar correctamente a qué empresa pertenece el movimiento cuando no coincide con la sucursal - Empresa predeterminada.</p>
+<p>Como usuario con el rol de Facturación del sistema Inmobiliaria, quiero poder editar los campos Empresa y Sucursal en los Movimientos Bancarios capturados manualmente, para reflejar correctamente la empresa y sucursal a las que pertenece el movimiento cuando estas no coincidan con la Empresa y Sucursal predeterminadas.</p>
 <h3 id="reglas-de-negocio_5">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_5" title="Permanent link">&para;</a></h3>
-<p><strong>RN-5.1</strong> Cuando el Movimiento Bancario se origina automáticamente desde otro documento (pago, anticipo, abono o factura), los campos Empresa se toman del documento origen y no es editable.</p>
-<p><strong>RN-5.2</strong> Cuando el registro del Movimiento Bancario es manual, el sistema precarga Empresa con los valores predeterminados del empleado en sesión y permite su edición.</p>
-<p><strong>RN-5.3</strong> Todo Movimiento Bancario deberá requerir Empresa para poder registrarse, sin importar si es automático o manual.</p>
+<p><strong>RN-5.1</strong> Cuando el Movimiento Bancario se origina automáticamente desde otro documento (pago, anticipo, abono o factura), los campos Empresa y Sucursal se toman del documento origen y no es editable.</p>
+<p><strong>RN-5.2</strong> Cuando el registro del Movimiento Bancario es manual, el sistema precarga Empresa y Sucursal de los valores predeterminados del empleado en sesión y permite su edición.</p>
+<p><strong>RN-5.3</strong> Todo Movimiento Bancario deberá requerir Empresa y Sucursal para poder registrarse, sin importar si es automático o manual.</p>
 <h3 id="criterios-de-aceptación_5">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_5" title="Permanent link">&para;</a></h3>
 <p><strong>CA-5.1.1 — Precarga en movimiento manual</strong>
 Dado que el empleado en sesión tiene como predeterminada la sucursal - empresa "Matriz Vicente Reyes"
@@ -4334,9 +4318,9 @@ Entonces el sistema actualiza a "Grupo Malia" conforme a la elegida.</p>
 <p><strong>CA-5.1.3 — Campos no editables en movimiento automático</strong>
 Dado que un Movimiento Bancario se generó automáticamente a partir de una Factura
 Cuando el usuario abre el movimiento para su consulta
-Entonces los campos Empresa se muestran de solo lectura con los valores heredados de la Factura.</p>
+Entonces los campos Empresa y Sucursal se muestran de solo lectura con los valores heredados de la Factura.</p>
 <p><strong>CA-5.1.4 — Bloqueo por falta de Empresa/</strong>
-Dado que el usuario intenta guardar un Movimiento Bancario manual sin seleccionar Empresa
+Dado que el usuario intenta guardar un Movimiento Bancario manual sin seleccionar Empresa y Sucursal
 Cuando confirma el guardado
 Entonces el sistema rechaza la operación e indica que el campo es obligatorio.</p>
 <h3 id="casos-de-prueba_5">Casos de prueba<a class="headerlink" href="#casos-de-prueba_5" title="Permanent link">&para;</a></h3>
@@ -4344,22 +4328,22 @@ Entonces el sistema rechaza la operación e indica que el campo es obligatorio.<
 Verifica: CA-5.1.1 · RN-5.2
 Dado que el empleado en sesión tiene predeterminada "Matriz Vicente Reyes"
 Cuando abre el formulario de alta manual de Movimiento Bancario
-Entonces Empresa  aparecen precargados con los valores del empleado.</p>
+Entonces Empresa y Sucursal  aparecen precargados con los valores del empleado.</p>
 <p><strong>CP-5.1.2 — Edición exitosa antes de guardar (alternativo)</strong>
 Verifica: CA-5.1.2
 Dado que el movimiento manual está precargado con la sucursal predeterminada
 Cuando el usuario la cambia a otra sucursal de su configuración
-Entonces al guardar el movimiento queda ligado a la nueva Empresa/ seleccionada.</p>
+Entonces al guardar el movimiento queda ligado a la nueva Empresa- Sucursal seleccionada.</p>
 <p><strong>CP-5.1.3 — Movimiento automático es de solo lectura (permisos/reglas)</strong>
 Verifica: CA-5.1.3 · RN-5.1
 Dado que el movimiento se generó automáticamente desde un Abono
-Cuando el usuario intenta modificar Empresa 
+Cuando el usuario intenta modificar Empresa y Sucursal 
 Entonces el sistema no permite la edición de esos campos.</p>
 <p><strong>CP-5.1.4 — Bloqueo por campos vacíos (error/validación)</strong>
 Verifica: CA-5.1.4 · RN-5.3
-Dado que el usuario deja el campo Empresa sin seleccionar en un movimiento manual
+Dado que el usuario deja el campo Empresa y Sucursal sin seleccionar en un movimiento manual
 Cuando intenta guardar
-Entonces el sistema impide el guardado e indica que Empresa es obligatoria.</p>
+Entonces el sistema impide el guardado e indica que Empresa y Sucursal es obligatoria.</p>
 <table>
 <thead>
 <tr>
@@ -4418,9 +4402,9 @@ Entonces el sistema impide el guardado e indica que Empresa es obligatoria.</p>
 </tbody>
 </table>
 <h2 id="objetivo_5">Objetivo<a class="headerlink" href="#objetivo_5" title="Permanent link">&para;</a></h2>
-<p>Permitir cambiar la razón social emisora de una Factura entre las empresas configuradas al personal en sesión, con su régimen fiscal correspondiente.</p>
+<p>Permitir visualizar y cambiar la razón social emisora y el régimen fiscal de una factura entre las empresas configuradas para el personal en sesión.</p>
 <h2 id="descripción_5">Descripción<a class="headerlink" href="#descripción_5" title="Permanent link">&para;</a></h2>
-<p><code>Factura</code> hereda de <code>ProcesoBaseObject</code> y ya cuenta con los campos <code>Empresa</code>/<code>Sucursal</code>, que hoy se autoasignan desde el empleado que crea el documento y no se exponen como una decisión explícita del usuario en la interfaz. Este requerimiento agrupa visualmente los campos "razón social emisor" (Empresa) y "régimen fiscal emisor", permite su edición restringida a las empresas configuradas al usuario, define el régimen fiscal por defecto según la empresa elegida (particularmente "Arrendamiento" cuando el emisor es "Grupo Malia"), y homologa que exista una sola sección de datos del cliente en la pantalla.</p>
+<p>Permitir al usuario visualizar y seleccionar la razón social emisora y el régimen fiscal asociados a una factura, tomando como opciones disponibles únicamente las empresas configuradas para el personal en sesión. El sistema deberá mostrar la información actualmente seleccionada y permitir modificarla antes de generar o emitir la factura, asegurando que los datos correspondan a una de las empresas habilitadas para el usuario. y homologa que exista una sola sección de datos del cliente en la pantalla.</p>
 <h3 id="diseño-uxui">Diseño UX/UI<a class="headerlink" href="#diseño-uxui" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Agrupar en una sola sección visual los campos "Razón social emisor" y "Régimen fiscal emisor".</li>
@@ -4428,16 +4412,19 @@ Entonces el sistema impide el guardado e indica que Empresa es obligatoria.</p>
 <li>Eliminar duplicidad de secciones de datos del cliente, dejando una sola.</li>
 </ul>
 <h2 id="hu-61--cambiar-la-empresa-que-emite-la-factura">HU-6.1 — Cambiar la empresa que emite la Factura<a class="headerlink" href="#hu-61--cambiar-la-empresa-que-emite-la-factura" title="Permanent link">&para;</a></h2>
-<p>Como usuario con el rol de Facturación del sistema Inmobiliaria, quiero poder cambiar la empresa que emite en la pantalla Facturas, para emitir correctamente a nombre de "Vicente Reyes Magaña" o "Grupo Malia" según corresponda a la operación.</p>
+<p>Como usuario con el rol de Facturación del sistema Inmobiliaria, quiero poder cambiar la empresa que emite en la pantalla Facturas, para emitir correctamente a nombre de "Vicente Reyes Magaña", "Grupo Malia" y "María Reyes" según corresponda a la operación.</p>
 <h3 id="reglas-de-negocio_6">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_6" title="Permanent link">&para;</a></h3>
-<p><strong>RN-6.1</strong> La razón social emisor debe precargar únicamente las empresas configuradas  por la <strong>lista de sucursales relacionadas</strong> al personal en sesión, dejando seleccionada por defecto la correspondiente a la sucursal predeterminada.</p>
+<p><strong>RN-6.1</strong> La razón social emisor debe precargar únicamente las empresas configuradas  por la <strong>lista de sucursales relacionadas</strong> al personal en sesión, <strong>dejando seleccionada por defecto la correspondiente a la sucursal predeterminada</strong>.</p>
 <p><strong>RN-6.2</strong> En una nueva Factura, el Régimen fiscal Emisor se precarga con "Arrendamiento" cuando la razón social emisor es "Grupo Malia"; en cualquier otro caso, se precarga el régimen fiscal configurado en la Empresa.</p>
 <p><strong>RN-6.3</strong> La Factura y la Transacción CXC relacionada deben corresponder siempre a la misma empresa.</p>
 <p><strong>RN-6.4</strong> No se permite editar la razón social emisor cuando la Factura está en estatus Cancelado o cuando ya está Timbrada.</p>
 <p><strong>RN-6.5</strong> Cuando la Factura se aplica contra un anticipo, la Factura, el Anticipo y la Transacción relacionada deben corresponder a la misma empresa.</p>
 <p><strong>RN-6.6</strong> Para aplicar saldo a favor, solo se permite relacionar anticipos emitidos por la misma razón social emisor y para el mismo cliente seleccionados en la Factura.</p>
 <p><strong>RN-6.7</strong> Toda Factura deberá requerir Empresa y Sucursal de registro para poder emitirse.</p>
+<p><strong>RN-6.8</strong> Quedará visible únicamente el campo Empresa.</p>
 <h3 id="criterios-de-aceptación_6">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_6" title="Permanent link">&para;</a></h3>
+<p><strong>CA-6.1.0 — Cargar empresa predeterminada</strong>
+Dado que el usuario en sesión tiene configurada la empresa "Vicente Reyes Magaña" como predeterminada para una factura nueva, entonces "Vicente Reyes Magaña" deberá aparecer seleccionada automáticamente en el campo Empresa, junto con la sucursal correspondiente en el campo Sucursal y permitir su edición en los campos.</p>
 <p><strong>CA-6.1.1 — Cambio de razón social permitido</strong>
 Dado que el usuario en sesión tiene configuradas "Vicente Reyes Magaña" y "Grupo Malia"
 Cuando cambia la razón social emisor a "Grupo Malia" en una Factura nueva
@@ -4560,17 +4547,21 @@ El cálculo automático del Régimen fiscal Emisor "Arrendamiento" para "Grupo M
 </tbody>
 </table>
 <h2 id="objetivo_6">Objetivo<a class="headerlink" href="#objetivo_6" title="Permanent link">&para;</a></h2>
-<p>Permitir cambiar la razón social emisora de una Nota de Crédito entre las empresas configuradas al usuario, manteniendo consistencia con la Factura que relaciona.</p>
+<p>Permitir visualizar y modificar la razón social emisora y el régimen fiscal de una Nota de Crédito entre las empresas configuradas para el personal en sesión, manteniendo consistencia con la Factura relacionada.</p>
 <h2 id="descripción_6">Descripción<a class="headerlink" href="#descripción_6" title="Permanent link">&para;</a></h2>
-<p><code>NotaCredito</code> hereda igualmente de <code>ProcesoBaseObject</code>/<code>MasterVentaBaseObject</code> y comparte la misma mecánica de Empresa/Sucursal que Factura. Este requerimiento agrupa los campos de razón social/régimen fiscal emisor, restringe la relación a facturas de la misma razón social y bloquea la edición cuando el documento está cancelado o timbrado.</p>
+<p>Se requiere permitir que el personal en sesión pueda visualizar y modificar la razón social emisora y el régimen fiscal asociados a una Nota de Crédito, considerando únicamente las empresas que tenga configuradas. La información seleccionada deberá mantener consistencia con la Factura relacionada, asegurando que los datos fiscales de ambos documentos correspondan entre sí y bloqueando la edición cuando el documento está cancelado o timbrado.</p>
 <h2 id="hu-71--cambiar-la-empresa-que-emite-la-nota-de-crédito">HU-7.1 — Cambiar la empresa que emite la Nota de Crédito<a class="headerlink" href="#hu-71--cambiar-la-empresa-que-emite-la-nota-de-crédito" title="Permanent link">&para;</a></h2>
 <p>Como usuario con el rol de Facturación del sistema Inmobiliaria, quiero poder cambiar la empresa que emite en la pantalla Notas de Crédito, para asegurar que la nota se emita a nombre de la misma razón social que la factura que corrige.</p>
 <h3 id="reglas-de-negocio_7">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_7" title="Permanent link">&para;</a></h3>
-<p><strong>RN-7.1</strong> Solo se pueden relacionar a la Nota de Crédito facturas emitidas por la misma razón social emisor seleccionada.</p>
-<p><strong>RN-7.2</strong> La Nota de Crédito, la Factura relacionada y la Transacción CXC generada deben corresponder a la misma empresa.</p>
-<p><strong>RN-7.3</strong> No se permite editar la razón social emisor cuando la Nota de Crédito está en estatus Cancelado o cuando ya está Timbrada.</p>
-<p><strong>RN-7.4</strong> Toda Nota de Crédito deberá requerir Empresa de registro para poder emitirse.</p>
+<p><strong>RN-7.1</strong> La razón social emisor debe precargar únicamente las empresas configuradas por la lista de sucursales relacionadas al personal en sesión, dejando seleccionada por defecto la correspondiente a la sucursal predeterminada.</p>
+<p><strong>RN-7.2</strong> Solo se pueden relacionar a la Nota de Crédito facturas emitidas por la misma empresa seleccionada.</p>
+<p><strong>RN-7.3</strong> La Nota de Crédito, la Factura relacionada y la Transacción CXC generada deben corresponder a la misma empresa.</p>
+<p><strong>RN-7.4</strong> No se permite editar la razón social emisor cuando la Nota de Crédito está en estatus Cancelado o cuando ya está Timbrada.</p>
+<p><strong>RN-7.5</strong> Toda Nota de Crédito deberá requerir Empresa y sucursal de registro para poder emitirse.</p>
+<p><strong>RN-7.6</strong> Quedará visible únicamente el campo Empresa.</p>
 <h3 id="criterios-de-aceptación_7">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_7" title="Permanent link">&para;</a></h3>
+<p><strong>CA-7.1.0 — Cargar empresa predeterminada</strong>
+ Dado que el usuario en sesión tiene configurada la empresa "Vicente Reyes Magaña" como predeterminada para una Nota de Crédito nueva, entonces "Vicente Reyes Magaña" deberá aparecer seleccionada automáticamente en el campo Empresa, junto con la sucursal correspondiente en el campo Sucursal y permitir su edición en los campos.</p>
 <p><strong>CA-7.1.1 — Cambio de razón social permitido</strong>
 Dado que el usuario en sesión tiene configuradas "Vicente Reyes Magaña" y "Grupo Malia"
 Cuando cambia la razón social emisor de una Nota de Crédito nueva a "Grupo Malia"
@@ -4662,17 +4653,21 @@ Entonces el sistema impide el registro e indica que la Sucursal es obligatoria.<
 </tbody>
 </table>
 <h2 id="objetivo_7">Objetivo<a class="headerlink" href="#objetivo_7" title="Permanent link">&para;</a></h2>
-<p>Permitir cambiar la razón social emisora de un Abono entre las empresas configuradas al usuario, manteniendo consistencia con las facturas que aplica.</p>
+<p>Permitir visualizar y modificar la razón social emisora y el régimen fiscal de un Abono entre las empresas configuradas para el personal en sesión, manteniendo consistencia con la Factura relacionada.</p>
 <h2 id="descripción_7">Descripción<a class="headerlink" href="#descripción_7" title="Permanent link">&para;</a></h2>
-<p><code>Abono</code> hereda de <code>ProcesoBaseObject</code> y participa del mismo mecanismo de Empresa/Sucursal. Este requerimiento agrupa los campos de razón social/régimen fiscal emisor y restringe las facturas aplicables al mismo emisor y cliente.</p>
+<p>Permitir al usuario visualizar y modificar la razón social emisora y el régimen fiscal asociados a un Abono, utilizando únicamente las empresas configuradas para el personal en sesión. La información seleccionada deberá mantenerse consistente con los datos fiscales de la Factura relacionada, garantizando la correspondencia entre ambos documentos.</p>
 <h2 id="hu-81--cambiar-la-empresa-que-emite-el-abono">HU-8.1 — Cambiar la empresa que emite el Abono<a class="headerlink" href="#hu-81--cambiar-la-empresa-que-emite-el-abono" title="Permanent link">&para;</a></h2>
 <p>Como usuario con el rol de Facturación del sistema Inmobiliaria, quiero poder cambiar la empresa que emite en la pantalla Abono, para aplicar correctamente el pago a facturas de la misma razón social.</p>
 <h3 id="reglas-de-negocio_8">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_8" title="Permanent link">&para;</a></h3>
-<p><strong>RN-8.1</strong> Solo se pueden relacionar al Abono facturas emitidas por la misma razón social emisor y del mismo cliente seleccionados.</p>
-<p><strong>RN-8.2</strong> El Abono, la Factura y la Transacción CXC relacionada deben corresponder a la misma empresa.</p>
-<p><strong>RN-8.3</strong> No se permite editar la razón social emisor cuando el Abono está en estatus Cancelado o cuando ya está Timbrado.</p>
-<p><strong>RN-8.4</strong> Todo Abono deberá requerir Empresa y Sucursal de registro para poder emitirse.</p>
+<p><strong>RN-8.1</strong> La razón social emisor debe precargar únicamente las empresas configuradas por la lista de sucursales relacionadas al personal en sesión, dejando seleccionada por defecto la correspondiente a la sucursal predeterminada.</p>
+<p><strong>RN-8.2</strong> Solo se pueden relacionar al Abono facturas emitidas por la misma razón social emisor y del mismo cliente seleccionados.</p>
+<p><strong>RN-8.3</strong> El Abono, la Factura y la Transacción CXC relacionada deben corresponder a la misma empresa.</p>
+<p><strong>RN-8.4</strong> No se permite editar la razón social emisor cuando el Abono está en estatus Cancelado o cuando ya está Timbrado.</p>
+<p><strong>RN-8.5</strong> Todo Abono deberá requerir Empresa y Sucursal de registro para poder emitirse.</p>
+<p><strong>RN-8.6</strong> Quedará visible únicamente el campo Empresa.</p>
 <h3 id="criterios-de-aceptación_8">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_8" title="Permanent link">&para;</a></h3>
+<p><strong>CA-6.1.0 — Cargar empresa predeterminada</strong>
+ Dado que el usuario en sesión tiene configurada la empresa "Vicente Reyes Magaña" como predeterminada para una Abono nuevo, entonces "Vicente Reyes Magaña" deberá aparecer seleccionada automáticamente en el campo Empresa, junto con la sucursal correspondiente en el campo Sucursal y permitir su edición en los campos.</p>
 <p><strong>CA-8.1.1 — Cambio de razón social permitido</strong>
 Dado que el usuario en sesión tiene configuradas "Vicente Reyes Magaña" y "Grupo Malia"
 Cuando cambia la razón social emisor de un Abono nuevo a "Grupo Malia"
@@ -4764,9 +4759,9 @@ Entonces el sistema impide el registro e indica que la Sucursal es obligatoria.<
 </tbody>
 </table>
 <h2 id="objetivo_8">Objetivo<a class="headerlink" href="#objetivo_8" title="Permanent link">&para;</a></h2>
-<p>Permitir cambiar la razón social emisora de un Anticipo entre las empresas configuradas al usuario, con su régimen fiscal correspondiente.</p>
+<p>Permitir visualizar y cambiar la razón social emisora y el régimen fiscal de un Anticipo entre las empresas configuradas para el personal en sesión.</p>
 <h2 id="descripción_8">Descripción<a class="headerlink" href="#descripción_8" title="Permanent link">&para;</a></h2>
-<p><code>Anticipo</code> hereda de <code>ProcesoBaseObject</code> y comparte el mismo mecanismo de Empresa/Sucursal que Factura. Este requerimiento agrupa los campos de razón social/régimen fiscal emisor, aplica la misma regla de "Arrendamiento" cuando el emisor es "Grupo Malia" y mantiene consistencia con la Transacción CXC generada.</p>
+<p>Permitir visualizar y modificar la razón social emisora y el régimen fiscal asociados a un Anticipo, seleccionándolos entre las empresas configuradas para el personal en sesión, y asegurar que la información se mantenga consistente con la transacción CxC generada.</p>
 <h2 id="hu-91--cambiar-la-empresa-que-emite-el-anticipo">HU-9.1 — Cambiar la empresa que emite el Anticipo<a class="headerlink" href="#hu-91--cambiar-la-empresa-que-emite-el-anticipo" title="Permanent link">&para;</a></h2>
 <p>Como usuario con el rol de Facturación del sistema Inmobiliaria, quiero poder cambiar la empresa que emite en la pantalla Anticipo, para registrar el anticipo a nombre de la razón social correcta.</p>
 <h3 id="reglas-de-negocio_9">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_9" title="Permanent link">&para;</a></h3>
@@ -4775,7 +4770,10 @@ Entonces el sistema impide el registro e indica que la Sucursal es obligatoria.<
 <p><strong>RN-9.3</strong> El Anticipo y la Transacción CXC relacionada deben corresponder a la misma empresa.</p>
 <p><strong>RN-9.4</strong> No se permite editar la razón social emisor cuando el Anticipo está en estatus Cancelado o cuando ya está Timbrado.</p>
 <p><strong>RN-9.5</strong> Todo Anticipo deberá requerir Empresa y Sucursal de registro para poder emitirse.</p>
+<p><strong>RN-9.6</strong> Quedará visible únicamente el campo Empresa.</p>
 <h3 id="criterios-de-aceptación_9">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_9" title="Permanent link">&para;</a></h3>
+<p><strong>CA-6.1.0 — Cargar empresa predeterminada</strong>
+ Dado que el usuario en sesión tiene configurada la empresa "Vicente Reyes Magaña" como predeterminada para un Anticipo nuevo, entonces "Vicente Reyes Magaña" deberá aparecer seleccionada automáticamente en el campo Empresa, junto con la sucursal correspondiente en el campo Sucursal y permitir su edición en los campos.</p>
 <p><strong>CA-9.1.1 — Cambio de razón social con régimen fiscal</strong>
 Dado que el usuario en sesión tiene configuradas "Vicente Reyes Magaña" y "Grupo Malia"
 Cuando cambia la razón social emisor de un Anticipo nuevo a "Grupo Malia"
@@ -4867,14 +4865,14 @@ Entonces la Transacción queda registrada con Empresa "Grupo Malia".</p>
 </tbody>
 </table>
 <h2 id="objetivo_9">Objetivo<a class="headerlink" href="#objetivo_9" title="Permanent link">&para;</a></h2>
-<p>Permitir registrar Transacciones CXC manuales seleccionando la empresa emisora entre las configuradas al personal en sesión.</p>
+<p>Permitir registrar Transacciones CXC manuales seleccionando la empresa y sucursal configuradas al personal en sesión.</p>
 <h2 id="descripción_9">Descripción<a class="headerlink" href="#descripción_9" title="Permanent link">&para;</a></h2>
-<p><code>Transaccion</code> (Transacción CXC) ya tiene los campos <code>Empresa</code>/<code>Sucursal</code> de solo lectura y se genera normalmente de forma automática a partir de Factura, Nota de Crédito, Abono o Anticipo (<code>FromFactura</code>, <code>FromNotaCredito</code>, <code>FromAbono</code>, <code>FromAnticipo</code>), heredando Empresa/Sucursal del documento origen. Este requerimiento habilita el registro <strong>manual</strong> de una Transacción CXC (para ajustes que no provienen de un documento de venta), agrupando los campos de razón social/régimen fiscal emisor y precargando la empresa correspondiente a la sucursal predeterminada del usuario.</p>
+<p>Permitir el registro manual de transacciones de Cuentas por Cobrar (CxC), utilizando únicamente la empresa y sucursal que se encuentren configuradas para el personal actualmente en sesión.</p>
 <h2 id="hu-101--registrar-una-transacción-cxc-manual-con-empresa-emisora">HU-10.1 — Registrar una Transacción CXC manual con empresa emisora<a class="headerlink" href="#hu-101--registrar-una-transacción-cxc-manual-con-empresa-emisora" title="Permanent link">&para;</a></h2>
-<p>Como usuario con el rol de Facturación del sistema Inmobiliaria, quiero registrar Transacciones CXC manuales y poder cambiar la empresa que emite, para reflejar ajustes de cartera que no se originan en un documento de venta existente.</p>
+<p>Como usuario con el rol de Facturación del sistema Inmobiliaria, quiero registrar Transacciones CXC manuales y poder cambiar la empresa y sucursal que emite, para reflejar ajustes de cartera que no se originan en un documento de venta existente.</p>
 <h3 id="reglas-de-negocio_10">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_10" title="Permanent link">&para;</a></h3>
-<p><strong>RN-10.1</strong> La razón social emisor debe precargar únicamente las empresas configuradas al personal en sesión, dejando seleccionada por defecto la correspondiente a la sucursal predeterminada.</p>
-<p><strong>RN-10.2</strong> Toda Transacción CXC deberá requerir Empresa de registro para poder guardarse.</p>
+<p><strong>RN-10.1</strong> La razón social emisor debe precargar únicamente las empresa y sucursal configurada al personal en sesión, dejando seleccionada por defecto la correspondiente a la empresa y sucursal predeterminada.</p>
+<p><strong>RN-10.2</strong> Toda Transacción CXC deberá requerir Empresa y Sucursal de registro para poder guardarse.</p>
 <p><strong>RN-10.3</strong> Si el registro de la Transacción es automático (generado desde Factura, Nota de Crédito, Abono o Anticipo), los campos Empresa de registro corresponden a los del documento que le dio origen y no son editables; en su defecto (registro manual), quedan a criterio del usuario dentro de sus empresas configuradas.</p>
 <h3 id="criterios-de-aceptación_10">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_10" title="Permanent link">&para;</a></h3>
 <p><strong>CA-10.1.1 — Registro manual con empresa seleccionable</strong>
@@ -4963,18 +4961,18 @@ Entonces el sistema no permite la edición de esos campos.</p>
 </tbody>
 </table>
 <h2 id="objetivo_10">Objetivo<a class="headerlink" href="#objetivo_10" title="Permanent link">&para;</a></h2>
-<p>Permitir filtrar las consultas del módulo Ventas y CXC por sucursal asignada al empleado en sesión.</p>
+<p>Permitir filtrar las consultas del módulo Ventas y CXC por empresa asignada al empleado en sesión.</p>
 <h2 id="descripción_10">Descripción<a class="headerlink" href="#descripción_10" title="Permanent link">&para;</a></h2>
 <p>El sistema deberá permitir filtrar y consultar la información de forma independiente por Empresa en las siguientes rutas de la interfaz gráfica:
 Consultas &gt; CXC &gt; <strong>CFDIs CFDIs Complementos</strong>, 
 Consultas &gt; Ventas &gt; <strong>CFDIs Emitidos</strong></p>
 <h3 id="operaciones_1">Operaciones<a class="headerlink" href="#operaciones_1" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Agregar filtro <code>Empresa</code> permitir seleccionar la empresas relacionadas por sucursales configuradas a personal en session.</li>
-<li>Restringir las opciones del filtro a empresas en estatus Activo.</li>
+<li>Agregar en la UI de ambos reportes el filtro “Empresa” y seleccionar automáticamente la empresa predeterminada asociada al personal en sesión.</li>
+<li>Restringir las opciones del selector “Filtro empresa” únicamente a las empresas asociadas al personal en sesión y que tengan estatus activo.</li>
 </ul>
 <h2 id="hu-111--filtrar-consultas-de-ventas-por-sucursal">HU-11.1 — Filtrar consultas de Ventas por sucursal<a class="headerlink" href="#hu-111--filtrar-consultas-de-ventas-por-sucursal" title="Permanent link">&para;</a></h2>
-<p>Como usuario con el rol de Facturación del sistema Inmobiliaria, quiero filtrar el módulo de consultas de Ventas por empresa asignadas a mi usuario, para revisar únicamente la información de las sucursales que me corresponden.</p>
+<p>Como usuario con el rol de Facturación del sistema Inmobiliaria, quiero filtrar el módulo de consultas de Ventas por empresa asignadas a mi usuario.</p>
 <h3 id="reglas-de-negocio_11">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_11" title="Permanent link">&para;</a></h3>
 <p><strong>RN-11.1</strong> El filtro de empresa permite selección solo de sucursales empresa en estatus Activo.</p>
 <p><strong>RN-11.2</strong> Cuando no se selecciona ninguna empresa en el filtro, la consulta muestra la información de todas las empresas asignadas al empleado en sesión (comportamiento por defecto, no del sistema completo).</p>
@@ -5151,7 +5149,7 @@ Entonces esos documentos no se modifican.</p>
 <p><a href="#indice-requerimientos">⬆ Volver al índice</a></p>
 <hr />
 <p><a id="rf-13"></a></p>
-<h1 id="rf-13--configuración-de-serie-por-combinación-documento--empresa--régimen-fiscal">RF-13 — Configuración de Serie por combinación Documento + Empresa + Régimen Fiscal<a class="headerlink" href="#rf-13--configuración-de-serie-por-combinación-documento--empresa--régimen-fiscal" title="Permanent link">&para;</a></h1>
+<h1 id="rf-13--configuración-serie-para-documentos-cfdi">RF-13 — Configuración serie para documentos CFDI<a class="headerlink" href="#rf-13--configuración-serie-para-documentos-cfdi" title="Permanent link">&para;</a></h1>
 <table>
 <thead>
 <tr>
@@ -5178,6 +5176,50 @@ Entonces esos documentos no se modifican.</p>
 <p>Permitir configurar una Serie propia para cada combinación de Documento (Factura/NotaCredito/Anticipo/Abono) de modo que cada RFC emisor y cada régimen fiscal administren su numeración de forma completamente independiente.</p>
 <h2 id="descripción_12">Descripción<a class="headerlink" href="#descripción_12" title="Permanent link">&para;</a></h2>
 <p>Cuando se habilita un nuevo régimen fiscal a una Empresa el sistema debe asegurar la existencia de una serie por cada combinación</p>
+<h2 id="hu-131--considerar-la-serie-correspondiente-para-la-generación-de-folios">HU-13.1 — Considerar la serie correspondiente para la generación de folios.<a class="headerlink" href="#hu-131--considerar-la-serie-correspondiente-para-la-generación-de-folios" title="Permanent link">&para;</a></h2>
+<p>Como usuario con rol Administrador del sistema Inmobiliaria, quiero que el sistema gestione las Serie correspondiente para la generación de folios en los documentos Factura, Nota Crédito, Abono y Anticipo.</p>
+<h3 id="reglas-de-negocio_13">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_13" title="Permanent link">&para;</a></h3>
+<p><strong>RN-13.1</strong> La separación de series para CFDI aplicará únicamente a facturas y se asignará por régimen fiscal.
+(Arrendamiento → Serie A
+Ingresos por intereses → Serie I
+Personas físicas con actividades empresariales y profesionales → Serie E)</p>
+<p><strong>RN-13.2</strong> Las series correspondientes a los CFDI de tipo Abono, Nota de Crédito y Anticipo deberán permanecer sin cambios, manteniendo el criterio actual definido mediante la variable de sistema.</p>
+<p><strong>RN-13.3</strong> La Serie de la factura deberá obtenerse de la serie configurada en Empleado, utilizando como distintivo el Régimen Fiscal correspondiente. A dicha serie se deberá concatenar el consecutivo correspondiente, conformando así el valor final de la factura.</p>
+<p><strong>RN-13.4</strong> Todo registro de régimen fiscal asociado a Empresa deberá tener  obligatoriamente el campo Serie de factura.</p>
+<h3 id="criterios-de-aceptación_13">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_13" title="Permanent link">&para;</a></h3>
+<p><strong>CA-13.1.1 — Obtencion de serie factura por empresa y Régimen Fiscal</strong>
+Dado que existe un Empleado con una serie configurada para un Régimen Fiscal determinado para la empresa,
+cuando se genere una factura para dicho Empleado,
+entonces el sistema deberá identificar y utilizar la serie correspondiente al Régimen Fiscal de la factura correspondiente a la empresa emite.</p>
+<p><strong>CA-13.1.2 — Validar serie de empresa y Régimen Fiscal</strong>
+Dado que el Empleado no cuenta con una serie configurada para el Régimen Fiscal correspondiente a la empresa,
+cuando se intente generar la factura,
+entonces el sistema deberá impedir la generación de la Serie y mostrar un mensaje indicando que no existe una serie configurada para dicho Régimen Fiscal.</p>
+<p><strong>CA-13.1.3 — Consecutivo correspondiente</strong>
+Dado que existe una serie configurada para el Régimen Fiscal,
+cuando se genere una nuev cfdi,
+entonces el sistema deberá utilizar el siguiente consecutivo disponible correspondiente a dicha serie.</p>
+<p><strong>CA-13.1.4 — Obtencion de serie Nota Credito, Abono y Anticipo</strong>
+Dado que se genere una Nota de Crédito, Anticipo o Abono,
+cuando el sistema determine la forma de afectación configurada mediante la variable de sistema,
+entonces deberá utilizar la forma de afectación actual sin afectación y asignar el siguiente consecutivo disponible correspondiente a la serie configurada para el documento.</p>
+<h3 id="casos-de-prueba_13">Casos de prueba<a class="headerlink" href="#casos-de-prueba_13" title="Permanent link">&para;</a></h3>
+<p><strong>CP-13.1.1 — Obtencion de serie factura con Regimen Fiscal</strong>
+Verifica: CA-13.1.1 · RN-13.1
+Dado que existe una empresa con un Régimen Fiscal configurado y una serie asociada a dicho Régimen Fiscal,
+cuando se genere una factura para un empleado perteneciente a dicha empresa,
+entonces el sistema deberá identificar y utilizar la serie correspondiente al Régimen Fiscal de la factura y a la empresa emisora.</p>
+<p><strong>CP-13.1.2 — Validar serie de empresa y Régimen Fiscal</strong>
+Verifica: CA-13.1.1 · RN-13.1
+Dado que existe un Régimen Fiscal configurado para la empresa,
+cuando el sistema intente generar la Serie,
+entonces deberá impedir la generación de la Serie
+y mostrar un mensaje indicando que no existe una serie configurada para dicho Régimen Fiscal.</p>
+<p><strong>CP-13.1.3 — Obtencion de serie Nota Credito, Abono y Anticipo</strong>
+Verifica: CA-13.1.1 · RN-13.1
+Dado que se genere una Nota de Crédito, Abono o Anticipo,
+cuando el sistema determine la forma de afectación configurada mediante la variable de sistema,
+entonces deberá utilizar la forma de afectación “Sin afectación” y asignar el siguiente consecutivo disponible correspondiente a la serie configurada para el tipo de documento.</p>
 <table>
 <thead>
 <tr>
@@ -5242,184 +5284,8 @@ Entonces esos documentos no se modifican.</p>
 <td>PERSONAS FÍSICAS CON ACTIVIDADES EMPRESARIALES Y PROFESIONALES</td>
 <td>Pendiente</td>
 </tr>
-<tr>
-<td>NOTA CREDITO</td>
-<td>VICENTE REYES</td>
-<td>ARRENDAMIENTO</td>
-<td>Pendiente</td>
-</tr>
-<tr>
-<td>NOTA CREDITO</td>
-<td>VICENTE REYES</td>
-<td>INGRESOS POR INTERESES</td>
-<td>Pendiente</td>
-</tr>
-<tr>
-<td>NOTA CREDITO</td>
-<td>VICENTE REYES</td>
-<td>PERSONAS FÍSICAS CON ACTIVIDADES EMPRESARIALES Y PROFESIONALES</td>
-<td>Pendiente</td>
-</tr>
-<tr>
-<td>NOTA CREDITO</td>
-<td>GRUPO MALIA</td>
-<td>ARRENDAMIENTO</td>
-<td>Pendiente</td>
-</tr>
-<tr>
-<td>NOTA CREDITO</td>
-<td>GRUPO MALIA</td>
-<td>INGRESOS POR INTERESES</td>
-<td>Pendiente</td>
-</tr>
-<tr>
-<td>NOTA CREDITO</td>
-<td>GRUPO MALIA</td>
-<td>PERSONAS FÍSICAS CON ACTIVIDADES EMPRESARIALES Y PROFESIONALES</td>
-<td>Pendiente</td>
-</tr>
-<tr>
-<td>NOTA CREDITO</td>
-<td>MARIA REYES</td>
-<td>ARRENDAMIENTO</td>
-<td>Pendiente</td>
-</tr>
-<tr>
-<td>NOTA CREDITO</td>
-<td>MARIA REYES</td>
-<td>INGRESOS POR INTERESES</td>
-<td>Pendiente</td>
-</tr>
-<tr>
-<td>NOTA CREDITO</td>
-<td>MARIA REYES</td>
-<td>PERSONAS FÍSICAS CON ACTIVIDADES EMPRESARIALES Y PROFESIONALES</td>
-<td>Pendiente</td>
-</tr>
-<tr>
-<td>ANTICIPO</td>
-<td>VICENTE REYES</td>
-<td>ARRENDAMIENTO</td>
-<td>Pendiente</td>
-</tr>
-<tr>
-<td>ANTICIPO</td>
-<td>VICENTE REYES</td>
-<td>INGRESOS POR INTERESES</td>
-<td>Pendiente</td>
-</tr>
-<tr>
-<td>ANTICIPO</td>
-<td>VICENTE REYES</td>
-<td>PERSONAS FÍSICAS CON ACTIVIDADES EMPRESARIALES Y PROFESIONALES</td>
-<td>Pendiente</td>
-</tr>
-<tr>
-<td>ANTICIPO</td>
-<td>GRUPO MALIA</td>
-<td>ARRENDAMIENTO</td>
-<td>Pendiente</td>
-</tr>
-<tr>
-<td>ANTICIPO</td>
-<td>GRUPO MALIA</td>
-<td>INGRESOS POR INTERESES</td>
-<td>Pendiente</td>
-</tr>
-<tr>
-<td>ANTICIPO</td>
-<td>GRUPO MALIA</td>
-<td>PERSONAS FÍSICAS CON ACTIVIDADES EMPRESARIALES Y PROFESIONALES</td>
-<td>Pendiente</td>
-</tr>
-<tr>
-<td>ANTICIPO</td>
-<td>MARIA REYES</td>
-<td>ARRENDAMIENTO</td>
-<td>Pendiente</td>
-</tr>
-<tr>
-<td>ANTICIPO</td>
-<td>MARIA REYES</td>
-<td>INGRESOS POR INTERESES</td>
-<td>Pendiente</td>
-</tr>
-<tr>
-<td>ANTICIPO</td>
-<td>MARIA REYES</td>
-<td>PERSONAS FÍSICAS CON ACTIVIDADES EMPRESARIALES Y PROFESIONALES</td>
-<td>Pendiente</td>
-</tr>
-<tr>
-<td>ABONO</td>
-<td>VICENTE REYES</td>
-<td>ARRENDAMIENTO</td>
-<td>B</td>
-</tr>
-<tr>
-<td>ABONO</td>
-<td>VICENTE REYES</td>
-<td>INGRESOS POR INTERESES</td>
-<td>B</td>
-</tr>
-<tr>
-<td>ABONO</td>
-<td>VICENTE REYES</td>
-<td>PERSONAS FÍSICAS CON ACTIVIDADES EMPRESARIALES Y PROFESIONALES</td>
-<td>B</td>
-</tr>
-<tr>
-<td>ABONO</td>
-<td>GRUPO MALIA</td>
-<td>ARRENDAMIENTO</td>
-<td>Pendiente</td>
-</tr>
-<tr>
-<td>ABONO</td>
-<td>GRUPO MALIA</td>
-<td>INGRESOS POR INTERESES</td>
-<td>Pendiente</td>
-</tr>
-<tr>
-<td>ABONO</td>
-<td>GRUPO MALIA</td>
-<td>PERSONAS FÍSICAS CON ACTIVIDADES EMPRESARIALES Y PROFESIONALES</td>
-<td>Pendiente</td>
-</tr>
-<tr>
-<td>ABONO</td>
-<td>MARIA REYES</td>
-<td>ARRENDAMIENTO</td>
-<td>Pendiente</td>
-</tr>
-<tr>
-<td>ABONO</td>
-<td>MARIA REYES</td>
-<td>INGRESOS POR INTERESES</td>
-<td>Pendiente</td>
-</tr>
-<tr>
-<td>ABONO</td>
-<td>MARIA REYES</td>
-<td>PERSONAS FÍSICAS CON ACTIVIDADES EMPRESARIALES Y PROFESIONALES</td>
-<td>Pendiente</td>
-</tr>
 </tbody>
 </table>
-<h2 id="hu-131--considerar-la-serie-correspondiente-para-la-generación-de-folios">HU-13.1 — Considerar la serie correspondiente para la generación de folios.<a class="headerlink" href="#hu-131--considerar-la-serie-correspondiente-para-la-generación-de-folios" title="Permanent link">&para;</a></h2>
-<p>Como usuario con rol Administrador del sistema Inmobiliaria, quiero que el sistema gestione las Serie correspondiente para la generación de folios en los documentos Factura, Nota Crédito, Abono y Anticipo.</p>
-<h3 id="reglas-de-negocio_13">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_13" title="Permanent link">&para;</a></h3>
-<p><strong>RN-13.1</strong> Al habilitar un régimen fiscal a una Empresa El documento conservara la separacion de folios por empresa y regimen-fiscal.</p>
-<p><strong>RN-13.2</strong> El valor (Serie) de cada combinación debe ser distinto entre combinaciones para evitar que dos combinaciones compartan consecutivo.</p>
-<h3 id="criterios-de-aceptación_13">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_13" title="Permanent link">&para;</a></h3>
-<p><strong>CA-13.1.1 — No duplicación de claves existentes</strong>
-Dado que la clave <code>SERIEFACTURAF_VRM_606</code> ya existe con Serie "A" configurada
-Cuando se vuelve a evaluar la generación automática para esa misma combinación
-Entonces el sistema no sobrescribe ni duplica la fila existente.</p>
-<h3 id="casos-de-prueba_13">Casos de prueba<a class="headerlink" href="#casos-de-prueba_13" title="Permanent link">&para;</a></h3>
-<p><strong>CP-13.1.1 — Generación automática folios (camino feliz)</strong>
-Verifica: CA-13.1.1 · RN-13.1
-Con base en la tabla antes mencionada, validar que cada combinación de documento, empresa y régimen fiscal cuente con su propia serie.</p>
 <table>
 <thead>
 <tr>
