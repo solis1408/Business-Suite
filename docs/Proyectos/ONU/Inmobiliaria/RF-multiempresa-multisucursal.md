@@ -74,7 +74,7 @@ Este documento aplica de forma transversal sobre el catálogo **Empleado** (agre
 | [RF-14](#rf-14) | Campo Empresa en el catálogo Pac | Backbone (Catálogos-Configuración) | Catálogo Pac |
 | [RF-15](#rf-15) | Resolución del PAC por Empresa emisora al timbrar | Ventas-Facturación (Timbrado) | Timbrado (TimbrarJob) |
 | [RF-16](#rf-16) | Configuración del PAC de cada una de las 3 empresas (puesta en marcha) | Backbone (Catálogos-Configuración) | Catálogo Pac |
-| [RF-17](#rf-17) | Agregar Lista "Documentos" en catálogo Empresa para configurar la serie | Backbone (Catálogos) | Catálogo Empresa / EmpresaDocumento |
+| [RF-17](#rf-17) | Catálogo empresa agregar series por documento | Backbone (Catálogos) | Catálogo Empresa / EmpresaDocumento |
 
 ---
 ---
@@ -1650,7 +1650,7 @@ Entonces corresponden al contrato específico de "Grupo Malia" con su proveedor,
 ---
 
 <a id="rf-17"></a>
-# RF-17 — Lista detalle "Documentos" en el catálogo Empresa para configurar la serie por documento
+# RF-17 — Catálogo empresa agregar series por documento
 
 | Campo        | Valor       |
 |--------------|-------------|
@@ -1662,32 +1662,10 @@ Entonces corresponden al contrato específico de "Grupo Malia" con su proveedor,
 Que cada empresa del grupo (Vicente Reyes, Grupo Malia y María Reyes) tenga su propia serie para cada documento Nota de Crédito, Abono y Anticipo que se emite, que esa serie se configure desde la pantalla de la empresa.
 
 ## Descripción
-En la pantalla de **Empresa** se agrega una nueva pestaña llamada **"Documentos"**, junto a "Certificados de Hacienda", "Sucursales" y "Personal Asignado". En esa pestaña el administrador indica qué serie usa cada documento Nota de Crédito, Abono y Anticipo.
+En la pantalla de **Empresa** se agrega una nueva pestaña llamada **"Series por Documento"**, junto a "Certificados de Hacienda", "Sucursales" y "Personal Asignado". En esa pestaña el administrador indica qué serie usa cada documento Nota de Crédito, Abono y Anticipo.
 
 Después, cuando alguien emite un documento, el sistema toma automáticamente la serie de la empresa que lo emite. El usuario no tiene que capturarla.
 
-**Folios para documentos fiscales**
-
-| Empresa | Documento | Régimen fiscal | Serie |
-|---------|-----------|----------------|-------|
-| Vicente Reyes | Factura | Arrendamiento | A |
-| Vicente Reyes | Factura | Ingresos por intereses | I |
-| Vicente Reyes | Factura | Personas físicas con actividades empresariales y profesionales | E |
-| Vicente Reyes | Abono | — | B |
-| Vicente Reyes | Anticipo | — | A |
-| Vicente Reyes | Nota de crédito | — | NM |
-| Grupo Malia | Factura | Arrendamiento | GMA |
-| Grupo Malia | Factura | Ingresos por intereses | GMI |
-| Grupo Malia | Factura | Personas físicas con actividades empresariales y profesionales | GME |
-| Grupo Malia | Abono | — | GMB |
-| Grupo Malia | Anticipo | — | GMA |
-| Grupo Malia | Nota de crédito | — | GMNM |
-| María Reyes | Factura | Arrendamiento | MRA |
-| María Reyes | Factura | Ingresos por intereses | MRI |
-| María Reyes | Factura | Personas físicas con actividades empresariales y profesionales | MRE |
-| María Reyes | Abono | — | MRB |
-| María Reyes | Anticipo | — | MRA |
-| María Reyes | Nota de crédito | — | MRNM |
 
 ### Datos que se capturan
 
@@ -1698,64 +1676,53 @@ Después, cuando alguien emite un documento, el sistema toma automáticamente la
 | Serie | Sí | Letras y/o números que identifican la numeración, por ejemplo "A". Máximo 25 caracteres, sin espacios. |
 | Estatus | Sí | Activa o Inactiva. Solo las series activas se usan para emitir documentos. |
 
-### Ejemplo: cómo quedaría la pestaña "Documentos" de Vicente Reyes
 
-| Documento | Régimen fiscal | Serie | Estatus |
-|-----------|----------------|-------|---------|
-| Factura | Arrendamiento | A | Activa |
-| Factura | Ingresos por intereses | I | Activa |
-| Factura | Personas físicas con actividades empresariales y profesionales | E | Activa |
-| Nota de Crédito | — | La serie que se usa hoy | Activa |
-| Abono | — | La serie que se usa hoy | Activa |
-| Anticipo | — | La serie que se usa hoy | Activa |
+## HU-17.1 — Agregar documento
 
-
-## HU-17.1 — Agregar documento y serie
-
-Como administrador del sistema Inmobiliaria, quiero agregar en la pestaña "Documentos" la serie que usa cada documento, para que cada empresa lleve su propio identificador.
+Como administrador del sistema Inmobiliaria, quiero agregar en la pestaña “Series por Documentos” un documento que contenga tipo, serie y estatus.
 
 ### Reglas de negocio
 
-**RN-17.1** Se puede agregar una serie activa para cada uno de los siguientes tipos de documento: Nota de Crédito, Abono y Anticipo.
+**RN-17.1** Se puede agregar una documento actioa para cada uno de los siguientes tipos: Nota de Crédito, Abono y Anticipo.
 
-**RN-17.2**  Para cada tipo de documento (Nota de Crédito, Abono y Anticipo), solo se permite una serie activa por empresa.
+**RN-17.2**  Para el valor de serie, no se podrá repetir por empresa.
 
-**RN-17.3** Dentro de una misma empresa no se puede usar la misma serie en dos documentos distintos. Dos empresas distintas sí pueden usar la misma serie, porque cada una lleva su propia numeración.
+**RN-17.3** Dentro de una misma empresa, no se puede utilizar el mismo documento. Sin embargo, dos empresas distintas sí pueden utilizar el mismo documento.
 
 **RN-17.4** La serie acepta letras y números, sin espacios.
 
 
 ### Criterios de Aceptación
 
-**CA-17.1.1 — Agregar la serie de un Abono, Nota de crédito o Anticipo**
+**CA-17.1.1 — Agregar documento: Abono, Nota de crédito o Anticipo**
 Dado que la empresa "Vicente Reyes" tiene "Documentos"
-Cuando el administrador agrega en la pestaña "Documentos" Abono, Nota de crédito o Anticipo y la serie 
-Entonces el sistema guarda la serie como Activa y la muestra en la lista.
+Cuando el administrador agrega en la pestaña "Series por Documentos" Abono, Nota de crédito o Anticipo y la serie 
+Entonces el sistema guarda el documento como Activo y lo muestra en la lista.
 
 **CA-17.1.2 — Documento que ya tiene serie**
-Dado que el Abono, Nota de crédito o Anticipo de "Vicente Reyes" el docuemnto activo
-Cuando el administrador intenta agregarle otra docuemento
+Dado que el Abono, Nota de crédito o Anticipo de "Vicente Reyes" el documento activo
+Cuando el administrador intenta agregar otro documento
 Entonces el sistema no guarda y avisa que ese documento ya existe.
 
-**CA-17.1.3 — Serie repetida en la misma empresa**
-Dado que "Vicente Reyes" ya usa la serie en algun documento Abono, Nota de crédito o Anticipo
-Cuando el administrador intenta usar la misma serie en Abono, Nota de crédito o Anticipo de la misma empresa
-Entonces el sistema no guarda y avisa que la serie ya se usa en otro documento de la empresa.
+**CA-17.1.3 — Documento repetido en la misma empresa**
+Dado que "Vicente Reyes" ya usa algun documento Abono, Nota de crédito o Anticipo
+Cuando el administrador intenta usar un Abono, Nota de crédito o Anticipo de la misma empresa
+Entonces el sistema no guarda y avisa que el documento ya se usa en otra empresa.
 
-**CA-17.1.4 — La misma serie en otra empresa**
-Dado que "Vicente Reyes" usa la serie en algun documento Abono, Nota de crédito o Anticipo
-Cuando el administrador configura la misma serie en Abono, Nota de crédito o Anticipo de "Grupo Malia"
+**CA-17.1.4 — Mismo Documento en otra empresa**
+Dado que "Vicente Reyes" usa Abono, Nota de crédito o Anticipo
+Cuando el administrador configura la mismo documento como Abono, Nota de crédito o Anticipo de "Grupo Malia"
 Entonces el sistema sí lo permite.
 
 
 
 ### Casos de prueba
 
-**CP-17.1.1 — Agregar la serie de un Abono, Nota de crédito o Anticipo (camino feliz)**
+**CP-17.1.1 — Agregar la Documento Abono, Nota de crédito o Anticipo (camino feliz)**
 Verifica: CA-17.1.5 · RN-17.3
 Dado que la empresa "Vicente Reyes" agrega "Documentos"
 Cuando el administrador agrega en la pestaña "Documentos" Abono, Nota de crédito o Anticipo y la serie 
-Entonces el sistema guarda la serie como Activa y la muestra en la lista.
+Entonces el sistema guarda el documento y lo muestra en la lista.
 
 **CP-17.1.2 — Segunda serie para el mismo documento (validación)**
 Verifica: CA-17.1.5 · RN-17.3
@@ -1763,13 +1730,13 @@ Dado que la empresa "Vicente Reyes" ya tienen la serie "A" activa en Anticipo
 Cuando el administrador intenta agregar la serie  para el mismo documento
 Entonces aparece el mensaje "El documento ya tiene una serie para la misma empresa" y no se guarda.
 
-**CP-17.1.3 — Segunda serie para el misma empresa (validación)**
+**CP-17.1.3 — documento en misma empresa (validación)**
 Verifica: CA-17.1.5 · RN-17.3
 Dado que la empresa "Vicente Reyes" ya tienen la serie "A" activa en Anticipo
 Cuando el administrador intenta agregar misma serie para otro documento de la misma empresa "Vicente Reyes" 
 Entonces aparece el mensaje "El documento ya tiene una serie para la misma empresa" y no se guarda.
 
-**CP-17.1.4 — Misma serie en otra empresa (alternativo)**
+**CP-17.1.4 — Mismo documento en otra empresa (alternativo)**
 Verifica: CA-17.1.7 · RN-17.4
 Dado que "Vicente Reyes" usa la serie "A" en Anticipo
 Cuando el administrador configura "A" en Anticipo de "Grupo Malia"
@@ -1777,28 +1744,28 @@ Entonces la serie se guarda sin problema.
 
 
 
-## HU-17.2 — Cambiar o desactivar una serie
+## HU-17.2 — Cambiar o desactivar una Documento
 
-Como administrador del sistema Inmobiliaria, quiero corregir, desactivar o cambiar una serie, para ajustar la configuración sin afectar los documentos que ya se emitieron.
+Como administrador del sistema Inmobiliaria, quiero corregir, desactivar o cambiar un Documento.
 
 ### Reglas de negocio
 
 
-**RN-17.5** La persona autorizada podrá editar la serie, cuando sea necesario; sin embargo, toda modificación deberá quedar registrada en la bitácora, indicando el cambio realizado y la fecha de modificación.
+**RN-17.5** La persona autorizada podrá editar el documento, cuando sea necesario; sin embargo, toda modificación en tipo, serie y estatus deberá quedar registrada en la bitácora, indicando el cambio realizado y la fecha de modificación.
 
-**RN-17.6** Al desactivar una serie, los documentos que ya se emitieron con ella se quedan igual.
+**RN-17.6** Al desactivar un documento que ya tiene procesos emitidos, la información asociada a dichos procesos permanece sin cambios.
 
-**RN-17.7** Una serie desactivada solo se puede volver a activar si no hay otra serie activa para el mismo documento.
+**RN-17.7** Un documento desactivado podrá volver a activarse únicamente cuando no exista otro documento con el mismo tipo, serie y estatus.
 
 ### Criterios de Aceptación
 
-**CA-17.2.1 — Corregir una serie que no se ha usado**
+**CA-17.2.1 — Corregir un documento que no se ha usado**
 Dado que la serie "N" de Nota de Crédito de "Grupo Malia" no se ha usado
 Cuando el administrador la cambia a "NC"
 Entonces el sistema guarda el cambio y registra en bitadora el cambio.
 
 
-**CA-17.2.2 — Desactivar una serie**
+**CA-17.2.2 — Desactivar un documento**
 Dado que la serie "A" de "Vicente Reyes" está activa y ya se usó
 Cuando el administrador la desactiva
 Entonces la serie queda Inactiva, ya no se usa en documentos nuevos y los documentos emitidos se quedan igual y registra en bitadora el cambio.
@@ -1813,33 +1780,33 @@ Dado que la serie "AR" está activa para Anticipo
 Cuando el administrador intenta volver a activar la serie "A" para Anticipo
 Entonces el sistema no lo permite y avisa que ya hay una serie activa para ese documento.
 
-**CA-17.2.5 — Activar cuando es serie unica**
+**CA-17.2.5 — Activar cuando el documento unico**
 Dado que la serie "AR" está inactiva para Anticipo
 Cuando el administrador intenta volver a activar la serie "AR" para Anticipo
 Entonces el sistema permite activa para ese documento y registrar en bitadora.
 
 ### Casos de prueba
 
-**CP-17.2.1 — Corregir serie sin uso (camino feliz)**
+**CP-17.2.1 — Corregir documento sin uso (camino feliz)**
 Verifica: CA-17.2.1 · RN-17.8
 Dado que la serie "N" de Nota de Crédito de "Grupo Malia" no se ha usado
 Cuando el administrador la cambia a "NC" y guarda
 Entonces la pestaña "Documentos" muestra la serie "NC" y se registra cambio en bitacora.
 
-**CP-17.2.2 — Desactivar sin afectar lo emitido (alternativo)**
+**CP-17.2.2 — Desactivar documento sin afectar lo emitido (alternativo)**
 Verifica: CA-17.2.3 · RN-17.9
 Dado que el anticipo A-000150 se emitió con la serie "A"
 Cuando el administrador desactiva la serie "A"
 Entonces la factura A-000150 conserva su serie y su número, ademas registra cambio en bitacora empresa.
 
-**CP-17.2.3 — Volver a activar con otra serie activa (validación)**
+**CP-17.2.3 — Volver a activar documento y existe otra serie activa (validación)**
 Verifica: CA-17.2.5 · RN-17.11
-Dado que "AR" está activa para facturas de Arrendamiento
+Dado que "AR" está activa para documento Anticipo
 Cuando el administrador intenta volver a activar "A"
 Entonces el sistema no lo permite.
 
 
-**CP-17.2.4 — Activar cuando es serie unica**
+**CP-17.2.4 — Activar cuando es documento y serie unica**
 Verifica: RN-17.11
 Dado que la serie "A" se desactivó no hay otra serie activa para ese documento
 Cuando el administrador la vuelve a activar
@@ -1938,17 +1905,3 @@ Entonces el sistema no lo permite y se registra cambio en bitacora.
 | RGO-04 | Cambios frecuentes de alcance sobre qué reportes exactos requieren filtro de sucursal (algunos nombres del documento de negocio no tienen una clase homónima exacta en el código, ver PA-01). | Media | Medio | Confirmar con negocio, pantalla por pantalla, el nombre exacto de cada reporte antes de iniciar el desarrollo de RF-11. |
 | RGO-05 | El bloqueo de captura con periodo Cerrado (RN-4.5) es una validación nueva sobre `MovimientoBancario`/`Transaccion`; si se implementa solo en la UI y no en la capa de guardado del backend, podría evadirse desde procesos automáticos (por ejemplo, un Movimiento Bancario generado automáticamente desde una Factura contra una cuenta sin periodo Abierto). | Media | Alto | Definir con negocio qué debe pasar cuando un documento automático (Factura/Abono/Anticipo) genera un Movimiento Bancario contra una cuenta sin periodo Abierto: ¿se bloquea también la Factura, o el Movimiento Bancario se genera igual y solo se bloquea la captura manual? Ver PA-02. |
 | RGO-06 | El documento `Pago` (CXP) también implementa `IDocumentoTimbrable` y comparte el mismo `TimbrarJob`/`Empresa.GetCurrentPac()`; si en la práctica también se timbra con PAC, heredaría automáticamente el comportamiento de RF-15 aunque no fue solicitado explícitamente en su alcance (que solo cubre Factura, Nota de Crédito, Anticipo y Abono). | Media | Medio | Confirmar con negocio si `Pago` debe incluirse explícitamente en el alcance de RF-15 o excluirse a propósito antes de liberar. |
-
-## Preguntas abiertas
-
-| ID | Pregunta | Responsable sugerido |
-|----|----------|-----------------------|
-| PA-01 | Para los reportes "CFDI Complemento", "CFDI Emitidos" y "Buzón Tributario Interno", no se localizó en el código una clase con nombre exactamente homónimo: ¿cuál es la pantalla/reporte real del sistema que corresponde a cada nombre de negocio? | Equipo de desarrollo + Negocio (usuarias inmfac/inmfac02) |
-| PA-02 | El bloqueo de captura por periodo Cerrado (RN-4.5) ya fue confirmado para captura manual: ¿debe extenderse también a los Movimientos Bancarios que se generan automáticamente desde Factura/Abono/Anticipo/Pago contra una cuenta sin periodo Abierto, o esos casos deben permitirse igual y solo bloquear la captura manual? | Negocio (Administración/Finanzas) |
-| PA-03 | ¿Existen registros históricos de Movimientos Bancarios/Transacciones/Facturas/Abonos/Anticipos con Empresa o Sucursal realmente nulos, o todos ya cuentan con un valor (heredado del único empleado/empresa operando hasta hoy) que solo debe confirmarse/estandarizarse a "Vicente Reyes"/"Matriz"? | Equipo de desarrollo (análisis de datos) + DBA |
-| PA-04 | ¿Qué series usarán "Grupo Malia" y "María Reyes" para cada documento y régimen fiscal? (RF-13 y RF-17 las marcan como "Pendiente"). | Negocio (Administración/Finanzas) |
-| PA-05 | Al dar de alta una serie nueva, ¿el consecutivo siempre inicia en 1 o se debe permitir capturar un folio inicial (por ejemplo, para continuar una numeración que ya se usaba en otro sistema)? | Negocio (Administración/Finanzas) |
-| PA-06 | Hoy la serie se concatena con `Sucursal.Serie` (por ejemplo "A" + "01"). Con la serie por Empresa (RF-17), ¿se conserva ese sufijo por sucursal o la serie final es solo la configurada en la Empresa? | Negocio + Equipo de desarrollo |
-| PA-07 | RN-13.2 indica que Nota de Crédito, Abono y Anticipo mantienen la serie por variable de sistema, y RN-13.3 que la serie de Factura se obtiene del Empleado. RF-17 propone que las 4 se configuren en la Empresa. ¿Se confirma que la Empresa es la única fuente de la serie para los 4 documentos, para ajustar RN-13.2 y RN-13.3? | Negocio + Análisis de Negocio |
-| PA-08 | Además de Fiscal, el código maneja series para los subtipos Interplanta y Consignación (`SerieFacturaInterplanta`, `SerieFacturaConsignacion`, etc.). ¿Inmobiliaria usa esos subtipos? Si los usa, la lista "Documentos" debe agregar el campo Subtipo a la llave Documento + Régimen fiscal. | Negocio + Equipo de desarrollo |
-| PA-09 | ¿Se requiere configurar en la lista "Documentos" otros documentos con folio (por ejemplo, Transacción CXC o Complemento de Pago), o solo los 4 CFDI de este alcance? | Negocio |
