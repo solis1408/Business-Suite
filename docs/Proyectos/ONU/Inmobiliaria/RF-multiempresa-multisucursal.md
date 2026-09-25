@@ -29,6 +29,7 @@ Este documento se basa en la solicitud del negocio y en el detalle de las necesi
 - La selección y restricción de la empresa emisora en Movimientos Bancarios, Facturas, Notas de Crédito, Abono, Anticipos y Transacciones CXC.
 - El filtrado por empresa en módulo de consultas.
 - La regularización de datos históricos para que queden ligados a Empresa "Vicente Reyes" y Sucursal "Matriz".
+- La configuración y gestión, desde el catálogo Empresa, de la serie que utiliza cada documento CFDI (lista detalle "Documentos").
 - La configuración inicial de la empresa "Grupo Malia" y "María Reyes" (certificados y cuentas bancarias) y el alta de sucursales matriz para ambas empresas, como requerimientos no funcionales de puesta en marcha.
 
 **No incluye:**
@@ -48,7 +49,7 @@ Este documento se basa en la solicitud del negocio y en el detalle de las necesi
 
 ## 4. Entidad a la que aplica
 
-Este documento aplica de forma transversal sobre el catálogo **Empleado** (agrega la relación 1:M con **Sucursal**  predeterminada), sobre una nueva entidad **Periodo** ligada a **CuentaBancaria** (estatus inicial *Abierto*, estatus terminal *Cerrado*), sobre los procesos transaccionales **MovimientoBancario, Factura, NotaCredito, Abono, Anticipo y Transaccion (CXC)**.
+Este documento aplica de forma transversal sobre el catálogo **Empleado** (agrega la relación 1:M con **Sucursal**  predeterminada), sobre una nueva entidad **Periodo** ligada a **CuentaBancaria** (estatus inicial *Abierto*, estatus terminal *Cerrado*), sobre los procesos transaccionales **MovimientoBancario, Factura, NotaCredito, Abono, Anticipo y Transaccion (CXC)**, y sobre el catálogo **Empresa** (agrega la lista detalle **Documentos**, nueva entidad **EmpresaDocumento**, para configurar la serie de cada documento CFDI).
 
 <a id="indice-requerimientos"></a>
 ## 5. Índice de requerimientos
@@ -69,11 +70,11 @@ Este documento aplica de forma transversal sobre el catálogo **Empleado** (agre
 | [RF-10](#rf-10) | Registro de Transacciones CXC manuales con selección de empresa | Ventas (CXC) | Transacción CXC |
 | [RF-11](#rf-11) | Filtro por sucursal en consultas de Ventas y Facturación | Ventas (Facturación) | Consultas/Reportes de Ventas |
 | [RF-12](#rf-12) | Regularización de información transaccional histórica | Backbone / Ventas / Inmobiliaria | Movimiento Bancario, Transacción CXC, Factura, Abono, Anticipo |
-| [RF-13](#rf-13) | Configuración de Serie por combinación Documento+Subtipo+Empresa+Régimen Fiscal | Backbone (Catálogos) | VariableSistema |
-| [RF-14](#rf-14) | Alta de la empresa "Maria Reyes" y "Grupo Malia" (puesta en marcha) | Backbone (Catálogos) | Empresa, Sucursal, Certificados, Cuenta Bancaria |
-| [RF-15](#rf-15) | Campo Empresa en el catálogo Pac | Backbone (Catálogos-Configuración) | Catálogo Pac |
-| [RF-16](#rf-16) | Resolución del PAC por Empresa emisora al timbrar | Ventas-Facturación (Timbrado) | Timbrado (TimbrarJob) |
-| [RF-17](#rf-17) | Configuración del PAC de cada una de las 3 empresas (puesta en marcha) | Backbone (Catálogos-Configuración) | Catálogo Pac |
+| [RF-13](#rf-13) | Alta de la empresa "Maria Reyes" y "Grupo Malia" (puesta en marcha) | Backbone (Catálogos) | Empresa, Sucursal, Certificados, Cuenta Bancaria |
+| [RF-14](#rf-14) | Campo Empresa en el catálogo Pac | Backbone (Catálogos-Configuración) | Catálogo Pac |
+| [RF-15](#rf-15) | Resolución del PAC por Empresa emisora al timbrar | Ventas-Facturación (Timbrado) | Timbrado (TimbrarJob) |
+| [RF-16](#rf-16) | Configuración del PAC de cada una de las 3 empresas (puesta en marcha) | Backbone (Catálogos-Configuración) | Catálogo Pac |
+| [RF-17](#rf-17) | Agregar Lista "Documentos" en catálogo Empresa para configurar la serie | Backbone (Catálogos) | Catálogo Empresa / EmpresaDocumento |
 
 ---
 ---
@@ -1344,110 +1345,9 @@ Entonces esos documentos no se modifican.
 
 ---
 
+
 <a id="rf-13"></a>
-# RF-13 — Configuración serie para documentos CFDI
-
-| Campo        | Valor       |
-|--------------|-------------|
-| Prioridad    | Must        |
-| Estado       | Definición  |
-| Dependencias | RF-01 (externo, documento RF-separacion-folios-empresa-regimen-fiscal.md) |
-
-## Objetivo
-Permitir configurar una Serie propia para cada combinación de Documento (Factura/NotaCredito/Anticipo/Abono) de modo que cada RFC emisor y cada régimen fiscal administren su numeración de forma completamente independiente.
-
-## Descripción
-Cuando se habilita un nuevo régimen fiscal a una Empresa el sistema debe asegurar la existencia de una serie por cada combinación
-
-
-## HU-13.1 — Considerar la serie correspondiente para la generación de folios.
-
-Como usuario con rol Administrador del sistema Inmobiliaria, quiero que el sistema gestione las Serie correspondiente para la generación de folios en los documentos Factura, Nota Crédito, Abono y Anticipo.
-
-### Reglas de negocio
-
-**RN-13.1** La separación de series para CFDI aplicará únicamente a facturas y se asignará por régimen fiscal.
-(Arrendamiento → Serie A
-Ingresos por intereses → Serie I
-Personas físicas con actividades empresariales y profesionales → Serie E)
-
-**RN-13.2** Las series correspondientes a los CFDI de tipo Abono, Nota de Crédito y Anticipo deberán permanecer sin cambios, manteniendo el criterio actual definido mediante la variable de sistema.
-
-**RN-13.3** La Serie de la factura deberá obtenerse de la serie configurada en Empleado, utilizando como distintivo el Régimen Fiscal correspondiente. A dicha serie se deberá concatenar el consecutivo correspondiente, conformando así el valor final de la factura.
-
-**RN-13.4** Todo registro de régimen fiscal asociado a Empresa deberá tener  obligatoriamente el campo Serie de factura.
-
-
-
-### Criterios de Aceptación
-
-**CA-13.1.1 — Obtencion de serie factura por empresa y Régimen Fiscal**
-Dado que existe un Empleado con una serie configurada para un Régimen Fiscal determinado para la empresa,
-cuando se genere una factura para dicho Empleado,
-entonces el sistema deberá identificar y utilizar la serie correspondiente al Régimen Fiscal de la factura correspondiente a la empresa emite.
-
-**CA-13.1.2 — Validar serie de empresa y Régimen Fiscal**
-Dado que el Empleado no cuenta con una serie configurada para el Régimen Fiscal correspondiente a la empresa,
-cuando se intente generar la factura,
-entonces el sistema deberá impedir la generación de la Serie y mostrar un mensaje indicando que no existe una serie configurada para dicho Régimen Fiscal.
-
-**CA-13.1.3 — Consecutivo correspondiente**
-Dado que existe una serie configurada para el Régimen Fiscal,
-cuando se genere una nuev cfdi,
-entonces el sistema deberá utilizar el siguiente consecutivo disponible correspondiente a dicha serie.
-
-
-**CA-13.1.4 — Obtencion de serie Nota Credito, Abono y Anticipo**
-Dado que se genere una Nota de Crédito, Anticipo o Abono,
-cuando el sistema determine la forma de afectación configurada mediante la variable de sistema,
-entonces deberá utilizar la forma de afectación actual sin afectación y asignar el siguiente consecutivo disponible correspondiente a la serie configurada para el documento.
-
-### Casos de prueba
-
-**CP-13.1.1 — Obtencion de serie factura con Regimen Fiscal**
-Verifica: CA-13.1.1 · RN-13.1
-Dado que existe una empresa con un Régimen Fiscal configurado y una serie asociada a dicho Régimen Fiscal,
-cuando se genere una factura para un empleado perteneciente a dicha empresa,
-entonces el sistema deberá identificar y utilizar la serie correspondiente al Régimen Fiscal de la factura y a la empresa emisora.
-
-**CP-13.1.2 — Validar serie de empresa y Régimen Fiscal**
-Verifica: CA-13.1.1 · RN-13.1
-Dado que existe un Régimen Fiscal configurado para la empresa,
-cuando el sistema intente generar la Serie,
-entonces deberá impedir la generación de la Serie
-y mostrar un mensaje indicando que no existe una serie configurada para dicho Régimen Fiscal.
-
-**CP-13.1.3 — Obtencion de serie Nota Credito, Abono y Anticipo**
-Verifica: CA-13.1.1 · RN-13.1
-Dado que se genere una Nota de Crédito, Abono o Anticipo,
-cuando el sistema determine la forma de afectación configurada mediante la variable de sistema,
-entonces deberá utilizar la forma de afectación “Sin afectación” y asignar el siguiente consecutivo disponible correspondiente a la serie configurada para el tipo de documento.
-
-| DOCUMENTO | EMPRESA | REGIMEN FISCAL | SERIE |
-| --- | --- | --- | --- |
-| FACTURA | VICENTE REYES | ARRENDAMIENTO | A |
-| FACTURA | VICENTE REYES | INGRESOS POR INTERESES | I |
-| FACTURA | VICENTE REYES | PERSONAS FÍSICAS CON ACTIVIDADES EMPRESARIALES Y PROFESIONALES | E |
-| FACTURA | GRUPO MALIA | ARRENDAMIENTO | Pendiente |
-| FACTURA | GRUPO MALIA | INGRESOS POR INTERESES | Pendiente |
-| FACTURA | GRUPO MALIA | PERSONAS FÍSICAS CON ACTIVIDADES EMPRESARIALES Y PROFESIONALES | Pendiente |
-| FACTURA | MARIA REYES | ARRENDAMIENTO | Pendiente |
-| FACTURA | MARIA REYES | INGRESOS POR INTERESES | Pendiente |
-| FACTURA | MARIA REYES | PERSONAS FÍSICAS CON ACTIVIDADES EMPRESARIALES Y PROFESIONALES | Pendiente |
-
-
-| CA | Caso(s) de prueba | Escenarios cubiertos |
-| --- | --- | --- |
-| CA-13.1.1 | CP-13.1.1 | Camino feliz |
-| CA-13.1.2 | CP-13.1.2 | Alternativo |
-| CA-13.1.3 | CP-13.1.3 | Error/validación |
-
-[⬆ Volver al índice](#indice-requerimientos)
-
----
-
-<a id="rf-14"></a>
-# RF-14 — Alta de la empresa "Maria Reyes" y "Grupo Malia"
+# RF-13 — Alta de la empresa "Maria Reyes" y "Grupo Malia"
 
 | Campo        | Valor       |
 |--------------|-------------|
@@ -1461,26 +1361,26 @@ Configurar en el sistema la nueva razón social "Maria Reyes" y"Grupo Malia" (a�
 ## Descripción
 Al igual que "Grupo Malia" la Empresa "Maria Reyes" se requiere el registro de empresas de sus certificados de sello digital (`EmpresaCertificado`) y PAC activo, al menos una cuenta bancaria, y su sucursal matriz. Una vez dada de alta, deben generarse (RF-13) y configurarse las Series correspondientes a cada combinación Documento+Régimen Fiscal habilitado para esta nueva Empresa antes de poder emitir documentos.
 
-## HU-14.1 — Dar de alta la empresa  "Maria Reyes" y "Grupo Malia"
+## HU-13.1 — Dar de alta la empresa  "Maria Reyes" y "Grupo Malia"
 
 Como usuario con rol Administrador del sistema Inmobiliaria, quiero dar de alta la razón social  "Maria Reyes" y"Grupo Malia" con su información fiscal, certificados, cuenta bancaria y sucursal matriz, para que el sistema pueda emitir documentos a su nombre bajo el nuevo esquema de folios.
 
 ### Reglas de negocio
 
-**RN-14.1** La Empresa  "Maria Reyes" y "Grupo Malia" debe darse de alta con al menos un régimen fiscal habilitado y su predeterminado (RF-01 del documento RF-separacion-folios-empresa-regimen-fiscal.md).
+**RN-13.1** La Empresa  "Maria Reyes" y "Grupo Malia" debe darse de alta con al menos un régimen fiscal habilitado y su predeterminado (RF-01 del documento RF-separacion-folios-empresa-regimen-fiscal.md).
 
-**RN-14.2** Debe contar con al menos un certificado de sello digital vigente y un PAC activo antes de poder timbrar documentos (`Empresa.GetCurrentCertificate()`, `Empresa.cs:360-371`, ya exige esto para cualquier Empresa).
+**RN-13.2** Debe contar con al menos un certificado de sello digital vigente y un PAC activo antes de poder timbrar documentos (`Empresa.GetCurrentCertificate()`, `Empresa.cs:360-371`, ya exige esto para cualquier Empresa).
 
-**RN-14.3** Debe configurarse al menos una Sucursal de tipo Matriz asociada a "Maria Reyes" antes de poder operar (mismo patrón exigido para "Grupo Malia").
+**RN-13.3** Debe configurarse al menos una Sucursal de tipo Matriz asociada a "Maria Reyes" antes de poder operar (mismo patrón exigido para "Grupo Malia").
 
 ### Criterios de Aceptación
 
-**CA-14.1.1 — Alta completa de la Empresa**
+**CA-13.1.1 — Alta completa de la Empresa**
 Dado que  "Maria Reyes" y "Grupo Malia" no existe en el catálogo Empresa
 Cuando el administrador la da de alta con RFC, régimen(es) fiscal(es), certificado vigente, cuenta bancaria y sucursal matriz
 Entonces la Empresa queda disponible para seleccionarse como emisora en Factura, Nota de Crédito, Anticipo y Abono (RF-06 a RF-09 de este documento).
 
-**CA-14.1.2 — Bloqueo de timbrado sin certificado vigente**
+**CA-13.1.2 — Bloqueo de timbrado sin certificado vigente**
 Dado que " "Maria Reyes" y "Grupo Malia" no tiene un certificado de sello digital vigente
 Cuando se intenta timbrar un documento a su nombre
 Entonces el sistema rechaza el timbrado indicando que la Empresa no cuenta con un certificado vigente (comportamiento ya existente en `GetCurrentCertificate()`).
@@ -1488,23 +1388,23 @@ Entonces el sistema rechaza el timbrado indicando que la Empresa no cuenta con u
 ### Casos de prueba
 
 
-**CP-14.1.2 — Bloqueo de timbrado sin certificado (error/regla)**
-Verifica: CA-14.1.2 · RN-14.2
+**CP-13.1.2 — Bloqueo de timbrado sin certificado (error/regla)**
+Verifica: CA-13.1.2 · RN-13.2
 Dado que  "Maria Reyes" y "Grupo Malia" aún no tiene certificado vigente cargado
 Cuando se intenta timbrar una Factura a su nombre
 Entonces el sistema rechaza la operación con el mensaje de certificado no vigente.
 
 | CA | Caso(s) de prueba | Escenarios cubiertos |
 | --- | --- | --- |
-| CA-14.1.1 | CP-14.1.1 | Camino feliz |
-| CA-14.1.2 | CP-14.1.2 | Error/regla |
+| CA-13.1.1 | CP-13.1.1 | Camino feliz |
+| CA-13.1.2 | CP-13.1.2 | Error/regla |
 
 [⬆ Volver al índice](#indice-requerimientos)
 
 ---
 
-<a id="rf-15"></a>
-# RF-15 — Campo Empresa en el catálogo Pac
+<a id="rf-14"></a>
+# RF-14 — Campo Empresa en el catálogo Pac
 
 | Campo        | Valor       |
 |--------------|-------------|
@@ -1518,33 +1418,33 @@ Que cada registro del catálogo `Pac` declare explícitamente a qué Empresa per
 ## Descripción
 Que cada registro del catálogo Pac declare explícitamente a qué Empresa pertenece, dejando de depender de la ruta indirecta Certificado→Pacs para saber de quién es cada PAC.
 
-## HU-15.1 — Asociar cada PAC a una única Empresa
+## HU-14.1 — Asociar cada PAC a una única Empresa
 
 Como Administrador del sistema Inmobiliaria, quiero asociar cada PAC a una única Empresa al darlo de alta, para identificar sin ambigüedad qué proveedor de certificación timbra los documentos de cada razón social.
 
 ### Reglas de negocio
 
-**RN-15.1** El campo Empresa es obligatorio en el catálogo `Pac`.
+**RN-14.1** El campo Empresa es obligatorio en el catálogo `Pac`.
 
-**RN-15.2** La relación es uno a uno: una Empresa no puede tener más de un Pac asociado, y un Pac no puede estar asociado a más de una Empresa (unicidad de la FK Empresa en `Pac`).
+**RN-14.2** La relación es uno a uno: una Empresa no puede tener más de un Pac asociado, y un Pac no puede estar asociado a más de una Empresa (unicidad de la FK Empresa en `Pac`).
 
-**RN-15.3** Solo se pueden asociar Empresas en estatus Activo.
+**RN-14.3** Solo se pueden asociar Empresas en estatus Activo.
 
-**RN-15.4** No se permite eliminar o inactivar un Pac si su Empresa asociada está Activa y no tiene otro Pac de respaldo configurado; el sistema debe advertir que esa Empresa se quedaría sin proveedor de timbrado.
+**RN-14.4** No se permite eliminar o inactivar un Pac si su Empresa asociada está Activa y no tiene otro Pac de respaldo configurado; el sistema debe advertir que esa Empresa se quedaría sin proveedor de timbrado.
 
 ### Criterios de Aceptación
 
-**CA-15.1.1 — Alta de Pac con Empresa**
+**CA-14.1.1 — Alta de Pac con Empresa**
 Dado que el administrador da de alta un nuevo Pac
 Cuando captura la información del proveedor y selecciona la Empresa "Vicente Reyes"
 Entonces el sistema guarda el Pac asociado a "Vicente Reyes" y lo muestra en su ficha.
 
-**CA-15.1.2 — Bloqueo de doble asociación**
+**CA-14.1.2 — Bloqueo de doble asociación**
 Dado que "Vicente Reyes" ya tiene un Pac asociado
 Cuando el administrador intenta asociar esa misma Empresa a un segundo Pac
 Entonces el sistema rechaza el guardado e indica que la Empresa ya tiene un PAC configurado.
 
-**CA-15.1.3 — Bloqueo de Empresa inactiva**
+**CA-14.1.3 — Bloqueo de Empresa inactiva**
 Dado que una Empresa está en estatus Inactivo
 Cuando el administrador abre el selector de Empresa en el alta de un Pac
 Entonces dicha Empresa no aparece como opción disponible.
@@ -1552,198 +1452,399 @@ Entonces dicha Empresa no aparece como opción disponible.
 
 ### Casos de prueba
 
-**CP-15.1.1 — Alta exitosa de Pac con Empresa (camino feliz)**
-Verifica: CA-15.1.1 · RN-15.1
+**CP-14.1.1 — Alta exitosa de Pac con Empresa (camino feliz)**
+Verifica: CA-14.1.1 · RN-14.1
 Dado que el administrador registra un Pac nuevo y selecciona "Vicente Reyes" como Empresa
 Cuando confirma el alta
 Entonces el Pac queda guardado y ligado a "Vicente Reyes".
 
-**CP-15.1.2 — Bloqueo de doble asociación (error/validación)**
-Verifica: CA-15.1.2 · RN-15.2
+**CP-14.1.2 — Bloqueo de doble asociación (error/validación)**
+Verifica: CA-14.1.2 · RN-14.2
 Dado que "Vicente Reyes" ya tiene el Pac "PAC-VR" asociado
 Cuando el administrador intenta asociar "Vicente Reyes" a un segundo Pac "PAC-VR2"
 Entonces el sistema rechaza el guardado e informa que la Empresa ya tiene un PAC configurado.
 
-**CP-15.1.3 — Bloqueo de Empresa inactiva (validación)**
-Verifica: CA-15.1.3 · RN-15.3
+**CP-14.1.3 — Bloqueo de Empresa inactiva (validación)**
+Verifica: CA-14.1.3 · RN-14.3
 Dado que la Empresa "Empresa Demo" está en estatus Inactivo
 Cuando el administrador abre el selector de Empresa en el alta de un Pac
 Entonces "Empresa Demo" no aparece entre las opciones disponibles.
 
-**CP-15.1.4 — Advertencia al inactivar el único Pac de una Empresa (regla de negocio)**
-Verifica: CA-15.1.4 · RN-15.4
+**CP-14.1.4 — Advertencia al inactivar el único Pac de una Empresa (regla de negocio)**
+Verifica: CA-14.1.4 · RN-14.4
 Dado que "Grupo Malia" solo tiene el Pac "PAC-Malia" activo
 Cuando el administrador intenta inactivarlo
 Entonces el sistema muestra la advertencia de que "Grupo Malia" quedaría sin PAC y solicita confirmación o bloquea la acción.
 
 | CA | Caso(s) de prueba | Escenarios cubiertos |
 | --- | --- | --- |
-| CA-15.1.1 | CP-15.1.1 | Camino feliz |
-| CA-15.1.2 | CP-15.1.2 | Error/validación |
-| CA-15.1.3 | CP-15.1.3 | Validación |
-| CA-15.1.4 | CP-15.1.4 | Regla de negocio |
+| CA-14.1.1 | CP-14.1.1 | Camino feliz |
+| CA-14.1.2 | CP-14.1.2 | Error/validación |
+| CA-14.1.3 | CP-14.1.3 | Validación |
+| CA-14.1.4 | CP-14.1.4 | Regla de negocio |
 
 [⬆ Volver al índice](#indice-requerimientos)
 
 ---
 
-<a id="rf-16"></a>
-# RF-16 — Resolución del PAC por Empresa emisora al timbrar
+<a id="rf-15"></a>
+# RF-15 — Resolución del PAC por Empresa emisora al timbrar
 
 | Campo        | Valor       |
 |--------------|-------------|
 | Prioridad    | Must        |
 | Estado       | Definición  |
-| Dependencias | RF-15 |
+| Dependencias | RF-14 |
 
 ## Objetivo
-Que al timbrar una Factura, Nota de Crédito, Anticipo o Abono, el sistema identifique la Empresa (razón social) que emite el documento y use el PAC ligado directamente a esa Empresa (RF-15) para el timbrado, en lugar de resolverlo por la vía indirecta actual del certificado.
+Que al timbrar una Factura, Nota de Crédito, Anticipo o Abono, el sistema identifique la Empresa (razón social) que emite el documento y use el PAC ligado directamente a esa Empresa (RF-14) para el timbrado, en lugar de resolverlo por la vía indirecta actual del certificado.
 
 ## Descripción
-Que al timbrar una Factura, Nota de Crédito, Anticipo o Abono, el sistema identifique la Empresa (razón social) que emite el documento y use el PAC ligado directamente a esa Empresa (RF-15) para el timbrado, en lugar de resolverlo por la vía indirecta actual del certificado.
+Que al timbrar una Factura, Nota de Crédito, Anticipo o Abono, el sistema identifique la Empresa (razón social) que emite el documento y use el PAC ligado directamente a esa Empresa (RF-14) para el timbrado, en lugar de resolverlo por la vía indirecta actual del certificado.
 
-## HU-16.1 — Timbrar con el PAC de la Empresa emisora
+## HU-15.1 — Timbrar con el PAC de la Empresa emisora
 
 Como usuario con rol Facturación, quiero que al timbrar cualquier documento el sistema use automáticamente el PAC de la Empresa emisora, para que el timbrado se realice siempre con el proveedor correcto sin intervención manual ni riesgo de usar el PAC de otra razón social.
 
 ### Reglas de negocio
 
-**RN-16.1** Al timbrar Factura, Nota de Crédito, Anticipo o Abono, el sistema determina la Empresa emisora del documento (`doc.Empresa`) y usa el Pac asociado a esa Empresa (RF-15) para el timbrado.
+**RN-15.1** Al timbrar Factura, Nota de Crédito, Anticipo o Abono, el sistema determina la Empresa emisora del documento (`doc.Empresa`) y usa el Pac asociado a esa Empresa (RF-14) para el timbrado.
 
-**RN-16.2** Esta lógica es única y uniforme para los 4 tipos de documento, ya que todos comparten el mismo mecanismo de timbrado (`TimbrarJob` sobre `IDocumentoTimbrable`).
+**RN-15.2** Esta lógica es única y uniforme para los 4 tipos de documento, ya que todos comparten el mismo mecanismo de timbrado (`TimbrarJob` sobre `IDocumentoTimbrable`).
 
-**RN-16.3** Si la Empresa emisora del documento no tiene un Pac asociado, o su Pac está Inactivo, el sistema bloquea el timbrado e indica qué Empresa no cuenta con un PAC configurado.
+**RN-15.3** Si la Empresa emisora del documento no tiene un Pac asociado, o su Pac está Inactivo, el sistema bloquea el timbrado e indica qué Empresa no cuenta con un PAC configurado.
 
-**RN-16.4** El certificado de sello digital (CSD) usado para sellar el CFDI sigue determinándose de forma independiente mediante `Empresa.GetCurrentCertificate()`, sin cambios.
+**RN-15.4** El certificado de sello digital (CSD) usado para sellar el CFDI sigue determinándose de forma independiente mediante `Empresa.GetCurrentCertificate()`, sin cambios.
 
 ### Criterios de Aceptación
 
-**CA-16.1.1 — Timbrado con el PAC correcto (Factura)**
+**CA-15.1.1 — Timbrado con el PAC correcto (Factura)**
 Dado que la Factura tiene como Empresa emisora a "Grupo Malia", y "Grupo Malia" tiene asociado el Pac "PAC-Malia"
 Cuando el sistema timbra la Factura
 Entonces el timbrado se envía usando las credenciales de "PAC-Malia".
 
-**CA-16.1.2 — Consistencia entre tipos de documento**
+**CA-15.1.2 — Consistencia entre tipos de documento**
 Dado que "Vicente Reyes" tiene asociado el Pac "PAC-VR"
 Cuando se timbra una Factura, una Nota de Crédito, un Anticipo y un Abono, todos emitidos por "Vicente Reyes"
 Entonces los 4 documentos se timbran usando "PAC-VR".
 
-**CA-16.1.3 — Bloqueo por Empresa sin PAC**
+**CA-15.1.3 — Bloqueo por Empresa sin PAC**
 Dado que la Empresa "María Reyes" aún no tiene un Pac asociado
 Cuando se intenta timbrar un documento emitido por "María Reyes"
 Entonces el sistema rechaza el timbrado e indica que "María Reyes" no tiene un PAC configurado.
 
-**CA-16.1.4 — No se mezclan PACs entre Empresas**
+**CA-15.1.4 — No se mezclan PACs entre Empresas**
 Dado que "Vicente Reyes" usa "PAC-VR" y "Grupo Malia" usa "PAC-Malia"
 Cuando se timbra un documento de "Grupo Malia"
 Entonces el sistema nunca utiliza las credenciales de "PAC-VR" para ese documento.
 
 ### Casos de prueba
 
-**CP-16.1.1 — Timbrado exitoso con el PAC de la Empresa (camino feliz)**
-Verifica: CA-16.1.1 · RN-16.1
+**CP-15.1.1 — Timbrado exitoso con el PAC de la Empresa (camino feliz)**
+Verifica: CA-15.1.1 · RN-15.1
 Dado que la Factura FAC-00500 tiene como emisor a "Grupo Malia" y esta tiene asociado "PAC-Malia"
 Cuando se ejecuta el timbrado
 Entonces la petición se envía con las credenciales de "PAC-Malia".
 
-**CP-16.1.2 — Consistencia entre los 4 tipos de documento (regresión funcional)**
-Verifica: CA-16.1.2 · RN-16.2
+**CP-15.1.2 — Consistencia entre los 4 tipos de documento (regresión funcional)**
+Verifica: CA-15.1.2 · RN-15.2
 Dado que "Vicente Reyes" tiene asociado "PAC-VR"
 Cuando se timbran, una por una, una Factura, una Nota de Crédito, un Anticipo y un Abono emitidos por "Vicente Reyes"
 Entonces los 4 documentos usan "PAC-VR" para el timbrado.
 
-**CP-16.1.3 — Bloqueo de timbrado por Empresa sin PAC (error/regla)**
-Verifica: CA-16.1.3 · RN-16.3
+**CP-15.1.3 — Bloqueo de timbrado por Empresa sin PAC (error/regla)**
+Verifica: CA-15.1.3 · RN-15.3
 Dado que "María Reyes" no tiene ningún Pac asociado
 Cuando se intenta timbrar una Factura emitida por "María Reyes"
 Entonces el sistema rechaza el timbrado e indica que "María Reyes" no tiene un PAC configurado.
 
-**CP-16.1.4 — No se mezclan credenciales entre Empresas (validación de integridad)**
-Verifica: CA-16.1.4 · RN-16.1
+**CP-15.1.4 — No se mezclan credenciales entre Empresas (validación de integridad)**
+Verifica: CA-15.1.4 · RN-15.1
 Dado que "Vicente Reyes" usa "PAC-VR" y "Grupo Malia" usa "PAC-Malia"
 Cuando se timbra un documento de "Grupo Malia"
 Entonces la petición de timbrado nunca incluye las credenciales de "PAC-VR".
 
-**CP-16.1.5 — El CSD no se ve afectado por el cambio de PAC (regla de negocio)**
-Verifica: RN-16.4
+**CP-15.1.5 — El CSD no se ve afectado por el cambio de PAC (regla de negocio)**
+Verifica: RN-15.4
 Dado que la resolución del PAC cambia a la nueva lógica de este RF
 Cuando se timbra un documento
 Entonces el certificado de sello digital sigue determinándose por `GetCurrentCertificate()` sin cambios.
 
 | CA | Caso(s) de prueba | Escenarios cubiertos |
 | --- | --- | --- |
-| CA-16.1.1 | CP-16.1.1 | Camino feliz |
-| CA-16.1.2 | CP-16.1.2 | Regresión funcional |
-| CA-16.1.3 | CP-16.1.3 | Error/regla |
-| CA-16.1.4 | CP-16.1.4, CP-16.1.5 | Validación de integridad, Regla de negocio |
+| CA-15.1.1 | CP-15.1.1 | Camino feliz |
+| CA-15.1.2 | CP-15.1.2 | Regresión funcional |
+| CA-15.1.3 | CP-15.1.3 | Error/regla |
+| CA-15.1.4 | CP-15.1.4, CP-15.1.5 | Validación de integridad, Regla de negocio |
 
 [⬆ Volver al índice](#indice-requerimientos)
 
 ---
 
-<a id="rf-17"></a>
-# RF-17 — Configuración del PAC de cada una de las 3 empresas (puesta en marcha)
+<a id="rf-16"></a>
+# RF-16 — Configuración del PAC de cada una de las 3 empresas (puesta en marcha)
 
 | Campo        | Valor       |
 |--------------|-------------|
 | Prioridad    | Should      |
 | Estado       | Definición  |
-| Dependencias | RF-15 |
+| Dependencias | RF-14 |
 
 ## Objetivo
-Dejar configurados los 3 Pacs del grupo, cada uno asociado a su Empresa correspondiente, para que el esquema de timbrado por Empresa (RF-16) pueda operar desde su liberación.
+Dejar configurados los 3 Pacs del grupo, cada uno asociado a su Empresa correspondiente, para que el esquema de timbrado por Empresa (RF-15) pueda operar desde su liberación.
 
 ## Descripción
 Tarea de puesta en marcha: configurar en el catálogo `Pac` un registro Activo por cada una de las 3 razones sociales del grupo (Vicente Reyes, Grupo Malia y María Reyes), con las credenciales de producción propias del contrato de cada Empresa con su proveedor de certificación.
 
-## HU-17.1 — Configurar el PAC de las 3 empresas del grupo
+## HU-16.1 — Configurar el PAC de las 3 empresas del grupo
 
 Como Administrador del sistema Inmobiliaria, quiero configurar el PAC correspondiente a "Vicente Reyes", "Grupo Malia" y "María Reyes", para que cada una pueda timbrar sus documentos con su propio proveedor de certificación.
 
 ### Reglas de negocio
 
-**RN-17.1** Deben existir 3 registros Pac Activos, cada uno asociado a una Empresa distinta: Vicente Reyes, Grupo Malia y María Reyes.
+**RN-16.1** Deben existir 3 registros Pac Activos, cada uno asociado a una Empresa distinta: Vicente Reyes, Grupo Malia y María Reyes.
 
-**RN-17.2** El Pac de "María Reyes" solo puede configurarse una vez que dicha Empresa exista en el catálogo `Empresa` (alta cubierta por RF-14 de este documento / RF-06 de `RF-separacion-folios-empresa-regimen-fiscal.md`).
+**RN-16.2** El Pac de "María Reyes" solo puede configurarse una vez que dicha Empresa exista en el catálogo `Empresa` (alta cubierta por RF-13 de este documento / RF-06 de `RF-separacion-folios-empresa-regimen-fiscal.md`).
 
-**RN-17.3** Cada Pac debe capturarse con las credenciales de producción (URL de timbrado, usuario, contraseña) propias del contrato de esa Empresa con su proveedor.
+**RN-16.3** Cada Pac debe capturarse con las credenciales de producción (URL de timbrado, usuario, contraseña) propias del contrato de esa Empresa con su proveedor.
 
 ### Criterios de Aceptación
 
-**CA-17.1.1 — Las 3 empresas quedan operativas**
+**CA-16.1.1 — Las 3 empresas quedan operativas**
 Dado que se completó la configuración de los 3 Pacs
 Cuando se timbra un documento de cada una de las 3 Empresas
 Entonces cada uno se timbra correctamente con el PAC correspondiente a su Empresa.
 
-**CA-17.1.2 — María Reyes bloqueada hasta tener PAC**
+**CA-16.1.2 — María Reyes bloqueada hasta tener PAC**
 Dado que "María Reyes" ya existe como Empresa pero su Pac aún no se ha configurado
 Cuando se intenta timbrar un documento a su nombre
-Entonces el sistema lo bloquea conforme a RN-16.3 (RF-16), hasta que se configure su Pac.
+Entonces el sistema lo bloquea conforme a RN-15.3 (RF-15), hasta que se configure su Pac.
 
 ### Casos de prueba
 
-**CP-17.1.1 — Las 3 empresas timbran con su propio PAC (camino feliz)**
-Verifica: CA-17.1.1 · RN-17.1
+**CP-16.1.1 — Las 3 empresas timbran con su propio PAC (camino feliz)**
+Verifica: CA-16.1.1 · RN-16.1
 Dado que "Vicente Reyes", "Grupo Malia" y "María Reyes" tienen cada una su Pac Activo configurado
 Cuando se timbra un documento de prueba de cada Empresa
 Entonces cada documento se timbra con el PAC correspondiente a su Empresa.
 
-**CP-17.1.2 — Bloqueo mientras María Reyes no tenga PAC (error/regla)**
-Verifica: CA-17.1.2 · RN-17.2
+**CP-16.1.2 — Bloqueo mientras María Reyes no tenga PAC (error/regla)**
+Verifica: CA-16.1.2 · RN-16.2
 Dado que "María Reyes" ya existe en el catálogo Empresa pero aún no tiene Pac asociado
 Cuando se intenta timbrar un documento a su nombre
-Entonces el sistema rechaza el timbrado conforme a RN-16.3, indicando que "María Reyes" no tiene un PAC configurado.
+Entonces el sistema rechaza el timbrado conforme a RN-15.3, indicando que "María Reyes" no tiene un PAC configurado.
 
-**CP-17.1.3 — Credenciales de producción propias por Empresa (validación)**
-Verifica: RN-17.3
+**CP-16.1.3 — Credenciales de producción propias por Empresa (validación)**
+Verifica: RN-16.3
 Dado que se configura el Pac de "Grupo Malia"
 Cuando se capturan la URL, usuario y contraseña de timbrado
 Entonces corresponden al contrato específico de "Grupo Malia" con su proveedor, distintas a las de las otras 2 empresas.
 
 | CA | Caso(s) de prueba | Escenarios cubiertos |
 | --- | --- | --- |
-| CA-17.1.1 | CP-17.1.1, CP-17.1.3 | Camino feliz, Validación |
-| CA-17.1.2 | CP-17.1.2 | Error/regla |
+| CA-16.1.1 | CP-16.1.1, CP-16.1.3 | Camino feliz, Validación |
+| CA-16.1.2 | CP-16.1.2 | Error/regla |
+
+[⬆ Volver al índice](#indice-requerimientos)
+
+---
+
+<a id="rf-17"></a>
+# RF-17 — Lista detalle "Documentos" en el catálogo Empresa para configurar la serie por documento
+
+| Campo        | Valor       |
+|--------------|-------------|
+| Prioridad    | Must        |
+| Estado       | Definición  |
+| Dependencias | RF-13, RF-13 |
+
+## Objetivo
+Que cada empresa del grupo (Vicente Reyes, Grupo Malia y María Reyes) tenga su propia serie para cada documento Nota de Crédito, Abono y Anticipo que se emite, que esa serie se configure desde la pantalla de la empresa.
+
+## Descripción
+En la pantalla de **Empresa** se agrega una nueva pestaña llamada **"Documentos"**, junto a "Certificados de Hacienda", "Sucursales" y "Personal Asignado". En esa pestaña el administrador indica qué serie usa cada documento Nota de Crédito, Abono y Anticipo.
+
+Después, cuando alguien emite un documento, el sistema toma automáticamente la serie de la empresa que lo emite. El usuario no tiene que capturarla.
+
+**Folios para documentos fiscales**
+
+| Empresa | Documento | Régimen fiscal | Serie |
+|---------|-----------|----------------|-------|
+| Vicente Reyes | Factura | Arrendamiento | A |
+| Vicente Reyes | Factura | Ingresos por intereses | I |
+| Vicente Reyes | Factura | Personas físicas con actividades empresariales y profesionales | E |
+| Vicente Reyes | Abono | — | B |
+| Vicente Reyes | Anticipo | — | A |
+| Vicente Reyes | Nota de crédito | — | NM |
+| Grupo Malia | Factura | Arrendamiento | GMA |
+| Grupo Malia | Factura | Ingresos por intereses | GMI |
+| Grupo Malia | Factura | Personas físicas con actividades empresariales y profesionales | GME |
+| Grupo Malia | Abono | — | GMB |
+| Grupo Malia | Anticipo | — | GMA |
+| Grupo Malia | Nota de crédito | — | GMNM |
+| María Reyes | Factura | Arrendamiento | MRA |
+| María Reyes | Factura | Ingresos por intereses | MRI |
+| María Reyes | Factura | Personas físicas con actividades empresariales y profesionales | MRE |
+| María Reyes | Abono | — | MRB |
+| María Reyes | Anticipo | — | MRA |
+| María Reyes | Nota de crédito | — | MRNM |
+
+### Datos que se capturan
+
+| Dato | ¿Es obligatorio? | Para qué sirve |
+|------|------------------|----------------|
+| Documento | Sí | Indica a qué documento aplica la serie: Factura, Nota de Crédito, Abono o Anticipo. |
+| Régimen fiscal | Solo en Factura | Las facturas llevan una serie distinta por régimen fiscal (por ejemplo, Arrendamiento usa la serie "A"). Solo aparecen los regímenes que tiene dados de alta la empresa. |
+| Serie | Sí | Letras y/o números que identifican la numeración, por ejemplo "A". Máximo 25 caracteres, sin espacios. |
+| Estatus | Sí | Activa o Inactiva. Solo las series activas se usan para emitir documentos. |
+
+### Ejemplo: cómo quedaría la pestaña "Documentos" de Vicente Reyes
+
+| Documento | Régimen fiscal | Serie | Estatus |
+|-----------|----------------|-------|---------|
+| Factura | Arrendamiento | A | Activa |
+| Factura | Ingresos por intereses | I | Activa |
+| Factura | Personas físicas con actividades empresariales y profesionales | E | Activa |
+| Nota de Crédito | — | La serie que se usa hoy | Activa |
+| Abono | — | La serie que se usa hoy | Activa |
+| Anticipo | — | La serie que se usa hoy | Activa |
+
+
+## HU-17.1 — Agregar documento y serie
+
+Como administrador del sistema Inmobiliaria, quiero agregar en la pestaña "Documentos" la serie que usa cada documento, para que cada empresa lleve su propio identificador.
+
+### Reglas de negocio
+
+**RN-17.1** Se puede agregar una serie activa para cada uno de los siguientes tipos de documento: Nota de Crédito, Abono y Anticipo.
+
+**RN-17.2**  Para cada tipo de documento (Nota de Crédito, Abono y Anticipo), solo se permite una serie activa por empresa.
+
+**RN-17.3** Dentro de una misma empresa no se puede usar la misma serie en dos documentos distintos. Dos empresas distintas sí pueden usar la misma serie, porque cada una lleva su propia numeración.
+
+**RN-17.4** La serie acepta letras y números, sin espacios.
+
+
+### Criterios de Aceptación
+
+**CA-17.1.1 — Agregar la serie de un Abono, Nota de crédito o Anticipo**
+Dado que la empresa "Vicente Reyes" tiene "Documentos"
+Cuando el administrador agrega en la pestaña "Documentos" Abono, Nota de crédito o Anticipo y la serie 
+Entonces el sistema guarda la serie como Activa y la muestra en la lista.
+
+**CA-17.1.2 — Documento que ya tiene serie**
+Dado que el Abono, Nota de crédito o Anticipo de "Vicente Reyes" el docuemnto activo
+Cuando el administrador intenta agregarle otra docuemento
+Entonces el sistema no guarda y avisa que ese documento ya existe.
+
+**CA-17.1.3 — Serie repetida en la misma empresa**
+Dado que "Vicente Reyes" ya usa la serie en algun documento Abono, Nota de crédito o Anticipo
+Cuando el administrador intenta usar la misma serie en Abono, Nota de crédito o Anticipo de la misma empresa
+Entonces el sistema no guarda y avisa que la serie ya se usa en otro documento de la empresa.
+
+**CA-17.1.4 — La misma serie en otra empresa**
+Dado que "Vicente Reyes" usa la serie en algun documento Abono, Nota de crédito o Anticipo
+Cuando el administrador configura la misma serie en Abono, Nota de crédito o Anticipo de "Grupo Malia"
+Entonces el sistema sí lo permite.
+
+
+
+### Casos de prueba
+
+**CP-17.1.1 — Agregar la serie de un Abono, Nota de crédito o Anticipo (camino feliz)**
+Verifica: CA-17.1.5 · RN-17.3
+Dado que la empresa "Vicente Reyes" agrega "Documentos"
+Cuando el administrador agrega en la pestaña "Documentos" Abono, Nota de crédito o Anticipo y la serie 
+Entonces el sistema guarda la serie como Activa y la muestra en la lista.
+
+**CP-17.1.2 — Segunda serie para el mismo documento (validación)**
+Verifica: CA-17.1.5 · RN-17.3
+Dado que la empresa "Vicente Reyes" ya tienen la serie "A" activa en Anticipo
+Cuando el administrador intenta agregar la serie  para el mismo documento
+Entonces aparece el mensaje "El documento ya tiene una serie para la misma empresa" y no se guarda.
+
+**CP-17.1.3 — Segunda serie para el misma empresa (validación)**
+Verifica: CA-17.1.5 · RN-17.3
+Dado que la empresa "Vicente Reyes" ya tienen la serie "A" activa en Anticipo
+Cuando el administrador intenta agregar misma serie para otro documento de la misma empresa "Vicente Reyes" 
+Entonces aparece el mensaje "El documento ya tiene una serie para la misma empresa" y no se guarda.
+
+**CP-17.1.4 — Misma serie en otra empresa (alternativo)**
+Verifica: CA-17.1.7 · RN-17.4
+Dado que "Vicente Reyes" usa la serie "A" en Anticipo
+Cuando el administrador configura "A" en Anticipo de "Grupo Malia"
+Entonces la serie se guarda sin problema.
+
+
+
+## HU-17.2 — Cambiar o desactivar una serie
+
+Como administrador del sistema Inmobiliaria, quiero corregir, desactivar o cambiar una serie, para ajustar la configuración sin afectar los documentos que ya se emitieron.
+
+### Reglas de negocio
+
+
+**RN-17.5** La persona autorizada podrá editar la serie, cuando sea necesario; sin embargo, toda modificación deberá quedar registrada en la bitácora, indicando el cambio realizado y la fecha de modificación.
+
+**RN-17.6** Al desactivar una serie, los documentos que ya se emitieron con ella se quedan igual.
+
+**RN-17.7** Una serie desactivada solo se puede volver a activar si no hay otra serie activa para el mismo documento.
+
+### Criterios de Aceptación
+
+**CA-17.2.1 — Corregir una serie que no se ha usado**
+Dado que la serie "N" de Nota de Crédito de "Grupo Malia" no se ha usado
+Cuando el administrador la cambia a "NC"
+Entonces el sistema guarda el cambio y registra en bitadora el cambio.
+
+
+**CA-17.2.2 — Desactivar una serie**
+Dado que la serie "A" de "Vicente Reyes" está activa y ya se usó
+Cuando el administrador la desactiva
+Entonces la serie queda Inactiva, ya no se usa en documentos nuevos y los documentos emitidos se quedan igual y registra en bitadora el cambio.
+
+**CA-17.2.3 — Cambiar la serie de un documento**
+Dado que la serie "A" en Anticipo de "Vicente Reyes" está desactivada
+Cuando el administrador agrega la serie "AR" para el mismo documento y régimen
+Entonces las nuevos Anticipos se emiten con la serie "AR" y registrar en bitadora.
+
+**CA-17.2.4 — Volver a activar cuando ya hay otra serie activa**
+Dado que la serie "AR" está activa para Anticipo
+Cuando el administrador intenta volver a activar la serie "A" para Anticipo
+Entonces el sistema no lo permite y avisa que ya hay una serie activa para ese documento.
+
+**CA-17.2.5 — Activar cuando es serie unica**
+Dado que la serie "AR" está inactiva para Anticipo
+Cuando el administrador intenta volver a activar la serie "AR" para Anticipo
+Entonces el sistema permite activa para ese documento y registrar en bitadora.
+
+### Casos de prueba
+
+**CP-17.2.1 — Corregir serie sin uso (camino feliz)**
+Verifica: CA-17.2.1 · RN-17.8
+Dado que la serie "N" de Nota de Crédito de "Grupo Malia" no se ha usado
+Cuando el administrador la cambia a "NC" y guarda
+Entonces la pestaña "Documentos" muestra la serie "NC" y se registra cambio en bitacora.
+
+**CP-17.2.2 — Desactivar sin afectar lo emitido (alternativo)**
+Verifica: CA-17.2.3 · RN-17.9
+Dado que el anticipo A-000150 se emitió con la serie "A"
+Cuando el administrador desactiva la serie "A"
+Entonces la factura A-000150 conserva su serie y su número, ademas registra cambio en bitacora empresa.
+
+**CP-17.2.3 — Volver a activar con otra serie activa (validación)**
+Verifica: CA-17.2.5 · RN-17.11
+Dado que "AR" está activa para facturas de Arrendamiento
+Cuando el administrador intenta volver a activar "A"
+Entonces el sistema no lo permite.
+
+
+**CP-17.2.4 — Activar cuando es serie unica**
+Verifica: RN-17.11
+Dado que la serie "A" se desactivó no hay otra serie activa para ese documento
+Cuando el administrador la vuelve a activar
+Entonces el sistema no lo permite y se registra cambio en bitacora.
+
 
 [⬆ Volver al índice](#indice-requerimientos)
 
@@ -1795,9 +1896,10 @@ Entonces corresponden al contrato específico de "Grupo Malia" con su proveedor,
 | OBJ-3 | RF-04 | HU-4.1 | CA-4.1.1 | Must | Propuesto |
 | OBJ-5 Habilitar supervisión y reportes segmentados por sucursal | RF-11 | HU-11.1 | CA-11.1.1 | Should | Propuesto |
 | OBJ-6 Consistencia histórica de la información al migrar al nuevo modelo | RF-12 | HU-12.1 | CA-12.1.1 | Must | Propuesto |
-| OBJ-7 Timbrar cada documento con el PAC de su Empresa emisora, sin depender de la ruta indirecta vía certificado | RF-15 | HU-15.1 | CA-15.1.1 | Must | Propuesto |
-| OBJ-7 | RF-16 | HU-16.1 | CA-16.1.1 | Must | Propuesto |
-| OBJ-7 | RF-17 | HU-17.1 | CA-17.1.1 | Should | Propuesto |
+| OBJ-7 Timbrar cada documento con el PAC de su Empresa emisora, sin depender de la ruta indirecta vía certificado | RF-14 | HU-14.1 | CA-14.1.1 | Must | Propuesto |
+| OBJ-7 | RF-15 | HU-15.1 | CA-15.1.1 | Must | Propuesto |
+| OBJ-7 | RF-16 | HU-16.1 | CA-16.1.1 | Should | Propuesto |
+| OBJ-8 Administrar desde el catálogo Empresa una numeración (serie) independiente por documento y razón social | RF-17 | HU-17.1, HU-17.2, HU-17.3 | CA-17.1.1, CA-17.2.3, CA-17.3.1 | Must | Propuesto |
 
 ### Reglas de negocio transversales (referencia global)
 
@@ -1816,7 +1918,7 @@ Entonces corresponden al contrato específico de "Grupo Malia" con su proveedor,
 | SUP-01 | Es técnicamente viable desactivar, en el punto de integración con BSuite, únicamente la escritura sobre `EmpleadoDeSucursal`, sin afectar el resto de los datos que BSuite sincroniza hacia el Empleado (RH, nómina, etc.). | Si la integración no permite desactivar ese campo de forma aislada, se requiere un cambio más amplio en el punto de integración con BSuite antes de liberar RF-01 (ver DEP-01, RGO-01). |
 | SUP-02 | Los registros históricos de Movimientos Bancarios, Transacciones CXC, Facturas, Abonos y Anticipos ya tienen un valor de Empresa/Sucursal poblado (heredado del creador vía `ProcesoBaseObject`), por lo que RF-12 es una estandarización y no un llenado desde nulo. | Si existen registros con Empresa/Sucursal nulos (por ejemplo, cargas iniciales o importaciones directas a base de datos), el script de regularización debe contemplar también el caso NULL, no solo el de reasignación. |
 | SUP-03 | El negocio confirma que "Matriz" es el nombre exacto de la sucursal a la que deben quedar ligados los registros históricos, y que dicha sucursal ya existe o se crea como parte de RNF-003. | Si el nombre real difiere, deberá ajustarse el criterio de aceptación de RF-12 y el script de migración. |
-| SUP-04 | Los Pacs existentes hoy ya están ligados de forma indirecta a una Empresa vía `EmpresaCertificado.Pacs`, por lo que llenar el nuevo campo Empresa (RF-15) es una asignación consistente con esa relación existente y no una captura desde cero. | Si existen Pacs sin una asociación clara o compartidos entre certificados de distintas Empresas, se requiere un proceso de descubrimiento manual con negocio para determinar su dueño antes de activar RF-16. |
+| SUP-04 | Los Pacs existentes hoy ya están ligados de forma indirecta a una Empresa vía `EmpresaCertificado.Pacs`, por lo que llenar el nuevo campo Empresa (RF-14) es una asignación consistente con esa relación existente y no una captura desde cero. | Si existen Pacs sin una asociación clara o compartidos entre certificados de distintas Empresas, se requiere un proceso de descubrimiento manual con negocio para determinar su dueño antes de activar RF-15. |
 
 ### Dependencias (DEP)
 
@@ -1825,7 +1927,7 @@ Entonces corresponden al contrato específico de "Grupo Malia" con su proveedor,
 | DEP-01 | Coordinar con el equipo responsable de la integración BSuite la desactivación de la escritura automática sobre `EmpleadoDeSucursal`, conforme a la decisión de negocio de que la sucursal del empleado se administra 100% de forma manual (RN-1.9). | Equipo responsable de la integración con BSuite |
 | DEP-02 | Alta de certificados de sello digital (CSD) y cuentas bancarias de "Grupo Malia" (RNF-001) antes de poder probar de punta a punta RF-06 a RF-10. | Área de Finanzas / Administración de Grupo Reyes |
 | DEP-03 | Cambio de modelo de datos en `ListaPrecio` (volver `Empresa` opcional) antes de poder cumplir el RNF-002 de lista compartida; debe planearse junto con pruebas de regresión sobre las validaciones de unicidad/vigencia existentes. | Equipo de desarrollo / Dirección de Sistemas |
-| DEP-04 | El Pac de "María Reyes" (RF-17) depende de que dicha Empresa ya exista en el catálogo `Empresa` (RF-14 de este documento / RF-06 de `RF-separacion-folios-empresa-regimen-fiscal.md`); no puede configurarse antes. | Área de Finanzas/Administración de Grupo Reyes + equipo de desarrollo |
+| DEP-04 | El Pac de "María Reyes" (RF-16) depende de que dicha Empresa ya exista en el catálogo `Empresa` (RF-13 de este documento / RF-06 de `RF-separacion-folios-empresa-regimen-fiscal.md`); no puede configurarse antes. | Área de Finanzas/Administración de Grupo Reyes + equipo de desarrollo |
 
 ### Riesgos (RGO)
 
@@ -1835,7 +1937,7 @@ Entonces corresponden al contrato específico de "Grupo Malia" con su proveedor,
 | RGO-02 | Volver `Empresa` opcional en `ListaPrecio` (RNF-002) obliga a ajustar la regla de unicidad/vigencia actual (hoy validada por Tipo+Empresa); un ajuste incompleto podría permitir dos listas globales del mismo Tipo vigentes simultáneamente o romper validaciones que asumen Empresa siempre poblada. | Alta | Alto | Cubrir con pruebas de regresión específicas la validación de unicidad de `ListaPrecio` antes y después del cambio, incluyendo el caso de listas ya existentes por Empresa conviviendo con listas globales nuevas. |
 | RGO-04 | Cambios frecuentes de alcance sobre qué reportes exactos requieren filtro de sucursal (algunos nombres del documento de negocio no tienen una clase homónima exacta en el código, ver PA-01). | Media | Medio | Confirmar con negocio, pantalla por pantalla, el nombre exacto de cada reporte antes de iniciar el desarrollo de RF-11. |
 | RGO-05 | El bloqueo de captura con periodo Cerrado (RN-4.5) es una validación nueva sobre `MovimientoBancario`/`Transaccion`; si se implementa solo en la UI y no en la capa de guardado del backend, podría evadirse desde procesos automáticos (por ejemplo, un Movimiento Bancario generado automáticamente desde una Factura contra una cuenta sin periodo Abierto). | Media | Alto | Definir con negocio qué debe pasar cuando un documento automático (Factura/Abono/Anticipo) genera un Movimiento Bancario contra una cuenta sin periodo Abierto: ¿se bloquea también la Factura, o el Movimiento Bancario se genera igual y solo se bloquea la captura manual? Ver PA-02. |
-| RGO-06 | El documento `Pago` (CXP) también implementa `IDocumentoTimbrable` y comparte el mismo `TimbrarJob`/`Empresa.GetCurrentPac()`; si en la práctica también se timbra con PAC, heredaría automáticamente el comportamiento de RF-16 aunque no fue solicitado explícitamente en su alcance (que solo cubre Factura, Nota de Crédito, Anticipo y Abono). | Media | Medio | Confirmar con negocio si `Pago` debe incluirse explícitamente en el alcance de RF-16 o excluirse a propósito antes de liberar. |
+| RGO-06 | El documento `Pago` (CXP) también implementa `IDocumentoTimbrable` y comparte el mismo `TimbrarJob`/`Empresa.GetCurrentPac()`; si en la práctica también se timbra con PAC, heredaría automáticamente el comportamiento de RF-15 aunque no fue solicitado explícitamente en su alcance (que solo cubre Factura, Nota de Crédito, Anticipo y Abono). | Media | Medio | Confirmar con negocio si `Pago` debe incluirse explícitamente en el alcance de RF-15 o excluirse a propósito antes de liberar. |
 
 ## Preguntas abiertas
 
@@ -1844,3 +1946,9 @@ Entonces corresponden al contrato específico de "Grupo Malia" con su proveedor,
 | PA-01 | Para los reportes "CFDI Complemento", "CFDI Emitidos" y "Buzón Tributario Interno", no se localizó en el código una clase con nombre exactamente homónimo: ¿cuál es la pantalla/reporte real del sistema que corresponde a cada nombre de negocio? | Equipo de desarrollo + Negocio (usuarias inmfac/inmfac02) |
 | PA-02 | El bloqueo de captura por periodo Cerrado (RN-4.5) ya fue confirmado para captura manual: ¿debe extenderse también a los Movimientos Bancarios que se generan automáticamente desde Factura/Abono/Anticipo/Pago contra una cuenta sin periodo Abierto, o esos casos deben permitirse igual y solo bloquear la captura manual? | Negocio (Administración/Finanzas) |
 | PA-03 | ¿Existen registros históricos de Movimientos Bancarios/Transacciones/Facturas/Abonos/Anticipos con Empresa o Sucursal realmente nulos, o todos ya cuentan con un valor (heredado del único empleado/empresa operando hasta hoy) que solo debe confirmarse/estandarizarse a "Vicente Reyes"/"Matriz"? | Equipo de desarrollo (análisis de datos) + DBA |
+| PA-04 | ¿Qué series usarán "Grupo Malia" y "María Reyes" para cada documento y régimen fiscal? (RF-13 y RF-17 las marcan como "Pendiente"). | Negocio (Administración/Finanzas) |
+| PA-05 | Al dar de alta una serie nueva, ¿el consecutivo siempre inicia en 1 o se debe permitir capturar un folio inicial (por ejemplo, para continuar una numeración que ya se usaba en otro sistema)? | Negocio (Administración/Finanzas) |
+| PA-06 | Hoy la serie se concatena con `Sucursal.Serie` (por ejemplo "A" + "01"). Con la serie por Empresa (RF-17), ¿se conserva ese sufijo por sucursal o la serie final es solo la configurada en la Empresa? | Negocio + Equipo de desarrollo |
+| PA-07 | RN-13.2 indica que Nota de Crédito, Abono y Anticipo mantienen la serie por variable de sistema, y RN-13.3 que la serie de Factura se obtiene del Empleado. RF-17 propone que las 4 se configuren en la Empresa. ¿Se confirma que la Empresa es la única fuente de la serie para los 4 documentos, para ajustar RN-13.2 y RN-13.3? | Negocio + Análisis de Negocio |
+| PA-08 | Además de Fiscal, el código maneja series para los subtipos Interplanta y Consignación (`SerieFacturaInterplanta`, `SerieFacturaConsignacion`, etc.). ¿Inmobiliaria usa esos subtipos? Si los usa, la lista "Documentos" debe agregar el campo Subtipo a la llave Documento + Régimen fiscal. | Negocio + Equipo de desarrollo |
+| PA-09 | ¿Se requiere configurar en la lista "Documentos" otros documentos con folio (por ejemplo, Transacción CXC o Complemento de Pago), o solo los 4 CFDI de este alcance? | Negocio |
