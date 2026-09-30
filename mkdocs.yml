@@ -68,6 +68,8 @@ nav:
         - Multiempresa y Multisucursal: "Proyectos/ONU/Inmobiliaria/RF-multiempresa-multisucursal.md"
       - Quinta Maria:
         - Módulo de Facturación: "Proyectos/ONU/Quinta Maria/Requerimientos_Funcionales_Facturacion_QuintaMariaFacturación.md"
+      - Civentor:
+        - Catálogos: Proyectos/ONU/Civentor/RF-catalogos-civentor.md
   - Documentación BSuite:
     - Catálogos:
       - Gestión TI:
