@@ -615,6 +615,8 @@ Como usuario con el rol de Facturación del sistema Inmobiliaria, quiero poder e
 
 **RN-5.3** Todo Movimiento Bancario deberá requerir Empresa y Sucursal para poder registrarse, sin importar si es automático o manual.
 
+**RN-5.4** Todo movimiento bancario registrado deberá actualizar automáticamente el saldo de la cuenta bancaria asociada a la sucursal y a la empresa correspondientes.
+
 ### Criterios de Aceptación
 
 **CA-5.1.1 — Precarga en movimiento manual**
@@ -636,6 +638,10 @@ Entonces los campos Empresa y Sucursal se muestran de solo lectura con los valor
 Dado que el usuario intenta guardar un Movimiento Bancario manual sin seleccionar Empresa y Sucursal
 Cuando confirma el guardado
 Entonces el sistema rechaza la operación e indica que el campo es obligatorio.
+
+**CA-5.1.5 — Actualización automática del saldo de la cuenta bancaria**
+Dado que se registra un movimiento bancario
+Entonces el saldo de la cuenta se actualiza automáticamente: aumenta si es un depósito y disminuye si es un retiro. El cambio solo aplica a la sucursal y empresa correspondientes.
 
 ### Casos de prueba
 
@@ -663,12 +669,21 @@ Dado que el usuario deja el campo Empresa y Sucursal sin seleccionar en un movim
 Cuando intenta guardar
 Entonces el sistema impide el guardado e indica que Empresa y Sucursal es obligatoria.
 
+**CP-5.1.5 — Actualización del saldo al registrar un movimiento (regla de negocio)**
+Verifica: CA-5.1.5 · RN-5.4
+Dado que la cuenta bancaria "BBVA-Matriz" de la sucursal "Matriz Vicente Reyes" (empresa "Vicente Reyes Magaña") tiene un saldo de $10,000.00
+Y la cuenta "BBVA-Malia Centro" de la empresa "Grupo Malia" tiene un saldo de $5,000.00
+Cuando el usuario registra un Movimiento Bancario de depósito por $2,500.00 contra "BBVA-Matriz"
+Entonces el saldo de "BBVA-Matriz" se actualiza automáticamente a $12,500.00 para la sucursal "Matriz Vicente Reyes" y la empresa "Vicente Reyes Magaña"
+Y el saldo de "BBVA-Malia Centro" permanece en $5,000.00.
+
 | CA | Caso(s) de prueba | Escenarios cubiertos |
 | --- | --- | --- |
 | CA-5.1.1 | CP-5.1.1 | Camino feliz |
 | CA-5.1.2 | CP-5.1.2 | Alternativo |
 | CA-5.1.3 | CP-5.1.3 | Regla de negocio (solo lectura) |
 | CA-5.1.4 | CP-5.1.4 | Error/validación |
+| CA-5.1.5 | CP-5.1.5 | Regla de negocio (actualización de saldo) |
 
 [⬆ Volver al índice](#indice-requerimientos)
 
