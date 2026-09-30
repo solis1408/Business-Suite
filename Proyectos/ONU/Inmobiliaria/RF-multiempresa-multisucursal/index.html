@@ -4390,6 +4390,7 @@ La entidad Periodo es nueva y no reemplaza ningún control existente. Decisión 
 <p><strong>RN-5.1</strong> Cuando el Movimiento Bancario se origina automáticamente desde otro documento (pago, anticipo, abono o factura), los campos Empresa y Sucursal se toman del documento origen y no es editable.</p>
 <p><strong>RN-5.2</strong> Cuando el registro del Movimiento Bancario es manual, el sistema precarga Empresa y Sucursal de los valores predeterminados del empleado en sesión y permite su edición.</p>
 <p><strong>RN-5.3</strong> Todo Movimiento Bancario deberá requerir Empresa y Sucursal para poder registrarse, sin importar si es automático o manual.</p>
+<p><strong>RN-5.4</strong> Todo movimiento bancario registrado deberá actualizar automáticamente el saldo de la cuenta bancaria asociada a la sucursal y a la empresa correspondientes.</p>
 <h3 id="criterios-de-aceptación_5">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_5" title="Permanent link">&para;</a></h3>
 <p><strong>CA-5.1.1 — Precarga en movimiento manual</strong>
 Dado que el empleado en sesión tiene como predeterminada la sucursal - empresa "Matriz Vicente Reyes"
@@ -4407,6 +4408,9 @@ Entonces los campos Empresa y Sucursal se muestran de solo lectura con los valor
 Dado que el usuario intenta guardar un Movimiento Bancario manual sin seleccionar Empresa y Sucursal
 Cuando confirma el guardado
 Entonces el sistema rechaza la operación e indica que el campo es obligatorio.</p>
+<p><strong>CA-5.1.5 — Actualización automática del saldo de la cuenta bancaria</strong>
+Dado que se registra un movimiento bancario
+Entonces el saldo de la cuenta se actualiza automáticamente: aumenta si es un depósito y disminuye si es un retiro. El cambio solo aplica a la sucursal y empresa correspondientes.</p>
 <h3 id="casos-de-prueba_5">Casos de prueba<a class="headerlink" href="#casos-de-prueba_5" title="Permanent link">&para;</a></h3>
 <p><strong>CP-5.1.1 — Precarga correcta en alta manual (camino feliz)</strong>
 Verifica: CA-5.1.1 · RN-5.2
@@ -4428,6 +4432,13 @@ Verifica: CA-5.1.4 · RN-5.3
 Dado que el usuario deja el campo Empresa y Sucursal sin seleccionar en un movimiento manual
 Cuando intenta guardar
 Entonces el sistema impide el guardado e indica que Empresa y Sucursal es obligatoria.</p>
+<p><strong>CP-5.1.5 — Actualización del saldo al registrar un movimiento (regla de negocio)</strong>
+Verifica: CA-5.1.5 · RN-5.4
+Dado que la cuenta bancaria "BBVA-Matriz" de la sucursal "Matriz Vicente Reyes" (empresa "Vicente Reyes Magaña") tiene un saldo de $10,000.00
+Y la cuenta "BBVA-Malia Centro" de la empresa "Grupo Malia" tiene un saldo de $5,000.00
+Cuando el usuario registra un Movimiento Bancario de depósito por $2,500.00 contra "BBVA-Matriz"
+Entonces el saldo de "BBVA-Matriz" se actualiza automáticamente a $12,500.00 para la sucursal "Matriz Vicente Reyes" y la empresa "Vicente Reyes Magaña"
+Y el saldo de "BBVA-Malia Centro" permanece en $5,000.00.</p>
 <table>
 <thead>
 <tr>
@@ -4456,6 +4467,11 @@ Entonces el sistema impide el guardado e indica que Empresa y Sucursal es obliga
 <td>CA-5.1.4</td>
 <td>CP-5.1.4</td>
 <td>Error/validación</td>
+</tr>
+<tr>
+<td>CA-5.1.5</td>
+<td>CP-5.1.5</td>
+<td>Regla de negocio (actualización de saldo)</td>
 </tr>
 </tbody>
 </table>
