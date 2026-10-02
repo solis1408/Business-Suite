@@ -160,7 +160,7 @@ stateDiagram-v2
 <a id="menu-catalogos"></a>
 ### 7.1 Menú de catálogos
 <a id="cat-empresas"></a>
-<details open>
+<details open markdown="1">
 <summary><strong>7.2 Empresas</strong></summary>
 
 | RF | Título | Sistema | Aplica a |
@@ -176,7 +176,7 @@ stateDiagram-v2
 </details>
 
 <a id="cat-empleado-contacto"></a>
-<details open>
+<details open markdown="1">
 <summary><strong>7.3 Empleado Contacto</strong></summary>
 
 | RF | Título | Sistema | Aplica a |
@@ -197,7 +197,7 @@ stateDiagram-v2
 </details>
 
 <a id="cat-tipos-vehiculo"></a>
-<details open>
+<details open markdown="1">
 <summary><strong>7.4 Tipos de Vehículo</strong></summary>
 
 | RF | Título | Sistema | Aplica a |
@@ -213,7 +213,7 @@ stateDiagram-v2
 </details>
 
 <a id="cat-tipos-transporte"></a>
-<details open>
+<details open markdown="1">
 <summary><strong>7.5 Tipos de Transporte</strong></summary>
 
 | RF | Título | Sistema | Aplica a |
@@ -228,7 +228,7 @@ stateDiagram-v2
 </details>
 
 <a id="cat-categorias-licencia-conducir"></a>
-<details open>
+<details open markdown="1">
 <summary><strong>7.6 Categorías de Licencia de Conducir</strong></summary>
 
 | RF | Título | Sistema | Aplica a |
@@ -244,7 +244,7 @@ stateDiagram-v2
 </details>
 
 <a id="cat-puestos-laborales"></a>
-<details open>
+<details open markdown="1">
 <summary><strong>7.7 Puestos Laborales</strong></summary>
 
 | RF | Título | Sistema | Aplica a |
@@ -260,7 +260,7 @@ stateDiagram-v2
 </details>
 
 <a id="cat-ciudades"></a>
-<details open>
+<details open markdown="1">
 <summary><strong>7.8 Ciudades</strong></summary>
 
 | RF | Título | Sistema | Aplica a |
@@ -281,7 +281,7 @@ stateDiagram-v2
 </details>
 
 <a id="cat-lista-precio-detalle"></a>
-<details open>
+<details open markdown="1">
 <summary><strong>7.9 Lista de Precios Detalle</strong></summary>
 
 | RF | Título | Sistema | Aplica a |
@@ -304,7 +304,7 @@ stateDiagram-v2
 </details>
 
 <a id="cat-unidades-medida"></a>
-<details open>
+<details open markdown="1">
 <summary><strong>7.10 Unidades de Medida</strong></summary>
 
 | RF | Título | Sistema | Aplica a |
@@ -320,7 +320,7 @@ stateDiagram-v2
 </details>
 
 <a id="cat-periodos"></a>
-<details open>
+<details open markdown="1">
 <summary><strong>7.11 Periodos</strong></summary>
 
 | RF | Título | Sistema | Aplica a |
@@ -335,7 +335,7 @@ stateDiagram-v2
 </details>
 
 <a id="cat-ramos"></a>
-<details open>
+<details open markdown="1">
 <summary><strong>7.12 Ramos (Tipos de Póliza)</strong></summary>
 
 | RF | Título | Sistema | Aplica a |
@@ -356,7 +356,7 @@ stateDiagram-v2
 </details>
 
 <a id="cat-cliente-forma-pago"></a>
-<details open>
+<details open markdown="1">
 <summary><strong>7.13 Formas de Pago del Cliente</strong></summary>
 
 | RF | Título | Sistema | Aplica a |
@@ -379,7 +379,7 @@ stateDiagram-v2
 </details>
 
 <a id="cat-tipos-clasificacion"></a>
-<details open>
+<details open markdown="1">
 <summary><strong>7.14 Tipos de Clasificación</strong></summary>
 
 | RF | Título | Sistema | Aplica a |
@@ -394,7 +394,7 @@ stateDiagram-v2
 </details>
 
 <a id="cat-grupos"></a>
-<details open>
+<details open markdown="1">
 <summary><strong>7.15 Grupos</strong></summary>
 
 | RF | Título | Sistema | Aplica a |
@@ -409,7 +409,7 @@ stateDiagram-v2
 </details>
 
 <a id="cat-tipos-asegurado"></a>
-<details open>
+<details open markdown="1">
 <summary><strong>7.16 Tipos de Asegurado</strong></summary>
 
 | RF | Título | Sistema | Aplica a |
@@ -430,7 +430,7 @@ stateDiagram-v2
 </details>
 
 <a id="cat-tipos-notificacion"></a>
-<details open>
+<details open markdown="1">
 <summary><strong>7.17 Tipos de Notificación</strong></summary>
 
 | RF | Título | Sistema | Aplica a |
@@ -446,7 +446,7 @@ stateDiagram-v2
 </details>
 
 <a id="cat-plataformas-notificacion"></a>
-<details open>
+<details open markdown="1">
 <summary><strong>7.18 Plataformas de Notificación</strong></summary>
 
 | RF | Título | Sistema | Aplica a |
@@ -468,7 +468,7 @@ stateDiagram-v2
 </details>
 
 <a id="cat-tipos-accion-poliza"></a>
-<details open>
+<details open markdown="1">
 <summary><strong>7.19 Tipos de Acción de Póliza</strong></summary>
 
 | RF | Título | Sistema | Aplica a |
@@ -483,7 +483,7 @@ stateDiagram-v2
 </details>
 
 <a id="cat-metodos-pago"></a>
-<details open>
+<details open markdown="1">
 <summary><strong>7.20 Métodos de Pago</strong></summary>
 
 | RF | Título | Sistema | Aplica a |
@@ -499,7 +499,7 @@ stateDiagram-v2
 </details>
 
 <a id="cat-tipos-regimen-capital"></a>
-<details open>
+<details open markdown="1">
 <summary><strong>7.21 Tipos de Régimen Capital</strong></summary>
 
 | RF | Título | Sistema | Aplica a |
@@ -514,7 +514,7 @@ stateDiagram-v2
 </details>
 
 <a id="cat-uso-cfdi"></a>
-<details open>
+<details open markdown="1">
 <summary><strong>7.22 Uso CFDI</strong></summary>
 
 | RF | Título | Sistema | Aplica a |
@@ -535,7 +535,7 @@ stateDiagram-v2
 </details>
 
 <a id="cat-tipos-comprobante"></a>
-<details open>
+<details open markdown="1">
 <summary><strong>7.23 Tipos de Comprobante</strong></summary>
 
 | RF | Título | Sistema | Aplica a |
@@ -550,7 +550,7 @@ stateDiagram-v2
 </details>
 
 <a id="cat-emails"></a>
-<details open>
+<details open markdown="1">
 <summary><strong>7.24 Emails</strong></summary>
 
 | RF | Título | Sistema | Aplica a |
@@ -572,7 +572,7 @@ stateDiagram-v2
 </details>
 
 <a id="cat-email-modulos"></a>
-<details open>
+<details open markdown="1">
 <summary><strong>7.25 Módulos de Email</strong></summary>
 
 | RF | Título | Sistema | Aplica a |
@@ -593,7 +593,7 @@ stateDiagram-v2
 </details>
 
 <a id="cat-email-servidores"></a>
-<details open>
+<details open markdown="1">
 <summary><strong>7.26 Servidores de Email</strong></summary>
 
 | RF | Título | Sistema | Aplica a |
@@ -608,7 +608,7 @@ stateDiagram-v2
 </details>
 
 <a id="cat-variables-sistema"></a>
-<details open>
+<details open markdown="1">
 <summary><strong>7.27 Variables del Sistema</strong></summary>
 
 | RF | Título | Sistema | Aplica a |
@@ -623,7 +623,7 @@ stateDiagram-v2
 </details>
 
 <a id="cat-bancos"></a>
-<details open>
+<details open markdown="1">
 <summary><strong>7.28 Bancos</strong></summary>
 
 | RF | Título | Sistema | Aplica a |
@@ -644,7 +644,7 @@ stateDiagram-v2
 </details>
 
 <a id="cat-cuentas-bancarias"></a>
-<details open>
+<details open markdown="1">
 <summary><strong>7.29 Cuentas bancarias</strong></summary>
 
 | RF | Título | Sistema | Aplica a |
@@ -670,7 +670,7 @@ stateDiagram-v2
 </details>
 
 <a id="cat-formas-pago"></a>
-<details open>
+<details open markdown="1">
 <summary><strong>7.30 Formas de Pago</strong></summary>
 
 | RF | Título | Sistema | Aplica a |
@@ -685,7 +685,7 @@ stateDiagram-v2
 </details>
 
 <a id="cat-leyendas-formas-pago"></a>
-<details open>
+<details open markdown="1">
 <summary><strong>7.31 Leyendas forma de pago</strong></summary>
 
 | RF | Título | Sistema | Aplica a |
@@ -700,7 +700,7 @@ stateDiagram-v2
 </details>
 
 <a id="cat-conceptos-bancarios"></a>
-<details open>
+<details open markdown="1">
 <summary><strong>7.32 Conceptos Bancarios</strong></summary>
 
 | RF | Título | Sistema | Aplica a |
@@ -721,7 +721,7 @@ stateDiagram-v2
 </details>
 
 <a id="cat-formatos-cheque"></a>
-<details open>
+<details open markdown="1">
 <summary><strong>7.33 Formato de cheques</strong></summary>
 
 | RF | Título | Sistema | Aplica a |
