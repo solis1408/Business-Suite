@@ -112,6 +112,7 @@ markdown_extensions:
         kwds:
           case: lower
   - admonition
+  - md_in_html
   - pymdownx.highlight
   - pymdownx.superfences:
       custom_fences:
