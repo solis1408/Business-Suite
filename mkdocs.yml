@@ -58,6 +58,8 @@ nav:
       - Baja Usuario - Ticket Escalonado:
         - Ejecución del Flujo de Trabajo por Bloques: Proyectos/iNN/Baja usuario - Ticket escalonado/Ejecución del Flujo de Trabajo de Tickets por Bloques.md
         - Vigencia del Resguardo y Recolección Automática: Proyectos/iNN/Baja usuario - Ticket escalonado/Vigencia del Resguardo en Sitio y Recolección Automática de Activos.md
+      - Control de Asistencias:
+        - Requerimiento Funcional: Proyectos/iNN/Control de Asistencias/Requerimientos-Funcionales-Control-de-Asistencia-Analisis-de-Negocio.md
     - ONU:
       - Visibilidad Fiscal:
         - Requerimiento Funcional: Proyectos/ONU/VisibilidadFiscal/Documento_Requerimientos_Funcionales_Interplantas.md
