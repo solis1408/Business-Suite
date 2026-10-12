@@ -3685,7 +3685,7 @@
 <li>RF-06 Creación automática de la prenómina.</li>
 <li>RF-07 Validación de empleado duplicado.</li>
 <li>RF-08 Consulta Prenómina.</li>
-<li>RF-09 Exportar y enviar el Excel a Recursos Humanos.</li>
+<li>RF-09 Exportar el Excel a Recursos Humanos.</li>
 </ul>
 <p><strong>Entregable 2 — Reporte de jornada desde Biostar</strong></p>
 <ul>
@@ -3699,7 +3699,7 @@
 <ul>
 <li>RF-15 Checada móvil desde InnovApp.</li>
 <li>RF-16 Permiso de checada por persona.</li>
-<li>RF-17 Teléfono autorizado (por evaluar).</li>
+<li>RF-17 Teléfono autorizado.</li>
 <li>RF-18 Alternativa y revisión supervisada por Recursos Humanos.</li>
 </ul>
 <h2 id="2-alcance-del-documento">2. Alcance del documento<a class="headerlink" href="#2-alcance-del-documento" title="Permanent link">&para;</a></h2>
@@ -3709,7 +3709,7 @@
 <ul>
 <li>El módulo nuevo "Prenómina": carga automática de empleados, detalle por día y cierre por la nominista.</li>
 <li>La "Prenómina Gasto" (antes, el módulo de prenómina actual): celdas de horas extra por día, total de horas extra y creación automática de la prenómina al cerrarse.</li>
-<li>El módulo "Consulta Prenómina", solo para Recursos Humanos general, con exportación a Excel y envío manual por correo.</li>
+<li>El módulo "Consulta Prenómina", solo para Recursos Humanos general, con exportación a Excel.</li>
 <li>Los catálogos "Nómina Conceptos" (relacionado con "Conceptos Nómina") y "Periodos Nómina" (semanal y quincenal).</li>
 <li>Los campos nuevos del expediente: "Proceso" y "Turno".</li>
 <li>Las horas extra por día y su total por periodo.</li>
@@ -3729,7 +3729,7 @@
 <li>La checada móvil desde InnovApp, sin lector, en oficina, campo y remoto.</li>
 <li>La validación de la CURP y de la huella biométrica del dispositivo, con ubicación y GPS obligatorios.</li>
 <li>El permiso de checada por persona.</li>
-<li>El teléfono autorizado (por evaluar).</li>
+<li>El teléfono autorizado.</li>
 <li>La alternativa con revisión supervisada por Recursos Humanos para las fallas de la checada móvil.</li>
 </ul>
 <p><strong>No incluye:</strong></p>
@@ -3768,7 +3768,7 @@
 <tbody>
 <tr>
 <td>Recursos Humanos (general)</td>
-<td>Personal de Recursos Humanos. Consulta el reporte de jornada, usa "Consulta Prenómina", exporta o envía el Excel y administra el catálogo "Nómina Conceptos".</td>
+<td>Personal de Recursos Humanos. Consulta el reporte de jornada, usa "Consulta Prenómina", exporta el Excel y administra el catálogo "Nómina Conceptos".</td>
 <td>1, 2</td>
 </tr>
 <tr>
@@ -3788,7 +3788,7 @@
 </tr>
 <tr>
 <td>Célula de Innovación</td>
-<td>Área de I&amp;N que configura los permisos, la configuración del usuario de la nominista y los destinatarios del correo. Es el área responsable del proyecto.</td>
+<td>Área de I&amp;N que configura los permisos y la configuración del usuario de la nominista. Es el área responsable del proyecto.</td>
 <td>1, 3</td>
 </tr>
 <tr>
@@ -3805,11 +3805,6 @@
 <td>Personas con permiso de InnovApp</td>
 <td>Empleados a quienes se les asigna el permiso para checar desde el celular.</td>
 <td>3</td>
-</tr>
-<tr>
-<td>Destinatarios del correo</td>
-<td>Personas de Recursos Humanos que reciben el Excel de la prenómina. Las configura la Célula de Innovación.</td>
-<td>1</td>
 </tr>
 <tr>
 <td>Biostar (complemento T&amp;A)</td>
@@ -3949,8 +3944,8 @@
 <td>1</td>
 </tr>
 <tr>
-<td><a href="#rf-09--exportar-y-enviar-el-excel-a-recursos-humanos">RF-09</a></td>
-<td>Exportar y enviar el Excel a Recursos Humanos</td>
+<td><a href="#rf-09--exportar-el-excel-a-recursos-humanos">RF-09</a></td>
+<td>Exportar el Excel a Recursos Humanos</td>
 <td>Business Suite y Contpaq</td>
 <td>Prenómina</td>
 <td>1</td>
@@ -4005,8 +4000,8 @@
 <td>3</td>
 </tr>
 <tr>
-<td><a href="#rf-17--teléfono-autorizado-por-evaluar">RF-17</a></td>
-<td>Teléfono autorizado (por evaluar)</td>
+<td><a href="#rf-17--teléfono-autorizado">RF-17</a></td>
+<td>Teléfono autorizado</td>
 <td>InnovApp</td>
 <td>Empleado</td>
 <td>3</td>
@@ -4031,7 +4026,7 @@
     F --&gt; G[La nominista cierra la prenómina]
     C --&gt; H[Recursos Humanos consulta por periodo y empresa RH]
     G --&gt; H
-    H --&gt; I[Recursos Humanos exporta el Excel o lo envía por correo]
+    H --&gt; I[Recursos Humanos exporta el Excel]
     I --&gt; J[Se obtiene la información por periodo para Contpaq]</code></pre>
 <p>El diagrama muestra las dos formas de crear la prenómina y cómo terminan en la misma consulta de Recursos Humanos.</p>
 <h1 id="rf-01--catálogos-nómina-conceptos-y-periodos-nómina">RF-01 — Catálogos "Nómina Conceptos" y "Periodos Nómina"<a class="headerlink" href="#rf-01--catálogos-nómina-conceptos-y-periodos-nómina" title="Permanent link">&para;</a></h1>
@@ -4351,7 +4346,7 @@
 <h2 id="objetivo_2">Objetivo<a class="headerlink" href="#objetivo_2" title="Permanent link">&para;</a></h2>
 <p>Que la nominista cree la prenómina de un periodo con sus empleados ya cargados, agregue las incidencias y la cierre.</p>
 <h2 id="descripción_2">Descripción<a class="headerlink" href="#descripción_2" title="Permanent link">&para;</a></h2>
-<p>El sistema deberá ofrecer el módulo nuevo "Prenómina", que es independiente del módulo de prenómina actual (ahora "Prenómina Gasto"). Una prenómina lleva sus datos generales (folio, estatus, quién la registra y cuándo) y su periodo. Al cargar el periodo, el sistema trae automáticamente a los empleados que le corresponden a la nominista y muestra una columna por cada día del periodo, que puede ser semanal o quincenal. Cada día viene con la asistencia por defecto y la nominista solo agrega las incidencias. Mientras la prenómina está Activa se puede ajustar, y se pueden agregar o quitar empleados. Al cerrarla, ya no se puede modificar.</p>
+<p>El sistema deberá ofrecer el módulo nuevo "Prenómina", que es independiente del módulo de prenómina actual (ahora "Prenómina Gasto"). Una prenómina lleva sus datos generales (folio, estatus, quién la registra y cuándo) y su periodo. Al cargar el periodo, el sistema trae automáticamente a los empleados que le corresponden a la nominista y muestra una columna por cada día del periodo, que puede ser semanal o quincenal. Cada día viene con la asistencia por defecto y la nominista solo agrega las incidencias. Mientras la prenómina está Activa se puede ajustar, y se pueden agregar o quitar empleados. Una vez guardada (cerrada), ya no se puede modificar.</p>
 <table>
 <thead>
 <tr>
@@ -4626,7 +4621,7 @@
 <h3 id="reglas-de-negocio_9">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_9" title="Permanent link">&para;</a></h3>
 <p><strong>RN-3.16</strong> Mientras la prenómina tenga estatus "Activa", se pueden hacer ajustes al detalle.</p>
 <p><strong>RN-3.17</strong> El proceso de prenómina lo cierra un empleado con rol de nominista, con la acción de cierre que ya existe en la Prenómina Gasto. Al cerrarse, el estatus cambia a "Cerrado" y sus empleados quedan disponibles en "Consulta Prenómina".</p>
-<p><strong>RN-3.18</strong> Una vez cerrada, no se permite modificar sus registros, conceptos ni horas extra.</p>
+<p><strong>RN-3.18</strong> Una vez guardada (cerrada) la prenómina, no se permite modificar sus registros, conceptos ni horas extra.</p>
 <h3 id="criterios-de-aceptación_9">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_9" title="Permanent link">&para;</a></h3>
 <p><strong>CA-3.6.1 — Ajustes antes del cierre</strong> Dado que la prenómina está activa Cuando la nominista modifica el detalle Entonces el sistema permite el ajuste.</p>
 <p><strong>CA-3.6.2 — Cerrar la prenómina</strong> Dado que un empleado con rol de nominista terminó la prenómina Cuando la cierra Entonces el estatus cambia a "Cerrado" y sus empleados quedan disponibles en "Consulta Prenómina".</p>
@@ -4845,7 +4840,7 @@
 <h2 id="objetivo_4">Objetivo<a class="headerlink" href="#objetivo_4" title="Permanent link">&para;</a></h2>
 <p>Mantener la Prenómina Gasto que ya usa el personal de Gastos, con el nuevo nombre, las celdas de horas extra y la creación automática de la prenómina.</p>
 <h2 id="descripción_4">Descripción<a class="headerlink" href="#descripción_4" title="Permanent link">&para;</a></h2>
-<p>El módulo de prenómina actual pasa a llamarse "Prenómina Gasto". Es un proceso del personal de Gastos, que trabaja en conjunto con Recursos Humanos, y es aparte del proceso de Recursos Humanos: ambos conviven y los dos dan lugar a la prenómina. El sistema deberá agregarle las celdas de horas extra por día y la columna de horas extra totales, y deberá crear la prenómina de forma automática al cerrarse (RF-06). Ya cuenta con un flujo de estatus y con la funcionalidad de agregar y quitar empleados, y se cierra igual que la prenómina.</p>
+<p>El módulo de prenómina actual pasa a llamarse "Prenómina Gasto". Es un proceso del personal de Gastos, que trabaja en conjunto con Recursos Humanos, y es aparte del proceso de Recursos Humanos: ambos conviven y los dos dan lugar a la prenómina. El sistema deberá agregarle las celdas de horas extra por día y la columna de horas extra totales, y deberá crear la prenómina de forma automática al cerrarse (RF-06). Ya cuenta con un flujo de estatus y con la funcionalidad de agregar y quitar empleados, y se cierra igual que la prenómina. Una vez guardada (cerrada), no se permite modificar sus registros.</p>
 <table>
 <thead>
 <tr>
@@ -4895,17 +4890,21 @@
 <p><strong>RN-5.2</strong> Cada renglón de empleado muestra: número de nómina, personal, estatus personal, RFC y proceso asignado (área RH), seguidos de una columna por cada día del periodo configurado, con su celda de horas extra a la derecha, y una columna final de horas extra totales.</p>
 <p><strong>RN-5.3</strong> Los detalles de cada fecha se llenan con los conceptos del catálogo "Conceptos Nómina".</p>
 <p><strong>RN-5.4</strong> El periodo, semanal o quincenal, se toma del catálogo "Periodos Nómina". Ya tiene su flujo de estatus y se cierra igual que la prenómina.</p>
+<p><strong>RN-5.5</strong> Una vez guardada (cerrada) la "Prenómina Gasto", no se permite modificar sus registros, conceptos ni horas extra.</p>
 <h3 id="criterios-de-aceptación_11">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_11" title="Permanent link">&para;</a></h3>
 <p><strong>CA-5.1.1 — Datos del empleado</strong> Dado que se abre la "Prenómina Gasto" para un periodo Cuando se muestran los empleados Entonces cada renglón trae el número de nómina, el personal, el estatus personal, el RFC y el proceso asignado (área RH).</p>
 <p><strong>CA-5.1.2 — Días y horas extra</strong> Dado que el periodo está configurado Cuando se muestran los días Entonces hay una columna por cada día, una celda de horas extra a la derecha de cada una y una columna final de horas extra totales.</p>
 <p><strong>CA-5.1.3 — Conceptos de cada fecha</strong> Dado que se llena el detalle de una fecha Cuando se elige el concepto Entonces se usa el catálogo "Conceptos Nómina".</p>
 <p><strong>CA-5.1.4 — Periodo semanal o quincenal</strong> Dado que el catálogo "Periodos Nómina" tiene periodos semanales y quincenales Cuando se abre la "Prenómina Gasto" para un periodo Entonces el periodo puede ser semanal o quincenal.</p>
+<p><strong>CA-5.1.5 — Prenómina Gasto guardada no se modifica</strong> Dado que la Prenómina Gasto está guardada (cerrada) Cuando se intenta modificar un registro, un concepto o las horas extra Entonces el sistema no lo permite.</p>
 <h3 id="casos-de-prueba_11">Casos de prueba<a class="headerlink" href="#casos-de-prueba_11" title="Permanent link">&para;</a></h3>
 <p><strong>CP-5.1.1 — Columnas del empleado (camino feliz)</strong> Verifica: CA-5.1.1 · RN-5.2 Dado que se abre la Prenómina Gasto de un periodo Cuando se muestra un empleado Entonces trae número de nómina, nombre, estatus, RFC y proceso asignado (área RH).</p>
 <p><strong>CP-5.1.2 — Días y celdas de horas (camino feliz)</strong> Verifica: CA-5.1.2 · RN-5.2 Dado que el periodo es de 7 días Cuando se muestran los días Entonces hay 7 columnas de días, 7 celdas de horas extra y una columna de total.</p>
 <p><strong>CP-5.1.3 — Concepto de "Conceptos Nómina" (camino feliz)</strong> Verifica: CA-5.1.3 · RN-5.3 Dado que el personal de Gastos llena el lunes de un empleado Cuando abre la lista de conceptos Entonces ve los conceptos del catálogo "Conceptos Nómina".</p>
 <p><strong>CP-5.1.4 — Periodo quincenal (alternativo)</strong> Verifica: CA-5.1.4 · RN-5.4 Dado que existe un periodo quincenal en el catálogo Cuando el personal de Gastos abre la Prenómina Gasto con ese periodo Entonces se muestran los días de la quincena.</p>
 <p><strong>CP-5.1.5 — Periodo semanal (alternativo)</strong> Verifica: CA-5.1.4 · RN-5.4 Dado que existe un periodo semanal en el catálogo Cuando el personal de Gastos abre la Prenómina Gasto con ese periodo Entonces se muestran los días de la semana.</p>
+<p><strong>CP-5.1.6 — No se modifica un concepto guardado (error)</strong> Verifica: CA-5.1.5 · RN-5.5 Dado que una Prenómina Gasto guardada (cerrada) Cuando el personal de Gastos intenta cambiar un concepto Entonces el sistema no lo permite.</p>
+<p><strong>CP-5.1.7 — No se modifican las horas extra guardadas (error)</strong> Verifica: CA-5.1.5 · RN-5.5 Dado que una Prenómina Gasto guardada (cerrada) Cuando el personal de Gastos intenta cambiar las horas extra de un día Entonces el sistema no lo permite.</p>
 <table>
 <thead>
 <tr>
@@ -4934,6 +4933,11 @@
 <td>CA-5.1.4</td>
 <td>CP-5.1.4, CP-5.1.5</td>
 <td>Alternativo</td>
+</tr>
+<tr>
+<td>CA-5.1.5</td>
+<td>CP-5.1.6, CP-5.1.7</td>
+<td>Error</td>
 </tr>
 </tbody>
 </table>
@@ -5076,7 +5080,7 @@
 <h2 id="objetivo_6">Objetivo<a class="headerlink" href="#objetivo_6" title="Permanent link">&para;</a></h2>
 <p>Evitar que un mismo empleado esté en dos prenóminas del mismo periodo.</p>
 <h2 id="descripción_6">Descripción<a class="headerlink" href="#descripción_6" title="Permanent link">&para;</a></h2>
-<p>El sistema deberá validar, en la Prenómina Gasto y en la Prenómina, que un mismo empleado no esté en dos prenóminas. No deja incluir a un empleado que ya esté en otra prenómina activa, de cualquiera de los dos módulos, ni a uno que ya esté en una prenómina cerrada del mismo periodo. En otro periodo no hay problema. La validación aplica tanto en la creación manual como en la automática.</p>
+<p>El sistema deberá validar, en la Prenómina Gasto y en la Prenómina, que un mismo empleado no esté en dos prenóminas. No deja incluir a un empleado que ya esté en otra prenómina activa, de cualquiera de los dos módulos, ni a uno que ya esté en una prenómina cerrada del mismo periodo. En otro periodo no hay problema. La validación aplica tanto en la creación manual como en la automática. Además, si un empleado aparece duplicado, su registro se pinta de un color que resalte para indicar la inconsistencia.</p>
 <h2 id="hu-71--impedir-empleados-duplicados">HU-7.1 — Impedir empleados duplicados<a class="headerlink" href="#hu-71--impedir-empleados-duplicados" title="Permanent link">&para;</a></h2>
 <p>Como nominista o personal de Gastos, quiero que el sistema no me deje incluir a un empleado que ya está en otra prenómina, para no pagar dos veces a la misma persona.</p>
 <h3 id="reglas-de-negocio_14">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_14" title="Permanent link">&para;</a></h3>
@@ -5084,11 +5088,13 @@
 <p><strong>RN-7.2</strong> No se permite incluir a un empleado que ya esté en otra prenómina activa, de cualquiera de los dos módulos, ni a uno que ya esté en una prenómina cerrada del mismo periodo.</p>
 <p><strong>RN-7.3</strong> Si ya está en una prenómina activa, el mensaje es "Este empleado ya está en una prenómina activa." Si ya está en una cerrada del mismo periodo, el mensaje es "Este empleado ya está en una prenómina cerrada de este periodo."</p>
 <p><strong>RN-7.4</strong> La validación aplica tanto en la creación manual como en la automática.</p>
+<p><strong>RN-7.5</strong> Cuando un empleado esté duplicado en una prenómina, su registro se pinta de un color que resalte para indicar la inconsistencia.</p>
 <h3 id="criterios-de-aceptación_14">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_14" title="Permanent link">&para;</a></h3>
 <p><strong>CA-7.1.1 — Empleado en una prenómina activa</strong> Dado que un empleado ya está en una "Prenómina Gasto" o en una prenómina activa Cuando se intenta incluirlo en otra Entonces el sistema bloquea la acción y muestra el mensaje "Este empleado ya está en una prenómina activa."</p>
 <p><strong>CA-7.1.2 — Empleado en una prenómina cerrada del mismo periodo</strong> Dado que un empleado ya está en una prenómina cerrada de un periodo Cuando se intenta incluirlo en otra prenómina nueva del mismo periodo Entonces el sistema bloquea la acción y muestra el mensaje "Este empleado ya está en una prenómina cerrada de este periodo."</p>
 <p><strong>CA-7.1.3 — Sin duplicidad</strong> Dado que un empleado no está en otra prenómina activa ni en una cerrada del mismo periodo Cuando se incluye en una prenómina Entonces el sistema lo permite.</p>
 <p><strong>CA-7.1.4 — Creación automática</strong> Dado que un empleado ya está en otra prenómina activa o en una cerrada del mismo periodo Cuando se crea la prenómina de forma automática al cerrar la "Prenómina Gasto" Entonces se aplica la misma validación que en la creación manual.</p>
+<p><strong>CA-7.1.5 — Registro duplicado resaltado</strong> Dado que un empleado aparece duplicado en una prenómina Cuando la persona abre la prenómina Entonces el registro de ese empleado se muestra pintado de un color que resalta e indica la inconsistencia.</p>
 <h3 id="casos-de-prueba_14">Casos de prueba<a class="headerlink" href="#casos-de-prueba_14" title="Permanent link">&para;</a></h3>
 <p><strong>CP-7.1.1 — Ya está en una prenómina activa (error)</strong> Verifica: CA-7.1.1 · RN-7.3 Dado que el empleado 1001 está en una prenómina activa de la semana 41 Cuando Ana intenta agregarlo a otra prenómina de la semana 41 Entonces el sistema lo bloquea y muestra "Este empleado ya está en una prenómina activa."</p>
 <p><strong>CP-7.1.2 — Ya está en la Prenómina Gasto activa (error)</strong> Verifica: CA-7.1.1 · RN-7.2 Dado que el empleado 1001 está en una Prenómina Gasto activa Cuando Ana intenta agregarlo a una prenómina Entonces el sistema lo bloquea.</p>
@@ -5096,6 +5102,8 @@
 <p><strong>CP-7.1.4 — Otro periodo sí se permite (alternativo)</strong> Verifica: CA-7.1.3 · RN-7.2 Dado que el empleado 1002 está en una prenómina cerrada de la semana 41 Cuando Ana lo agrega a una prenómina de la semana 42 Entonces el sistema lo permite.</p>
 <p><strong>CP-7.1.5 — Empleado libre (camino feliz)</strong> Verifica: CA-7.1.3 Dado que el empleado 1003 no está en ninguna prenómina Cuando Ana lo agrega Entonces el sistema lo permite.</p>
 <p><strong>CP-7.1.6 — Creación automática con duplicado (error)</strong> Verifica: CA-7.1.4 · RN-7.4 Dado que el empleado 1001 ya está en una prenómina cerrada de la semana 41 y está en la Prenómina Gasto de esa semana Cuando Gastos cierra la Prenómina Gasto Entonces se aplica la validación de empleado duplicado.</p>
+<p><strong>CP-7.1.7 — Registro duplicado resaltado (camino feliz)</strong> Verifica: CA-7.1.5 · RN-7.5 Dado que el empleado 1001 aparece duplicado en una prenómina Cuando Ana abre la prenómina Entonces el registro del empleado 1001 se muestra de un color que resalta, distinto al de los demás registros.</p>
+<p><strong>CP-7.1.8 — Empleado sin duplicado no se resalta (validación)</strong> Verifica: CA-7.1.5 · RN-7.5 Dado que el empleado 1003 no está duplicado Cuando Ana abre la prenómina Entonces su registro se muestra con el formato normal.</p>
 <table>
 <thead>
 <tr>
@@ -5124,6 +5132,11 @@
 <td>CA-7.1.4</td>
 <td>CP-7.1.6</td>
 <td>Error</td>
+</tr>
+<tr>
+<td>CA-7.1.5</td>
+<td>CP-7.1.7, CP-7.1.8</td>
+<td>Camino feliz, Validación</td>
 </tr>
 </tbody>
 </table>
@@ -5155,7 +5168,7 @@
 <h2 id="objetivo_7">Objetivo<a class="headerlink" href="#objetivo_7" title="Permanent link">&para;</a></h2>
 <p>Que Recursos Humanos vea en un solo lugar, por periodo y empresa RH, la información de las prenóminas cerradas y quién falta por cerrar.</p>
 <h2 id="descripción_7">Descripción<a class="headerlink" href="#descripción_7" title="Permanent link">&para;</a></h2>
-<p>El sistema deberá ofrecer el módulo "Consulta Prenómina", disponible solo para Recursos Humanos general (no incluye a Recursos Humanos de plantas). Se filtra por periodo de nómina y por empresa RH, un campo que ya existe en el expediente del empleado y que es distinto de la "empresa" con la que se cargan los empleados en la prenómina. Al filtrar, aparecen todos los empleados de esa empresa RH con la información capturada en la prenómina ya cerrada. Los empleados que faltan por cerrar su nómina aparecen en el reporte, pero con los días del periodo sin información. Eso no bloquea la exportación ni el envío.</p>
+<p>El sistema deberá ofrecer el módulo "Consulta Prenómina", disponible solo para Recursos Humanos general (no incluye a Recursos Humanos de plantas). Se filtra por periodo de nómina y por empresa RH, un campo que ya existe en el expediente del empleado y que es distinto de la "empresa" con la que se cargan los empleados en la prenómina. Al filtrar, aparecen todos los empleados de esa empresa RH con la información capturada en la prenómina ya cerrada. Los empleados que faltan por cerrar su nómina aparecen en el reporte, pero con los días del periodo sin información. Eso no bloquea la exportación.</p>
 <h2 id="hu-81--consultar-por-periodo-y-empresa-rh">HU-8.1 — Consultar por periodo y empresa RH<a class="headerlink" href="#hu-81--consultar-por-periodo-y-empresa-rh" title="Permanent link">&para;</a></h2>
 <p>Como Recursos Humanos, quiero filtrar por periodo y empresa RH, para ver la información cerrada de todos los empleados de esa empresa.</p>
 <h3 id="reglas-de-negocio_15">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_15" title="Permanent link">&para;</a></h3>
@@ -5202,15 +5215,14 @@
 <p>Como Recursos Humanos, quiero ver con los días vacíos a los empleados que faltan por cerrar su nómina, para saber a quién le falta información antes de exportar.</p>
 <h3 id="reglas-de-negocio_16">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_16" title="Permanent link">&para;</a></h3>
 <p><strong>RN-8.4</strong> Los empleados de la empresa RH que faltan por cerrar su nómina aparecen en el reporte sin información en los días del periodo.</p>
-<p><strong>RN-8.5</strong> Esto no bloquea la exportación ni el envío. Un Excel puede salir con empleados pendientes, por lo que conviene revisar los empleados sin información antes de exportar o enviar.</p>
+<p><strong>RN-8.5</strong> Esto no bloquea la exportación. Un Excel puede salir con empleados pendientes, por lo que conviene revisar los empleados sin información antes de exportar.</p>
 <h3 id="criterios-de-aceptación_16">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_16" title="Permanent link">&para;</a></h3>
 <p><strong>CA-8.2.1 — Empleado sin nómina cerrada</strong> Dado que un empleado de la empresa RH no tiene su nómina cerrada en el periodo Cuando Recursos Humanos consulta ese periodo y esa empresa RH Entonces el empleado aparece en el reporte con los días del periodo sin información.</p>
-<p><strong>CA-8.2.2 — Exportación con pendientes</strong> Dado que hay empleados sin nómina cerrada Cuando Recursos Humanos exporta o envía el Excel Entonces el sistema lo permite y esos empleados salen con los días vacíos.</p>
+<p><strong>CA-8.2.2 — Exportación con pendientes</strong> Dado que hay empleados sin nómina cerrada Cuando Recursos Humanos exporta el Excel Entonces el sistema lo permite y esos empleados salen con los días vacíos.</p>
 <h3 id="casos-de-prueba_16">Casos de prueba<a class="headerlink" href="#casos-de-prueba_16" title="Permanent link">&para;</a></h3>
 <p><strong>CP-8.2.1 — Empleado pendiente aparece vacío (camino feliz)</strong> Verifica: CA-8.2.1 · RN-8.4 Dado que el empleado 1004 no está en ninguna prenómina cerrada de la semana 41 Cuando Recursos Humanos consulta la semana 41 Entonces el empleado 1004 aparece con sus 7 días sin información.</p>
 <p><strong>CP-8.2.2 — Empleado en prenómina activa también vacío (alternativo)</strong> Verifica: CA-8.2.1 · RN-8.3 Dado que el empleado 1005 está en una prenómina activa de la semana 41 Cuando Recursos Humanos consulta la semana 41 Entonces el empleado 1005 aparece con los días vacíos.</p>
 <p><strong>CP-8.2.3 — Exportar con pendientes (alternativo)</strong> Verifica: CA-8.2.2 · RN-8.5 Dado que hay 3 empleados pendientes en la consulta Cuando Recursos Humanos exporta el Excel Entonces el Excel se genera y esos 3 empleados salen con los días vacíos.</p>
-<p><strong>CP-8.2.4 — Enviar con pendientes (alternativo)</strong> Verifica: CA-8.2.2 · RN-8.5 Dado que hay empleados pendientes en la consulta Cuando Recursos Humanos elige enviar el Excel por correo Entonces el correo se envía sin bloqueo.</p>
 <table>
 <thead>
 <tr>
@@ -5227,14 +5239,14 @@
 </tr>
 <tr>
 <td>CA-8.2.2</td>
-<td>CP-8.2.3, CP-8.2.4</td>
+<td>CP-8.2.3</td>
 <td>Alternativo</td>
 </tr>
 </tbody>
 </table>
 <hr />
 <p><strong>Regla transversal:</strong> la información que muestra esta consulta es la de las prenóminas cerradas, sean manuales (RF-03) o automáticas (RF-06).</p>
-<h1 id="rf-09--exportar-y-enviar-el-excel-a-recursos-humanos">RF-09 — Exportar y enviar el Excel a Recursos Humanos<a class="headerlink" href="#rf-09--exportar-y-enviar-el-excel-a-recursos-humanos" title="Permanent link">&para;</a></h1>
+<h1 id="rf-09--exportar-el-excel-a-recursos-humanos">RF-09 — Exportar el Excel a Recursos Humanos<a class="headerlink" href="#rf-09--exportar-el-excel-a-recursos-humanos" title="Permanent link">&para;</a></h1>
 <table>
 <thead>
 <tr>
@@ -5260,7 +5272,7 @@
 <h2 id="objetivo_8">Objetivo<a class="headerlink" href="#objetivo_8" title="Permanent link">&para;</a></h2>
 <p>Que Recursos Humanos obtenga, en un Excel, la información por periodo que necesita para Contpaq.</p>
 <h2 id="descripción_8">Descripción<a class="headerlink" href="#descripción_8" title="Permanent link">&para;</a></h2>
-<p>Desde "Consulta Prenómina", el sistema deberá permitir que el personal de Recursos Humanos exporte a Excel la información consultada, y que la envíe por correo electrónico a los destinatarios que configure la Célula de Innovación. El envío es una opción manual, bajo demanda: el sistema nunca envía un correo por su cuenta. De ese Excel se obtiene la información por periodo, con los conceptos para Contpaq. Es el mismo Excel para exportar y para enviar, y sustituye el reporte manual en papel. No hay un layout aparte para Contpaq: se usa este Excel.</p>
+<p>Desde "Consulta Prenómina", el sistema deberá permitir que el personal de Recursos Humanos exporte a Excel la información consultada. De ese Excel se obtiene la información por periodo, con los conceptos para Contpaq. Sustituye el reporte manual en papel. No hay un layout aparte para Contpaq: se usa este Excel.</p>
 <table>
 <thead>
 <tr>
@@ -5296,7 +5308,7 @@
 <p>Como Recursos Humanos, quiero exportar la consulta a Excel, para llevar la información del periodo a Contpaq sin capturarla a mano.</p>
 <h3 id="reglas-de-negocio_17">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_17" title="Permanent link">&para;</a></h3>
 <p><strong>RN-9.1</strong> El archivo Excel es el que se usa para Contpaq, sin otro layout aparte, y trae la información por periodo; en cada día va la clave del concepto de "Nómina Conceptos" para Contpaq y las horas extra del día, y al final las horas extra totales. Incluye el número de nómina y el nombre de cada empleado y los días del periodo.</p>
-<p><strong>RN-9.2</strong> La exportación y el envío por correo los hace Recursos Humanos desde "Consulta Prenómina", de forma manual y bajo demanda.</p>
+<p><strong>RN-9.2</strong> La exportación la hace Recursos Humanos desde "Consulta Prenómina", de forma manual y bajo demanda.</p>
 <h3 id="criterios-de-aceptación_17">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_17" title="Permanent link">&para;</a></h3>
 <p><strong>CA-9.1.1 — Exportar a Excel</strong> Dado que Recursos Humanos consultó un periodo y una empresa RH Cuando exporta Entonces el sistema descarga un Excel con el número de nómina y el nombre de cada empleado, los días del periodo y, en cada día, la clave del concepto de "Nómina Conceptos" que coincide con Contpaq y las horas extra del día, y al final las horas extra totales.</p>
 <h3 id="casos-de-prueba_17">Casos de prueba<a class="headerlink" href="#casos-de-prueba_17" title="Permanent link">&para;</a></h3>
@@ -5320,48 +5332,8 @@
 </tr>
 </tbody>
 </table>
-<h2 id="hu-92--enviar-el-excel-por-correo">HU-9.2 — Enviar el Excel por correo<a class="headerlink" href="#hu-92--enviar-el-excel-por-correo" title="Permanent link">&para;</a></h2>
-<p>Como Recursos Humanos, quiero enviar el Excel por correo a las personas que lo necesitan, para que lleguen a Contpaq sin pasar archivos a mano.</p>
-<h3 id="reglas-de-negocio_18">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_18" title="Permanent link">&para;</a></h3>
-<p><strong>RN-9.3</strong> Al elegir la opción de enviar, el sistema manda un correo electrónico a los destinatarios configurados por la Célula de Innovación, con un Excel con la información de "Consulta Prenómina", con la información por periodo para Contpaq.</p>
-<p><strong>RN-9.4</strong> El envío es manual y bajo demanda. El envío no modifica la información.</p>
-<h3 id="criterios-de-aceptación_18">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_18" title="Permanent link">&para;</a></h3>
-<p><strong>CA-9.2.1 — Envío por correo</strong> Dado que Recursos Humanos consultó un periodo y una empresa RH Cuando elige la opción de enviar Entonces el sistema envía un correo electrónico a los destinatarios configurados por la Célula de Innovación con ese Excel.</p>
-<p><strong>CA-9.2.2 — Envío solo bajo demanda</strong> Dado que Recursos Humanos exporta el Excel Cuando no elige la opción de enviar Entonces el sistema no manda ningún correo.</p>
-<p><strong>CA-9.2.3 — Contenido del correo</strong> Dado que se envió el correo Cuando se abre el Excel Entonces incluye la información por empleado, con el número de nómina, el nombre, los días del periodo y, en cada día, la clave del concepto y las horas extra del día, y al final las horas extra totales.</p>
-<h3 id="casos-de-prueba_18">Casos de prueba<a class="headerlink" href="#casos-de-prueba_18" title="Permanent link">&para;</a></h3>
-<p><strong>CP-9.2.1 — Envío exitoso (camino feliz)</strong> Verifica: CA-9.2.1 · RN-9.3 Dado que Recursos Humanos consultó la semana 41 y "Grupo A" y la Célula de Innovación configuró 2 destinatarios Cuando elige enviar Entonces los 2 destinatarios reciben el correo con el Excel.</p>
-<p><strong>CP-9.2.2 — Sin envío automático (validación)</strong> Verifica: CA-9.2.2 · RN-9.4 Dado que Recursos Humanos exportó el Excel Cuando pasa un día sin que elija enviar Entonces no se envía ningún correo.</p>
-<p><strong>CP-9.2.3 — Mismo contenido que la exportación (validación)</strong> Verifica: CA-9.2.3 · RN-9.1 Dado que se exportó un Excel y se envió otro con los mismos filtros Cuando se comparan Entonces el contenido es el mismo.</p>
-<p><strong>CP-9.2.4 — El envío no cambia la información (validación)</strong> Verifica: CA-9.2.1 · RN-9.4 Dado que Recursos Humanos envió el Excel Cuando vuelve a consultar el mismo periodo Entonces la información es la misma que antes del envío.</p>
-<table>
-<thead>
-<tr>
-<th>CA</th>
-<th>Caso(s) de prueba</th>
-<th>Escenarios cubiertos</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>CA-9.2.1</td>
-<td>CP-9.2.1, CP-9.2.4</td>
-<td>Camino feliz, Validación</td>
-</tr>
-<tr>
-<td>CA-9.2.2</td>
-<td>CP-9.2.2</td>
-<td>Validación</td>
-</tr>
-<tr>
-<td>CA-9.2.3</td>
-<td>CP-9.2.3</td>
-<td>Validación</td>
-</tr>
-</tbody>
-</table>
 <hr />
-<p><strong>Regla transversal:</strong> los destinatarios y todas las asignaciones de permisos los configura la Célula de Innovación.</p>
+<p><strong>Regla transversal:</strong> todas las asignaciones de permisos las configura la Célula de Innovación.</p>
 <h1 id="entregable-2--reporte-de-jornada-desde-biostar">ENTREGABLE 2 — REPORTE DE JORNADA DESDE BIOSTAR<a class="headerlink" href="#entregable-2--reporte-de-jornada-desde-biostar" title="Permanent link">&para;</a></h1>
 <p>A partir del 1 de enero de 2027, la LFT exigirá un registro electrónico de la jornada de trabajo. Las checadas ya se guardan en Biostar, tanto las de los checadores físicos de cada planta como las de InnovApp. Este entregable crea un reporte en Business Suite que las presenta con una sola línea por empleado y por día, para que Recursos Humanos las consulte y las audite.</p>
 <p>El reporte no cambia ni recalcula nada: toma la información de Biostar, de su complemento T&amp;A (tiempo y asistencia), tal como viene. Tampoco reemplaza las listas de asistencia que hoy entregan las empresas al equipo de nómina.</p>
@@ -5447,18 +5419,18 @@
 </table>
 <h2 id="hu-101--ver-una-línea-por-empleado-y-por-día">HU-10.1 — Ver una línea por empleado y por día<a class="headerlink" href="#hu-101--ver-una-línea-por-empleado-y-por-día" title="Permanent link">&para;</a></h2>
 <p>Como Recursos Humanos, quiero ver una sola línea por empleado y por día con sus cuatro marcajes, para revisar la jornada sin interpretar checadas sueltas.</p>
-<h3 id="reglas-de-negocio_19">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_19" title="Permanent link">&para;</a></h3>
+<h3 id="reglas-de-negocio_18">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_18" title="Permanent link">&para;</a></h3>
 <p><strong>RN-10.1</strong> Toda la información de las checadas, incluidas las de InnovApp, se toma de Biostar, de su complemento T&amp;A. El reporte solo cambia su estructura de lectura; se conecta únicamente para consultar y no modifica nada.</p>
 <p><strong>RN-10.2</strong> El reporte muestra una sola línea por empleado y por día, no una línea por cada checada. Incluye todos los días del periodo filtrado.</p>
 <p><strong>RN-10.3</strong> Cada línea incluye: nombre, CURP, fecha, los cuatro tipos de marcaje en horizontal (entrada, inicio de comida, fin de comida y salida; vacíos si no existe alguno), horas extra y excepciones. Todo va en la misma línea por día y por empleado.</p>
 <p><strong>RN-10.4</strong> En cada tipo de marcaje se muestra siempre la primera checada que se registró de ese tipo en el día.</p>
 <p><strong>RN-10.5</strong> Si en un día el empleado no tiene ninguna checada, la línea de ese día aparece con los cuatro tipos de marcaje vacíos y muestra la excepción que indique Biostar.</p>
-<h3 id="criterios-de-aceptación_19">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_19" title="Permanent link">&para;</a></h3>
+<h3 id="criterios-de-aceptación_18">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_18" title="Permanent link">&para;</a></h3>
 <p><strong>CA-10.1.1 — Una línea por día</strong> Dado que un empleado tiene checadas de entrada, comida y salida en un día Cuando Recursos Humanos consulta el reporte Entonces se muestra una sola línea con nombre, CURP, fecha, los cuatro tipos de marcaje, las horas extra y las excepciones.</p>
 <p><strong>CA-10.1.2 — Días del periodo</strong> Dado que Recursos Humanos filtra un periodo de varios días Cuando ejecuta el reporte Entonces cada día del periodo (por ejemplo, lunes, martes y así hasta cubrirlo) tiene su línea con los cuatro tipos de marcaje.</p>
 <p><strong>CA-10.1.3 — Primera checada de cada tipo</strong> Dado que un empleado tiene varias checadas del mismo tipo de marcaje en un día Cuando Recursos Humanos consulta el reporte Entonces la celda de ese tipo de marcaje muestra la primera que se registró.</p>
 <p><strong>CA-10.1.4 — Día sin checadas</strong> Dado que un empleado no tiene ninguna checada en un día del periodo Cuando Recursos Humanos consulta el reporte Entonces la línea de ese día aparece con los cuatro tipos de marcaje vacíos y muestra la excepción que indique Biostar.</p>
-<h3 id="casos-de-prueba_19">Casos de prueba<a class="headerlink" href="#casos-de-prueba_19" title="Permanent link">&para;</a></h3>
+<h3 id="casos-de-prueba_18">Casos de prueba<a class="headerlink" href="#casos-de-prueba_18" title="Permanent link">&para;</a></h3>
 <p><strong>CP-10.1.1 — Línea completa (camino feliz)</strong> Verifica: CA-10.1.1 · RN-10.3 Dado que Luis checó entrada 08:02, inicio de comida 14:00, fin de comida 14:30 y salida 18:05 el lunes Cuando Recursos Humanos consulta el reporte Entonces hay una sola línea del lunes con esas cuatro horas.</p>
 <p><strong>CP-10.1.2 — Periodo de cinco días (camino feliz)</strong> Verifica: CA-10.1.2 · RN-10.2 Dado que se filtra de lunes a viernes Cuando se ejecuta el reporte Entonces cada empleado tiene cinco líneas, una por día.</p>
 <p><strong>CP-10.1.3 — Dos entradas en el mismo día (alternativo)</strong> Verifica: CA-10.1.3 · RN-10.4 Dado que Luis checó entrada a las 08:02 y otra vez a las 08:05 Cuando se consulta el reporte Entonces la celda de entrada muestra 08:02.</p>
@@ -5498,16 +5470,16 @@
 </table>
 <h2 id="hu-102--ver-las-horas-extra-y-las-excepciones-tal-como-las-trae-biostar">HU-10.2 — Ver las horas extra y las excepciones tal como las trae Biostar<a class="headerlink" href="#hu-102--ver-las-horas-extra-y-las-excepciones-tal-como-las-trae-biostar" title="Permanent link">&para;</a></h2>
 <p>Como Recursos Humanos, quiero ver las horas extra y las excepciones que calcula Biostar, para auditar sin que el reporte cambie ningún dato.</p>
-<h3 id="reglas-de-negocio_20">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_20" title="Permanent link">&para;</a></h3>
+<h3 id="reglas-de-negocio_19">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_19" title="Permanent link">&para;</a></h3>
 <p><strong>RN-10.6</strong> Los turnos y las horas base se configuran en Biostar (complemento T&amp;A). Las horas extra del reporte son las que Biostar genera según esa configuración.</p>
 <p><strong>RN-10.7</strong> Si Biostar trae un campo vacío o un dato distinto a una hora (por ejemplo, en caso de falta), el reporte lo muestra tal como viene, sin completarlo ni corregirlo.</p>
 <p><strong>RN-10.8</strong> Las excepciones (por ejemplo, ausencia o tiempo de trabajo insuficiente) son las que indica Biostar; el reporte las muestra tal como vienen.</p>
-<h3 id="criterios-de-aceptación_20">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_20" title="Permanent link">&para;</a></h3>
+<h3 id="criterios-de-aceptación_19">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_19" title="Permanent link">&para;</a></h3>
 <p><strong>CA-10.2.1 — Horas coinciden con Biostar</strong> Dado que el reporte muestra las horas de un empleado Cuando se comparan con las checadas de Biostar Entonces todas coinciden.</p>
 <p><strong>CA-10.2.2 — Horas extra de Biostar</strong> Dado que el turno y las horas base están configurados en Biostar y un empleado trabaja más de sus horas base Cuando Recursos Humanos consulta el reporte Entonces las horas extra son las que Biostar generó.</p>
 <p><strong>CA-10.2.3 — Datos tal como vienen</strong> Dado que Biostar trae un campo vacío o un dato distinto a una hora (por ejemplo, en caso de falta) Cuando Recursos Humanos consulta el reporte Entonces el reporte muestra el campo vacío o el dato tal como viene.</p>
 <p><strong>CA-10.2.4 — Excepciones</strong> Dado que Biostar indica una excepción para un empleado en un día (por ejemplo, ausencia o tiempo de trabajo insuficiente) Cuando Recursos Humanos consulta el reporte Entonces la línea de ese día muestra la excepción tal como viene en Biostar.</p>
-<h3 id="casos-de-prueba_20">Casos de prueba<a class="headerlink" href="#casos-de-prueba_20" title="Permanent link">&para;</a></h3>
+<h3 id="casos-de-prueba_19">Casos de prueba<a class="headerlink" href="#casos-de-prueba_19" title="Permanent link">&para;</a></h3>
 <p><strong>CP-10.2.1 — Horas iguales a Biostar (camino feliz)</strong> Verifica: CA-10.2.1 · RN-10.1 Dado que Biostar tiene entrada 08:02 y salida 18:05 de Luis Cuando se consulta el reporte Entonces muestra 08:02 y 18:05.</p>
 <p><strong>CP-10.2.2 — Horas extra de Biostar (camino feliz)</strong> Verifica: CA-10.2.2 · RN-10.6 Dado que el turno de Luis es de 8 horas y trabajó 10 Cuando se consulta el reporte Entonces las horas extra son las que Biostar calculó para ese día.</p>
 <p><strong>CP-10.2.3 — Dato distinto a una hora (alternativo)</strong> Verifica: CA-10.2.3 · RN-10.7 Dado que Biostar trae la palabra "Falta" en lugar de una hora Cuando se consulta el reporte Entonces el reporte muestra "Falta" sin cambiarla.</p>
@@ -5546,14 +5518,14 @@
 </table>
 <h2 id="hu-103--consultar-desde-business-suite-según-mi-alcance">HU-10.3 — Consultar desde Business Suite según mi alcance<a class="headerlink" href="#hu-103--consultar-desde-business-suite-según-mi-alcance" title="Permanent link">&para;</a></h2>
 <p>Como Recursos Humanos, quiero consultar el reporte desde Business Suite y que Recursos Humanos de cada planta vea solo su planta, para que cada persona vea lo que le corresponde.</p>
-<h3 id="reglas-de-negocio_21">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_21" title="Permanent link">&para;</a></h3>
+<h3 id="reglas-de-negocio_20">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_20" title="Permanent link">&para;</a></h3>
 <p><strong>RN-10.9</strong> El reporte está disponible para Recursos Humanos y para Recursos Humanos de plantas. El personal de Recursos Humanos de cada planta ve solo su planta. Se consulta desde Business Suite de escritorio.</p>
 <p><strong>RN-10.10</strong> El empleado debe estar registrado en Biostar. Si no lo está, no puede checar y sus registros no aparecen en el reporte.</p>
-<h3 id="criterios-de-aceptación_21">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_21" title="Permanent link">&para;</a></h3>
+<h3 id="criterios-de-aceptación_20">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_20" title="Permanent link">&para;</a></h3>
 <p><strong>CA-10.3.1 — Business Suite de escritorio</strong> Dado que una persona autorizada abre Business Suite de escritorio Cuando ejecuta el reporte Entonces lo ve con la estructura descrita.</p>
 <p><strong>CA-10.3.2 — Solo mi planta</strong> Dado que una persona de Recursos Humanos de una planta ejecuta el reporte Cuando se muestran los resultados Entonces solo ve a los empleados de su planta.</p>
 <p><strong>CA-10.3.3 — Empleado no registrado</strong> Dado que un empleado no está registrado en Biostar Cuando Recursos Humanos consulta el reporte Entonces ese empleado no aparece.</p>
-<h3 id="casos-de-prueba_21">Casos de prueba<a class="headerlink" href="#casos-de-prueba_21" title="Permanent link">&para;</a></h3>
+<h3 id="casos-de-prueba_20">Casos de prueba<a class="headerlink" href="#casos-de-prueba_20" title="Permanent link">&para;</a></h3>
 <p><strong>CP-10.3.1 — Consulta desde Business Suite (camino feliz)</strong> Verifica: CA-10.3.1 · RN-10.9 Dado que una persona autorizada Cuando abre Business Suite de escritorio y ejecuta el reporte Entonces ve el reporte con la estructura descrita.</p>
 <p><strong>CP-10.3.2 — Recursos Humanos de planta ve su planta (permisos)</strong> Verifica: CA-10.3.2 · RN-10.9 Dado que la persona de Recursos Humanos de la planta Norte Cuando ejecuta el reporte Entonces solo aparecen empleados de la planta Norte.</p>
 <p><strong>CP-10.3.3 — Recursos Humanos general ve todo (alternativo)</strong> Verifica: CA-10.3.2 · RN-10.9 Dado que una persona de Recursos Humanos general Cuando ejecuta el reporte Entonces puede ver a los empleados de todas las plantas.</p>
@@ -5616,17 +5588,17 @@
 <p>El sistema deberá generar el reporte con filtros fijos y filtros modificables. Fijos: nombre "Reporte diario", tipo de reporte "Individual" y marcaciones "Todas las marcaciones" (todas las checadas: hora de entrada, inicio de comida, fin de comida y salida). Modificables, y únicos que se pueden cambiar: el grupo de usuarios, que son los grupos por proceso configurados en Biostar y cuyo listado se consume de Biostar, y el periodo, que es personalizado con fecha de inicio y fecha de fin obligatorias.</p>
 <h2 id="hu-111--filtrar-por-grupo-y-periodo">HU-11.1 — Filtrar por grupo y periodo<a class="headerlink" href="#hu-111--filtrar-por-grupo-y-periodo" title="Permanent link">&para;</a></h2>
 <p>Como Recursos Humanos, quiero elegir solo el grupo de usuarios y el periodo, para obtener siempre el mismo reporte sin configurar nada más.</p>
-<h3 id="reglas-de-negocio_22">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_22" title="Permanent link">&para;</a></h3>
+<h3 id="reglas-de-negocio_21">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_21" title="Permanent link">&para;</a></h3>
 <p><strong>RN-11.1</strong> Los filtros fijos son: nombre "Reporte diario", tipo de reporte "Individual" y marcaciones "Todas las marcaciones". No se pueden modificar.</p>
 <p><strong>RN-11.2</strong> El grupo de usuarios se elige entre los grupos por proceso configurados en Biostar; el listado se consume de Biostar.</p>
 <p><strong>RN-11.3</strong> El periodo es personalizado y requiere fecha de inicio y fecha de fin.</p>
-<h3 id="criterios-de-aceptación_22">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_22" title="Permanent link">&para;</a></h3>
+<h3 id="criterios-de-aceptación_21">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_21" title="Permanent link">&para;</a></h3>
 <p><strong>CA-11.1.1 — Filtro por grupo y periodo</strong> Dado que Recursos Humanos elige un grupo de usuarios y un periodo personalizado, con fecha de inicio y fecha de fin Cuando ejecuta el "Reporte diario" Entonces solo aparecen empleados de ese grupo y fechas de ese periodo.</p>
 <p><strong>CA-11.1.2 — Periodo personalizado</strong> Dado que Recursos Humanos elige un periodo personalizado Cuando indica fecha inicial y final Entonces el reporte cubre exactamente ese rango.</p>
 <p><strong>CA-11.1.3 — Filtros fijos</strong> Dado que Recursos Humanos abre el reporte Cuando ve los filtros Entonces el nombre, el tipo de reporte y las marcaciones no se pueden modificar; solo se modifican el grupo de usuarios y el periodo.</p>
 <p><strong>CA-11.1.4 — Grupos de Biostar</strong> Dado que hay grupos por proceso configurados en Biostar Cuando Recursos Humanos abre la lista de grupos de usuarios Entonces ve los grupos que se consumen de Biostar.</p>
 <p><strong>CA-11.1.5 — Fechas obligatorias</strong> Dado que Recursos Humanos no indica la fecha de inicio o la fecha de fin Cuando intenta ejecutar el reporte Entonces el sistema no lo permite.</p>
-<h3 id="casos-de-prueba_22">Casos de prueba<a class="headerlink" href="#casos-de-prueba_22" title="Permanent link">&para;</a></h3>
+<h3 id="casos-de-prueba_21">Casos de prueba<a class="headerlink" href="#casos-de-prueba_21" title="Permanent link">&para;</a></h3>
 <p><strong>CP-11.1.1 — Filtrar por grupo y periodo (camino feliz)</strong> Verifica: CA-11.1.1 · RN-11.2 Dado que existe el grupo "Empaque" en Biostar Cuando Recursos Humanos elige "Empaque" y del 5 al 11 de octubre Entonces solo aparecen empleados de "Empaque" con fechas del 5 al 11.</p>
 <p><strong>CP-11.1.2 — Rango exacto (camino feliz)</strong> Verifica: CA-11.1.2 · RN-11.3 Dado que se elige del 1 al 15 de octubre Cuando se ejecuta el reporte Entonces hay 15 días por empleado, del 1 al 15.</p>
 <p><strong>CP-11.1.3 — Filtros fijos bloqueados (validación)</strong> Verifica: CA-11.1.3 · RN-11.1 Dado que Recursos Humanos abre el reporte Cuando intenta cambiar el tipo de reporte a otro distinto de "Individual" Entonces el sistema no lo permite.</p>
@@ -5698,11 +5670,11 @@
 <p>El sistema deberá permitir que Recursos Humanos elija qué columnas del reporte quiere ver. Al ejecutar el reporte, solo se muestran las columnas elegidas.</p>
 <h2 id="hu-121--elegir-las-columnas-del-reporte">HU-12.1 — Elegir las columnas del reporte<a class="headerlink" href="#hu-121--elegir-las-columnas-del-reporte" title="Permanent link">&para;</a></h2>
 <p>Como Recursos Humanos, quiero elegir qué columnas ver, para leer el reporte sin información que no necesito.</p>
-<h3 id="reglas-de-negocio_23">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_23" title="Permanent link">&para;</a></h3>
+<h3 id="reglas-de-negocio_22">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_22" title="Permanent link">&para;</a></h3>
 <p><strong>RN-12.1</strong> Recursos Humanos elige qué columnas del reporte se muestran. Las columnas disponibles son las del reporte de jornada (RF-10).</p>
-<h3 id="criterios-de-aceptación_23">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_23" title="Permanent link">&para;</a></h3>
+<h3 id="criterios-de-aceptación_22">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_22" title="Permanent link">&para;</a></h3>
 <p><strong>CA-12.1.1 — Columnas elegidas</strong> Dado que Recursos Humanos configura las columnas del reporte Cuando guarda su selección y ejecuta el reporte Entonces solo se muestran las columnas seleccionadas.</p>
-<h3 id="casos-de-prueba_23">Casos de prueba<a class="headerlink" href="#casos-de-prueba_23" title="Permanent link">&para;</a></h3>
+<h3 id="casos-de-prueba_22">Casos de prueba<a class="headerlink" href="#casos-de-prueba_22" title="Permanent link">&para;</a></h3>
 <p><strong>CP-12.1.1 — Mostrar algunas columnas (camino feliz)</strong> Verifica: CA-12.1.1 · RN-12.1 Dado que Recursos Humanos elige solo Nombre, Fecha, Entrada y Salida Cuando ejecuta el reporte Entonces el reporte muestra solo esas cuatro columnas.</p>
 <p><strong>CP-12.1.2 — Mostrar todas (alternativo)</strong> Verifica: CA-12.1.1 Dado que Recursos Humanos elige todas las columnas Cuando ejecuta el reporte Entonces el reporte muestra todas.</p>
 <p><strong>CP-12.1.3 — Sin guardar no cambia (validación)</strong> Verifica: CA-12.1.1 Dado que Recursos Humanos cambia las columnas pero no guarda Cuando ejecuta el reporte Entonces el reporte usa la última selección guardada.</p>
@@ -5751,11 +5723,11 @@
 <p>El sistema deberá permitir exportar el reporte, con los filtros aplicados, solo a Excel y con todos los campos que trae el reporte. No se exporta a PDF.</p>
 <h2 id="hu-131--exportar-el-reporte-a-excel">HU-13.1 — Exportar el reporte a Excel<a class="headerlink" href="#hu-131--exportar-el-reporte-a-excel" title="Permanent link">&para;</a></h2>
 <p>Como Recursos Humanos, quiero exportar el reporte a Excel, para conservarlo y revisarlo fuera del sistema.</p>
-<h3 id="reglas-de-negocio_24">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_24" title="Permanent link">&para;</a></h3>
+<h3 id="reglas-de-negocio_23">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_23" title="Permanent link">&para;</a></h3>
 <p><strong>RN-13.1</strong> El reporte se exporta solo a Excel, con todos los campos del reporte y con los filtros aplicados.</p>
-<h3 id="criterios-de-aceptación_24">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_24" title="Permanent link">&para;</a></h3>
+<h3 id="criterios-de-aceptación_23">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_23" title="Permanent link">&para;</a></h3>
 <p><strong>CA-13.1.1 — Exportar a Excel</strong> Dado que el reporte está filtrado Cuando Recursos Humanos elige exportar a Excel Entonces el archivo contiene las mismas líneas y todos los campos que trae el reporte.</p>
-<h3 id="casos-de-prueba_24">Casos de prueba<a class="headerlink" href="#casos-de-prueba_24" title="Permanent link">&para;</a></h3>
+<h3 id="casos-de-prueba_23">Casos de prueba<a class="headerlink" href="#casos-de-prueba_23" title="Permanent link">&para;</a></h3>
 <p><strong>CP-13.1.1 — Exportación completa (camino feliz)</strong> Verifica: CA-13.1.1 · RN-13.1 Dado que el reporte filtrado muestra 40 líneas Cuando Recursos Humanos exporta Entonces el Excel tiene esas 40 líneas con todos los campos.</p>
 <p><strong>CP-13.1.2 — Respeta los filtros (validación)</strong> Verifica: CA-13.1.1 · RN-13.1 Dado que el reporte está filtrado por el grupo "Empaque" Cuando Recursos Humanos exporta Entonces el Excel solo trae empleados de "Empaque".</p>
 <p><strong>CP-13.1.3 — Solo hay formato Excel (validación)</strong> Verifica: CA-13.1.1 · RN-13.1 Dado que Recursos Humanos abre las opciones de exportación Cuando revisa los formatos disponibles Entonces solo existe Excel, no PDF.</p>
@@ -5804,12 +5776,12 @@
 <p>En los checadores físicos, el empleado indica si su checada es salida a comida o regreso de comida; la configuración del checador está a cargo de otras áreas y no es parte del desarrollo. Además, el sistema deberá usar la CURP como llave común para relacionar a cada empleado entre Biostar, Business Suite y Contpaq. La CURP ya existe en Business Suite y Recursos Humanos la captura en Biostar. Los empleados cuya CURP no se encuentre en alguno de los tres sistemas se listan en un detalle de errores.</p>
 <h2 id="hu-141--indicar-la-comida-en-el-checador">HU-14.1 — Indicar la comida en el checador<a class="headerlink" href="#hu-141--indicar-la-comida-en-el-checador" title="Permanent link">&para;</a></h2>
 <p>Como empleado que checa, quiero indicar en el checador si salgo o regreso de comer, para que mi comida quede registrada con el tipo correcto.</p>
-<h3 id="reglas-de-negocio_25">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_25" title="Permanent link">&para;</a></h3>
+<h3 id="reglas-de-negocio_24">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_24" title="Permanent link">&para;</a></h3>
 <p><strong>RN-14.1</strong> En el checador, el empleado debe indicar si su checada es salida a comida o regreso de comida. Esta configuración está a cargo de otras áreas.</p>
-<h3 id="criterios-de-aceptación_25">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_25" title="Permanent link">&para;</a></h3>
+<h3 id="criterios-de-aceptación_24">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_24" title="Permanent link">&para;</a></h3>
 <p><strong>CA-14.1.1 — Comida registrada</strong> Dado que un empleado checa en el checador e indica salida a comida Cuando el sistema trae sus checadas de Biostar Entonces el reporte muestra esa hora en el inicio de comida.</p>
 <p><strong>CA-14.1.2 — Sin indicar la comida</strong> Dado que un empleado no usa la opción de comida en el checador Cuando Recursos Humanos consulta el reporte Entonces los campos de comida de ese día quedan vacíos.</p>
-<h3 id="casos-de-prueba_25">Casos de prueba<a class="headerlink" href="#casos-de-prueba_25" title="Permanent link">&para;</a></h3>
+<h3 id="casos-de-prueba_24">Casos de prueba<a class="headerlink" href="#casos-de-prueba_24" title="Permanent link">&para;</a></h3>
 <p><strong>CP-14.1.1 — Salida a comida visible (camino feliz)</strong> Verifica: CA-14.1.1 · RN-14.1 Dado que Luis indicó salida a comida a las 14:00 Cuando Recursos Humanos consulta el reporte Entonces el inicio de comida del día muestra 14:00.</p>
 <p><strong>CP-14.1.2 — Regreso de comida visible (camino feliz)</strong> Verifica: CA-14.1.1 · RN-14.1 Dado que Luis indicó regreso de comida a las 14:30 Cuando Recursos Humanos consulta el reporte Entonces el fin de comida muestra 14:30.</p>
 <p><strong>CP-14.1.3 — No usó la opción (alternativo)</strong> Verifica: CA-14.1.2 Dado que Luis checó sin indicar comida Cuando Recursos Humanos consulta el reporte Entonces el inicio y el fin de comida quedan vacíos.</p>
@@ -5836,13 +5808,13 @@
 </table>
 <h2 id="hu-142--relacionar-al-empleado-por-curp">HU-14.2 — Relacionar al empleado por CURP<a class="headerlink" href="#hu-142--relacionar-al-empleado-por-curp" title="Permanent link">&para;</a></h2>
 <p>Como Recursos Humanos, quiero que el sistema relacione a cada empleado por su CURP y me muestre a quién no encontró, para corregir los datos antes de la prueba.</p>
-<h3 id="reglas-de-negocio_26">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_26" title="Permanent link">&para;</a></h3>
+<h3 id="reglas-de-negocio_25">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_25" title="Permanent link">&para;</a></h3>
 <p><strong>RN-14.2</strong> El empleado debe corresponder entre Biostar, Business Suite y Contpaq mediante el campo CURP, que ya existe en el empleado de Business Suite. Recursos Humanos captura la CURP en Biostar (fuera del desarrollo).</p>
 <p><strong>RN-14.3</strong> Los empleados cuya CURP no se encuentre en alguno de los tres sistemas se listan en un detalle de errores.</p>
-<h3 id="criterios-de-aceptación_26">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_26" title="Permanent link">&para;</a></h3>
+<h3 id="criterios-de-aceptación_25">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_25" title="Permanent link">&para;</a></h3>
 <p><strong>CA-14.2.1 — CURP encontrada en los tres sistemas</strong> Dado que un empleado tiene la misma CURP en Biostar, Business Suite y Contpaq Cuando el sistema relaciona a los empleados Entonces lo reconoce como la misma persona.</p>
 <p><strong>CA-14.2.2 — Detalle de errores</strong> Dado que la CURP de un empleado no se encuentra en alguno de los tres sistemas Cuando el sistema termina de relacionar a los empleados Entonces lista a ese empleado en el detalle de errores.</p>
-<h3 id="casos-de-prueba_26">Casos de prueba<a class="headerlink" href="#casos-de-prueba_26" title="Permanent link">&para;</a></h3>
+<h3 id="casos-de-prueba_25">Casos de prueba<a class="headerlink" href="#casos-de-prueba_25" title="Permanent link">&para;</a></h3>
 <p><strong>CP-14.2.1 — CURP en los tres sistemas (camino feliz)</strong> Verifica: CA-14.2.1 · RN-14.2 Dado que Luis tiene la CURP "XXXX" en los tres sistemas Cuando se relacionan los empleados Entonces Luis queda relacionado.</p>
 <p><strong>CP-14.2.2 — CURP ausente en Biostar (error)</strong> Verifica: CA-14.2.2 · RN-14.3 Dado que Ana tiene CURP en Business Suite y Contpaq pero no en Biostar Cuando se relacionan los empleados Entonces Ana aparece en el detalle de errores.</p>
 <p><strong>CP-14.2.3 — CURP ausente en Contpaq (error)</strong> Verifica: CA-14.2.2 · RN-14.3 Dado que Pedro tiene CURP en Biostar y Business Suite pero no en Contpaq Cuando se relacionan los empleados Entonces Pedro aparece en el detalle de errores.</p>
@@ -5871,11 +5843,13 @@
 <p><strong>Regla transversal:</strong> la CURP también se usa para ligar al usuario de InnovApp con la persona de Biostar (RF-15).</p>
 <h1 id="entregable-3--innovapp">ENTREGABLE 3 — INNOVAPP<a class="headerlink" href="#entregable-3--innovapp" title="Permanent link">&para;</a></h1>
 <p>Este entregable permite checar desde el celular, dentro de InnovApp, sin lector, para el personal de oficina, campo y trabajo remoto. La checada queda registrada en Biostar como cualquier otra y se ve en el reporte de jornada. Se acordó el camino de checada desde la app sin lector, con una API dedicada separada de la API actual de InnovApp.</p>
-<p>Para checar, la persona necesita el permiso, que el sistema reconozca su CURP, que valide la huella biométrica del dispositivo, que la ubicación y el GPS estén activos y que haya internet. Se empieza con un piloto reducido antes de ampliar.</p>
+<p>Para checar, la persona necesita el permiso, que el sistema reconozca su CURP, que use su teléfono autorizado con biometría local exitosa, que la ubicación y el GPS estén activos y que haya internet. Se empieza con un piloto reducido antes de ampliar.</p>
 <pre class="mermaid"><code>flowchart TD
     A[La persona con permiso abre InnovApp] --&gt; B{¿Su CURP coincide con la de Biostar?}
     B -- No --&gt; X[Mensaje: Usuario no encontrado. Contacta a Recursos Humanos.]
-    B -- Sí --&gt; C{¿La huella biométrica del dispositivo coincide?}
+    B -- Sí --&gt; T{¿Es el teléfono autorizado de la persona?}
+    T -- No --&gt; W[No se permite checar]
+    T -- Sí --&gt; C{¿La biometría local del teléfono es exitosa?}
     C -- No --&gt; Y[No se registra la checada]
     C -- Sí --&gt; D{¿Hay internet, ubicación y GPS activos?}
     D -- No --&gt; Z[No se permite checar]
@@ -5908,24 +5882,32 @@
 <h2 id="objetivo_14">Objetivo<a class="headerlink" href="#objetivo_14" title="Permanent link">&para;</a></h2>
 <p>Permitir que el personal registre su asistencia desde el celular, con las mismas cuatro checadas que en un checador físico.</p>
 <h2 id="descripción_14">Descripción<a class="headerlink" href="#descripción_14" title="Permanent link">&para;</a></h2>
-<p>El sistema deberá permitir registrar asistencia desde InnovApp, sin lector, para uso en oficina, campo y remoto. Se registran los mismos cuatro movimientos que en el checador: entrada, salida a comida, regreso de comida y salida. Primero se valida la CURP (InnovApp la toma del expediente de personal; en Biostar se agrega la CURP a los usuarios para hacer coincidir a la persona) y después la huella biométrica del dispositivo. Para checar, la ubicación y el GPS deben estar siempre activos y debe haber internet. La ubicación se guarda solo como dato informativo.</p>
+<p>El sistema deberá permitir registrar asistencia desde InnovApp, sin lector, para uso en oficina, campo y remoto. Se registran los mismos cuatro movimientos que en el checador: entrada, salida a comida, regreso de comida y salida. Se valida, en este orden, que el usuario esté ligado a una persona de Biostar mediante la CURP (InnovApp la toma del expediente de personal; en Biostar se agrega la CURP a los usuarios para hacer coincidir a la persona), que el teléfono sea el autorizado de esa persona y que la biometría local del teléfono sea exitosa. La fecha y la hora de la checada las pone el servidor. Para checar, la ubicación y el GPS deben estar siempre activos y debe haber internet. La ubicación se guarda solo como dato informativo.</p>
 <h2 id="hu-151--registrar-las-cuatro-checadas-desde-innovapp">HU-15.1 — Registrar las cuatro checadas desde InnovApp<a class="headerlink" href="#hu-151--registrar-las-cuatro-checadas-desde-innovapp" title="Permanent link">&para;</a></h2>
 <p>Como persona con permiso, quiero registrar mi entrada, mi salida a comida, mi regreso de comida y mi salida desde InnovApp, para checar sin ir a un checador.</p>
-<h3 id="reglas-de-negocio_27">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_27" title="Permanent link">&para;</a></h3>
+<h3 id="reglas-de-negocio_26">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_26" title="Permanent link">&para;</a></h3>
 <p><strong>RN-15.1</strong> La checada móvil se hace desde InnovApp, sin lector, y se usa en oficina, campo y remoto. No se permiten servicios externos en ninguna etapa de la ruta de checada.</p>
 <p><strong>RN-15.2</strong> Desde InnovApp se registran los mismos cuatro eventos que en el checador: entrada, salida a comida, regreso de comida y salida. Cada checada queda en Biostar como una asistencia y se refleja en el reporte igual que las demás. Se contemplan desde el inicio los turnos especiales (por ejemplo, nocturnos) y varios sitios.</p>
 <p><strong>RN-15.3</strong> En la primera etapa solo se puede checar cuando se tiene acceso a internet; checar sin internet en el teléfono se contempla más adelante.</p>
 <p><strong>RN-15.4</strong> El empleado no consulta el historial de sus marcas en InnovApp.</p>
-<h3 id="criterios-de-aceptación_27">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_27" title="Permanent link">&para;</a></h3>
+<p><strong>RN-15.10</strong> La fecha y la hora de cada checada las determina el servidor al recibirla; no se usa la hora del teléfono.</p>
+<p><strong>RN-15.11</strong> Una checada no se guarda en el teléfono para enviarse después. Si no se confirma el registro, se avisa al usuario y no queda como checada válida (ver RF-18).</p>
+<p><strong>RN-15.12</strong> Cada checada tiene un identificador único; si se envía dos veces, Biostar la registra una sola vez.</p>
+<p><strong>RN-15.13</strong> Si Biostar no confirma el registro, la persona ve que no se registró y puede reintentar; no queda una checada a medias.</p>
+<h3 id="criterios-de-aceptación_26">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_26" title="Permanent link">&para;</a></h3>
 <p><strong>CA-15.1.1 — Registrar una checada</strong> Dado que una persona con permiso abre InnovApp con acceso a internet Cuando elige entrada, salida a comida, regreso de comida o salida Entonces la checada queda registrada en Biostar como asistencia.</p>
 <p><strong>CA-15.1.2 — Sin internet</strong> Dado que el dispositivo no tiene acceso a internet Cuando la persona intenta checar en InnovApp Entonces no se le permite checar.</p>
 <p><strong>CA-15.1.3 — Se ve en el reporte</strong> Dado que una persona checó desde InnovApp entrada, salida a comida, regreso de comida o salida Cuando Recursos Humanos consulta el reporte Entonces la checada aparece igual que las de los demás checadores.</p>
-<h3 id="casos-de-prueba_27">Casos de prueba<a class="headerlink" href="#casos-de-prueba_27" title="Permanent link">&para;</a></h3>
+<p><strong>CA-15.1.4 — Hora del servidor</strong> Dado que Ana checa con la hora de su teléfono alterada Cuando se registra la checada Entonces Biostar recibe la hora del servidor.</p>
+<p><strong>CA-15.1.5 — Sin duplicados</strong> Dado que una checada se envía dos veces por una falla de red Cuando Biostar la recibe Entonces aparece una sola vez en el reporte.</p>
+<h3 id="casos-de-prueba_26">Casos de prueba<a class="headerlink" href="#casos-de-prueba_26" title="Permanent link">&para;</a></h3>
 <p><strong>CP-15.1.1 — Entrada desde el celular (camino feliz)</strong> Verifica: CA-15.1.1 · RN-15.2 Dado que Ana tiene permiso y abre InnovApp con internet Cuando elige "entrada" Entonces Biostar registra una entrada de Ana.</p>
 <p><strong>CP-15.1.2 — Los cuatro tipos (alternativo)</strong> Verifica: CA-15.1.1 · RN-15.2 Dado que Ana tiene permiso y abre InnovApp con internet Cuando registra salida a comida, regreso de comida y salida Entonces Biostar tiene las tres checadas.</p>
 <p><strong>CP-15.1.3 — Sin internet (error)</strong> Verifica: CA-15.1.2 · RN-15.3 Dado que el teléfono de Ana está sin internet Cuando intenta checar Entonces no se le permite y no se registra nada.</p>
 <p><strong>CP-15.1.4 — Aparece en el reporte (camino feliz)</strong> Verifica: CA-15.1.3 · RN-15.2 Dado que Ana checó entrada a las 08:02 desde InnovApp Cuando Recursos Humanos consulta el reporte de ese día Entonces la entrada de Ana muestra 08:02.</p>
 <p><strong>CP-15.1.5 — Sin historial para el empleado (validación)</strong> Verifica: CA-15.1.1 · RN-15.4 Dado que Ana ya checó varias veces Cuando abre InnovApp Entonces no hay una pantalla de historial de sus marcas.</p>
+<p><strong>CP-15.1.6 — Hora del teléfono alterada (validación)</strong> Verifica: CA-15.1.4 · RN-15.10 Dado que el reloj del teléfono de Ana está adelantado una hora Cuando checa Entonces la checada se registra con la hora real.</p>
+<p><strong>CP-15.1.7 — Reenvío (validación)</strong> Verifica: CA-15.1.5 · RN-15.12 Dado que Ana checó y la respuesta se perdió Cuando la app reintenta Entonces el reporte muestra una sola entrada.</p>
 <table>
 <thead>
 <tr>
@@ -5950,23 +5932,36 @@
 <td>CP-15.1.4</td>
 <td>Camino feliz</td>
 </tr>
+<tr>
+<td>CA-15.1.4</td>
+<td>CP-15.1.6</td>
+<td>Validación</td>
+</tr>
+<tr>
+<td>CA-15.1.5</td>
+<td>CP-15.1.7</td>
+<td>Validación</td>
+</tr>
 </tbody>
 </table>
 <h2 id="hu-152--validar-mi-identidad-antes-de-checar">HU-15.2 — Validar mi identidad antes de checar<a class="headerlink" href="#hu-152--validar-mi-identidad-antes-de-checar" title="Permanent link">&para;</a></h2>
-<p>Como Recursos Humanos, quiero que la app valide la CURP y la huella biométrica del dispositivo, para que nadie checque por otra persona.</p>
-<h3 id="reglas-de-negocio_28">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_28" title="Permanent link">&para;</a></h3>
-<p><strong>RN-15.5</strong> Para checar desde InnovApp, primero se valida la CURP y después la huella biométrica del dispositivo. Una checada solo es válida si ambas validaciones se cumplen. El criterio de identidad (teléfono autorizado más biometría local) está por evaluar (RF-17).</p>
-<p><strong>RN-15.6</strong> El usuario de InnovApp se liga con la persona de Biostar mediante la CURP. Si no la encuentra, muestra "Usuario no encontrado. Contacta a Recursos Humanos." y no permite checar.</p>
-<h3 id="criterios-de-aceptación_28">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_28" title="Permanent link">&para;</a></h3>
-<p><strong>CA-15.2.1 — CURP y huella</strong> Dado que una persona con permiso abre InnovApp Cuando su CURP coincide con la de Biostar, se valida su huella biométrica y la huella coincide Entonces se registra su checada.</p>
-<p><strong>CA-15.2.2 — Huella no coincide</strong> Dado que la validación biométrica del dispositivo no coincide con la persona Cuando intenta checar Entonces la checada no se registra.</p>
+<p>Como Recursos Humanos, quiero que la app valide el usuario, el teléfono autorizado y la biometría local, para que nadie checque por otra persona.</p>
+<h3 id="reglas-de-negocio_27">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_27" title="Permanent link">&para;</a></h3>
+<p><strong>RN-15.5</strong> Para checar desde InnovApp se valida, en este orden: (1) que el usuario esté ligado a una persona de Biostar, (2) que el teléfono sea el autorizado de esa persona (RF-17) y (3) que la biometría local del teléfono sea exitosa. Una checada solo es válida si se cumplen las tres validaciones. La biometría local confirma que quien usa el teléfono está registrado en él.</p>
+<p><strong>RN-15.6</strong> El usuario de InnovApp se liga con la persona de Biostar mediante la CURP, que se usa solo como dato de enlace. Si no la encuentra, muestra "Usuario no encontrado. Contacta a Recursos Humanos." y no permite checar.</p>
+<p><strong>RN-15.9</strong> La CURP no se registra en bitácoras técnicas ni se muestra completa en mensajes.</p>
+<h3 id="criterios-de-aceptación_27">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_27" title="Permanent link">&para;</a></h3>
+<p><strong>CA-15.2.1 — Identidad válida</strong> Dado que una persona con permiso abre InnovApp en su teléfono autorizado Cuando su CURP coincide con la de Biostar y la biometría local es exitosa Entonces se registra su checada.</p>
+<p><strong>CA-15.2.2 — Biometría local no exitosa</strong> Dado que la biometría local del teléfono falla o se cancela Cuando intenta checar Entonces la checada no se registra.</p>
 <p><strong>CA-15.2.3 — CURP no encontrada</strong> Dado que la CURP del usuario de InnovApp no se encuentra en Biostar Cuando intenta checar Entonces el sistema muestra el mensaje "Usuario no encontrado. Contacta a Recursos Humanos." y no permite checar.</p>
-<p><strong>CA-15.2.4 — Orden de las validaciones</strong> Dado que una persona intenta checar en InnovApp Cuando el sistema valida su identidad Entonces valida primero la CURP y después la huella biométrica del dispositivo.</p>
-<h3 id="casos-de-prueba_28">Casos de prueba<a class="headerlink" href="#casos-de-prueba_28" title="Permanent link">&para;</a></h3>
-<p><strong>CP-15.2.1 — Identidad válida (camino feliz)</strong> Verifica: CA-15.2.1 · RN-15.5 Dado que la CURP de Ana está en Biostar y su huella coincide Cuando checa Entonces la checada se registra.</p>
-<p><strong>CP-15.2.2 — Huella distinta (error)</strong> Verifica: CA-15.2.2 · RN-15.5 Dado que la CURP de Ana está en Biostar pero la huella del teléfono es de otra persona Cuando intenta checar Entonces no se registra la checada.</p>
+<p><strong>CA-15.2.4 — Orden de las validaciones</strong> Dado que una persona intenta checar en InnovApp Cuando el sistema valida su identidad Entonces valida primero que el usuario esté ligado a Biostar, después que el teléfono sea el autorizado y al final la biometría local.</p>
+<p><strong>CA-15.2.5 — CURP protegida</strong> Dado que Ana checó Cuando se revisan las bitácoras técnicas y los mensajes Entonces no aparece su CURP completa.</p>
+<h3 id="casos-de-prueba_27">Casos de prueba<a class="headerlink" href="#casos-de-prueba_27" title="Permanent link">&para;</a></h3>
+<p><strong>CP-15.2.1 — Identidad válida (camino feliz)</strong> Verifica: CA-15.2.1 · RN-15.5 Dado que la CURP de Ana está en Biostar, usa su teléfono autorizado y su biometría local es exitosa Cuando checa Entonces la checada se registra.</p>
+<p><strong>CP-15.2.2 — Biometría cancelada (error)</strong> Verifica: CA-15.2.2 · RN-15.5 Dado que Ana cancela la biometría del teléfono Cuando intenta checar Entonces no se registra la checada.</p>
 <p><strong>CP-15.2.3 — CURP no encontrada (error)</strong> Verifica: CA-15.2.3 · RN-15.6 Dado que la CURP del usuario no existe en Biostar Cuando intenta checar Entonces ve el mensaje "Usuario no encontrado. Contacta a Recursos Humanos." y no puede checar.</p>
-<p><strong>CP-15.2.4 — CURP primero, huella después (validación)</strong> Verifica: CA-15.2.4 · RN-15.5 Dado que la CURP no coincide Cuando intenta checar Entonces el sistema no llega a pedir la huella.</p>
+<p><strong>CP-15.2.4 — Orden de las validaciones (validación)</strong> Verifica: CA-15.2.4 · RN-15.5 Dado que la CURP no coincide Cuando intenta checar Entonces el sistema no llega a validar el teléfono ni a pedir la biometría.</p>
+<p><strong>CP-15.2.5 — CURP no visible en bitácoras (validación)</strong> Verifica: CA-15.2.5 · RN-15.9 Dado que Ana checó Cuando se revisan las bitácoras técnicas Entonces no aparece su CURP completa.</p>
 <table>
 <thead>
 <tr>
@@ -5996,18 +5991,23 @@
 <td>CP-15.2.4</td>
 <td>Validación</td>
 </tr>
+<tr>
+<td>CA-15.2.5</td>
+<td>CP-15.2.5</td>
+<td>Validación</td>
+</tr>
 </tbody>
 </table>
 <h2 id="hu-153--checar-con-la-ubicación-y-el-gps-activos">HU-15.3 — Checar con la ubicación y el GPS activos<a class="headerlink" href="#hu-153--checar-con-la-ubicación-y-el-gps-activos" title="Permanent link">&para;</a></h2>
 <p>Como Recursos Humanos, quiero que la app exija ubicación y GPS activos al checar, para saber desde dónde se registró cada checada.</p>
-<h3 id="reglas-de-negocio_29">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_29" title="Permanent link">&para;</a></h3>
-<p><strong>RN-15.7</strong> Al registrar la asistencia en InnovApp se obtiene la ubicación y se almacena solo como dato informativo; su valor no se usa para permitir ni impedir la checada (no hay zona permitida). Se captura únicamente al checar, sin seguimiento continuo.</p>
+<h3 id="reglas-de-negocio_28">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_28" title="Permanent link">&para;</a></h3>
+<p><strong>RN-15.7</strong> Al registrar la asistencia en InnovApp se obtiene la ubicación y se almacena solo como dato informativo; su valor no se usa para permitir ni impedir la checada (no hay zona permitida). Se captura únicamente al checar, sin seguimiento continuo. Además de la ubicación, se guarda si el teléfono la reporta como simulada, solo como dato informativo.</p>
 <p><strong>RN-15.8</strong> La ubicación es obligatoria para checar: el usuario debe haber dado el permiso de ubicación (si no lo tiene, la app lo solicita) y la ubicación y el GPS deben estar siempre activos; la app lo valida.</p>
-<h3 id="criterios-de-aceptación_29">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_29" title="Permanent link">&para;</a></h3>
+<h3 id="criterios-de-aceptación_28">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_28" title="Permanent link">&para;</a></h3>
 <p><strong>CA-15.3.1 — Ubicación informativa</strong> Dado que una persona checa en InnovApp Cuando se registra la asistencia Entonces se obtiene y se almacena su ubicación, sin condicionar la checada por su valor.</p>
 <p><strong>CA-15.3.2 — Permiso de ubicación</strong> Dado que el usuario no ha dado el permiso de ubicación Cuando intenta checar en InnovApp Entonces la app le solicita el permiso y no permite checar hasta que lo dé.</p>
 <p><strong>CA-15.3.3 — Ubicación y GPS activos</strong> Dado que la ubicación o el GPS del teléfono están apagados Cuando el usuario intenta checar Entonces la app lo valida y no permite checar hasta que estén activos.</p>
-<h3 id="casos-de-prueba_29">Casos de prueba<a class="headerlink" href="#casos-de-prueba_29" title="Permanent link">&para;</a></h3>
+<h3 id="casos-de-prueba_28">Casos de prueba<a class="headerlink" href="#casos-de-prueba_28" title="Permanent link">&para;</a></h3>
 <p><strong>CP-15.3.1 — Ubicación guardada (camino feliz)</strong> Verifica: CA-15.3.1 · RN-15.7 Dado que Ana checa con ubicación y GPS activos Cuando se registra la checada Entonces se guarda su ubicación como dato informativo.</p>
 <p><strong>CP-15.3.2 — Checar lejos de la oficina (alternativo)</strong> Verifica: CA-15.3.1 · RN-15.7 Dado que Ana checa desde un lugar distinto a su sitio de trabajo Cuando se registra la checada Entonces se permite y se guarda la ubicación.</p>
 <p><strong>CP-15.3.3 — Sin permiso de ubicación (error)</strong> Verifica: CA-15.3.2 · RN-15.8 Dado que Ana no ha dado el permiso de ubicación Cuando intenta checar Entonces la app le pide el permiso y no la deja checar hasta que lo dé.</p>
@@ -6070,13 +6070,13 @@
 <p>El sistema deberá permitir asignar a cada persona el permiso para checar desde InnovApp. La Célula de Innovación asigna el permiso según sea necesario, igual que todas las asignaciones de permisos.</p>
 <h2 id="hu-161--asignar-el-permiso-de-checada">HU-16.1 — Asignar el permiso de checada<a class="headerlink" href="#hu-161--asignar-el-permiso-de-checada" title="Permanent link">&para;</a></h2>
 <p>Como Célula de Innovación, quiero asignar a cada persona el permiso de checar desde InnovApp, para controlar quién puede hacerlo.</p>
-<h3 id="reglas-de-negocio_30">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_30" title="Permanent link">&para;</a></h3>
+<h3 id="reglas-de-negocio_29">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_29" title="Permanent link">&para;</a></h3>
 <p><strong>RN-16.1</strong> Solo las personas con permiso asignado pueden checar desde InnovApp. La Célula de Innovación lo asigna según sea necesario.</p>
 <p><strong>RN-16.2</strong> Todas las asignaciones de permisos las configura la Célula de Innovación.</p>
-<h3 id="criterios-de-aceptación_30">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_30" title="Permanent link">&para;</a></h3>
+<h3 id="criterios-de-aceptación_29">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_29" title="Permanent link">&para;</a></h3>
 <p><strong>CA-16.1.1 — Persona con permiso</strong> Dado que la Célula de Innovación asignó el permiso a una persona Cuando abre InnovApp Entonces puede checar.</p>
 <p><strong>CA-16.1.2 — Persona sin permiso</strong> Dado que una persona no tiene el permiso Cuando intenta checar en InnovApp Entonces el sistema no se lo permite.</p>
-<h3 id="casos-de-prueba_30">Casos de prueba<a class="headerlink" href="#casos-de-prueba_30" title="Permanent link">&para;</a></h3>
+<h3 id="casos-de-prueba_29">Casos de prueba<a class="headerlink" href="#casos-de-prueba_29" title="Permanent link">&para;</a></h3>
 <p><strong>CP-16.1.1 — Con permiso puede checar (camino feliz)</strong> Verifica: CA-16.1.1 · RN-16.1 Dado que Ana tiene el permiso Cuando abre InnovApp Entonces puede checar.</p>
 <p><strong>CP-16.1.2 — Sin permiso no checa (permisos)</strong> Verifica: CA-16.1.2 · RN-16.1 Dado que Luis no tiene el permiso Cuando intenta checar Entonces el sistema no se lo permite.</p>
 <p><strong>CP-16.1.3 — Quitar el permiso (alternativo)</strong> Verifica: CA-16.1.2 · RN-16.1 Dado que Ana tenía el permiso y la Célula de Innovación se lo quita Cuando intenta checar Entonces el sistema no se lo permite.</p>
@@ -6102,7 +6102,7 @@
 </tr>
 </tbody>
 </table>
-<h1 id="rf-17--teléfono-autorizado-por-evaluar">RF-17 — Teléfono autorizado (por evaluar)<a class="headerlink" href="#rf-17--teléfono-autorizado-por-evaluar" title="Permanent link">&para;</a></h1>
+<h1 id="rf-17--teléfono-autorizado">RF-17 — Teléfono autorizado<a class="headerlink" href="#rf-17--teléfono-autorizado" title="Permanent link">&para;</a></h1>
 <table>
 <thead>
 <tr>
@@ -6117,7 +6117,7 @@
 </tr>
 <tr>
 <td>Estado</td>
-<td>Por evaluar</td>
+<td>Definición</td>
 </tr>
 <tr>
 <td>Dependencias</td>
@@ -6128,21 +6128,36 @@
 <h2 id="objetivo_16">Objetivo<a class="headerlink" href="#objetivo_16" title="Permanent link">&para;</a></h2>
 <p>Asegurar que cada persona checa desde su propio teléfono.</p>
 <h2 id="descripción_16">Descripción<a class="headerlink" href="#descripción_16" title="Permanent link">&para;</a></h2>
-<p>Se evaluará, como criterio de identidad, un teléfono autorizado más biometría local. Cada empleado con permiso asociaría un teléfono (personal o de la empresa, con Android o iOS) antes de checar desde InnovApp. No se permiten teléfonos compartidos. El mecanismo exacto está por evaluar; los detalles de cómo se autoriza el teléfono quedan fuera de este proyecto.</p>
+<p>Cada persona con permiso tiene un solo teléfono autorizado, personal o de la empresa, con Android o iOS. El teléfono se asocia a la persona con una clave propia de ese equipo, protegida por la biometría local. El teléfono no se comparte y se puede cambiar o revocar con la aprobación de Recursos Humanos. Los detalles técnicos de la autorización quedan a cargo de la Célula de Innovación.</p>
 <h2 id="hu-171--asociar-un-teléfono-a-mi-persona">HU-17.1 — Asociar un teléfono a mi persona<a class="headerlink" href="#hu-171--asociar-un-teléfono-a-mi-persona" title="Permanent link">&para;</a></h2>
 <p>Como Recursos Humanos, quiero que cada persona con permiso tenga un solo teléfono autorizado, para que nadie checque por otra persona.</p>
-<h3 id="reglas-de-negocio_31">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_31" title="Permanent link">&para;</a></h3>
+<h3 id="reglas-de-negocio_30">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_30" title="Permanent link">&para;</a></h3>
 <p><strong>RN-17.1</strong> Los teléfonos pueden ser personales o de la empresa, con Android o iOS. No se permiten teléfonos compartidos.</p>
-<p><strong>RN-17.2</strong> Como criterio de identidad se evalúa un teléfono autorizado más biometría local.</p>
-<h3 id="criterios-de-aceptación_31">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_31" title="Permanent link">&para;</a></h3>
+<p><strong>RN-17.2</strong> Como criterio de identidad se usa un teléfono autorizado más biometría local.</p>
+<p><strong>RN-17.3</strong> Cada persona tiene un teléfono autorizado activo y cada teléfono pertenece a una sola persona.</p>
+<p><strong>RN-17.4</strong> Para cambiar de teléfono, Recursos Humanos aprueba la nueva asociación y el teléfono anterior deja de estar autorizado.</p>
+<p><strong>RN-17.5</strong> Si el teléfono se pierde, o la persona pierde el permiso o causa baja, la autorización se revoca de inmediato.</p>
+<p><strong>RN-17.6</strong> Si cambia la biometría registrada en el teléfono después de asociarlo (se agrega o se quita una huella o un rostro), el teléfono deja de estar autorizado y se asocia de nuevo con aprobación de Recursos Humanos.</p>
+<p><strong>RN-17.7</strong> El teléfono debe tener biometría local y cumplir la versión mínima de sistema operativo que defina la Célula de Innovación (RNF-003).</p>
+<p><strong>RN-17.8</strong> La asociación la realiza o supervisa Recursos Humanos o la Célula de Innovación, y la persona acepta que el teléfono contiene solo su propia biometría al momento de asociarlo.</p>
+<h3 id="criterios-de-aceptación_30">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_30" title="Permanent link">&para;</a></h3>
 <p><strong>CA-17.1.1 — Teléfono autorizado</strong> Dado que un empleado con permiso tiene un teléfono autorizado Cuando intenta checar desde InnovApp Entonces el sistema continúa con las validaciones de identidad.</p>
 <p><strong>CA-17.1.2 — Teléfono no autorizado</strong> Dado que un empleado intenta checar desde un teléfono que no está autorizado Cuando intenta checar Entonces el sistema no se lo permite.</p>
 <p><strong>CA-17.1.3 — Teléfono compartido</strong> Dado que un teléfono ya está asociado a un empleado Cuando se intenta asociarlo a otro Entonces el sistema no lo permite.</p>
-<h3 id="casos-de-prueba_31">Casos de prueba<a class="headerlink" href="#casos-de-prueba_31" title="Permanent link">&para;</a></h3>
+<p><strong>CA-17.1.4 — Cambio de teléfono</strong> Dado que Ana tiene un teléfono nuevo Cuando Recursos Humanos aprueba la nueva asociación Entonces el teléfono anterior deja de poder checar.</p>
+<p><strong>CA-17.1.5 — Revocación</strong> Dado que Ana perdió su teléfono o causó baja Cuando se revoca su autorización Entonces nadie puede checar con ese teléfono.</p>
+<p><strong>CA-17.1.6 — Cambio de biometría</strong> Dado que se agregó una huella al teléfono de Ana después de asociarlo Cuando intenta checar Entonces el sistema no se lo permite hasta que se asocie de nuevo.</p>
+<p><strong>CA-17.1.7 — Teléfono no compatible</strong> Dado que un teléfono no tiene biometría local compatible Cuando se intenta asociar Entonces el sistema no lo permite y se canaliza a RF-18.</p>
+<h3 id="casos-de-prueba_30">Casos de prueba<a class="headerlink" href="#casos-de-prueba_30" title="Permanent link">&para;</a></h3>
 <p><strong>CP-17.1.1 — Teléfono autorizado checa (camino feliz)</strong> Verifica: CA-17.1.1 · RN-17.1 Dado que Ana tiene su teléfono Android autorizado Cuando intenta checar Entonces el sistema continúa con las validaciones.</p>
 <p><strong>CP-17.1.2 — Teléfono iOS autorizado (alternativo)</strong> Verifica: CA-17.1.1 · RN-17.1 Dado que Pedro tiene su iPhone de la empresa autorizado Cuando intenta checar Entonces el sistema continúa con las validaciones.</p>
 <p><strong>CP-17.1.3 — Teléfono no autorizado (error)</strong> Verifica: CA-17.1.2 · RN-17.2 Dado que Ana intenta checar desde un teléfono que no está autorizado Cuando abre InnovApp Entonces el sistema no se lo permite.</p>
 <p><strong>CP-17.1.4 — Teléfono ya asociado a otra persona (error)</strong> Verifica: CA-17.1.3 · RN-17.1 Dado que el teléfono de Ana ya está asociado a ella Cuando se intenta asociarlo a Luis Entonces el sistema no lo permite.</p>
+<p><strong>CP-17.1.5 — Cambio de teléfono (alternativo)</strong> Verifica: CA-17.1.4 · RN-17.4 Dado que Ana cambió de teléfono y Recursos Humanos aprobó la asociación Cuando intenta checar con el teléfono anterior Entonces no se lo permite.</p>
+<p><strong>CP-17.1.6 — Revocación por pérdida (error)</strong> Verifica: CA-17.1.5 · RN-17.5 Dado que Luis perdió su teléfono y se revocó Cuando alguien intenta checar con él Entonces no se permite.</p>
+<p><strong>CP-17.1.7 — Baja de la persona (error)</strong> Verifica: CA-17.1.5 · RN-17.5 Dado que Pedro causó baja Cuando intenta checar Entonces no se permite.</p>
+<p><strong>CP-17.1.8 — Se agrega una huella (error)</strong> Verifica: CA-17.1.6 · RN-17.6 Dado que a Ana se le agrega una huella al teléfono Cuando intenta checar Entonces no se permite hasta asociar de nuevo.</p>
+<p><strong>CP-17.1.9 — Teléfono sin biometría (error)</strong> Verifica: CA-17.1.7 · RN-17.7 Dado que el teléfono de Luis no tiene biometría local Cuando se intenta asociar Entonces no se permite.</p>
 <table>
 <thead>
 <tr>
@@ -6165,6 +6180,26 @@
 <tr>
 <td>CA-17.1.3</td>
 <td>CP-17.1.4</td>
+<td>Error</td>
+</tr>
+<tr>
+<td>CA-17.1.4</td>
+<td>CP-17.1.5</td>
+<td>Alternativo</td>
+</tr>
+<tr>
+<td>CA-17.1.5</td>
+<td>CP-17.1.6, CP-17.1.7</td>
+<td>Error</td>
+</tr>
+<tr>
+<td>CA-17.1.6</td>
+<td>CP-17.1.8</td>
+<td>Error</td>
+</tr>
+<tr>
+<td>CA-17.1.7</td>
+<td>CP-17.1.9</td>
 <td>Error</td>
 </tr>
 </tbody>
@@ -6198,18 +6233,22 @@
 <p>El sistema deberá contar con una alternativa y con una revisión supervisada por Recursos Humanos para las fallas de la checada móvil (por ejemplo, biometría bloqueada, teléfono perdido o equipo incompatible) y para las marcas que requieran corrección. Un fallo técnico no se convierte automáticamente en falta laboral. El canal, los responsables y los plazos se concretarán en el análisis.</p>
 <h2 id="hu-181--revisar-las-fallas-con-apoyo-de-recursos-humanos">HU-18.1 — Revisar las fallas con apoyo de Recursos Humanos<a class="headerlink" href="#hu-181--revisar-las-fallas-con-apoyo-de-recursos-humanos" title="Permanent link">&para;</a></h2>
 <p>Como empleado, quiero que Recursos Humanos revise mi caso cuando la app falla, para que mi asistencia se registre bien.</p>
-<h3 id="reglas-de-negocio_32">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_32" title="Permanent link">&para;</a></h3>
+<h3 id="reglas-de-negocio_31">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_31" title="Permanent link">&para;</a></h3>
 <p><strong>RN-18.1</strong> Un fallo técnico de la checada móvil no se convierte automáticamente en falta laboral.</p>
 <p><strong>RN-18.2</strong> Las fallas y las marcas que requieren corrección tienen una alternativa y una revisión supervisada por Recursos Humanos.</p>
-<h3 id="criterios-de-aceptación_32">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_32" title="Permanent link">&para;</a></h3>
+<p><strong>RN-18.3</strong> Los casos de teléfono perdido, cambio de teléfono, cambio de biometría o equipo incompatible se atienden con una nueva asociación aprobada por Recursos Humanos (RF-17).</p>
+<p><strong>RN-18.4</strong> Cada falla, alternativa y corrección queda registrada con la fecha, la persona y quien la aprobó.</p>
+<h3 id="criterios-de-aceptación_31">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_31" title="Permanent link">&para;</a></h3>
 <p><strong>CA-18.1.1 — Alternativa ante una falla</strong> Dado que un empleado no puede checar por una falla (por ejemplo, biometría bloqueada, teléfono perdido o equipo incompatible) Cuando Recursos Humanos revisa el caso Entonces existe una alternativa supervisada para registrar su asistencia.</p>
 <p><strong>CA-18.1.2 — Sin falta automática</strong> Dado que ocurre un fallo técnico en la checada móvil Cuando se registra la incidencia Entonces el sistema no la convierte automáticamente en falta laboral.</p>
 <p><strong>CA-18.1.3 — Marca por corregir</strong> Dado que una marca requiere corrección Cuando Recursos Humanos la revisa Entonces la corrección queda bajo su supervisión.</p>
-<h3 id="casos-de-prueba_32">Casos de prueba<a class="headerlink" href="#casos-de-prueba_32" title="Permanent link">&para;</a></h3>
+<p><strong>CA-18.1.4 — Registro de la revisión</strong> Dado que Recursos Humanos aprueba una alternativa o corrección Cuando se guarda Entonces queda registrada con fecha, persona y aprobador.</p>
+<h3 id="casos-de-prueba_31">Casos de prueba<a class="headerlink" href="#casos-de-prueba_31" title="Permanent link">&para;</a></h3>
 <p><strong>CP-18.1.1 — Biometría bloqueada (alternativo)</strong> Verifica: CA-18.1.1 · RN-18.2 Dado que la biometría del teléfono de Ana está bloqueada Cuando Recursos Humanos revisa su caso Entonces hay una alternativa supervisada para registrar su asistencia.</p>
 <p><strong>CP-18.1.2 — Teléfono perdido (alternativo)</strong> Verifica: CA-18.1.1 · RN-18.2 Dado que Luis perdió su teléfono Cuando Recursos Humanos revisa su caso Entonces hay una alternativa supervisada para registrar su asistencia.</p>
 <p><strong>CP-18.1.3 — Falla técnica no es falta (validación)</strong> Verifica: CA-18.1.2 · RN-18.1 Dado que la app falló y Ana no pudo checar Cuando se registra la incidencia Entonces el sistema no la marca como falta laboral.</p>
 <p><strong>CP-18.1.4 — Corrección supervisada (camino feliz)</strong> Verifica: CA-18.1.3 · RN-18.2 Dado que una marca de Pedro requiere corrección Cuando Recursos Humanos la revisa Entonces la corrección queda registrada bajo su supervisión.</p>
+<p><strong>CP-18.1.5 — Registro de la aprobación (validación)</strong> Verifica: CA-18.1.4 · RN-18.4 Dado que Recursos Humanos aprobó la corrección de la marca de Pedro Cuando se consulta el registro Entonces aparecen la fecha, la persona y quien la aprobó.</p>
 <table>
 <thead>
 <tr>
@@ -6233,6 +6272,11 @@
 <td>CA-18.1.3</td>
 <td>CP-18.1.4</td>
 <td>Camino feliz</td>
+</tr>
+<tr>
+<td>CA-18.1.4</td>
+<td>CP-18.1.5</td>
+<td>Validación</td>
 </tr>
 </tbody>
 </table>
@@ -6262,6 +6306,18 @@
 <ul>
 <li><strong>Descripción:</strong> el registro electrónico de la jornada debe estar probado antes del 1 de enero de 2027, fecha en que la LFT lo exige.</li>
 <li><strong>Métrica / criterio de verificación:</strong> la prueba previa se realiza y se aprueba antes del 1 de enero de 2027.</li>
+<li><strong>Prioridad:</strong> Must</li>
+</ul>
+<h3 id="rnf-005--bitácora-de-la-checada-móvil">RNF-005 — Bitácora de la checada móvil<a class="headerlink" href="#rnf-005--bitácora-de-la-checada-móvil" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Descripción:</strong> se registran, con fecha, persona y resultado, las asociaciones, cambios y revocaciones de teléfono; las checadas aceptadas y rechazadas con su motivo; y los cambios del permiso de checada.</li>
+<li><strong>Métrica / criterio de verificación:</strong> en el piloto, el 100% de los eventos de una muestra aparece en la bitácora con sus datos.</li>
+<li><strong>Prioridad:</strong> Must</li>
+</ul>
+<h3 id="rnf-006--privacidad-de-la-checada-móvil">RNF-006 — Privacidad de la checada móvil<a class="headerlink" href="#rnf-006--privacidad-de-la-checada-móvil" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Descripción:</strong> la persona recibe el aviso de privacidad y da su consentimiento para el uso de la CURP y la ubicación. La biometría del teléfono permanece en el teléfono y no se almacena en los sistemas del proyecto.</li>
+<li><strong>Métrica / criterio de verificación:</strong> el 100% de las personas con permiso tiene su consentimiento registrado antes de checar; ningún sistema del proyecto guarda datos biométricos.</li>
 <li><strong>Prioridad:</strong> Must</li>
 </ul>
 <h2 id="matriz-de-trazabilidad">Matriz de trazabilidad<a class="headerlink" href="#matriz-de-trazabilidad" title="Permanent link">&para;</a></h2>
@@ -6320,7 +6376,7 @@
 <td>OBJ-2</td>
 <td>RF-05</td>
 <td>HU-5.1</td>
-<td>CA-5.1.1 a CA-5.1.4</td>
+<td>CA-5.1.1 a CA-5.1.5</td>
 <td>Must</td>
 <td>Propuesto</td>
 </tr>
@@ -6336,7 +6392,7 @@
 <td>OBJ-4</td>
 <td>RF-07</td>
 <td>HU-7.1</td>
-<td>CA-7.1.1 a CA-7.1.4</td>
+<td>CA-7.1.1 a CA-7.1.5</td>
 <td>Must</td>
 <td>Propuesto</td>
 </tr>
@@ -6351,8 +6407,8 @@
 <tr>
 <td>OBJ-2</td>
 <td>RF-09</td>
-<td>HU-9.1, HU-9.2</td>
-<td>CA-9.1.1 a CA-9.2.3</td>
+<td>HU-9.1</td>
+<td>CA-9.1.1</td>
 <td>Must</td>
 <td>Propuesto</td>
 </tr>
@@ -6416,20 +6472,21 @@
 <td>OBJ-3, OBJ-4</td>
 <td>RF-17</td>
 <td>HU-17.1</td>
-<td>CA-17.1.1 a CA-17.1.3</td>
+<td>CA-17.1.1 a CA-17.1.7</td>
 <td>Should</td>
-<td>Por evaluar</td>
+<td>Propuesto</td>
 </tr>
 <tr>
 <td>OBJ-3</td>
 <td>RF-18</td>
 <td>HU-18.1</td>
-<td>CA-18.1.1 a CA-18.1.3</td>
+<td>CA-18.1.1 a CA-18.1.4</td>
 <td>Should</td>
 <td>Propuesto</td>
 </tr>
 </tbody>
 </table>
+<p>Los requerimientos no funcionales también se relacionan así: RNF-005 (bitácora de la checada móvil) aplica a RF-15, RF-16, RF-17 y RF-18, y RNF-006 (privacidad de la checada móvil) aplica a RF-15.</p>
 <h2 id="supuestos-dependencias-y-riesgos">Supuestos, dependencias y riesgos<a class="headerlink" href="#supuestos-dependencias-y-riesgos" title="Permanent link">&para;</a></h2>
 <h3 id="supuestos">Supuestos<a class="headerlink" href="#supuestos" title="Permanent link">&para;</a></h3>
 <table>
@@ -6520,7 +6577,7 @@
 </tr>
 <tr>
 <td>DEP-05</td>
-<td>Que cada nominista tenga configurados sus procesos y su empresa, y que se configuren los permisos y los destinatarios del correo.</td>
+<td>Que cada nominista tenga configurados sus procesos y su empresa, y que se configuren los permisos.</td>
 <td>Célula de Innovación</td>
 </tr>
 <tr>
@@ -6530,12 +6587,12 @@
 </tr>
 <tr>
 <td>DEP-08</td>
-<td>Revisar las capacidades reales de InnovApp (tecnología, versiones de Android e iOS, biometría, ubicación y almacenamiento protegido).</td>
+<td>Revisar las capacidades reales de InnovApp (tecnología, versiones de Android e iOS, biometría, ubicación y almacenamiento protegido). También, versiones mínimas, biometría compatible y verificación de integridad del dispositivo.</td>
 <td>Célula de Innovación</td>
 </tr>
 <tr>
 <td>DEP-09</td>
-<td>Contar con una API dedicada de checada móvil, separada de la API actual de InnovApp, con dispositivo virtual y licencia de la Event Log API por confirmar.</td>
+<td>Contar con una API dedicada de checada móvil, separada de la API actual de InnovApp, con dispositivo virtual y licencia de la Event Log API por confirmar. El envío se hace con un identificador único para evitar duplicados.</td>
 <td>Célula de Innovación y proveedor</td>
 </tr>
 </tbody>
@@ -6597,10 +6654,10 @@
 </tr>
 <tr>
 <td>RGO-08</td>
-<td>Los empleados que faltan por cerrar su nómina salen sin información y no se bloquea la exportación ni el envío; un Excel puede salir con pendientes.</td>
+<td>Los empleados que faltan por cerrar su nómina salen sin información y no se bloquea la exportación; un Excel puede salir con pendientes.</td>
 <td>Media</td>
 <td>Medio</td>
-<td>Revisar a los empleados sin información antes de exportar o enviar.</td>
+<td>Revisar a los empleados sin información antes de exportar.</td>
 </tr>
 <tr>
 <td>RGO-09</td>
@@ -6628,7 +6685,7 @@
 <td>La biometría local del teléfono no acredita por sí sola la identidad laboral de quien checa.</td>
 <td>Media</td>
 <td>Alto</td>
-<td>Evaluar el teléfono autorizado más biometría local.</td>
+<td>Teléfono autorizado, clave protegida por biometría, aviso de cambio de biometría, asociación supervisada y revisión por Recursos Humanos.</td>
 </tr>
 <tr>
 <td>RGO-13</td>
@@ -6640,7 +6697,7 @@
 </tbody>
 </table>
 <h3 id="impacto-organizacional-y-capacitación">Impacto organizacional y capacitación<a class="headerlink" href="#impacto-organizacional-y-capacitación" title="Permanent link">&para;</a></h3>
-<p>El cambio alcanza a todo Grupo Reyes a nivel nacional. No existe un número exacto de personas a capacitar. Se necesita material para: el registro de comida en los checadores, la consulta de jornada en Business Suite, el módulo "Prenómina" (carga y cierre), la "Prenómina Gasto" (cambio de nombre y horas extra), "Consulta Prenómina" (consulta, exportación y envío), el catálogo "Nómina Conceptos", la asignación de proceso y de turno en el expediente, y la checada en InnovApp.</p>
+<p>El cambio alcanza a todo Grupo Reyes a nivel nacional. No existe un número exacto de personas a capacitar. Se necesita material para: el registro de comida en los checadores, la consulta de jornada en Business Suite, el módulo "Prenómina" (carga y cierre), la "Prenómina Gasto" (cambio de nombre y horas extra), "Consulta Prenómina" (consulta y exportación), el catálogo "Nómina Conceptos", la asignación de proceso y de turno en el expediente, y la checada en InnovApp.</p>
 <h2 id="preguntas-abiertas">Preguntas abiertas<a class="headerlink" href="#preguntas-abiertas" title="Permanent link">&para;</a></h2>
 <p>Lo que todavía falta resolver, con un responsable sugerido.</p>
 <table>
@@ -6685,7 +6742,7 @@
 </tr>
 <tr>
 <td>PA-07</td>
-<td>Alternativa y revisión supervisada por RH: definir el canal, los responsables y los plazos, y si se lleva dentro o fuera del sistema.</td>
+<td>Alternativa y revisión supervisada por RH: definir el canal, los responsables y los plazos, y si se lleva dentro o fuera del sistema. También, el procedimiento de nueva asociación y de revocación del teléfono (RN-17.4 a RN-17.6).</td>
 <td>3</td>
 <td>Recursos Humanos</td>
 </tr>
@@ -6700,6 +6757,12 @@
 <td>Servicios externos, costos y licencias: confirmar con I&amp;N y el proveedor que la ruta de checada no depende de ningún servicio externo y confirmar los costos y las licencias, incluidas las de T&amp;A y de la Event Log API.</td>
 <td>3</td>
 <td>Célula de Innovación</td>
+</tr>
+<tr>
+<td>PA-10</td>
+<td>Registro duplicado: definir el color con el que se pinta y si el resaltado también se muestra en "Consulta Prenómina".</td>
+<td>1</td>
+<td>Recursos Humanos</td>
 </tr>
 </tbody>
 </table>
