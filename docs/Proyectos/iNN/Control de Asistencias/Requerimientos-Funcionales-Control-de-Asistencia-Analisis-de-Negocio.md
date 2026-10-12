@@ -22,7 +22,7 @@ Los tres entregables son:
 
 1. **Prenómina:** los módulos Prenómina, Prenómina Gasto y Consulta Prenómina; los catálogos "Nómina Conceptos" y "Periodos Nómina"; los campos nuevos del expediente (Proceso y Turno); las horas extra; la validación de duplicados y la creación automática.
 2. **Reporte de jornada desde Biostar:** el reporte, sus filtros, sus columnas y su exportación a Excel; la opción de comida en el checador y la lectura del complemento T&A de Biostar.
-3. **InnovApp:** la checada móvil (validación de CURP, ubicación, GPS e internet), el permiso por persona, el teléfono autorizado y la alternativa supervisada por Recursos Humanos.
+3. **InnovApp:** la checada móvil (validación de CURP, ubicación, GPS e internet), el permiso por persona, la autorización del teléfono por Recursos Humanos y la alternativa supervisada por Recursos Humanos.
 
 Los requerimientos (RF) de cada entregable son:
 
@@ -49,8 +49,8 @@ Los requerimientos (RF) de cada entregable son:
 **Entregable 3 — InnovApp**
 
 - RF-15 Checada móvil desde InnovApp.
-- RF-16 Permiso de checada por persona.
-- RF-17 Teléfono autorizado.
+- RF-16 Permiso de checada remota por persona.
+- RF-17 Autorización del teléfono para checar.
 - RF-18 Alternativa y revisión supervisada por Recursos Humanos.
 
 ## 2. Alcance del documento
@@ -82,8 +82,8 @@ El alcance cubre a todo Grupo Reyes a nivel nacional, con una prueba previa al 1
 
 - La checada móvil desde InnovApp, sin lector, en oficina, campo y remoto.
 - La validación de la CURP y de la huella biométrica del dispositivo, con ubicación y GPS obligatorios.
-- El permiso de checada por persona.
-- El teléfono autorizado.
+- El permiso de checada remota por persona.
+- La autorización del teléfono por Recursos Humanos, en el subproceso "Autorización Asistencia Remota".
 - La alternativa con revisión supervisada por Recursos Humanos para las fallas de la checada móvil.
 
 **No incluye:**
@@ -127,6 +127,7 @@ El alcance cubre a todo Grupo Reyes a nivel nacional, con una prueba previa al 1
 | Business Suite | Sistema donde se consulta el reporte de jornada (versión de escritorio) y donde viven los módulos de prenómina. | 1, 2 |
 | Contpaq | Sistema de nómina que recibe la información por periodo desde el Excel. | 1 |
 | InnovApp | Aplicación móvil desde la que se checa. | 3 |
+| Recursos Humanos general (autoriza teléfonos) | Personal de Recursos Humanos general que resuelve las solicitudes del subproceso "Autorización Asistencia Remota": autoriza, deniega o revoca el teléfono de cada persona. Recursos Humanos de plantas no lo usa. | 3 |
 
 ## 4. Entidad a la que aplica
 
@@ -139,6 +140,7 @@ El proyecto trabaja sobre estas entidades:
 | Empleado (expediente) | Persona que checa. Tiene CURP, empresa, empresa RH, sucursal y, con este proyecto, Proceso y Turno. | Activo o inactivo (dato que ya existe). |
 | Marcaje (checada) | Registro de entrada, inicio de comida, fin de comida o salida. Vive en Biostar. | No aplica. |
 | Catálogos | "Nómina Conceptos", "Conceptos Nómina", "Periodos Nómina", "Proceso" y catálogo de turnos. | No aplica. |
+| Solicitud de autorización de asistencia remota | Solicitud que hace una persona para que su teléfono pueda checar desde InnovApp. Se resuelve en el subproceso "Autorización Asistencia Remota", dentro del proceso "Recursos Humanos". | Inicial: Pendiente. Posteriores: Autorizada, Denegada o Revocada. |
 
 La prenómina tiene solo dos estatus. Si la crea una nominista, empieza en Activa y se puede ajustar hasta que se cierra. Si la crea el sistema al cerrar la Prenómina Gasto, nace en Cerrado y ya no se puede modificar.
 
@@ -171,8 +173,8 @@ stateDiagram-v2
 | [RF-13](#rf-13--exportación-del-reporte-a-excel) | Exportación del reporte a Excel | Business Suite | Marcaje | 2 |
 | [RF-14](#rf-14--opción-de-comida-en-el-checador-y-relación-de-empleados-por-curp) | Opción de comida en el checador y relación de empleados por CURP | Biostar, Business Suite y Contpaq | Marcaje y Empleado | 2 |
 | [RF-15](#rf-15--checada-móvil-desde-innovapp) | Checada móvil desde InnovApp | InnovApp y Biostar | Marcaje | 3 |
-| [RF-16](#rf-16--permiso-de-checada-por-persona) | Permiso de checada por persona | InnovApp | Empleado | 3 |
-| [RF-17](#rf-17--teléfono-autorizado) | Teléfono autorizado | InnovApp | Empleado | 3 |
+| [RF-16](#rf-16--permiso-de-checada-remota-por-persona) | Permiso de checada remota por persona | InnovApp | Empleado | 3 |
+| [RF-17](#rf-17--autorización-del-teléfono-para-checar) | Autorización del teléfono para checar | InnovApp | Empleado | 3 |
 | [RF-18](#rf-18--alternativa-y-revisión-supervisada-por-recursos-humanos) | Alternativa y revisión supervisada por Recursos Humanos | InnovApp | Marcaje | 3 |
 
 # ENTREGABLE 1 — PRENÓMINA
@@ -1536,16 +1538,16 @@ Como Recursos Humanos, quiero que el sistema relacione a cada empleado por su CU
 
 # ENTREGABLE 3 — INNOVAPP
 
-Este entregable permite checar desde el celular, dentro de InnovApp, sin lector, para el personal de oficina, campo y trabajo remoto. La checada queda registrada en Biostar como cualquier otra y se ve en el reporte de jornada. Se acordó el camino de checada desde la app sin lector, con una API dedicada separada de la API actual de InnovApp.
+Este entregable permite checar desde el celular, dentro de InnovApp, sin lector, para el personal de oficina, campo y trabajo remoto. La checada queda registrada en Biostar como cualquier otra y se ve en el reporte de jornada. Se acordó el camino de checada desde la app sin lector, con una API dedicada separada de la API actual de InnovApp. Además, cada teléfono necesita la autorización de Recursos Humanos, que se solicita desde la app y se resuelve en el subproceso nuevo "Autorización Asistencia Remota".
 
-Para checar, la persona necesita el permiso, que el sistema reconozca su CURP, que use su teléfono autorizado con biometría local exitosa, que la ubicación y el GPS estén activos y que haya internet. Se empieza con un piloto reducido antes de ampliar.
+Para checar, la persona necesita el permiso, que el sistema reconozca su CURP, que su teléfono tenga la autorización de Recursos Humanos y la biometría local sea exitosa, que la ubicación y el GPS estén activos y que haya internet. Se empieza con un piloto reducido antes de ampliar.
 
 ```mermaid
 flowchart TD
     A[La persona con permiso abre InnovApp] --> B{¿Su CURP coincide con la de Biostar?}
     B -- No --> X[Mensaje: Usuario no encontrado. Contacta a Recursos Humanos.]
-    B -- Sí --> T{¿Es el teléfono autorizado de la persona?}
-    T -- No --> W[No se permite checar]
+    B -- Sí --> T{¿Su teléfono tiene la autorización de Recursos Humanos?}
+    T -- No --> W[No se permite checar: debe solicitar la autorización]
     T -- Sí --> C{¿La biometría local del teléfono es exitosa?}
     C -- No --> Y[No se registra la checada]
     C -- Sí --> D{¿Hay internet, ubicación y GPS activos?}
@@ -1562,7 +1564,7 @@ El diagrama muestra las validaciones que hace la app antes de registrar una chec
 | --- | --- |
 | Prioridad | Must |
 | Estado | Definición |
-| Dependencias | RF-10, RF-14, RF-16 |
+| Dependencias | RF-10, RF-14, RF-16, RF-17 |
 
 ## Objetivo
 
@@ -1570,7 +1572,7 @@ Permitir que el personal registre su asistencia desde el celular, con las mismas
 
 ## Descripción
 
-El sistema deberá permitir registrar asistencia desde InnovApp, sin lector, para uso en oficina, campo y remoto. Se registran los mismos cuatro movimientos que en el checador: entrada, salida a comida, regreso de comida y salida. Se valida, en este orden, que el usuario esté ligado a una persona de Biostar mediante la CURP (InnovApp la toma del expediente de personal; en Biostar se agrega la CURP a los usuarios para hacer coincidir a la persona), que el teléfono sea el autorizado de esa persona y que la biometría local del teléfono sea exitosa. La fecha y la hora de la checada las pone el servidor. Para checar, la ubicación y el GPS deben estar siempre activos y debe haber internet. La ubicación se guarda solo como dato informativo.
+El sistema deberá permitir registrar asistencia desde InnovApp, sin lector, para uso en oficina, campo y remoto. Se registran los mismos cuatro movimientos que en el checador: entrada, salida a comida, regreso de comida y salida. Se valida, en este orden, que el usuario esté ligado a una persona de Biostar mediante la CURP (InnovApp la toma del expediente de personal; en Biostar se agrega la CURP a los usuarios para hacer coincidir a la persona), que la clave de confianza del teléfono coincida con la que Recursos Humanos autorizó y que la biometría local del teléfono sea exitosa. La fecha y la hora de la checada las pone el servidor. Para checar, la ubicación y el GPS deben estar siempre activos y debe haber internet. La ubicación se guarda solo como dato informativo.
 
 ## HU-15.1 — Registrar las cuatro checadas desde InnovApp
 
@@ -1632,11 +1634,11 @@ Como persona con permiso, quiero registrar mi entrada, mi salida a comida, mi re
 
 ## HU-15.2 — Validar mi identidad antes de checar
 
-Como Recursos Humanos, quiero que la app valide el usuario, el teléfono autorizado y la biometría local, para que nadie checque por otra persona.
+Como Recursos Humanos, quiero que la app valide el usuario, la clave de confianza del teléfono y la biometría local, para que nadie checque por otra persona.
 
 ### Reglas de negocio
 
-**RN-15.5** Para checar desde InnovApp se valida, en este orden: (1) que el usuario esté ligado a una persona de Biostar, (2) que el teléfono sea el autorizado de esa persona (RF-17) y (3) que la biometría local del teléfono sea exitosa. Una checada solo es válida si se cumplen las tres validaciones. La biometría local confirma que quien usa el teléfono está registrado en él.
+**RN-15.5** Para checar desde InnovApp se valida, en este orden: (1) que el usuario esté ligado a una persona de Biostar, (2) que la clave de confianza del teléfono coincida con la que Recursos Humanos autorizó (RF-17) y (3) que la biometría local del teléfono sea exitosa. Una checada solo es válida si se cumplen las tres validaciones. La biometría local confirma que quien usa el teléfono está registrado en él.
 
 **RN-15.6** El usuario de InnovApp se liga con la persona de Biostar mediante la CURP, que se usa solo como dato de enlace. Si no la encuentra, muestra "Usuario no encontrado. Contacta a Recursos Humanos." y no permite checar.
 
@@ -1644,13 +1646,13 @@ Como Recursos Humanos, quiero que la app valide el usuario, el teléfono autoriz
 
 ### Criterios de Aceptación
 
-**CA-15.2.1 — Identidad válida** Dado que una persona con permiso abre InnovApp en su teléfono autorizado Cuando su CURP coincide con la de Biostar y la biometría local es exitosa Entonces se registra su checada.
+**CA-15.2.1 — Identidad válida** Dado que una persona con permiso abre InnovApp en un teléfono autorizado por Recursos Humanos Cuando su CURP coincide con la de Biostar y la biometría local es exitosa Entonces se registra su checada.
 
 **CA-15.2.2 — Biometría local no exitosa** Dado que la biometría local del teléfono falla o se cancela Cuando intenta checar Entonces la checada no se registra.
 
 **CA-15.2.3 — CURP no encontrada** Dado que la CURP del usuario de InnovApp no se encuentra en Biostar Cuando intenta checar Entonces el sistema muestra el mensaje "Usuario no encontrado. Contacta a Recursos Humanos." y no permite checar.
 
-**CA-15.2.4 — Orden de las validaciones** Dado que una persona intenta checar en InnovApp Cuando el sistema valida su identidad Entonces valida primero que el usuario esté ligado a Biostar, después que el teléfono sea el autorizado y al final la biometría local.
+**CA-15.2.4 — Orden de las validaciones** Dado que una persona intenta checar en InnovApp Cuando el sistema valida su identidad Entonces valida primero que el usuario esté ligado a Biostar, después la clave de confianza del teléfono y al final la biometría local.
 
 **CA-15.2.5 — CURP protegida** Dado que Ana checó Cuando se revisan las bitácoras técnicas y los mensajes Entonces no aparece su CURP completa.
 
@@ -1662,7 +1664,7 @@ Como Recursos Humanos, quiero que la app valide el usuario, el teléfono autoriz
 
 **CP-15.2.3 — CURP no encontrada (error)** Verifica: CA-15.2.3 · RN-15.6 Dado que la CURP del usuario no existe en Biostar Cuando intenta checar Entonces ve el mensaje "Usuario no encontrado. Contacta a Recursos Humanos." y no puede checar.
 
-**CP-15.2.4 — Orden de las validaciones (validación)** Verifica: CA-15.2.4 · RN-15.5 Dado que la CURP no coincide Cuando intenta checar Entonces el sistema no llega a validar el teléfono ni a pedir la biometría.
+**CP-15.2.4 — Orden de las validaciones (validación)** Verifica: CA-15.2.4 · RN-15.5 Dado que la CURP no coincide Cuando intenta checar Entonces el sistema no llega a validar la clave del teléfono ni a pedir la biometría.
 
 **CP-15.2.5 — CURP no visible en bitácoras (validación)** Verifica: CA-15.2.5 · RN-15.9 Dado que Ana checó Cuando se revisan las bitácoras técnicas Entonces no aparece su CURP completa.
 
@@ -1714,7 +1716,7 @@ Como Recursos Humanos, quiero que la app exija ubicación y GPS activos al checa
 
 **Regla transversal:** el resultado de las marcas de la app debe demostrarse en el reporte de asistencia (T&A) antes de ampliar el piloto; si no es viable, se evalúa otra alternativa. Se inicia con un piloto reducido antes de ampliar.
 
-# RF-16 — Permiso de checada por persona
+# RF-16 — Permiso de checada remota por persona
 
 | Campo | Valor |
 | --- | --- |
@@ -1724,126 +1726,297 @@ Como Recursos Humanos, quiero que la app exija ubicación y GPS activos al checa
 
 ## Objetivo
 
-Que solo las personas autorizadas puedan checar desde el celular.
+Que la opción de checar de manera remota solo le aparezca al personal que corresponde.
 
 ## Descripción
 
-El sistema deberá permitir asignar a cada persona el permiso para checar desde InnovApp. La Célula de Innovación asigna el permiso según sea necesario, igual que todas las asignaciones de permisos.
+El sistema deberá permitir asignar el permiso de checada remota. La Célula de Innovación asigna a qué personal le aparece en InnovApp la opción de checar de manera remota. Este permiso es independiente de la autorización de Recursos Humanos al teléfono (RF-17): la Célula decide quién ve la opción y Recursos Humanos decide si ese teléfono puede checar.
 
-## HU-16.1 — Asignar el permiso de checada
+## HU-16.1 — Asignar el permiso de checada remota
 
-Como Célula de Innovación, quiero asignar a cada persona el permiso de checar desde InnovApp, para controlar quién puede hacerlo.
+Como Célula de Innovación, quiero asignar a qué personal le aparece la opción de checar de manera remota, para controlar quién puede solicitar la autorización de su teléfono.
 
 ### Reglas de negocio
 
-**RN-16.1** Solo las personas con permiso asignado pueden checar desde InnovApp. La Célula de Innovación lo asigna según sea necesario.
+**RN-16.1** La Célula de Innovación asigna a qué personal le aparece en InnovApp la opción de checar de manera remota.
 
-**RN-16.2** Todas las asignaciones de permisos las configura la Célula de Innovación.
+**RN-16.2** Este permiso es independiente de la autorización de Recursos Humanos. La Célula decide quién ve la opción; Recursos Humanos decide si ese teléfono puede checar. Para checar se necesitan las dos.
 
 ### Criterios de Aceptación
 
-**CA-16.1.1 — Persona con permiso** Dado que la Célula de Innovación asignó el permiso a una persona Cuando abre InnovApp Entonces puede checar.
+**CA-16.1.1 — Persona con permiso** Dado que la Célula de Innovación asignó el permiso a una persona Cuando abre InnovApp Entonces ve la opción de checar de manera remota.
 
-**CA-16.1.2 — Persona sin permiso** Dado que una persona no tiene el permiso Cuando intenta checar en InnovApp Entonces el sistema no se lo permite.
+**CA-16.1.2 — Persona sin permiso** Dado que una persona no tiene el permiso Cuando abre InnovApp Entonces no ve la opción de checar de manera remota.
+
+**CA-16.1.3 — Permiso sin autorización de Recursos Humanos** Dado que una persona tiene el permiso de checada remota pero su teléfono no está autorizado por Recursos Humanos Cuando intenta checar Entonces no se le permite.
 
 ### Casos de prueba
 
-**CP-16.1.1 — Con permiso puede checar (camino feliz)** Verifica: CA-16.1.1 · RN-16.1 Dado que Ana tiene el permiso Cuando abre InnovApp Entonces puede checar.
+**CP-16.1.1 — Con permiso ve la opción (camino feliz)** Verifica: CA-16.1.1 · RN-16.1 Dado que Ana tiene el permiso Cuando abre InnovApp Entonces ve la opción de checar de manera remota.
 
-**CP-16.1.2 — Sin permiso no checa (permisos)** Verifica: CA-16.1.2 · RN-16.1 Dado que Luis no tiene el permiso Cuando intenta checar Entonces el sistema no se lo permite.
+**CP-16.1.2 — Sin permiso no ve la opción (permisos)** Verifica: CA-16.1.2 · RN-16.1 Dado que Luis no tiene el permiso Cuando abre InnovApp Entonces no ve la opción de checar de manera remota.
 
-**CP-16.1.3 — Quitar el permiso (alternativo)** Verifica: CA-16.1.2 · RN-16.1 Dado que Ana tenía el permiso y la Célula de Innovación se lo quita Cuando intenta checar Entonces el sistema no se lo permite.
+**CP-16.1.3 — Quitar el permiso (alternativo)** Verifica: CA-16.1.2 · RN-16.1 Dado que Ana tenía el permiso y la Célula de Innovación se lo quita Cuando abre InnovApp Entonces ya no ve la opción de checar de manera remota.
 
 **CP-16.1.4 — Solo la Célula de Innovación asigna (permisos)** Verifica: CA-16.1.1 · RN-16.2 Dado que una persona de Recursos Humanos abre la configuración de permisos Cuando intenta asignar el permiso de checada Entonces el sistema no se lo permite.
+
+**CP-16.1.5 — Permiso sin autorización de Recursos Humanos (error)** Verifica: CA-16.1.3 · RN-16.2 Dado que Ana tiene el permiso pero su teléfono no está autorizado Cuando intenta checar Entonces no se le permite.
 
 | CA | Caso(s) de prueba | Escenarios cubiertos |
 | --- | --- | --- |
 | CA-16.1.1 | CP-16.1.1, CP-16.1.4 | Camino feliz, Permisos |
 | CA-16.1.2 | CP-16.1.2, CP-16.1.3 | Permisos, Alternativo |
+| CA-16.1.3 | CP-16.1.5 | Error |
 
-# RF-17 — Teléfono autorizado
+# RF-17 — Autorización del teléfono para checar
 
 | Campo | Valor |
 | --- | --- |
-| Prioridad | Should |
+| Prioridad | Must |
 | Estado | Definición |
 | Dependencias | RF-15, RF-16 |
 
 ## Objetivo
 
-Asegurar que cada persona checa desde su propio teléfono.
+Que cada persona solo pueda checar desde un teléfono que Recursos Humanos haya autorizado.
 
 ## Descripción
 
-Cada persona con permiso tiene un solo teléfono autorizado, personal o de la empresa, con Android o iOS. El teléfono se asocia a la persona con una clave propia de ese equipo, protegida por la biometría local. El teléfono no se comparte y se puede cambiar o revocar con la aprobación de Recursos Humanos. Los detalles técnicos de la autorización quedan a cargo de la Célula de Innovación.
+Para checar desde InnovApp, el teléfono de cada persona necesita la confianza de Recursos Humanos. Al entrar por primera vez, la app comprueba que la persona exista en Biostar mediante la CURP y genera una clave de confianza que une a la persona con ese teléfono. La clave se genera una sola vez y se guarda solo en el teléfono. Con ella se crea una solicitud en el subproceso nuevo "Autorización Asistencia Remota", dentro del proceso "Recursos Humanos", donde Recursos Humanos general la autoriza o la deniega. Si la persona cambia de teléfono, la clave no coincide, no puede checar y debe pedir una nueva autorización; el teléfono anterior sigue activo hasta que se autorice el nuevo. Una persona solo puede usar un teléfono para checar.
 
-## HU-17.1 — Asociar un teléfono a mi persona
+| Estado de la solicitud | Qué significa |
+| --- | --- |
+| Pendiente | La persona ya la pidió y espera la respuesta de Recursos Humanos. Todavía no puede checar con ese teléfono. |
+| Autorizada | Recursos Humanos la aprobó. La persona puede checar con ese teléfono. |
+| Denegada | Recursos Humanos no la aprobó. La persona puede volver a solicitarla. |
+| Revocada | Recursos Humanos retiró la autorización, o la persona causó baja. El teléfono ya no puede checar. |
 
-Como Recursos Humanos, quiero que cada persona con permiso tenga un solo teléfono autorizado, para que nadie checque por otra persona.
+## HU-17.1 — Solicitar la autorización la primera vez
+
+Como persona con permiso de checada remota, quiero que mi teléfono quede registrado y pueda ser autorizado, para poder checar desde InnovApp.
 
 ### Reglas de negocio
 
-**RN-17.1** Los teléfonos pueden ser personales o de la empresa, con Android o iOS. No se permiten teléfonos compartidos.
+**RN-17.1** Antes de solicitar, se valida que el usuario esté registrado en Biostar mediante la CURP. Si no, la app muestra "Usuario no encontrado. Contacta a Recursos Humanos."
 
-**RN-17.2** Como criterio de identidad se usa un teléfono autorizado más biometría local.
+**RN-17.2** Si el usuario existe en las dos plataformas, se hace un registro inicial: la app genera una clave de confianza que une a la persona con ese teléfono. La clave se genera una sola vez y se guarda solo en el teléfono; no sale de él.
 
-**RN-17.3** Cada persona tiene un teléfono autorizado activo y cada teléfono pertenece a una sola persona.
+**RN-17.3** El registro inicial genera una solicitud en estado "Pendiente" en el subproceso nuevo "Autorización Asistencia Remota", dentro del proceso "Recursos Humanos".
 
-**RN-17.4** Para cambiar de teléfono, Recursos Humanos aprueba la nueva asociación y el teléfono anterior deja de estar autorizado.
+**RN-17.4** Mientras la solicitud esté pendiente no se puede checar desde ese teléfono. No hay plazo de respuesta: la solicitud queda en espera hasta que Recursos Humanos la resuelva.
 
-**RN-17.5** Si el teléfono se pierde, o la persona pierde el permiso o causa baja, la autorización se revoca de inmediato.
+**RN-17.5** Cada persona tiene como máximo una solicitud pendiente. Si pide otra, la nueva reemplaza a la anterior.
 
-**RN-17.6** Si cambia la biometría registrada en el teléfono después de asociarlo (se agrega o se quita una huella o un rostro), el teléfono deja de estar autorizado y se asocia de nuevo con aprobación de Recursos Humanos.
-
-**RN-17.7** El teléfono debe tener biometría local y cumplir la versión mínima de sistema operativo que defina la Célula de Innovación (RNF-003).
-
-**RN-17.8** La asociación la realiza o supervisa Recursos Humanos o la Célula de Innovación, y la persona acepta que el teléfono contiene solo su propia biometría al momento de asociarlo.
+**RN-17.6** La persona se entera del estado de su solicitud al entrar a InnovApp; no se envía una notificación al teléfono. Los textos finales los define UI-UX.
 
 ### Criterios de Aceptación
 
-**CA-17.1.1 — Teléfono autorizado** Dado que un empleado con permiso tiene un teléfono autorizado Cuando intenta checar desde InnovApp Entonces el sistema continúa con las validaciones de identidad.
+**CA-17.1.1 — Usuario en las dos plataformas** Dado que la CURP del usuario existe en Biostar Cuando inicia sesión por primera vez en un teléfono Entonces la app genera la clave de confianza y crea la solicitud en estado "Pendiente".
 
-**CA-17.1.2 — Teléfono no autorizado** Dado que un empleado intenta checar desde un teléfono que no está autorizado Cuando intenta checar Entonces el sistema no se lo permite.
+**CA-17.1.2 — Usuario no encontrado** Dado que la CURP del usuario no existe en Biostar Cuando inicia sesión Entonces ve el mensaje "Usuario no encontrado. Contacta a Recursos Humanos." y no se crea la solicitud.
 
-**CA-17.1.3 — Teléfono compartido** Dado que un teléfono ya está asociado a un empleado Cuando se intenta asociarlo a otro Entonces el sistema no lo permite.
+**CA-17.1.3 — Solicitud pendiente** Dado que la solicitud de la persona está pendiente Cuando intenta checar Entonces no se le permite.
 
-**CA-17.1.4 — Cambio de teléfono** Dado que Ana tiene un teléfono nuevo Cuando Recursos Humanos aprueba la nueva asociación Entonces el teléfono anterior deja de poder checar.
+**CA-17.1.4 — Clave solo en el teléfono** Dado que se generó la clave de confianza Cuando se revisan los sistemas del proyecto Entonces ninguno guarda la clave completa.
 
-**CA-17.1.5 — Revocación** Dado que Ana perdió su teléfono o causó baja Cuando se revoca su autorización Entonces nadie puede checar con ese teléfono.
+**CA-17.1.5 — Una sola solicitud pendiente** Dado que una persona ya tiene una solicitud pendiente Cuando pide otra Entonces la nueva reemplaza a la anterior.
 
-**CA-17.1.6 — Cambio de biometría** Dado que se agregó una huella al teléfono de Ana después de asociarlo Cuando intenta checar Entonces el sistema no se lo permite hasta que se asocie de nuevo.
-
-**CA-17.1.7 — Teléfono no compatible** Dado que un teléfono no tiene biometría local compatible Cuando se intenta asociar Entonces el sistema no lo permite y se canaliza a RF-18.
+**CA-17.1.6 — Aviso al entrar a la app** Dado que cambió el estado de la solicitud de la persona Cuando abre InnovApp Entonces ve el estado de su solicitud, sin que se le envíe una notificación al teléfono.
 
 ### Casos de prueba
 
-**CP-17.1.1 — Teléfono autorizado checa (camino feliz)** Verifica: CA-17.1.1 · RN-17.1 Dado que Ana tiene su teléfono Android autorizado Cuando intenta checar Entonces el sistema continúa con las validaciones.
+**CP-17.1.1 — Primera solicitud (camino feliz)** Verifica: CA-17.1.1 · RN-17.2 Dado que Ana tiene el permiso de checada remota y su CURP está en Biostar Cuando inicia sesión por primera vez en su teléfono Entonces se crea la clave en el teléfono y una solicitud "Pendiente".
 
-**CP-17.1.2 — Teléfono iOS autorizado (alternativo)** Verifica: CA-17.1.1 · RN-17.1 Dado que Pedro tiene su iPhone de la empresa autorizado Cuando intenta checar Entonces el sistema continúa con las validaciones.
+**CP-17.1.2 — CURP inexistente (error)** Verifica: CA-17.1.2 · RN-17.1 Dado que la CURP del usuario no existe en Biostar Cuando inicia sesión Entonces ve "Usuario no encontrado. Contacta a Recursos Humanos." y no se crea solicitud.
 
-**CP-17.1.3 — Teléfono no autorizado (error)** Verifica: CA-17.1.2 · RN-17.2 Dado que Ana intenta checar desde un teléfono que no está autorizado Cuando abre InnovApp Entonces el sistema no se lo permite.
+**CP-17.1.3 — Checar con la solicitud pendiente (error)** Verifica: CA-17.1.3 · RN-17.4 Dado que la solicitud de Ana está pendiente Cuando intenta checar Entonces no se le permite y no se registra nada.
 
-**CP-17.1.4 — Teléfono ya asociado a otra persona (error)** Verifica: CA-17.1.3 · RN-17.1 Dado que el teléfono de Ana ya está asociado a ella Cuando se intenta asociarlo a Luis Entonces el sistema no lo permite.
+**CP-17.1.4 — La clave no sale del teléfono (validación)** Verifica: CA-17.1.4 · RN-17.2 Dado que Ana generó su clave Cuando se revisan la base de datos y la bitácora del servidor Entonces no aparece la clave completa.
 
-**CP-17.1.5 — Cambio de teléfono (alternativo)** Verifica: CA-17.1.4 · RN-17.4 Dado que Ana cambió de teléfono y Recursos Humanos aprobó la asociación Cuando intenta checar con el teléfono anterior Entonces no se lo permite.
+**CP-17.1.5 — No se genera una clave nueva (validación)** Verifica: CA-17.1.1 · RN-17.2 Dado que Ana ya tiene su clave en ese teléfono Cuando vuelve a iniciar sesión en el mismo teléfono Entonces no se genera una clave nueva.
 
-**CP-17.1.6 — Revocación por pérdida (error)** Verifica: CA-17.1.5 · RN-17.5 Dado que Luis perdió su teléfono y se revocó Cuando alguien intenta checar con él Entonces no se permite.
+**CP-17.1.6 — Segunda solicitud (alternativo)** Verifica: CA-17.1.5 · RN-17.5 Dado que Ana tiene una solicitud pendiente Cuando pide otra Entonces la bandeja de Recursos Humanos muestra solo la nueva.
 
-**CP-17.1.7 — Baja de la persona (error)** Verifica: CA-17.1.5 · RN-17.5 Dado que Pedro causó baja Cuando intenta checar Entonces no se permite.
-
-**CP-17.1.8 — Se agrega una huella (error)** Verifica: CA-17.1.6 · RN-17.6 Dado que a Ana se le agrega una huella al teléfono Cuando intenta checar Entonces no se permite hasta asociar de nuevo.
-
-**CP-17.1.9 — Teléfono sin biometría (error)** Verifica: CA-17.1.7 · RN-17.7 Dado que el teléfono de Luis no tiene biometría local Cuando se intenta asociar Entonces no se permite.
+**CP-17.1.7 — Aviso al abrir la app (camino feliz)** Verifica: CA-17.1.6 · RN-17.6 Dado que Recursos Humanos autorizó la solicitud de Ana Cuando Ana abre InnovApp Entonces ve que su teléfono fue autorizado, sin notificación al teléfono.
 
 | CA | Caso(s) de prueba | Escenarios cubiertos |
 | --- | --- | --- |
-| CA-17.1.1 | CP-17.1.1, CP-17.1.2 | Camino feliz, Alternativo |
-| CA-17.1.2 | CP-17.1.3 | Error |
-| CA-17.1.3 | CP-17.1.4 | Error |
-| CA-17.1.4 | CP-17.1.5 | Alternativo |
-| CA-17.1.5 | CP-17.1.6, CP-17.1.7 | Error |
-| CA-17.1.6 | CP-17.1.8 | Error |
-| CA-17.1.7 | CP-17.1.9 | Error |
+| CA-17.1.1 | CP-17.1.1, CP-17.1.5 | Camino feliz, Validación |
+| CA-17.1.2 | CP-17.1.2 | Error |
+| CA-17.1.3 | CP-17.1.3 | Error |
+| CA-17.1.4 | CP-17.1.4 | Validación |
+| CA-17.1.5 | CP-17.1.6 | Alternativo |
+| CA-17.1.6 | CP-17.1.7 | Camino feliz |
+
+## HU-17.2 — Autorizar o denegar desde la bandeja de Recursos Humanos
+
+Como Recursos Humanos general, quiero ver las solicitudes y resolverlas, para controlar qué teléfonos pueden checar.
+
+### Reglas de negocio
+
+**RN-17.7** Solo Recursos Humanos general ve y resuelve las solicitudes de "Autorización Asistencia Remota".
+
+**RN-17.8** Cada solicitud muestra, completos, nombre, número de nómina, RFC, CURP, área, departamento asignado, puesto, turno, proceso, sucursal asignada y empresa asignada, tomados del expediente, y el modelo del dispositivo. Tiene las acciones Autorizar y Denegar.
+
+**RN-17.9** Si se autoriza, la persona puede checar con ese teléfono. Si se deniega, no puede, y puede volver a solicitar la autorización sin límite de veces.
+
+**RN-17.10** Al denegar, Recursos Humanos puede escribir un motivo, que es opcional.
+
+**RN-17.11** La bandeja se puede filtrar por estado (Pendiente, Autorizada, Denegada y Revocada).
+
+**RN-17.12** Cada resolución queda registrada con la fecha, la persona, quien la resolvió y el motivo, si lo hay.
+
+### Criterios de Aceptación
+
+**CA-17.2.1 — Datos de la solicitud** Dado que hay una solicitud pendiente Cuando Recursos Humanos general abre el subproceso Entonces ve los datos del expediente, el modelo del dispositivo y las acciones Autorizar y Denegar.
+
+**CA-17.2.2 — Autorizar** Dado que Recursos Humanos general autoriza la solicitud Cuando la persona intenta checar con ese teléfono Entonces se le permite.
+
+**CA-17.2.3 — Denegar** Dado que Recursos Humanos general deniega la solicitud Cuando la persona intenta checar con ese teléfono Entonces no se le permite y puede solicitar la autorización de nuevo.
+
+**CA-17.2.4 — Solo Recursos Humanos general** Dado que una persona no es de Recursos Humanos general Cuando intenta abrir el subproceso Entonces no está disponible para ella.
+
+**CA-17.2.5 — Registro de la resolución** Dado que Recursos Humanos resolvió una solicitud Cuando se consulta el registro Entonces aparecen la fecha, la persona, quien la resolvió y el motivo, si lo hay.
+
+**CA-17.2.6 — Filtro por estado** Dado que hay solicitudes en distintos estados Cuando Recursos Humanos general filtra por un estado Entonces ve solo las solicitudes de ese estado.
+
+**CA-17.2.7 — Denegar sin motivo** Dado que Recursos Humanos general deniega una solicitud Cuando no escribe un motivo Entonces el sistema lo permite y guarda la resolución sin motivo.
+
+### Casos de prueba
+
+**CP-17.2.1 — Datos del expediente y del dispositivo (camino feliz)** Verifica: CA-17.2.1 · RN-17.8 Dado que Ana solicitó la autorización Cuando Recursos Humanos general abre su solicitud Entonces ve completos nombre, número de nómina, RFC, CURP, área, departamento, puesto, turno, proceso, sucursal y empresa, más el modelo de su teléfono.
+
+**CP-17.2.2 — Autorizar y checar (camino feliz)** Verifica: CA-17.2.2 · RN-17.9 Dado que Recursos Humanos general autorizó el teléfono de Ana Cuando Ana checa su entrada Entonces la checada se registra.
+
+**CP-17.2.3 — Denegar con motivo (alternativo)** Verifica: CA-17.2.3 · RN-17.10 Dado que Recursos Humanos general deniega la solicitud de Luis y escribe un motivo Cuando Luis intenta checar Entonces no se le permite y el motivo queda guardado.
+
+**CP-17.2.4 — Denegar sin motivo (alternativo)** Verifica: CA-17.2.7 · RN-17.10 Dado que Recursos Humanos general deniega la solicitud de Luis sin escribir motivo Cuando guarda Entonces la resolución se guarda sin motivo.
+
+**CP-17.2.5 — Solicitar de nuevo tras una denegación (alternativo)** Verifica: CA-17.2.3 · RN-17.9 Dado que la solicitud de Luis fue denegada tres veces Cuando Luis solicita la autorización otra vez Entonces se crea una solicitud pendiente nueva, sin límite de intentos.
+
+**CP-17.2.6 — Recursos Humanos de plantas sin acceso (permisos)** Verifica: CA-17.2.4 · RN-17.7 Dado que una persona de Recursos Humanos de una planta abre el sistema Cuando intenta entrar a "Autorización Asistencia Remota" Entonces el subproceso no está disponible.
+
+**CP-17.2.7 — Registro de la resolución (validación)** Verifica: CA-17.2.5 · RN-17.12 Dado que Recursos Humanos general autorizó la solicitud de Pedro Cuando se consulta el registro Entonces aparecen la fecha, Pedro y quien lo autorizó.
+
+**CP-17.2.8 — Filtro por estado (validación)** Verifica: CA-17.2.6 · RN-17.11 Dado que hay solicitudes pendientes, autorizadas, denegadas y revocadas Cuando Recursos Humanos general filtra por "Denegada" Entonces ve solo las denegadas.
+
+| CA | Caso(s) de prueba | Escenarios cubiertos |
+| --- | --- | --- |
+| CA-17.2.1 | CP-17.2.1 | Camino feliz |
+| CA-17.2.2 | CP-17.2.2 | Camino feliz |
+| CA-17.2.3 | CP-17.2.3, CP-17.2.5 | Alternativo |
+| CA-17.2.4 | CP-17.2.6 | Permisos |
+| CA-17.2.5 | CP-17.2.7 | Validación |
+| CA-17.2.6 | CP-17.2.8 | Validación |
+| CA-17.2.7 | CP-17.2.4 | Alternativo |
+
+## HU-17.3 — Cambiar de teléfono, de biometría o reinstalar la app
+
+Como persona con permiso de checada remota, quiero poder usar un teléfono nuevo, para seguir checando si cambio o pierdo el mío.
+
+### Reglas de negocio
+
+**RN-17.13** Una persona solo puede checar desde un teléfono, y cada teléfono pertenece a una sola persona.
+
+**RN-17.14** En un teléfono nuevo la clave de confianza no coincide y no se permite checar. La persona solicita desde InnovApp una nueva autorización, que llega a Recursos Humanos como una solicitud pendiente igual a la primera.
+
+**RN-17.15** Si cambia la biometría registrada en el teléfono, o se reinstala InnovApp, el sistema operativo invalida la clave y se trata como un dispositivo nuevo.
+
+**RN-17.16** El teléfono anterior sigue activo hasta que Recursos Humanos autorice la nueva solicitud. Al autorizarse, la clave se actualiza y el anterior deja de poder checar. Si se deniega, el anterior sigue activo.
+
+### Criterios de Aceptación
+
+**CA-17.3.1 — Teléfono nuevo** Dado que la persona entra desde un teléfono nuevo Cuando intenta checar Entonces no se le permite y puede solicitar la nueva autorización desde InnovApp.
+
+**CA-17.3.2 — Teléfono anterior durante la espera** Dado que la solicitud del teléfono nuevo está pendiente Cuando la persona checa desde el teléfono anterior Entonces se le permite.
+
+**CA-17.3.3 — Cambio autorizado** Dado que Recursos Humanos autoriza el teléfono nuevo Cuando la persona intenta checar desde el teléfono anterior Entonces no se le permite.
+
+**CA-17.3.4 — Cambio denegado** Dado que Recursos Humanos deniega el teléfono nuevo Cuando la persona checa desde el teléfono anterior Entonces se le permite.
+
+**CA-17.3.5 — Cambio de biometría o reinstalación** Dado que se agregó o se quitó una huella o un rostro en el teléfono, o se reinstaló InnovApp Cuando la persona intenta checar Entonces no se le permite y se trata como un dispositivo nuevo.
+
+### Casos de prueba
+
+**CP-17.3.1 — Teléfono nuevo sin autorización (error)** Verifica: CA-17.3.1 · RN-17.14 Dado que Ana entra desde un teléfono nuevo Cuando intenta checar Entonces no se le permite y puede solicitar la autorización.
+
+**CP-17.3.2 — Teléfono anterior activo en la espera (alternativo)** Verifica: CA-17.3.2 · RN-17.16 Dado que la solicitud del teléfono nuevo de Ana está pendiente Cuando Ana checa con su teléfono anterior Entonces se le permite.
+
+**CP-17.3.3 — Cambio autorizado (camino feliz)** Verifica: CA-17.3.3 · RN-17.16 Dado que Recursos Humanos autorizó el teléfono nuevo de Ana Cuando Ana checa con el teléfono nuevo y luego con el anterior Entonces con el nuevo se le permite y con el anterior no.
+
+**CP-17.3.4 — Cambio denegado (alternativo)** Verifica: CA-17.3.4 · RN-17.16 Dado que Recursos Humanos denegó el teléfono nuevo de Ana Cuando Ana checa con su teléfono anterior Entonces se le permite.
+
+**CP-17.3.5 — Un teléfono con dos personas (error)** Verifica: CA-17.3.1 · RN-17.13 Dado que el teléfono de Ana está autorizado Cuando Luis intenta checar desde ese teléfono con su usuario Entonces no se le permite.
+
+**CP-17.3.6 — Dos teléfonos de la misma persona (error)** Verifica: CA-17.3.3 · RN-17.13 Dado que Ana tiene un teléfono autorizado y otro ya autorizado como reemplazo Cuando intenta checar con los dos Entonces solo puede checar con el vigente.
+
+**CP-17.3.7 — Se agrega una huella (error)** Verifica: CA-17.3.5 · RN-17.15 Dado que a Ana se le agrega una huella en su teléfono Cuando intenta checar Entonces no se le permite hasta que Recursos Humanos autorice una nueva solicitud.
+
+**CP-17.3.8 — Reinstalación de la app (error)** Verifica: CA-17.3.5 · RN-17.15 Dado que Ana reinstaló InnovApp Cuando intenta checar Entonces no se le permite hasta que Recursos Humanos autorice una nueva solicitud.
+
+| CA | Caso(s) de prueba | Escenarios cubiertos |
+| --- | --- | --- |
+| CA-17.3.1 | CP-17.3.1, CP-17.3.5 | Error |
+| CA-17.3.2 | CP-17.3.2 | Alternativo |
+| CA-17.3.3 | CP-17.3.3, CP-17.3.6 | Camino feliz, Error |
+| CA-17.3.4 | CP-17.3.4 | Alternativo |
+| CA-17.3.5 | CP-17.3.7, CP-17.3.8 | Error |
+
+## HU-17.4 — Revocar un teléfono y atender las bajas
+
+Como Recursos Humanos general, quiero revocar un teléfono y que las bajas se cierren solas, para que nadie siga checando sin autorización.
+
+### Reglas de negocio
+
+**RN-17.17** Recursos Humanos general puede revocar un teléfono autorizado (por ejemplo, por pérdida) y deja de poder checar de inmediato. Puede escribir un motivo, que es opcional.
+
+**RN-17.18** Si una persona causa baja o pierde el permiso de checada remota, su solicitud pendiente pasa a "Revocada" con el motivo "Baja" y su teléfono autorizado se revoca.
+
+### Criterios de Aceptación
+
+**CA-17.4.1 — Revocar bloquea de inmediato** Dado que Recursos Humanos general revoca un teléfono autorizado Cuando la persona intenta checar con él Entonces no se le permite.
+
+**CA-17.4.2 — Baja de la persona** Dado que una persona causa baja Cuando se registra la baja Entonces su solicitud pendiente pasa a "Revocada" con el motivo "Baja" y su teléfono autorizado se revoca.
+
+**CA-17.4.3 — Pérdida del permiso de checada remota** Dado que la Célula de Innovación quita el permiso de checada remota a una persona Cuando se guarda el cambio Entonces su solicitud pendiente se cierra como "Revocada" y su teléfono autorizado se revoca.
+
+**CA-17.4.4 — Revocar sin motivo** Dado que Recursos Humanos general revoca un teléfono Cuando no escribe un motivo Entonces el sistema lo permite y guarda la revocación sin motivo.
+
+### Casos de prueba
+
+**CP-17.4.1 — Revocar con motivo (camino feliz)** Verifica: CA-17.4.1 · RN-17.17 Dado que Luis perdió su teléfono Cuando Recursos Humanos general lo revoca y escribe el motivo "Pérdida" Entonces nadie puede checar con ese teléfono y el motivo queda guardado.
+
+**CP-17.4.2 — Revocar sin motivo (alternativo)** Verifica: CA-17.4.4 · RN-17.17 Dado que Recursos Humanos general revoca el teléfono de Luis sin motivo Cuando guarda Entonces la revocación se guarda sin motivo.
+
+**CP-17.4.3 — Baja con solicitud pendiente (alternativo)** Verifica: CA-17.4.2 · RN-17.18 Dado que Pedro tiene una solicitud pendiente y causa baja Cuando se registra la baja Entonces su solicitud queda "Revocada" con el motivo "Baja".
+
+**CP-17.4.4 — Baja con teléfono autorizado (alternativo)** Verifica: CA-17.4.2 · RN-17.18 Dado que Pedro tiene un teléfono autorizado y causa baja Cuando se registra la baja Entonces su teléfono queda revocado y ya no puede checar.
+
+**CP-17.4.5 — Quitar el permiso de checada remota (alternativo)** Verifica: CA-17.4.3 · RN-17.18 Dado que Ana tiene un teléfono autorizado Cuando la Célula de Innovación le quita el permiso de checada remota Entonces su teléfono queda revocado y ya no ve la opción de checar de manera remota.
+
+| CA | Caso(s) de prueba | Escenarios cubiertos |
+| --- | --- | --- |
+| CA-17.4.1 | CP-17.4.1 | Camino feliz |
+| CA-17.4.2 | CP-17.4.3, CP-17.4.4 | Alternativo |
+| CA-17.4.3 | CP-17.4.5 | Alternativo |
+| CA-17.4.4 | CP-17.4.2 | Alternativo |
+
+### Mensajes de la app
+
+Son los textos de partida; los define finalmente UI-UX.
+
+| Situación | Mensaje |
+| --- | --- |
+| Solicitud pendiente | "Tu solicitud está en revisión. Aún no puedes checar desde este teléfono." |
+| Solicitud denegada | "Tu solicitud fue denegada. Puedes solicitarla de nuevo." |
+| Solicitud autorizada | "Tu teléfono fue autorizado. Ya puedes checar." |
+| Teléfono nuevo o clave que no coincide | "Este teléfono no está autorizado. Solicita la autorización a Recursos Humanos." |
+| Teléfono revocado | "Tu teléfono ya no está autorizado. Solicita una nueva autorización." |
+| CURP no encontrada | "Usuario no encontrado. Contacta a Recursos Humanos." |
+
+---
+
+**Regla transversal:** el permiso de checada remota (RF-16) y la autorización de Recursos Humanos son independientes; para checar se necesitan las dos.
 
 # RF-18 — Alternativa y revisión supervisada por Recursos Humanos
 
@@ -1871,7 +2044,7 @@ Como empleado, quiero que Recursos Humanos revise mi caso cuando la app falla, p
 
 **RN-18.2** Las fallas y las marcas que requieren corrección tienen una alternativa y una revisión supervisada por Recursos Humanos.
 
-**RN-18.3** Los casos de teléfono perdido, cambio de teléfono, cambio de biometría o equipo incompatible se atienden con una nueva asociación aprobada por Recursos Humanos (RF-17).
+**RN-18.3** Los casos de teléfono perdido, cambio de teléfono, cambio de biometría o equipo incompatible se atienden con una nueva solicitud en "Autorización Asistencia Remota" (RF-17).
 
 **RN-18.4** Cada falla, alternativa y corrección queda registrada con la fecha, la persona y quien la aprobó.
 
@@ -1938,13 +2111,13 @@ Solo se incluyen las expectativas que el negocio expresó, con una forma de medi
 
 ### RNF-005 — Bitácora de la checada móvil
 
-- **Descripción:** se registran, con fecha, persona y resultado, las asociaciones, cambios y revocaciones de teléfono; las checadas aceptadas y rechazadas con su motivo; y los cambios del permiso de checada.
+- **Descripción:** se registran, con fecha, persona y resultado, las solicitudes, autorizaciones, denegaciones y revocaciones de teléfono, con su motivo si lo hay; las checadas aceptadas y rechazadas con su motivo; y los cambios del permiso de checada.
 - **Métrica / criterio de verificación:** en el piloto, el 100% de los eventos de una muestra aparece en la bitácora con sus datos.
 - **Prioridad:** Must
 
 ### RNF-006 — Privacidad de la checada móvil
 
-- **Descripción:** la persona recibe el aviso de privacidad y da su consentimiento para el uso de la CURP y la ubicación. La biometría del teléfono permanece en el teléfono y no se almacena en los sistemas del proyecto.
+- **Descripción:** la persona recibe el aviso de privacidad y da su consentimiento para el uso de la CURP y la ubicación. La biometría del teléfono permanece en el teléfono y no se almacena en los sistemas del proyecto. Recursos Humanos general ve la CURP y el RFC completos solo en la bandeja de "Autorización Asistencia Remota", como excepción a RN-15.9.
 - **Métrica / criterio de verificación:** el 100% de las personas con permiso tiene su consentimiento registrado antes de checar; ningún sistema del proyecto guarda datos biométricos.
 - **Prioridad:** Must
 
@@ -1974,8 +2147,8 @@ Conecta cada objetivo de negocio con los requerimientos que lo cumplen.
 | OBJ-1 | RF-13 | HU-13.1 | CA-13.1.1 | Must | Propuesto |
 | OBJ-1, OBJ-4 | RF-14 | HU-14.1, HU-14.2 | CA-14.1.1 a CA-14.2.2 | Must | Propuesto |
 | OBJ-3 | RF-15 | HU-15.1 a HU-15.3 | CA-15.1.1 a CA-15.3.3 | Must | Propuesto |
-| OBJ-3, OBJ-4 | RF-16 | HU-16.1 | CA-16.1.1, CA-16.1.2 | Must | Propuesto |
-| OBJ-3, OBJ-4 | RF-17 | HU-17.1 | CA-17.1.1 a CA-17.1.7 | Should | Propuesto |
+| OBJ-3, OBJ-4 | RF-16 | HU-16.1 | CA-16.1.1 a CA-16.1.3 | Must | Propuesto |
+| OBJ-3, OBJ-4 | RF-17 | HU-17.1 a HU-17.4 | CA-17.1.1 a CA-17.4.4 | Should | Propuesto |
 | OBJ-3 | RF-18 | HU-18.1 | CA-18.1.1 a CA-18.1.4 | Should | Propuesto |
 
 Los requerimientos no funcionales también se relacionan así: RNF-005 (bitácora de la checada móvil) aplica a RF-15, RF-16, RF-17 y RF-18, y RNF-006 (privacidad de la checada móvil) aplica a RF-15.
@@ -1995,6 +2168,7 @@ Los requerimientos no funcionales también se relacionan así: RNF-005 (bitácor
 | SUP-07 | Las marcas de InnovApp aparecen en T&A y se calculan bien. Debe demostrarse; si no es viable, se evalúa otra alternativa. | La checada móvil no se vería en el reporte. |
 | SUP-08 | Las horas extra se capturan como valores de horas; la explicación del pago es solo informativa. | Habría que construir la lógica de pago. |
 | SUP-09 | La sucursal, la empresa y la empresa RH son datos independientes del expediente. | La carga y la consulta podrían traer empleados equivocados. |
+| SUP-10 | La clave de confianza se genera una sola vez por teléfono y se guarda solo en el teléfono, protegida por su biometría. | La clave podría copiarse a otro teléfono y se perdería la confianza entre dispositivo y usuario. |
 
 ### Dependencias
 
@@ -2008,6 +2182,8 @@ Los requerimientos no funcionales también se relacionan así: RNF-005 (bitácor
 | DEP-06 | Configurar los turnos y las horas base en Biostar y la opción de comida en los checadores. | Otras áreas |
 | DEP-08 | Revisar las capacidades reales de InnovApp (tecnología, versiones de Android e iOS, biometría, ubicación y almacenamiento protegido). También, versiones mínimas, biometría compatible y verificación de integridad del dispositivo. | Célula de Innovación |
 | DEP-09 | Contar con una API dedicada de checada móvil, separada de la API actual de InnovApp, con dispositivo virtual y licencia de la Event Log API por confirmar. El envío se hace con un identificador único para evitar duplicados. | Célula de Innovación y proveedor |
+| DEP-10 | Construir el subproceso "Autorización Asistencia Remota" dentro del proceso "Recursos Humanos" de Business Suite, con sus acciones de autorizar, denegar y revocar, y el filtro por estado. | Célula de Innovación |
+| DEP-11 | Definir los textos finales de los mensajes de la app sobre la autorización del teléfono. | UI-UX |
 
 ### Riesgos
 
@@ -2025,8 +2201,11 @@ La probabilidad y el impacto son una estimación de este análisis.
 | RGO-09 | El turno del expediente y el de Biostar se registran por separado y pueden no coincidir. | Media | Medio | Revisar de forma periódica que ambos coincidan. |
 | RGO-10 | Las horas extra capturadas y las de Biostar pueden no coincidir; por ahora no hay validación que lo controle. | Media | Medio | Revisar las diferencias antes de cerrar la prenómina. |
 | RGO-11 | Importar una marca de la app no prueba que las horas se calculen bien en T\&A; si no se calculan, el reporte no las mostrará correctas. | Media | Alto | Demostrar el recorrido con un usuario de prueba antes del piloto. |
-| RGO-12 | La biometría local del teléfono no acredita por sí sola la identidad laboral de quien checa. | Media | Alto | Teléfono autorizado, clave protegida por biometría, aviso de cambio de biometría, asociación supervisada y revisión por Recursos Humanos. |
+| RGO-12 | La biometría local del teléfono no acredita por sí sola la identidad laboral de quien checa. | Media | Alto | Clave de confianza generada en el teléfono y protegida por biometría, autorización de Recursos Humanos para cada teléfono y revisión por Recursos Humanos. |
 | RGO-13 | Los costos y las licencias de la checada móvil están por confirmar, y el desarrollo y el mantenimiento propios requieren estimación y aprobación. | Media | Alto | Estimar y aprobar antes de ampliar más allá del piloto. |
+| RGO-14 | No hay plazo para que Recursos Humanos responda las solicitudes de autorización; mientras esperan, las personas no pueden checar desde un teléfono nuevo. | Media | Alto | El teléfono anterior sigue activo durante la espera y Recursos Humanos revisa la bandeja de forma periódica. |
+| RGO-15 | Al arrancar llegará una solicitud por cada persona con permiso, lo que puede saturar la bandeja de Recursos Humanos. | Alta | Medio | Estimar el volumen y planear la autorización por etapas durante el piloto. |
+| RGO-16 | El subproceso "Autorización Asistencia Remota" es nuevo y hay que construirlo; no existe hoy en Business Suite. | Media | Alto | Estimarlo con la Célula de Innovación antes del piloto. |
 
 ### Impacto organizacional y capacitación
 
@@ -2043,7 +2222,8 @@ Lo que todavía falta resolver, con un responsable sugerido.
 | PA-04 | Capacitación: cantidad de personas por rol y si el personal que checa (incluida la checada por InnovApp) la requiere. | 1, 2, 3 | Recursos Humanos |
 | PA-05 | Checada móvil: revisar las capacidades reales de InnovApp y dónde se incorpora la checada. | 3 | Célula de Innovación |
 | PA-06 | Checada móvil: demostrar que las marcas llegan a T&A y producen entradas, salidas y horas correctas, y mapear entrada, salida y comidas; si no es viable, definir la alternativa. | 3 | Célula de Innovación |
-| PA-07 | Alternativa y revisión supervisada por RH: definir el canal, los responsables y los plazos, y si se lleva dentro o fuera del sistema. También, el procedimiento de nueva asociación y de revocación del teléfono (RN-17.4 a RN-17.6). | 3 | Recursos Humanos |
+| PA-07 | Alternativa y revisión supervisada por RH: definir el canal, los responsables y los plazos, y si se lleva dentro o fuera del sistema. | 3 | Recursos Humanos |
 | PA-08 | Checada móvil: precisar la población, las cantidades y los sitios; cuáles turnos especiales y sitios aplican y cómo se reportan; y la población, duración y criterios de aceptación del piloto. | 3 | Recursos Humanos y Célula de Innovación |
 | PA-09 | Servicios externos, costos y licencias: confirmar con I&N y el proveedor que la ruta de checada no depende de ningún servicio externo y confirmar los costos y las licencias, incluidas las de T&A y de la Event Log API. | 3 | Célula de Innovación |
 | PA-10 | Registro duplicado: definir el color con el que se pinta y si el resaltado también se muestra en "Consulta Prenómina". | 1 | Recursos Humanos |
+| PA-11 | Autorización Asistencia Remota: estimar cuántas solicitudes llegarán al arranque y confirmar con UI-UX los textos finales de los mensajes de la app. | 3 | Recursos Humanos y UI-UX |
