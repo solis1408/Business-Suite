@@ -6,7 +6,7 @@ Este documento explica, en lenguaje sencillo, lo que debe hacer el proyecto Cont
 
 | Campo | Valor |
 | --- | --- |
-| Versión | 1.2 |
+| Versión | 1.5 |
 | Fecha | 2026-10-15 |
 | Estado | Definición |
 | Módulo | Business Suite, Biostar (complemento T&A), InnovApp y Contpaq |
@@ -42,9 +42,9 @@ Los requerimientos (RF) de cada entregable son:
 
 **Entregable 2 — Reporte de jornada desde Biostar**
 
-- RF-10 Reporte de jornada por empleado y por día.
+- RF-10 Reporte de jornada por persona y por día.
 - RF-11 Filtros del reporte.
-- RF-12 Columnas configurables.
+- RF-12 Columnas fijas del reporte.
 - RF-13 Exportación del reporte a Excel.
 - RF-14 Opción de comida en el checador y relación de empleados por CURP.
 
@@ -76,15 +76,15 @@ El alcance cubre a todo Grupo Reyes a nivel nacional, con una prueba previa al 1
 
 *Entregable 2 — Reporte de jornada desde Biostar*
 
-- El reporte "Reporte diario", con una línea por empleado y por día, consultable desde Business Suite de escritorio.
+- El reporte "Reporte Asistencia diario", agrupado por persona, con un renglón por día y una ventana con todas las checadas de cada día, consultable desde Business Suite de escritorio.
 - Los filtros del reporte (solo cambian el grupo de usuarios y el periodo).
-- Las columnas configurables y la exportación solo a Excel, con todos los campos.
+- Las columnas fijas del reporte y la exportación solo a Excel, solo con la vista principal.
 - La lectura del complemento T&A de Biostar.
 - El detalle de errores con los empleados cuya CURP no se encuentra entre Biostar, Business Suite y Contpaq.
 
 *Entregable 3 — InnovApp*
 
-- La checada móvil desde InnovApp, sin lector, en oficina, campo y remoto.
+- La checada móvil desde InnovApp, sin lector, en oficina, campo y remoto, con las cuatro opciones siempre disponibles, biometría al elegir cada opción, el historial de las checadas de los tres días anteriores y el aviso al volver a checar un tipo ya registrado.
 - La validación de la CURP y de la huella biométrica del dispositivo, con ubicación y GPS obligatorios.
 - El permiso de checada remota por persona.
 - La autorización del teléfono por Recursos Humanos, en el subproceso "Autorización Asistencia Remota".
@@ -109,7 +109,6 @@ El alcance cubre a todo Grupo Reyes a nivel nacional, con una prueba previa al 1
 
 *Entregable 3 — InnovApp*
 
-- Que el empleado consulte el historial de sus marcas en InnovApp.
 - Servicios externos en la ruta de checada, en cualquier etapa.
 - Checar sin internet en el teléfono: se contempla más adelante, fuera de la primera etapa.
 - Selfie, prueba de vida o comparación biométrica remota: no están aprobadas.
@@ -171,9 +170,9 @@ stateDiagram-v2
 | [RF-07](#rf-07--validación-de-empleado-duplicado) | Validación de empleado duplicado | Business Suite | Prenómina y Prenómina Gasto | 1 |
 | [RF-08](#rf-08--consulta-prenómina) | Consulta Prenómina | Business Suite | Prenómina | 1 |
 | [RF-09](#rf-09--exportar-el-excel-a-recursos-humanos) | Exportar el Excel a Recursos Humanos | Business Suite y Contpaq | Prenómina | 1 |
-| [RF-10](#rf-10--reporte-de-jornada-por-empleado-y-por-día) | Reporte de jornada por empleado y por día | Business Suite y Biostar (T&A) | Marcaje | 2 |
+| [RF-10](#rf-10--reporte-de-jornada-por-persona-y-por-día) | Reporte de jornada por persona y por día | Business Suite y Biostar (T&A) | Marcaje | 2 |
 | [RF-11](#rf-11--filtros-del-reporte) | Filtros del reporte | Business Suite y Biostar | Marcaje | 2 |
-| [RF-12](#rf-12--columnas-configurables) | Columnas configurables | Business Suite | Marcaje | 2 |
+| [RF-12](#rf-12--columnas-fijas-del-reporte) | Columnas fijas del reporte | Business Suite | Marcaje | 2 |
 | [RF-13](#rf-13--exportación-del-reporte-a-excel) | Exportación del reporte a Excel | Business Suite | Marcaje | 2 |
 | [RF-14](#rf-14--opción-de-comida-en-el-checador-y-relación-de-empleados-por-curp) | Opción de comida en el checador y relación de empleados por CURP | Biostar, Business Suite y Contpaq | Marcaje y Empleado | 2 |
 | [RF-15](#rf-15--checada-móvil-desde-innovapp) | Checada móvil desde InnovApp | InnovApp y Biostar | Marcaje | 3 |
@@ -1498,7 +1497,7 @@ Como Célula de Innovación, quiero asignar a cada usuario los departamentos que
 
 # ENTREGABLE 2 — REPORTE DE JORNADA DESDE BIOSTAR
 
-A partir del 1 de enero de 2027, la LFT exigirá un registro electrónico de la jornada de trabajo. Las checadas ya se guardan en Biostar, tanto las de los checadores físicos de cada planta como las de InnovApp. Este entregable crea un reporte en Business Suite que las presenta con una sola línea por empleado y por día, para que Recursos Humanos las consulte y las audite.
+A partir del 1 de enero de 2027, la LFT exigirá un registro electrónico de la jornada de trabajo. Las checadas ya se guardan en Biostar, tanto las de los checadores físicos de cada planta como las de InnovApp. Este entregable crea un reporte en Business Suite que las presenta agrupadas por persona y con un renglón por día, para que Recursos Humanos las consulte y las audite.
 
 El reporte no cambia ni recalcula nada: toma la información de Biostar, de su complemento T&A (tiempo y asistencia), tal como viene. Tampoco reemplaza las listas de asistencia que hoy entregan las empresas al equipo de nómina.
 
@@ -1506,14 +1505,14 @@ El reporte no cambia ni recalcula nada: toma la información de Biostar, de su c
 flowchart TD
     A[El empleado checa en el checador o en InnovApp] --> B[Biostar guarda la checada en T&A]
     B --> C[Recursos Humanos elige grupo y periodo en Business Suite]
-    C --> D[Se muestra el Reporte diario: una línea por empleado y por día]
-    D --> E[Recursos Humanos configura las columnas]
+    C --> D[Se muestra el Reporte Asistencia diario: una persona con un renglón por día]
+    D --> E[Recursos Humanos abre las checadas de un día con el icono de ver]
     E --> F[Exporta el reporte a Excel]
 ```
 
 El diagrama muestra el camino de una checada hasta el Excel.
 
-# RF-10 — Reporte de jornada por empleado y por día
+# RF-10 — Reporte de jornada por persona y por día
 
 | Campo | Valor |
 | --- | --- |
@@ -1527,59 +1526,67 @@ Dar a Recursos Humanos un registro electrónico, claro y auditable, de la jornad
 
 ## Descripción
 
-El sistema deberá mostrar, en Business Suite de escritorio, una sola línea por empleado y por día, para todos los días del periodo que se filtró. Cada línea trae el nombre, la CURP, la fecha, los cuatro tipos de marcaje (entrada, inicio de comida, fin de comida y salida) en horizontal, las horas extra y las excepciones. Si falta una marcación, queda vacía. Todo se toma de Biostar, de su complemento T&A, sin modificarlo. Lo opera el personal de Recursos Humanos.
+El sistema deberá mostrar, en Business Suite de escritorio, el reporte "Reporte Asistencia diario" agrupado por persona: a la izquierda va el nombre de la persona y, a un lado, sus días, con un renglón por día para todos los días del periodo que se filtró. Cada renglón trae la fecha, la entrada, el inicio de comida, el fin de comida, la salida, las horas extra y las excepciones. Si falta una marcación, queda vacía. En cada día con checadas hay un icono de "ver" que abre una ventana emergente con todas las checadas de ese día. Todo se toma de Biostar, de su complemento T&A, sin modificarlo. Lo opera el personal de Recursos Humanos.
 
 | Campo del reporte | Qué muestra |
 | --- | --- |
-| Nombre | Nombre del empleado. |
-| CURP | CURP del empleado, el dato que Recursos Humanos captura en Biostar. |
-| Fecha | Fecha de la línea. |
+| Nombre de la persona | Nombre del empleado. Va a la izquierda y agrupa sus días. |
+| Fecha | Fecha del renglón. |
 | Entrada | Hora de la checada de entrada. Vacío si no existe. |
 | Inicio de comida | Hora de la checada de salida a comida. Vacío si no existe. |
 | Fin de comida | Hora de la checada de regreso de comida. Vacío si no existe. |
 | Salida | Hora de la checada de salida. Vacío si no existe. |
 | Horas extra | Las que genera Biostar según el turno y las horas base. |
 | Excepciones | Las que indica Biostar, por ejemplo ausencia o tiempo de trabajo insuficiente. |
+| Icono de ver | Abre una ventana con todas las checadas del día. Solo aparece en los días con checadas. |
 
-## HU-10.1 — Ver una línea por empleado y por día
+## HU-10.1 — Ver a cada persona con un renglón por día
 
-Como Recursos Humanos, quiero ver una sola línea por empleado y por día con sus cuatro marcajes, para revisar la jornada sin interpretar checadas sueltas.
+Como Recursos Humanos, quiero ver a cada persona con un renglón por día y sus cuatro marcajes, para revisar la jornada sin interpretar checadas sueltas.
 
 ### Reglas de negocio
 
 **RN-10.1** Toda la información de las checadas, incluidas las de InnovApp, se toma de Biostar, de su complemento T&A. El reporte solo cambia su estructura de lectura; se conecta únicamente para consultar y no modifica nada.
 
-**RN-10.2** El reporte muestra una sola línea por empleado y por día, no una línea por cada checada. Incluye todos los días del periodo filtrado.
+**RN-10.2** El reporte va agrupado por persona: a la izquierda se muestra el nombre de la persona y, a un lado, sus días. Cada día es un renglón, no uno por cada checada. Incluye todos los días del periodo filtrado.
 
-**RN-10.3** Cada línea incluye: nombre, CURP, fecha, los cuatro tipos de marcaje en horizontal (entrada, inicio de comida, fin de comida y salida; vacíos si no existe alguno), horas extra y excepciones. Todo va en la misma línea por día y por empleado.
+**RN-10.3** Cada renglón de día muestra: fecha, entrada, inicio de comida, fin de comida, salida, horas extra y excepciones, según las checadas de Biostar; si falta algún dato, queda vacío. La CURP ya no se muestra en el reporte.
 
 **RN-10.4** En cada tipo de marcaje se muestra siempre la primera checada que se registró de ese tipo en el día.
 
-**RN-10.5** Si en un día el empleado no tiene ninguna checada, la línea de ese día aparece con los cuatro tipos de marcaje vacíos y muestra la excepción que indique Biostar.
+**RN-10.5** Si en un día el empleado no tiene ninguna checada, el renglón de ese día aparece con los cuatro tipos de marcaje vacíos y muestra la excepción que indique Biostar.
 
 ### Criterios de Aceptación
 
-**CA-10.1.1 — Una línea por día** Dado que un empleado tiene checadas de entrada, comida y salida en un día Cuando Recursos Humanos consulta el reporte Entonces se muestra una sola línea con nombre, CURP, fecha, los cuatro tipos de marcaje, las horas extra y las excepciones.
+**CA-10.1.1 — Un renglón por día** Dado que un empleado tiene checadas de entrada, comida y salida en un día Cuando Recursos Humanos consulta el reporte Entonces se muestra un solo renglón de ese día con fecha, los cuatro tipos de marcaje, las horas extra y las excepciones.
 
-**CA-10.1.2 — Días del periodo** Dado que Recursos Humanos filtra un periodo de varios días Cuando ejecuta el reporte Entonces cada día del periodo (por ejemplo, lunes, martes y así hasta cubrirlo) tiene su línea con los cuatro tipos de marcaje.
+**CA-10.1.2 — Días del periodo** Dado que Recursos Humanos filtra un periodo de varios días Cuando consulta el reporte Entonces cada persona aparece con un renglón por cada día del periodo.
 
-**CA-10.1.3 — Primera checada de cada tipo** Dado que un empleado tiene varias checadas del mismo tipo de marcaje en un día Cuando Recursos Humanos consulta el reporte Entonces la celda de ese tipo de marcaje muestra la primera que se registró.
+**CA-10.1.3 — Primera checada de cada tipo** Dado que un empleado tiene varias checadas del mismo tipo en un día Cuando Recursos Humanos consulta el reporte Entonces el renglón muestra la primera de cada tipo.
 
-**CA-10.1.4 — Día sin checadas** Dado que un empleado no tiene ninguna checada en un día del periodo Cuando Recursos Humanos consulta el reporte Entonces la línea de ese día aparece con los cuatro tipos de marcaje vacíos y muestra la excepción que indique Biostar.
+**CA-10.1.4 — Día sin checadas** Dado que un empleado no tiene ninguna checada en un día del periodo Cuando Recursos Humanos consulta el reporte Entonces el renglón de ese día aparece con los marcajes vacíos y la excepción que indique Biostar.
+
+**CA-10.1.5 — Nombre y días a un lado** Dado que Recursos Humanos consulta el reporte Cuando se muestra cada persona Entonces el nombre va a la izquierda y sus días, uno por renglón, a un lado.
+
+**CA-10.1.6 — Sin CURP en el reporte** Dado que Recursos Humanos consulta el reporte Cuando revisa las columnas Entonces no aparece la CURP.
 
 ### Casos de prueba
 
-**CP-10.1.1 — Línea completa (camino feliz)** Verifica: CA-10.1.1 · RN-10.3 Dado que Luis checó entrada 08:02, inicio de comida 14:00, fin de comida 14:30 y salida 18:05 el lunes Cuando Recursos Humanos consulta el reporte Entonces hay una sola línea del lunes con esas cuatro horas.
+**CP-10.1.1 — Renglón completo (camino feliz)** Verifica: CA-10.1.1 · RN-10.3 Dado que Luis checó entrada 08:02, inicio de comida 14:00, fin de comida 14:30 y salida 18:05 el lunes Cuando Recursos Humanos consulta el reporte Entonces hay un solo renglón del lunes con esas cuatro horas.
 
-**CP-10.1.2 — Periodo de cinco días (camino feliz)** Verifica: CA-10.1.2 · RN-10.2 Dado que se filtra de lunes a viernes Cuando se ejecuta el reporte Entonces cada empleado tiene cinco líneas, una por día.
+**CP-10.1.2 — Periodo de cinco días (camino feliz)** Verifica: CA-10.1.2 · RN-10.2 Dado que se filtra del lunes al viernes y Luis tiene checadas todos los días Cuando Recursos Humanos consulta el reporte Entonces Luis aparece con cinco renglones, uno por día.
 
-**CP-10.1.3 — Dos entradas en el mismo día (alternativo)** Verifica: CA-10.1.3 · RN-10.4 Dado que Luis checó entrada a las 08:02 y otra vez a las 08:05 Cuando se consulta el reporte Entonces la celda de entrada muestra 08:02.
+**CP-10.1.3 — Dos entradas en el mismo día (alternativo)** Verifica: CA-10.1.3 · RN-10.4 Dado que Luis checó entrada a las 08:02 y otra a las 08:10 Cuando Recursos Humanos consulta el reporte Entonces el renglón muestra 08:02 en la entrada.
 
-**CP-10.1.4 — Falta una marcación (alternativo)** Verifica: CA-10.1.1 · RN-10.3 Dado que Luis no checó fin de comida Cuando se consulta el reporte Entonces la celda de fin de comida queda vacía.
+**CP-10.1.4 — Falta una marcación (alternativo)** Verifica: CA-10.1.1 · RN-10.3 Dado que Luis no tiene fin de comida un día Cuando Recursos Humanos consulta el reporte Entonces el renglón muestra el fin de comida vacío y las demás horas normales.
 
-**CP-10.1.5 — Día sin checadas (error)** Verifica: CA-10.1.4 · RN-10.5 Dado que Luis no checó el miércoles y Biostar marca la excepción de ausencia Cuando se consulta el reporte Entonces la línea del miércoles aparece con los cuatro marcajes vacíos y la excepción "ausencia".
+**CP-10.1.5 — Día sin checadas (error)** Verifica: CA-10.1.4 · RN-10.5 Dado que Luis no checó el martes Cuando Recursos Humanos consulta el reporte Entonces el renglón del martes tiene los cuatro marcajes vacíos y la excepción que indique Biostar.
 
-**CP-10.1.6 — No se muestran varias líneas por checada (validación)** Verifica: CA-10.1.1 · RN-10.2 Dado que Luis tiene 4 checadas el lunes Cuando se consulta el reporte Entonces hay una línea del lunes, no cuatro.
+**CP-10.1.6 — No hay varios renglones por checada (validación)** Verifica: CA-10.1.1 · RN-10.2 Dado que Luis checó cuatro veces en un día Cuando Recursos Humanos consulta el reporte Entonces ve un solo renglón de ese día y no cuatro.
+
+**CP-10.1.7 — Nombre a un lado de sus días (camino feliz)** Verifica: CA-10.1.5 · RN-10.2 Dado que se consulta el reporte de Luis y de Ana Cuando Recursos Humanos lo abre Entonces cada nombre va a la izquierda y, a su lado, sus renglones por día.
+
+**CP-10.1.8 — Sin CURP en el reporte (validación)** Verifica: CA-10.1.6 · RN-10.3 Dado que el empleado tiene CURP en Biostar Cuando Recursos Humanos consulta el reporte Entonces la CURP no aparece en ninguna columna.
 
 | CA | Caso(s) de prueba | Escenarios cubiertos |
 | --- | --- | --- |
@@ -1587,6 +1594,8 @@ Como Recursos Humanos, quiero ver una sola línea por empleado y por día con su
 | CA-10.1.2 | CP-10.1.2 | Camino feliz |
 | CA-10.1.3 | CP-10.1.3 | Alternativo |
 | CA-10.1.4 | CP-10.1.5 | Error |
+| CA-10.1.5 | CP-10.1.7 | Camino feliz |
+| CA-10.1.6 | CP-10.1.8 | Validación |
 
 ## HU-10.2 — Ver las horas extra y las excepciones tal como las trae Biostar
 
@@ -1665,9 +1674,54 @@ Como Recursos Humanos, quiero consultar el reporte desde Business Suite y que Re
 | CA-10.3.2 | CP-10.3.2, CP-10.3.3 | Permisos, Alternativo |
 | CA-10.3.3 | CP-10.3.4 | Error |
 
+## HU-10.4 — Ver todas las checadas de un día
+
+Como Recursos Humanos, quiero abrir, desde cada día, una ventana con todas las checadas de ese día, para revisar el detalle cuando la vista principal no basta.
+
+### Reglas de negocio
+
+**RN-10.11** En cada día con checadas hay un icono de "ver". Al darle clic se abre una ventana emergente con todas las checadas de ese día, no solo la primera de cada tipo.
+
+**RN-10.12** Cada checada de la ventana emergente muestra la hora, el tipo de marcaje (entrada, inicio de comida, fin de comida o salida) y el origen (checador físico o InnovApp), ordenadas por hora.
+
+**RN-10.13** En los días sin checadas no aparece el icono de "ver".
+
+**RN-10.14** La ventana emergente es de solo consulta y su información no se exporta.
+
+### Criterios de Aceptación
+
+**CA-10.4.1 — Icono de ver** Dado que un día tiene checadas Cuando Recursos Humanos ve el renglón de ese día Entonces aparece el icono de "ver".
+
+**CA-10.4.2 — Todas las checadas del día** Dado que Recursos Humanos da clic en el icono de "ver" de un día Cuando se abre la ventana emergente Entonces muestra todas las checadas de ese día, con hora, tipo de marcaje y origen, ordenadas por hora.
+
+**CA-10.4.3 — Día sin checadas** Dado que un día no tiene checadas Cuando Recursos Humanos ve el renglón de ese día Entonces no aparece el icono de "ver".
+
+**CA-10.4.4 — Solo consulta** Dado que la ventana emergente está abierta Cuando Recursos Humanos la revisa Entonces solo puede consultar y no cambiar ninguna checada.
+
+### Casos de prueba
+
+**CP-10.4.1 — Abrir la ventana de un día (camino feliz)** Verifica: CA-10.4.1 · RN-10.11 Dado que Luis tiene checadas el lunes Cuando Recursos Humanos da clic en el icono de "ver" del lunes Entonces se abre una ventana con las checadas de ese día.
+
+**CP-10.4.2 — Más checadas que en la vista principal (camino feliz)** Verifica: CA-10.4.2 · RN-10.11 Dado que Luis checó entrada a las 08:02 y otra a las 08:10 Cuando Recursos Humanos abre la ventana de ese día Entonces ve las dos checadas, aunque la vista principal solo muestra la primera.
+
+**CP-10.4.3 — Orden por hora (validación)** Verifica: CA-10.4.2 · RN-10.12 Dado que Luis tiene cuatro checadas en el día Cuando Recursos Humanos abre la ventana Entonces las checadas aparecen ordenadas por hora, cada una con su tipo de marcaje.
+
+**CP-10.4.4 — Origen de la checada (alternativo)** Verifica: CA-10.4.2 · RN-10.12 Dado que una checada se hizo en el checador de la planta y otra desde InnovApp Cuando Recursos Humanos abre la ventana Entonces cada checada muestra su origen.
+
+**CP-10.4.5 — Día sin checadas (validación)** Verifica: CA-10.4.3 · RN-10.13 Dado que Luis no checó el martes Cuando Recursos Humanos ve el renglón del martes Entonces no aparece el icono de "ver".
+
+**CP-10.4.6 — Solo consulta (permisos)** Verifica: CA-10.4.4 · RN-10.14 Dado que la ventana emergente está abierta Cuando Recursos Humanos intenta cambiar una checada Entonces el sistema no se lo permite.
+
+| CA | Caso(s) de prueba | Escenarios cubiertos |
+| --- | --- | --- |
+| CA-10.4.1 | CP-10.4.1 | Camino feliz |
+| CA-10.4.2 | CP-10.4.2, CP-10.4.3, CP-10.4.4 | Camino feliz, Validación, Alternativo |
+| CA-10.4.3 | CP-10.4.5 | Validación |
+| CA-10.4.4 | CP-10.4.6 | Permisos |
+
 ---
 
-**Regla transversal:** los filtros del reporte se describen en RF-11, las columnas en RF-12, la exportación en RF-13 y la CURP en RF-14.
+**Regla transversal:** los filtros del reporte se describen en RF-11, las columnas fijas en RF-12, la exportación en RF-13 y la ventana emergente de checadas en HU-10.4.
 
 # RF-11 — Filtros del reporte
 
@@ -1683,7 +1737,7 @@ Que el reporte se genere siempre igual, y que Recursos Humanos solo cambie el gr
 
 ## Descripción
 
-El sistema deberá generar el reporte con filtros fijos y filtros modificables. Fijos: nombre "Reporte diario", tipo de reporte "Individual" y marcaciones "Todas las marcaciones" (todas las checadas: hora de entrada, inicio de comida, fin de comida y salida). Modificables, y únicos que se pueden cambiar: el grupo de usuarios, que son los grupos por proceso configurados en Biostar y cuyo listado se consume de Biostar, y el periodo, que es personalizado con fecha de inicio y fecha de fin obligatorias.
+El sistema deberá generar el reporte con filtros fijos y filtros modificables. Fijos: nombre "Reporte Asistencia diario", tipo de reporte "Individual" y marcaciones "Todas las marcaciones" (todas las checadas: hora de entrada, inicio de comida, fin de comida y salida). Modificables, y únicos que se pueden cambiar: el grupo de usuarios, que son los grupos por proceso configurados en Biostar y cuyo listado se consume de Biostar, y el periodo, que es personalizado con fecha de inicio y fecha de fin obligatorias.
 
 ## HU-11.1 — Filtrar por grupo y periodo
 
@@ -1691,7 +1745,7 @@ Como Recursos Humanos, quiero elegir solo el grupo de usuarios y el periodo, par
 
 ### Reglas de negocio
 
-**RN-11.1** Los filtros fijos son: nombre "Reporte diario", tipo de reporte "Individual" y marcaciones "Todas las marcaciones". No se pueden modificar.
+**RN-11.1** Los filtros fijos son: nombre "Reporte Asistencia diario", tipo de reporte "Individual" y marcaciones "Todas las marcaciones". No se pueden modificar.
 
 **RN-11.2** El grupo de usuarios se elige entre los grupos por proceso configurados en Biostar; el listado se consume de Biostar.
 
@@ -1699,7 +1753,7 @@ Como Recursos Humanos, quiero elegir solo el grupo de usuarios y el periodo, par
 
 ### Criterios de Aceptación
 
-**CA-11.1.1 — Filtro por grupo y periodo** Dado que Recursos Humanos elige un grupo de usuarios y un periodo personalizado, con fecha de inicio y fecha de fin Cuando ejecuta el "Reporte diario" Entonces solo aparecen empleados de ese grupo y fechas de ese periodo.
+**CA-11.1.1 — Filtro por grupo y periodo** Dado que Recursos Humanos elige un grupo de usuarios y un periodo personalizado, con fecha de inicio y fecha de fin Cuando ejecuta el "Reporte Asistencia diario" Entonces solo aparecen empleados de ese grupo y fechas de ese periodo.
 
 **CA-11.1.2 — Periodo personalizado** Dado que Recursos Humanos elige un periodo personalizado Cuando indica fecha inicial y final Entonces el reporte cubre exactamente ese rango.
 
@@ -1731,45 +1785,48 @@ Como Recursos Humanos, quiero elegir solo el grupo de usuarios y el periodo, par
 | CA-11.1.4 | CP-11.1.4 | Camino feliz |
 | CA-11.1.5 | CP-11.1.5, CP-11.1.6 | Error |
 
-# RF-12 — Columnas configurables
+# RF-12 — Columnas fijas del reporte
 
 | Campo | Valor |
 | --- | --- |
-| Prioridad | Should |
+| Prioridad | Must |
 | Estado | Definición |
 | Dependencias | RF-10 |
 
 ## Objetivo
 
-Que cada persona de Recursos Humanos vea solo las columnas que necesita.
+Que el reporte muestre siempre las mismas columnas, con la información disponible en Biostar.
 
 ## Descripción
 
-El sistema deberá permitir que Recursos Humanos elija qué columnas del reporte quiere ver. Al ejecutar el reporte, solo se muestran las columnas elegidas.
+El sistema deberá mostrar siempre las mismas columnas en el reporte; no son configurables. Se muestran con la información disponible en Biostar.
 
-## HU-12.1 — Elegir las columnas del reporte
+## HU-12.1 — Ver siempre las mismas columnas
 
-Como Recursos Humanos, quiero elegir qué columnas ver, para leer el reporte sin información que no necesito.
+Como Recursos Humanos, quiero que el reporte muestre siempre las mismas columnas, para leerlo siempre igual.
 
 ### Reglas de negocio
 
-**RN-12.1** Recursos Humanos elige qué columnas del reporte se muestran. Las columnas disponibles son las del reporte de jornada (RF-10).
+**RN-12.1** Las columnas del reporte son fijas y no se pueden configurar: nombre de la persona, fecha, entrada, inicio de comida, fin de comida, salida, horas extra y excepciones. Se muestran con la información disponible de Biostar.
 
 ### Criterios de Aceptación
 
-**CA-12.1.1 — Columnas elegidas** Dado que Recursos Humanos configura las columnas del reporte Cuando guarda su selección y ejecuta el reporte Entonces solo se muestran las columnas seleccionadas.
+**CA-12.1.1 — Columnas fijas** Dado que Recursos Humanos abre el reporte Cuando se muestra el resultado Entonces ve siempre las mismas columnas y no hay una opción para configurarlas.
+
+**CA-12.1.2 — Con la información disponible** Dado que Biostar no trae un dato para un día Cuando se muestra el reporte Entonces la columna sigue en su lugar y el dato queda vacío.
 
 ### Casos de prueba
 
-**CP-12.1.1 — Mostrar algunas columnas (camino feliz)** Verifica: CA-12.1.1 · RN-12.1 Dado que Recursos Humanos elige solo Nombre, Fecha, Entrada y Salida Cuando ejecuta el reporte Entonces el reporte muestra solo esas cuatro columnas.
+**CP-12.1.1 — Columnas siempre iguales (camino feliz)** Verifica: CA-12.1.1 · RN-12.1 Dado que dos personas de Recursos Humanos abren el reporte Cuando lo consultan Entonces las dos ven las mismas columnas.
 
-**CP-12.1.2 — Mostrar todas (alternativo)** Verifica: CA-12.1.1 Dado que Recursos Humanos elige todas las columnas Cuando ejecuta el reporte Entonces el reporte muestra todas.
+**CP-12.1.2 — Sin opción de configurar (validación)** Verifica: CA-12.1.1 · RN-12.1 Dado que Recursos Humanos abre el reporte Cuando busca una opción para elegir columnas Entonces no existe.
 
-**CP-12.1.3 — Sin guardar no cambia (validación)** Verifica: CA-12.1.1 Dado que Recursos Humanos cambia las columnas pero no guarda Cuando ejecuta el reporte Entonces el reporte usa la última selección guardada.
+**CP-12.1.3 — Dato no disponible (alternativo)** Verifica: CA-12.1.2 · RN-12.1 Dado que Biostar no trae horas extra para un día Cuando se muestra el reporte Entonces la columna de horas extra aparece vacía en ese día.
 
 | CA | Caso(s) de prueba | Escenarios cubiertos |
 | --- | --- | --- |
-| CA-12.1.1 | CP-12.1.1, CP-12.1.2, CP-12.1.3 | Camino feliz, Alternativo, Validación |
+| CA-12.1.1 | CP-12.1.1, CP-12.1.2 | Camino feliz, Validación |
+| CA-12.1.2 | CP-12.1.3 | Alternativo |
 
 # RF-13 — Exportación del reporte a Excel
 
@@ -1785,7 +1842,7 @@ Llevar el reporte a un archivo que Recursos Humanos pueda guardar y revisar.
 
 ## Descripción
 
-El sistema deberá permitir exportar el reporte, con los filtros aplicados, solo a Excel y con todos los campos que trae el reporte. No se exporta a PDF.
+El sistema deberá permitir exportar el reporte, con los filtros aplicados, solo a Excel y solo con la información de la vista principal: el nombre de la persona y sus renglones por día. El detalle de la ventana emergente de checadas no se exporta. No se exporta a PDF.
 
 ## HU-13.1 — Exportar el reporte a Excel
 
@@ -1793,23 +1850,35 @@ Como Recursos Humanos, quiero exportar el reporte a Excel, para conservarlo y re
 
 ### Reglas de negocio
 
-**RN-13.1** El reporte se exporta solo a Excel, con todos los campos del reporte y con los filtros aplicados.
+**RN-13.1** El reporte se exporta solo a Excel, con los filtros aplicados y solo con la información de la vista principal (nombre de la persona y sus renglones por día). No incluye el detalle de la ventana emergente.
+
+**RN-13.2** En el Excel, el nombre de la persona se repite en cada renglón de sus días, para poder filtrar y ordenar.
 
 ### Criterios de Aceptación
 
-**CA-13.1.1 — Exportar a Excel** Dado que el reporte está filtrado Cuando Recursos Humanos elige exportar a Excel Entonces el archivo contiene las mismas líneas y todos los campos que trae el reporte.
+**CA-13.1.1 — Exportar a Excel** Dado que el reporte está filtrado Cuando Recursos Humanos exporta Entonces se descarga un Excel con la información de la vista principal y los filtros aplicados.
+
+**CA-13.1.2 — No se exporta el detalle de la ventana** Dado que un día tiene varias checadas Cuando Recursos Humanos exporta Entonces el Excel no incluye la lista de checadas de la ventana emergente.
+
+**CA-13.1.3 — Nombre en cada renglón** Dado que una persona tiene varios días en el reporte Cuando Recursos Humanos exporta Entonces el nombre de la persona aparece en cada renglón de sus días.
 
 ### Casos de prueba
 
-**CP-13.1.1 — Exportación completa (camino feliz)** Verifica: CA-13.1.1 · RN-13.1 Dado que el reporte filtrado muestra 40 líneas Cuando Recursos Humanos exporta Entonces el Excel tiene esas 40 líneas con todos los campos.
+**CP-13.1.1 — Exportación de la vista principal (camino feliz)** Verifica: CA-13.1.1 · RN-13.1 Dado que Recursos Humanos filtró el grupo "Producción" y la semana 41 Cuando exporta Entonces el Excel trae las personas con sus renglones por día, con las columnas de la vista principal.
 
-**CP-13.1.2 — Respeta los filtros (validación)** Verifica: CA-13.1.1 · RN-13.1 Dado que el reporte está filtrado por el grupo "Empaque" Cuando Recursos Humanos exporta Entonces el Excel solo trae empleados de "Empaque".
+**CP-13.1.2 — Respeta los filtros (validación)** Verifica: CA-13.1.1 · RN-13.1 Dado que el reporte está filtrado por un grupo y un periodo Cuando Recursos Humanos exporta Entonces el Excel solo trae las personas y los días filtrados.
 
-**CP-13.1.3 — Solo hay formato Excel (validación)** Verifica: CA-13.1.1 · RN-13.1 Dado que Recursos Humanos abre las opciones de exportación Cuando revisa los formatos disponibles Entonces solo existe Excel, no PDF.
+**CP-13.1.3 — Solo hay formato Excel (validación)** Verifica: CA-13.1.1 · RN-13.1 Dado que Recursos Humanos quiere exportar Cuando abre las opciones de exportación Entonces solo existe Excel, sin PDF.
+
+**CP-13.1.4 — No incluye el detalle de la ventana (validación)** Verifica: CA-13.1.2 · RN-13.1 Dado que Luis tiene cuatro checadas un día Cuando Recursos Humanos exporta Entonces el Excel muestra el renglón del día y no las cuatro checadas.
+
+**CP-13.1.5 — Nombre repetido (camino feliz)** Verifica: CA-13.1.3 · RN-13.2 Dado que Luis tiene cinco días en el reporte Cuando Recursos Humanos exporta Entonces "Luis" aparece en los cinco renglones.
 
 | CA | Caso(s) de prueba | Escenarios cubiertos |
 | --- | --- | --- |
 | CA-13.1.1 | CP-13.1.1, CP-13.1.2, CP-13.1.3 | Camino feliz, Validación |
+| CA-13.1.2 | CP-13.1.4 | Validación |
+| CA-13.1.3 | CP-13.1.5 | Camino feliz |
 
 # RF-14 — Opción de comida en el checador y relación de empleados por CURP
 
@@ -1891,11 +1960,11 @@ Como Recursos Humanos, quiero que el sistema relacione a cada empleado por su CU
 
 Este entregable permite checar desde el celular, dentro de InnovApp, sin lector, para el personal de oficina, campo y trabajo remoto. La checada queda registrada en Biostar como cualquier otra y se ve en el reporte de jornada. Se acordó el camino de checada desde la app sin lector, con una API dedicada separada de la API actual de InnovApp. Además, cada teléfono necesita la autorización de Recursos Humanos, que se solicita desde la app y se resuelve en el subproceso nuevo "Autorización Asistencia Remota".
 
-Para checar, la persona necesita el permiso, que el sistema reconozca su CURP, que su teléfono tenga la autorización de Recursos Humanos y la biometría local sea exitosa, que la ubicación y el GPS estén activos y que haya internet. Se empieza con un piloto reducido antes de ampliar.
+Para checar, la persona necesita el permiso, que el sistema reconozca su CURP, que su teléfono tenga la autorización de Recursos Humanos y la biometría local sea exitosa, que la ubicación y el GPS estén activos y que haya internet. Las cuatro opciones de checada están siempre disponibles, la biometría se pide al elegir la opción y la persona puede ver el historial de sus checadas de los tres días anteriores y, si vuelve a checar un tipo que ya registró, la app se lo avisa. Se empieza con un piloto reducido antes de ampliar.
 
 ```mermaid
 flowchart TD
-    A[La persona con permiso abre InnovApp] --> B{¿Su CURP coincide con la de Biostar?}
+    A[La persona con permiso abre InnovApp y elige una de las cuatro opciones de checada] --> B{¿Su CURP coincide con la de Biostar?}
     B -- No --> X[Mensaje: Usuario no encontrado. Contacta a Recursos Humanos.]
     B -- Sí --> T{¿Su teléfono tiene la autorización de Recursos Humanos?}
     T -- No --> W[No se permite checar: debe solicitar la autorización]
@@ -1923,7 +1992,7 @@ Permitir que el personal registre su asistencia desde el celular, con las mismas
 
 ## Descripción
 
-El sistema deberá permitir registrar asistencia desde InnovApp, sin lector, para uso en oficina, campo y remoto. Se registran los mismos cuatro movimientos que en el checador: entrada, salida a comida, regreso de comida y salida. Se valida, en este orden, que el usuario esté ligado a una persona de Biostar mediante la CURP (InnovApp la toma del expediente de personal; en Biostar se agrega la CURP a los usuarios para hacer coincidir a la persona), que la clave de confianza del teléfono coincida con la que Recursos Humanos autorizó y que la biometría local del teléfono sea exitosa. La fecha y la hora de la checada las pone el servidor. Para checar, la ubicación y el GPS deben estar siempre activos y debe haber internet. La ubicación se guarda solo como dato informativo.
+El sistema deberá permitir registrar asistencia desde InnovApp, sin lector, para uso en oficina, campo y remoto. Se registran los mismos cuatro movimientos que en el checador: entrada, salida a comida, regreso de comida y salida. Se valida, en este orden, que el usuario esté ligado a una persona de Biostar mediante la CURP (InnovApp la toma del expediente de personal; en Biostar se agrega la CURP a los usuarios para hacer coincidir a la persona), que la clave de confianza del teléfono coincida con la que Recursos Humanos autorizó y que la biometría local del teléfono sea exitosa. La fecha y la hora de la checada las pone el servidor. Para checar, la ubicación y el GPS deben estar siempre activos y debe haber internet. La ubicación se guarda solo como dato informativo. Las cuatro opciones de checada están siempre disponibles y no se bloquean. Al elegir una opción se pide la biometría y solo si es exitosa se inserta el registro de asistencia en Biostar. La persona puede ver el historial de sus checadas de los tres días anteriores, sin contar hoy, que se obtiene de la API de Biostar. Si vuelve a checar un tipo que ya registró, la app se lo avisa y ella decide si continúa.
 
 ## HU-15.1 — Registrar las cuatro checadas desde InnovApp
 
@@ -1937,7 +2006,7 @@ Como persona con permiso, quiero registrar mi entrada, mi salida a comida, mi re
 
 **RN-15.3** En la primera etapa solo se puede checar cuando se tiene acceso a internet; checar sin internet en el teléfono se contempla más adelante.
 
-**RN-15.4** El empleado no consulta el historial de sus marcas en InnovApp.
+**RN-15.4** El empleado puede ver en InnovApp el historial de sus checadas de los tres días anteriores a hoy (HU-15.4).
 
 **RN-15.10** La fecha y la hora de cada checada las determina el servidor al recibirla; no se usa la hora del teléfono.
 
@@ -1946,6 +2015,8 @@ Como persona con permiso, quiero registrar mi entrada, mi salida a comida, mi re
 **RN-15.12** Cada checada tiene un identificador único; si se envía dos veces, Biostar la registra una sola vez.
 
 **RN-15.13** Si Biostar no confirma el registro, la persona ve que no se registró y puede reintentar; no queda una checada a medias.
+
+**RN-15.14** Las cuatro opciones de checada (entrada, salida a comida, regreso de comida y salida) están siempre disponibles en InnovApp y no se bloquean, sin importar las checadas anteriores del día. En el reporte de jornada se muestra la primera checada de cada tipo (RN-10.4) y, en la ventana de cada día, todas.
 
 ### Criterios de Aceptación
 
@@ -1959,6 +2030,8 @@ Como persona con permiso, quiero registrar mi entrada, mi salida a comida, mi re
 
 **CA-15.1.5 — Sin duplicados** Dado que una checada se envía dos veces por una falla de red Cuando Biostar la recibe Entonces aparece una sola vez en el reporte.
 
+**CA-15.1.6 — Cuatro opciones siempre disponibles** Dado que una persona con permiso abre InnovApp Cuando ve las opciones de checada Entonces ve las cuatro (entrada, salida a comida, regreso de comida y salida) disponibles, sin importar sus checadas anteriores del día.
+
 ### Casos de prueba
 
 **CP-15.1.1 — Entrada desde el celular (camino feliz)** Verifica: CA-15.1.1 · RN-15.2 Dado que Ana tiene permiso y abre InnovApp con internet Cuando elige "entrada" Entonces Biostar registra una entrada de Ana.
@@ -1969,19 +2042,22 @@ Como persona con permiso, quiero registrar mi entrada, mi salida a comida, mi re
 
 **CP-15.1.4 — Aparece en el reporte (camino feliz)** Verifica: CA-15.1.3 · RN-15.2 Dado que Ana checó entrada a las 08:02 desde InnovApp Cuando Recursos Humanos consulta el reporte de ese día Entonces la entrada de Ana muestra 08:02.
 
-**CP-15.1.5 — Sin historial para el empleado (validación)** Verifica: CA-15.1.1 · RN-15.4 Dado que Ana ya checó varias veces Cuando abre InnovApp Entonces no hay una pantalla de historial de sus marcas.
+**CP-15.1.5 — Las cuatro opciones disponibles (validación)** Verifica: CA-15.1.6 · RN-15.14 Dado que Ana ya registró entrada, salida a comida, regreso de comida y salida el lunes Cuando vuelve a abrir InnovApp ese mismo día Entonces las cuatro opciones siguen disponibles.
 
 **CP-15.1.6 — Hora del teléfono alterada (validación)** Verifica: CA-15.1.4 · RN-15.10 Dado que el reloj del teléfono de Ana está adelantado una hora Cuando checa Entonces la checada se registra con la hora real.
 
 **CP-15.1.7 — Reenvío (validación)** Verifica: CA-15.1.5 · RN-15.12 Dado que Ana checó y la respuesta se perdió Cuando la app reintenta Entonces el reporte muestra una sola entrada.
 
+**CP-15.1.8 — Elegir otra vez una opción (alternativo)** Verifica: CA-15.1.6 · RN-15.14 Dado que Ana ya registró su entrada Cuando elige otra vez "entrada" Entonces la app se lo permite, le pide la biometría y, si es exitosa, Biostar registra la checada; el reporte muestra la primera y la ventana del día muestra las dos.
+
 | CA | Caso(s) de prueba | Escenarios cubiertos |
 | --- | --- | --- |
-| CA-15.1.1 | CP-15.1.1, CP-15.1.2, CP-15.1.5 | Camino feliz, Alternativo, Validación |
+| CA-15.1.1 | CP-15.1.1, CP-15.1.2 | Camino feliz, Alternativo |
 | CA-15.1.2 | CP-15.1.3 | Error |
 | CA-15.1.3 | CP-15.1.4 | Camino feliz |
 | CA-15.1.4 | CP-15.1.6 | Validación |
 | CA-15.1.5 | CP-15.1.7 | Validación |
+| CA-15.1.6 | CP-15.1.5, CP-15.1.8 | Validación, Alternativo |
 
 ## HU-15.2 — Validar mi identidad antes de checar
 
@@ -1989,7 +2065,7 @@ Como Recursos Humanos, quiero que la app valide el usuario, la clave de confianz
 
 ### Reglas de negocio
 
-**RN-15.5** Para checar desde InnovApp se valida, en este orden: (1) que el usuario esté ligado a una persona de Biostar, (2) que la clave de confianza del teléfono coincida con la que Recursos Humanos autorizó (RF-17) y (3) que la biometría local del teléfono sea exitosa. Una checada solo es válida si se cumplen las tres validaciones. La biometría local confirma que quien usa el teléfono está registrado en él.
+**RN-15.5** Para checar desde InnovApp se valida, en este orden: (1) que el usuario esté ligado a una persona de Biostar, (2) que la clave de confianza del teléfono coincida con la que Recursos Humanos autorizó (RF-17) y (3) que la biometría local del teléfono sea exitosa. Una checada solo es válida si se cumplen las tres validaciones. La biometría local confirma que quien usa el teléfono está registrado en él. La biometría se pide cada vez que la persona elige una opción de checada: solo si es exitosa se inserta el registro de asistencia en Biostar y, si no lo es, no se registra asistencia.
 
 **RN-15.6** El usuario de InnovApp se liga con la persona de Biostar mediante la CURP, que se usa solo como dato de enlace. Si no la encuentra, muestra "Usuario no encontrado. Contacta a Recursos Humanos." y no permite checar.
 
@@ -2007,6 +2083,8 @@ Como Recursos Humanos, quiero que la app valide el usuario, la clave de confianz
 
 **CA-15.2.5 — CURP protegida** Dado que Ana checó Cuando se revisan las bitácoras técnicas y los mensajes Entonces no aparece su CURP completa.
 
+**CA-15.2.6 — Biometría al elegir la opción** Dado que una persona con permiso elige una opción de checada Cuando la app le pide la biometría Entonces si la valida se inserta el registro de asistencia en Biostar y, si no la valida, no se registra asistencia.
+
 ### Casos de prueba
 
 **CP-15.2.1 — Identidad válida (camino feliz)** Verifica: CA-15.2.1 · RN-15.5 Dado que la CURP de Ana está en Biostar, usa su teléfono autorizado y su biometría local es exitosa Cuando checa Entonces la checada se registra.
@@ -2019,6 +2097,8 @@ Como Recursos Humanos, quiero que la app valide el usuario, la clave de confianz
 
 **CP-15.2.5 — CURP no visible en bitácoras (validación)** Verifica: CA-15.2.5 · RN-15.9 Dado que Ana checó Cuando se revisan las bitácoras técnicas Entonces no aparece su CURP completa.
 
+**CP-15.2.6 — Biometría al elegir la opción (camino feliz)** Verifica: CA-15.2.6 · RN-15.5 Dado que Ana elige "salida a comida" Cuando valida su biometría Entonces Biostar registra la salida a comida; y si cancela la biometría, no se registra nada.
+
 | CA | Caso(s) de prueba | Escenarios cubiertos |
 | --- | --- | --- |
 | CA-15.2.1 | CP-15.2.1 | Camino feliz |
@@ -2026,6 +2106,7 @@ Como Recursos Humanos, quiero que la app valide el usuario, la clave de confianz
 | CA-15.2.3 | CP-15.2.3 | Error |
 | CA-15.2.4 | CP-15.2.4 | Validación |
 | CA-15.2.5 | CP-15.2.5 | Validación |
+| CA-15.2.6 | CP-15.2.6 | Camino feliz |
 
 ## HU-15.3 — Checar con la ubicación y el GPS activos
 
@@ -2066,6 +2147,110 @@ Como Recursos Humanos, quiero que la app exija ubicación y GPS activos al checa
 ---
 
 **Regla transversal:** el resultado de las marcas de la app debe demostrarse en el reporte de asistencia (T&A) antes de ampliar el piloto; si no es viable, se evalúa otra alternativa. Se inicia con un piloto reducido antes de ampliar.
+
+## HU-15.4 — Ver mi historial de checadas
+
+Como persona con permiso, quiero ver el historial de mis checadas de los tres días anteriores a hoy, para confirmar que mis checadas quedaron registradas.
+
+### Reglas de negocio
+
+**RN-15.15** InnovApp tiene una opción para ver el historial de checadas de la persona.
+
+**RN-15.16** El historial muestra las checadas de los tres días anteriores a hoy, sin contar el día en curso, y se obtienen de la API de Biostar: todas las que están en Biostar, también las del checador físico. Se ordena de la más reciente a la más antigua.
+
+**RN-15.17** Cada checada del historial muestra la fecha, la hora y el tipo (entrada, salida a comida, regreso de comida o salida). Es de solo consulta.
+
+**RN-15.18** Si la API de Biostar no responde, la app avisa que no pudo consultar el historial y permite reintentar. Por defecto: "No se pudo consultar tu historial. Intenta de nuevo." UI-UX puede cambiar el texto.
+
+### Criterios de Aceptación
+
+**CA-15.4.1 — Opción de historial** Dado que una persona con permiso abre InnovApp Cuando busca su historial de checadas Entonces encuentra una opción para verlo.
+
+**CA-15.4.2 — Tres días anteriores** Dado que la persona tiene checadas de varios días Cuando abre su historial Entonces ve solo las checadas de los tres días anteriores a hoy.
+
+**CA-15.4.3 — Orden** Dado que el historial tiene varias checadas Cuando la persona lo abre Entonces las ve de la más reciente a la más antigua.
+
+**CA-15.4.4 — Datos de Biostar** Dado que la persona tiene checadas en Biostar Cuando abre su historial Entonces las checadas que ve coinciden con las de Biostar.
+
+**CA-15.4.5 — Biostar no responde** Dado que la API de Biostar no responde Cuando la persona abre su historial Entonces ve el aviso de que no se pudo consultar y puede reintentar.
+
+**CA-15.4.6 — Sin contar hoy** Dado que la persona ya checó hoy Cuando abre su historial Entonces las checadas de hoy no aparecen.
+
+### Casos de prueba
+
+**CP-15.4.1 — Ver el historial (camino feliz)** Verifica: CA-15.4.1 · RN-15.15 Dado que Ana ya checó varias veces Cuando abre la opción de historial Entonces ve sus checadas con fecha, hora y tipo.
+
+**CP-15.4.2 — Solo tres días (validación)** Verifica: CA-15.4.2 · RN-15.16 Dado que Ana tiene checadas de los últimos cinco días, incluido hoy Cuando abre su historial Entonces solo ve las de los tres días anteriores a hoy.
+
+**CP-15.4.3 — De la más reciente a la más antigua (validación)** Verifica: CA-15.4.3 · RN-15.16 Dado que Ana checó entrada 08:02, salida a comida 14:00 y salida 18:05 el lunes Cuando abre su historial Entonces ve primero la salida de las 18:05 y al final la entrada de las 08:02.
+
+**CP-15.4.4 — Coincide con Biostar (validación)** Verifica: CA-15.4.4 · RN-15.16 Dado que Biostar tiene cuatro checadas de Ana el martes Cuando Ana abre su historial Entonces ve esas mismas cuatro.
+
+**CP-15.4.5 — Biostar no responde (error)** Verifica: CA-15.4.5 · RN-15.18 Dado que la API de Biostar no responde Cuando Ana abre su historial Entonces ve "No se pudo consultar tu historial. Intenta de nuevo." y puede reintentar.
+
+**CP-15.4.6 — Solo consulta (permisos)** Verifica: CA-15.4.1 · RN-15.17 Dado que Ana ve su historial Cuando intenta cambiar o borrar una checada Entonces la app no se lo permite.
+
+**CP-15.4.7 — Las checadas de hoy no aparecen (validación)** Verifica: CA-15.4.6 · RN-15.16 Dado que Ana checó hoy a las 08:02 Cuando abre su historial Entonces esa checada no aparece; solo ve las de los tres días anteriores.
+
+| CA | Caso(s) de prueba | Escenarios cubiertos |
+| --- | --- | --- |
+| CA-15.4.1 | CP-15.4.1, CP-15.4.6 | Camino feliz, Permisos |
+| CA-15.4.2 | CP-15.4.2 | Validación |
+| CA-15.4.3 | CP-15.4.3 | Validación |
+| CA-15.4.4 | CP-15.4.4 | Validación |
+| CA-15.4.5 | CP-15.4.5 | Error |
+| CA-15.4.6 | CP-15.4.7 | Validación |
+
+## HU-15.5 — Avisar cuando voy a checar otra vez
+
+Como persona con permiso, quiero que la app me avise cuando voy a checar de nuevo un tipo que ya registré, para decidir si realmente quiero hacerlo.
+
+### Reglas de negocio
+
+**RN-15.19** Si la persona elige una opción de checada que la app ya registró antes, la app muestra el aviso "Ya registraste una \[opción\]. ¿Deseas checar de nuevo?", con Aceptar y Cancelar (texto por defecto; UI-UX puede cambiarlo). Si la opción no se había usado, no hay aviso.
+
+**RN-15.20** Si la persona acepta, se continúa con la validación de identidad y se pide la biometría; si es exitosa, se inserta el registro en Biostar. Si cancela, no se checa y no se pide la biometría.
+
+**RN-15.21** Para el aviso, la app recuerda solo el tipo de checada que ella registró; no guarda la checada ni consulta a Biostar. Por eso no se entera de las checadas hechas en un checador físico, y esa memoria se pierde si se reinstala la app o se cambia de teléfono. Cuándo se reinicia esa memoria queda pendiente para el análisis técnico.
+
+**RN-15.22** Si no se puede insertar la checada por un error de conexión, no se checa (RN-15.13).
+
+### Criterios de Aceptación
+
+**CA-15.5.1 — Aviso al repetir un tipo** Dado que la persona ya registró una "entrada" desde la app Cuando elige otra vez "entrada" Entonces la app muestra el aviso con Aceptar y Cancelar.
+
+**CA-15.5.2 — Aceptar** Dado que la persona ve el aviso Cuando elige Aceptar Entonces la app pide la biometría y, si es exitosa, se inserta el registro en Biostar.
+
+**CA-15.5.3 — Cancelar** Dado que la persona ve el aviso Cuando elige Cancelar Entonces no se checa y no se pide la biometría.
+
+**CA-15.5.4 — Tipo que no se había usado** Dado que la persona no ha registrado una "salida" desde la app Cuando elige "salida" Entonces no aparece el aviso y se pide la biometría.
+
+**CA-15.5.5 — Sin consulta a Biostar para el aviso** Dado que la persona elige una opción de checada Cuando la app decide si muestra el aviso Entonces lo decide con lo que ella misma registró y no consulta a Biostar.
+
+**CA-15.5.6 — Error de conexión** Dado que la persona aceptó volver a checar Cuando no se puede insertar la checada por un error de conexión Entonces no se checa y la persona ve que no se registró.
+
+### Casos de prueba
+
+**CP-15.5.1 — Aviso al repetir (camino feliz)** Verifica: CA-15.5.1 · RN-15.19 Dado que Ana ya registró su entrada desde la app Cuando elige otra vez "entrada" Entonces ve "Ya registraste una entrada. ¿Deseas checar de nuevo?" con Aceptar y Cancelar.
+
+**CP-15.5.2 — Aceptar y checar (camino feliz)** Verifica: CA-15.5.2 · RN-15.20 Dado que Ana ve el aviso Cuando elige Aceptar y valida su biometría Entonces Biostar registra la segunda entrada.
+
+**CP-15.5.3 — Cancelar (alternativo)** Verifica: CA-15.5.3 · RN-15.20 Dado que Ana ve el aviso Cuando elige Cancelar Entonces no se registra nada y la app no le pide la biometría.
+
+**CP-15.5.4 — Tipo nuevo sin aviso (alternativo)** Verifica: CA-15.5.4 · RN-15.19 Dado que Ana solo ha registrado su entrada Cuando elige "salida a comida" Entonces no ve el aviso y la app le pide la biometría.
+
+**CP-15.5.5 — Checada del checador físico (validación)** Verifica: CA-15.5.5 · RN-15.21 Dado que Ana checó su entrada en el checador de la planta Cuando elige "entrada" en la app Entonces no ve el aviso, porque la app no consulta a Biostar.
+
+**CP-15.5.6 — Sin conexión al aceptar (error)** Verifica: CA-15.5.6 · RN-15.22 Dado que Ana aceptó volver a checar y no hay conexión con Biostar Cuando valida su biometría Entonces no se registra la checada y ve que no se registró.
+
+| CA | Caso(s) de prueba | Escenarios cubiertos |
+| --- | --- | --- |
+| CA-15.5.1 | CP-15.5.1 | Camino feliz |
+| CA-15.5.2 | CP-15.5.2 | Camino feliz |
+| CA-15.5.3 | CP-15.5.3 | Alternativo |
+| CA-15.5.4 | CP-15.5.4 | Alternativo |
+| CA-15.5.5 | CP-15.5.5 | Validación |
+| CA-15.5.6 | CP-15.5.6 | Error |
 
 # RF-16 — Permiso de checada remota por persona
 
@@ -2133,7 +2318,7 @@ Que cada persona solo pueda checar desde un teléfono que Recursos Humanos haya 
 
 ## Descripción
 
-Para checar desde InnovApp, el teléfono de cada persona necesita la confianza de Recursos Humanos. Al entrar por primera vez, la app comprueba que la persona exista en Biostar mediante la CURP y genera una clave de confianza que une a la persona con ese teléfono. La clave se genera una sola vez y se guarda solo en el teléfono. Con ella se crea una solicitud en el subproceso nuevo "Autorización Asistencia Remota", dentro del proceso "Recursos Humanos", donde Recursos Humanos general la autoriza o la deniega. Si la persona cambia de teléfono, la clave no coincide, no puede checar y debe pedir una nueva autorización; el teléfono anterior sigue activo hasta que se autorice el nuevo. Una persona solo puede usar un teléfono para checar.
+Para checar desde InnovApp, el teléfono de cada persona necesita la confianza de Recursos Humanos. Al entrar por primera vez, la app comprueba que la persona exista en Biostar mediante la CURP y genera una clave de confianza que une a la persona con ese teléfono. La clave se genera una sola vez y se guarda solo en el teléfono. Con ella se crea una solicitud en el subproceso nuevo "Autorización Asistencia Remota", dentro del proceso "Recursos Humanos", donde Recursos Humanos general la autoriza o la deniega. Si la persona cambia de teléfono, la clave no coincide, no puede checar y debe pedir una nueva autorización; el teléfono anterior sigue activo hasta que se autorice el nuevo. Una persona solo puede usar un teléfono para checar. Al autorizar, Business Suite valida con la API de Biostar que el empleado exista en las dos plataformas; sin esa relación no se puede autorizar.
 
 | Estado de la solicitud | Qué significa |
 | --- | --- |
@@ -2217,6 +2402,8 @@ Como Recursos Humanos general, quiero ver las solicitudes y resolverlas, para co
 
 **RN-17.12** Cada resolución queda registrada con la fecha, la persona, quien la resolvió y el motivo, si lo hay.
 
+**RN-17.19** Al autorizar una solicitud, Business Suite valida con la API de Biostar que el empleado exista en su base de datos y que haya relación (match) entre el empleado de Business Suite y el de Biostar, mediante la CURP. Si no hay match, no deja autorizar y muestra el motivo; por defecto: "No se puede autorizar: el empleado no existe en Biostar." (UI-UX puede cambiar el texto). El empleado debe estar en las dos plataformas. Denegar no requiere esta validación.
+
 ### Criterios de Aceptación
 
 **CA-17.2.1 — Datos de la solicitud** Dado que hay una solicitud pendiente Cuando Recursos Humanos general abre el subproceso Entonces ve los datos del expediente, el modelo del dispositivo y las acciones Autorizar y Denegar.
@@ -2232,6 +2419,12 @@ Como Recursos Humanos general, quiero ver las solicitudes y resolverlas, para co
 **CA-17.2.6 — Filtro por estado** Dado que hay solicitudes en distintos estados Cuando Recursos Humanos general filtra por un estado Entonces ve solo las solicitudes de ese estado.
 
 **CA-17.2.7 — Denegar sin motivo** Dado que Recursos Humanos general deniega una solicitud Cuando no escribe un motivo Entonces el sistema lo permite y guarda la resolución sin motivo.
+
+**CA-17.2.8 — Autorizar sin relación con Biostar** Dado que el empleado de la solicitud no existe en Biostar Cuando Recursos Humanos general intenta autorizar Entonces el sistema no lo permite y muestra el motivo.
+
+**CA-17.2.9 — Autorizar con relación en las dos plataformas** Dado que el empleado existe en Business Suite y en Biostar Cuando Recursos Humanos general autoriza Entonces el sistema consulta la API de Biostar, encuentra el match y la solicitud pasa a "Autorizada".
+
+**CA-17.2.10 — Denegar sin relación** Dado que el empleado de la solicitud no existe en Biostar Cuando Recursos Humanos general deniega Entonces el sistema lo permite.
 
 ### Casos de prueba
 
@@ -2251,6 +2444,14 @@ Como Recursos Humanos general, quiero ver las solicitudes y resolverlas, para co
 
 **CP-17.2.8 — Filtro por estado (validación)** Verifica: CA-17.2.6 · RN-17.11 Dado que hay solicitudes pendientes, autorizadas, denegadas y revocadas Cuando Recursos Humanos general filtra por "Denegada" Entonces ve solo las denegadas.
 
+**CP-17.2.9 — Autorizar sin match (error)** Verifica: CA-17.2.8 · RN-17.19 Dado que la CURP de Luis no existe en Biostar Cuando Recursos Humanos general intenta autorizar su solicitud Entonces el sistema no deja autorizar y muestra "No se puede autorizar: el empleado no existe en Biostar."
+
+**CP-17.2.10 — Autorizar con match (camino feliz)** Verifica: CA-17.2.9 · RN-17.19 Dado que Ana existe en Business Suite y en Biostar Cuando Recursos Humanos general autoriza su solicitud Entonces la solicitud pasa a "Autorizada".
+
+**CP-17.2.11 — Denegar sin match (alternativo)** Verifica: CA-17.2.10 · RN-17.19 Dado que Luis no existe en Biostar Cuando Recursos Humanos general deniega su solicitud Entonces el sistema lo permite.
+
+**CP-17.2.12 — La validación consulta Biostar al autorizar (validación)** Verifica: CA-17.2.9 · RN-17.19 Dado que Ana existía en Biostar cuando pidió su solicitud y ya no existe Cuando Recursos Humanos general intenta autorizar Entonces el sistema vuelve a consultar la API de Biostar y no deja autorizar.
+
 | CA | Caso(s) de prueba | Escenarios cubiertos |
 | --- | --- | --- |
 | CA-17.2.1 | CP-17.2.1 | Camino feliz |
@@ -2260,6 +2461,9 @@ Como Recursos Humanos general, quiero ver las solicitudes y resolverlas, para co
 | CA-17.2.5 | CP-17.2.7 | Validación |
 | CA-17.2.6 | CP-17.2.8 | Validación |
 | CA-17.2.7 | CP-17.2.4 | Alternativo |
+| CA-17.2.8 | CP-17.2.9 | Error |
+| CA-17.2.9 | CP-17.2.10, CP-17.2.12 | Camino feliz, Validación |
+| CA-17.2.10 | CP-17.2.11 | Alternativo |
 
 ## HU-17.3 — Cambiar de teléfono, de biometría o reinstalar la app
 
@@ -2493,12 +2697,12 @@ Conecta cada objetivo de negocio con los requerimientos que lo cumplen.
 | OBJ-4 | RF-07 | HU-7.1 | CA-7.1.1 a CA-7.1.6 | Must | Propuesto |
 | OBJ-2 | RF-08 | HU-8.1, HU-8.2 | CA-8.1.1 a CA-8.2.2 | Must | Propuesto |
 | OBJ-2 | RF-09 | HU-9.1 | CA-9.1.1 | Must | Propuesto |
-| OBJ-1 | RF-10 | HU-10.1 a HU-10.3 | CA-10.1.1 a CA-10.3.3 | Must | Propuesto |
+| OBJ-1 | RF-10 | HU-10.1 a HU-10.4 | CA-10.1.1 a CA-10.4.4 | Must | Propuesto |
 | OBJ-1 | RF-11 | HU-11.1 | CA-11.1.1 a CA-11.1.5 | Must | Propuesto |
-| OBJ-1 | RF-12 | HU-12.1 | CA-12.1.1 | Should | Propuesto |
-| OBJ-1 | RF-13 | HU-13.1 | CA-13.1.1 | Must | Propuesto |
+| OBJ-1 | RF-12 | HU-12.1 | CA-12.1.1 a CA-12.1.2 | Should | Propuesto |
+| OBJ-1 | RF-13 | HU-13.1 | CA-13.1.1 a CA-13.1.3 | Must | Propuesto |
 | OBJ-1, OBJ-4 | RF-14 | HU-14.1, HU-14.2 | CA-14.1.1 a CA-14.2.2 | Must | Propuesto |
-| OBJ-3 | RF-15 | HU-15.1 a HU-15.3 | CA-15.1.1 a CA-15.3.3 | Must | Propuesto |
+| OBJ-3 | RF-15 | HU-15.1 a HU-15.5 | CA-15.1.1 a CA-15.5.6 | Must | Propuesto |
 | OBJ-3, OBJ-4 | RF-16 | HU-16.1 | CA-16.1.1 a CA-16.1.3 | Must | Propuesto |
 | OBJ-3, OBJ-4 | RF-17 | HU-17.1 a HU-17.4 | CA-17.1.1 a CA-17.4.4 | Should | Propuesto |
 | OBJ-3 | RF-18 | HU-18.1 | CA-18.1.1 a CA-18.1.4 | Should | Propuesto |
@@ -2535,10 +2739,11 @@ Los requerimientos no funcionales también se relacionan así: RNF-005 (bitácor
 | DEP-05 | Que cada nominista tenga configuradas sus grupos de área RH, con sus sucursales y tipos de periodo (pestaña que ya existe), y sus departamentos, con sus sucursales y tipos de periodo (pestaña nueva), y que se configuren los permisos. | Célula de Innovación |
 | DEP-06 | Configurar los turnos y las horas base en Biostar y la opción de comida en los checadores. | Otras áreas |
 | DEP-08 | Revisar las capacidades reales de InnovApp (tecnología, versiones de Android e iOS, biometría, ubicación y almacenamiento protegido). También, versiones mínimas, biometría compatible y verificación de integridad del dispositivo. | Célula de Innovación |
-| DEP-09 | Contar con una API dedicada de checada móvil, separada de la API actual de InnovApp, con dispositivo virtual y licencia de la Event Log API por confirmar. El envío se hace con un identificador único para evitar duplicados. | Célula de Innovación y proveedor |
+| DEP-09 | Contar con una API dedicada de checada móvil, separada de la API actual de InnovApp, con dispositivo virtual y licencia de la Event Log API por confirmar. El envío se hace con un identificador único para evitar duplicados. Se usa también para consultar el historial de checadas de los tres días anteriores y para validar que el empleado exista en Biostar al autorizar su solicitud. | Célula de Innovación y proveedor |
 | DEP-10 | Construir el subproceso "Autorización Asistencia Remota" dentro del proceso "Recursos Humanos" de Business Suite, con sus acciones de autorizar, denegar y revocar, y el filtro por estado. | Célula de Innovación |
 | DEP-11 | Definir los textos finales de los mensajes de la app sobre la autorización del teléfono. | UI-UX |
 | DEP-12 | Asignar a cada usuario sus departamentos por sucursal y tipo de periodo en la pestaña "Sucursal-Departamento" antes del arranque. | Célula de Innovación |
+| DEP-13 | Que la API de Biostar permita consultar si un empleado existe y las checadas de los tres días anteriores a hoy de cada persona. | Célula de Innovación y proveedor |
 
 ### Riesgos
 
@@ -2566,7 +2771,7 @@ La probabilidad y el impacto son una estimación de este análisis.
 
 ### Impacto organizacional y capacitación
 
-El cambio alcanza a todo Grupo Reyes a nivel nacional. No existe un número exacto de personas a capacitar. Se necesita material para: el registro de comida en los checadores, la consulta de jornada en Business Suite, el módulo "Prenómina" (búsqueda, captura y cierre) y la pestaña "Sucursal-Departamento", la "Prenómina Gasto" (cambio de nombre y horas extra), "Consulta Prenómina" (consulta y exportación), el catálogo "Conceptos Prenómina", la asignación de frecuencia y de turno en el expediente, y la checada en InnovApp.
+El cambio alcanza a todo Grupo Reyes a nivel nacional. No existe un número exacto de personas a capacitar. Se necesita material para: el registro de comida en los checadores, la consulta de jornada en Business Suite, el módulo "Prenómina" (búsqueda, captura y cierre) y la pestaña "Sucursal-Departamento", la "Prenómina Gasto" (cambio de nombre y horas extra), "Consulta Prenómina" (consulta y exportación), el catálogo "Conceptos Prenómina", la asignación de frecuencia y de turno en el expediente, y la checada y el historial en InnovApp.
 
 ## Preguntas abiertas
 
@@ -2585,3 +2790,4 @@ Lo que todavía falta resolver, con un responsable sugerido.
 | PA-10 | Registro duplicado: definir el color con el que se pinta y si el resaltado también se muestra en "Consulta Prenómina". | 1 | Recursos Humanos |
 | PA-11 | Autorización Asistencia Remota: estimar cuántas solicitudes llegarán al arranque y confirmar con UI-UX los textos finales de los mensajes de la app. | 3 | Recursos Humanos y UI-UX |
 | PA-13 | Frecuencia y tipo de periodo: confirmar que los valores "Semanal" y "Quincenal" de la frecuencia coinciden con los nombres de los tipos de periodo del catálogo "Tipo de periodo de Nómina"; si no, definir la equivalencia. | 1 | Recursos Humanos |
+| PA-14 | Aviso al volver a checar en InnovApp: definir, en el análisis técnico, cuándo se reinicia la memoria de la app que decide si muestra el aviso; y confirmar los textos de los mensajes de la app (historial, aviso y autorización sin relación con Biostar). | 3 | Célula de Innovación y UI-UX |
