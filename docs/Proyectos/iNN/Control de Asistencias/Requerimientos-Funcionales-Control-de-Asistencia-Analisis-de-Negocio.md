@@ -6,7 +6,7 @@ Este documento explica, en lenguaje sencillo, lo que debe hacer el proyecto Cont
 
 | Campo | Valor |
 | --- | --- |
-| Versión | 1.5 |
+| Versión | 1.6 |
 | Fecha | 2026-10-15 |
 | Estado | Definición |
 | Módulo | Business Suite, Biostar (complemento T&A), InnovApp y Contpaq |
@@ -185,7 +185,7 @@ stateDiagram-v2
 
 Hoy parte del control de asistencia de la prenómina se lleva de forma manual en papel, y no todas las áreas usan el módulo de prenómina actual, que pasa a llamarse "Prenómina Gasto". Este entregable crea el módulo "Prenómina" y el módulo "Consulta Prenómina", para que la información de cada periodo llegue a Contpaq en un Excel y sin captura manual intermedia.
 
-La prenómina se puede crear de dos maneras que conviven. En la manual, la nominista busca a sus empleados con filtros (grupo de área RH o departamento, sucursal, tipo de periodo y periodo), se cargan con la asistencia por defecto y ella agrega las incidencias. En la automática, el personal de Gastos llena y cierra la Prenómina Gasto y el sistema crea la prenómina ya cerrada. En los dos casos, la prenómina vive en el módulo "Prenómina" y es la que muestra "Consulta Prenómina".
+La prenómina se puede crear de dos maneras que conviven. En la manual, la nominista busca a sus empleados con filtros (sucursal, grupo de área RH o departamento, tipo de periodo y periodo), se cargan con la asistencia por defecto y ella agrega las incidencias. En la automática, el personal de Gastos llena y cierra la Prenómina Gasto y el sistema crea la prenómina ya cerrada. En los dos casos, la prenómina vive en el módulo "Prenómina" y es la que muestra "Consulta Prenómina".
 
 ```mermaid
 flowchart TD
@@ -476,14 +476,14 @@ Que la nominista busque a sus empleados con filtros, cree la prenómina de un pe
 
 ## Descripción
 
-El sistema deberá ofrecer el módulo nuevo "Prenómina", que es independiente del módulo de prenómina actual (ahora "Prenómina Gasto"). Una prenómina lleva sus datos generales (folio, estatus, quién la registra y cuándo) y los filtros con los que se armó. La prenómina no se carga sola: la nominista elige un grupo de área RH o un departamento (uno solo), la sucursal, el tipo de periodo y el periodo, y presiona el botón Buscar. Cada día viene con la asistencia por defecto y la nominista agrega las incidencias y las horas extra. Puede agregar empleados desde el listado de los que cumplen los filtros y aún no están. Al cerrar, el sistema avisa si faltan empleados. Mientras la prenómina está Activo se pueden cambiar los filtros y todos los valores; una vez guardada (cerrada), ya no se puede modificar. Si se crea de forma automática desde la Prenómina Gasto, queda ligada a ella.
+El sistema deberá ofrecer el módulo nuevo "Prenómina", que es independiente del módulo de prenómina actual (ahora "Prenómina Gasto"). Una prenómina lleva sus datos generales (folio, estatus, quién la registra y cuándo) y los filtros con los que se armó. La prenómina no se carga sola: la nominista elige primero la sucursal y después un grupo de área RH o un departamento (uno solo), el tipo de periodo y el periodo, y presiona el botón Buscar. Cada día viene con la asistencia por defecto y la nominista agrega las incidencias y las horas extra. Puede agregar empleados desde el listado de los que cumplen los filtros y aún no están. Al cerrar, el sistema avisa si faltan empleados. Mientras la prenómina está Activo se pueden cambiar los filtros y todos los valores; una vez guardada (cerrada), ya no se puede modificar. Si se crea de forma automática desde la Prenómina Gasto, queda ligada a ella.
 
 Filtros de la búsqueda (cada uno permite un solo valor):
 
 | Filtro | ¿Obligatorio? | Qué muestra |
 | --- | --- | --- |
-| Grupo área RH o Departamento | Sí, uno solo de los dos | Los grupos de área RH que la nominista tiene en "Sucursal-Área R.H." o los departamentos que tiene en "Sucursal-Departamento". No se pueden elegir los dos. |
-| Sucursal | Sí | Las sucursales configuradas para el grupo o el departamento elegido. |
+| Sucursal | Sí | Las sucursales que la nominista tiene configuradas en sus pestañas "Sucursal-Área R.H." y "Sucursal-Departamento", sin repetir. Se elige primero. |
+| Grupo área RH o Departamento | Sí, uno solo de los dos | Los grupos de área RH o los departamentos que la nominista tiene configurados para la sucursal elegida. No se pueden elegir los dos. |
 | Tipo de periodo de nómina | Sí | Del catálogo "Tipo de periodo de Nómina". Con un grupo se llena solo desde su configuración; con un departamento, los configurados para esa sucursal y ese departamento. |
 | Periodo de nómina | Sí | Los periodos del catálogo "Periodos Nómina" del tipo elegido. |
 
@@ -516,25 +516,30 @@ Como Célula de Innovación, quiero configurar en el usuario de cada nominista s
 
 **CA-3.1.1 — Configuración del usuario** Dado que una nominista tiene grupos, departamentos y sucursales configurados Cuando abre la búsqueda de la prenómina Entonces solo ve esas opciones en sus filtros.
 
-**CA-3.1.2 — Sin grupos ni departamentos** Dado que una nominista no tiene grupos de área RH ni departamentos configurados Cuando abre la búsqueda de la prenómina Entonces no puede buscar y ve el mensaje "No tienes grupos de área RH ni departamentos configurados. Contacta a la Célula de Innovación."
+**CA-3.1.2 — Sin sucursales configuradas** Dado que una nominista no tiene sucursales configuradas Cuando abre la búsqueda de la prenómina Entonces no puede buscar y ve el mensaje "No tienes sucursales configuradas. Contacta a la Célula de Innovación."
 
-**CA-3.1.3 — Sin tipo de periodo configurado** Dado que la nominista eligió un departamento y una sucursal sin tipo de periodo configurado Cuando intenta buscar Entonces no se cargan empleados y ve el mensaje "No tienes un tipo de periodo configurado para esta sucursal y departamento. Contacta a la Célula de Innovación."
+**CA-3.1.3 — Sin tipo de periodo configurado** Dado que la nominista eligió una sucursal y un departamento sin tipo de periodo configurado Cuando intenta buscar Entonces no se cargan empleados y ve el mensaje "No tienes un tipo de periodo configurado para esta sucursal y departamento. Contacta a la Célula de Innovación."
+
+**CA-3.1.4 — Sucursal sin grupos ni departamentos** Dado que la nominista eligió una sucursal para la que no tiene grupos de área RH ni departamentos configurados Cuando intenta elegir el grupo o el departamento Entonces no puede buscar y ve el mensaje "No tienes grupos de área RH ni departamentos configurados para esta sucursal. Contacta a la Célula de Innovación."
 
 ### Casos de prueba
 
 **CP-3.1.1 — Usuario configurado (camino feliz)** Verifica: CA-3.1.1 · RN-3.1 Dado que la nominista Ana tiene el grupo "Operación" y el departamento "Producción" Cuando abre la búsqueda Entonces puede elegir cualquiera de los dos, pero no otros.
 
-**CP-3.1.2 — Usuario sin configuración (error)** Verifica: CA-3.1.2 · RN-3.1 Dado que el nominista Luis no tiene grupos ni departamentos configurados Cuando abre la búsqueda Entonces no puede buscar y ve el mensaje de falta de configuración.
+**CP-3.1.2 — Usuario sin configuración (error)** Verifica: CA-3.1.2 · RN-3.1 Dado que el nominista Luis no tiene sucursales configuradas Cuando abre la búsqueda Entonces no puede buscar y ve el mensaje de falta de sucursales.
 
-**CP-3.1.3 — Sin tipo de periodo (error)** Verifica: CA-3.1.3 · RN-3.1 Dado que Ana tiene "Producción" en la sucursal "Sur" sin tipo de periodo Cuando elige ese departamento y esa sucursal Entonces no se cargan empleados y ve el mensaje de falta de tipo de periodo.
+**CP-3.1.3 — Sin tipo de periodo (error)** Verifica: CA-3.1.3 · RN-3.1 Dado que Ana tiene "Producción" en la sucursal "Sur" sin tipo de periodo Cuando elige esa sucursal y ese departamento Entonces no se cargan empleados y ve el mensaje de falta de tipo de periodo.
 
 **CP-3.1.4 — Solo la Célula de Innovación configura (permisos)** Verifica: CA-3.1.1 · RN-3.2 Dado que una nominista abre su propio usuario Cuando intenta cambiar sus grupos, departamentos o sucursales Entonces el sistema no se lo permite.
+
+**CP-3.1.5 — Sucursal sin grupos ni departamentos (error)** Verifica: CA-3.1.4 · RN-3.1 Dado que Ana tiene la sucursal "Centro" sin grupos ni departamentos configurados Cuando elige "Centro" Entonces no puede buscar y ve "No tienes grupos de área RH ni departamentos configurados para esta sucursal. Contacta a la Célula de Innovación."
 
 | CA | Caso(s) de prueba | Escenarios cubiertos |
 | --- | --- | --- |
 | CA-3.1.1 | CP-3.1.1, CP-3.1.4 | Camino feliz, Permisos |
 | CA-3.1.2 | CP-3.1.2 | Error |
 | CA-3.1.3 | CP-3.1.3 | Error |
+| CA-3.1.4 | CP-3.1.5 | Error |
 
 ## HU-3.2 — Crear una prenómina con su folio, sus filtros y su periodo
 
@@ -542,7 +547,7 @@ Como nominista, quiero crear una prenómina con mis filtros y mi periodo, para t
 
 ### Reglas de negocio
 
-**RN-3.3** Los datos generales de la prenómina son: folio generado de manera automática, estatus, personal que registra, fecha de registro y los filtros de la búsqueda (grupo de área RH o departamento, sucursal, tipo de periodo y periodo).
+**RN-3.3** Los datos generales de la prenómina son: folio generado de manera automática, estatus, personal que registra, fecha de registro y los filtros de la búsqueda (sucursal, grupo de área RH o departamento, tipo de periodo y periodo).
 
 **RN-3.4** La prenómina creada de forma manual nace con estatus "Activo".
 
@@ -584,11 +589,11 @@ Como nominista, quiero buscar a mis empleados con filtros y el botón Buscar, pa
 
 **RN-3.7** La prenómina no se carga sola. La nominista captura los filtros obligatorios y presiona Buscar; se traen todos los empleados que cumplen los filtros. Cada filtro permite un solo valor.
 
-**RN-3.19** Los filtros se eligen en este orden: grupo de área RH o departamento; sucursal; tipo de periodo de nómina; y periodo de nómina.
+**RN-3.19** Los filtros se eligen en este orden: sucursal; grupo de área RH o departamento; tipo de periodo de nómina; y periodo de nómina.
 
-**RN-3.20** Se elige un grupo de área RH o un departamento, nunca los dos, y es obligatorio uno de los dos. Cada lista trae solo lo que la nominista tiene configurado en sus pestañas "Sucursal-Área R.H." y "Sucursal-Departamento".
+**RN-3.20** La sucursal es obligatoria y muestra las sucursales que la nominista tiene configuradas en sus pestañas "Sucursal-Área R.H." y "Sucursal-Departamento", sin repetir. Al cambiar la sucursal se vacían el grupo o el departamento, el tipo de periodo y el periodo.
 
-**RN-3.21** La sucursal muestra solo las sucursales configuradas para el grupo o el departamento elegido. Al cambiar el grupo o el departamento se vacía la sucursal.
+**RN-3.21** Después de la sucursal se elige un grupo de área RH o un departamento, nunca los dos, y es obligatorio uno de los dos. Cada lista trae solo lo que la nominista tiene configurado para esa sucursal. Al cambiar el grupo o el departamento se vacían el tipo de periodo y el periodo.
 
 **RN-3.22** El tipo de periodo sale del catálogo "Tipo de periodo de Nómina". Con un grupo se llena solo desde su configuración y no se cambia; con un departamento, muestra los tipos configurados para esa sucursal y ese departamento, y si hay más de uno la nominista elige. El periodo muestra solo los del tipo elegido; si cambia el tipo, el periodo se vacía.
 
@@ -604,19 +609,19 @@ Como nominista, quiero buscar a mis empleados con filtros y el botón Buscar, pa
 
 ### Criterios de Aceptación
 
-**CA-3.3.1 — Búsqueda con filtros** Dado que la nominista capturó un grupo o un departamento, la sucursal, el tipo de periodo y el periodo Cuando presiona Buscar Entonces se traen todos los empleados que cumplen los filtros.
+**CA-3.3.1 — Búsqueda con filtros** Dado que la nominista capturó la sucursal, un grupo o un departamento, el tipo de periodo y el periodo Cuando presiona Buscar Entonces se traen todos los empleados que cumplen los filtros.
 
 **CA-3.3.2 — Grupo o departamento, uno solo** Dado que la nominista eligió un grupo de área RH Cuando intenta elegir también un departamento Entonces el sistema no lo permite; solo puede quedar uno de los dos.
 
-**CA-3.3.3 — Sucursales según la selección** Dado que la nominista eligió un grupo o un departamento Cuando abre el filtro de sucursal Entonces ve solo las sucursales configuradas para esa selección.
+**CA-3.3.3 — Grupos y departamentos según la sucursal** Dado que la nominista eligió una sucursal Cuando abre el filtro de grupo o departamento Entonces ve solo los grupos y departamentos configurados para esa sucursal; y si cambia la sucursal, se vacían el grupo o el departamento, el tipo de periodo y el periodo.
 
-**CA-3.3.4 — Tipo de periodo desde la configuración** Dado que la nominista eligió la sucursal Cuando se carga el tipo de periodo Entonces con un grupo se llena solo, y con un departamento muestra los tipos configurados para esa sucursal y ese departamento.
+**CA-3.3.4 — Tipo de periodo desde la configuración** Dado que la nominista eligió la sucursal y un grupo o un departamento Cuando se carga el tipo de periodo Entonces con un grupo se llena solo, y con un departamento muestra los tipos configurados para esa sucursal y ese departamento.
 
 **CA-3.3.5 — Periodos según el tipo** Dado que está elegido el tipo de periodo Cuando la nominista abre el filtro de periodo Entonces ve solo los periodos de ese tipo.
 
 **CA-3.3.6 — Cambio del tipo de periodo** Dado que la nominista ya había elegido un periodo Cuando cambia el tipo de periodo Entonces el periodo se vacía y debe elegir uno nuevo antes de buscar.
 
-**CA-3.3.7 — Campos obligatorios** Dado que falta el grupo o el departamento, la sucursal, el tipo de periodo o el periodo Cuando presiona Buscar Entonces el sistema no busca y señala los campos obligatorios.
+**CA-3.3.7 — Campos obligatorios** Dado que falta la sucursal, el grupo o el departamento, el tipo de periodo o el periodo Cuando presiona Buscar Entonces el sistema no busca y señala los campos obligatorios.
 
 **CA-3.3.8 — Empleados de un grupo** Dado que la nominista busca por un grupo de área RH Cuando se cargan los empleados Entonces aparecen los que tienen alguna de las áreas RH del grupo y cuya frecuencia coincide con el tipo de periodo.
 
@@ -638,19 +643,19 @@ Como nominista, quiero buscar a mis empleados con filtros y el botón Buscar, pa
 
 ### Casos de prueba
 
-**CP-3.3.1 — Búsqueda por grupo (camino feliz)** Verifica: CA-3.3.1 · RN-3.7 Dado que Ana eligió el grupo "Operación", la sucursal "Norte", el tipo "Semanal" y la semana 41, y hay 10 empleados de ese grupo con frecuencia "Semanal" Cuando presiona Buscar Entonces aparecen esos 10 empleados.
+**CP-3.3.1 — Búsqueda por grupo (camino feliz)** Verifica: CA-3.3.1 · RN-3.7 Dado que Ana eligió la sucursal "Norte", el grupo "Operación", el tipo "Semanal" y la semana 41, y hay 10 empleados de ese grupo con frecuencia "Semanal" Cuando presiona Buscar Entonces aparecen esos 10 empleados.
 
-**CP-3.3.2 — Búsqueda por departamento (camino feliz)** Verifica: CA-3.3.1 · RN-3.7 Dado que Ana eligió el departamento "Producción", la sucursal "Norte", el tipo "Semanal" y la semana 41 Cuando presiona Buscar Entonces aparecen todos los empleados de "Producción" con frecuencia "Semanal".
+**CP-3.3.2 — Búsqueda por departamento (camino feliz)** Verifica: CA-3.3.1 · RN-3.7 Dado que Ana eligió la sucursal "Norte", el departamento "Producción", el tipo "Semanal" y la semana 41 Cuando presiona Buscar Entonces aparecen todos los empleados de "Producción" con frecuencia "Semanal".
 
 **CP-3.3.3 — Grupo y departamento a la vez (error)** Verifica: CA-3.3.2 · RN-3.20 Dado que Ana eligió el grupo "Operación" Cuando intenta elegir también el departamento "Producción" Entonces el sistema no lo permite.
 
-**CP-3.3.4 — Sucursales de la selección (validación)** Verifica: CA-3.3.3 · RN-3.19 · RN-3.21 Dado que el departamento "Producción" está configurado solo para "Norte" Cuando Ana lo elige y abre el filtro de sucursal Entonces ve únicamente "Norte".
+**CP-3.3.4 — Grupos y departamentos de la sucursal (validación)** Verifica: CA-3.3.3 · RN-3.19 · RN-3.21 Dado que Ana eligió la sucursal "Norte" y el departamento "Producción" solo está configurado para "Sur" Cuando abre el filtro de grupo o departamento Entonces no ve "Producción".
 
-**CP-3.3.5 — Cambio de grupo o departamento (validación)** Verifica: CA-3.3.3 · RN-3.21 Dado que Ana ya eligió la sucursal "Norte" Cuando cambia el departamento Entonces la sucursal se vacía.
+**CP-3.3.5 — Cambio de sucursal (validación)** Verifica: CA-3.3.3 · RN-3.20 Dado que Ana eligió la sucursal "Norte", el departamento "Producción", el tipo y el periodo Cuando cambia la sucursal a "Sur" Entonces se vacían el departamento, el tipo de periodo y el periodo.
 
-**CP-3.3.6 — Tipo de periodo con grupo (camino feliz)** Verifica: CA-3.3.4 · RN-3.22 Dado que el grupo "Operación" tiene el tipo "Semanal" para "Norte" Cuando Ana elige la sucursal Entonces el tipo de periodo se llena solo con "Semanal".
+**CP-3.3.6 — Tipo de periodo con grupo (camino feliz)** Verifica: CA-3.3.4 · RN-3.22 Dado que el grupo "Operación" tiene el tipo "Semanal" para "Norte" Cuando Ana elige la sucursal "Norte" y el grupo "Operación" Entonces el tipo de periodo se llena solo con "Semanal".
 
-**CP-3.3.7 — Tipo de periodo con departamento (alternativo)** Verifica: CA-3.3.4 · RN-3.22 Dado que "Producción" tiene los tipos "Semanal" y "Quincenal" para "Norte" Cuando Ana elige esa sucursal Entonces puede elegir cualquiera de los dos.
+**CP-3.3.7 — Tipo de periodo con departamento (alternativo)** Verifica: CA-3.3.4 · RN-3.22 Dado que "Producción" tiene los tipos "Semanal" y "Quincenal" para "Norte" Cuando Ana elige la sucursal "Norte" y el departamento "Producción" Entonces puede elegir cualquiera de los dos.
 
 **CP-3.3.8 — Periodos según el tipo (camino feliz)** Verifica: CA-3.3.5 · RN-3.22 Dado que Ana eligió el tipo "Quincenal" Cuando abre el filtro de periodo Entonces ve solo los quincenales.
 
