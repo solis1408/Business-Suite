@@ -6,8 +6,8 @@ Este documento explica, en lenguaje sencillo, lo que debe hacer el proyecto Cont
 
 | Campo | Valor |
 | --- | --- |
-| Versión | 1.6 |
-| Fecha | 2026-10-15 |
+| Versión | 2.0 |
+| Fecha | 2026-10-28 |
 | Estado | Definición |
 | Módulo | Business Suite, Biostar (complemento T&A), InnovApp y Contpaq |
 | Autor | Análisis de Negocio |
@@ -20,7 +20,7 @@ Este documento explica qué debe hacer el sistema en los tres entregables del pr
 
 Los tres entregables son:
 
-1. **Prenómina:** los módulos Prenómina, Prenómina Gasto y Consulta Prenómina; los catálogos "Conceptos Prenómina" y "Periodos Nómina"; los campos nuevos del expediente (Frecuencia y Turno); las horas extra; la validación de duplicados y la creación automática.
+1. **Prenómina:** los módulos Prenómina, Prenómina Gasto y Consulta Prenómina; los catálogos "Conceptos Prenómina" y "Periodos Nómina"; los campos nuevos del expediente (Periodicidad y Turno); el alcance del listado del Expediente Empleado; las horas extra; la validación de duplicados y la creación automática.
 2. **Reporte de jornada desde Biostar:** el reporte, sus filtros, sus columnas y su exportación a Excel; la opción de comida en el checador y la lectura del complemento T&A de Biostar.
 3. **InnovApp:** la checada móvil (validación de CURP, ubicación, GPS e internet), el permiso por persona, la autorización del teléfono por Recursos Humanos y la alternativa supervisada por Recursos Humanos.
 
@@ -29,7 +29,7 @@ Los requerimientos (RF) de cada entregable son:
 **Entregable 1 — Prenómina**
 
 - RF-01 Catálogos "Conceptos Prenómina" y "Periodos Nómina".
-- RF-02 Campos nuevos del expediente: Frecuencia y Turno.
+- RF-02 Campos nuevos del expediente: Periodicidad y Turno.
 - RF-03 Prenómina: creación manual por la nominista.
 - RF-04 Horas extra.
 - RF-05 Prenómina Gasto.
@@ -39,6 +39,8 @@ Los requerimientos (RF) de cada entregable son:
 - RF-09 Exportar el Excel a Recursos Humanos.
 
 * RF-19 Configuración del usuario: Departamentos por Sucursal.
+
+- RF-20 Alcance del listado de Expediente Empleado.
 
 **Entregable 2 — Reporte de jornada desde Biostar**
 
@@ -67,12 +69,14 @@ El alcance cubre a todo Grupo Reyes a nivel nacional, con una prueba previa al 1
 - La "Prenómina Gasto" (antes, el módulo de prenómina actual): celdas de horas extra por día, total de horas extra y creación automática de la prenómina al cerrarse.
 - El módulo "Consulta Prenómina", solo para Recursos Humanos general, con exportación a Excel.
 - Los catálogos "Conceptos Prenómina" (relacionado con "Conceptos Nómina") y "Periodos Nómina" (semanal y quincenal).
-- Los campos nuevos del expediente: "Frecuencia" y "Turno".
+- Los campos nuevos del expediente: "Periodicidad" y "Turno".
 - Las horas extra por día y su total por periodo.
 - La validación para que un empleado no esté en dos prenóminas.
 - Agregar y quitar empleados en una prenómina Activo.
 
 * La pestaña nueva "Sucursal-Departamento" en la configuración del usuario, con los departamentos que atiende cada usuario por sucursal y tipo de periodo.
+
+- El alcance del listado principal del Expediente Empleado: cada persona ve solo al personal con número de nómina de las unidades de negocio de sus sucursales configuradas, salvo los perfiles con visibilidad total.
 
 *Entregable 2 — Reporte de jornada desde Biostar*
 
@@ -107,6 +111,9 @@ El alcance cubre a todo Grupo Reyes a nivel nacional, con una prueba previa al 1
 - El cálculo automático del pago de las horas extra: solo se capturan valores de horas; la explicación del pago es informativa.
 - Una acción de cierre nueva: se reutiliza la que ya existe en la Prenómina Gasto.
 
+* La actualización de los datos del expediente (número de nómina, Empresa RH, unidad de negocio) y el retiro de activos y cuentas de los empleados cancelados: se atienden por actualización de datos, fuera de estos requerimientos (ver "Anotaciones de seguimiento").
+* Los lookups de empleado de otras pantallas: no cambian con el alcance del listado.
+
 *Entregable 3 — InnovApp*
 
 - Servicios externos en la ruta de checada, en cualquier etapa.
@@ -118,11 +125,11 @@ El alcance cubre a todo Grupo Reyes a nivel nacional, con una prueba previa al 1
 
 | Actor / Rol | Descripción | Entregable |
 | --- | --- | --- |
-| Recursos Humanos (general) | Personal de Recursos Humanos. Consulta el reporte de jornada, usa "Consulta Prenómina", exporta el Excel y administra el catálogo "Conceptos Prenómina" y asigna la frecuencia a los empleados. | 1, 2 |
+| Recursos Humanos (general) | Personal de Recursos Humanos. Consulta el reporte de jornada, usa "Consulta Prenómina", exporta el Excel y administra el catálogo "Conceptos Prenómina". | 1, 2 |
 | Recursos Humanos de plantas | Personal de Recursos Humanos de cada planta. Consulta el reporte de jornada, pero solo ve su planta. No usa "Consulta Prenómina". | 2 |
-| Nominista | Persona del equipo de nómina que crea y cierra la prenómina de forma manual. Busca a sus empleados con filtros, asigna el turno a su personal y configura los datos que falten de un empleado. No opera la Prenómina Gasto. | 1 |
+| Nominista | Persona del equipo de nómina que crea y cierra la prenómina de forma manual. Busca a sus empleados con filtros, captura la periodicidad y el turno de su personal y configura los datos que falten de un empleado. No opera la Prenómina Gasto. | 1 |
 | Personal de Gastos | Personal que lleva la Prenómina Gasto en conjunto con Recursos Humanos. | 1 |
-| Célula de Innovación | Área de I&N que configura los permisos y la configuración del usuario de la nominista (grupos de área RH y departamentos, con sus sucursales y tipos de periodo). Es el área responsable del proyecto. | 1, 3 |
+| Célula de Innovación | Área de I&N que configura los permisos y la configuración del usuario de la nominista (grupos de área RH y departamentos, con sus sucursales y tipos de periodo). Asigna el permiso especial de visibilidad total del expediente. Es el área responsable del proyecto. | 1, 3 |
 | Líder de Célula de Innovación | Persona que valida que se cumplan todos los criterios de aceptación. | 1, 2, 3 |
 | Empleados que checan | Personal de las plantas y centros de trabajo que registra su entrada, sus comidas y su salida en los checadores físicos. | 2 |
 | Personas con permiso de InnovApp | Empleados a quienes se les asigna el permiso para checar desde el celular. | 3 |
@@ -140,7 +147,7 @@ El proyecto trabaja sobre estas entidades:
 | --- | --- | --- |
 | Prenómina | Registro, por periodo, de lo que pasó con cada empleado cada día (asistencia, incidencias y horas extra). Se crea de forma manual o automática. | Inicial: Activo (creación manual) o Cerrado (creación automática). Terminal: Cerrado. |
 | Prenómina Gasto | Módulo de prenómina que ya existe y lleva el personal de Gastos. | Ya tiene su flujo de estatus. Se cierra igual que la prenómina. |
-| Empleado (expediente) | Persona que checa. Tiene CURP, empresa, empresa RH, sucursal asignada, departamento asignado, Proceso (Área RH) y, con este proyecto, Frecuencia y Turno. | Activo o inactivo (dato que ya existe). |
+| Empleado (expediente) | Persona que checa. Tiene CURP, empresa, empresa RH, sucursal asignada, departamento asignado, Proceso (Área RH) y, con este proyecto, Periodicidad y Turno. | Activo o inactivo (dato que ya existe). |
 | Marcaje (checada) | Registro de entrada, inicio de comida, fin de comida o salida. Vive en Biostar. | No aplica. |
 | Catálogos | "Conceptos Prenómina", "Conceptos Nómina", "Periodos Nómina", "Tipo de periodo de Nómina" y catálogo de turnos. | No aplica. |
 | Solicitud de autorización de asistencia remota | Solicitud que hace una persona para que su teléfono pueda checar desde InnovApp. Se resuelve en el subproceso "Autorización Asistencia Remota", dentro del proceso "Recursos Humanos". | Inicial: Pendiente. Posteriores: Autorizada, Denegada o Revocada. |
@@ -162,7 +169,7 @@ stateDiagram-v2
 | RF | Título | Sistema | Aplica a | Entregable |
 | --- | --- | --- | --- | --- |
 | [RF-01](#rf-01--catálogos-conceptos-prenómina-y-periodos-nómina) | Catálogos "Conceptos Prenómina" y "Periodos Nómina" | Business Suite | Catálogos | 1 |
-| [RF-02](#rf-02--campos-nuevos-del-expediente-frecuencia-y-turno) | Campos nuevos del expediente: Frecuencia y Turno | Business Suite | Empleado | 1 |
+| [RF-02](#rf-02--campos-nuevos-del-expediente-periodicidad-y-turno) | Campos nuevos del expediente: Periodicidad y Turno | Business Suite | Empleado | 1 |
 | [RF-03](#rf-03--prenómina-creación-manual-por-la-nominista) | Prenómina: creación manual por la nominista | Business Suite | Prenómina | 1 |
 | [RF-04](#rf-04--horas-extra) | Horas extra | Business Suite | Prenómina y Prenómina Gasto | 1 |
 | [RF-05](#rf-05--prenómina-gasto) | Prenómina Gasto | Business Suite | Prenómina Gasto | 1 |
@@ -180,6 +187,7 @@ stateDiagram-v2
 | [RF-17](#rf-17--autorización-del-teléfono-para-checar) | Autorización del teléfono para checar | InnovApp | Empleado | 3 |
 | [RF-18](#rf-18--alternativa-y-revisión-supervisada-por-recursos-humanos) | Alternativa y revisión supervisada por Recursos Humanos | InnovApp | Marcaje | 3 |
 | [RF-19](#rf-19--configuración-del-usuario-departamentos-por-sucursal) | Configuración del usuario: Departamentos por Sucursal | Business Suite | Usuario | 1 |
+| [RF-20](#rf-20--alcance-del-listado-de-expediente-empleado) | Alcance del listado de Expediente Empleado | Business Suite | Empleado | 1 |
 
 # ENTREGABLE 1 — PRENÓMINA
 
@@ -315,7 +323,7 @@ Como nominista, quiero elegir un periodo semanal o quincenal de un catálogo, pa
 
 **Regla transversal:** estos dos catálogos los usan la Prenómina, la Prenómina Gasto y "Consulta Prenómina" (RF-03, RF-05, RF-06, RF-08 y RF-09).
 
-# RF-02 — Campos nuevos del expediente: Frecuencia y Turno
+# RF-02 — Campos nuevos del expediente: Periodicidad y Turno
 
 | Campo | Valor |
 | --- | --- |
@@ -325,21 +333,21 @@ Como nominista, quiero elegir un periodo semanal o quincenal de un catálogo, pa
 
 ## Objetivo
 
-Relacionar a cada empleado con el tipo de periodo mediante su frecuencia, saber en qué turno trabaja, y usar los datos que ya existen (área RH y departamento) para armar la prenómina.
+Relacionar a cada empleado con el tipo de periodo mediante su periodicidad, saber en qué turno trabaja, y usar los datos que ya existen (área RH y departamento) para armar la prenómina.
 
 ## Descripción
 
-El sistema deberá agregar al expediente del empleado dos campos: "Frecuencia" y "Turno". La "Frecuencia" es una lista fija con dos opciones, "Semanal" y "Quincenal" (no sale del catálogo "Tipo de periodo de Nómina"); es obligatoria, solo la asigna Recursos Humanos y es el dato que relaciona al empleado con el tipo de periodo: en la búsqueda de la prenómina y en "Consulta Prenómina" solo entran los empleados cuya frecuencia coincide con el tipo de periodo elegido. El "Turno" toma sus valores de un catálogo de turnos y lo asignan las noministas. La prenómina usa además los datos que ya existen en el expediente, el "Proceso (Área RH)" y el "Departamento asignado".
+El sistema deberá agregar al expediente del empleado dos campos: "Periodicidad" y "Turno". La "Periodicidad" es una lista fija con dos opciones, "Semanal" y "Quincenal" (no sale del catálogo "Tipo de periodo de Nómina"). La captura la nominista que tiene el permiso de edición de datos empresariales generales, y es obligatoria al guardar el expediente cuando el usuario puede editarla. Es el dato que relaciona al empleado con el tipo de periodo: en la búsqueda de la prenómina y en "Consulta Prenómina" solo entran los empleados cuya periodicidad coincide con el tipo de periodo elegido. El "Turno" toma sus valores del catálogo de turnos (solo turnos activos) y se captura con el mismo permiso. La prenómina usa además los datos que ya existen en el expediente, el "Proceso (Área RH)" y el "Departamento asignado".
 
 | Dato del expediente | ¿Es nuevo? | Descripción |
 | --- | --- | --- |
-| Turno | Sí | Turno en el que trabaja el empleado. |
-| Departamento asignado | No | Campo que ya existe. Se usa para que el empleado entre a la prenómina por departamento. |
+| Turno | Sí | Turno en el que trabaja el empleado. Sale del catálogo de turnos (solo activos). |
+| Departamento asignado | No | Campo que ya existe; en pantalla se muestra como "Depto. Asignado". Se usa para que el empleado entre a la prenómina por departamento. No es el campo de texto "Departamento Asignado", que no se usa. |
 | Proceso (Área RH) | No | Campo que ya existe. Define a qué grupo de área RH pertenece el empleado. |
 | Sucursal asignada | No | Campo que ya existe. Se muestra en la prenómina. |
-| Empresa RH | No | Es distinta de "Empresa". Se usa como filtro en "Consulta Prenómina". |
-| Empresa | No | Ya no se usa para cargar empleados en la prenómina. |
-| Frecuencia | Sí | Lista fija con "Semanal" y "Quincenal". Es obligatoria y relaciona al empleado con el tipo de periodo. |
+| Empresa RH | No | Es distinta de "Empresa" y se elige por separado, sin depender de la sucursal ni de la empresa. Se usa como filtro en "Consulta Prenómina". |
+| Empresa | No | Se obtiene de la sucursal asignada. Ya no se usa para cargar empleados en la prenómina. |
+| Periodicidad | Sí | Lista fija con "Semanal" y "Quincenal". Obligatoria para quien tiene el permiso de edición. Relaciona al empleado con el tipo de periodo. |
 
 ## HU-2.1 — Usar los datos del expediente que ya existen
 
@@ -349,28 +357,38 @@ Como nominista, quiero que la prenómina use el área RH y el departamento que y
 
 **RN-2.1** No se agrega un campo "Proceso" nuevo al expediente. La prenómina usa el "Proceso (Área RH)" y el "Departamento asignado", que ya existen.
 
-**RN-2.2** Un empleado entra a la prenómina por grupo si tiene alguna de las áreas RH del grupo, y por departamento si tiene ese departamento asignado; en los dos casos, además, su frecuencia debe coincidir con el tipo de periodo elegido.
+**RN-2.2** Un empleado entra a la prenómina por grupo si tiene alguna de las áreas RH del grupo, y por departamento si tiene ese departamento asignado; en los dos casos, además, su periodicidad debe coincidir con el tipo de periodo elegido.
 
-**RN-2.3** La sucursal, la empresa y la empresa RH son datos independientes del expediente y no se relacionan entre sí.
+**RN-2.3** La empresa del expediente se obtiene de la sucursal asignada: al elegir la sucursal, la empresa toma la de esa sucursal. La empresa RH es independiente de la sucursal y de la empresa, y se elige por separado.
+
+**RN-2.4** Cada cambio al Proceso (Área RH), turno, periodicidad, departamento, sucursal o empresa del expediente se registra en la bitácora del empleado con el valor anterior.
 
 ### Criterios de Aceptación
 
 **CA-2.1.1 — Sin campo "Proceso" nuevo** Dado que se abre el expediente de un empleado Cuando se revisan sus campos Entonces no existe un campo "Proceso" nuevo, y la prenómina usa "Proceso (Área RH)" y "Departamento asignado".
 
-**CA-2.1.2 — Entrar por grupo o por departamento** Dado que un empleado tiene un área RH que pertenece a un grupo y un departamento asignado Cuando la nominista busca por ese grupo o por ese departamento Entonces el empleado puede aparecer en cualquiera de las dos búsquedas, si su frecuencia coincide con el tipo de periodo.
+**CA-2.1.2 — Entrar por grupo o por departamento** Dado que un empleado tiene un área RH que pertenece a un grupo y un departamento asignado Cuando la nominista busca por ese grupo o por ese departamento Entonces el empleado puede aparecer en cualquiera de las dos búsquedas, si su periodicidad coincide con el tipo de periodo.
+
+**CA-2.1.3 — Cambios en la bitácora** Dado que una persona con permiso cambia el turno, la periodicidad, el departamento, la sucursal o el Proceso (Área RH) de un empleado Cuando guarda el expediente Entonces la bitácora registra el cambio con el valor anterior.
 
 ### Casos de prueba
 
 **CP-2.1.1 — No hay un campo "Proceso" nuevo (validación)** Verifica: CA-2.1.1 · RN-2.1 Dado que se abre el expediente de un empleado Cuando se revisan sus campos Entonces solo existen "Proceso (Área RH)" y "Departamento asignado".
 
-**CP-2.1.2 — Entra por grupo (camino feliz)** Verifica: CA-2.1.2 · RN-2.2 Dado que el área RH de Luis pertenece al grupo "Operación" y su frecuencia es "Semanal" Cuando Ana busca por el grupo "Operación" con el tipo "Semanal" Entonces Luis aparece.
+**CP-2.1.2 — Entra por grupo (camino feliz)** Verifica: CA-2.1.2 · RN-2.2 Dado que el área RH de Luis pertenece al grupo "Operación" y su periodicidad es "Semanal" Cuando Ana busca por el grupo "Operación" con el tipo "Semanal" Entonces Luis aparece.
 
-**CP-2.1.3 — Entra por departamento (camino feliz)** Verifica: CA-2.1.2 · RN-2.2 Dado que Luis tiene el departamento "Producción" y la frecuencia "Semanal" Cuando Ana busca por el departamento "Producción" con el tipo "Semanal" Entonces Luis aparece.
+**CP-2.1.3 — Entra por departamento (camino feliz)** Verifica: CA-2.1.2 · RN-2.2 Dado que Luis tiene el departamento "Producción" y la periodicidad "Semanal" Cuando Ana busca por el departamento "Producción" con el tipo "Semanal" Entonces Luis aparece.
+
+**CP-2.1.4 — Cambio registrado en la bitácora (camino feliz)** Verifica: CA-2.1.3 · RN-2.4 Dado que la periodicidad de Luis es "Semanal" Cuando Ana la cambia a "Quincenal" y guarda Entonces la bitácora de Luis muestra que se actualizó la periodicidad de nómina y que la anterior era "Semanal".
+
+**CP-2.1.5 — La sucursal define la empresa (validación)** Verifica: RN-2.3 Dado que la sucursal "Norte" pertenece a la empresa "Empresa A" Cuando Ana asigna la sucursal "Norte" a un empleado Entonces la empresa del expediente queda en "Empresa A" y la empresa RH no cambia.
 
 | CA | Caso(s) de prueba | Escenarios cubiertos |
 | --- | --- | --- |
 | CA-2.1.1 | CP-2.1.1 | Validación |
 | CA-2.1.2 | CP-2.1.2, CP-2.1.3 | Camino feliz |
+| CA-2.1.3 | CP-2.1.4 | Camino feliz |
+| RN-2.3 (sin CA propio) | CP-2.1.5 | Validación |
 
 ## HU-2.2 — Asignar el turno a mi personal
 
@@ -378,7 +396,7 @@ Como nominista, quiero asignar el turno en el que trabaja cada empleado desde un
 
 ### Reglas de negocio
 
-**RN-2.5** El campo "Turno" del expediente define el turno en el que trabaja el personal. Sus valores salen de un catálogo de turnos y lo capturan las noministas.
+**RN-2.5** El campo "Turno" del expediente define el turno en el que trabaja el personal. Sus valores salen del catálogo de turnos (solo turnos activos) y lo captura quien tiene el permiso de edición de datos empresariales generales, normalmente la nominista.
 
 **RN-2.6** El turno del expediente y el turno de Biostar deberían coincidir, pero se registran al personal de manera independiente. El sistema no los compara.
 
@@ -386,15 +404,15 @@ Como nominista, quiero asignar el turno en el que trabaja cada empleado desde un
 
 **CA-2.2.1 — Asignar el turno** Dado que una nominista abre el expediente de un empleado Cuando elige el turno en el que trabaja y guarda Entonces el turno queda asignado al empleado.
 
-**CA-2.2.2 — Solo turnos del catálogo** Dado que existe un catálogo de turnos Cuando la nominista abre el campo "Turno" Entonces solo ve los turnos de ese catálogo.
+**CA-2.2.2 — Solo turnos del catálogo** Dado que existe un catálogo de turnos Cuando la nominista abre el campo "Turno" Entonces solo ve los turnos activos de ese catálogo.
 
 ### Casos de prueba
 
 **CP-2.2.1 — Asignar un turno (camino feliz)** Verifica: CA-2.2.1 Dado que el catálogo tiene el turno "Nocturno" Cuando la nominista lo elige para un empleado y guarda Entonces el expediente muestra "Nocturno".
 
-**CP-2.2.2 — Lista de turnos (validación)** Verifica: CA-2.2.2 · RN-2.5 Dado que el catálogo tiene tres turnos Cuando la nominista abre el campo "Turno" Entonces ve esos tres turnos y ningún otro.
+**CP-2.2.2 — Lista de turnos (validación)** Verifica: CA-2.2.2 · RN-2.5 Dado que el catálogo tiene tres turnos activos y uno inactivo Cuando la nominista abre el campo "Turno" Entonces ve los tres turnos activos y ningún otro.
 
-**CP-2.2.3 — Persona que no es nominista no asigna turnos (permisos)** Verifica: CA-2.2.1 · RN-2.5 Dado que una persona sin rol de nominista abre un expediente Cuando intenta cambiar el turno Entonces el sistema no se lo permite.
+**CP-2.2.3 — Persona sin permiso no asigna turnos (permisos)** Verifica: CA-2.2.1 · RN-2.5 Dado que una persona sin el permiso de edición de datos empresariales generales abre un expediente Cuando intenta cambiar el turno Entonces el sistema no se lo permite.
 
 **CP-2.2.4 — Turno distinto al de Biostar (alternativo)** Verifica: CA-2.2.1 · RN-2.6 Dado que el turno del expediente es "Nocturno" y en Biostar es "Matutino" Cuando la nominista guarda el expediente Entonces el sistema lo guarda sin compararlos.
 
@@ -403,51 +421,51 @@ Como nominista, quiero asignar el turno en el que trabaja cada empleado desde un
 | CA-2.2.1 | CP-2.2.1, CP-2.2.3, CP-2.2.4 | Camino feliz, Permisos, Alternativo |
 | CA-2.2.2 | CP-2.2.2 | Validación |
 
-## HU-2.3 — Mantener la frecuencia en el expediente
+## HU-2.3 — Mantener la periodicidad en el expediente
 
-Como Recursos Humanos, quiero registrar la frecuencia de cada empleado en su expediente, para que la prenómina lo relacione con el tipo de periodo.
+Como nominista, quiero registrar la periodicidad de cada empleado en su expediente, para que la prenómina lo relacione con el tipo de periodo.
 
 ### Reglas de negocio
 
-**RN-2.7** El campo "Frecuencia" del expediente es una lista fija con dos opciones: "Semanal" y "Quincenal". No sale del catálogo "Tipo de periodo de Nómina".
+**RN-2.7** El campo "Periodicidad" del expediente es una lista fija con dos opciones: "Semanal" y "Quincenal". No sale del catálogo "Tipo de periodo de Nómina".
 
-**RN-2.8** Solo Recursos Humanos asigna la frecuencia. Es obligatoria: todo el personal debe tener frecuencia antes del arranque.
+**RN-2.8** La periodicidad la captura quien tiene el permiso de edición de datos empresariales generales (la nominista), igual que el turno. Es obligatoria cuando el usuario puede editarla: el sistema la exige al guardar el expediente. Todo el personal debe tener periodicidad antes del arranque.
 
-**RN-2.9** La frecuencia relaciona al empleado con el tipo de periodo: en la búsqueda de la prenómina y en "Consulta Prenómina" solo entran los empleados cuya frecuencia coincide con el tipo de periodo elegido. La coincidencia es por valor ("Semanal" con "Semanal" y "Quincenal" con "Quincenal").
+**RN-2.9** La periodicidad relaciona al empleado con el tipo de periodo: en la búsqueda de la prenómina y en "Consulta Prenómina" solo entran los empleados cuya periodicidad coincide con el tipo de periodo elegido. La coincidencia es por valor ("Semanal" con "Semanal" y "Quincenal" con "Quincenal").
 
-**RN-2.10** Un empleado sin frecuencia no aparece en esas búsquedas.
+**RN-2.10** Un empleado sin periodicidad no aparece en esas búsquedas.
 
 ### Criterios de Aceptación
 
-**CA-2.3.1 — Opciones de la frecuencia** Dado que se abre el campo "Frecuencia" en el expediente de un empleado Cuando se despliega la lista Entonces se ven solo las opciones "Semanal" y "Quincenal".
+**CA-2.3.1 — Opciones de la periodicidad** Dado que se abre el campo "Periodicidad" en el expediente de un empleado Cuando se despliega la lista Entonces se ven solo las opciones "Semanal" y "Quincenal".
 
-**CA-2.3.2 — Guardar la frecuencia** Dado que Recursos Humanos eligió una frecuencia para un empleado Cuando guarda el expediente Entonces la frecuencia queda registrada en el expediente.
+**CA-2.3.2 — Guardar la periodicidad** Dado que la nominista eligió una periodicidad para un empleado Cuando guarda el expediente Entonces la periodicidad queda registrada en el expediente.
 
-**CA-2.3.3 — Frecuencia obligatoria** Dado que un empleado no tiene frecuencia Cuando Recursos Humanos intenta guardar su expediente Entonces el sistema pide la frecuencia.
+**CA-2.3.3 — Periodicidad obligatoria para quien edita** Dado que un empleado no tiene periodicidad y quien edita su expediente tiene el permiso de edición de datos empresariales generales Cuando intenta guardar el expediente Entonces el sistema pide la periodicidad.
 
-**CA-2.3.4 — Solo Recursos Humanos** Dado que una persona no es de Recursos Humanos Cuando intenta cambiar la frecuencia de un empleado Entonces el sistema no se lo permite.
+**CA-2.3.4 — Solo con el permiso** Dado que una persona no tiene el permiso de edición de datos empresariales generales Cuando intenta cambiar la periodicidad de un empleado Entonces el sistema no se lo permite.
 
-**CA-2.3.5 — Empleado con la frecuencia que coincide** Dado que la nominista busca por el tipo de periodo "Semanal" Cuando se cargan los empleados Entonces aparecen los empleados con frecuencia "Semanal" que cumplen los demás filtros.
+**CA-2.3.5 — Empleado con la periodicidad que coincide** Dado que la nominista busca por el tipo de periodo "Semanal" Cuando se cargan los empleados Entonces aparecen los empleados con periodicidad "Semanal" que cumplen los demás filtros.
 
-**CA-2.3.6 — Empleado con otra frecuencia o sin ella** Dado que un empleado tiene otra frecuencia o no tiene frecuencia Cuando la nominista busca por un tipo de periodo distinto Entonces ese empleado no aparece.
+**CA-2.3.6 — Empleado con otra periodicidad o sin ella** Dado que un empleado tiene otra periodicidad o no tiene periodicidad Cuando la nominista busca por un tipo de periodo distinto Entonces ese empleado no aparece.
 
 ### Casos de prueba
 
-**CP-2.3.1 — Ver las opciones (camino feliz)** Verifica: CA-2.3.1 · RN-2.7 Dado que Recursos Humanos abre el expediente de un empleado Cuando despliega el campo "Frecuencia" Entonces ve "Semanal" y "Quincenal".
+**CP-2.3.1 — Ver las opciones (camino feliz)** Verifica: CA-2.3.1 · RN-2.7 Dado que la nominista abre el expediente de un empleado Cuando despliega el campo "Periodicidad" Entonces ve "Semanal" y "Quincenal".
 
-**CP-2.3.2 — Solo dos opciones (validación)** Verifica: CA-2.3.1 · RN-2.7 Dado que se despliega el campo "Frecuencia" Cuando se intenta escribir un valor distinto Entonces no se puede: solo se elige entre las dos opciones.
+**CP-2.3.2 — Solo dos opciones (validación)** Verifica: CA-2.3.1 · RN-2.7 Dado que se despliega el campo "Periodicidad" Cuando se intenta escribir un valor distinto Entonces no se puede: solo se elige entre las dos opciones.
 
-**CP-2.3.3 — Guardar la frecuencia (camino feliz)** Verifica: CA-2.3.2 · RN-2.8 Dado que Recursos Humanos eligió "Quincenal" para un empleado Cuando guarda el expediente Entonces el expediente muestra "Quincenal".
+**CP-2.3.3 — Guardar la periodicidad (camino feliz)** Verifica: CA-2.3.2 · RN-2.8 Dado que la nominista eligió "Quincenal" para un empleado Cuando guarda el expediente Entonces el expediente muestra "Quincenal".
 
-**CP-2.3.4 — Falta la frecuencia (error)** Verifica: CA-2.3.3 · RN-2.8 Dado que un empleado no tiene frecuencia Cuando Recursos Humanos intenta guardar su expediente Entonces el sistema pide la frecuencia.
+**CP-2.3.4 — Falta la periodicidad (error)** Verifica: CA-2.3.3 · RN-2.8 Dado que un empleado no tiene periodicidad y la nominista tiene el permiso de edición Cuando actualiza otro dato del expediente e intenta guardar Entonces el sistema pide la periodicidad.
 
-**CP-2.3.5 — Persona de otra área no asigna la frecuencia (permisos)** Verifica: CA-2.3.4 · RN-2.8 Dado que una nominista abre el expediente de un empleado Cuando intenta cambiar la frecuencia Entonces el sistema no se lo permite.
+**CP-2.3.5 — Persona sin permiso no cambia la periodicidad (permisos)** Verifica: CA-2.3.4 · RN-2.8 Dado que una persona sin el permiso de edición de datos empresariales generales abre el expediente de un empleado Cuando intenta cambiar la periodicidad Entonces el sistema no se lo permite.
 
-**CP-2.3.6 — Coincide con el tipo de periodo (camino feliz)** Verifica: CA-2.3.5 · RN-2.9 Dado que el empleado 1001 tiene frecuencia "Semanal" y está en el departamento "Producción" Cuando Ana busca "Producción" con el tipo "Semanal" Entonces el empleado 1001 aparece.
+**CP-2.3.6 — Coincide con el tipo de periodo (camino feliz)** Verifica: CA-2.3.5 · RN-2.9 Dado que el empleado 1001 tiene periodicidad "Semanal" y está en el departamento "Producción" Cuando Ana busca "Producción" con el tipo "Semanal" Entonces el empleado 1001 aparece.
 
-**CP-2.3.7 — No coincide con el tipo de periodo (validación)** Verifica: CA-2.3.6 · RN-2.9 Dado que el empleado 1002 tiene frecuencia "Quincenal" y está en "Producción" Cuando Ana busca "Producción" con el tipo "Semanal" Entonces el empleado 1002 no aparece.
+**CP-2.3.7 — No coincide con el tipo de periodo (validación)** Verifica: CA-2.3.6 · RN-2.9 Dado que el empleado 1002 tiene periodicidad "Quincenal" y está en "Producción" Cuando Ana busca "Producción" con el tipo "Semanal" Entonces el empleado 1002 no aparece.
 
-**CP-2.3.8 — Empleado sin frecuencia (validación)** Verifica: CA-2.3.6 · RN-2.10 Dado que un empleado de "Producción" no tiene frecuencia Cuando Ana busca "Producción" Entonces ese empleado no aparece.
+**CP-2.3.8 — Empleado sin periodicidad (validación)** Verifica: CA-2.3.6 · RN-2.10 Dado que un empleado de "Producción" no tiene periodicidad Cuando Ana busca "Producción" Entonces ese empleado no aparece.
 
 | CA | Caso(s) de prueba | Escenarios cubiertos |
 | --- | --- | --- |
@@ -460,7 +478,7 @@ Como Recursos Humanos, quiero registrar la frecuencia de cada empleado en su exp
 
 ---
 
-**Regla transversal:** el "Proceso (Área RH)" (para pertenecer a un grupo) y el departamento asignado y la frecuencia del expediente se usan para buscar a los empleados en la prenómina (RF-03). El turno y la sucursal se muestran en ella.
+**Regla transversal:** el "Proceso (Área RH)" (para pertenecer a un grupo) y el departamento asignado y la periodicidad del expediente se usan para buscar a los empleados en la prenómina (RF-03). El turno y la sucursal se muestran en ella.
 
 # RF-03 — Prenómina: creación manual por la nominista
 
@@ -597,7 +615,7 @@ Como nominista, quiero buscar a mis empleados con filtros y el botón Buscar, pa
 
 **RN-3.22** El tipo de periodo sale del catálogo "Tipo de periodo de Nómina". Con un grupo se llena solo desde su configuración y no se cambia; con un departamento, muestra los tipos configurados para esa sucursal y ese departamento, y si hay más de uno la nominista elige. El periodo muestra solo los del tipo elegido; si cambia el tipo, el periodo se vacía.
 
-**RN-3.23** Con un grupo entran los empleados que tienen alguna de las áreas RH del grupo; con un departamento, los empleados de ese departamento. En los dos casos solo entran los empleados cuya frecuencia coincide con el tipo de periodo elegido.
+**RN-3.23** Con un grupo entran los empleados que tienen alguna de las áreas RH del grupo; con un departamento, los empleados de ese departamento. En los dos casos solo entran los empleados cuya periodicidad coincide con el tipo de periodo elegido.
 
 **RN-3.24** No aparecen en la búsqueda los empleados que ya están en otra prenómina activa o en una cerrada del mismo periodo. Sí aparecen los empleados dados de baja o inactivos.
 
@@ -623,9 +641,9 @@ Como nominista, quiero buscar a mis empleados con filtros y el botón Buscar, pa
 
 **CA-3.3.7 — Campos obligatorios** Dado que falta la sucursal, el grupo o el departamento, el tipo de periodo o el periodo Cuando presiona Buscar Entonces el sistema no busca y señala los campos obligatorios.
 
-**CA-3.3.8 — Empleados de un grupo** Dado que la nominista busca por un grupo de área RH Cuando se cargan los empleados Entonces aparecen los que tienen alguna de las áreas RH del grupo y cuya frecuencia coincide con el tipo de periodo.
+**CA-3.3.8 — Empleados de un grupo** Dado que la nominista busca por un grupo de área RH Cuando se cargan los empleados Entonces aparecen los que tienen alguna de las áreas RH del grupo y cuya periodicidad coincide con el tipo de periodo.
 
-**CA-3.3.9 — Empleados de un departamento** Dado que la nominista busca por un departamento Cuando se cargan los empleados Entonces aparecen los empleados de ese departamento cuya frecuencia coincide con el tipo de periodo elegido.
+**CA-3.3.9 — Empleados de un departamento** Dado que la nominista busca por un departamento Cuando se cargan los empleados Entonces aparecen los empleados de ese departamento cuya periodicidad coincide con el tipo de periodo elegido.
 
 **CA-3.3.10 — Empleados que no aparecen** Dado que un empleado ya está en otra prenómina activa o en una cerrada del mismo periodo Cuando la nominista busca Entonces ese empleado no aparece en el resultado.
 
@@ -643,9 +661,9 @@ Como nominista, quiero buscar a mis empleados con filtros y el botón Buscar, pa
 
 ### Casos de prueba
 
-**CP-3.3.1 — Búsqueda por grupo (camino feliz)** Verifica: CA-3.3.1 · RN-3.7 Dado que Ana eligió la sucursal "Norte", el grupo "Operación", el tipo "Semanal" y la semana 41, y hay 10 empleados de ese grupo con frecuencia "Semanal" Cuando presiona Buscar Entonces aparecen esos 10 empleados.
+**CP-3.3.1 — Búsqueda por grupo (camino feliz)** Verifica: CA-3.3.1 · RN-3.7 Dado que Ana eligió la sucursal "Norte", el grupo "Operación", el tipo "Semanal" y la semana 41, y hay 10 empleados de ese grupo con periodicidad "Semanal" Cuando presiona Buscar Entonces aparecen esos 10 empleados.
 
-**CP-3.3.2 — Búsqueda por departamento (camino feliz)** Verifica: CA-3.3.1 · RN-3.7 Dado que Ana eligió la sucursal "Norte", el departamento "Producción", el tipo "Semanal" y la semana 41 Cuando presiona Buscar Entonces aparecen todos los empleados de "Producción" con frecuencia "Semanal".
+**CP-3.3.2 — Búsqueda por departamento (camino feliz)** Verifica: CA-3.3.1 · RN-3.7 Dado que Ana eligió la sucursal "Norte", el departamento "Producción", el tipo "Semanal" y la semana 41 Cuando presiona Buscar Entonces aparecen todos los empleados de "Producción" con periodicidad "Semanal".
 
 **CP-3.3.3 — Grupo y departamento a la vez (error)** Verifica: CA-3.3.2 · RN-3.20 Dado que Ana eligió el grupo "Operación" Cuando intenta elegir también el departamento "Producción" Entonces el sistema no lo permite.
 
@@ -663,9 +681,9 @@ Como nominista, quiero buscar a mis empleados con filtros y el botón Buscar, pa
 
 **CP-3.3.10 — Falta un campo obligatorio (error)** Verifica: CA-3.3.7 · RN-3.20 Dado que Ana no eligió la sucursal Cuando presiona Buscar Entonces no se busca y se señala que la sucursal es obligatoria.
 
-**CP-3.3.11 — Entran los del grupo (validación)** Verifica: CA-3.3.8 · RN-3.23 Dado que el grupo "Operación" tiene las áreas "Empaque" y "Surtido" Cuando Ana busca por ese grupo Entonces aparecen los empleados de "Empaque" y de "Surtido" con frecuencia "Semanal", y ningún otro.
+**CP-3.3.11 — Entran los del grupo (validación)** Verifica: CA-3.3.8 · RN-3.23 Dado que el grupo "Operación" tiene las áreas "Empaque" y "Surtido" Cuando Ana busca por ese grupo Entonces aparecen los empleados de "Empaque" y de "Surtido" con periodicidad "Semanal", y ningún otro.
 
-**CP-3.3.12 — Solo entran los que coinciden con el tipo de periodo (validación)** Verifica: CA-3.3.9 · RN-3.23 Dado que un empleado de "Producción" tiene la frecuencia "Quincenal" y Ana busca el tipo "Semanal" Cuando presiona Buscar Entonces ese empleado no aparece.
+**CP-3.3.12 — Solo entran los que coinciden con el tipo de periodo (validación)** Verifica: CA-3.3.9 · RN-3.23 Dado que un empleado de "Producción" tiene la periodicidad "Quincenal" y Ana busca el tipo "Semanal" Cuando presiona Buscar Entonces ese empleado no aparece.
 
 **CP-3.3.13 — Empleado ya en otra prenómina (validación)** Verifica: CA-3.3.10 · RN-3.24 Dado que un empleado ya está en una prenómina de la semana 41 Cuando Ana busca la semana 41 Entonces ese empleado no aparece.
 
@@ -745,9 +763,9 @@ Como nominista, quiero agregar empleados que faltan y quitar a los que no corres
 
 **RN-3.12** Al agregar un empleado aplica la validación de empleado duplicado (RF-07).
 
-**RN-3.13** Los empleados que no cumplen los filtros de la búsqueda (incluida su frecuencia) no se muestran para agregar y no se muestra ningún mensaje.
+**RN-3.13** Los empleados que no cumplen los filtros de la búsqueda (incluida su periodicidad) no se muestran para agregar y no se muestra ningún mensaje.
 
-**RN-3.14** Si a un empleado le falta algún dato, no aparece en el listado hasta que se configure; la frecuencia la asigna Recursos Humanos.
+**RN-3.14** Si a un empleado le falta algún dato, no aparece en el listado hasta que se configure; la periodicidad la captura la nominista.
 
 **RN-3.15** La Prenómina Gasto ya cuenta con la funcionalidad de agregar y quitar empleados.
 
@@ -759,13 +777,13 @@ Como nominista, quiero agregar empleados que faltan y quitar a los que no corres
 
 **CA-3.5.3 — Quitar un empleado** Dado que la prenómina está Activo Cuando la nominista quita un empleado del listado Entonces el empleado deja de formar parte de esa prenómina.
 
-**CA-3.5.4 — Dato faltante** Dado que a un empleado le falta algún dato necesario Cuando se intenta agregarlo Entonces no aparece en el listado hasta que se configure ese dato (la frecuencia la asigna Recursos Humanos).
+**CA-3.5.4 — Dato faltante** Dado que a un empleado le falta algún dato necesario Cuando se intenta agregarlo Entonces no aparece en el listado hasta que se configure ese dato (la periodicidad la captura la nominista).
 
 **CA-3.5.5 — Prenómina cerrada** Dado que la prenómina está cerrada Cuando se intenta agregar o quitar un empleado Entonces el sistema no lo permite.
 
 ### Casos de prueba
 
-**CP-3.5.1 — Agregar un empleado válido (camino feliz)** Verifica: CA-3.5.1 · RN-3.11 Dado que una prenómina Activo del departamento "Producción", sucursal "Norte" y tipo "Semanal", y un empleado de "Producción" con frecuencia "Semanal" que no está en ella Cuando Ana abre la opción de agregar y lo marca Entonces el empleado queda en la prenómina.
+**CP-3.5.1 — Agregar un empleado válido (camino feliz)** Verifica: CA-3.5.1 · RN-3.11 Dado que una prenómina Activo del departamento "Producción", sucursal "Norte" y tipo "Semanal", y un empleado de "Producción" con periodicidad "Semanal" que no está en ella Cuando Ana abre la opción de agregar y lo marca Entonces el empleado queda en la prenómina.
 
 **CP-3.5.2 — Empleado de otro departamento no aparece (validación)** Verifica: CA-3.5.2 · RN-3.13 Dado que un empleado de un departamento que Ana no tiene configurado Cuando Ana abre el listado para agregar Entonces no lo ve y no aparece ningún mensaje.
 
@@ -773,7 +791,7 @@ Como nominista, quiero agregar empleados que faltan y quitar a los que no corres
 
 **CP-3.5.4 — Quitar un empleado (camino feliz)** Verifica: CA-3.5.3 Dado que una prenómina activa con 10 empleados Cuando Ana quita a uno Entonces la prenómina queda con 9 empleados.
 
-**CP-3.5.5 — Empleado con otra frecuencia o sin ella (validación)** Verifica: CA-3.5.4 · RN-3.14 Dado que un empleado de "Producción" tiene la frecuencia "Quincenal" o no tiene frecuencia, y la prenómina es de tipo "Semanal" Cuando Ana abre el listado para agregar Entonces ese empleado no aparece.
+**CP-3.5.5 — Empleado con otra periodicidad o sin ella (validación)** Verifica: CA-3.5.4 · RN-3.14 Dado que un empleado de "Producción" tiene la periodicidad "Quincenal" o no tiene periodicidad, y la prenómina es de tipo "Semanal" Cuando Ana abre el listado para agregar Entonces ese empleado no aparece.
 
 **CP-3.5.6 — Prenómina cerrada no cambia (error)** Verifica: CA-3.5.5 Dado que una prenómina cerrada Cuando Ana intenta agregar o quitar un empleado Entonces el sistema no lo permite.
 
@@ -799,7 +817,7 @@ Como nominista, quiero ajustar el detalle mientras esté Activo y cerrarla cuand
 
 **RN-3.28** Mientras la prenómina esté Activo se pueden cambiar los filtros de la búsqueda y todos los valores. Una vez cerrada, no se puede modificar nada, ni los filtros.
 
-**RN-3.29** Al cerrar, el sistema revisa si faltan empleados que cumplen los filtros de la prenómina (incluida su frecuencia) y que no están en ella ni en otra prenómina del mismo periodo. Si faltan, avisa: "Faltan N empleados que cumplen los filtros. ¿Deseas cerrar así o agregarlos?", con Cerrar así y Agregar. Con Agregar se abre el listado de esos empleados para marcar los que quiera, y después captura sus incidencias u horas extra; con Cerrar así, la prenómina se cierra sin ellos.
+**RN-3.29** Al cerrar, el sistema revisa si faltan empleados que cumplen los filtros de la prenómina (incluida su periodicidad) y que no están en ella ni en otra prenómina del mismo periodo. Si faltan, avisa: "Faltan N empleados que cumplen los filtros. ¿Deseas cerrar así o agregarlos?", con Cerrar así y Agregar. Con Agregar se abre el listado de esos empleados para marcar los que quiera, y después captura sus incidencias u horas extra; con Cerrar así, la prenómina se cierra sin ellos.
 
 ### Criterios de Aceptación
 
@@ -837,7 +855,7 @@ Como nominista, quiero ajustar el detalle mientras esté Activo y cerrarla cuand
 
 **CP-3.6.7 — Filtros bloqueados con la prenómina cerrada (error)** Verifica: CA-3.6.5 · RN-3.28 Dado que la prenómina de Ana está cerrada Cuando intenta cambiar un filtro Entonces el sistema no lo permite.
 
-**CP-3.6.8 — Aviso de faltantes (camino feliz)** Verifica: CA-3.6.6 · RN-3.29 Dado que faltan 3 empleados del departamento "Producción", con frecuencia "Semanal", que no están en ninguna prenómina de la semana 41 Cuando Ana intenta cerrar Entonces ve "Faltan 3 empleados que cumplen los filtros. ¿Deseas cerrar así o agregarlos?"
+**CP-3.6.8 — Aviso de faltantes (camino feliz)** Verifica: CA-3.6.6 · RN-3.29 Dado que faltan 3 empleados del departamento "Producción", con periodicidad "Semanal", que no están en ninguna prenómina de la semana 41 Cuando Ana intenta cerrar Entonces ve "Faltan 3 empleados que cumplen los filtros. ¿Deseas cerrar así o agregarlos?"
 
 **CP-3.6.9 — Agregar los faltantes (alternativo)** Verifica: CA-3.6.7 · RN-3.29 Dado que Ana ve el aviso de faltantes Cuando elige Agregar y marca 2 de los 3 Entonces esos 2 quedan en la prenómina para capturar sus incidencias.
 
@@ -1042,7 +1060,7 @@ Que la prenómina se cree sola, ya cerrada y con los conceptos que entiende Cont
 
 ## Descripción
 
-El sistema deberá crear de manera automática una prenómina, en el módulo "Prenómina", cuando se cierre la Prenómina Gasto. La prenómina nace con estatus "Cerrado", hereda el periodo de la Prenómina Gasto, trae las horas extra tal cual y usa los conceptos de "Conceptos Prenómina" que estén ligados a los "Conceptos Nómina" usados. Como nace cerrada, no se puede modificar. Para que esto funcione, los "Conceptos Nómina" deben estar ligados previamente en "Conceptos Prenómina", y el sistema lo valida al cerrar la Prenómina Gasto para evitar detalles en la prenómina.
+El sistema deberá crear de manera automática una prenómina, en el módulo "Prenómina", cuando se cierre la Prenómina Gasto. La prenómina nace con estatus "Cerrado", hereda el periodo de la Prenómina Gasto, trae las horas extra tal cual y usa los conceptos de "Conceptos Prenómina" que estén ligados a los "Conceptos Nómina" usados. Como nace cerrada, no se puede modificar. Para que esto funcione, los "Conceptos Nómina" deben estar ligados previamente en "Conceptos Prenómina", y el sistema lo valida al cerrar la Prenómina Gasto para evitar detalles en la prenómina. Además, al intentar cerrarla valida que cada empleado incluido tenga sucursal asignada, turno y área RH; si falta algún dato o algún concepto no está relacionado, la Prenómina Gasto no se cierra.
 
 ## HU-6.1 — Crear la prenómina al cerrar la Prenómina Gasto
 
@@ -1097,7 +1115,7 @@ Como Recursos Humanos, quiero que el sistema revise que cada concepto usado teng
 
 **RN-6.5** Para crear la prenómina de forma automática, los "Conceptos Nómina" usados en la "Prenómina Gasto" deben estar ligados previamente en el catálogo "Conceptos Prenómina".
 
-**RN-6.6** Al cerrar la "Prenómina Gasto" se valida que todos los conceptos usados tengan un concepto ligado, para evitar detalles en la prenómina.
+**RN-6.6** Al cerrar la "Prenómina Gasto" se valida que todos los conceptos usados tengan un concepto ligado, para evitar detalles en la prenómina. Si alguno no está ligado, no se cierra (RN-6.11).
 
 ### Criterios de Aceptación
 
@@ -1148,6 +1166,68 @@ Como Recursos Humanos, quiero que cada prenómina automática quede ligada a la 
 ---
 
 **Regla transversal:** la creación automática aplica también la validación de empleado duplicado (RF-07).
+
+## HU-6.4 — Validar los datos al cerrar la Prenómina Gasto
+
+Como Gastos, quiero que el sistema revise los datos de los empleados y los conceptos antes de cerrar la Prenómina Gasto, para que la prenómina automática se cree completa.
+
+### Reglas de negocio
+
+**RN-6.9** Al intentar cerrar la Prenómina Gasto, el sistema revisa a cada empleado incluido en ella: debe tener sucursal asignada, turno y área RH ("Proceso (Área RH)"). La revisión comprueba que cada dato tenga un valor.
+
+**RN-6.10** Al intentar cerrar, el sistema también revisa que cada concepto de "Conceptos Nómina" usado esté relacionado con un concepto de "Conceptos Prenómina".
+
+**RN-6.11** Si algún empleado tiene un dato incompleto o algún concepto no está relacionado, la Prenómina Gasto no se cierra y sigue Activo. Las dos revisiones se hacen juntas y el aviso lista todo lo que falta: "No se puede cerrar la Prenómina Gasto. Estos empleados tienen datos incompletos: \[nombre, número de nómina y dato que falta\]." y "No se puede cerrar la Prenómina Gasto. Estos conceptos no están relacionados con un concepto de prenómina: \[conceptos\]." (textos por defecto; UI-UX puede cambiarlos).
+
+**RN-6.12** Para poder cerrar, se corrigen los datos en el expediente del empleado o la relación en el catálogo "Conceptos Prenómina" y se vuelve a intentar el cierre.
+
+**RN-6.13** Esta revisión aplica solo al cierre de la Prenómina Gasto. No cambia la prenómina manual, en la que los empleados sin área RH entran por departamento.
+
+### Criterios de Aceptación
+
+**CA-6.4.1 — Empleados con datos completos** Dado que todos los empleados de la Prenómina Gasto tienen sucursal asignada, turno y área RH Cuando Gastos intenta cerrarla Entonces la revisión de empleados se cumple.
+
+**CA-6.4.2 — Dato faltante en un empleado** Dado que un empleado de la Prenómina Gasto no tiene sucursal asignada, turno o área RH Cuando Gastos intenta cerrarla Entonces no se cierra y la Prenómina Gasto sigue Activo.
+
+**CA-6.4.3 — Concepto sin relación** Dado que un concepto de "Conceptos Nómina" usado no está relacionado con un concepto de prenómina Cuando Gastos intenta cerrar la Prenómina Gasto Entonces no se cierra.
+
+**CA-6.4.4 — Todo completo** Dado que los empleados tienen sus datos y todos los conceptos están relacionados Cuando Gastos cierra la Prenómina Gasto Entonces se cierra y se crea la prenómina automática.
+
+**CA-6.4.5 — Aviso con todo lo que falta** Dado que hay empleados con datos incompletos y conceptos sin relación Cuando Gastos intenta cerrar Entonces ve las dos listas en el mismo aviso, con el nombre y el número de nómina de cada empleado y el dato que falta.
+
+**CA-6.4.6 — Corregir y volver a cerrar** Dado que la Prenómina Gasto no se cerró por datos o conceptos pendientes Cuando se corrigen y Gastos vuelve a intentar el cierre Entonces la validación se repite con los datos actuales.
+
+**CA-6.4.7 — No cambia la prenómina manual** Dado que un empleado no tiene área RH pero sí departamento Cuando la nominista busca por ese departamento en la prenómina manual Entonces el empleado aparece, porque la revisión del cierre aplica solo a la Prenómina Gasto.
+
+### Casos de prueba
+
+**CP-6.4.1 — Empleados completos (camino feliz)** Verifica: CA-6.4.1 · RN-6.9 Dado que Luis y Ana tienen sucursal, turno y área RH Cuando Gastos intenta cerrar la Prenómina Gasto Entonces la revisión de empleados se cumple.
+
+**CP-6.4.2 — Falta la sucursal (error)** Verifica: CA-6.4.2 · RN-6.11 Dado que Luis no tiene sucursal asignada Cuando Gastos intenta cerrar Entonces no se cierra y el aviso indica a Luis y que le falta la sucursal.
+
+**CP-6.4.3 — Falta el turno (error)** Verifica: CA-6.4.2 · RN-6.11 Dado que Ana no tiene turno Cuando Gastos intenta cerrar Entonces no se cierra y el aviso indica a Ana y que le falta el turno.
+
+**CP-6.4.4 — Falta el área RH (error)** Verifica: CA-6.4.2 · RN-6.9 Dado que Pedro no tiene área RH Cuando Gastos intenta cerrar Entonces no se cierra y el aviso indica a Pedro y que le falta el área RH.
+
+**CP-6.4.5 — Concepto sin relación (error)** Verifica: CA-6.4.3 · RN-6.10 Dado que la Prenómina Gasto usa el concepto "Permiso", que no tiene concepto de prenómina relacionado Cuando Gastos intenta cerrar Entonces no se cierra.
+
+**CP-6.4.6 — Aviso con las dos listas (validación)** Verifica: CA-6.4.5 · RN-6.11 Dado que a Luis le falta la sucursal y el concepto "Permiso" no está relacionado Cuando Gastos intenta cerrar Entonces el aviso muestra a Luis y el concepto "Permiso" juntos.
+
+**CP-6.4.7 — Corregir y volver a cerrar (alternativo)** Verifica: CA-6.4.6 · RN-6.12 Dado que Gastos corrigió la sucursal de Luis Cuando vuelve a intentar cerrar Entonces la validación se repite y, si ya no falta nada, se cierra.
+
+**CP-6.4.8 — Todo completo cierra (camino feliz)** Verifica: CA-6.4.4 · RN-6.10 Dado que todos los empleados tienen sus datos y todos los conceptos están relacionados Cuando Gastos cierra la Prenómina Gasto Entonces se cierra y existe la prenómina automática.
+
+**CP-6.4.9 — La prenómina manual no cambia (validación)** Verifica: CA-6.4.7 · RN-6.13 Dado que un empleado de "Producción" no tiene área RH Cuando Ana busca por el departamento "Producción" en la prenómina manual Entonces el empleado aparece.
+
+| CA | Caso(s) de prueba | Escenarios cubiertos |
+| --- | --- | --- |
+| CA-6.4.1 | CP-6.4.1 | Camino feliz |
+| CA-6.4.2 | CP-6.4.2, CP-6.4.3, CP-6.4.4 | Error |
+| CA-6.4.3 | CP-6.4.5 | Error |
+| CA-6.4.4 | CP-6.4.8 | Camino feliz |
+| CA-6.4.5 | CP-6.4.6 | Validación |
+| CA-6.4.6 | CP-6.4.7 | Alternativo |
+| CA-6.4.7 | CP-6.4.9 | Validación |
 
 # RF-07 — Validación de empleado duplicado
 
@@ -1244,23 +1324,23 @@ Que Recursos Humanos vea en un solo lugar, por empresa RH, tipo de periodo y per
 
 ## Descripción
 
-El sistema deberá ofrecer el módulo "Consulta Prenómina", disponible solo para Recursos Humanos general (no incluye a Recursos Humanos de plantas). Se filtra por una o varias empresas RH (un campo que ya existe en el expediente del empleado y que es distinto de la "empresa"), por tipo de periodo de nómina y por periodo, y opcionalmente por personas, por nombre. Los empleados se cargan según su empresa RH y su frecuencia, que debe coincidir con el tipo de periodo elegido. Al filtrar, aparecen todos los empleados de esa empresa RH con la información capturada en la prenómina ya cerrada. Los empleados que faltan por cerrar su nómina aparecen en el reporte, pero con los días del periodo sin información. Eso no bloquea la exportación.
+El sistema deberá ofrecer el módulo "Consulta Prenómina", disponible solo para Recursos Humanos general (no incluye a Recursos Humanos de plantas). Se filtra por una empresa RH (un campo que ya existe en el expediente del empleado y que es distinto de la "empresa"), por tipo de periodo de nómina y por periodo, y opcionalmente por una persona, por nombre: para elegir una persona se requiere haber elegido antes la empresa RH. Los empleados se cargan según su empresa RH y su periodicidad, que debe coincidir con el tipo de periodo elegido. Al filtrar, aparecen todos los empleados de esa empresa RH con la información capturada en la prenómina ya cerrada. Los empleados que faltan por cerrar su nómina aparecen en el reporte, pero con los días del periodo sin información. Eso no bloquea la exportación.
 
 ## HU-8.1 — Consultar por empresa RH, tipo de periodo y periodo
 
-Como Recursos Humanos, quiero filtrar por empresa RH, tipo de periodo y periodo (y, si quiero, por personas), para ver la información cerrada de los empleados que corresponden.
+Como Recursos Humanos, quiero filtrar por empresa RH, tipo de periodo y periodo (y, si quiero, por una persona), para ver la información cerrada de los empleados que corresponden.
 
 ### Reglas de negocio
 
-**RN-8.1** El módulo "Consulta Prenómina" es accesible solo para Recursos Humanos general y permite filtrar por una o varias empresas RH, tipo de periodo de nómina y periodo de nómina (obligatorios), y por personas, por nombre (opcional). Los empleados se cargan según la empresa RH y su frecuencia, y el periodo solo muestra los del tipo elegido. Muestra a todos los empleados de esa empresa RH en el expediente, con la información capturada en la prenómina ya cerrada.
+**RN-8.1** El módulo "Consulta Prenómina" es accesible solo para Recursos Humanos general y permite filtrar por una empresa RH, tipo de periodo de nómina y periodo de nómina (obligatorios), y por una persona, por nombre (opcional). Cada filtro permite un solo valor, y para elegir una persona se requiere haber elegido antes la empresa RH. Los empleados se cargan según la empresa RH y su periodicidad, y el periodo solo muestra los del tipo elegido. Muestra a todos los empleados de esa empresa RH en el expediente, con la información capturada en la prenómina ya cerrada.
 
-**RN-8.2** La "empresa RH" es un campo del expediente distinto de la "empresa" del expediente, que ya no se usa para cargar empleados. El filtro usa la empresa RH. La sucursal, la empresa y la empresa RH no se relacionan entre sí.
+**RN-8.2** La "empresa RH" es un campo del expediente distinto de la "empresa" del expediente, que ya no se usa para cargar empleados. El filtro usa la empresa RH. La empresa del expediente se obtiene de la sucursal asignada; la empresa RH es independiente de ambas y se elige por separado.
 
 **RN-8.3** La información de un empleado solo aparece cuando su nómina ya está cerrada.
 
 ### Criterios de Aceptación
 
-**CA-8.1.1 — Filtros de la consulta** Dado que una persona de Recursos Humanos entra a "Consulta Prenómina" Cuando abre el módulo Entonces puede filtrar por una o varias empresas RH, tipo de periodo y periodo, y opcionalmente por personas por nombre; el periodo solo muestra los del tipo elegido.
+**CA-8.1.1 — Filtros de la consulta** Dado que una persona de Recursos Humanos entra a "Consulta Prenómina" Cuando abre el módulo Entonces puede filtrar por una empresa RH, tipo de periodo y periodo, y opcionalmente por una persona por nombre; el periodo solo muestra los del tipo elegido.
 
 **CA-8.1.2 — Acceso solo para Recursos Humanos** Dado que una persona no es de Recursos Humanos general (por ejemplo, de plantas) Cuando intenta entrar a "Consulta Prenómina" Entonces el módulo no está disponible para ella.
 
@@ -1268,9 +1348,15 @@ Como Recursos Humanos, quiero filtrar por empresa RH, tipo de periodo y periodo 
 
 **CA-8.1.4 — Tipo de periodo del empleado** Dado que la empresa RH tiene empleados semanales y quincenales Cuando Recursos Humanos consulta un periodo semanal Entonces aparecen solo los empleados semanales y no los quincenales.
 
-**CA-8.1.5 — Filtrar por personas** Dado que Recursos Humanos escribe el nombre de una o varias personas Cuando ejecuta la consulta Entonces aparecen solo esas personas, si cumplen los demás filtros.
+**CA-8.1.5 — Filtrar por una persona** Dado que Recursos Humanos eligió una empresa RH y escribe el nombre de una persona de esa empresa Cuando ejecuta la consulta Entonces aparece solo esa persona, si cumple los demás filtros.
 
-**CA-8.1.6 — Varias empresas RH** Dado que Recursos Humanos elige una o varias empresas RH Cuando ejecuta la consulta Entonces aparecen los empleados de todas las empresas elegidas.
+**CA-8.1.6 — Una sola empresa RH** Dado que Recursos Humanos ya eligió una empresa RH Cuando intenta elegir una segunda empresa RH Entonces el sistema no lo permite: solo puede haber una.
+
+**CA-8.1.7 — La persona requiere la empresa RH** Dado que Recursos Humanos no ha elegido la empresa RH Cuando intenta elegir una persona Entonces el sistema no lo permite.
+
+**CA-8.1.8 — Cambio de empresa RH** Dado que Recursos Humanos ya eligió una empresa RH y una persona Cuando cambia la empresa RH Entonces la persona se vacía y debe elegirla de nuevo.
+
+**CA-8.1.9 — Personas con el mismo nombre** Dado que hay varias personas con el mismo nombre en la empresa RH elegida Cuando Recursos Humanos escribe ese nombre Entonces elige de una lista que muestra el nombre y el número de nómina.
 
 ### Casos de prueba
 
@@ -1286,9 +1372,15 @@ Como Recursos Humanos, quiero filtrar por empresa RH, tipo de periodo y periodo 
 
 **CP-8.1.6 — Los quincenales no salen en un periodo semanal (validación)** Verifica: CA-8.1.4 · RN-8.6 Dado que "Grupo A" tiene 12 empleados semanales y 8 quincenales Cuando Recursos Humanos consulta "Grupo A", "Semanal" y la semana 41 Entonces aparecen solo los 12 semanales.
 
-**CP-8.1.7 — Filtrar por nombre (camino feliz)** Verifica: CA-8.1.5 · RN-8.1 Dado que "Grupo A" tiene 20 empleados Cuando Recursos Humanos escribe el nombre "Luis" Entonces aparecen solo los empleados que se llaman Luis.
+**CP-8.1.7 — Filtrar por nombre (camino feliz)** Verifica: CA-8.1.5 · RN-8.1 Dado que Recursos Humanos eligió la empresa RH "Grupo A", que tiene 20 empleados Cuando escribe el nombre "Luis" y elige a Luis Pérez Entonces aparece solo Luis Pérez.
 
-**CP-8.1.8 — Dos empresas RH (alternativo)** Verifica: CA-8.1.6 · RN-8.1 Dado que existen las empresas RH "Grupo A" y "Grupo B" Cuando Recursos Humanos elige las dos Entonces aparecen los empleados de ambas.
+**CP-8.1.8 — Solo una empresa RH (alternativo)** Verifica: CA-8.1.6 · RN-8.1 Dado que existen las empresas RH "Grupo A" y "Grupo B" y Recursos Humanos eligió "Grupo A" Cuando intenta elegir también "Grupo B" Entonces el sistema no lo permite.
+
+**CP-8.1.9 — Persona sin empresa RH (error)** Verifica: CA-8.1.7 · RN-8.1 Dado que Recursos Humanos no ha elegido ninguna empresa RH Cuando intenta escribir el nombre de una persona Entonces el sistema no lo permite.
+
+**CP-8.1.10 — Cambio de empresa RH vacía la persona (validación)** Verifica: CA-8.1.8 · RN-8.7 Dado que Recursos Humanos eligió "Grupo A" y a Luis Pérez Cuando cambia la empresa RH a "Grupo B" Entonces la persona se vacía.
+
+**CP-8.1.11 — Dos personas con el mismo nombre (alternativo)** Verifica: CA-8.1.9 · RN-8.7 Dado que "Grupo A" tiene dos empleados llamados Luis Pérez, con números de nómina 1001 y 1002 Cuando Recursos Humanos escribe "Luis Pérez" Entonces ve una lista con los dos, con su número de nómina, y elige uno.
 
 | CA | Caso(s) de prueba | Escenarios cubiertos |
 | --- | --- | --- |
@@ -1298,6 +1390,9 @@ Como Recursos Humanos, quiero filtrar por empresa RH, tipo de periodo y periodo 
 | CA-8.1.4 | CP-8.1.6 | Validación |
 | CA-8.1.5 | CP-8.1.7 | Camino feliz |
 | CA-8.1.6 | CP-8.1.8 | Alternativo |
+| CA-8.1.7 | CP-8.1.9 | Error |
+| CA-8.1.8 | CP-8.1.10 | Validación |
+| CA-8.1.9 | CP-8.1.11 | Alternativo |
 
 ## HU-8.2 — Ver quién falta por cerrar
 
@@ -1309,7 +1404,9 @@ Como Recursos Humanos, quiero ver con los días vacíos a los empleados que falt
 
 **RN-8.5** Esto no bloquea la exportación. Un Excel puede salir con empleados pendientes, por lo que conviene revisar los empleados sin información antes de exportar.
 
-**RN-8.6** Los empleados se cargan según su empresa RH y su frecuencia, que debe coincidir con el tipo de periodo elegido. Los empleados sin frecuencia no aparecen.
+**RN-8.6** Los empleados se cargan según su empresa RH y su periodicidad, que debe coincidir con el tipo de periodo elegido. Los empleados sin periodicidad no aparecen.
+
+**RN-8.7** Las personas que se ofrecen son solo los empleados de la empresa RH elegida que cumplen los demás filtros. Si hay varias personas con el mismo nombre, se elige de una lista que muestra el nombre y el número de nómina. Al cambiar la empresa RH se vacía la persona.
 
 ### Criterios de Aceptación
 
@@ -1498,7 +1595,135 @@ Como Célula de Innovación, quiero asignar a cada usuario los departamentos que
 
 ---
 
-**Regla transversal:** esta configuración alimenta la búsqueda de la Prenómina (RF-03) y la validación al agregar empleados.
+**Regla transversal:** esta configuración alimenta la búsqueda de la Prenómina (RF-03), la validación al agregar empleados y, junto con la pestaña "Sucursal-Área R.H.", el alcance del listado de Expediente Empleado (RF-20).
+
+# RF-20 — Alcance del listado de Expediente Empleado
+
+| Campo | Valor |
+| --- | --- |
+| Prioridad | Must |
+| Estado | Definición |
+| Dependencias | RF-02, RF-19 |
+
+## Objetivo
+
+Que cada persona vea en el listado del Expediente Empleado solo al personal que le corresponde, y que la nominista encuentre al personal semanal y quincenal que debe atender, para capturarle la periodicidad y el turno.
+
+## Descripción
+
+El sistema deberá limitar el listado principal del "Expediente Empleado" según quién lo consulta. Hay perfiles con visibilidad total y los demás ven solo al personal de las unidades de negocio de sus sucursales configuradas. La regla no depende de la periodicidad ni del prefijo del número de nómina, por lo que la nominista ve tanto a los empleados semanales como a los quincenales. Las listas de búsqueda de empleado de otras pantallas no cambian. En todos los casos, el listado solo muestra a los empleados que tienen número de nómina.
+
+| Perfil | Cómo se identifica | Qué ve |
+| --- | --- | --- |
+| Administrativo | Tiene un rol administrativo. | Todo el personal, sin restricción de unidad de negocio. |
+| Innovación y Negocios | Su empleado pertenece al departamento de Innovación y Negocios. | Todo el personal, sin restricción de unidad de negocio. |
+| Visibilidad total | Tiene el permiso especial "Ver todo el personal", que asigna la Célula de Innovación. | Todo el personal, sin restricción de unidad de negocio. |
+| Con sucursales configuradas | Tiene al menos una fila activa en "Sucursal-Área R.H." o en "Sucursal-Departamento". | El personal de las unidades de negocio de las Empresa RH ligadas a sus sucursales. |
+| Cualquier otro | No cumple ninguno de los anteriores. | Ningún empleado. |
+
+Para el perfil "Con sucursales configuradas", el alcance se obtiene así: las sucursales son la unión de las filas activas de sus dos pestañas; las Empresa RH ligadas son las activas cuya sucursal es una de ellas; las unidades de negocio son las de la empresa de cada una de esas Empresa RH; y el empleado se muestra si su Empresa RH pertenece a una de esas unidades de negocio.
+
+## HU-20.1 — Ver al personal de las unidades de negocio de mis sucursales
+
+Como nominista, quiero ver en el expediente al personal semanal y quincenal de las unidades de negocio de mis sucursales, para capturarle la periodicidad y el turno sin ver al personal que no me corresponde.
+
+### Reglas de negocio
+
+**RN-20.1** El alcance aplica solo al listado principal del Expediente Empleado. Las listas de búsqueda de empleado de otras pantallas no cambian.
+
+**RN-20.2** Quien no tiene visibilidad total ve únicamente a los empleados cuya Empresa RH pertenece a una unidad de negocio de las Empresa RH ligadas a las sucursales de su configuración. Las sucursales son la unión de las filas activas de "Sucursal-Área R.H." y de "Sucursal-Departamento"; una Empresa RH queda ligada a una sucursal por su campo de sucursal.
+
+**RN-20.3** El alcance no depende de la periodicidad ni del prefijo del número de nómina: se muestran empleados semanales y quincenales.
+
+**RN-20.4** Una Empresa RH sin sucursal, o cuya empresa no tiene unidad de negocio, no aporta alcance. Los empleados sin Empresa RH, o con una Empresa RH cuya empresa no tiene unidad de negocio, solo los ven los perfiles con visibilidad total.
+
+**RN-20.5** Los botones de la vista (Todos, Activos y Cancelados) se aplican sobre el alcance. "Todos" es el predeterminado, y quien selecciona "Activos" deja de ver a los cancelados.
+
+### Criterios de Aceptación
+
+**CA-20.1.1 — Alcance por unidad de negocio** Dado que una nominista tiene la sucursal "Norte" configurada y "Norte" está ligada a una Empresa RH de la unidad de negocio "Manufactura" Cuando abre el listado del expediente Entonces ve a los empleados de las Empresa RH de "Manufactura", semanales y quincenales.
+
+**CA-20.1.2 — Dos pestañas de configuración** Dado que una nominista tiene una sucursal solo en "Sucursal-Área R.H." y otra solo en "Sucursal-Departamento" Cuando abre el listado Entonces el alcance incluye las unidades de negocio de las dos sucursales.
+
+**CA-20.1.3 — Fuera de su alcance** Dado que existen empleados de otra unidad de negocio Cuando la nominista abre el listado Entonces no los ve.
+
+**CA-20.1.4 — Filtros de estatus** Dado que la nominista tiene empleados activos y cancelados dentro de su alcance Cuando selecciona el botón "Activos" Entonces solo ve a los activos, y con "Todos" ve a los activos y a los cancelados.
+
+**CA-20.1.5 — Empresa RH sin datos completos** Dado que un empleado tiene una Empresa RH sin sucursal o sin unidad de negocio Cuando una nominista abre el listado Entonces no ve a ese empleado.
+
+### Casos de prueba
+
+**CP-20.1.1 — Nominista con una sucursal (camino feliz)** Verifica: CA-20.1.1 · RN-20.2 Dado que Ana tiene "Norte" configurada y "Norte" tiene una Empresa RH de "Manufactura" Cuando Ana abre el listado Entonces ve a los empleados de las Empresa RH de "Manufactura".
+
+**CP-20.1.2 — Personal quincenal visible (camino feliz)** Verifica: CA-20.1.1 · RN-20.3 Dado que un empleado de "Manufactura" tiene periodicidad "Quincenal" y número de nómina que no empieza con "S" Cuando Ana abre el listado Entonces ve a ese empleado.
+
+**CP-20.1.3 — Unión de las dos pestañas (alternativo)** Verifica: CA-20.1.2 · RN-20.2 Dado que Ana tiene "Norte" en "Sucursal-Área R.H." y "Sur" en "Sucursal-Departamento" Cuando abre el listado Entonces ve a las unidades de negocio de las Empresa RH de las dos sucursales.
+
+**CP-20.1.4 — Otra unidad de negocio (validación)** Verifica: CA-20.1.3 · RN-20.2 Dado que un empleado pertenece a la unidad de negocio "Servicios" y Ana no tiene sucursales ligadas a ella Cuando Ana abre el listado Entonces no lo ve.
+
+**CP-20.1.5 — Botón "Activos" (alternativo)** Verifica: CA-20.1.4 · RN-20.5 Dado que Ana ve activos y cancelados con "Todos" Cuando selecciona "Activos" Entonces solo ve a los activos.
+
+**CP-20.1.6 — Empresa RH sin unidad de negocio (validación)** Verifica: CA-20.1.5 · RN-20.4 Dado que la Empresa RH de un empleado no tiene unidad de negocio Cuando Ana abre el listado Entonces no ve a ese empleado.
+
+| CA | Caso(s) de prueba | Escenarios cubiertos |
+| --- | --- | --- |
+| CA-20.1.1 | CP-20.1.1, CP-20.1.2 | Camino feliz |
+| CA-20.1.2 | CP-20.1.3 | Alternativo |
+| CA-20.1.3 | CP-20.1.4 | Validación |
+| CA-20.1.4 | CP-20.1.5 | Alternativo |
+| CA-20.1.5 | CP-20.1.6 | Validación |
+
+## HU-20.2 — Visibilidad total y usuarios sin acceso
+
+Como Célula de Innovación, quiero que solo los perfiles autorizados vean a todo el personal y que quien no tenga configuración no vea ningún empleado, para proteger la información del expediente.
+
+### Reglas de negocio
+
+**RN-20.6** Los perfiles con visibilidad total son el administrativo, Innovación y Negocios y quien tenga el permiso especial "Ver todo el personal". La Célula de Innovación asigna ese permiso, igual que todas las asignaciones de permisos.
+
+**RN-20.7** Quien no tiene visibilidad total ni sucursales configuradas no ve ningún empleado.
+
+**RN-20.8** Un usuario sin empleado asociado no provoca un error al abrir el listado: se le aplican las mismas reglas.
+
+**RN-20.9** El listado solo muestra a los empleados que tienen número de nómina (con valor, sin espacios en blanco), sin importar su estatus ni el perfil de quien lo consulta, incluidos los perfiles con visibilidad total.
+
+### Criterios de Aceptación
+
+**CA-20.2.1 — Visibilidad total** Dado que una persona es administrativa, es de Innovación y Negocios o tiene el permiso especial "Ver todo el personal" Cuando abre el listado Entonces ve al personal con número de nómina de todas las unidades de negocio.
+
+**CA-20.2.2 — Sin configuración ni permiso** Dado que una persona no tiene sucursales configuradas ni el permiso especial Cuando abre el listado Entonces no ve ningún empleado.
+
+**CA-20.2.3 — Usuario sin empleado** Dado que un usuario no tiene empleado asociado Cuando abre el listado Entonces el sistema no muestra un error y aplica las reglas de los demás perfiles.
+
+**CA-20.2.4 — Solo la Célula de Innovación asigna el permiso** Dado que una persona no es de la Célula de Innovación Cuando intenta asignar el permiso especial "Ver todo el personal" Entonces no puede.
+
+**CA-20.2.5 — Solo con número de nómina** Dado que existen empleados sin número de nómina Cuando cualquier persona abre el listado, incluso con visibilidad total Entonces esos empleados no aparecen.
+
+### Casos de prueba
+
+**CP-20.2.1 — Perfil administrativo (camino feliz)** Verifica: CA-20.2.1 · RN-20.6 Dado que una persona administrativa abre el listado Entonces ve al personal de todas las unidades de negocio.
+
+**CP-20.2.2 — Permiso especial (camino feliz)** Verifica: CA-20.2.1 · RN-20.6 Dado que Luis tiene el permiso "Ver todo el personal" y no tiene sucursales configuradas Cuando abre el listado Entonces ve al personal de todas las unidades de negocio.
+
+**CP-20.2.3 — Sin configuración (error)** Verifica: CA-20.2.2 · RN-20.7 Dado que Marta no tiene sucursales configuradas ni permiso especial Cuando abre el listado Entonces la lista está vacía.
+
+**CP-20.2.4 — Usuario sin empleado (validación)** Verifica: CA-20.2.3 · RN-20.8 Dado que un usuario no tiene empleado asociado y no tiene visibilidad total Cuando abre el listado Entonces no hay error y ve solo lo que le permiten sus sucursales configuradas.
+
+**CP-20.2.5 — Empleado sin número de nómina (validación)** Verifica: CA-20.2.5 · RN-20.9 Dado que un empleado no tiene número de nómina o solo tiene espacios Cuando una persona con visibilidad total abre el listado Entonces el empleado no aparece.
+
+**CP-20.2.6 — Empleado con número de nómina (camino feliz)** Verifica: CA-20.2.5 · RN-20.9 Dado que un empleado de una unidad de negocio dentro del alcance tiene número de nómina Cuando la persona abre el listado Entonces el empleado aparece.
+
+| CA | Caso(s) de prueba | Escenarios cubiertos |
+| --- | --- | --- |
+| CA-20.2.1 | CP-20.2.1, CP-20.2.2 | Camino feliz |
+| CA-20.2.2 | CP-20.2.3 | Error |
+| CA-20.2.3 | CP-20.2.4 | Validación |
+| CA-20.2.4 | (permisos: revisión de configuración) | Permisos |
+| CA-20.2.5 | CP-20.2.5, CP-20.2.6 | Validación, Camino feliz |
+
+---
+
+**Regla transversal:** el listado solo muestra a los empleados con número de nómina. Las anotaciones sobre la calidad de los datos del expediente están en "Anotaciones de seguimiento".
 
 # ENTREGABLE 2 — REPORTE DE JORNADA DESDE BIOSTAR
 
@@ -2323,7 +2548,7 @@ Que cada persona solo pueda checar desde un teléfono que Recursos Humanos haya 
 
 ## Descripción
 
-Para checar desde InnovApp, el teléfono de cada persona necesita la confianza de Recursos Humanos. Al entrar por primera vez, la app comprueba que la persona exista en Biostar mediante la CURP y genera una clave de confianza que une a la persona con ese teléfono. La clave se genera una sola vez y se guarda solo en el teléfono. Con ella se crea una solicitud en el subproceso nuevo "Autorización Asistencia Remota", dentro del proceso "Recursos Humanos", donde Recursos Humanos general la autoriza o la deniega. Si la persona cambia de teléfono, la clave no coincide, no puede checar y debe pedir una nueva autorización; el teléfono anterior sigue activo hasta que se autorice el nuevo. Una persona solo puede usar un teléfono para checar. Al autorizar, Business Suite valida con la API de Biostar que el empleado exista en las dos plataformas; sin esa relación no se puede autorizar.
+Para checar desde InnovApp, el teléfono de cada persona necesita la confianza de Recursos Humanos. Al entrar por primera vez, la app comprueba que la persona exista en Biostar mediante la CURP y genera una clave de confianza que une a la persona con ese teléfono. La clave se genera una sola vez y se guarda solo en el teléfono. Con ella se crea una solicitud en el subproceso nuevo "Autorización Asistencia Remota", dentro del proceso "Recursos Humanos", donde Recursos Humanos general la autoriza o la deniega. Si la persona cambia de teléfono, la clave no coincide, no puede checar y debe pedir una nueva autorización; el teléfono anterior sigue activo hasta que se autorice el nuevo. Una persona solo puede usar un teléfono para checar. Al autorizar, Business Suite valida con la API de Biostar que el empleado exista en las dos plataformas; sin esa relación no se puede autorizar. Cada solicitud nueva se avisa por correo al encargado de autorizar de Recursos Humanos, con quién la solicita y de qué empresa.
 
 | Estado de la solicitud | Qué significa |
 | --- | --- |
@@ -2579,6 +2804,68 @@ Son los textos de partida; los define finalmente UI-UX.
 
 **Regla transversal:** el permiso de checada remota (RF-16) y la autorización de Recursos Humanos son independientes; para checar se necesitan las dos.
 
+## HU-17.5 — Avisar por correo cada solicitud nueva
+
+Como Recursos Humanos general, quiero recibir un correo cada vez que alguien solicita autorización para checar, para atender las solicitudes sin tener que revisar la bandeja todo el tiempo.
+
+### Reglas de negocio
+
+**RN-17.20** Cada vez que se crea una solicitud nueva en estado "Pendiente" (la primera solicitud de una persona o la de un teléfono nuevo), el sistema envía un correo a la dirección configurada para Recursos Humanos general. Se envía un correo por solicitud. No se envía cuando la app avisa que ya hay una solicitud pendiente, porque ahí no se crea una solicitud.
+
+**RN-17.21** La dirección de correo (un correo o una lista de distribución, por ejemplo un buzón de Recursos Humanos general) la configura la Célula de Innovación, igual que el resto de las configuraciones.
+
+**RN-17.22** El correo lleva el nombre y el número de nómina de quien solicita, su empresa y su Empresa RH, su sucursal, el modelo del teléfono y la fecha y hora de la solicitud. No lleva la CURP ni el RFC, ni un enlace a la bandeja de solicitudes.
+
+**RN-17.23** El asunto por defecto es "Nueva solicitud de autorización para checar: \[nombre\]". UI-UX puede cambiar el asunto y el texto del correo.
+
+**RN-17.24** El correo solo avisa: la solicitud se autoriza o se deniega en Business Suite, con la validación de la relación con Biostar (RN-17.19).
+
+**RN-17.25** Si el correo no se puede enviar, la solicitud se crea igual y queda visible en la bandeja de Recursos Humanos general; el sistema registra el error de envío.
+
+### Criterios de Aceptación
+
+**CA-17.5.1 — Correo por solicitud nueva** Dado que una persona crea una solicitud nueva, ya sea la primera o la de un teléfono nuevo Cuando la solicitud queda en estado "Pendiente" Entonces el sistema envía un correo a la dirección configurada, un correo por solicitud.
+
+**CA-17.5.2 — Datos del correo** Dado que se envía el correo de una solicitud Cuando Recursos Humanos general lo abre Entonces ve el nombre y el número de nómina de quien solicita, su empresa y su Empresa RH, su sucursal, el modelo del teléfono y la fecha y hora de la solicitud.
+
+**CA-17.5.3 — Sin datos sensibles ni enlace** Dado que se envía el correo de una solicitud Cuando se revisa su contenido Entonces no trae la CURP, el RFC ni un enlace a la bandeja de solicitudes.
+
+**CA-17.5.4 — Sin solicitud nueva, sin correo** Dado que una persona ya tiene una solicitud pendiente Cuando intenta pedir otra y la app le avisa que ya tiene una pendiente Entonces no se envía ningún correo.
+
+**CA-17.5.5 — Falla del correo** Dado que el correo no se puede enviar Cuando se crea la solicitud Entonces la solicitud queda en la bandeja y el sistema registra el error de envío.
+
+**CA-17.5.6 — Solo la Célula de Innovación configura el destinatario** Dado que una persona no es de la Célula de Innovación Cuando intenta cambiar la dirección de correo que recibe las solicitudes Entonces no puede.
+
+**CA-17.5.7 — El correo solo avisa** Dado que Recursos Humanos general recibe el correo de una solicitud Cuando quiere resolverla Entonces la autoriza o la deniega en Business Suite, y el correo no cambia su estado.
+
+### Casos de prueba
+
+**CP-17.5.1 — Correo al crear una solicitud (camino feliz)** Verifica: CA-17.5.1 · RN-17.20 Dado que Ana solicita autorización por primera vez Cuando su solicitud queda "Pendiente" Entonces llega un correo al buzón de Recursos Humanos general.
+
+**CP-17.5.2 — Correo por teléfono nuevo (alternativo)** Verifica: CA-17.5.1 · RN-17.20 Dado que Ana cambió de teléfono y solicita una nueva autorización Cuando la solicitud queda "Pendiente" Entonces llega otro correo, uno por solicitud.
+
+**CP-17.5.3 — Datos del correo (validación)** Verifica: CA-17.5.2 · RN-17.22 Dado que Luis, número de nómina 1001, de la sucursal "Norte", de la empresa "Empresa A" y la Empresa RH "Grupo A", solicita desde un teléfono modelo X Cuando llega el correo Entonces muestra su nombre, su número de nómina, la empresa, la Empresa RH, la sucursal, el modelo del teléfono y la fecha y hora.
+
+**CP-17.5.4 — Sin CURP, RFC ni enlace (validación)** Verifica: CA-17.5.3 · RN-17.22 Dado que llega el correo de una solicitud Cuando se revisa su contenido Entonces no aparecen la CURP, el RFC ni un enlace a la bandeja.
+
+**CP-17.5.5 — Solicitud ya pendiente (validación)** Verifica: CA-17.5.4 · RN-17.20 Dado que Ana ya tiene una solicitud pendiente Cuando intenta pedir otra y la app le avisa que ya tiene una pendiente Entonces no llega ningún correo nuevo.
+
+**CP-17.5.6 — Falla el envío (error)** Verifica: CA-17.5.5 · RN-17.25 Dado que el servicio de correo no responde Cuando Ana crea su solicitud Entonces la solicitud aparece en la bandeja y se registra el error de envío.
+
+**CP-17.5.7 — Destinatario configurado por la Célula (permisos)** Verifica: CA-17.5.6 · RN-17.21 Dado que una persona de Recursos Humanos abre la configuración del destinatario Cuando intenta cambiar la dirección Entonces el sistema no se lo permite.
+
+**CP-17.5.8 — El correo no autoriza (validación)** Verifica: CA-17.5.7 · RN-17.24 Dado que Recursos Humanos general recibe el correo de la solicitud de Ana Cuando solo lo lee Entonces la solicitud sigue "Pendiente" hasta que se autoriza o se deniega en Business Suite.
+
+| CA | Caso(s) de prueba | Escenarios cubiertos |
+| --- | --- | --- |
+| CA-17.5.1 | CP-17.5.1, CP-17.5.2 | Camino feliz, Alternativo |
+| CA-17.5.2 | CP-17.5.3 | Validación |
+| CA-17.5.3 | CP-17.5.4 | Validación |
+| CA-17.5.4 | CP-17.5.5 | Validación |
+| CA-17.5.5 | CP-17.5.6 | Error |
+| CA-17.5.6 | CP-17.5.7 | Permisos |
+| CA-17.5.7 | CP-17.5.8 | Validación |
+
 # RF-18 — Alternativa y revisión supervisada por Recursos Humanos
 
 | Campo | Valor |
@@ -2654,7 +2941,7 @@ Solo se incluyen las expectativas que el negocio expresó, con una forma de medi
 
 ### RNF-002 — Seguridad y permisos
 
-- **Descripción:** solo el personal autorizado puede consultar el reporte y los módulos "Prenómina" y "Consulta Prenómina", y solo quien tenga permiso puede checar desde InnovApp. La Célula de Innovación configura todos los permisos.
+- **Descripción:** solo el personal autorizado puede consultar el reporte y los módulos "Prenómina" y "Consulta Prenómina", solo ve a todo el personal del Expediente Empleado quien tenga visibilidad total, y solo quien tenga permiso puede checar desde InnovApp. La Célula de Innovación configura todos los permisos.
 - **Métrica / criterio de verificación:** en las pruebas de permisos, el 100% de los intentos de una persona sin permiso es rechazado.
 - **Prioridad:** Must
 
@@ -2698,7 +2985,7 @@ Conecta cada objetivo de negocio con los requerimientos que lo cumplen.
 | OBJ-2 | RF-03 | HU-3.1 a HU-3.6 | CA-3.1.1 a CA-3.6.9 | Must | Propuesto |
 | OBJ-2 | RF-04 | HU-4.1 | CA-4.1.1 a CA-4.1.4 | Must | Propuesto |
 | OBJ-2 | RF-05 | HU-5.1 | CA-5.1.1 a CA-5.1.5 | Must | Propuesto |
-| OBJ-2 | RF-06 | HU-6.1, HU-6.2 | CA-6.1.1 a CA-6.2.2 | Must | Propuesto |
+| OBJ-2 | RF-06 | HU-6.1 a HU-6.4 | CA-6.1.1 a CA-6.4.7 | Must | Propuesto |
 | OBJ-4 | RF-07 | HU-7.1 | CA-7.1.1 a CA-7.1.6 | Must | Propuesto |
 | OBJ-2 | RF-08 | HU-8.1, HU-8.2 | CA-8.1.1 a CA-8.2.2 | Must | Propuesto |
 | OBJ-2 | RF-09 | HU-9.1 | CA-9.1.1 | Must | Propuesto |
@@ -2709,9 +2996,10 @@ Conecta cada objetivo de negocio con los requerimientos que lo cumplen.
 | OBJ-1, OBJ-4 | RF-14 | HU-14.1, HU-14.2 | CA-14.1.1 a CA-14.2.2 | Must | Propuesto |
 | OBJ-3 | RF-15 | HU-15.1 a HU-15.5 | CA-15.1.1 a CA-15.5.6 | Must | Propuesto |
 | OBJ-3, OBJ-4 | RF-16 | HU-16.1 | CA-16.1.1 a CA-16.1.3 | Must | Propuesto |
-| OBJ-3, OBJ-4 | RF-17 | HU-17.1 a HU-17.4 | CA-17.1.1 a CA-17.4.4 | Should | Propuesto |
+| OBJ-3, OBJ-4 | RF-17 | HU-17.1 a HU-17.5 | CA-17.1.1 a CA-17.5.7 | Should | Propuesto |
 | OBJ-3 | RF-18 | HU-18.1 | CA-18.1.1 a CA-18.1.4 | Should | Propuesto |
 | OBJ-2, OBJ-4 | RF-19 | HU-19.1 | CA-19.1.1 a CA-19.1.9 | Must | Propuesto |
+| OBJ-2, OBJ-4 | RF-20 | HU-20.1, HU-20.2 | CA-20.1.1 a CA-20.2.5 | Must | Propuesto |
 
 Los requerimientos no funcionales también se relacionan así: RNF-005 (bitácora de la checada móvil) aplica a RF-15, RF-16, RF-17 y RF-18, y RNF-006 (privacidad de la checada móvil) aplica a RF-15.
 
@@ -2729,9 +3017,11 @@ Los requerimientos no funcionales también se relacionan así: RNF-005 (bitácor
 | SUP-06 | La nómina quincenal también puede tener un corte; sus fechas las dan el inicio y el fin del periodo. | Habría que definir otro dato de corte. |
 | SUP-07 | Las marcas de InnovApp aparecen en T&A y se calculan bien. Debe demostrarse; si no es viable, se evalúa otra alternativa. | La checada móvil no se vería en el reporte. |
 | SUP-08 | Las horas extra se capturan como valores de horas; la explicación del pago es solo informativa. | Habría que construir la lógica de pago. |
-| SUP-09 | La sucursal, la empresa y la empresa RH son datos independientes del expediente. | La carga y la consulta podrían traer empleados equivocados. |
+| SUP-09 | La empresa del expediente se obtiene de la sucursal asignada; la empresa RH es un dato independiente de ambas. | La carga y la consulta podrían traer empleados equivocados. |
 | SUP-10 | La clave de confianza se genera una sola vez por teléfono y se guarda solo en el teléfono, protegida por su biometría. | La clave podría copiarse a otro teléfono y se perdería la confianza entre dispositivo y usuario. |
-| SUP-11 | La frecuencia del empleado ("Semanal" o "Quincenal") coincide por valor con los tipos de periodo del catálogo "Tipo de periodo de Nómina". | Si los nombres no coinciden, los empleados no aparecerían en las búsquedas y habría que definir la equivalencia. |
+| SUP-11 | La periodicidad del empleado ("Semanal" o "Quincenal") coincide por valor con los tipos de periodo del catálogo "Tipo de periodo de Nómina". | Si los nombres no coinciden, los empleados no aparecerían en las búsquedas y habría que definir la equivalencia. |
+| SUP-12 | Cada Empresa RH tiene asignada una sucursal y su empresa tiene una unidad de negocio; el alcance del listado del expediente depende de esos datos. | Los empleados de esa Empresa RH no los vería ningún usuario con alcance por sucursal. |
+| SUP-13 | El número de nómina es válido cuando tiene valor; no se exige otro formato. | Habría que definir el formato y revisar los números existentes. |
 
 ### Dependencias
 
@@ -2740,7 +3030,7 @@ Los requerimientos no funcionales también se relacionan así: RNF-005 (bitácor
 | DEP-01 | Capturar la CURP de cada empleado en Biostar antes del arranque. | Recursos Humanos |
 | DEP-02 | Cargar los conceptos de Contpaq en el catálogo "Conceptos Prenómina" y ligarlos a los "Conceptos Nómina" usados en la Prenómina Gasto. | Recursos Humanos |
 | DEP-03 | Que el catálogo "Periodos Nómina" tenga periodos semanales y quincenales. | Recursos Humanos |
-| DEP-04 | Que los empleados tengan sucursal asignada y departamento asignado en su expediente, y que Recursos Humanos asigne la frecuencia, y las noministas el turno, a todo el personal antes del arranque. | Noministas |
+| DEP-04 | Que los empleados tengan sucursal asignada y departamento asignado en su expediente, y que las noministas capturen la periodicidad y el turno de todo el personal antes del arranque. | Noministas |
 | DEP-05 | Que cada nominista tenga configuradas sus grupos de área RH, con sus sucursales y tipos de periodo (pestaña que ya existe), y sus departamentos, con sus sucursales y tipos de periodo (pestaña nueva), y que se configuren los permisos. | Célula de Innovación |
 | DEP-06 | Configurar los turnos y las horas base en Biostar y la opción de comida en los checadores. | Otras áreas |
 | DEP-08 | Revisar las capacidades reales de InnovApp (tecnología, versiones de Android e iOS, biometría, ubicación y almacenamiento protegido). También, versiones mínimas, biometría compatible y verificación de integridad del dispositivo. | Célula de Innovación |
@@ -2749,6 +3039,9 @@ Los requerimientos no funcionales también se relacionan así: RNF-005 (bitácor
 | DEP-11 | Definir los textos finales de los mensajes de la app sobre la autorización del teléfono. | UI-UX |
 | DEP-12 | Asignar a cada usuario sus departamentos por sucursal y tipo de periodo en la pestaña "Sucursal-Departamento" antes del arranque. | Célula de Innovación |
 | DEP-13 | Que la API de Biostar permita consultar si un empleado existe y las checadas de los tres días anteriores a hoy de cada persona. | Célula de Innovación y proveedor |
+| DEP-14 | Asignar el permiso especial "Ver todo el personal" a quien deba ver todo el expediente (por ejemplo, Recursos Humanos general) y configurar las sucursales de cada nominista antes del arranque; quien no tenga ninguna de las dos cosas no verá ningún empleado. | Célula de Innovación |
+| DEP-15 | Completar los datos del expediente: Empresa RH, sucursal de cada Empresa RH y unidad de negocio de cada empresa. | Recursos Humanos y Célula de Innovación |
+| DEP-16 | Contar con un servicio de correo para enviar el aviso de cada solicitud de autorización, y una dirección o lista de distribución de Recursos Humanos general configurada como destinatario. | Célula de Innovación |
 
 ### Riesgos
 
@@ -2769,14 +3062,29 @@ La probabilidad y el impacto son una estimación de este análisis.
 | RGO-12 | La biometría local del teléfono no acredita por sí sola la identidad laboral de quien checa. | Media | Alto | Clave de confianza generada en el teléfono y protegida por biometría, autorización de Recursos Humanos para cada teléfono y revisión por Recursos Humanos. |
 | RGO-13 | Los costos y las licencias de la checada móvil están por confirmar, y el desarrollo y el mantenimiento propios requieren estimación y aprobación. | Media | Alto | Estimar y aprobar antes de ampliar más allá del piloto. |
 | RGO-14 | No hay plazo para que Recursos Humanos responda las solicitudes de autorización; mientras esperan, las personas no pueden checar desde un teléfono nuevo. | Media | Alto | El teléfono anterior sigue activo durante la espera y Recursos Humanos revisa la bandeja de forma periódica. |
-| RGO-15 | Al arrancar llegará una solicitud por cada persona con permiso, lo que puede saturar la bandeja de Recursos Humanos. | Alta | Medio | Estimar el volumen y planear la autorización por etapas durante el piloto. |
+| RGO-15 | Al arrancar llegará una solicitud por cada persona con permiso, lo que puede saturar la bandeja de Recursos Humanos y el buzón de correo configurado. | Alta | Medio | Estimar el volumen y planear la autorización por etapas durante el piloto. |
 | RGO-16 | El subproceso "Autorización Asistencia Remota" es nuevo y hay que construirlo; no existe hoy en Business Suite. | Media | Alto | Estimarlo con la Célula de Innovación antes del piloto. |
 | RGO-18 | Un usuario sin departamentos configurados en una sucursal no ve ni carga nada en esa sucursal. | Media | Alto | Configurar los departamentos por sucursal de cada nominista antes del arranque. |
-| RGO-17 | Los empleados sin frecuencia no aparecen en la búsqueda de la prenómina ni en la consulta. | Media | Alto | Recursos Humanos asigna la frecuencia a todo el personal antes del arranque. |
+| RGO-17 | Los empleados sin periodicidad no aparecen en la búsqueda de la prenómina ni en la consulta. | Media | Alto | Las noministas capturan la periodicidad de todo el personal antes del arranque. |
+| RGO-19 | En la validación de datos, 449 de 12,506 empleados activos (3.6%) no tienen Empresa RH o su Empresa RH no tiene unidad de negocio, por lo que no los ve ningún usuario con alcance por sucursal. | Alta | Medio | Completar los datos (DEP-15) o definir un respaldo por la empresa del empleado (PA-15). |
+| RGO-20 | Un usuario que hoy ve el expediente por Empresa RH y no tiene sucursales configuradas dejará de ver empleados. | Alta | Alto | Configurar sucursales o asignar el permiso especial antes del arranque (DEP-14). |
+
+### Anotaciones de seguimiento
+
+Estas anotaciones **no son requerimientos**: no tienen historias ni criterios de aceptación y no cambian lo que hace el sistema. Se dejan aquí para no perderlas de vista. Se atienden por actualización de datos.
+
+| ID | Anotación | Qué se hace | Responsable sugerido |
+| --- | --- | --- | --- |
+| NOT-01 | Hay empleados **activos sin número de nómina**. El listado de Expediente Empleado no los muestra (RN-20.9). | Capturar el número de nómina por actualización de datos. | Recursos Humanos |
+| NOT-02 | Hay empleados **cancelados que conservan activos** (de cómputo o de telefonía), **cuentas de correo o cuentas de sistema** sin retirar. | Identificarlos y retirar lo asignado por actualización de datos. | Recursos Humanos y Célula de Innovación |
+| NOT-03 | Hay empleados sin número de nómina que **no tienen activos, cuentas de correo ni cuentas de sistema**: son registros que ya no se usan y el listado no los muestra. | Revisar si se depuran por actualización de datos; no se eliminan desde el sistema. | Recursos Humanos y Célula de Innovación |
+| NOT-04 | En la validación de datos de octubre de 2026 había 12,506 empleados activos, 44,867 cancelados y 1 dado de baja. De los activos, 182 no tienen Empresa RH y 449 no tienen Empresa RH o su Empresa RH no tiene unidad de negocio (176 de esos 449 se rescatarían con la unidad de negocio de su empresa). De los cancelados, 21,189 no tienen Empresa RH. | Completar Empresa RH, sucursal de la Empresa RH y unidad de negocio de la empresa (DEP-15). | Recursos Humanos y Célula de Innovación |
+| NOT-05 | Al revisar los pendientes de un empleado cancelado queda por confirmar si, además de activos, correos y cuentas de sistema, también cuentan el directorio activo, la VPN, las licencias, las aplicaciones remotas y los accesos biométricos. | Definirlo antes de la actualización de datos. | Recursos Humanos y Célula de Innovación |
+| NOT-06 | El permiso especial anterior "Ver datos por unidad de negocio" (`BB_VIEW_PER_BY_UDN`) no lo usa ninguna pantalla; lo reemplaza "Ver todo el personal". | Verificar que ningún rol lo tenga asignado y retirarlo. | Célula de Innovación |
 
 ### Impacto organizacional y capacitación
 
-El cambio alcanza a todo Grupo Reyes a nivel nacional. No existe un número exacto de personas a capacitar. Se necesita material para: el registro de comida en los checadores, la consulta de jornada en Business Suite, el módulo "Prenómina" (búsqueda, captura y cierre) y la pestaña "Sucursal-Departamento", la "Prenómina Gasto" (cambio de nombre y horas extra), "Consulta Prenómina" (consulta y exportación), el catálogo "Conceptos Prenómina", la asignación de frecuencia y de turno en el expediente, y la checada y el historial en InnovApp.
+El cambio alcanza a todo Grupo Reyes a nivel nacional. No existe un número exacto de personas a capacitar. Se necesita material para: el registro de comida en los checadores, la consulta de jornada en Business Suite, el módulo "Prenómina" (búsqueda, captura y cierre) y la pestaña "Sucursal-Departamento", la "Prenómina Gasto" (cambio de nombre y horas extra), "Consulta Prenómina" (consulta y exportación), el catálogo "Conceptos Prenómina", la asignación de periodicidad y de turno en el expediente, y la checada y el historial en InnovApp.
 
 ## Preguntas abiertas
 
@@ -2794,5 +3102,7 @@ Lo que todavía falta resolver, con un responsable sugerido.
 | PA-09 | Servicios externos, costos y licencias: confirmar con I&N y el proveedor que la ruta de checada no depende de ningún servicio externo y confirmar los costos y las licencias, incluidas las de T&A y de la Event Log API. | 3 | Célula de Innovación |
 | PA-10 | Registro duplicado: definir el color con el que se pinta y si el resaltado también se muestra en "Consulta Prenómina". | 1 | Recursos Humanos |
 | PA-11 | Autorización Asistencia Remota: estimar cuántas solicitudes llegarán al arranque y confirmar con UI-UX los textos finales de los mensajes de la app. | 3 | Recursos Humanos y UI-UX |
-| PA-13 | Frecuencia y tipo de periodo: confirmar que los valores "Semanal" y "Quincenal" de la frecuencia coinciden con los nombres de los tipos de periodo del catálogo "Tipo de periodo de Nómina"; si no, definir la equivalencia. | 1 | Recursos Humanos |
+| PA-13 | Periodicidad y tipo de periodo: confirmar que los valores "Semanal" y "Quincenal" de la periodicidad coinciden con los nombres de los tipos de periodo del catálogo "Tipo de periodo de Nómina"; si no, definir la equivalencia. | 1 | Recursos Humanos |
 | PA-14 | Aviso al volver a checar en InnovApp: definir, en el análisis técnico, cuándo se reinicia la memoria de la app que decide si muestra el aviso; y confirmar los textos de los mensajes de la app (historial, aviso y autorización sin relación con Biostar). | 3 | Célula de Innovación y UI-UX |
+| PA-15 | Empleados sin Empresa RH o con Empresa RH sin unidad de negocio: decidir si el alcance usa como respaldo la unidad de negocio de la empresa del empleado (que viene de su sucursal) o si solo se corrigen los datos. | 1 | Recursos Humanos |
+| PA-16 | Correo de solicitudes de autorización: definir con UI-UX el texto final del correo y la dirección o lista que lo recibirá. | 3 | Recursos Humanos y UI-UX |
