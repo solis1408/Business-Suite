@@ -1,0 +1,6177 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentación BRD y FSD - Business Suite">
+      
+      
+        <meta name="author" content="solis1408">
+      
+      
+        <link rel="canonical" href="https://solis1408.github.io/Business-Suite/Proyectos/ONU/Jugueteria/RF_Pedidos_Apartado/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>RF Pedidos Apartado - Business Suite - Documentación</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main-nav.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#información-general" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../../../.." title="Business Suite - Documentación" class="md-header__button md-logo" aria-label="Business Suite - Documentación" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Business Suite - Documentación
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              RF Pedidos Apartado
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Business Suite - Documentación" class="md-nav__button md-logo" aria-label="Business Suite - Documentación" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Business Suite - Documentación
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Proyectos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Proyectos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    iNN
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    iNN
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1_1" id="__nav_2_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Expediente de Personal (EDC)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Expediente de Personal (EDC)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../iNN/EDC/documentacion/requerimiento-cliente/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requerimiento Cliente
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../iNN/EDC/documentacion/requerimiento-funcional/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requerimiento Funcional
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1_1_3" id="__nav_2_1_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RouteMap
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_1_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    RouteMap
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../iNN/EDC/documentacion/routemap/Roadmap%20Estrat%C3%A9gico%20%E2%80%94%20Expediente%20Digital%20del%20Colaborador/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RouteMap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../iNN/EDC/documentacion/routemap/roadmap-diagrama/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diagrama HTML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_1_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1_1_4" id="__nav_2_1_1_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diagramas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_1_1_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_1_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Diagramas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../iNN/EDC/documentacion/diagramas/contexto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contexto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../iNN/EDC/documentacion/diagramas/mapa-de-estados/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mapa de estados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_1_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1_1_5" id="__nav_2_1_1_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prototipos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_1_1_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_1_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Prototipos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../iNN/EDC/documentacion/prototipos/prototipo-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prototipo 1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../iNN/EDC/documentacion/prototipos/prototipo-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prototipo 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../iNN/EDC/documentacion/prototipos/prototipo-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prototipo 3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1_2" id="__nav_2_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Auditorias
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Auditorias
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../iNN/Auditorias/documentacion/requerimiento-cliente/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requerimiento Cliente
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../iNN/Auditorias/documentacion/requerimiento-funcional/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requerimiento Funcional
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1_2_3" id="__nav_2_1_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diagramas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_1_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Diagramas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../iNN/Auditorias/documentacion/diagramas/contexto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contexto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../iNN/Auditorias/documentacion/diagramas/mapa-de-estados/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mapa de estados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1_2_4" id="__nav_2_1_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prototipos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_1_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Prototipos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../iNN/Auditorias/documentacion/prototipos/prototipo-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monitor Acciones Correctivas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../iNN/Auditorias/documentacion/prototipos/prototipo-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monitor Auditorias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../iNN/Auditorias/documentacion/prototipos/prototipo-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reporte Resumen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1_3" id="__nav_2_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estatus Tickets
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Estatus Tickets
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1_3_1" id="__nav_2_1_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diagramas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_1_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Diagramas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../iNN/EstatusTickets/documentacion/diagramas/contexto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contexto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../iNN/EstatusTickets/documentacion/diagramas/mapa-de-estados/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mapa de estados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../iNN/EstatusTickets/documentacion/Ejercicios%20de%20Estados%20Tickets.pdf" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejercicios de Estados Tickets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../iNN/EstatusTickets/documentacion/Ejercicios%20de%20Equipo%20C%C3%B3mputo.pdf" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejercicios de Equipo Cómputo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../iNN/EstatusTickets/documentacion/Ejercicios%20de%20Solicitudes%20Servicio.pdf" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejercicios de Solicitudes Servicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../iNN/EstatusTickets/documentacion/Funcionales-Estados-Tickets-Proyectos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Funcionales
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../iNN/EstatusTickets/documentacion/Tecnico-Monitor-CAU-Nuevos-Estados/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Técnico
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1_4" id="__nav_2_1_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Baja Usuario - Ticket Escalonado
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Baja Usuario - Ticket Escalonado
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../iNN/Baja%20usuario%20-%20Ticket%20escalonado/Ejecuci%C3%B3n%20del%20Flujo%20de%20Trabajo%20de%20Tickets%20por%20Bloques/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ejecución del Flujo de Trabajo por Bloques
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../iNN/Baja%20usuario%20-%20Ticket%20escalonado/Vigencia%20del%20Resguardo%20en%20Sitio%20y%20Recolecci%C3%B3n%20Autom%C3%A1tica%20de%20Activos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vigencia del Resguardo y Recolección Automática
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1_5" id="__nav_2_1_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control de Asistencias
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Control de Asistencias
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../iNN/Control%20de%20Asistencias/Requerimientos-Funcionales-Control-de-Asistencia-Analisis-de-Negocio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requerimiento Funcional
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ONU
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ONU
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_1" id="__nav_2_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visibilidad Fiscal
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Visibilidad Fiscal
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../VisibilidadFiscal/Documento_Requerimientos_Funcionales_Interplantas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requerimiento Funcional
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_2" id="__nav_2_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Foliación Caja Operativa
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Foliación Caja Operativa
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Foliacion-Caja-Operativa/RF-Foliacion-Caja-Financiera/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Requerimiento Funcional
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_3" id="__nav_2_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inmobiliaria
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Inmobiliaria
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Inmobiliaria/Requerimientos_Funcionales_Facturacion_Inmobiliaria_CFDI/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo Facturación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Inmobiliaria/RF-multiempresa-multisucursal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multiempresa y Multisucursal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_4" id="__nav_2_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quinta Maria
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Quinta Maria
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Quinta%20Maria/Requerimientos_Funcionales_Facturacion_QuintaMariaFacturaci%C3%B3n/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Módulo de Facturación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_5" id="__nav_2_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Civentor
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Civentor
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Civentor/RF-catalogos-civentor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Catálogos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Documentación BSuite
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Documentación BSuite
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Catálogos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Catálogos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1_1" id="__nav_3_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gestión TI
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gestión TI
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Catalogos/Gestion-TI/documentacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Catalogos/Gestion-TI/documentacion/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Catalogos/Gestion-TI/documentacion/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1_2" id="__nav_3_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compras
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Compras
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Catalogos/Compras/documentacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Catalogos/Compras/documentacion/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Catalogos/Compras/documentacion/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Procesos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Procesos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_1" id="__nav_3_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gestión TI
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gestión TI
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Procesos/Gestion-TI/documentacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Procesos/Gestion-TI/documentacion/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Procesos/Gestion-TI/documentacion/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_2" id="__nav_3_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compras
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Compras
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Procesos/Compras/documentacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Procesos/Compras/documentacion/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Procesos/Compras/documentacion/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Consultas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Consultas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3_1" id="__nav_3_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gestión TI
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gestión TI
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3_1_1" id="__nav_3_3_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reporte Forecast
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_3_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reporte Forecast
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Consultas/Gestion-TI/documentacion/reporte-forecast/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Consultas/Gestion-TI/documentacion/reporte-forecast/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Consultas/Gestion-TI/documentacion/reporte-forecast/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3_1_2" id="__nav_3_3_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reporte Financiero
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_3_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reporte Financiero
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Consultas/Gestion-TI/documentacion/reporte-financiero/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Consultas/Gestion-TI/documentacion/reporte-financiero/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Consultas/Gestion-TI/documentacion/reporte-financiero/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3_2" id="__nav_3_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compras
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Compras
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Consultas/Compras/documentacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Consultas/Compras/documentacion/BRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BRD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../BSuite/Consultas/Compras/documentacion/FSD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#información-general" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Información General
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-objetivo-del-proyecto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Objetivo del Proyecto
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Objetivo del Proyecto">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-antecedentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Antecedentes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-beneficio-de-negocio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Beneficio de Negocio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-descripción-general-de-la-solución" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 Descripción General de la Solución
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-alcance-del-documento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Alcance del documento
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Alcance del documento">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-funcionalidades-incluidas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Funcionalidades Incluidas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-fuera-de-alcance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Fuera de Alcance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-actores-y-roles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Actores y roles
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-entidad-a-la-que-aplica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Entidad a la que aplica
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-índice-de-requerimientos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Índice de requerimientos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#---" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ---
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rf-01--crear-y-guardar-pedido-de-apartado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RF-01 — Crear y guardar pedido de apartado
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RF-01 — Crear y guardar pedido de apartado">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objetivo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#descripción" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Descripción
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Descripción">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#información--atributos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Información / atributos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diseño-uxui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diseño UX/UI
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hu-11--crear-apartado-desde-pedido-pv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HU-1.1 — Crear apartado desde Pedido PV
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="HU-1.1 — Crear apartado desde Pedido PV">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reglas-de-negocio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reglas de negocio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#criterios-de-aceptación" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Criterios de Aceptación
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hu-12--ver-y-administrar-el-apartado-en-pedidos-largo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HU-1.2 — Ver y administrar el apartado en Pedidos (Largo)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="HU-1.2 — Ver y administrar el apartado en Pedidos (Largo)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reglas-de-negocio_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reglas de negocio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#criterios-de-aceptación_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Criterios de Aceptación
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hu-13--cancelar-un-apartado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HU-1.3 — Cancelar un apartado
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="HU-1.3 — Cancelar un apartado">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reglas-de-negocio_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reglas de negocio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#criterios-de-aceptación_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Criterios de Aceptación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#casos-de-prueba" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Casos de prueba
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rf-02--gestionar-abonos-internos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RF-02 — Gestionar abonos internos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RF-02 — Gestionar abonos internos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#descripción_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Descripción
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Descripción">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#información--atributos_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Información / atributos
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hu-21--registrar-abono" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HU-2.1 — Registrar abono
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="HU-2.1 — Registrar abono">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reglas-de-negocio_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reglas de negocio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#criterios-de-aceptación_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Criterios de Aceptación
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hu-22--cancelar-abono" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HU-2.2 — Cancelar abono
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="HU-2.2 — Cancelar abono">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reglas-de-negocio_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reglas de negocio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#criterios-de-aceptación_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Criterios de Aceptación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#casos-de-prueba_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Casos de prueba
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rf-03--gestionar-cobros-de-pedidos-de-apartado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RF-03 — Gestionar cobros de pedidos de apartado
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RF-03 — Gestionar cobros de pedidos de apartado">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#descripción_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Descripción
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hu-31--cobrar-apartado-liquidado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HU-3.1 — Cobrar apartado liquidado
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="HU-3.1 — Cobrar apartado liquidado">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reglas-de-negocio_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reglas de negocio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#criterios-de-aceptación_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Criterios de Aceptación
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hu-32--cobro-de-pedido-normal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HU-3.2 — Cobro de pedido normal
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="HU-3.2 — Cobro de pedido normal">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reglas-de-negocio_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reglas de negocio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#criterios-de-aceptación_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Criterios de Aceptación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#casos-de-prueba_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Casos de prueba
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rf-04--inventario-y-entregas-de-apartados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RF-04 — Inventario y entregas de apartados
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RF-04 — Inventario y entregas de apartados">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#descripción_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Descripción
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Descripción">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nuevas-operaciones-de-almacén" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nuevas operaciones de almacén
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hu-41--relacionar-movimientos-de-almacén-con-el-apartado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HU-4.1 — Relacionar movimientos de almacén con el apartado
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="HU-4.1 — Relacionar movimientos de almacén con el apartado">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reglas-de-negocio_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reglas de negocio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#criterios-de-aceptación_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Criterios de Aceptación
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hu-42--crear-entrega-manual-de-apartado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HU-4.2 — Crear entrega manual de apartado
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="HU-4.2 — Crear entrega manual de apartado">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reglas-de-negocio_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reglas de negocio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#criterios-de-aceptación_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Criterios de Aceptación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#casos-de-prueba_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Casos de prueba
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rf-05--timbrado-manual-de-facturas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RF-05 — Timbrado manual de facturas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RF-05 — Timbrado manual de facturas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#descripción_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Descripción
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hu-51--ajustar-la-factura-antes-de-guardar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HU-5.1 — Ajustar la factura antes de guardar
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="HU-5.1 — Ajustar la factura antes de guardar">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reglas-de-negocio_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reglas de negocio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#criterios-de-aceptación_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Criterios de Aceptación
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hu-52--timbrar-bajo-demanda" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HU-5.2 — Timbrar bajo demanda
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="HU-5.2 — Timbrar bajo demanda">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reglas-de-negocio_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reglas de negocio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#criterios-de-aceptación_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Criterios de Aceptación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#casos-de-prueba_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Casos de prueba
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rf-06--consultar-pedidos-de-apartado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RF-06 — Consultar pedidos de apartado
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RF-06 — Consultar pedidos de apartado">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#descripción_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Descripción
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hu-61--filtrar-apartados-en-las-consultas-de-pedidos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HU-6.1 — Filtrar apartados en las consultas de pedidos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="HU-6.1 — Filtrar apartados en las consultas de pedidos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reglas-de-negocio_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reglas de negocio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#criterios-de-aceptación_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Criterios de Aceptación
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hu-62--pestaña-resultado-apartados-en-concentrado-de-cobranza" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HU-6.2 — Pestaña "Resultado Apartados" en Concentrado de cobranza
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="HU-6.2 — Pestaña &#34;Resultado Apartados&#34; en Concentrado de cobranza">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reglas-de-negocio_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reglas de negocio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#criterios-de-aceptación_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Criterios de Aceptación
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hu-63--sección-de-apartados-en-el-formato-cobranza-general" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HU-6.3 — Sección de apartados en el formato Cobranza General
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="HU-6.3 — Sección de apartados en el formato Cobranza General">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reglas-de-negocio_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reglas de negocio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#criterios-de-aceptación_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Criterios de Aceptación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#casos-de-prueba_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Casos de prueba
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#---_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ---
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#requerimientos-no-funcionales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Requerimientos no funcionales
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matriz-de-trazabilidad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Matriz de trazabilidad
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#supuestos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supuestos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependencias" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dependencias
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#riesgos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Riesgos
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h2 id="información-general">Información General<a class="headerlink" href="#información-general" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"></th>
+<th style="text-align: left;"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Nombre del Proyecto</strong></td>
+<td style="text-align: left;">Funcionalidad de Apartado de Juguetes Para Sistema Happy Island</td>
+</tr>
+<tr>
+<td style="text-align: left;">Número de Solicitud de Servicio</td>
+<td style="text-align: left;">[4212]</td>
+</tr>
+<tr>
+<td style="text-align: left;">Tipo de Servicio</td>
+<td style="text-align: left;">Mejora funcional</td>
+</tr>
+<tr>
+<td style="text-align: left;">Prioridad</td>
+<td style="text-align: left;">- [x] Urgente<br>- [ ] Medio<br>- [ ] Bajo</td>
+</tr>
+<tr>
+<td style="text-align: left;">Área de I&amp;N Responsable de Implementación</td>
+<td style="text-align: left;">[Celula Otras Unidades de negocio]</td>
+</tr>
+<tr>
+<td style="text-align: left;">Responsable del Requerimiento</td>
+<td style="text-align: left;">[Leslie Karina Rivera Davila]</td>
+</tr>
+<tr>
+<td style="text-align: left;">Fecha de Elaboración</td>
+<td style="text-align: left;">07/11/2026</td>
+</tr>
+<tr>
+<td style="text-align: left;">Product Owner</td>
+<td style="text-align: left;">[Leslie Karina Rivera Davila]</td>
+</tr>
+<tr>
+<td style="text-align: left;">Área de Negocio</td>
+<td style="text-align: left;">[Ventas]</td>
+</tr>
+<tr>
+<td style="text-align: left;">Versión</td>
+<td style="text-align: left;">v1.0</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1-objetivo-del-proyecto">1. Objetivo del Proyecto<a class="headerlink" href="#1-objetivo-del-proyecto" title="Permanent link">&para;</a></h2>
+<p>Permitir que en punto de venta el cliente <strong>aparte productos</strong> con un abono inicial y los pague en varios abonos. El producto queda reservado a su nombre hasta que lo liquide y lo recoja. Con esto se busca vender a clientes que no pueden pagar todo en una sola exhibición, sin perder el control del inventario, de la cobranza ni de la facturación. También se ajusta la facturación para revisar la factura antes de timbrarla, y las consultas para dar seguimiento a los apartados.</p>
+<h3 id="11-antecedentes">1.1 Antecedentes<a class="headerlink" href="#11-antecedentes" title="Permanent link">&para;</a></h3>
+<p>Hoy los pedidos tienen dos flujos:</p>
+<ul>
+<li><strong>Pedido Punto de Venta (flujo corto):</strong> al guardar, la entrega del producto se genera y se finaliza en ese momento.</li>
+<li><strong>Pedido (flujo largo):</strong> el pedido se autoriza, se entrega, se cobra y se factura en pasos separados.</li>
+</ul>
+<p>En los dos flujos el orden es: <strong>pedido, entrega, cobro y factura</strong>. No hay forma de recibir pagos parciales antes de entregar ni de reservar producto para un cliente. El producto que un cliente quiere apartar sigue disponible para venderse a otro, y los pagos parciales no tienen dónde registrarse ligados al pedido.</p>
+<p>En facturación, la factura que se genera desde las entregas trae precargados el cliente y las formas de pago, y el usuario no puede corregirlos antes de guardar.</p>
+<h3 id="12-beneficio-de-negocio">1.2 Beneficio de Negocio<a class="headerlink" href="#12-beneficio-de-negocio" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Necesidad actual:</strong> no se pueden vender productos por apartado ni separar el inventario reservado del disponible. Tampoco se pueden corregir las formas de pago o el cliente de la factura antes de guardarla.</li>
+<li><strong>Impacto esperado:</strong> el cliente aparta con al menos el 30% y abona hasta liquidar. El producto apartado queda en un almacén aparte y el cobro se arma con los abonos. La factura se revisa antes de timbrarse.</li>
+<li><strong>Beneficio operativo/comercial:</strong> más ventas a clientes de contado que pagan en partes, inventario disponible confiable, seguimiento del saldo de cada apartado y menos cancelaciones de facturas por errores de captura. [Cuantificación por definir con el área de negocio]</li>
+</ul>
+<h3 id="13-descripción-general-de-la-solución">1.3 Descripción General de la Solución<a class="headerlink" href="#13-descripción-general-de-la-solución" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Apartar.</strong> El vendedor captura el pedido en Punto de Venta, lo marca como <strong>Apartado</strong> y le pone una <strong>fecha de vigencia</strong>. Al guardar, registra un <strong>abono inicial de al menos 30%</strong>. No se genera la entrega; el producto pasa del almacén de venta al <strong>almacén de Apartados</strong> de la sucursal.</li>
+<li><strong>Abonar.</strong> Los siguientes abonos se registran en la pantalla de Pedidos (flujo largo), en una pestaña <strong>Abonos</strong>. Cada abono baja el saldo y cancelar un abono lo regresa.</li>
+<li><strong>Cobrar.</strong> Cuando el saldo llega a cero se habilita el botón <strong>Cobro</strong>. El cobro se genera solo, con las formas de pago de los abonos, y los pagos quedan <strong>en tránsito</strong> en la cuenta bancaria que les corresponde.</li>
+<li><strong>Entregar.</strong> Cuando el cliente viene por su producto, el usuario crea la <strong>entrega</strong>. El producto sale del almacén de Apartados.</li>
+<li><strong>Facturar.</strong> Se factura como hoy. El usuario puede ajustar las formas de pago y el cliente antes de guardar, y la factura se <strong>timbra cuando un usuario autorizado lo pide</strong>.</li>
+<li><strong>Cancelar.</strong> Si el apartado se cancela, el producto regresa al almacén de venta y lo abonado queda como <strong>saldo a favor</strong> del cliente.</li>
+</ol>
+<hr />
+<h2 id="2-alcance-del-documento">2. Alcance del documento<a class="headerlink" href="#2-alcance-del-documento" title="Permanent link">&para;</a></h2>
+<h3 id="21-funcionalidades-incluidas">2.1 Funcionalidades Incluidas<a class="headerlink" href="#21-funcionalidades-incluidas" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Marcar pedidos de Punto de Venta como apartados, con fecha de vigencia y saldo.</li>
+<li>Registrar el abono inicial al guardar el apartado.</li>
+<li>Reservar el producto apartado en un almacén de Apartados por sucursal.</li>
+<li>Consultar el apartado en Pedidos (flujo largo) y registrar o cancelar abonos ahí.</li>
+<li>Cobrar el apartado liquidado con las formas de pago de los abonos.</li>
+<li>Crear a mano la entrega del apartado y sacar el producto del almacén de Apartados.</li>
+<li>Cancelar apartados, regresando el producto y dejando lo abonado como saldo a favor.</li>
+<li>Ajustar las formas de pago y el cliente de la factura antes de guardarla.</li>
+<li>Guardar las facturas pendientes de timbrar y timbrarlas bajo demanda, con permiso.</li>
+<li>Filtrar e identificar apartados en Detallado de pedidos y Resumen de pedidos.</li>
+<li>Nueva pestaña "Resultado Apartados" en el Concentrado de cobranza.</li>
+<li>Nueva sección de apartados en el formato Cobranza General.</li>
+</ul>
+<h3 id="22-fuera-de-alcance">2.2 Fuera de Alcance<a class="headerlink" href="#22-fuera-de-alcance" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Crear apartados desde Pedidos (flujo largo).</li>
+<li>Apartar con forma de pago Crédito.</li>
+<li>Cancelar en automático los apartados vencidos. Solo se avisa.</li>
+<li>Generar en automático la entrega cuando el apartado se liquida.</li>
+<li>Que la cancelación manual del cobro afecte el apartado o sus abonos.</li>
+<li>Cambios al flujo de pedidos que no son apartados, salvo los ajustes de factura (RF-12 y RF-13).</li>
+</ul>
+<hr />
+<h2 id="3-actores-y-roles">3. Actores y roles<a class="headerlink" href="#3-actores-y-roles" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Actor / Rol</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Vendedor de punto de venta</td>
+<td>Captura el pedido PV, lo marca como apartado y registra el abono inicial.</td>
+</tr>
+<tr>
+<td>Cajero / Cobranza</td>
+<td>Registra y cancela abonos y genera el cobro del apartado liquidado.</td>
+</tr>
+<tr>
+<td>Almacenista / Embarques</td>
+<td>Crea y finaliza la entrega del producto apartado.</td>
+</tr>
+<tr>
+<td>Facturista</td>
+<td>Revisa y ajusta la factura y la timbra cuando tiene permiso.</td>
+</tr>
+<tr>
+<td>Supervisor / Gerente</td>
+<td>Cancela apartados y consulta su seguimiento.</td>
+</tr>
+<tr>
+<td>Sistema</td>
+<td>Calcula saldos y genera en automático los movimientos de almacén, los movimientos bancarios y los saldos a favor.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4-entidad-a-la-que-aplica">4. Entidad a la que aplica<a class="headerlink" href="#4-entidad-a-la-que-aplica" title="Permanent link">&para;</a></h2>
+<p>Aplica al <strong>Pedido</strong>, en su modalidad <strong>Pedido PV marcado como Apartado</strong>, y a su nuevo detalle <strong>Abonos del pedido</strong>.</p>
+<ul>
+<li><strong>Estatus inicial del apartado:</strong> Autorizado, con saldo pendiente y producto en el almacén de apartados.</li>
+<li><strong>Estatus terminal del apartado:</strong> Finalizado (liquidado, cobrado y entregado) o Cancelado.</li>
+<li><strong>Estatus del abono:</strong> Activo o Cancelado.</li>
+</ul>
+<p>El ciclo de vida del apartado es el siguiente:</p>
+<pre class="mermaid"><code>stateDiagram-v2
+    [*] --&gt; ApartadoConSaldo: Guardar Pedido PV con abono inicial
+    ApartadoConSaldo --&gt; ApartadoConSaldo: Registrar o cancelar abono
+    ApartadoConSaldo --&gt; Liquidado: Saldo = 0
+    Liquidado --&gt; ApartadoConSaldo: Cancelar abono
+    Liquidado --&gt; Cobrado: Botón Cobro
+    Cobrado --&gt; Entregado: Entrega manual finalizada
+    Entregado --&gt; Facturado: Facturar entrega
+    ApartadoConSaldo --&gt; Cancelado: Cancelar apartado
+    Liquidado --&gt; Cancelado: Cancelar apartado
+    Cobrado --&gt; Cancelado: Cancelar cobro y luego el apartado
+    Entregado --&gt; Cancelado: Revertir entrega y cobro, luego cancelar
+    Facturado --&gt; [*]
+    Cancelado --&gt; [*]</code></pre>
+<p>El apartado nace con saldo pendiente y queda liquidado cuando los abonos cubren el total. Un apartado liquidado vuelve a tener saldo si se cancela uno de sus abonos. Después de liquidado se cobra, se entrega y se factura. Se puede cancelar en cualquier etapa anterior a la factura, revirtiendo antes lo que ya se haya hecho.</p>
+<p><a id="indice"></a></p>
+<h2 id="5-índice-de-requerimientos">5. Índice de requerimientos<a class="headerlink" href="#5-índice-de-requerimientos" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p><strong>Navegación rápida:</strong> haz clic en el identificador para ir al detalle.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>RF</th>
+<th>Título</th>
+<th>Sistema</th>
+<th>Aplica a</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#rf-01">RF-01</a></td>
+<td>Crear y guardar pedido de apartado</td>
+<td>Ventas</td>
+<td>Pedido PV, Pedidos (Largo)</td>
+</tr>
+<tr>
+<td><a href="#rf-02">RF-02</a></td>
+<td>Gestionar abonos internos</td>
+<td>Ventas / Cobranza</td>
+<td>Pedidos (Largo)</td>
+</tr>
+<tr>
+<td><a href="#rf-03">RF-03</a></td>
+<td>Gestionar cobros de pedidos de apartado</td>
+<td>Cobranza / Bancos</td>
+<td>Pedido PV, Pedidos (Largo)</td>
+</tr>
+<tr>
+<td><a href="#rf-04">RF-04</a></td>
+<td>Inventario y entregas de apartados</td>
+<td>Inventarios / Embarques</td>
+<td>Movimientos de almacén, Entregas</td>
+</tr>
+<tr>
+<td><a href="#rf-05">RF-05</a></td>
+<td>Timbrado manual de facturas</td>
+<td>Facturación</td>
+<td>Facturas</td>
+</tr>
+<tr>
+<td><a href="#rf-06">RF-06</a></td>
+<td>Consultar pedidos de apartado</td>
+<td>Consultas / Reportes</td>
+<td>Ventas, Cuentas por cobrar</td>
+</tr>
+</tbody>
+</table>
+<h2 id="---">---<a class="headerlink" href="#---" title="Permanent link">&para;</a></h2>
+<p><a id="rf-01"></a></p>
+<h1 id="rf-01--crear-y-guardar-pedido-de-apartado">RF-01 — Crear y guardar pedido de apartado<a class="headerlink" href="#rf-01--crear-y-guardar-pedido-de-apartado" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>RF-02, RF-04</td>
+</tr>
+</tbody>
+</table>
+<h2 id="objetivo">Objetivo<a class="headerlink" href="#objetivo" title="Permanent link">&para;</a></h2>
+<p>Que el cliente pueda reservar productos dejando un anticipo, sin que el producto se entregue ni se venda a otra persona.</p>
+<h2 id="descripción">Descripción<a class="headerlink" href="#descripción" title="Permanent link">&para;</a></h2>
+<p>El sistema deberá permitir marcar un Pedido PV como <strong>Apartado</strong>. Al guardarlo, deberá pedir el abono inicial. Además, no deberá generar la entrega automática que hoy se crea en punto de venta. En su lugar, moverá el producto del almacén de venta al almacén de apartados de la sucursal.</p>
+<p>El apartado solo se crea desde Pedido PV. En Pedidos (Largo) se puede ver el apartado y administrar sus abonos, pero no se puede modificar.</p>
+<h3 id="información--atributos">Información / atributos<a class="headerlink" href="#información--atributos" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Obligatorio</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Apartado</td>
+<td>Sí (Sí/No)</td>
+<td>Indica que el pedido es un apartado.</td>
+</tr>
+<tr>
+<td>Fecha vigencia apartado</td>
+<td>Sí, si es apartado</td>
+<td>Fecha límite para liquidar.</td>
+</tr>
+<tr>
+<td>Saldo apartado</td>
+<td>Calculado, solo lectura</td>
+<td>Total del pedido menos los abonos activos.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="diseño-uxui">Diseño UX/UI<a class="headerlink" href="#diseño-uxui" title="Permanent link">&para;</a></h3>
+<ul>
+<li>En Pedido PV se agregan los campos <strong>Apartado</strong> y <strong>Fecha vigencia apartado</strong>. Al guardar un apartado aparece una ventana para capturar el abono inicial: forma de pago, importe, cuenta bancaria e indicador de abono inicial (ya marcado).</li>
+<li>En Pedidos (Largo) se agrega la pestaña <strong>Abonos</strong>, visible solo cuando el pedido es apartado.</li>
+</ul>
+<h2 id="hu-11--crear-apartado-desde-pedido-pv">HU-1.1 — Crear apartado desde Pedido PV<a class="headerlink" href="#hu-11--crear-apartado-desde-pedido-pv" title="Permanent link">&para;</a></h2>
+<p>Como vendedor de punto de venta, quiero marcar un pedido como apartado y registrar el abono inicial, para reservar el producto al cliente mientras termina de pagarlo.</p>
+<h3 id="reglas-de-negocio">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio" title="Permanent link">&para;</a></h3>
+<p><strong>RN-1.1</strong> Si el pedido se marca como Apartado, la fecha de vigencia es obligatoria y debe ser posterior a la fecha del pedido.</p>
+<p><strong>RN-1.2</strong> Un pedido solo se guarda como apartado si tiene un abono inicial registrado en ese momento.</p>
+<p><strong>RN-1.3</strong> El abono inicial debe ser de al menos el 30% del total del pedido y no mayor al total.</p>
+<p><strong>RN-1.4</strong> Los apartados no aceptan la forma de pago Crédito.</p>
+<p><strong>RN-1.5</strong> Al guardar, el saldo del apartado empieza en el total del pedido y en el mismo momento se le descuenta el abono inicial.</p>
+<p><strong>RN-1.6</strong> Un apartado no genera la entrega automática de punto de venta.</p>
+<p><strong>RN-1.7</strong> Al guardar, el sistema genera los movimientos de traspaso al almacén de apartados (ver RF-04).</p>
+<h3 id="criterios-de-aceptación">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación" title="Permanent link">&para;</a></h3>
+<p><strong>CA-1.1.1 — Guardar apartado con abono inicial</strong>
+Dado que el vendedor captura un Pedido PV de $1,000, lo marca como Apartado y captura una vigencia válida
+Cuando guarda y registra un abono inicial de $300 en efectivo
+Entonces el sistema guarda el pedido como apartado con saldo de $700, asocia el abono marcado como inicial y no crea ninguna entrega.</p>
+<p><strong>CA-1.1.2 — Vigencia obligatoria</strong>
+Dado que el pedido está marcado como Apartado y no tiene fecha de vigencia
+Cuando el vendedor intenta guardar
+Entonces el sistema no guarda e informa que la fecha de vigencia es obligatoria.</p>
+<p><strong>CA-1.1.3 — Abono inicial menor al 30%</strong>
+Dado un apartado de $1,000
+Cuando el vendedor captura un abono inicial de $200
+Entonces el sistema rechaza el abono e informa que el mínimo es $300.</p>
+<p><strong>CA-1.1.4 — Sin abono inicial no hay apartado</strong>
+Dado que se abrió la ventana de abono inicial
+Cuando el vendedor la cierra sin registrar el abono
+Entonces el pedido no se guarda como apartado.</p>
+<p><strong>CA-1.1.5 — Crédito no permitido</strong>
+Dado que se captura el abono inicial
+Cuando el vendedor elige la forma de pago Crédito
+Entonces el sistema no la permite.</p>
+<p><strong>CA-1.1.6 — Pedido PV normal sin cambios</strong>
+Dado un Pedido PV que no está marcado como Apartado
+Cuando el vendedor lo guarda
+Entonces el sistema sigue el flujo actual: no pide abono y genera la entrega automática.</p>
+<h2 id="hu-12--ver-y-administrar-el-apartado-en-pedidos-largo">HU-1.2 — Ver y administrar el apartado en Pedidos (Largo)<a class="headerlink" href="#hu-12--ver-y-administrar-el-apartado-en-pedidos-largo" title="Permanent link">&para;</a></h2>
+<p>Como cajero, quiero abrir el apartado en Pedidos (Largo) y ver sus abonos, para darle seguimiento sin alterar lo que se vendió.</p>
+<h3 id="reglas-de-negocio_1">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_1" title="Permanent link">&para;</a></h3>
+<p><strong>RN-1.8</strong> En Pedidos (Largo) no se pueden crear pedidos de apartado. El campo Apartado no está disponible al capturar un pedido nuevo.</p>
+<p><strong>RN-1.9</strong> Un apartado creado desde Pedido PV es de solo lectura en Pedidos (Largo). Sus botones de acción están deshabilitados, excepto la pestaña Abonos y el botón Cobro (RF-03).</p>
+<p><strong>RN-1.10</strong> La pestaña Abonos solo se muestra, y solo se puede editar, cuando el pedido es apartado.</p>
+<h3 id="criterios-de-aceptación_1">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_1" title="Permanent link">&para;</a></h3>
+<p><strong>CA-1.2.1 — Apartado en solo lectura</strong>
+Dado un apartado creado en Pedido PV
+Cuando el cajero lo abre en Pedidos (Largo)
+Entonces todos los datos y acciones aparecen bloqueados, excepto la pestaña Abonos.</p>
+<p><strong>CA-1.2.2 — Pestaña Abonos solo en apartados</strong>
+Dado un pedido normal
+Cuando se abre en Pedidos (Largo)
+Entonces la pestaña Abonos no se muestra.</p>
+<p><strong>CA-1.2.3 — No crear apartados en Pedidos (Largo)</strong>
+Dado que un usuario captura un pedido nuevo en Pedidos (Largo)
+Cuando busca la opción Apartado
+Entonces la opción no está disponible.</p>
+<h2 id="hu-13--cancelar-un-apartado">HU-1.3 — Cancelar un apartado<a class="headerlink" href="#hu-13--cancelar-un-apartado" title="Permanent link">&para;</a></h2>
+<p>Como supervisor, quiero cancelar un apartado, para liberar el producto y dejarle al cliente su dinero como saldo a favor.</p>
+<h3 id="reglas-de-negocio_2">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_2" title="Permanent link">&para;</a></h3>
+<p><strong>RN-1.11</strong> Si el apartado ya tiene una entrega, primero se debe revertir: cancelar o desembarcar la entrega para que el producto regrese al almacén de apartados. Después se cancela el cobro, si existe, y por último el apartado.</p>
+<p><strong>RN-1.12</strong> No se puede cancelar un apartado que ya está facturado.</p>
+<p><strong>RN-1.13</strong> Al cancelar, el sistema regresa el producto del almacén de apartados al almacén y ubicación de donde salió, con movimientos de traspaso inversos.</p>
+<p><strong>RN-1.14</strong> Al cancelar, el total de los abonos activos se convierte en <strong>saldo a favor</strong> del cliente y los abonos quedan cancelados.</p>
+<p><strong>RN-1.15</strong> Si la fecha de vigencia ya pasó y el apartado no está liquidado, el sistema muestra una alerta en el pedido. No lo cancela solo.</p>
+<h3 id="criterios-de-aceptación_2">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_2" title="Permanent link">&para;</a></h3>
+<p><strong>CA-1.3.1 — Cancelar apartado sin entrega</strong>
+Dado un apartado con $600 abonados y sin entrega
+Cuando el supervisor lo cancela
+Entonces el producto regresa al almacén de venta, los abonos quedan cancelados y el cliente tiene $600 de saldo a favor.</p>
+<p><strong>CA-1.3.2 — Cancelar apartado con entrega</strong>
+Dado un apartado con una entrega finalizada y no facturada
+Cuando el supervisor intenta cancelarlo
+Entonces el sistema le pide revertir primero la entrega y el cobro, y después le permite cancelar.</p>
+<p><strong>CA-1.3.3 — Apartado facturado</strong>
+Dado un apartado ya facturado
+Cuando el supervisor intenta cancelarlo
+Entonces el sistema lo impide e informa que primero se debe cancelar la factura.</p>
+<p><strong>CA-1.3.4 — Vigencia vencida</strong>
+Dado un apartado con saldo y la vigencia vencida
+Cuando se abre el pedido
+Entonces el sistema muestra la alerta "Apartado vencido" y permite seguir abonando o cancelarlo.</p>
+<h3 id="casos-de-prueba">Casos de prueba<a class="headerlink" href="#casos-de-prueba" title="Permanent link">&para;</a></h3>
+<p><strong>CP-1.1.1 — Apartado exitoso con 30%</strong>
+Verifica: CA-1.1.1 · RN-1.3 · RN-1.5
+Dado un Pedido PV de $1,000 marcado como Apartado con vigencia de 30 días
+Cuando se guarda con un abono inicial de $300 en efectivo
+Entonces el saldo queda en $700, existe un abono inicial activo y no hay entregas.</p>
+<p><strong>CP-1.1.2 — Abono inicial mayor al 30%</strong>
+Verifica: CA-1.1.1 · RN-1.3
+Dado un apartado de $1,000
+Cuando el abono inicial es de $500
+Entonces se guarda y el saldo queda en $500.</p>
+<p><strong>CP-1.1.3 — Falta la vigencia</strong>
+Verifica: CA-1.1.2 · RN-1.1
+Dado un apartado sin fecha de vigencia
+Cuando se intenta guardar
+Entonces se muestra el mensaje de campo obligatorio.</p>
+<p><strong>CP-1.1.4 — Vigencia anterior a la fecha del pedido</strong>
+Verifica: CA-1.1.2 · RN-1.1
+Dado un apartado con vigencia de ayer
+Cuando se intenta guardar
+Entonces el sistema lo rechaza.</p>
+<p><strong>CP-1.1.5 — Abono inicial de 29%</strong>
+Verifica: CA-1.1.3 · RN-1.3
+Dado un apartado de $1,000
+Cuando el abono inicial es de $290
+Entonces el sistema lo rechaza.</p>
+<p><strong>CP-1.1.6 — Abono inicial mayor al total</strong>
+Verifica: CA-1.1.3 · RN-1.3
+Dado un apartado de $1,000
+Cuando el abono inicial es de $1,200
+Entonces el sistema lo rechaza.</p>
+<p><strong>CP-1.1.7 — Se cierra la ventana del abono</strong>
+Verifica: CA-1.1.4 · RN-1.2
+Dado que se abrió la ventana de abono inicial
+Cuando el usuario la cancela
+Entonces no queda ningún pedido apartado guardado.</p>
+<p><strong>CP-1.1.8 — Forma de pago Crédito</strong>
+Verifica: CA-1.1.5 · RN-1.4
+Dado que se captura el abono inicial
+Cuando se elige Crédito
+Entonces el sistema no la acepta.</p>
+<p><strong>CP-1.1.9 — Pedido PV normal</strong>
+Verifica: CA-1.1.6 · RN-1.6
+Dado un Pedido PV no marcado como Apartado
+Cuando se guarda
+Entonces se genera la entrega automática como hoy.</p>
+<p><strong>CP-1.2.1 — Edición bloqueada en Pedidos (Largo)</strong>
+Verifica: CA-1.2.1 · RN-1.9
+Dado un apartado abierto en Pedidos (Largo)
+Cuando el usuario intenta cambiar una cantidad o usar Clonar o Finalizar
+Entonces los campos y botones aparecen deshabilitados.</p>
+<p><strong>CP-1.2.2 — Abonos editables en Pedidos (Largo)</strong>
+Verifica: CA-1.2.1 · RN-1.9
+Dado un apartado abierto en Pedidos (Largo)
+Cuando el usuario entra a la pestaña Abonos
+Entonces puede registrar un abono.</p>
+<p><strong>CP-1.2.3 — Pedido normal sin pestaña Abonos</strong>
+Verifica: CA-1.2.2 · RN-1.10
+Dado un pedido no apartado
+Cuando se abre en Pedidos (Largo)
+Entonces no aparece la pestaña Abonos.</p>
+<p><strong>CP-1.2.4 — Sin opción Apartado en Pedidos (Largo)</strong>
+Verifica: CA-1.2.3 · RN-1.8
+Dado un pedido nuevo en Pedidos (Largo)
+Cuando el usuario revisa los campos
+Entonces Apartado no está disponible.</p>
+<p><strong>CP-1.3.1 — Cancelar sin entrega</strong>
+Verifica: CA-1.3.1 · RN-1.13 · RN-1.14
+Dado un apartado con $600 abonados
+Cuando se cancela
+Entonces hay movimientos de traspaso inversos, los abonos quedan cancelados y el cliente tiene $600 de saldo a favor.</p>
+<p><strong>CP-1.3.2 — Cancelar con entrega</strong>
+Verifica: CA-1.3.2 · RN-1.11
+Dado un apartado con una entrega finalizada
+Cuando se intenta cancelar
+Entonces el sistema lo bloquea hasta que se revierten la entrega y el cobro.</p>
+<p><strong>CP-1.3.3 — Cancelar apartado facturado</strong>
+Verifica: CA-1.3.3 · RN-1.12
+Dado un apartado facturado
+Cuando se intenta cancelar
+Entonces el sistema lo impide.</p>
+<p><strong>CP-1.3.4 — Alerta de vencimiento</strong>
+Verifica: CA-1.3.4 · RN-1.15
+Dado un apartado con saldo y la vigencia vencida
+Cuando se abre
+Entonces se muestra "Apartado vencido" y el apartado sigue vigente.</p>
+<table>
+<thead>
+<tr>
+<th>CA</th>
+<th>Caso(s) de prueba</th>
+<th>Escenarios cubiertos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CA-1.1.1</td>
+<td>CP-1.1.1, CP-1.1.2</td>
+<td>Camino feliz, alternativo</td>
+</tr>
+<tr>
+<td>CA-1.1.2</td>
+<td>CP-1.1.3, CP-1.1.4</td>
+<td>Validación</td>
+</tr>
+<tr>
+<td>CA-1.1.3</td>
+<td>CP-1.1.5, CP-1.1.6</td>
+<td>Validación de límites</td>
+</tr>
+<tr>
+<td>CA-1.1.4</td>
+<td>CP-1.1.7</td>
+<td>Error</td>
+</tr>
+<tr>
+<td>CA-1.1.5</td>
+<td>CP-1.1.8</td>
+<td>Validación</td>
+</tr>
+<tr>
+<td>CA-1.1.6</td>
+<td>CP-1.1.9</td>
+<td>Alternativo (sin regresión)</td>
+</tr>
+<tr>
+<td>CA-1.2.1</td>
+<td>CP-1.2.1, CP-1.2.2</td>
+<td>Permisos y visibilidad</td>
+</tr>
+<tr>
+<td>CA-1.2.2</td>
+<td>CP-1.2.3</td>
+<td>Visibilidad</td>
+</tr>
+<tr>
+<td>CA-1.2.3</td>
+<td>CP-1.2.4</td>
+<td>Restricción</td>
+</tr>
+<tr>
+<td>CA-1.3.1</td>
+<td>CP-1.3.1</td>
+<td>Camino feliz</td>
+</tr>
+<tr>
+<td>CA-1.3.2</td>
+<td>CP-1.3.2</td>
+<td>Estado no permitido</td>
+</tr>
+<tr>
+<td>CA-1.3.3</td>
+<td>CP-1.3.3</td>
+<td>Estado no permitido</td>
+</tr>
+<tr>
+<td>CA-1.3.4</td>
+<td>CP-1.3.4</td>
+<td>Alternativo</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>Regla transversal:</strong>
+El apartado no sigue el flujo automático de punto de venta (entrega y cobro inmediatos). La entrega (RF-04) y el cobro (RF-03) solo ocurren después de liquidarlo.</p>
+<p><a href="#indice">⬆ Volver al índice de requerimientos</a></p>
+<hr />
+<p><a id="rf-02"></a></p>
+<h1 id="rf-02--gestionar-abonos-internos">RF-02 — Gestionar abonos internos<a class="headerlink" href="#rf-02--gestionar-abonos-internos" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>RF-01</td>
+</tr>
+</tbody>
+</table>
+<h2 id="descripción_1">Descripción<a class="headerlink" href="#descripción_1" title="Permanent link">&para;</a></h2>
+<p>El sistema deberá permitir registrar y cancelar abonos de un pedido de apartado desde la pestaña <strong>Abonos</strong> de Pedidos (Largo), y deberá recalcular el saldo en automático. Cuando el saldo llegue a cero, el pedido quedará <strong>liquidado</strong>: se habilitará el botón Cobro (RF-03) y se podrá crear la entrega (RF-04).</p>
+<h3 id="información--atributos_1">Información / atributos<a class="headerlink" href="#información--atributos_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Obligatorio</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Número de abono</td>
+<td>Automático</td>
+<td>Consecutivo dentro del pedido.</td>
+</tr>
+<tr>
+<td>Fecha</td>
+<td>Automático</td>
+<td>Fecha y hora del registro.</td>
+</tr>
+<tr>
+<td>Forma de pago</td>
+<td>Sí</td>
+<td>Cualquier forma de pago excepto Crédito.</td>
+</tr>
+<tr>
+<td>Importe</td>
+<td>Sí</td>
+<td>Mayor a cero y no mayor al saldo pendiente.</td>
+</tr>
+<tr>
+<td>Cuenta bancaria</td>
+<td>Sí</td>
+<td>La cuenta donde entra el dinero. Para efectivo y aplicación de anticipos es la cuenta interna de efectivo de la sucursal.</td>
+</tr>
+<tr>
+<td>Moneda</td>
+<td>Automático</td>
+<td>La moneda del pedido.</td>
+</tr>
+<tr>
+<td>Inicial</td>
+<td>Automático</td>
+<td>Indica si fue el abono inicial.</td>
+</tr>
+<tr>
+<td>Estatus</td>
+<td>Automático</td>
+<td>Activo o Cancelado.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="hu-21--registrar-abono">HU-2.1 — Registrar abono<a class="headerlink" href="#hu-21--registrar-abono" title="Permanent link">&para;</a></h2>
+<p>Como cajero, quiero registrar los abonos que el cliente va dejando, para saber en todo momento cuánto le falta pagar.</p>
+<h3 id="reglas-de-negocio_3">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_3" title="Permanent link">&para;</a></h3>
+<p><strong>RN-2.1</strong> Los abonos solo se registran desde la pestaña Abonos de Pedidos (Largo).</p>
+<p><strong>RN-2.2</strong> El importe debe ser mayor a cero y no mayor al saldo pendiente.</p>
+<p><strong>RN-2.3</strong> Cada abono activo resta su importe del saldo del apartado.</p>
+<p><strong>RN-2.4</strong> Con saldo en cero el pedido queda liquidado y ya no acepta más abonos.</p>
+<p><strong>RN-2.5</strong> No se pueden registrar abonos en apartados cancelados.</p>
+<h3 id="criterios-de-aceptación_3">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_3" title="Permanent link">&para;</a></h3>
+<p><strong>CA-2.1.1 — Registrar abono</strong>
+Dado un apartado con saldo de $700
+Cuando el cajero registra un abono de $200 con tarjeta de débito
+Entonces el abono queda activo y el saldo baja a $500.</p>
+<p><strong>CA-2.1.2 — Liquidar apartado</strong>
+Dado un apartado con saldo de $500
+Cuando el cajero registra un abono de $500
+Entonces el saldo queda en $0, el pedido se marca como liquidado y se habilita el botón Cobro.</p>
+<p><strong>CA-2.1.3 — Importe mayor al saldo</strong>
+Dado un apartado con saldo de $500
+Cuando el cajero captura $600
+Entonces el sistema rechaza el abono.</p>
+<p><strong>CA-2.1.4 — Apartado cancelado</strong>
+Dado un apartado cancelado
+Cuando el cajero intenta abonar
+Entonces la pestaña Abonos no permite agregar registros.</p>
+<h2 id="hu-22--cancelar-abono">HU-2.2 — Cancelar abono<a class="headerlink" href="#hu-22--cancelar-abono" title="Permanent link">&para;</a></h2>
+<p>Como cajero, quiero cancelar un abono registrado por error, para que el saldo del cliente sea correcto.</p>
+<h3 id="reglas-de-negocio_4">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_4" title="Permanent link">&para;</a></h3>
+<p><strong>RN-2.6</strong> Al cancelar un abono, su importe se vuelve a sumar al saldo.</p>
+<p><strong>RN-2.7</strong> Un abono no se puede cancelar si el apartado ya tiene un cobro vigente. Primero hay que cancelar el cobro.</p>
+<p><strong>RN-2.8</strong> El abono inicial no se puede cancelar mientras el apartado esté activo, porque un apartado debe tener abono inicial (RN-1.2).</p>
+<h3 id="criterios-de-aceptación_4">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_4" title="Permanent link">&para;</a></h3>
+<p><strong>CA-2.2.1 — Cancelar abono</strong>
+Dado un apartado con saldo de $300 y un abono activo de $200
+Cuando el cajero lo cancela
+Entonces el abono queda cancelado y el saldo sube a $500.</p>
+<p><strong>CA-2.2.2 — Cancelar abono con cobro vigente</strong>
+Dado un apartado liquidado y cobrado
+Cuando el cajero intenta cancelar un abono
+Entonces el sistema lo impide e indica que primero se debe cancelar el cobro.</p>
+<p><strong>CA-2.2.3 — Cancelar abono inicial</strong>
+Dado un apartado activo
+Cuando el cajero intenta cancelar el abono inicial
+Entonces el sistema lo impide.</p>
+<h3 id="casos-de-prueba_1">Casos de prueba<a class="headerlink" href="#casos-de-prueba_1" title="Permanent link">&para;</a></h3>
+<p><strong>CP-2.1.1 — Abono parcial</strong>
+Verifica: CA-2.1.1 · RN-2.3
+Dado un saldo de $700
+Cuando se abonan $200
+Entonces el saldo queda en $500.</p>
+<p><strong>CP-2.1.2 — Abono que liquida</strong>
+Verifica: CA-2.1.2 · RN-2.4
+Dado un saldo de $500
+Cuando se abonan $500
+Entonces el saldo queda en $0 y el botón Cobro se habilita.</p>
+<p><strong>CP-2.1.3 — Abono después de liquidar</strong>
+Verifica: CA-2.1.2 · RN-2.4
+Dado un apartado con saldo $0
+Cuando se intenta otro abono
+Entonces el sistema lo rechaza.</p>
+<p><strong>CP-2.1.4 — Importe mayor al saldo</strong>
+Verifica: CA-2.1.3 · RN-2.2
+Dado un saldo de $500
+Cuando se capturan $600
+Entonces el sistema lo rechaza.</p>
+<p><strong>CP-2.1.5 — Importe cero</strong>
+Verifica: CA-2.1.3 · RN-2.2
+Dado un apartado con saldo
+Cuando se capturan $0
+Entonces el sistema lo rechaza.</p>
+<p><strong>CP-2.1.6 — Abonar a un apartado cancelado</strong>
+Verifica: CA-2.1.4 · RN-2.5
+Dado un apartado cancelado
+Cuando se abre la pestaña Abonos
+Entonces no se pueden agregar abonos.</p>
+<p><strong>CP-2.1.7 — Abonar desde Pedido PV</strong>
+Verifica: CA-2.1.1 · RN-2.1
+Dado un apartado abierto en Pedido PV
+Cuando el usuario busca registrar un abono
+Entonces la opción no existe en esa pantalla.</p>
+<p><strong>CP-2.2.1 — Cancelación con reversa de saldo</strong>
+Verifica: CA-2.2.1 · RN-2.6
+Dado un abono activo de $200 y un saldo de $300
+Cuando se cancela el abono
+Entonces el saldo queda en $500.</p>
+<p><strong>CP-2.2.2 — Abono bloqueado por cobro</strong>
+Verifica: CA-2.2.2 · RN-2.7
+Dado un apartado cobrado
+Cuando se intenta cancelar un abono
+Entonces el sistema lo impide.</p>
+<p><strong>CP-2.2.3 — Abono inicial protegido</strong>
+Verifica: CA-2.2.3 · RN-2.8
+Dado un apartado activo
+Cuando se intenta cancelar el abono inicial
+Entonces el sistema lo impide.</p>
+<table>
+<thead>
+<tr>
+<th>CA</th>
+<th>Caso(s) de prueba</th>
+<th>Escenarios cubiertos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CA-2.1.1</td>
+<td>CP-2.1.1, CP-2.1.7</td>
+<td>Camino feliz, Permisos</td>
+</tr>
+<tr>
+<td>CA-2.1.2</td>
+<td>CP-2.1.2, CP-2.1.3</td>
+<td>Camino feliz, Error</td>
+</tr>
+<tr>
+<td>CA-2.1.3</td>
+<td>CP-2.1.4, CP-2.1.5</td>
+<td>Validación</td>
+</tr>
+<tr>
+<td>CA-2.1.4</td>
+<td>CP-2.1.6</td>
+<td>Estado no permitido</td>
+</tr>
+<tr>
+<td>CA-2.2.1</td>
+<td>CP-2.2.1</td>
+<td>Camino feliz</td>
+</tr>
+<tr>
+<td>CA-2.2.2</td>
+<td>CP-2.2.2</td>
+<td>Estado no permitido</td>
+</tr>
+<tr>
+<td>CA-2.2.3</td>
+<td>CP-2.2.3</td>
+<td>Validación</td>
+</tr>
+</tbody>
+</table>
+<p><a href="#indice">⬆ Volver al índice de requerimientos</a></p>
+<hr />
+<p><a id="rf-03"></a></p>
+<h1 id="rf-03--gestionar-cobros-de-pedidos-de-apartado">RF-03 — Gestionar cobros de pedidos de apartado<a class="headerlink" href="#rf-03--gestionar-cobros-de-pedidos-de-apartado" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>RF-02</td>
+</tr>
+</tbody>
+</table>
+<h2 id="descripción_2">Descripción<a class="headerlink" href="#descripción_2" title="Permanent link">&para;</a></h2>
+<p>El sistema deberá habilitar el botón <strong>Cobro</strong> en Pedido PV y en Pedidos (Largo) cuando el apartado esté liquidado y no tenga otro cobro vigente, sin importar si ya se entregó el producto. Al presionarlo, el sistema genera el cobro con los importes y las formas de pago de los abonos, sin abrir la ventana de captura, y registra los movimientos bancarios. Los pedidos normales conservan el flujo actual.</p>
+<h2 id="hu-31--cobrar-apartado-liquidado">HU-3.1 — Cobrar apartado liquidado<a class="headerlink" href="#hu-31--cobrar-apartado-liquidado" title="Permanent link">&para;</a></h2>
+<p>Como cajero, quiero generar el cobro de un apartado liquidado con un solo clic, para no volver a capturar pagos que ya registré como abonos.</p>
+<h3 id="reglas-de-negocio_5">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_5" title="Permanent link">&para;</a></h3>
+<p><strong>RN-3.1</strong> El botón Cobro solo está activo si el apartado tiene saldo cero y no tiene un cobro vigente.</p>
+<p><strong>RN-3.2</strong> El cobro se arma con los abonos activos: un renglón por forma de pago, con la suma de los abonos de esa forma.</p>
+<p><strong>RN-3.3</strong> Cada forma de pago genera un movimiento bancario <strong>en tránsito</strong> en su cuenta. Las formas bancarizadas (cheque, transferencia, tarjeta de crédito y tarjeta de débito) usan la cuenta del abono. Las internas (efectivo y aplicación de anticipos) usan la cuenta interna de efectivo de la sucursal.</p>
+<p><strong>RN-3.4</strong> Al generarse el cobro, el pedido queda marcado como <strong>cobrado</strong>.</p>
+<p><strong>RN-3.5</strong> Si se cancela el cobro a mano, el apartado y sus abonos no cambian. El pedido deja de estar cobrado y el botón Cobro se vuelve a habilitar.</p>
+<h3 id="criterios-de-aceptación_5">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_5" title="Permanent link">&para;</a></h3>
+<p><strong>CA-3.1.1 — Cobro automático</strong>
+Dado un apartado de $1,000 liquidado con $300 en efectivo y $700 con tarjeta de débito
+Cuando el cajero presiona Cobro
+Entonces se genera un cobro de $1,000 con esos dos renglones, sin abrir la ventana de captura, y el pedido queda cobrado.</p>
+<p><strong>CA-3.1.2 — Movimientos bancarios en tránsito</strong>
+Dado el cobro anterior
+Cuando se guarda
+Entonces se crea un movimiento en tránsito de $300 en la cuenta de efectivo y otro de $700 en la cuenta bancaria del abono con tarjeta.</p>
+<p><strong>CA-3.1.3 — Botón deshabilitado</strong>
+Dado un apartado con saldo de $200, o uno con cobro vigente
+Cuando se abre en Pedido PV o en Pedidos (Largo)
+Entonces el botón Cobro aparece deshabilitado.</p>
+<p><strong>CA-3.1.4 — Cancelar el cobro</strong>
+Dado un apartado cobrado
+Cuando el cajero cancela el cobro
+Entonces los abonos y el saldo no cambian, el pedido deja de estar cobrado y el botón Cobro se habilita de nuevo.</p>
+<h2 id="hu-32--cobro-de-pedido-normal">HU-3.2 — Cobro de pedido normal<a class="headerlink" href="#hu-32--cobro-de-pedido-normal" title="Permanent link">&para;</a></h2>
+<p>Como cajero, quiero que los pedidos normales se cobren igual que hoy, para no cambiar la operación diaria.</p>
+<h3 id="reglas-de-negocio_6">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_6" title="Permanent link">&para;</a></h3>
+<p><strong>RN-3.6</strong> En los pedidos no apartados, el botón Cobro abre la ventana de captura con sus reglas actuales.</p>
+<h3 id="criterios-de-aceptación_6">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_6" title="Permanent link">&para;</a></h3>
+<p><strong>CA-3.2.1 — Pedido normal</strong>
+Dado un Pedido PV normal con su entrega finalizada
+Cuando el cajero presiona Cobro
+Entonces se abre la ventana de captura de cobro, como hoy.</p>
+<h3 id="casos-de-prueba_2">Casos de prueba<a class="headerlink" href="#casos-de-prueba_2" title="Permanent link">&para;</a></h3>
+<p><strong>CP-3.1.1 — Cobro con dos formas de pago</strong>
+Verifica: CA-3.1.1 · RN-3.2 · RN-3.4
+Dado un apartado liquidado con $300 en efectivo y $700 con tarjeta de débito
+Cuando se presiona Cobro
+Entonces el cobro tiene dos renglones por $1,000 y el pedido queda cobrado.</p>
+<p><strong>CP-3.1.2 — Varios abonos con la misma forma de pago</strong>
+Verifica: CA-3.1.1 · RN-3.2
+Dado un apartado con tres abonos en efectivo de $300, $300 y $400
+Cuando se cobra
+Entonces el cobro tiene un solo renglón de efectivo por $1,000.</p>
+<p><strong>CP-3.1.3 — Cobro antes de la entrega</strong>
+Verifica: CA-3.1.1 · RN-3.1
+Dado un apartado liquidado y sin entrega
+Cuando se presiona Cobro
+Entonces el cobro se genera.</p>
+<p><strong>CP-3.1.4 — Movimientos bancarios por cuenta</strong>
+Verifica: CA-3.1.2 · RN-3.3
+Dado un cobro de apartado con efectivo y transferencia
+Cuando se guarda
+Entonces cada forma de pago tiene su movimiento en tránsito en la cuenta que le corresponde.</p>
+<p><strong>CP-3.1.5 — Botón deshabilitado con saldo</strong>
+Verifica: CA-3.1.3 · RN-3.1
+Dado un apartado con saldo de $200
+Cuando se abre
+Entonces el botón Cobro está deshabilitado.</p>
+<p><strong>CP-3.1.6 — Botón deshabilitado con cobro vigente</strong>
+Verifica: CA-3.1.3 · RN-3.1
+Dado un apartado ya cobrado
+Cuando se abre
+Entonces el botón Cobro está deshabilitado.</p>
+<p><strong>CP-3.1.7 — Botón también en Pedidos (Largo)</strong>
+Verifica: CA-3.1.3 · RN-3.1
+Dado un apartado liquidado abierto en Pedidos (Largo)
+Cuando se revisan las acciones
+Entonces el botón Cobro está habilitado.</p>
+<p><strong>CP-3.1.8 — Cancelar el cobro</strong>
+Verifica: CA-3.1.4 · RN-3.5
+Dado un apartado cobrado
+Cuando se cancela el cobro
+Entonces los abonos siguen activos, el saldo sigue en $0 y el botón Cobro se habilita.</p>
+<p><strong>CP-3.2.1 — Pedido normal sin cambios</strong>
+Verifica: CA-3.2.1 · RN-3.6
+Dado un Pedido PV normal
+Cuando se presiona Cobro
+Entonces aparece la ventana de captura de cobro.</p>
+<table>
+<thead>
+<tr>
+<th>CA</th>
+<th>Caso(s) de prueba</th>
+<th>Escenarios cubiertos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CA-3.1.1</td>
+<td>CP-3.1.1, CP-3.1.2, CP-3.1.3</td>
+<td>Camino feliz, alternativos</td>
+</tr>
+<tr>
+<td>CA-3.1.2</td>
+<td>CP-3.1.4</td>
+<td>Camino feliz</td>
+</tr>
+<tr>
+<td>CA-3.1.3</td>
+<td>CP-3.1.5, CP-3.1.6, CP-3.1.7</td>
+<td>Visibilidad</td>
+</tr>
+<tr>
+<td>CA-3.1.4</td>
+<td>CP-3.1.8</td>
+<td>Alternativo</td>
+</tr>
+<tr>
+<td>CA-3.2.1</td>
+<td>CP-3.2.1</td>
+<td>Sin regresión</td>
+</tr>
+</tbody>
+</table>
+<p><a href="#indice">⬆ Volver al índice de requerimientos</a></p>
+<hr />
+<p><a id="rf-04"></a></p>
+<h1 id="rf-04--inventario-y-entregas-de-apartados">RF-04 — Inventario y entregas de apartados<a class="headerlink" href="#rf-04--inventario-y-entregas-de-apartados" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>RF-01</td>
+</tr>
+</tbody>
+</table>
+<h2 id="descripción_3">Descripción<a class="headerlink" href="#descripción_3" title="Permanent link">&para;</a></h2>
+<p>El sistema deberá manejar un <strong>almacén virtual de Apartados por sucursal</strong>. Al guardar un apartado, el producto pasa del almacén de venta a ese almacén. Cuando el cliente recoge, el usuario crea la entrega a mano y el producto sale del almacén de Apartados. Los movimientos de almacén que genere un apartado quedarán ligados al pedido.</p>
+<h3 id="nuevas-operaciones-de-almacén">Nuevas operaciones de almacén<a class="headerlink" href="#nuevas-operaciones-de-almacén" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Operación</th>
+<th>Tipo</th>
+<th>Efecto</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Salida por traspaso de apartado</td>
+<td>Salida</td>
+<td>Resta del almacén y la ubicación actuales del producto.</td>
+</tr>
+<tr>
+<td>Entrada por traspaso de apartado</td>
+<td>Entrada</td>
+<td>Suma al almacén de Apartados, en la ubicación predeterminada del producto.</td>
+</tr>
+<tr>
+<td>Entrega de apartado</td>
+<td>Salida</td>
+<td>Resta del almacén de Apartados, en la ubicación predeterminada, al entregar.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="hu-41--relacionar-movimientos-de-almacén-con-el-apartado">HU-4.1 — Relacionar movimientos de almacén con el apartado<a class="headerlink" href="#hu-41--relacionar-movimientos-de-almacén-con-el-apartado" title="Permanent link">&para;</a></h2>
+<p>Como almacenista, quiero que los movimientos de un apartado queden ligados a su pedido, para rastrear dónde está el producto apartado.</p>
+<h3 id="reglas-de-negocio_7">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_7" title="Permanent link">&para;</a></h3>
+<p><strong>RN-4.1</strong> Los movimientos de almacén tienen un campo <strong>Pedido</strong> que solo se llena cuando un apartado genera el movimiento. En los demás movimientos queda vacío.</p>
+<p><strong>RN-4.2</strong> Al guardar el apartado se generan, por cada producto, una Salida por traspaso de apartado y una Entrada por traspaso de apartado por la misma cantidad.</p>
+<p><strong>RN-4.3</strong> Si el almacén de venta no tiene existencia suficiente, el apartado no se guarda, salvo que la sucursal permita stock negativo.</p>
+<p><strong>RN-4.4</strong> Cada sucursal que use apartados debe tener configurado su almacén de Apartados.</p>
+<p><strong>RN-4.5</strong> Las entregas de pedidos normales siguen afectando el almacén de venta (piso o bodega) y no llenan el campo Pedido.</p>
+<h3 id="criterios-de-aceptación_7">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_7" title="Permanent link">&para;</a></h3>
+<p><strong>CA-4.1.1 — Traspaso al apartar</strong>
+Dado un apartado de 10 piezas del producto A, que está en Bodega, ubicación B-01
+Cuando se guarda
+Entonces se crea una salida de 10 piezas de Bodega B-01 y una entrada de 10 piezas al almacén de Apartados en la ubicación predeterminada, y ambos movimientos quedan ligados al pedido.</p>
+<p><strong>CA-4.1.2 — Sin existencia</strong>
+Dado que Bodega solo tiene 5 piezas
+Cuando se intenta apartar 10
+Entonces el sistema impide guardar e informa la existencia disponible.</p>
+<p><strong>CA-4.1.3 — Sucursal sin almacén de Apartados</strong>
+Dado una sucursal sin almacén de Apartados configurado
+Cuando se intenta guardar un apartado
+Entonces el sistema lo impide e indica que falta la configuración.</p>
+<p><strong>CA-4.1.4 — Pedido normal</strong>
+Dado un Pedido PV normal
+Cuando se genera su entrega
+Entonces el movimiento resta del almacén de venta y no queda ligado a ningún pedido.</p>
+<h2 id="hu-42--crear-entrega-manual-de-apartado">HU-4.2 — Crear entrega manual de apartado<a class="headerlink" href="#hu-42--crear-entrega-manual-de-apartado" title="Permanent link">&para;</a></h2>
+<p>Como almacenista, quiero crear la entrega del apartado cuando el cliente viene por su producto, para sacarlo del almacén de Apartados.</p>
+<h3 id="reglas-de-negocio_8">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_8" title="Permanent link">&para;</a></h3>
+<p><strong>RN-4.6</strong> La entrega de un apartado solo se crea a mano y se arma con los productos del apartado.</p>
+<p><strong>RN-4.7</strong> Solo se puede crear la entrega cuando el apartado está liquidado.</p>
+<p><strong>RN-4.8</strong> Al finalizar la entrega se genera una Entrega de apartado desde el almacén de Apartados, ubicación predeterminada, ligada al pedido.</p>
+<p><strong>RN-4.9</strong> Si la entrega se cancela o se desembarca, el producto regresa al almacén de Apartados.</p>
+<h3 id="criterios-de-aceptación_8">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_8" title="Permanent link">&para;</a></h3>
+<p><strong>CA-4.2.1 — Entregar apartado</strong>
+Dado un apartado liquidado de 10 piezas
+Cuando el almacenista crea y finaliza la entrega
+Entonces salen 10 piezas del almacén de Apartados y el movimiento queda ligado al pedido.</p>
+<p><strong>CA-4.2.2 — Apartado con saldo</strong>
+Dado un apartado con saldo pendiente
+Cuando se intenta crear la entrega
+Entonces el sistema lo impide.</p>
+<p><strong>CA-4.2.3 — Revertir la entrega</strong>
+Dado una entrega de apartado finalizada y no facturada
+Cuando se cancela o se desembarca
+Entonces el producto regresa al almacén de Apartados.</p>
+<h3 id="casos-de-prueba_3">Casos de prueba<a class="headerlink" href="#casos-de-prueba_3" title="Permanent link">&para;</a></h3>
+<p><strong>CP-4.1.1 — Traspaso correcto</strong>
+Verifica: CA-4.1.1 · RN-4.1 · RN-4.2
+Dado un apartado de 10 piezas desde Bodega B-01
+Cuando se guarda
+Entonces existen la salida y la entrada por 10 piezas, ambas ligadas al pedido.</p>
+<p><strong>CP-4.1.2 — Varios productos</strong>
+Verifica: CA-4.1.1 · RN-4.2
+Dado un apartado con los productos A y B
+Cuando se guarda
+Entonces cada producto tiene su salida y su entrada.</p>
+<p><strong>CP-4.1.3 — Sin existencia</strong>
+Verifica: CA-4.1.2 · RN-4.3
+Dado que hay 5 piezas en existencia
+Cuando se apartan 10
+Entonces el sistema lo rechaza.</p>
+<p><strong>CP-4.1.4 — Sin almacén de Apartados</strong>
+Verifica: CA-4.1.3 · RN-4.4
+Dado una sucursal sin almacén de Apartados
+Cuando se guarda un apartado
+Entonces el sistema lo rechaza.</p>
+<p><strong>CP-4.1.5 — Entrega normal sin pedido ligado</strong>
+Verifica: CA-4.1.4 · RN-4.5
+Dado un Pedido PV normal
+Cuando se genera su entrega
+Entonces el movimiento no está ligado a un pedido y resta del almacén de venta.</p>
+<p><strong>CP-4.2.1 — Entrega de apartado</strong>
+Verifica: CA-4.2.1 · RN-4.6 · RN-4.8
+Dado un apartado liquidado
+Cuando se crea y finaliza la entrega
+Entonces el movimiento es una Entrega de apartado desde el almacén de Apartados.</p>
+<p><strong>CP-4.2.2 — Entrega bloqueada por saldo</strong>
+Verifica: CA-4.2.2 · RN-4.7
+Dado un apartado con saldo de $200
+Cuando se intenta crear la entrega
+Entonces el sistema la rechaza.</p>
+<p><strong>CP-4.2.3 — Sin entrega automática al liquidar</strong>
+Verifica: CA-4.2.1 · RN-4.6
+Dado un apartado que se acaba de liquidar
+Cuando se revisan sus entregas
+Entonces no existe ninguna entrega creada en automático.</p>
+<p><strong>CP-4.2.4 — Desembarque</strong>
+Verifica: CA-4.2.3 · RN-4.9
+Dado una entrega de apartado finalizada
+Cuando se desembarca
+Entonces el producto regresa al almacén de Apartados.</p>
+<table>
+<thead>
+<tr>
+<th>CA</th>
+<th>Caso(s) de prueba</th>
+<th>Escenarios cubiertos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CA-4.1.1</td>
+<td>CP-4.1.1, CP-4.1.2</td>
+<td>Camino feliz, alternativo</td>
+</tr>
+<tr>
+<td>CA-4.1.2</td>
+<td>CP-4.1.3</td>
+<td>Validación</td>
+</tr>
+<tr>
+<td>CA-4.1.3</td>
+<td>CP-4.1.4</td>
+<td>Configuración faltante</td>
+</tr>
+<tr>
+<td>CA-4.1.4</td>
+<td>CP-4.1.5</td>
+<td>Sin regresión</td>
+</tr>
+<tr>
+<td>CA-4.2.1</td>
+<td>CP-4.2.1, CP-4.2.3</td>
+<td>Camino feliz, alternativo</td>
+</tr>
+<tr>
+<td>CA-4.2.2</td>
+<td>CP-4.2.2</td>
+<td>Estado no permitido</td>
+</tr>
+<tr>
+<td>CA-4.2.3</td>
+<td>CP-4.2.4</td>
+<td>Reversa</td>
+</tr>
+</tbody>
+</table>
+<p><a href="#indice">⬆ Volver al índice de requerimientos</a></p>
+<hr />
+<p><a id="rf-05"></a></p>
+<h1 id="rf-05--timbrado-manual-de-facturas">RF-05 — Timbrado manual de facturas<a class="headerlink" href="#rf-05--timbrado-manual-de-facturas" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Should</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>Ninguna</td>
+</tr>
+</tbody>
+</table>
+<h2 id="descripción_4">Descripción<a class="headerlink" href="#descripción_4" title="Permanent link">&para;</a></h2>
+<p>Al facturar entregas, el sistema deberá permitir que el usuario revise y corrija la factura <strong>antes de guardarla</strong>: quitar o ajustar las formas de pago precargadas y cambiar el cliente. Las facturas se guardarán como <strong>pendientes de timbrar</strong> y se timbrarán cuando un usuario con permiso lo pida.</p>
+<blockquote>
+<p>Nota técnica: hoy ya existe el botón <strong>Timbrar</strong> y el permiso especial "FC-MAN-TIMBRADO". Lo que cambia es que esa factura queda editable antes de guardar.</p>
+</blockquote>
+<h2 id="hu-51--ajustar-la-factura-antes-de-guardar">HU-5.1 — Ajustar la factura antes de guardar<a class="headerlink" href="#hu-51--ajustar-la-factura-antes-de-guardar" title="Permanent link">&para;</a></h2>
+<p>Como facturista, quiero corregir las formas de pago y el cliente de la factura generada desde entregas, para que el comprobante salga correcto desde el principio.</p>
+<h3 id="reglas-de-negocio_9">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_9" title="Permanent link">&para;</a></h3>
+<p><strong>RN-5.1</strong> Antes de guardar, el facturista puede eliminar renglones de formas de pago precargadas y cambiar sus importes.</p>
+<p><strong>RN-5.2</strong> La suma de las formas de pago debe ser igual al total de la factura (regla actual).</p>
+<p><strong>RN-5.3</strong> Al cambiar el cliente se actualizan sus datos fiscales: razón social, RFC, régimen, uso de CFDI y domicilio fiscal.</p>
+<p><strong>RN-5.4</strong> Una vez guardada, la factura ya no se puede editar.</p>
+<h3 id="criterios-de-aceptación_9">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_9" title="Permanent link">&para;</a></h3>
+<p><strong>CA-5.1.1 — Editar formas de pago</strong>
+Dado una factura nueva generada desde entregas, con efectivo $500 y tarjeta $500
+Cuando el facturista elimina la tarjeta y cambia el efectivo a $1,000
+Entonces el sistema acepta los cambios y permite guardar.</p>
+<p><strong>CA-5.1.2 — Formas de pago que no cuadran</strong>
+Dado una factura de $1,000
+Cuando las formas de pago suman $900
+Entonces el sistema no guarda e informa la diferencia.</p>
+<p><strong>CA-5.1.3 — Cambiar el cliente</strong>
+Dado una factura nueva generada desde entregas
+Cuando el facturista cambia el cliente
+Entonces se actualizan sus datos fiscales.</p>
+<h2 id="hu-52--timbrar-bajo-demanda">HU-5.2 — Timbrar bajo demanda<a class="headerlink" href="#hu-52--timbrar-bajo-demanda" title="Permanent link">&para;</a></h2>
+<p>Como facturista autorizado, quiero timbrar la factura cuando la haya revisado, para evitar cancelaciones por errores.</p>
+<h3 id="reglas-de-negocio_10">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_10" title="Permanent link">&para;</a></h3>
+<p><strong>RN-5.5</strong> Toda factura fiscal se guarda con estatus de timbrado <strong>Pendiente</strong>.</p>
+<p><strong>RN-5.6</strong> Solo los usuarios con el permiso de timbrado manual ven el botón Timbrar.</p>
+<h3 id="criterios-de-aceptación_10">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_10" title="Permanent link">&para;</a></h3>
+<p><strong>CA-5.2.1 — Factura pendiente</strong>
+Dado una factura generada desde entregas
+Cuando se guarda
+Entonces queda con estatus de timbrado Pendiente.</p>
+<p><strong>CA-5.2.2 — Timbrar con permiso</strong>
+Dado una factura pendiente y un usuario con permiso
+Cuando presiona Timbrar
+Entonces la factura se envía a timbrar.</p>
+<p><strong>CA-5.2.3 — Sin permiso</strong>
+Dado un usuario sin permiso de timbrado
+Cuando abre una factura pendiente
+Entonces no ve el botón Timbrar.</p>
+<h3 id="casos-de-prueba_4">Casos de prueba<a class="headerlink" href="#casos-de-prueba_4" title="Permanent link">&para;</a></h3>
+<p><strong>CP-5.1.1 — Eliminar forma de pago</strong>
+Verifica: CA-5.1.1 · RN-5.1
+Dado una factura nueva con dos formas de pago
+Cuando se elimina una y se ajusta la otra al total
+Entonces la factura se guarda.</p>
+<p><strong>CP-5.1.2 — Factura guardada no editable</strong>
+Verifica: CA-5.1.1 · RN-5.4
+Dado una factura ya guardada
+Cuando se intenta editar sus formas de pago
+Entonces los campos están bloqueados.</p>
+<p><strong>CP-5.1.3 — Formas de pago no cuadran</strong>
+Verifica: CA-5.1.2 · RN-5.2
+Dado una factura de $1,000 con formas de pago que suman $900
+Cuando se intenta guardar
+Entonces el sistema lo rechaza.</p>
+<p><strong>CP-5.1.4 — Cambio de cliente</strong>
+Verifica: CA-5.1.3 · RN-5.3
+Dado una factura nueva
+Cuando se cambia el cliente
+Entonces se actualizan el RFC, la razón social y el régimen.</p>
+<p><strong>CP-5.2.1 — Guardado pendiente</strong>
+Verifica: CA-5.2.1 · RN-5.5
+Dado una factura nueva
+Cuando se guarda
+Entonces queda con timbrado Pendiente.</p>
+<p><strong>CP-5.2.2 — Timbrado con permiso</strong>
+Verifica: CA-5.2.2 · RN-5.6
+Dado un usuario con permiso
+Cuando timbra una factura pendiente
+Entonces la factura queda Timbrada.</p>
+<p><strong>CP-5.2.3 — Sin permiso</strong>
+Verifica: CA-5.2.3 · RN-5.6
+Dado un usuario sin permiso
+Cuando abre una factura pendiente
+Entonces no aparece el botón Timbrar.</p>
+<table>
+<thead>
+<tr>
+<th>CA</th>
+<th>Caso(s) de prueba</th>
+<th>Escenarios cubiertos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CA-5.1.1</td>
+<td>CP-5.1.1, CP-5.1.2</td>
+<td>Camino feliz, Estado no permitido</td>
+</tr>
+<tr>
+<td>CA-5.1.2</td>
+<td>CP-5.1.3</td>
+<td>Validación</td>
+</tr>
+<tr>
+<td>CA-5.1.3</td>
+<td>CP-5.1.4</td>
+<td>Camino feliz</td>
+</tr>
+<tr>
+<td>CA-5.2.1</td>
+<td>CP-5.2.1</td>
+<td>Camino feliz</td>
+</tr>
+<tr>
+<td>CA-5.2.2</td>
+<td>CP-5.2.2</td>
+<td>Camino feliz</td>
+</tr>
+<tr>
+<td>CA-5.2.3</td>
+<td>CP-5.2.3</td>
+<td>Permisos</td>
+</tr>
+</tbody>
+</table>
+<p><a href="#indice">⬆ Volver al índice de requerimientos</a></p>
+<hr />
+<p><a id="rf-06"></a></p>
+<h1 id="rf-06--consultar-pedidos-de-apartado">RF-06 — Consultar pedidos de apartado<a class="headerlink" href="#rf-06--consultar-pedidos-de-apartado" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prioridad</td>
+<td>Should</td>
+</tr>
+<tr>
+<td>Estado</td>
+<td>Definición</td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td>RF-01, RF-02</td>
+</tr>
+</tbody>
+</table>
+<h2 id="descripción_5">Descripción<a class="headerlink" href="#descripción_5" title="Permanent link">&para;</a></h2>
+<p>El sistema deberá permitir distinguir los apartados en las consultas de Ventas y dar seguimiento a sus abonos en Cuentas por Cobrar.</p>
+<h2 id="hu-61--filtrar-apartados-en-las-consultas-de-pedidos">HU-6.1 — Filtrar apartados en las consultas de pedidos<a class="headerlink" href="#hu-61--filtrar-apartados-en-las-consultas-de-pedidos" title="Permanent link">&para;</a></h2>
+<p>Como supervisor, quiero filtrar los apartados en Detallado de pedidos y en Resumen de pedidos, para analizarlos aparte de los pedidos normales.</p>
+<h3 id="reglas-de-negocio_11">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_11" title="Permanent link">&para;</a></h3>
+<p><strong>RN-6.1</strong> Ambas consultas tienen el filtro <strong>Tipo de pedido</strong> con las opciones Todos, Apartados y Normales. El valor por omisión es Todos.</p>
+<p><strong>RN-6.2</strong> Los resultados muestran la columna de solo lectura <strong>Apartado</strong> (Sí/No).</p>
+<h3 id="criterios-de-aceptación_11">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_11" title="Permanent link">&para;</a></h3>
+<p><strong>CA-6.1.1 — Filtrar apartados</strong>
+Dado que existen pedidos normales y apartados
+Cuando el usuario filtra Apartados en Detallado de pedidos o en Resumen de pedidos
+Entonces solo aparecen apartados, con la columna Apartado en "Sí".</p>
+<p><strong>CA-6.1.2 — Valor por omisión</strong>
+Dado que el usuario no cambia el filtro
+Cuando ejecuta la consulta
+Entonces aparecen todos los pedidos y se distinguen por la columna Apartado.</p>
+<h2 id="hu-62--pestaña-resultado-apartados-en-concentrado-de-cobranza">HU-6.2 — Pestaña "Resultado Apartados" en Concentrado de cobranza<a class="headerlink" href="#hu-62--pestaña-resultado-apartados-en-concentrado-de-cobranza" title="Permanent link">&para;</a></h2>
+<p>Como cobranza, quiero ver los apartados con sus abonos en el Concentrado de cobranza, para dar seguimiento a lo que falta por cobrar.</p>
+<h3 id="reglas-de-negocio_12">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_12" title="Permanent link">&para;</a></h3>
+<p><strong>RN-6.3</strong> La pestaña respeta los filtros generales de la consulta: cliente, sucursal, fechas y moneda.</p>
+<p><strong>RN-6.4</strong> Se muestra un renglón por abono, con estos campos: fecha del pedido, cliente, pedido, importe, saldo, fecha de vigencia, apartado, número de abono, fecha de abono, importe del abono, forma de pago, moneda del abono y estatus del pedido.</p>
+<h3 id="criterios-de-aceptación_12">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_12" title="Permanent link">&para;</a></h3>
+<p><strong>CA-6.2.1 — Ver apartados y abonos</strong>
+Dado un cliente con un apartado de $1,000 y dos abonos
+Cuando se consulta el Concentrado de cobranza de ese cliente
+Entonces la pestaña Resultado Apartados muestra dos renglones con los datos de cada abono y el saldo del apartado.</p>
+<p><strong>CA-6.2.2 — Respeta los filtros</strong>
+Dado un rango de fechas que no incluye ningún apartado
+Cuando se ejecuta la consulta
+Entonces la pestaña aparece vacía.</p>
+<h2 id="hu-63--sección-de-apartados-en-el-formato-cobranza-general">HU-6.3 — Sección de apartados en el formato Cobranza General<a class="headerlink" href="#hu-63--sección-de-apartados-en-el-formato-cobranza-general" title="Permanent link">&para;</a></h2>
+<p>Como gerente, quiero ver en el formato Cobranza General un resumen de los apartados, para conocer el saldo pendiente por cliente.</p>
+<h3 id="reglas-de-negocio_13">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_13" title="Permanent link">&para;</a></h3>
+<p><strong>RN-6.5</strong> La sección muestra por cada apartado: cliente, cargo (total del pedido), abono (suma de abonos activos), saldo y fecha de vigencia.</p>
+<p><strong>RN-6.6</strong> Solo incluye apartados no cancelados.</p>
+<h3 id="criterios-de-aceptación_13">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_13" title="Permanent link">&para;</a></h3>
+<p><strong>CA-6.3.1 — Sección de apartados</strong>
+Dado un apartado con cargo de $1,000 y abonos por $600
+Cuando se imprime el formato Cobranza General
+Entonces la sección de apartados muestra cargo $1,000, abono $600 y saldo $400.</p>
+<p><strong>CA-6.3.2 — Excluir cancelados</strong>
+Dado un apartado cancelado
+Cuando se imprime el formato
+Entonces ese apartado no aparece en la sección.</p>
+<h3 id="casos-de-prueba_5">Casos de prueba<a class="headerlink" href="#casos-de-prueba_5" title="Permanent link">&para;</a></h3>
+<p><strong>CP-6.1.1 — Filtro Apartados</strong>
+Verifica: CA-6.1.1 · RN-6.1 · RN-6.2
+Dado dos pedidos normales y un apartado
+Cuando se filtra Apartados
+Entonces aparece un solo pedido, con Apartado "Sí".</p>
+<p><strong>CP-6.1.2 — Filtro Normales</strong>
+Verifica: CA-6.1.1 · RN-6.1
+Dado los mismos datos
+Cuando se filtra Normales
+Entonces aparecen dos pedidos con Apartado "No".</p>
+<p><strong>CP-6.1.3 — Columna no editable</strong>
+Verifica: CA-6.1.2 · RN-6.2
+Dado los resultados de la consulta
+Cuando el usuario intenta editar la columna Apartado
+Entonces la columna no se puede editar.</p>
+<p><strong>CP-6.2.1 — Renglón por abono</strong>
+Verifica: CA-6.2.1 · RN-6.4
+Dado un apartado con dos abonos
+Cuando se consulta
+Entonces aparecen dos renglones con los 13 campos.</p>
+<p><strong>CP-6.2.2 — Filtros sin resultados</strong>
+Verifica: CA-6.2.2 · RN-6.3
+Dado un rango de fechas sin apartados
+Cuando se consulta
+Entonces la pestaña está vacía.</p>
+<p><strong>CP-6.3.1 — Totales de la sección</strong>
+Verifica: CA-6.3.1 · RN-6.5
+Dado un apartado con cargo de $1,000 y abonos por $600
+Cuando se imprime
+Entonces el saldo es $400.</p>
+<p><strong>CP-6.3.2 — Apartado cancelado excluido</strong>
+Verifica: CA-6.3.2 · RN-6.6
+Dado un apartado cancelado
+Cuando se imprime
+Entonces no aparece.</p>
+<table>
+<thead>
+<tr>
+<th>CA</th>
+<th>Caso(s) de prueba</th>
+<th>Escenarios cubiertos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CA-6.1.1</td>
+<td>CP-6.1.1, CP-6.1.2</td>
+<td>Camino feliz, alternativo</td>
+</tr>
+<tr>
+<td>CA-6.1.2</td>
+<td>CP-6.1.3</td>
+<td>Visibilidad</td>
+</tr>
+<tr>
+<td>CA-6.2.1</td>
+<td>CP-6.2.1</td>
+<td>Camino feliz</td>
+</tr>
+<tr>
+<td>CA-6.2.2</td>
+<td>CP-6.2.2</td>
+<td>Alternativo</td>
+</tr>
+<tr>
+<td>CA-6.3.1</td>
+<td>CP-6.3.1</td>
+<td>Camino feliz</td>
+</tr>
+<tr>
+<td>CA-6.3.2</td>
+<td>CP-6.3.2</td>
+<td>Validación</td>
+</tr>
+</tbody>
+</table>
+<p><a href="#indice">⬆ Volver al índice de requerimientos</a></p>
+<h2 id="---_1">---<a class="headerlink" href="#---_1" title="Permanent link">&para;</a></h2>
+<h2 id="requerimientos-no-funcionales">Requerimientos no funcionales<a class="headerlink" href="#requerimientos-no-funcionales" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Categoría</th>
+<th>Requerimiento</th>
+<th>Métrica</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RNF-001</td>
+<td>Integridad</td>
+<td>El apartado, su abono inicial y sus movimientos de traspaso se guardan juntos: o se guarda todo o nada.</td>
+<td>0 apartados sin abono inicial o sin traspaso.</td>
+</tr>
+<tr>
+<td>RNF-002</td>
+<td>Concurrencia</td>
+<td>Dos usuarios no pueden apartar la misma existencia al mismo tiempo.</td>
+<td>0 existencias negativas por apartados simultáneos en pruebas con 2 usuarios.</td>
+</tr>
+<tr>
+<td>RNF-003</td>
+<td>Auditoría</td>
+<td>Cada abono, cancelación, cobro y traspaso registra quién lo hizo y cuándo.</td>
+<td>100% de los registros con usuario y fecha.</td>
+</tr>
+<tr>
+<td>RNF-004</td>
+<td>Rendimiento</td>
+<td>Guardar un apartado de hasta 20 productos, con su abono inicial, tarda poco.</td>
+<td>≤ 3 segundos.</td>
+</tr>
+<tr>
+<td>RNF-005</td>
+<td>Seguridad</td>
+<td>Registrar o cancelar abonos, cancelar apartados y timbrar requieren permisos que se configuran por rol.</td>
+<td>100% de las acciones protegidas.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="matriz-de-trazabilidad">Matriz de trazabilidad<a class="headerlink" href="#matriz-de-trazabilidad" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Objetivo de negocio</th>
+<th>RF</th>
+<th>Historia</th>
+<th>Criterios de aceptación</th>
+<th>Prioridad</th>
+<th>Estado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OBJ-1 Vender por apartado en punto de venta</td>
+<td>RF-01</td>
+<td>HU-1.1, HU-1.2, HU-1.3</td>
+<td>CA-1.1.1 a CA-1.3.4</td>
+<td>Must</td>
+<td>Propuesto</td>
+</tr>
+<tr>
+<td>OBJ-2 Controlar el saldo del cliente</td>
+<td>RF-02</td>
+<td>HU-2.1, HU-2.2</td>
+<td>CA-2.1.1 a CA-2.2.3</td>
+<td>Must</td>
+<td>Propuesto</td>
+</tr>
+<tr>
+<td>OBJ-3 Conservar el estándar de cobros y bancos</td>
+<td>RF-03</td>
+<td>HU-3.1, HU-3.2</td>
+<td>CA-3.1.1 a CA-3.2.1</td>
+<td>Must</td>
+<td>Propuesto</td>
+</tr>
+<tr>
+<td>OBJ-4 Separar el inventario apartado del disponible</td>
+<td>RF-04</td>
+<td>HU-4.1, HU-4.2</td>
+<td>CA-4.1.1 a CA-4.2.3</td>
+<td>Must</td>
+<td>Propuesto</td>
+</tr>
+<tr>
+<td>OBJ-5 Reducir errores en el timbrado</td>
+<td>RF-05</td>
+<td>HU-5.1, HU-5.2</td>
+<td>CA-5.1.1 a CA-5.2.3</td>
+<td>Should</td>
+<td>Propuesto</td>
+</tr>
+<tr>
+<td>OBJ-6 Dar seguimiento a los apartados</td>
+<td>RF-06</td>
+<td>HU-6.1, HU-6.2, HU-6.3</td>
+<td>CA-6.1.1 a CA-6.3.2</td>
+<td>Should</td>
+<td>Propuesto</td>
+</tr>
+</tbody>
+</table>
+<h2 id="supuestos">Supuestos<a class="headerlink" href="#supuestos" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Supuesto</th>
+<th>Impacto si es falso</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SUP-01</td>
+<td>El abono inicial es de <strong>al menos</strong> 30%, no de exactamente 30%.</td>
+<td>Habría que bloquear el importe en exactamente el 30%.</td>
+</tr>
+<tr>
+<td>SUP-02</td>
+<td>Los movimientos bancarios se generan al <strong>cobrar</strong>, no en cada abono, porque así lo pide la Necesidad 3.</td>
+<td>Si el banco debe reflejar cada abono, cambian RF-02 y RF-03.</td>
+</tr>
+<tr>
+<td>SUP-03</td>
+<td>El saldo a favor que deja una cancelación se maneja como el saldo a favor actual de Cuentas por Cobrar y se puede aplicar en una factura futura.</td>
+<td>Se necesitaría un mecanismo nuevo de devolución.</td>
+</tr>
+<tr>
+<td>SUP-04</td>
+<td>La factura de un apartado sigue el flujo actual de facturar entregas.</td>
+<td>Si se requiere un CFDI por cada abono, cambia el alcance fiscal.</td>
+</tr>
+<tr>
+<td>SUP-05</td>
+<td>Los abonos se registran en la misma moneda del pedido.</td>
+<td>Habría que manejar tipo de cambio por abono.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="dependencias">Dependencias<a class="headerlink" href="#dependencias" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Dependencia</th>
+<th>De quién / de qué</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DEP-01</td>
+<td>Dar de alta el almacén de Apartados en cada sucursal, con sus ubicaciones predeterminadas.</td>
+<td>Administración / Inventarios</td>
+</tr>
+<tr>
+<td>DEP-02</td>
+<td>Dar de alta las tres operaciones de almacén nuevas.</td>
+<td>TI</td>
+</tr>
+<tr>
+<td>DEP-03</td>
+<td>Configurar la cuenta interna de efectivo en cada sucursal.</td>
+<td>Tesorería</td>
+</tr>
+<tr>
+<td>DEP-04</td>
+<td>Definir los permisos nuevos y asignarlos por rol.</td>
+<td>Seguridad / TI</td>
+</tr>
+</tbody>
+</table>
+<h2 id="riesgos">Riesgos<a class="headerlink" href="#riesgos" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Riesgo</th>
+<th>Prob.</th>
+<th>Impacto</th>
+<th>Mitigación</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RGO-01</td>
+<td>Las existencias se actualizan con un proceso de base de datos que no está en el código del sistema. Las operaciones nuevas podrían no reflejarse en el stock.</td>
+<td>Alta</td>
+<td>Alto</td>
+<td>Revisar y ajustar ese proceso antes de desarrollar y probar el stock por operación.</td>
+</tr>
+<tr>
+<td>RGO-02</td>
+<td>Hoy el cobro solo genera movimiento bancario en efectivo. Agregar las demás formas de pago podría duplicar movimientos en los pedidos normales.</td>
+<td>Media</td>
+<td>Alto</td>
+<td>Aplicar la regla nueva solo a apartados y probar que no haya cambios en los pedidos normales.</td>
+</tr>
+<tr>
+<td>RGO-03</td>
+<td>Hoy el Pedido PV genera y finaliza la entrega al guardar. Omitirla solo en apartados puede romper el flujo corto.</td>
+<td>Media</td>
+<td>Alto</td>
+<td>Pruebas de no regresión del Pedido PV normal (CP-1.1.9).</td>
+</tr>
+<tr>
+<td>RGO-04</td>
+<td>Dejar editable la factura generada desde entregas puede descuadrar las formas de pago contra el cobro.</td>
+<td>Media</td>
+<td>Medio</td>
+<td>Mantener la validación de que la suma de las formas de pago sea igual al total (RN-5.2).</td>
+</tr>
+<tr>
+<td>RGO-05</td>
+<td>Apartados vencidos que nadie cancela dejan producto inmovilizado.</td>
+<td>Media</td>
+<td>Medio</td>
+<td>Alerta de vencimiento y consulta filtrable por vigencia.</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": [], "search": "../../../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+        <script src="../../../../assets/javascripts/main-nav.js"></script>
+      
+    
+  </body>
+</html>
