@@ -72,6 +72,8 @@ nav:
         - Módulo de Facturación: "Proyectos/ONU/Quinta Maria/Requerimientos_Funcionales_Facturacion_QuintaMariaFacturación.md"
       - Civentor:
         - Catálogos: Proyectos/ONU/Civentor/RF-catalogos-civentor.md
+      - Jugueteria:
+        - Pedidos con Apartado: Proyectos/ONU/Jugueteria/RF_Pedidos_Apartado.md
   - Documentación BSuite:
     - Catálogos:
       - Gestión TI:
