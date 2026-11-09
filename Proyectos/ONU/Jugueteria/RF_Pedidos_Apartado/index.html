@@ -2395,6 +2395,18 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#formas-de-pago" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Formas de pago
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Formas de pago">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#5-índice-de-requerimientos" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2404,8 +2416,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#---" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2413,6 +2425,11 @@
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -4761,6 +4778,18 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#formas-de-pago" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Formas de pago
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Formas de pago">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#5-índice-de-requerimientos" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4770,8 +4799,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#---" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4779,6 +4808,11 @@
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -5880,6 +5914,45 @@
     Facturado --&gt; [*]
     Cancelado --&gt; [*]</code></pre>
 <p>El apartado nace con saldo pendiente y queda liquidado cuando los abonos cubren el total. Un apartado liquidado vuelve a tener saldo si se cancela uno de sus abonos. Después de liquidado se cobra, se entrega y se factura. Se puede cancelar en cualquier etapa anterior a la factura, revirtiendo antes lo que ya se haya hecho.</p>
+<h1 id="formas-de-pago">Formas de pago<a class="headerlink" href="#formas-de-pago" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Cuenta Bancaria</th>
+<th>Forma de Pago</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Banorte</td>
+<td>Cheque Nominativo</td>
+</tr>
+<tr>
+<td>Banorte</td>
+<td>Transferencia Electrónica</td>
+</tr>
+<tr>
+<td>Banorte</td>
+<td>Tarjeta De Débito</td>
+</tr>
+<tr>
+<td>Banorte</td>
+<td>Tarjeta De Crédito</td>
+</tr>
+<tr>
+<td>Interna (Efectivo)</td>
+<td>Efectivo</td>
+</tr>
+<tr>
+<td>Interna (Efectivo)</td>
+<td>Aplicación de Anticipos</td>
+</tr>
+<tr>
+<td>Caja Chica</td>
+<td>Efectivo</td>
+</tr>
+</tbody>
+</table>
 <p><a id="indice"></a></p>
 <h2 id="5-índice-de-requerimientos">5. Índice de requerimientos<a class="headerlink" href="#5-índice-de-requerimientos" title="Permanent link">&para;</a></h2>
 <blockquote>
@@ -5992,15 +6065,16 @@
 </table>
 <h3 id="diseño-uxui">Diseño UX/UI<a class="headerlink" href="#diseño-uxui" title="Permanent link">&para;</a></h3>
 <ul>
-<li>En Pedido PV se agregan los campos <strong>Apartado</strong> y <strong>Fecha vigencia apartado</strong>. Al guardar un apartado aparece una ventana para capturar el abono inicial: forma de pago, importe, cuenta bancaria e indicador de abono inicial (ya marcado).</li>
+<li>En Pedido PV se agregan los campos <strong>Apartado</strong> y <strong>Fecha vigencia apartado</strong>. Al guardar un apartado aparece una ventana para capturar el abono inicial: forma de pago (Efectivo), importe, cuenta bancaria e indicador de abono inicial (ya marcado).</li>
 <li>En Pedidos (Largo) se agrega la pestaña <strong>Abonos</strong>, visible solo cuando el pedido es apartado.</li>
 </ul>
 <h2 id="hu-11--crear-apartado-desde-pedido-pv">HU-1.1 — Crear apartado desde Pedido PV<a class="headerlink" href="#hu-11--crear-apartado-desde-pedido-pv" title="Permanent link">&para;</a></h2>
 <p>Como vendedor de punto de venta, quiero marcar un pedido como apartado y registrar el abono inicial, para reservar el producto al cliente mientras termina de pagarlo.</p>
 <h3 id="reglas-de-negocio">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio" title="Permanent link">&para;</a></h3>
+<p><strong>RN-1.0</strong> La cuenta bancaria que se afectará se determinará en función de la forma de pago seleccionada para el abono.</p>
 <p><strong>RN-1.1</strong> Si el pedido se marca como Apartado, la fecha de vigencia es obligatoria y debe ser posterior a la fecha del pedido.</p>
 <p><strong>RN-1.2</strong> Un pedido solo se guarda como apartado si tiene un abono inicial registrado en ese momento.</p>
-<p><strong>RN-1.3</strong> El abono inicial debe ser de al menos el 30% del total del pedido y no mayor al total.</p>
+<p><strong>RN-1.3</strong> El abono inicial debe ser con forma de pago Efectivo y al menos el 30% del total del pedido y no mayor al total.</p>
 <p><strong>RN-1.4</strong> Los apartados no aceptan la forma de pago Crédito.</p>
 <p><strong>RN-1.5</strong> Al guardar, el saldo del apartado empieza en el total del pedido y en el mismo momento se le descuenta el abono inicial.</p>
 <p><strong>RN-1.6</strong> Un apartado no genera la entrega automática de punto de venta.</p>
@@ -6322,6 +6396,7 @@ El apartado no sigue el flujo automático de punto de venta (entrega y cobro inm
 <h2 id="hu-21--registrar-abono">HU-2.1 — Registrar abono<a class="headerlink" href="#hu-21--registrar-abono" title="Permanent link">&para;</a></h2>
 <p>Como cajero, quiero registrar los abonos que el cliente va dejando, para saber en todo momento cuánto le falta pagar.</p>
 <h3 id="reglas-de-negocio_3">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_3" title="Permanent link">&para;</a></h3>
+<p><strong>RN-2.0</strong> La forma de pago para liquidar el 70 % restante del apartado será definida por el usuario. En función de la forma de pago seleccionada, se determinará la cuenta bancaria que será afectada.</p>
 <p><strong>RN-2.1</strong> Los abonos solo se registran desde la pestaña Abonos de Pedidos (Largo).</p>
 <p><strong>RN-2.2</strong> El importe debe ser mayor a cero y no mayor al saldo pendiente.</p>
 <p><strong>RN-2.3</strong> Cada abono activo resta su importe del saldo del apartado.</p>
