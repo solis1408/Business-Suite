@@ -114,6 +114,19 @@ stateDiagram-v2
 
 El apartado nace con saldo pendiente y queda liquidado cuando los abonos cubren el total. Un apartado liquidado vuelve a tener saldo si se cancela uno de sus abonos. Después de liquidado se cobra, se entrega y se factura. Se puede cancelar en cualquier etapa anterior a la factura, revirtiendo antes lo que ya se haya hecho.
 
+# Formas de pago
+
+| Cuenta Bancaria      | Forma de Pago                         |
+|----------------------|---------------------------------------|
+| Banorte              | Cheque Nominativo                     |
+| Banorte              | Transferencia Electrónica             |
+| Banorte              | Tarjeta De Débito                     |
+| Banorte              | Tarjeta De Crédito                    |
+| Interna (Efectivo)   | Efectivo                              |
+| Interna (Efectivo)   | Aplicación de Anticipos               |
+| Caja Chica           | Efectivo                              |
+
+
 <a id="indice"></a>
 ## 5. Índice de requerimientos
 
@@ -160,7 +173,7 @@ El apartado solo se crea desde Pedido PV. En Pedidos (Largo) se puede ver el apa
 
 ### Diseño UX/UI
 
-- En Pedido PV se agregan los campos **Apartado** y **Fecha vigencia apartado**. Al guardar un apartado aparece una ventana para capturar el abono inicial: forma de pago, importe, cuenta bancaria e indicador de abono inicial (ya marcado).
+- En Pedido PV se agregan los campos **Apartado** y **Fecha vigencia apartado**. Al guardar un apartado aparece una ventana para capturar el abono inicial: forma de pago (Efectivo), importe, cuenta bancaria e indicador de abono inicial (ya marcado).
 - En Pedidos (Largo) se agrega la pestaña **Abonos**, visible solo cuando el pedido es apartado.
 
 ## HU-1.1 — Crear apartado desde Pedido PV
@@ -169,11 +182,14 @@ Como vendedor de punto de venta, quiero marcar un pedido como apartado y registr
 
 ### Reglas de negocio
 
+
+**RN-1.0** La cuenta bancaria que se afectará se determinará en función de la forma de pago seleccionada para el abono.
+
 **RN-1.1** Si el pedido se marca como Apartado, la fecha de vigencia es obligatoria y debe ser posterior a la fecha del pedido.
 
 **RN-1.2** Un pedido solo se guarda como apartado si tiene un abono inicial registrado en ese momento.
 
-**RN-1.3** El abono inicial debe ser de al menos el 30% del total del pedido y no mayor al total.
+**RN-1.3** El abono inicial debe ser con forma de pago Efectivo y al menos el 30% del total del pedido y no mayor al total.
 
 **RN-1.4** Los apartados no aceptan la forma de pago Crédito.
 
@@ -182,6 +198,7 @@ Como vendedor de punto de venta, quiero marcar un pedido como apartado y registr
 **RN-1.6** Un apartado no genera la entrega automática de punto de venta.
 
 **RN-1.7** Al guardar, el sistema genera los movimientos de traspaso al almacén de apartados (ver RF-04).
+
 
 ### Criterios de Aceptación
 
@@ -442,6 +459,8 @@ El sistema deberá permitir registrar y cancelar abonos de un pedido de apartado
 Como cajero, quiero registrar los abonos que el cliente va dejando, para saber en todo momento cuánto le falta pagar.
 
 ### Reglas de negocio
+
+**RN-2.0** La forma de pago para liquidar el 70 % restante del apartado será definida por el usuario. En función de la forma de pago seleccionada, se determinará la cuenta bancaria que será afectada.
 
 **RN-2.1** Los abonos solo se registran desde la pestaña Abonos de Pedidos (Largo).
 
