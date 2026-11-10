@@ -63,6 +63,7 @@ En facturación, la factura que se genera desde las entregas trae precargados el
 - Filtrar e identificar apartados en Detallado de pedidos y Resumen de pedidos.
 - Nueva pestaña "Resultado Apartados" en el Concentrado de cobranza.
 - Nueva sección de apartados en el formato Cobranza General.
+- Marcar apartados como **Olvidados** para detenerlos de forma definitiva (sin cobro, entrega, facturación ni cancelación) y liberar el producto para la venta.
 
 ### 2.2 Fuera de Alcance
 
@@ -82,7 +83,7 @@ En facturación, la factura que se genera desde las entregas trae precargados el
 | Cajero / Cobranza | Registra y cancela abonos y genera el cobro del apartado liquidado. |
 | Almacenista / Embarques | Crea y finaliza la entrega del producto apartado. |
 | Facturista | Revisa y ajusta la factura y la timbra cuando tiene permiso. |
-| Supervisor / Gerente | Cancela apartados y consulta su seguimiento. |
+| Supervisor / Gerente | Cancela apartados, los marca como olvidados y consulta su seguimiento. |
 | Sistema | Calcula saldos y genera en automático los movimientos de almacén y los movimientos bancarios de cada abono. |
 
 ## 4. Entidad a la que aplica
@@ -90,7 +91,8 @@ En facturación, la factura que se genera desde las entregas trae precargados el
 Aplica al **Pedido**, en su modalidad **Pedido PV marcado como Apartado**, y a su nuevo detalle **Abonos del pedido**.
 
 - **Estatus inicial del apartado:** Autorizado, con saldo pendiente y producto en el almacén de apartados.
-- **Estatus terminal del apartado:** Finalizado (liquidado, cobrado y entregado) o Cancelado.
+- **Estatus terminal del apartado:** Finalizado (liquidado, cobrado y entregado), Cancelado u Olvidado.
+- **Estatus Olvidado:** es terminal. Libera el producto para la venta y detiene el apartado de forma definitiva: no se puede reactivar, abonar, cobrar, entregar, facturar ni cancelar (RF-07).
 - **Estatus del abono:** Activo o Cancelado.
 
 El ciclo de vida del apartado es el siguiente:
@@ -108,11 +110,15 @@ stateDiagram-v2
     Liquidado --> Cancelado: Cancelar apartado
     Cobrado --> Cancelado: Cancelar cobro y luego el apartado
     Entregado --> Cancelado: Revertir entrega y cobro, luego cancelar
+    ApartadoConSaldo --> Olvidado: Marcar como olvidado
+    Liquidado --> Olvidado: Marcar como olvidado
+    Cobrado --> Olvidado: Marcar como olvidado
     Facturado --> [*]
     Cancelado --> [*]
+    Olvidado --> [*]
 ```
 
-El apartado nace con saldo pendiente y queda liquidado cuando los abonos cubren el total. Un apartado liquidado vuelve a tener saldo si se cancela uno de sus abonos. Después de liquidado se cobra, se entrega y se factura. Se puede cancelar en cualquier etapa anterior a la factura, revirtiendo antes lo que ya se haya hecho.
+El apartado nace con saldo pendiente y queda liquidado cuando los abonos cubren el total. Un apartado liquidado vuelve a tener saldo si se cancela uno de sus abonos. Después de liquidado se cobra, se entrega y se factura. Se puede cancelar en cualquier etapa anterior a la factura, revirtiendo antes lo que ya se haya hecho, salvo que esté olvidado. Antes de la entrega, el apartado se puede marcar como **Olvidado**: el producto se libera para la venta y el pedido queda detenido de forma definitiva, sin poder reactivarse ni cancelarse.
 
 
 # 4.1 Formas de pago
@@ -141,6 +147,7 @@ El apartado nace con saldo pendiente y queda liquidado cuando los abonos cubren 
 | [RF-04](#rf-04) | Inventario y entregas de apartados | Inventarios / Embarques | Movimientos de almacén, Entregas |
 | [RF-05](#rf-05) | Timbrado manual de facturas | Facturación | Facturas |
 | [RF-06](#rf-06) | Consultar pedidos de apartado | Consultas / Reportes | Ventas, Cuentas por cobrar |
+| [RF-07](#rf-07) | Marcar pedido de apartado como Olvidado | Ventas / Cobranza / Embarques / Facturación | Pedido PV, Pedidos (Largo), Entregas, Facturas |
 
 ---
 ---
@@ -205,25 +212,25 @@ Dado que el vendedor captura un Pedido de $1,000, lo marca como Apartado y captu
 Cuando guarda y registra un abono inicial de $300 en efectivo
 Entonces el sistema guarda el pedido como apartado con saldo de $700, asocia el abono marcado como inicial y no crea ninguna entrega.
 
-**CA-1.1.2 — Vigencia obligatoria**
-Dado que el pedido está marcado como Apartado y no tiene fecha de vigencia
+**CA-1.1.2 — Vigencia obligatoria y válida**
+Dado que el pedido está marcado como Apartado y no tiene fecha de vigencia, o la vigencia no es posterior a la fecha del pedido
 Cuando el vendedor intenta guardar
-Entonces el sistema no guarda e informa que la fecha de vigencia es obligatoria.
+Entonces el sistema no guarda e informa que la fecha de vigencia es obligatoria y debe ser posterior a la fecha del pedido.
 
-**CA-1.1.3 — Abono inicial menor al 30%**
+**CA-1.1.3 — Abono inicial fuera de rango**
 Dado un apartado de $1,000
-Cuando el vendedor captura un abono inicial de $200
-Entonces el sistema rechaza el abono e informa que el mínimo es $300.
+Cuando el vendedor captura un abono inicial de $200 o de $1,200
+Entonces el sistema rechaza el abono e informa que debe estar entre $300 (30%) y $1,000 (total del pedido).
 
 **CA-1.1.4 — Sin abono inicial no hay apartado**
 Dado que se abrió la ventana de abono inicial
 Cuando el vendedor la cierra sin registrar el abono
 Entonces el pedido no se guarda.
 
-**CA-1.1.5 — Crédito no permitido**
-Dado que se captura el abono inicial
-Cuando el vendedor elige la forma de pago Crédito
-Entonces el sistema no la permite.
+**CA-1.1.5 — Forma de pago fija en Efectivo**
+Dado que se abre la ventana del abono inicial
+Cuando el vendedor revisa la forma de pago
+Entonces la forma de pago es Efectivo y no se puede cambiar a Crédito ni a otra forma de pago.
 
 **CA-1.1.6 — Pedido normal sin cambios**
 Dado un Pedido que no está marcado como Apartado
@@ -247,7 +254,7 @@ Como cajero, quiero abrir el apartado en Pedidos (Largo) y ver sus abonos, para 
 **CA-1.2.1 — Apartado en solo lectura**
 Dado un apartado creado en Pedido PV
 Cuando el cajero lo abre en Pedidos (Largo)
-Entonces todos los datos y acciones aparecen bloqueados, excepto la pestaña Abonos.
+Entonces todos los datos y acciones aparecen bloqueados, excepto la pestaña Abonos y el botón Cobro (este último solo si el apartado está liquidado, RF-03).
 
 **CA-1.2.2 — Pestaña Abonos solo en apartados**
 Dado un pedido normal
@@ -265,7 +272,7 @@ Como supervisor, quiero cancelar un pedido apartado, para liberar el producto.
 
 ### Reglas de negocio
 
-**RN-1.11** El sistema deberá permitir la cancelación de un pedido de apartado únicamente cuando este no se encuentre cobrado ni previamente cancelado.
+**RN-1.11** El sistema deberá permitir la cancelación de un pedido de apartado únicamente cuando este no se encuentre cobrado, previamente cancelado ni marcado como Olvidado (RN-7.11).
 
 **RN-1.12** Si el pedido de apartado presenta avances en alguno de sus procesos, el sistema deberá requerir la reversión de dichos avances antes de permitir su cancelación.
 
@@ -280,7 +287,7 @@ Como supervisor, quiero cancelar un pedido apartado, para liberar el producto.
 **CA-1.3.1 — Cancelar apartado sin cobro**
 Dado un apartado con $600 abonados y sin cobro
 Cuando el supervisor lo cancela
-Entonces el producto regresa al almacén de venta, los abonos quedan cancelados.
+Entonces el producto regresa al almacén y ubicación de origen y los abonos quedan cancelados.
 
 **CA-1.3.2 — Cancelar apartado con cobro**
 Dado un apartado con una cobro y no factura
@@ -300,7 +307,7 @@ Entonces el sistema muestra la alerta "Apartado vencido" y permite seguir abonan
 ### Casos de prueba
 
 **CP-1.1.1 — Apartado exitoso con 30%**
-Verifica: CA-1.1.1 · RN-1.3 · RN-1.5
+Verifica: CA-1.1.1 · RN-1.3 · RN-1.5 · RN-1.6
 Dado un Pedido PV de $1,000 marcado como Apartado con vigencia de 30 días
 Cuando se guarda con un abono inicial de $300 en efectivo
 Entonces el saldo queda en $700, existe un abono inicial activo y no hay entregas.
@@ -323,7 +330,7 @@ Dado un apartado con vigencia de ayer
 Cuando se intenta guardar
 Entonces el sistema lo rechaza.
 
-**CP-1.1.5 — Abono inicial de 30%**
+**CP-1.1.5 — Abono inicial menor al 30%**
 Verifica: CA-1.1.3 · RN-1.3
 Dado un apartado de $1,000
 Cuando el abono inicial es de $290
@@ -341,11 +348,11 @@ Dado que se abrió la ventana de abono inicial
 Cuando el usuario la cancela
 Entonces no queda ningún pedido apartado guardado.
 
-**CP-1.1.8 — Forma de pago Crédito**
-Verifica: CA-1.1.5 · RN-1.4
-Dado que se captura el abono inicial
-Cuando se elige Crédito
-Entonces el sistema no la acepta.
+**CP-1.1.8 — Forma de pago fija en Efectivo**
+Verifica: CA-1.1.5 · RN-1.3 · RN-1.4
+Dado que se abre la ventana del abono inicial
+Cuando el usuario intenta cambiar la forma de pago
+Entonces la forma de pago es Efectivo y el campo no permite elegir Crédito ni otra forma de pago.
 
 **CP-1.1.9 — Pedido PV normal**
 Verifica: CA-1.1.6 · RN-1.6
@@ -378,19 +385,19 @@ Cuando el usuario revisa los campos
 Entonces Apartado no está disponible.
 
 **CP-1.3.1 — Cancelar sin cobro**
-Verifica: CA-1.3.1 · RN-1.13 · RN-1.14
+Verifica: CA-1.3.1 · RN-1.11 · RN-1.14
 Dado un apartado con $600 abonados
 Cuando se cancela
-Entonces se cancela los movimientos de almacén ya aplicados, los abonos quedan cancelados.
+Entonces se cancelan los movimientos de almacén ya aplicados, el producto regresa al almacén y ubicación de origen y los abonos quedan cancelados.
 
 **CP-1.3.2 — Cancelar con cobro**
-Verifica: CA-1.3.2 · RN-1.11
+Verifica: CA-1.3.2 · RN-1.11 · RN-1.12
 Dado un apartado con un cobro
 Cuando se intenta cancelar
-Entonces el sistema lo bloquea hasta que se revierten el proceso de cobro.
+Entonces el sistema lo bloquea hasta que se revierta el cobro.
 
 **CP-1.3.3 — Cancelar apartado facturado**
-Verifica: CA-1.3.3 · RN-1.12
+Verifica: CA-1.3.3 · RN-1.13
 Dado un apartado facturado
 Cuando se intenta cancelar
 Entonces el sistema lo impide.
@@ -540,7 +547,7 @@ Cuando se abonan $200
 Entonces el saldo queda en $500.
 
 **CP-2.1.2 — Abono que liquida**
-Verifica: CA-2.1.2 · RN-2.4
+Verifica: CA-2.1.2 · RN-2.3
 Dado un saldo de $500
 Cuando se abonan $500
 Entonces el saldo queda en $0 y el botón Cobro se habilita.
@@ -564,7 +571,7 @@ Cuando se capturan $0
 Entonces el sistema lo rechaza.
 
 **CP-2.1.6 — Abonar a un apartado cancelado**
-Verifica: CA-2.1.4 · RN-2.5
+Verifica: CA-2.1.4 · RN-2.4
 Dado un apartado cancelado
 Cuando se abre la pestaña Abonos
 Entonces no se pueden agregar abonos.
@@ -575,11 +582,17 @@ Dado un apartado abierto en Pedido PV
 Cuando el usuario busca registrar un abono
 Entonces la opción no existe en esa pantalla.
 
+**CP-2.1.8 — Movimiento bancario por abono**
+Verifica: CA-2.1.5 · RN-2.0 · RN-2.5
+Dado un apartado con saldo de $700
+Cuando se registra un abono de $200 en efectivo
+Entonces se crea un movimiento bancario en tránsito por $200 en la cuenta de efectivo de la sucursal, ligado al abono y al pedido.
+
 **CP-2.2.1 — Cancelación con reversa de saldo**
 Verifica: CA-2.2.1 · RN-2.6
 Dado un abono activo de $200 y un saldo de $300
 Cuando se cancela el abono
-Entonces el saldo queda en $500.
+Entonces el saldo queda en $500 y el movimiento bancario del abono queda cancelado.
 
 **CP-2.2.2 — Abono bloqueado por cobro**
 Verifica: CA-2.2.2 · RN-2.7
@@ -599,6 +612,8 @@ Entonces el sistema lo impide.
 | CA-2.1.2 | CP-2.1.2, CP-2.1.3 | Camino feliz, Error |
 | CA-2.1.3 | CP-2.1.4, CP-2.1.5 | Validación |
 | CA-2.1.4 | CP-2.1.6 | Estado no permitido |
+| CA-2.1.5 | CP-2.1.8 | Camino feliz |
+| CA-2.1.6 | CP-3.1.4 (RF-03) | Camino feliz |
 | CA-2.2.1 | CP-2.2.1 | Camino feliz |
 | CA-2.2.2 | CP-2.2.2 | Estado no permitido |
 | CA-2.2.3 | CP-2.2.3 | Validación |
@@ -626,7 +641,7 @@ Como cajero, quiero generar el cobro de un apartado liquidado con un solo clic, 
 
 ### Reglas de negocio
 
-**RN-3.1** El botón Cobro solo está activo si el apartado tiene saldo cero y no tiene un cobro vigente.
+**RN-3.1** El botón Cobro solo está activo si el apartado tiene saldo cero, no tiene un cobro vigente y no está marcado como Olvidado (RN-7.8).
 
 **RN-3.2** El cobro se arma con los abonos activos: un renglón por forma de pago, con la suma de los abonos de esa forma.
 
@@ -634,7 +649,7 @@ Como cajero, quiero generar el cobro de un apartado liquidado con un solo clic, 
 
 **RN-3.4** Al generarse el cobro, el pedido queda marcado como **cobrado**.
 
-**RN-3.5** Si se cancela el cobro a mano, el apartado y sus abonos no cambian. El pedido deja de estar cobrado y el botón Cobro se vuelve a habilitar.
+**RN-3.5** Si se cancela el cobro a mano, el apartado y sus abonos no cambian. El pedido deja de estar cobrado y el botón Cobro se vuelve a habilitar. No se puede cancelar el cobro de un pedido marcado como Olvidado (RN-7.8).
 
 ### Criterios de Aceptación
 
@@ -947,6 +962,11 @@ Dado una factura nueva generada desde entregas
 Cuando el facturista cambia el cliente
 Entonces se actualizan sus datos fiscales.
 
+**CA-5.1.4 — Factura guardada no editable**
+Dado una factura ya guardada
+Cuando el facturista intenta cambiar sus formas de pago o el cliente
+Entonces los campos aparecen bloqueados.
+
 ## HU-5.2 — Timbrar bajo demanda
 
 Como facturista autorizado, quiero timbrar la factura cuando la haya revisado, para evitar cancelaciones por errores.
@@ -983,7 +1003,7 @@ Cuando se elimina una y se ajusta la otra al total
 Entonces la factura se guarda.
 
 **CP-5.1.2 — Factura guardada no editable**
-Verifica: CA-5.1.1 · RN-5.4
+Verifica: CA-5.1.4 · RN-5.4
 Dado una factura ya guardada
 Cuando se intenta editar sus formas de pago
 Entonces los campos están bloqueados.
@@ -998,7 +1018,7 @@ Entonces el sistema lo rechaza.
 Verifica: CA-5.1.3 · RN-5.3
 Dado una factura nueva
 Cuando se cambia el cliente
-Entonces se actualizan el RFC, la razón social y el régimen.
+Entonces se actualizan la razón social, el RFC, el régimen, el uso de CFDI y el domicilio fiscal.
 
 **CP-5.2.1 — Guardado pendiente**
 Verifica: CA-5.2.1 · RN-5.5
@@ -1020,9 +1040,10 @@ Entonces no aparece el botón Timbrar.
 
 | CA | Caso(s) de prueba | Escenarios cubiertos |
 | --- | --- | --- |
-| CA-5.1.1 | CP-5.1.1, CP-5.1.2 | Camino feliz, Estado no permitido |
+| CA-5.1.1 | CP-5.1.1 | Camino feliz |
 | CA-5.1.2 | CP-5.1.3 | Validación |
 | CA-5.1.3 | CP-5.1.4 | Camino feliz |
+| CA-5.1.4 | CP-5.1.2 | Estado no permitido |
 | CA-5.2.1 | CP-5.2.1 | Camino feliz |
 | CA-5.2.2 | CP-5.2.2 | Camino feliz |
 | CA-5.2.3 | CP-5.2.3 | Permisos |
@@ -1124,11 +1145,11 @@ Dado los mismos datos
 Cuando se filtra Normales
 Entonces aparecen dos pedidos con Apartado "No".
 
-**CP-6.1.3 — Columna no editable**
-Verifica: CA-6.1.2 · RN-6.2
-Dado los resultados de la consulta
-Cuando el usuario intenta editar la columna Apartado
-Entonces la columna no se puede editar.
+**CP-6.1.3 — Filtro por omisión y columna de solo lectura**
+Verifica: CA-6.1.2 · RN-6.1 · RN-6.2
+Dado los mismos datos
+Cuando se ejecuta la consulta sin cambiar el filtro
+Entonces el filtro está en Todos, aparecen los tres pedidos con la columna Apartado en "Sí" o "No", y la columna no se puede editar.
 
 **CP-6.2.1 — Renglón por abono**
 Verifica: CA-6.2.1 · RN-6.4
@@ -1157,11 +1178,318 @@ Entonces no aparece.
 | CA | Caso(s) de prueba | Escenarios cubiertos |
 | --- | --- | --- |
 | CA-6.1.1 | CP-6.1.1, CP-6.1.2 | Camino feliz, alternativo |
-| CA-6.1.2 | CP-6.1.3 | Visibilidad |
+| CA-6.1.2 | CP-6.1.3 | Valor por omisión, visibilidad |
 | CA-6.2.1 | CP-6.2.1 | Camino feliz |
 | CA-6.2.2 | CP-6.2.2 | Alternativo |
 | CA-6.3.1 | CP-6.3.1 | Camino feliz |
 | CA-6.3.2 | CP-6.3.2 | Validación |
+
+[⬆ Volver al índice de requerimientos](#indice)
+
+---
+
+<a id="rf-07"></a>
+# RF-07 — Marcar pedido de apartado como Olvidado
+
+| Campo        | Valor |
+|--------------|-------|
+| Prioridad    | Should |
+| Estado       | Definición |
+| Dependencias | RF-01, RF-02, RF-03, RF-04, RF-06 |
+
+## Objetivo
+
+Detener los pedidos de apartado que el cliente haya dejado de atender, evitando que se les dé seguimiento o avance por error.
+
+## Descripción
+
+El sistema deberá permitir que un usuario autorizado marque un pedido de apartado con el estatus Olvidado. Mientras el pedido mantenga este estatus, permanecerá bloqueado y solo estará disponible para consulta. No se permitirá cancelarlo, gestionar abonos, realizar cobros, generar entregas ni emitir facturas. El estatus es definitivo: no se puede reactivar. Al marcarlo, el producto se libera para la venta.
+
+### Información / Bitácora
+
+| Campo | Obligatorio | Descripción |
+|-------|-------------|-------------|
+| Estatus | Automático | Toma el valor **Olvidado** al marcar el pedido. |
+| Estatus anterior | Automático | Etapa en que estaba el pedido al marcarlo (con saldo, liquidado o cobrado). Solo es informativo. |
+| Motivo | Sí | Texto que explica por qué se marca como olvidado. |
+| Fecha | Automático | Fecha y hora en que se marcó. |
+| Usuario | Automático | Usuario que marcó el pedido. |
+
+### Diseño UX/UI
+
+- En listado de Pedidos (Largo) y listado Pedido PV agrega el botónes **Olvidado**, visible solo para pedidos apartados y solo para usuarios con permiso. 
+
+- Agregar una bitácora de cambios en el módulo Pedido, donde se registren las acciones de Olvidado.
+
+## HU-7.1 — Marcar pedido como olvidado
+
+Como supervisor con permiso especial, quiero marcar como olvidado un apartado que el cliente dejó de atender, para que nadie lo cobre, lo entregue ni lo facture por error.
+
+### Reglas de negocio
+
+**RN-7.1** Solo se permitirá marcar como Olvidado aquellos pedidos que correspondan a la modalidad de Apartado. Esta acción deberá estar restringida a usuarios que cuenten con un permiso especial.
+
+**RN-7.2** Solo se puede marcar como Olvidado un pedido apartado que no esté cancelado, entregado ni facturado. Se puede marcar con saldo, liquidado o cobrado. Es obligatorio registrar un motivo.
+
+
+**RN-7.3** Al marcar un pedido como Olvidado, el sistema deberá actualizar su estatus a Olvidado y registrar automáticamente en la bitácora de cambios la transición de estatus realizada.
+
+**RN-7.4** Al Marcar el pedido como olvidado ya no se permitira hacer abonos, ni el cobro, ni entregas y se conservar los movimientos bancarios ligados al pedido. 
+
+**RN-7.5** Al marcar un pedido como Olvidado, se bloquearán los abonos, cobros y entregas, conservando los movimientos bancarios asociados.
+
+**RN-7.6** Al marcar un pedido como Olvidado, el sistema deberá liberar el producto apartado: cancelar los movimientos de almacén generados al reservarlo y regresar el producto al almacén y ubicación de origen, disponible para la venta. Los abonos, el cobro (si existe) y los movimientos bancarios se conservan.
+
+### Criterios de Aceptación
+
+**CA-7.1.1 — Marcar apartado como olvidado**
+Dado que el pedido de apartado con saldo pendiente de $400 y un usuario que cuenta con el permiso correspondiente.
+Cuando el usuario marca el pedido como Olvidado, indicando el motivo: "Cliente no responde llamadas".
+Entonces el pedido deberá actualizarse al estatus Olvidado, conservar su saldo pendiente sin modificaciones y liberar el inventario, regresando el producto al stock disponible para su venta.
+
+**CA-7.1.2 — Motivo obligatorio**
+Dado que el usuario presiona Marcar como olvidado
+Cuando intenta confirmar sin capturar el motivo
+Entonces el sistema no marca el pedido e informa que el motivo es obligatorio.
+
+**CA-7.1.3 — Usuario sin permiso**
+Dado un usuario sin el permiso para marcar pedidos olvidados
+Cuando abre un apartado en Pedidos (Largo)
+Entonces no ve el botón Marcar como olvidado.
+
+**CA-7.1.4 — Apartado entregado, facturado o cancelado**
+Dado un apartado facturado, entregado o cancelado
+Cuando el usuario intenta marcarlo como olvidado
+Entonces el sistema no lo permite.
+
+**CA-7.1.5 — Pedido normal**
+Dado un pedido que no es apartado
+Cuando se abre en Pedidos (Largo)
+Entonces no aparece el botón Marcar como olvidado.
+
+**CA-7.1.6 — Registrar en bitácora el cambio de estatus a Olvidado**
+Dado un pedido que corresponde a la modalidad de apartado.
+Cuando se marca como Olvidado y la acción se realiza exitosamente.
+Entonce el sistema deberá registrar en la bitácora el cambio realizado, incluyendo usuario, fecha y hora, y descripción del cambio.
+
+**CA-7.1.7 — Marcar apartado cobrado como olvidado**
+Dado un apartado liquidado, cobrado y sin entrega, y un usuario con el permiso correspondiente
+Cuando el usuario lo marca como Olvidado con motivo
+Entonces el sistema lo permite, conserva el cobro y los abonos sin cambios, guarda Cobrado como estatus anterior y libera el producto para la venta.
+
+
+## HU-7.2 — Bloquear el avance del pedido olvidado
+
+Como cajero, almacenista o facturista, quiero que el sistema me impida avanzar un pedido olvidado, para no cobrar, entregar ni facturar algo que está detenido.
+
+### Reglas de negocio
+
+**RN-7.7** En un pedido olvidado, la pestaña Abonos queda en solo lectura: no se pueden registrar ni cancelar abonos.
+
+**RN-7.8** Un pedido olvidado no se puede cobrar: el botón Cobro está deshabilitado aunque el apartado esté liquidado, y el sistema rechaza el cobro desde cualquier pantalla. Si el pedido ya estaba cobrado al marcarlo, el cobro se conserva y no se puede cancelar mientras el pedido siga olvidado.
+
+**RN-7.9** En un pedido olvidado, No se puede crear la entrega de un pedido olvidado.
+
+**RN-7.10** En un pedido olvidado, No se puede facturar ninguna entrega ligada a un pedido olvidado.
+
+**RN-7.11** Un pedido olvidado no se puede cancelar. La opción Cancelar queda deshabilitada y el sistema rechaza la cancelación desde cualquier pantalla.
+
+**RN-7.12** El bloqueo aplica en todas las pantallas donde el pedido puede avanzar: Pedido PV, Pedidos (Largo), Cobranza, Entregas y Facturación.
+
+**RN-7.13** Los pedidos con estatus Olvidado serán únicamente de consulta y no permitirán realizar modificaciones.
+
+### Criterios de Aceptación
+
+**CA-7.2.1 — Abonos bloqueados**
+Dado un apartado olvidado con saldo de $400
+Cuando el cajero intenta registrar o cancelar un abono
+Entonces la pestaña Abonos no permite cambios.
+
+**CA-7.2.2 — Cobro bloqueado**
+Dado un apartado liquidado y olvidado
+Cuando el cajero lo abre en Pedido PV o en Pedidos (Largo)
+Entonces el botón Cobro aparece deshabilitado.
+
+**CA-7.2.3 — Entrega bloqueada**
+Dado un apartado olvidado
+Cuando el almacenista intenta crear su entrega
+Entonces el sistema lo impide y muestra el mensaje "El pedido está marcado como olvidado".
+
+**CA-7.2.4 — Factura bloqueada**
+Dado un apartado olvidado
+Cuando el facturista intenta facturarlo
+Entonces el sistema lo impide y muestra el mensaje "El pedido está marcado como olvidado".
+
+**CA-7.2.5 — Cancelación bloqueada**
+Dado un apartado olvidado
+Cuando el supervisor intenta cancelarlo
+Entonces el sistema lo impide, muestra el mensaje "El pedido está marcado como olvidado" y no modifica los abonos, el cobro ni los movimientos bancarios.
+
+**CA-7.2.6 — Cancelación del cobro bloqueada**
+Dado un apartado cobrado que después se marcó como Olvidado
+Cuando el cajero intenta cancelar el cobro
+Entonces el sistema lo impide, muestra el mensaje "El pedido está marcado como olvidado" y el cobro sigue vigente.
+
+
+## HU-7.3 — Identificar pedidos olvidados en las consultas
+
+Como supervisor, quiero identificar los pedidos olvidados en las consultas, para darles seguimiento.
+
+### Reglas de negocio
+
+**RN-7.14** En Detallado de pedidos y Resumen de pedidos, el filtro de estatus incluye la opción **Olvidado**, y los resultados muestran ese estatus.
+
+**RN-7.15** En la pestaña Resultado Apartados del Concentrado de cobranza y en la sección de apartados del formato Cobranza General, los pedidos olvidados aparecen con el estatus Olvidado.
+
+### Criterios de Aceptación
+
+**CA-7.3.1 — Filtrar olvidados**
+Dado que existen apartados activos y olvidados
+Cuando el usuario filtra el estatus Olvidado en Detallado de pedidos o en Resumen de pedidos
+Entonces solo aparecen los pedidos olvidados.
+
+**CA-7.3.2 — Olvidados en cobranza**
+Dado un apartado olvidado con saldo de $400
+Cuando se consulta el Concentrado de cobranza o se imprime el formato Cobranza General
+Entonces el apartado aparece con estatus Olvidado y saldo de $400.
+
+### Casos de prueba
+
+**CP-7.1.1 — Marcar apartado con saldo**
+Verifica: CA-7.1.1 · RN-7.2 · RN-7.4 · RN-7.5 · RN-7.6
+Dado un apartado con saldo de $400 y un usuario con permiso
+Cuando lo marca como olvidado con motivo
+Entonces el estatus es Olvidado, el saldo sigue en $400, los traspasos al almacén de Apartados quedan cancelados, el producto regresa a su almacén y ubicación de origen, y los abonos y sus movimientos bancarios no cambian.
+
+**CP-7.1.2 — Marcar apartado cobrado**
+Verifica: CA-7.1.7 · RN-7.2 · RN-7.6
+Dado un apartado liquidado, cobrado y sin entrega
+Cuando se marca como olvidado
+Entonces el sistema lo permite, guarda Cobrado como estatus anterior, el cobro sigue vigente y el producto regresa a su almacén y ubicación de origen.
+
+**CP-7.1.3 — Sin motivo**
+Verifica: CA-7.1.2 · RN-7.2
+Dado que se abrió la ventana para marcar como olvidado
+Cuando se confirma sin motivo
+Entonces el sistema lo rechaza.
+
+**CP-7.1.4 — Sin permiso**
+Verifica: CA-7.1.3 · RN-7.1
+Dado un usuario sin permiso
+Cuando abre un apartado
+Entonces no aparece el botón Marcar como olvidado.
+
+**CP-7.1.5 — Apartado entregado**
+Verifica: CA-7.1.4 · RN-7.2
+Dado un apartado con entrega finalizada
+Cuando se intenta marcar como olvidado
+Entonces el sistema lo impide.
+
+**CP-7.1.6 — Apartado cancelado**
+Verifica: CA-7.1.4 · RN-7.2
+Dado un apartado cancelado
+Cuando se intenta marcar como olvidado
+Entonces el sistema lo impide.
+
+**CP-7.1.7 — Pedido normal**
+Verifica: CA-7.1.5 · RN-7.1
+Dado un pedido normal
+Cuando se abre en Pedidos (Largo)
+Entonces no aparece el botón Marcar como olvidado.
+
+**CP-7.1.8 — Registro en bitácora**
+Verifica: CA-7.1.6 · RN-7.3
+Dado un apartado con saldo y un usuario con permiso
+Cuando lo marca como olvidado con el motivo "Cliente no responde llamadas"
+Entonces la bitácora del pedido tiene un registro con el usuario, la fecha y hora, el cambio de estatus a Olvidado y el motivo capturado.
+
+**CP-7.2.1 — Registrar abono en pedido olvidado**
+Verifica: CA-7.2.1 · RN-7.7
+Dado un apartado olvidado con saldo
+Cuando se intenta registrar un abono
+Entonces el sistema no lo permite.
+
+**CP-7.2.2 — Cancelar abono en pedido olvidado**
+Verifica: CA-7.2.1 · RN-7.7
+Dado un apartado olvidado con un abono activo
+Cuando se intenta cancelar el abono
+Entonces el sistema no lo permite.
+
+**CP-7.2.3 — Cobro deshabilitado**
+Verifica: CA-7.2.2 · RN-7.8
+Dado un apartado liquidado y olvidado
+Cuando se abre en Pedido PV y en Pedidos (Largo)
+Entonces el botón Cobro está deshabilitado en ambas pantallas.
+
+**CP-7.2.4 — Entrega bloqueada**
+Verifica: CA-7.2.3 · RN-7.9 · RN-7.12
+Dado un apartado liquidado y olvidado
+Cuando se intenta crear la entrega desde Entregas
+Entonces el sistema la rechaza con el mensaje "El pedido está marcado como olvidado".
+
+**CP-7.2.5 — Factura bloqueada**
+Verifica: CA-7.2.4 · RN-7.10 · RN-7.12
+Dado un apartado olvidado
+Cuando se intenta facturar desde Facturación
+Entonces el sistema lo rechaza con el mensaje "El pedido está marcado como olvidado".
+
+**CP-7.2.6 — Cancelar pedido olvidado con saldo**
+Verifica: CA-7.2.5 · RN-7.11
+Dado un apartado olvidado con saldo de $400
+Cuando se intenta cancelar
+Entonces el sistema lo rechaza con el mensaje "El pedido está marcado como olvidado", y los abonos, el saldo y los movimientos bancarios no cambian.
+
+**CP-7.2.7 — Cancelar pedido olvidado desde Pedido PV y Pedidos (Largo)**
+Verifica: CA-7.2.5 · RN-7.11 · RN-7.12
+Dado un apartado liquidado y olvidado
+Cuando se intenta cancelar desde Pedido PV y desde Pedidos (Largo)
+Entonces la opción Cancelar está deshabilitada en ambas pantallas.
+
+**CP-7.2.8 — Cancelar el cobro de un pedido olvidado**
+Verifica: CA-7.2.6 · RN-7.8 · RN-3.5
+Dado un apartado cobrado y olvidado
+Cuando se intenta cancelar su cobro
+Entonces el sistema lo rechaza y el cobro, los abonos y el saldo no cambian.
+
+**CP-7.2.9 — Olvidado es definitivo**
+Verifica: CA-7.2.1 · CA-7.2.2 · RN-7.13
+Dado un apartado olvidado
+Cuando un usuario, incluso con permiso, busca cambiarlo de estatus o modificarlo
+Entonces no existe la opción de reactivarlo y todos sus datos aparecen en solo lectura.
+
+**CP-7.3.1 — Filtro Olvidado**
+Verifica: CA-7.3.1 · RN-7.14
+Dado dos apartados activos y uno olvidado
+Cuando se filtra el estatus Olvidado
+Entonces aparece un solo pedido.
+
+**CP-7.3.2 — Olvidado en cobranza**
+Verifica: CA-7.3.2 · RN-7.15
+Dado un apartado olvidado con saldo de $400
+Cuando se consulta el Concentrado de cobranza y se imprime el formato Cobranza General
+Entonces en ambos aparece con estatus Olvidado y saldo de $400.
+
+| CA | Caso(s) de prueba | Escenarios cubiertos |
+| --- | --- | --- |
+| CA-7.1.1 | CP-7.1.1 | Camino feliz |
+| CA-7.1.2 | CP-7.1.3 | Validación |
+| CA-7.1.3 | CP-7.1.4 | Permisos |
+| CA-7.1.4 | CP-7.1.5, CP-7.1.6 | Estado no permitido |
+| CA-7.1.5 | CP-7.1.7 | Sin regresión |
+| CA-7.1.6 | CP-7.1.8 | Auditoría |
+| CA-7.1.7 | CP-7.1.2 | Alternativo |
+| CA-7.2.1 | CP-7.2.1, CP-7.2.2 | Estado no permitido |
+| CA-7.2.2 | CP-7.2.3 | Estado no permitido |
+| CA-7.2.3 | CP-7.2.4 | Estado no permitido |
+| CA-7.2.4 | CP-7.2.5 | Estado no permitido |
+| CA-7.2.5 | CP-7.2.6, CP-7.2.7 | Estado no permitido |
+| CA-7.2.6 | CP-7.2.8 | Estado no permitido |
+| CA-7.2.1, CA-7.2.2 | CP-7.2.9 | Estado terminal |
+| CA-7.3.1 | CP-7.3.1 | Camino feliz |
+| CA-7.3.2 | CP-7.3.2 | Camino feliz |
+
+**Regla transversal:**
+El estatus Olvidado es definitivo. Libera el producto para la venta, pero conserva los abonos, el cobro (si existe) y los movimientos bancarios. Un pedido olvidado no se puede reactivar, abonar, cobrar, entregar, facturar ni cancelar.
 
 [⬆ Volver al índice de requerimientos](#indice)
 
@@ -1176,7 +1504,8 @@ Entonces no aparece.
 | RNF-002 | Concurrencia | Dos usuarios no pueden apartar la misma existencia al mismo tiempo. | 0 existencias negativas por apartados simultáneos en pruebas con 2 usuarios. |
 | RNF-003 | Auditoría | Cada abono, cancelación, cobro y traspaso registra quién lo hizo y cuándo. | 100% de los registros con usuario y fecha. |
 | RNF-004 | Rendimiento | Guardar un apartado de hasta 20 productos, con su abono inicial, tarda poco. | ≤ 3 segundos. |
-| RNF-005 | Seguridad | Registrar o cancelar abonos, cancelar apartados y timbrar requieren permisos que se configuran por rol. | 100% de las acciones protegidas. |
+| RNF-005 | Seguridad | Registrar o cancelar abonos, cancelar apartados, marcar pedidos olvidados y timbrar requieren permisos que se configuran por rol. | 100% de las acciones protegidas. |
+| RNF-006 | Integridad | El bloqueo de un pedido olvidado se valida en el servidor, no solo en la pantalla, para que no se pueda cobrar, entregar ni facturar por otra vía. | 0 cobros, entregas o facturas de pedidos olvidados. |
 
 ## Matriz de trazabilidad
 
@@ -1188,6 +1517,7 @@ Entonces no aparece.
 | OBJ-4 Separar el inventario apartado del disponible | RF-04 | HU-4.1, HU-4.2 | CA-4.1.1 a CA-4.2.3 | Must | Propuesto |
 | OBJ-5 Reducir errores en el timbrado | RF-05 | HU-5.1, HU-5.2 | CA-5.1.1 a CA-5.2.3 | Should | Propuesto |
 | OBJ-6 Dar seguimiento a los apartados | RF-06 | HU-6.1, HU-6.2, HU-6.3 | CA-6.1.1 a CA-6.3.2 | Should | Propuesto |
+| OBJ-7 Detener los apartados que el cliente dejó de atender | RF-07 | HU-7.1, HU-7.2, HU-7.3 | CA-7.1.1 a CA-7.3.2 | Should | Propuesto |
 
 ## Supuestos
 
@@ -1198,6 +1528,8 @@ Entonces no aparece.
 | SUP-03 | Al cancelar un apartado no se genera saldo a favor. Los abonos se cancelan y la devolución del dinero al cliente se hace fuera de este proceso. | Si el cliente debe conservar lo abonado, habría que generar saldo a favor en Cuentas por Cobrar o un mecanismo de devolución. |
 | SUP-04 | La factura de un apartado sigue el flujo actual de facturar entregas. | Si se requiere un CFDI por cada abono, cambia el alcance fiscal. |
 | SUP-05 | Los abonos se registran en la misma moneda del pedido. | Habría que manejar tipo de cambio por abono. |
+| SUP-06 | El estatus Olvidado aplica solo a pedidos de apartado y es definitivo (no se reactiva). | Si aplica a pedidos normales, hay que extender RN-7.1 al flujo largo y al de punto de venta. Si debe poder reactivarse, hay que agregar una HU de reactivación y definir cómo se vuelve a apartar el producto ya liberado. |
+| SUP-07 | Marcar un pedido como olvidado libera el producto, pero conserva los abonos, el cobro y los movimientos bancarios. La devolución del dinero al cliente se resuelve fuera de este proceso. | Si los abonos deben cancelarse o generar saldo a favor, hay que agregarlo a RF-07. |
 
 ## Dependencias
 
@@ -1216,4 +1548,5 @@ Entonces no aparece.
 | RGO-02 | Hoy el cobro genera movimiento bancario. Si en un apartado no se suprime, el dinero quedaría duplicado: una vez por cada abono y otra al cobrar. También podría afectar a los pedidos normales si la regla no se limita a apartados. | Media | Alto | Aplicar RN-3.3 solo a apartados y probar que los pedidos normales sigan generando su movimiento al cobrar. |
 | RGO-03 | Hoy el Pedido PV genera y finaliza la entrega al guardar. Omitirla solo en apartados puede romper el flujo corto. | Media | Alto | Pruebas de no regresión del Pedido PV normal (CP-1.1.9). |
 | RGO-04 | Dejar editable la factura generada desde entregas puede descuadrar las formas de pago contra el cobro. | Media | Medio | Mantener la validación de que la suma de las formas de pago sea igual al total (RN-5.2). |
-| RGO-05 | Apartados vencidos que nadie cancela dejan producto inmovilizado. | Media | Medio | Alerta de vencimiento y consulta filtrable por vigencia. |
+| RGO-05 | Apartados vencidos que nadie cancela dejan producto inmovilizado. | Media | Medio | Alerta de vencimiento, consulta filtrable por vigencia y estatus Olvidado para detenerlos y liberar el producto. |
+| RGO-06 | El bloqueo de Olvidado se valida solo en Pedidos y alguien cobra, entrega o factura desde otra pantalla. | Media | Alto | Validar el estatus en Pedido PV, Pedidos (Largo), Entregas y Facturación (RN-7.11, RNF-006). |
