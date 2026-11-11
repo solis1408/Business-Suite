@@ -62,7 +62,6 @@ En facturación, la factura que se genera desde las entregas trae precargados el
 - Guardar las facturas pendientes de timbrar y timbrarlas bajo demanda, con permiso.
 - Filtrar e identificar apartados en Detallado de pedidos y Resumen de pedidos.
 - Nueva pestaña "Resultado Apartados" en el Concentrado de cobranza.
-- Nueva sección de apartados en el formato Cobranza General.
 - Marcar apartados como **Olvidados** para detenerlos de forma definitiva (sin cobro, entrega, facturación ni cancelación) y liberar el producto para la venta.
 
 ### 2.2 Fuera de Alcance
@@ -149,7 +148,7 @@ El apartado nace con saldo pendiente y queda liquidado cuando los abonos cubren 
 | [RF-04](#rf-04) | Inventario y entregas de apartados | Inventarios / Embarques | Movimientos de almacén, Entregas |
 | [RF-05](#rf-05) | Timbrado manual de facturas | Facturación | Facturas |
 | [RF-06](#rf-06) | Consultar pedidos de apartado | Consultas / Reportes | Ventas, Cuentas por cobrar |
-| [RF-07](#rf-07) | Marcar pedido de apartado como Olvidado | Ventas / Cobranza / Embarques / Facturación | Pedido PV, Pedidos (Largo), Entregas, Facturas |
+| [RF-07](#rf-07) | Marcar pedido de apartado como Olvidado (Expirado) | Ventas / Cobranza / Embarques / Facturación | Pedido PV, Pedidos (Largo), Entregas, Facturas |
 
 ---
 ---
@@ -1110,15 +1109,15 @@ Dado que el usuario no cambia el filtro
 Cuando ejecuta la consulta
 Entonces aparecen todos los pedidos y se distinguen por la columna Apartado.
 
-## HU-6.2 — Consulta Concentrado de cobranza apartado
+## HU-6.2 — Consulta Concentrado de Cobranza Apartado
 
-Como cobranza, quiero ver los apartados con sus abonos en el Concentrado de cobranza, para dar seguimiento a lo que falta por cobrar.
+Como cobranza, quiero ver los pedido apartados y sus abonos en el Concentrado de cobranza, para dar seguimiento a lo que falta por cobrar.
 
 ### Reglas de negocio
 
-**RN-6.3** La pestaña respeta los filtros generales de la consulta: cliente, sucursal, fechas y moneda.
+**RN-6.3** La consulta deberá contar con filtros generales por fecha de corte, cliente, sucursal y número de pedido.
 
-**RN-6.4** Se muestra un renglón por abono, con estos campos: fecha del pedido, cliente, pedido, importe, saldo, fecha de vigencia, apartado, número de abono, fecha de abono, importe del abono, forma de pago, moneda del abono y estatus del pedido.
+**RN-6.4** La tabla de resultados deberá mostrar las siguientes columnas: fecha del pedido, cliente, número de pedido, importe, saldo, fecha de vigencia, número de abono, fecha de abono, importe del abono, forma de pago y estatus del pedido.
 
 ### Criterios de Aceptación
 
@@ -1131,28 +1130,6 @@ Entonces la pestaña Resultado Apartados muestra dos renglones con los datos de 
 Dado un rango de fechas que no incluye ningún apartado
 Cuando se ejecuta la consulta
 Entonces la pestaña aparece vacía.
-
-## HU-6.3 — Sección de apartados en el formato Cobranza General
-
-Como cobranza, quiero que el formato Cobranza General incluya una sección de apartados, para ver en un mismo reporte cuánto se ha abonado y cuánto falta por cobrar de cada apartado.
-
-### Reglas de negocio
-
-**RN-6.5** El formato Cobranza General incluye una sección **Apartados** con un renglón por apartado: cliente, pedido, fecha del pedido, fecha de vigencia, cargo (total del pedido), abonos (suma de abonos activos), saldo (cargo menos abonos) y estatus. Al final de la sección se muestran los totales de cargo, abonos y saldo.
-
-**RN-6.6** La sección excluye los apartados cancelados y los abonos cancelados. Los apartados olvidados sí aparecen, con estatus Olvidado (RN-7.15).
-
-### Criterios de Aceptación
-
-**CA-6.3.1 — Totales de la sección**
-Dado un apartado con cargo de $1,000 y abonos activos por $600
-Cuando se imprime el formato Cobranza General
-Entonces la sección Apartados muestra cargo $1,000, abonos $600 y saldo $400, y esos importes se suman en los totales de la sección.
-
-**CA-6.3.2 — Apartados cancelados excluidos**
-Dado un apartado cancelado
-Cuando se imprime el formato Cobranza General
-Entonces el apartado no aparece en la sección ni en sus totales.
 
 ### Casos de prueba
 
@@ -1178,7 +1155,7 @@ Entonces el filtro está en Todos, aparecen los tres pedidos con la columna Apar
 Verifica: CA-6.2.1 · RN-6.4
 Dado un apartado con dos abonos
 Cuando se consulta
-Entonces aparecen dos renglones con los 13 campos.
+Entonces aparecen dos renglones con las 11 columnas de RN-6.4.
 
 **CP-6.2.2 — Filtros sin resultados**
 Verifica: CA-6.2.2 · RN-6.3
@@ -1186,33 +1163,19 @@ Dado un rango de fechas sin apartados
 Cuando se consulta
 Entonces la pestaña está vacía.
 
-**CP-6.3.1 — Totales de la sección**
-Verifica: CA-6.3.1 · RN-6.5
-Dado un apartado con cargo de $1,000 y abonos por $600
-Cuando se imprime
-Entonces el saldo es $400.
-
-**CP-6.3.2 — Apartado cancelado excluido**
-Verifica: CA-6.3.2 · RN-6.6
-Dado un apartado cancelado
-Cuando se imprime
-Entonces no aparece.
-
 | CA | Caso(s) de prueba | Escenarios cubiertos |
 | --- | --- | --- |
 | CA-6.1.1 | CP-6.1.1, CP-6.1.2 | Camino feliz, alternativo |
 | CA-6.1.2 | CP-6.1.3 | Valor por omisión, visibilidad |
 | CA-6.2.1 | CP-6.2.1 | Camino feliz |
 | CA-6.2.2 | CP-6.2.2 | Alternativo |
-| CA-6.3.1 | CP-6.3.1 | Camino feliz |
-| CA-6.3.2 | CP-6.3.2 | Validación |
 
 [⬆ Volver al índice de requerimientos](#indice)
 
 ---
 
 <a id="rf-07"></a>
-# RF-07 — Marcar pedido de apartado como Olvidado
+# RF-07 — Marcar pedido de apartado como Olvidado (Expirado)
 
 | Campo        | Valor |
 |--------------|-------|
@@ -1362,7 +1325,7 @@ Como supervisor, quiero identificar los pedidos olvidados en las consultas, para
 
 **RN-7.14** En Detallado de pedidos y Resumen de pedidos, el filtro de estatus incluye la opción **Olvidado**, y los resultados muestran ese estatus.
 
-**RN-7.15** En la pestaña Resultado Apartados del Concentrado de cobranza y en la sección de apartados del formato Cobranza General, los pedidos olvidados aparecen con el estatus Olvidado.
+**RN-7.15** En la pestaña Resultado Apartados del Concentrado de cobranza, los pedidos olvidados aparecen con el estatus Olvidado.
 
 ### Criterios de Aceptación
 
@@ -1373,7 +1336,7 @@ Entonces solo aparecen los pedidos olvidados.
 
 **CA-7.3.2 — Olvidados en cobranza**
 Dado un apartado olvidado con saldo de $400
-Cuando se consulta el Concentrado de cobranza o se imprime el formato Cobranza General
+Cuando se consulta el Concentrado de cobranza
 Entonces el apartado aparece con estatus Olvidado y saldo de $400.
 
 ### Casos de prueba
@@ -1489,8 +1452,8 @@ Entonces aparece un solo pedido.
 **CP-7.3.2 — Olvidado en cobranza**
 Verifica: CA-7.3.2 · RN-7.15
 Dado un apartado olvidado con saldo de $400
-Cuando se consulta el Concentrado de cobranza y se imprime el formato Cobranza General
-Entonces en ambos aparece con estatus Olvidado y saldo de $400.
+Cuando se consulta el Concentrado de cobranza
+Entonces aparece con estatus Olvidado y saldo de $400.
 
 | CA | Caso(s) de prueba | Escenarios cubiertos |
 | --- | --- | --- |
@@ -1539,7 +1502,7 @@ El estatus Olvidado es definitivo. Libera el producto para la venta, pero conser
 | OBJ-3 Conservar el estándar de cobros y bancos | RF-03 | HU-3.1, HU-3.2 | CA-3.1.1 a CA-3.2.1 | Must | Propuesto |
 | OBJ-4 Separar el inventario apartado del disponible | RF-04 | HU-4.1, HU-4.2 | CA-4.1.1 a CA-4.2.3 | Must | Propuesto |
 | OBJ-5 Reducir errores en el timbrado | RF-05 | HU-5.1, HU-5.2 | CA-5.1.1 a CA-5.2.3 | Should | Propuesto |
-| OBJ-6 Dar seguimiento a los apartados | RF-06 | HU-6.1, HU-6.2, HU-6.3 | CA-6.1.1 a CA-6.3.2 | Should | Propuesto |
+| OBJ-6 Dar seguimiento a los apartados | RF-06 | HU-6.1, HU-6.2 | CA-6.1.1 a CA-6.2.2 | Should | Propuesto |
 | OBJ-7 Detener los apartados que el cliente dejó de atender | RF-07 | HU-7.1, HU-7.2, HU-7.3 | CA-7.1.1 a CA-7.3.2 | Should | Propuesto |
 
 ## Supuestos
