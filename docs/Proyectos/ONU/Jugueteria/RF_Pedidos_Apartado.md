@@ -62,7 +62,6 @@ En facturación, la factura que se genera desde las entregas trae precargados el
 - Guardar las facturas pendientes de timbrar y timbrarlas bajo demanda, con permiso.
 - Filtrar e identificar apartados en Detallado de pedidos y Resumen de pedidos.
 - Nueva pestaña "Resultado Apartados" en el Concentrado de cobranza.
-- Nueva sección de apartados en el formato Cobranza General.
 - Marcar apartados como **Olvidados** para detenerlos de forma definitiva (sin cobro, entrega, facturación ni cancelación) y liberar el producto para la venta.
 
 ### 2.2 Fuera de Alcance
@@ -1132,7 +1131,6 @@ Dado un rango de fechas que no incluye ningún apartado
 Cuando se ejecuta la consulta
 Entonces la pestaña aparece vacía.
 
-
 ### Casos de prueba
 
 **CP-6.1.1 — Filtro Apartados**
@@ -1157,7 +1155,7 @@ Entonces el filtro está en Todos, aparecen los tres pedidos con la columna Apar
 Verifica: CA-6.2.1 · RN-6.4
 Dado un apartado con dos abonos
 Cuando se consulta
-Entonces aparecen dos renglones con los 13 campos.
+Entonces aparecen dos renglones con las 11 columnas de RN-6.4.
 
 **CP-6.2.2 — Filtros sin resultados**
 Verifica: CA-6.2.2 · RN-6.3
@@ -1165,26 +1163,12 @@ Dado un rango de fechas sin apartados
 Cuando se consulta
 Entonces la pestaña está vacía.
 
-**CP-6.3.1 — Totales de la sección**
-Verifica: CA-6.3.1 · RN-6.5
-Dado un apartado con cargo de $1,000 y abonos por $600
-Cuando se imprime
-Entonces el saldo es $400.
-
-**CP-6.3.2 — Apartado cancelado excluido**
-Verifica: CA-6.3.2 · RN-6.6
-Dado un apartado cancelado
-Cuando se imprime
-Entonces no aparece.
-
 | CA | Caso(s) de prueba | Escenarios cubiertos |
 | --- | --- | --- |
 | CA-6.1.1 | CP-6.1.1, CP-6.1.2 | Camino feliz, alternativo |
 | CA-6.1.2 | CP-6.1.3 | Valor por omisión, visibilidad |
 | CA-6.2.1 | CP-6.2.1 | Camino feliz |
 | CA-6.2.2 | CP-6.2.2 | Alternativo |
-| CA-6.3.1 | CP-6.3.1 | Camino feliz |
-| CA-6.3.2 | CP-6.3.2 | Validación |
 
 [⬆ Volver al índice de requerimientos](#indice)
 
@@ -1341,7 +1325,7 @@ Como supervisor, quiero identificar los pedidos olvidados en las consultas, para
 
 **RN-7.14** En Detallado de pedidos y Resumen de pedidos, el filtro de estatus incluye la opción **Olvidado**, y los resultados muestran ese estatus.
 
-**RN-7.15** En la pestaña Resultado Apartados del Concentrado de cobranza y en la sección de apartados del formato Cobranza General, los pedidos olvidados aparecen con el estatus Olvidado.
+**RN-7.15** En la pestaña Resultado Apartados del Concentrado de cobranza, los pedidos olvidados aparecen con el estatus Olvidado.
 
 ### Criterios de Aceptación
 
@@ -1352,7 +1336,7 @@ Entonces solo aparecen los pedidos olvidados.
 
 **CA-7.3.2 — Olvidados en cobranza**
 Dado un apartado olvidado con saldo de $400
-Cuando se consulta el Concentrado de cobranza o se imprime el formato Cobranza General
+Cuando se consulta el Concentrado de cobranza
 Entonces el apartado aparece con estatus Olvidado y saldo de $400.
 
 ### Casos de prueba
@@ -1468,8 +1452,8 @@ Entonces aparece un solo pedido.
 **CP-7.3.2 — Olvidado en cobranza**
 Verifica: CA-7.3.2 · RN-7.15
 Dado un apartado olvidado con saldo de $400
-Cuando se consulta el Concentrado de cobranza y se imprime el formato Cobranza General
-Entonces en ambos aparece con estatus Olvidado y saldo de $400.
+Cuando se consulta el Concentrado de cobranza
+Entonces aparece con estatus Olvidado y saldo de $400.
 
 | CA | Caso(s) de prueba | Escenarios cubiertos |
 | --- | --- | --- |
@@ -1518,7 +1502,7 @@ El estatus Olvidado es definitivo. Libera el producto para la venta, pero conser
 | OBJ-3 Conservar el estándar de cobros y bancos | RF-03 | HU-3.1, HU-3.2 | CA-3.1.1 a CA-3.2.1 | Must | Propuesto |
 | OBJ-4 Separar el inventario apartado del disponible | RF-04 | HU-4.1, HU-4.2 | CA-4.1.1 a CA-4.2.3 | Must | Propuesto |
 | OBJ-5 Reducir errores en el timbrado | RF-05 | HU-5.1, HU-5.2 | CA-5.1.1 a CA-5.2.3 | Should | Propuesto |
-| OBJ-6 Dar seguimiento a los apartados | RF-06 | HU-6.1, HU-6.2, HU-6.3 | CA-6.1.1 a CA-6.3.2 | Should | Propuesto |
+| OBJ-6 Dar seguimiento a los apartados | RF-06 | HU-6.1, HU-6.2 | CA-6.1.1 a CA-6.2.2 | Should | Propuesto |
 | OBJ-7 Detener los apartados que el cliente dejó de atender | RF-07 | HU-7.1, HU-7.2, HU-7.3 | CA-7.1.1 a CA-7.3.2 | Should | Propuesto |
 
 ## Supuestos
