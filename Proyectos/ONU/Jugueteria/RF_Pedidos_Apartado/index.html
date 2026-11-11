@@ -2469,10 +2469,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#información--atributos" class="md-nav__link">
+  <a href="#atributos-para-agregar-en-pedido" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Información / atributos
+        Atributos para agregar en pedido
       
     </span>
   </a>
@@ -2653,7 +2653,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#información--atributos_1" class="md-nav__link">
+  <a href="#información--atributos" class="md-nav__link">
     <span class="md-ellipsis">
       
         Información / atributos
@@ -3193,15 +3193,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#hu-62--pestaña-resultado-apartados-en-concentrado-de-cobranza" class="md-nav__link">
+  <a href="#hu-62--consulta-concentrado-de-cobranza-apartado" class="md-nav__link">
     <span class="md-ellipsis">
       
-        HU-6.2 — Pestaña "Resultado Apartados" en Concentrado de cobranza
+        HU-6.2 — Consulta Concentrado de cobranza apartado
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="HU-6.2 — Pestaña &#34;Resultado Apartados&#34; en Concentrado de cobranza">
+    <nav class="md-nav" aria-label="HU-6.2 — Consulta Concentrado de cobranza apartado">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -5047,10 +5047,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#información--atributos" class="md-nav__link">
+  <a href="#atributos-para-agregar-en-pedido" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Información / atributos
+        Atributos para agregar en pedido
       
     </span>
   </a>
@@ -5231,7 +5231,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#información--atributos_1" class="md-nav__link">
+  <a href="#información--atributos" class="md-nav__link">
     <span class="md-ellipsis">
       
         Información / atributos
@@ -5771,15 +5771,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#hu-62--pestaña-resultado-apartados-en-concentrado-de-cobranza" class="md-nav__link">
+  <a href="#hu-62--consulta-concentrado-de-cobranza-apartado" class="md-nav__link">
     <span class="md-ellipsis">
       
-        HU-6.2 — Pestaña "Resultado Apartados" en Concentrado de cobranza
+        HU-6.2 — Consulta Concentrado de cobranza apartado
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="HU-6.2 — Pestaña &#34;Resultado Apartados&#34; en Concentrado de cobranza">
+    <nav class="md-nav" aria-label="HU-6.2 — Consulta Concentrado de cobranza apartado">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -6212,7 +6212,7 @@
 </ul>
 <h3 id="13-descripción-general-de-la-solución">1.3 Descripción General de la Solución<a class="headerlink" href="#13-descripción-general-de-la-solución" title="Permanent link">&para;</a></h3>
 <ol>
-<li><strong>Apartar.</strong> El vendedor captura el pedido en Punto de Venta, lo marca como <strong>Apartado</strong> y le pone una <strong>fecha de vigencia</strong>. Al guardar, registra un <strong>abono inicial de al menos 30%</strong>. No se genera la entrega; el producto pasa del almacén de venta al <strong>almacén de Apartados</strong> de la sucursal.</li>
+<li><strong>Apartar.</strong> El vendedor captura el pedido en Punto de Venta, lo marca como <strong>Apartado</strong> y le pone una <strong>fecha de vigencia</strong>. Al guardar, registra un <strong>abono inicial de al menos 30%</strong>, que genera un movimiento bancario <strong>en firme</strong> en la cuenta de efectivo de la sucursal. No se genera la entrega; el producto pasa del almacén de venta al <strong>almacén de Apartados</strong> de la sucursal.</li>
 <li><strong>Abonar.</strong> Los siguientes abonos se registran en efectivo en la pantalla de Pedidos (flujo largo), en una pestaña <strong>Abonos</strong>. Cada abono baja el saldo y genera un movimiento bancario <strong>en tránsito</strong> en la cuenta de efectivo de la sucursal. Cancelar un abono regresa el saldo y cancela su movimiento bancario.</li>
 <li><strong>Cobrar.</strong> Cuando el saldo llega a cero se habilita el botón <strong>Cobro</strong>. El cobro se genera solo, con los abonos registrados, y <strong>no genera movimientos bancarios nuevos</strong>, porque ya se generaron con cada abono.</li>
 <li><strong>Entregar.</strong> Cuando el cliente viene por su producto, el usuario crea la <strong>entrega</strong>. El producto sale del almacén de Apartados.</li>
@@ -6244,7 +6244,7 @@
 <li>Cancelar en automático los apartados vencidos. Solo se avisa.</li>
 <li>Generar en automático la entrega cuando el apartado se liquida.</li>
 <li>Que la cancelación manual del cobro afecte el apartado o sus abonos.</li>
-<li>Cambios al flujo de pedidos que no son apartados, salvo los ajustes de factura (RF-12 y RF-13).</li>
+<li>Cambios al flujo de pedidos que no son apartados, salvo los ajustes de factura (RF-05).</li>
 </ul>
 <hr />
 <h2 id="3-actores-y-roles">3. Actores y roles<a class="headerlink" href="#3-actores-y-roles" title="Permanent link">&para;</a></h2>
@@ -6298,6 +6298,8 @@
     Liquidado --&gt; ApartadoConSaldo: Cancelar abono
     Liquidado --&gt; Cobrado: Botón Cobro
     Cobrado --&gt; Entregado: Entrega manual finalizada
+    Liquidado --&gt; Entregado: Entrega manual finalizada (sin cobro previo)
+    Entregado --&gt; Entregado: Botón Cobro (si no se cobró antes)
     Entregado --&gt; Facturado: Facturar entrega
     ApartadoConSaldo --&gt; Cancelado: Cancelar apartado
     Liquidado --&gt; Cancelado: Cancelar apartado
@@ -6309,7 +6311,7 @@
     Facturado --&gt; [*]
     Cancelado --&gt; [*]
     Olvidado --&gt; [*]</code></pre>
-<p>El apartado nace con saldo pendiente y queda liquidado cuando los abonos cubren el total. Un apartado liquidado vuelve a tener saldo si se cancela uno de sus abonos. Después de liquidado se cobra, se entrega y se factura. Se puede cancelar en cualquier etapa anterior a la factura, revirtiendo antes lo que ya se haya hecho, salvo que esté olvidado. Antes de la entrega, el apartado se puede marcar como <strong>Olvidado</strong>: el producto se libera para la venta y el pedido queda detenido de forma definitiva, sin poder reactivarse ni cancelarse.</p>
+<p>El apartado nace con saldo pendiente y queda liquidado cuando los abonos cubren el total. Un apartado liquidado vuelve a tener saldo si se cancela uno de sus abonos. Después de liquidado se cobra, se entrega y se factura; el cobro y la entrega pueden ocurrir en cualquier orden (RF-03, RN-4.7). Se puede cancelar en cualquier etapa anterior a la factura, revirtiendo antes lo que ya se haya hecho, salvo que esté olvidado. Antes de la entrega, el apartado se puede marcar como <strong>Olvidado</strong>: el producto se libera para la venta y el pedido queda detenido de forma definitiva, sin poder reactivarse ni cancelarse.</p>
 <h1 id="41-formas-de-pago">4.1 Formas de pago<a class="headerlink" href="#41-formas-de-pago" title="Permanent link">&para;</a></h1>
 <table>
 <thead>
@@ -6434,11 +6436,11 @@
 </tbody>
 </table>
 <h2 id="objetivo">Objetivo<a class="headerlink" href="#objetivo" title="Permanent link">&para;</a></h2>
-<p>Que el cliente pueda reservar productos dejando un anticipo, sin que el producto se entregue ni se venda a otra persona.</p>
+<p>Que el cliente pueda reservar productos dejando un abono inicial, sin que el producto se entregue ni se venda a otra persona.</p>
 <h2 id="descripción">Descripción<a class="headerlink" href="#descripción" title="Permanent link">&para;</a></h2>
 <p>El sistema deberá permitir marcar un Pedido como <strong>Apartado</strong>. Al guardarlo, deberá pedir el abono inicial. Además, no deberá generar la entrega automática que hoy se crea en punto de venta. En su lugar, moverá el producto del almacén de venta al almacén de apartados de la sucursal.</p>
 <p>El apartado solo se crea desde Pedido PV. Evitar crear nuevo pedido apartado desde Pedidos (Largo) de aqui solo se puede ver el apartado y administrar sus abonos.</p>
-<h3 id="información--atributos">Información / atributos<a class="headerlink" href="#información--atributos" title="Permanent link">&para;</a></h3>
+<h3 id="atributos-para-agregar-en-pedido">Atributos para agregar en pedido<a class="headerlink" href="#atributos-para-agregar-en-pedido" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -6461,30 +6463,31 @@
 <tr>
 <td>Saldo apartado</td>
 <td>Calculado, solo lectura</td>
-<td>Total del pedido menos los abonos activos.</td>
+<td>Total del pedido menos los abonos activos (No Visible)</td>
 </tr>
 </tbody>
 </table>
 <h3 id="diseño-uxui">Diseño UX/UI<a class="headerlink" href="#diseño-uxui" title="Permanent link">&para;</a></h3>
 <ul>
 <li>En Pedido se agrega los campos <strong>Apartado</strong> y <strong>Fecha vigencia apartado</strong>. Al guardar un apartado aparece una ventana para capturar el abono inicial: forma de pago simpre será Efectivo, importe e indicador de abono inicial (ya marcado).</li>
-<li>En Pedidos (Largo) se agrega la pestaña <strong>Abonos</strong>, visible solo cuando el pedido es apartado.</li>
+<li>En Pedidos (Largo) se agrega la pestaña <strong>Abonos</strong>, visible solo cuando el pedido es apartado independientemente de su estado actual.</li>
 </ul>
 <h2 id="hu-11--crear-pedido-apartado">HU-1.1 — Crear pedido apartado<a class="headerlink" href="#hu-11--crear-pedido-apartado" title="Permanent link">&para;</a></h2>
 <p>Como vendedor de punto de venta, quiero marcar un pedido como apartado y registrar el abono inicial, para reservar el producto al cliente mientras termina de pagarlo.</p>
 <h3 id="reglas-de-negocio">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio" title="Permanent link">&para;</a></h3>
-<p><strong>RN-1.1</strong> Si el pedido se marca como Apartado, la fecha de vigencia es obligatoria y debe ser posterior a la fecha del pedido.</p>
+<p><strong>RN-1.1</strong> Si el pedido se marca como Apartado, la fecha de vigencia será obligatoria y deberá ser posterior a la fecha de registro del pedido. El sistema calculará una fecha sugerida sumando 30 días naturales mediante una variable configurable. El usuario podrá capturar cualquier fecha futura, sin límite máximo.</p>
 <p><strong>RN-1.2</strong> Un pedido solo se guarda como apartado si tiene un abono inicial registrado en ese momento.</p>
-<p><strong>RN-1.3</strong> El abono inicial debe ser con forma de pago Efectivo y al menos el 30% del total del pedido y no mayor al total.</p>
-<p><strong>RN-1.4</strong> Los apartados no aceptan la forma de pago Crédito.</p>
+<p><strong>RN-1.3</strong> El abono inicial deberá realizarse en efectivo, mediante una ventana emergente, por un monto mínimo del 30% y máximo del 100% del total del pedido. Al guardarlo, el sistema generará automáticamente un movimiento bancario <strong>en firme</strong> en la cuenta de efectivo de la sucursal. A diferencia de los abonos posteriores (RN-2.5), este movimiento no queda en tránsito.</p>
+<p><strong>RN-1.4</strong> Los pedidos con estatus Apartado deberán estar asociados a un cliente identificado y no permitirán seleccionar la forma de pago Crédito.</p>
 <p><strong>RN-1.5</strong> Al guardar, el saldo del apartado empieza en el total del pedido y en el mismo momento se le descuenta el abono inicial.</p>
 <p><strong>RN-1.6</strong> Un apartado no genera la entrega automática de punto de venta.</p>
-<p><strong>RN-1.7</strong> Al guardar el apartado, el sistema deberá generar automáticamente los movimientos de almacén correspondientes para garantizar la reserva de los productos. (ver RF-04).</p>
+<p><strong>RN-1.7</strong> Al guardar un pedido como Apartado, el sistema deberá generar automáticamente los movimientos de almacén correspondientes (Salida–Entrada) para garantizar la reserva de los productos.</p>
+<p><strong>RN-1.7.1</strong> Se puede ampliar la <strong>fecha de vigencia</strong> de un apartado, esté vigente o vencido, siempre que no esté Olvidado, cancelado ni cobrado. La nueva fecha debe ser posterior a la fecha actual (SUP-08).</p>
 <h3 id="criterios-de-aceptación">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación" title="Permanent link">&para;</a></h3>
 <p><strong>CA-1.1.1 — Guardar apartado con abono inicial</strong>
 Dado que el vendedor captura un Pedido de $1,000, lo marca como Apartado y captura una vigencia válida
 Cuando guarda y registra un abono inicial de $300 en efectivo
-Entonces el sistema guarda el pedido como apartado con saldo de $700, asocia el abono marcado como inicial y no crea ninguna entrega.</p>
+Entonces el sistema guarda el pedido como apartado con saldo de $700, asocia el abono marcado como inicial, genera un movimiento bancario en firme por $300 en la cuenta de efectivo de la sucursal y no crea ninguna entrega.</p>
 <p><strong>CA-1.1.2 — Vigencia obligatoria y válida</strong>
 Dado que el pedido está marcado como Apartado y no tiene fecha de vigencia, o la vigencia no es posterior a la fecha del pedido
 Cuando el vendedor intenta guardar
@@ -6505,6 +6508,10 @@ Entonces la forma de pago es Efectivo y no se puede cambiar a Crédito ni a otra
 Dado un Pedido que no está marcado como Apartado
 Cuando el vendedor lo guarda
 Entonces el sistema sigue el flujo actual: no pide abono y genera la entrega automática.</p>
+<p><strong>CA-1.1.7 — Movimientos de almacén para apartado de productos</strong>
+Dado un pedido apartado
+Cuando se guarda el pedido
+Entonces el sistema genera dos movimientos de almacén: una salida del inventario disponible para venta, con tipo "SALIDA POR TRASPASO DE APARTADO", y una entrada al inventario de productos apartados, con tipo "ENTRADA POR TRASPASO DE APARTADO".</p>
 <h2 id="hu-12--ver-y-administrar-el-apartado-en-pedidos-largo">HU-1.2 — Ver y administrar el apartado en Pedidos (Largo)<a class="headerlink" href="#hu-12--ver-y-administrar-el-apartado-en-pedidos-largo" title="Permanent link">&para;</a></h2>
 <p>Como cajero, quiero abrir el apartado en Pedidos (Largo) y ver sus abonos, para darle seguimiento sin alterar lo que se vendió.</p>
 <h3 id="reglas-de-negocio_1">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_1" title="Permanent link">&para;</a></h3>
@@ -6595,6 +6602,11 @@ Verifica: CA-1.1.6 · RN-1.6
 Dado un Pedido PV no marcado como Apartado
 Cuando se guarda
 Entonces se genera la entrega automática como hoy.</p>
+<p><strong>CP-1.1.10 — Traspaso de almacén al guardar el apartado</strong>
+Verifica: CA-1.1.7 · RN-1.7
+Dado un Pedido PV marcado como Apartado con 2 piezas del producto A
+Cuando se guarda con su abono inicial
+Entonces existen una "SALIDA POR TRASPASO DE APARTADO" de 2 piezas del almacén de venta y una "ENTRADA POR TRASPASO DE APARTADO" de 2 piezas al almacén de Apartados.</p>
 <p><strong>CP-1.2.1 — Edición bloqueada en Pedidos (Largo)</strong>
 Verifica: CA-1.2.1 · RN-1.9
 Dado un apartado abierto en Pedidos (Largo)
@@ -6675,6 +6687,11 @@ Entonces se muestra "Apartado vencido" y el apartado sigue vigente.</p>
 <td>Alternativo (sin regresión)</td>
 </tr>
 <tr>
+<td>CA-1.1.7</td>
+<td>CP-1.1.10</td>
+<td>Camino feliz</td>
+</tr>
+<tr>
 <td>CA-1.2.1</td>
 <td>CP-1.2.1, CP-1.2.2</td>
 <td>Permisos y visibilidad</td>
@@ -6742,7 +6759,7 @@ El apartado no sigue el flujo automático de punto de venta (entrega y cobro inm
 </table>
 <h2 id="descripción_1">Descripción<a class="headerlink" href="#descripción_1" title="Permanent link">&para;</a></h2>
 <p>El sistema deberá permitir registrar y cancelar abonos de un pedido de apartado desde la pestaña <strong>Abonos</strong> de Pedidos (Largo), y deberá recalcular el saldo en automático. Cuando el saldo llegue a cero, el pedido quedará <strong>liquidado</strong>: se habilitará el botón Cobro (RF-03) y se podrá crear la entrega (RF-04).</p>
-<h3 id="información--atributos_1">Información / atributos<a class="headerlink" href="#información--atributos_1" title="Permanent link">&para;</a></h3>
+<h3 id="información--atributos">Información / atributos<a class="headerlink" href="#información--atributos" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -6800,9 +6817,9 @@ El apartado no sigue el flujo automático de punto de venta (entrega y cobro inm
 <p><strong>RN-2.0</strong> Para liquidar el 70 % restante del apartado, el sistema deberá permitir únicamente la forma de pago Efectivo. La cuenta bancaria que se afectará se determinará automáticamente de acuerdo con dicha forma de pago.</p>
 <p><strong>RN-2.1</strong> Los abonos deberán registrarse exclusivamente desde la pestaña Abonos de la interfaz de usuario de Pedidos (Largo). Unicamente con los estatus Activo y Cancelado.</p>
 <p><strong>RN-2.2</strong> El importe debe ser mayor a cero y no mayor al saldo pendiente.</p>
-<p><strong>RN-2.3</strong> Los abonos activos disminuyen el saldo del apartado.</p>
+<p><strong>RN-2.3</strong> Los abonos se generarán con estatus Activo y disminuirán el saldo pendiente del apartado. Una vez guardados, no podrán editarse únicamente podrán cancelarse.</p>
 <p><strong>RN-2.4</strong> El sistema no deberá permitir el registro de abonos en pedidos de apartado que se encuentren cancelados, saldados o cobrados.</p>
-<p><strong>RN-2.5</strong> Al guardar un abono, el sistema deberá generar automáticamente un movimiento bancario en tránsito que afectará el saldo de la cuenta bancaria asociada a la forma de pago utilizada. </p>
+<p><strong>RN-2.5</strong> Al guardar un abono posterior al inicial (registrado desde la pestaña Abonos), el sistema deberá generar automáticamente un movimiento bancario <strong>en tránsito</strong>, vinculado al abono y al pedido, que afectará el saldo de la cuenta bancaria asociada a la forma de pago utilizada. El abono inicial genera su movimiento en firme (RN-1.3).</p>
 <h3 id="criterios-de-aceptación_3">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_3" title="Permanent link">&para;</a></h3>
 <p><strong>CA-2.1.1 — Registrar abono</strong>
 Dado un apartado con saldo de $700
@@ -6832,8 +6849,10 @@ Entonces el sistema no deberá generar movimientos bancarios adicionales, ya que
 <p>Como cajero, quiero cancelar un abono registrado por error, para que el saldo del cliente sea correcto.</p>
 <h3 id="reglas-de-negocio_4">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_4" title="Permanent link">&para;</a></h3>
 <p><strong>RN-2.6</strong> Al cancelar un abono, el sistema deberá reintegrar su importe al saldo del apartado y cancelar el movimiento bancario asociado.</p>
-<p><strong>RN-2.7</strong> El sistema no deberá permitir cancelar un abono cuando el pedido de apartado esté cancelado o cuente con un cobro vigente.</p>
+<p><strong>RN-2.7</strong> El sistema no deberá permitir cancelar un abono cuando el pedido de apartado esté cancelado, cuente con un cobro vigente o entregado.</p>
 <p><strong>RN-2.8</strong> El abono inicial no se puede cancelar mientras el apartado esté activo, porque un apartado debe tener abono inicial (RN-1.2).</p>
+<p><strong>RN-2.8.1</strong> Los abonos deberán cancelarse manualmente por el usuario autorizado.</p>
+<p><strong>RN-2.8.2</strong> Los abonos iniciales se cancelarán automáticamente al cancelar el pedido Apartado.</p>
 <h3 id="criterios-de-aceptación_4">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_4" title="Permanent link">&para;</a></h3>
 <p><strong>CA-2.2.1 — Cancelar abono</strong>
 Dado un apartado con saldo de $300 y un abono activo de $200
@@ -6991,17 +7010,17 @@ Entonces el sistema lo impide.</p>
 <p>Como cajero, quiero generar el cobro de un apartado liquidado con un solo clic, para no volver a capturar pagos que ya registré como abonos.</p>
 <h3 id="reglas-de-negocio_5">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_5" title="Permanent link">&para;</a></h3>
 <p><strong>RN-3.1</strong> El botón Cobro solo está activo si el apartado tiene saldo cero, no tiene un cobro vigente y no está marcado como Olvidado (RN-7.8).</p>
-<p><strong>RN-3.2</strong> El cobro se arma con los abonos activos: un renglón por forma de pago, con la suma de los abonos de esa forma.</p>
-<p><strong>RN-3.3</strong> Al registrar cobros asociados a pedidos de apartado, el sistema no deberá generar movimientos bancarios adicionales, ya que estos se generan previamente por cada abono registrado.</p>
-<p><strong>RN-3.4</strong> Al generarse el cobro, el pedido queda marcado como <strong>cobrado</strong>.</p>
-<p><strong>RN-3.5</strong> Si se cancela el cobro a mano, el apartado y sus abonos no cambian. El pedido deja de estar cobrado y el botón Cobro se vuelve a habilitar. No se puede cancelar el cobro de un pedido marcado como Olvidado (RN-7.8).</p>
+<p><strong>RN-3.2</strong> El cobro de un pedido apartado se integrará con los abonos activos, generando un renglón por cada forma de pago con el importe acumulado correspondiente. No se generarán movimientos bancarios adicionales, ya que estos se generan al registrar cada abono.</p>
+<p><strong>RN-3.3</strong> Al generarse el cobro, el pedido queda marcado como <strong>cobrado</strong>.</p>
+<p><strong>RN-3.4</strong> Si se cancela el cobro a mano, el apartado y sus abonos no cambian. El pedido deja de estar cobrado y el botón Cobro se vuelve a habilitar. No se puede cancelar el cobro de un pedido marcado como Olvidado (RN-7.8).</p>
+<p><strong>RN-3.5</strong> Los cobros de pedidos normales deberán seguir el flujo de operación actual del sistema, sin modificaciones.</p>
 <h3 id="criterios-de-aceptación_5">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_5" title="Permanent link">&para;</a></h3>
 <p><strong>CA-3.1.1 — Cobro automático</strong>
 Dado un apartado de $1,000 liquidado con un abono inicial de $300 y un abono de $700, ambos en efectivo
 Cuando el cajero presiona Cobro
 Entonces se genera un cobro de $1,000 con un solo renglón de efectivo, sin abrir la ventana de captura, y el pedido queda cobrado.</p>
 <p><strong>CA-3.1.2 — Sin movimientos bancarios adicionales</strong>
-Dado el cobro anterior, cuyos abonos ya generaron sus movimientos en tránsito de $300 y $700 en la cuenta de efectivo (RN-2.5)
+Dado el cobro anterior, cuyos abonos ya generaron sus movimientos en la cuenta de efectivo: $300 en firme del abono inicial (RN-1.3) y $700 en tránsito del abono posterior (RN-2.5)
 Cuando se guarda
 Entonces el sistema no crea movimientos bancarios adicionales.</p>
 <p><strong>CA-3.1.3 — Botón deshabilitado</strong>
@@ -7023,7 +7042,7 @@ Cuando el cajero presiona Cobro
 Entonces se abre la ventana de captura de cobro, como hoy.</p>
 <h3 id="casos-de-prueba_2">Casos de prueba<a class="headerlink" href="#casos-de-prueba_2" title="Permanent link">&para;</a></h3>
 <p><strong>CP-3.1.1 — Cobro de apartado liquidado</strong>
-Verifica: CA-3.1.1 · RN-3.2 · RN-3.4
+Verifica: CA-3.1.1 · RN-3.2 · RN-3.3
 Dado un apartado liquidado con un abono inicial de $300 y un abono de $700, ambos en efectivo
 Cuando se presiona Cobro
 Entonces el cobro tiene un solo renglón de efectivo por $1,000 y el pedido queda cobrado.</p>
@@ -7038,8 +7057,8 @@ Dado un apartado liquidado y sin entrega
 Cuando se presiona Cobro
 Entonces el cobro se genera.</p>
 <p><strong>CP-3.1.4 — Sin movimientos bancarios al cobrar</strong>
-Verifica: CA-3.1.2 · RN-3.3
-Dado un apartado liquidado con dos abonos en efectivo, cada uno con su movimiento en tránsito
+Verifica: CA-3.1.2 · RN-3.2
+Dado un apartado liquidado con dos abonos en efectivo: el inicial, con su movimiento en firme, y uno posterior, con su movimiento en tránsito
 Cuando se guarda el cobro
 Entonces la cuenta de efectivo conserva solo los dos movimientos de los abonos y no aparece ninguno nuevo.</p>
 <p><strong>CP-3.1.5 — Botón deshabilitado con saldo</strong>
@@ -7058,7 +7077,7 @@ Dado un apartado liquidado abierto en Pedidos (Largo)
 Cuando se revisan las acciones
 Entonces el botón Cobro está habilitado.</p>
 <p><strong>CP-3.1.8 — Cancelar el cobro</strong>
-Verifica: CA-3.1.4 · RN-3.5
+Verifica: CA-3.1.4 · RN-3.4
 Dado un apartado cobrado
 Cuando se cancela el cobro
 Entonces los abonos siguen activos, el saldo sigue en $0 y el botón Cobro se habilita.</p>
@@ -7492,7 +7511,7 @@ Entonces solo aparecen apartados, con la columna Apartado en "Sí".</p>
 Dado que el usuario no cambia el filtro
 Cuando ejecuta la consulta
 Entonces aparecen todos los pedidos y se distinguen por la columna Apartado.</p>
-<h2 id="hu-62--pestaña-resultado-apartados-en-concentrado-de-cobranza">HU-6.2 — Pestaña "Resultado Apartados" en Concentrado de cobranza<a class="headerlink" href="#hu-62--pestaña-resultado-apartados-en-concentrado-de-cobranza" title="Permanent link">&para;</a></h2>
+<h2 id="hu-62--consulta-concentrado-de-cobranza-apartado">HU-6.2 — Consulta Concentrado de cobranza apartado<a class="headerlink" href="#hu-62--consulta-concentrado-de-cobranza-apartado" title="Permanent link">&para;</a></h2>
 <p>Como cobranza, quiero ver los apartados con sus abonos en el Concentrado de cobranza, para dar seguimiento a lo que falta por cobrar.</p>
 <h3 id="reglas-de-negocio_12">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_12" title="Permanent link">&para;</a></h3>
 <p><strong>RN-6.3</strong> La pestaña respeta los filtros generales de la consulta: cliente, sucursal, fechas y moneda.</p>
@@ -7507,19 +7526,19 @@ Dado un rango de fechas que no incluye ningún apartado
 Cuando se ejecuta la consulta
 Entonces la pestaña aparece vacía.</p>
 <h2 id="hu-63--sección-de-apartados-en-el-formato-cobranza-general">HU-6.3 — Sección de apartados en el formato Cobranza General<a class="headerlink" href="#hu-63--sección-de-apartados-en-el-formato-cobranza-general" title="Permanent link">&para;</a></h2>
-<p>Como gerente, quiero ver en el formato Cobranza General un resumen de los apartados, para conocer el saldo pendiente por cliente.</p>
+<p>Como cobranza, quiero que el formato Cobranza General incluya una sección de apartados, para ver en un mismo reporte cuánto se ha abonado y cuánto falta por cobrar de cada apartado.</p>
 <h3 id="reglas-de-negocio_13">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_13" title="Permanent link">&para;</a></h3>
-<p><strong>RN-6.5</strong> La sección muestra por cada apartado: cliente, cargo (total del pedido), abono (suma de abonos activos), saldo y fecha de vigencia.</p>
-<p><strong>RN-6.6</strong> Solo incluye apartados no cancelados.</p>
+<p><strong>RN-6.5</strong> El formato Cobranza General incluye una sección <strong>Apartados</strong> con un renglón por apartado: cliente, pedido, fecha del pedido, fecha de vigencia, cargo (total del pedido), abonos (suma de abonos activos), saldo (cargo menos abonos) y estatus. Al final de la sección se muestran los totales de cargo, abonos y saldo.</p>
+<p><strong>RN-6.6</strong> La sección excluye los apartados cancelados y los abonos cancelados. Los apartados olvidados sí aparecen, con estatus Olvidado (RN-7.15).</p>
 <h3 id="criterios-de-aceptación_13">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_13" title="Permanent link">&para;</a></h3>
-<p><strong>CA-6.3.1 — Sección de apartados</strong>
-Dado un apartado con cargo de $1,000 y abonos por $600
+<p><strong>CA-6.3.1 — Totales de la sección</strong>
+Dado un apartado con cargo de $1,000 y abonos activos por $600
 Cuando se imprime el formato Cobranza General
-Entonces la sección de apartados muestra cargo $1,000, abono $600 y saldo $400.</p>
-<p><strong>CA-6.3.2 — Excluir cancelados</strong>
+Entonces la sección Apartados muestra cargo $1,000, abonos $600 y saldo $400, y esos importes se suman en los totales de la sección.</p>
+<p><strong>CA-6.3.2 — Apartados cancelados excluidos</strong>
 Dado un apartado cancelado
-Cuando se imprime el formato
-Entonces ese apartado no aparece en la sección.</p>
+Cuando se imprime el formato Cobranza General
+Entonces el apartado no aparece en la sección ni en sus totales.</p>
 <h3 id="casos-de-prueba_5">Casos de prueba<a class="headerlink" href="#casos-de-prueba_5" title="Permanent link">&para;</a></h3>
 <p><strong>CP-6.1.1 — Filtro Apartados</strong>
 Verifica: CA-6.1.1 · RN-6.1 · RN-6.2
@@ -7667,7 +7686,7 @@ Entonces no aparece.</p>
 <h3 id="diseño-uxui_1">Diseño UX/UI<a class="headerlink" href="#diseño-uxui_1" title="Permanent link">&para;</a></h3>
 <ul>
 <li>
-<p>En listado de Pedidos (Largo) y listado Pedido PV agrega el botónes <strong>Olvidado</strong>, visible solo para pedidos apartados y solo para usuarios con permiso. </p>
+<p>En el listado de Pedidos (Largo) y en el listado de Pedido PV se agrega el botón <strong>Olvidado</strong>, habilitado solo para pedidos apartados y visible solo para usuarios con permiso. Al presionarlo se abre una ventana para capturar el motivo.</p>
 </li>
 <li>
 <p>Agregar una bitácora de cambios en el módulo Pedido, donde se registren las acciones de Olvidado.</p>
@@ -7677,32 +7696,32 @@ Entonces no aparece.</p>
 <p>Como supervisor con permiso especial, quiero marcar como olvidado un apartado que el cliente dejó de atender, para que nadie lo cobre, lo entregue ni lo facture por error.</p>
 <h3 id="reglas-de-negocio_14">Reglas de negocio<a class="headerlink" href="#reglas-de-negocio_14" title="Permanent link">&para;</a></h3>
 <p><strong>RN-7.1</strong> Solo se permitirá marcar como Olvidado aquellos pedidos que correspondan a la modalidad de Apartado. Esta acción deberá estar restringida a usuarios que cuenten con un permiso especial.</p>
-<p><strong>RN-7.2</strong> Solo se puede marcar como Olvidado un pedido apartado que no esté cancelado, entregado ni facturado. Se puede marcar con saldo, liquidado o cobrado. Es obligatorio registrar un motivo.</p>
+<p><strong>RN-7.2</strong> Solo se puede marcar como Olvidado un pedido apartado que no esté cancelado, entregado ni facturado. Se puede marcar con saldo pendiente, liquidado o cobrado. Es obligatorio registrar un motivo.</p>
 <p><strong>RN-7.3</strong> Al marcar un pedido como Olvidado, el sistema deberá actualizar su estatus a Olvidado y registrar automáticamente en la bitácora de cambios la transición de estatus realizada.</p>
 <p><strong>RN-7.4</strong> Al Marcar el pedido como olvidado ya no se permitira hacer abonos, ni el cobro, ni entregas y se conservar los movimientos bancarios ligados al pedido. </p>
-<p><strong>RN-7.5</strong> Al marcar un pedido como Olvidado, se bloquearán los abonos, cobros y entregas, conservando los movimientos bancarios asociados.</p>
-<p><strong>RN-7.6</strong> Al marcar un pedido como Olvidado, el sistema deberá liberar el producto apartado: cancelar los movimientos de almacén generados al reservarlo y regresar el producto al almacén y ubicación de origen, disponible para la venta. Los abonos, el cobro (si existe) y los movimientos bancarios se conservan.</p>
+<p><strong>RN-7.5</strong> Al marcar un pedido como Olvidado, se bloquearán la edicion a abonos, cobros y entregas, conservando los movimientos bancarios asociados y vigentes.</p>
+<p><strong>RN-7.6</strong> Al marcar un pedido con estaus Olvidado, el sistema deberá liberar el producto apartado: cancelar los movimientos de almacén generados al reservarlo y regresar el producto al almacén y ubicación de origen, disponible para la venta. Los abonos, el cobro (si existe) y los movimientos bancarios se conservan.</p>
 <h3 id="criterios-de-aceptación_14">Criterios de Aceptación<a class="headerlink" href="#criterios-de-aceptación_14" title="Permanent link">&para;</a></h3>
 <p><strong>CA-7.1.1 — Marcar apartado como olvidado</strong>
 Dado que el pedido de apartado con saldo pendiente de $400 y un usuario que cuenta con el permiso correspondiente.
 Cuando el usuario marca el pedido como Olvidado, indicando el motivo: "Cliente no responde llamadas".
 Entonces el pedido deberá actualizarse al estatus Olvidado, conservar su saldo pendiente sin modificaciones y liberar el inventario, regresando el producto al stock disponible para su venta.</p>
 <p><strong>CA-7.1.2 — Motivo obligatorio</strong>
-Dado que el usuario presiona Marcar como olvidado
+Dado que el usuario presiona el botón Olvidado
 Cuando intenta confirmar sin capturar el motivo
 Entonces el sistema no marca el pedido e informa que el motivo es obligatorio.</p>
 <p><strong>CA-7.1.3 — Usuario sin permiso</strong>
 Dado un usuario sin el permiso para marcar pedidos olvidados
-Cuando abre un apartado en Pedidos (Largo)
-Entonces no ve el botón Marcar como olvidado.</p>
+Cuando consulta el listado de Pedidos (Largo) o de Pedido PV
+Entonces no ve el botón Olvidado.</p>
 <p><strong>CA-7.1.4 — Apartado entregado, facturado o cancelado</strong>
 Dado un apartado facturado, entregado o cancelado
 Cuando el usuario intenta marcarlo como olvidado
 Entonces el sistema no lo permite.</p>
 <p><strong>CA-7.1.5 — Pedido normal</strong>
 Dado un pedido que no es apartado
-Cuando se abre en Pedidos (Largo)
-Entonces no aparece el botón Marcar como olvidado.</p>
+Cuando se selecciona en el listado de Pedidos (Largo) o de Pedido PV
+Entonces el botón Olvidado está deshabilitado.</p>
 <p><strong>CA-7.1.6 — Registrar en bitácora el cambio de estatus a Olvidado</strong>
 Dado un pedido que corresponde a la modalidad de apartado.
 Cuando se marca como Olvidado y la acción se realiza exitosamente.
@@ -7779,8 +7798,8 @@ Entonces el sistema lo rechaza.</p>
 <p><strong>CP-7.1.4 — Sin permiso</strong>
 Verifica: CA-7.1.3 · RN-7.1
 Dado un usuario sin permiso
-Cuando abre un apartado
-Entonces no aparece el botón Marcar como olvidado.</p>
+Cuando consulta el listado de Pedidos (Largo) o de Pedido PV
+Entonces no aparece el botón Olvidado.</p>
 <p><strong>CP-7.1.5 — Apartado entregado</strong>
 Verifica: CA-7.1.4 · RN-7.2
 Dado un apartado con entrega finalizada
@@ -7794,8 +7813,8 @@ Entonces el sistema lo impide.</p>
 <p><strong>CP-7.1.7 — Pedido normal</strong>
 Verifica: CA-7.1.5 · RN-7.1
 Dado un pedido normal
-Cuando se abre en Pedidos (Largo)
-Entonces no aparece el botón Marcar como olvidado.</p>
+Cuando se selecciona en el listado de Pedidos (Largo)
+Entonces el botón Olvidado está deshabilitado.</p>
 <p><strong>CP-7.1.8 — Registro en bitácora</strong>
 Verifica: CA-7.1.6 · RN-7.3
 Dado un apartado con saldo y un usuario con permiso
@@ -7837,7 +7856,7 @@ Dado un apartado liquidado y olvidado
 Cuando se intenta cancelar desde Pedido PV y desde Pedidos (Largo)
 Entonces la opción Cancelar está deshabilitada en ambas pantallas.</p>
 <p><strong>CP-7.2.8 — Cancelar el cobro de un pedido olvidado</strong>
-Verifica: CA-7.2.6 · RN-7.8 · RN-3.5
+Verifica: CA-7.2.6 · RN-7.8 · RN-3.4
 Dado un apartado cobrado y olvidado
 Cuando se intenta cancelar su cobro
 Entonces el sistema lo rechaza y el cobro, los abonos y el saldo no cambian.</p>
@@ -8089,7 +8108,7 @@ El estatus Olvidado es definitivo. Libera el producto para la venta, pero conser
 <tr>
 <td>SUP-02</td>
 <td>Los movimientos bancarios de un apartado se generan al registrar <strong>cada abono</strong>, no al cobrar, para que la cuenta de efectivo refleje el dinero conforme entra.</td>
-<td>Si el banco solo debe reflejar el cobro final, cambian RN-2.5, RN-2.6 y RN-3.3.</td>
+<td>Si el banco solo debe reflejar el cobro final, cambian RN-2.5, RN-2.6 y RN-3.2.</td>
 </tr>
 <tr>
 <td>SUP-03</td>
@@ -8115,6 +8134,11 @@ El estatus Olvidado es definitivo. Libera el producto para la venta, pero conser
 <td>SUP-07</td>
 <td>Marcar un pedido como olvidado libera el producto, pero conserva los abonos, el cobro y los movimientos bancarios. La devolución del dinero al cliente se resuelve fuera de este proceso.</td>
 <td>Si los abonos deben cancelarse o generar saldo a favor, hay que agregarlo a RF-07.</td>
+</tr>
+<tr>
+<td>SUP-08</td>
+<td>"Ampliar un apartado" (RN-1.7.1) significa extender su fecha de vigencia, no agregar productos ni cantidades.</td>
+<td>Si se deben poder agregar productos, hay que definir el abono inicial adicional, los traspasos al almacén de Apartados y el recálculo del saldo.</td>
 </tr>
 </tbody>
 </table>
@@ -8174,7 +8198,7 @@ El estatus Olvidado es definitivo. Libera el producto para la venta, pero conser
 <td>Hoy el cobro genera movimiento bancario. Si en un apartado no se suprime, el dinero quedaría duplicado: una vez por cada abono y otra al cobrar. También podría afectar a los pedidos normales si la regla no se limita a apartados.</td>
 <td>Media</td>
 <td>Alto</td>
-<td>Aplicar RN-3.3 solo a apartados y probar que los pedidos normales sigan generando su movimiento al cobrar.</td>
+<td>Aplicar RN-3.2 solo a apartados y probar que los pedidos normales sigan generando su movimiento al cobrar.</td>
 </tr>
 <tr>
 <td>RGO-03</td>
