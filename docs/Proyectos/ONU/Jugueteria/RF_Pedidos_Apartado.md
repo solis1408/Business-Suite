@@ -149,7 +149,7 @@ El apartado nace con saldo pendiente y queda liquidado cuando los abonos cubren 
 | [RF-04](#rf-04) | Inventario y entregas de apartados | Inventarios / Embarques | Movimientos de almacén, Entregas |
 | [RF-05](#rf-05) | Timbrado manual de facturas | Facturación | Facturas |
 | [RF-06](#rf-06) | Consultar pedidos de apartado | Consultas / Reportes | Ventas, Cuentas por cobrar |
-| [RF-07](#rf-07) | Marcar pedido de apartado como Olvidado | Ventas / Cobranza / Embarques / Facturación | Pedido PV, Pedidos (Largo), Entregas, Facturas |
+| [RF-07](#rf-07) | Marcar pedido de apartado como Olvidado (Expirado) | Ventas / Cobranza / Embarques / Facturación | Pedido PV, Pedidos (Largo), Entregas, Facturas |
 
 ---
 ---
@@ -1110,15 +1110,15 @@ Dado que el usuario no cambia el filtro
 Cuando ejecuta la consulta
 Entonces aparecen todos los pedidos y se distinguen por la columna Apartado.
 
-## HU-6.2 — Consulta Concentrado de cobranza apartado
+## HU-6.2 — Consulta Concentrado de Cobranza Apartado
 
-Como cobranza, quiero ver los apartados con sus abonos en el Concentrado de cobranza, para dar seguimiento a lo que falta por cobrar.
+Como cobranza, quiero ver los pedido apartados y sus abonos en el Concentrado de cobranza, para dar seguimiento a lo que falta por cobrar.
 
 ### Reglas de negocio
 
-**RN-6.3** La pestaña respeta los filtros generales de la consulta: cliente, sucursal, fechas y moneda.
+**RN-6.3** La consulta deberá contar con filtros generales por fecha de corte, cliente, sucursal y número de pedido.
 
-**RN-6.4** Se muestra un renglón por abono, con estos campos: fecha del pedido, cliente, pedido, importe, saldo, fecha de vigencia, apartado, número de abono, fecha de abono, importe del abono, forma de pago, moneda del abono y estatus del pedido.
+**RN-6.4** La tabla de resultados deberá mostrar las siguientes columnas: fecha del pedido, cliente, número de pedido, importe, saldo, fecha de vigencia, número de abono, fecha de abono, importe del abono, forma de pago y estatus del pedido.
 
 ### Criterios de Aceptación
 
@@ -1132,27 +1132,6 @@ Dado un rango de fechas que no incluye ningún apartado
 Cuando se ejecuta la consulta
 Entonces la pestaña aparece vacía.
 
-## HU-6.3 — Sección de apartados en el formato Cobranza General
-
-Como cobranza, quiero que el formato Cobranza General incluya una sección de apartados, para ver en un mismo reporte cuánto se ha abonado y cuánto falta por cobrar de cada apartado.
-
-### Reglas de negocio
-
-**RN-6.5** El formato Cobranza General incluye una sección **Apartados** con un renglón por apartado: cliente, pedido, fecha del pedido, fecha de vigencia, cargo (total del pedido), abonos (suma de abonos activos), saldo (cargo menos abonos) y estatus. Al final de la sección se muestran los totales de cargo, abonos y saldo.
-
-**RN-6.6** La sección excluye los apartados cancelados y los abonos cancelados. Los apartados olvidados sí aparecen, con estatus Olvidado (RN-7.15).
-
-### Criterios de Aceptación
-
-**CA-6.3.1 — Totales de la sección**
-Dado un apartado con cargo de $1,000 y abonos activos por $600
-Cuando se imprime el formato Cobranza General
-Entonces la sección Apartados muestra cargo $1,000, abonos $600 y saldo $400, y esos importes se suman en los totales de la sección.
-
-**CA-6.3.2 — Apartados cancelados excluidos**
-Dado un apartado cancelado
-Cuando se imprime el formato Cobranza General
-Entonces el apartado no aparece en la sección ni en sus totales.
 
 ### Casos de prueba
 
@@ -1212,7 +1191,7 @@ Entonces no aparece.
 ---
 
 <a id="rf-07"></a>
-# RF-07 — Marcar pedido de apartado como Olvidado
+# RF-07 — Marcar pedido de apartado como Olvidado (Expirado)
 
 | Campo        | Valor |
 |--------------|-------|
