@@ -63,6 +63,8 @@ En facturación, la factura que se genera desde las entregas trae precargados el
 - Filtrar e identificar apartados en Detallado de pedidos y Resumen de pedidos.
 - Nueva pestaña "Resultado Apartados" en el Concentrado de cobranza.
 - Marcar apartados como **Olvidados** para detenerlos de forma definitiva (sin cobro, entrega, facturación ni cancelación) y liberar el producto para la venta.
+- **Ampliar la fecha de vigencia** de un apartado, vigente o vencido, con motivo obligatorio y registro automático en la **bitácora de auditoría** del pedido, visible solo en Pedidos (Largo).
+- **Imprimir el ticket del apartado** en Pedido PV, con una sección inferior que lista los abonos (fecha e importe), el total abonado y el saldo pendiente.
 
 ### 2.2 Fuera de Alcance
 
@@ -78,12 +80,12 @@ En facturación, la factura que se genera desde las entregas trae precargados el
 
 | Actor / Rol | Descripción |
 |-------------|-------------|
-| Vendedor de punto de venta | Captura el pedido PV, lo marca como apartado y registra el abono inicial. |
+| Vendedor de punto de venta | Captura el pedido PV, lo marca como apartado, registra el abono inicial e imprime el ticket del apartado. |
 | Cajero / Cobranza | Registra y cancela abonos y genera el cobro del apartado liquidado. |
 | Almacenista / Embarques | Crea y finaliza la entrega del producto apartado. |
 | Facturista | Revisa y ajusta la factura y la timbra cuando tiene permiso. |
-| Supervisor / Gerente | Cancela apartados, los marca como olvidados y consulta su seguimiento. |
-| Sistema | Calcula saldos y genera en automático los movimientos de almacén y los movimientos bancarios de cada abono. |
+| Supervisor / Gerente | Cancela apartados, los marca como olvidados, amplía su fecha de vigencia y consulta su seguimiento. |
+| Sistema | Calcula saldos y genera en automático los movimientos de almacén, los movimientos bancarios de cada abono y los registros de la bitácora de auditoría. |
 
 ## 4. Entidad a la que aplica
 
@@ -99,7 +101,8 @@ El ciclo de vida del apartado es el siguiente:
 ```mermaid
 stateDiagram-v2
     [*] --> ApartadoConSaldo: Guardar Pedido PV con abono inicial
-    ApartadoConSaldo --> ApartadoConSaldo: Registrar o cancelar abono
+    ApartadoConSaldo --> ApartadoConSaldo: Registrar o cancelar abono / Ampliar vigencia
+    Liquidado --> Liquidado: Ampliar vigencia
     ApartadoConSaldo --> Liquidado: Saldo = 0
     Liquidado --> ApartadoConSaldo: Cancelar abono
     Liquidado --> Cobrado: Botón Cobro
@@ -142,19 +145,21 @@ El apartado nace con saldo pendiente y queda liquidado cuando los abonos cubren 
 
 | RF | Título | Sistema | Aplica a |
 |----|--------|---------|----------|
-| [RF-01](#rf-01) | Crear y guardar pedido de apartado | Ventas | Pedido PV, Pedidos (Largo) |
+| [RF-01](#rf-01) | Crear y cancelar pedido de apartado | Ventas | Pedido PV, Pedidos (Largo) |
 | [RF-02](#rf-02) | Gestionar abonos internos | Ventas / Cobranza | Pedidos (Largo) |
-| [RF-03](#rf-03) | Gestionar cobros de pedidos de apartado | Cobranza / Bancos | Pedido PV, Pedidos (Largo) |
+| [RF-03](#rf-03) | Cobros de pedidos de apartado | Cobranza / Bancos | Pedido PV, Pedidos (Largo) |
 | [RF-04](#rf-04) | Inventario y entregas de apartados | Inventarios / Embarques | Movimientos de almacén, Entregas |
 | [RF-05](#rf-05) | Timbrado manual de facturas | Facturación | Facturas |
 | [RF-06](#rf-06) | Consultar pedidos de apartado | Consultas / Reportes | Ventas, Cuentas por cobrar |
 | [RF-07](#rf-07) | Marcar pedido de apartado como Olvidado (Expirado) | Ventas / Cobranza / Embarques / Facturación | Pedido PV, Pedidos (Largo), Entregas, Facturas |
+| [RF-08](#rf-08) | Ampliar fecha de vigencia del apartado y bitácora de auditoría | Ventas / Auditoría | Pedidos (Largo) |
+| [RF-09](#rf-09) | Imprimir ticket del apartado con abonos y saldo | Ventas | Pedido PV |
 
 ---
 ---
 
 <a id="rf-01"></a>
-# RF-01 — Crear y guardar pedido de apartado
+# RF-01 — Crear y cancelar pedido de apartado
 
 | Campo        | Valor |
 |--------------|-------|
@@ -195,7 +200,7 @@ Como vendedor de punto de venta, quiero marcar un pedido como apartado y registr
 
 **RN-1.2** Un pedido solo se guarda como apartado si tiene un abono inicial registrado en ese momento.
 
-**RN-1.3** El abono inicial deberá realizarse en efectivo, mediante una ventana emergente, por un monto mínimo del 30% y máximo del 100% del total del pedido. Al guardarlo, el sistema generará automáticamente un movimiento bancario **en firme** en la cuenta de efectivo de la sucursal. A diferencia de los abonos posteriores (RN-2.5), este movimiento no queda en tránsito.
+**RN-1.3** El abono inicial se capturará en una ventana emergente, con la casilla Inicial marcada automáticamente. Deberá ser en efectivo, mínimo del 30% y máximo del 100% del pedido, generando un movimiento bancario en firme en la cuenta de efectivo.
 
 **RN-1.4** Los pedidos con estatus Apartado deberán estar asociados a un cliente identificado y no permitirán seleccionar la forma de pago Crédito.
 
@@ -205,7 +210,7 @@ Como vendedor de punto de venta, quiero marcar un pedido como apartado y registr
 
 **RN-1.7** Al guardar un pedido como Apartado, el sistema deberá generar automáticamente los movimientos de almacén correspondientes (Salida–Entrada) para garantizar la reserva de los productos.
 
-**RN-1.7.1** Se puede ampliar la **fecha de vigencia** de un apartado, esté vigente o vencido, siempre que no esté Olvidado, cancelado ni cobrado. La nueva fecha debe ser posterior a la fecha actual (SUP-08).
+**RN-1.7.1** Se puede ampliar la **fecha de vigencia** de un apartado, esté vigente o vencido, con motivo obligatorio. Las condiciones, el motivo y el registro en bitácora se detallan en [RF-08](#rf-08) (SUP-08).
 
 ### Criterios de Aceptación
 
@@ -472,9 +477,13 @@ El sistema deberá permitir registrar y cancelar abonos de un pedido de apartado
 | Forma de pago | Automático | Siempre Efectivo (RN-1.3, RN-2.0). |
 | Importe | Sí | Mayor a cero y no mayor al saldo pendiente. |
 | Cuenta bancaria | Automático | La cuenta interna de efectivo de la sucursal, que corresponde a la forma de pago Efectivo. |
-| Moneda | Automático | La moneda del pedido. |
 | Inicial | Automático | Indica si fue el abono inicial. |
+| Liquidado | Automático | Indica si fue el abono fue concluido. |
 | Estatus | Automático | Activo o Cancelado. |
+
+### Diseño UX/UI
+
+- En la sección Abonos estarán visibles y serán editables los siguientes campos: fecha, forma de pago, importe y las casillas de verificación Inicial y Liquidado.
 
 ## HU-2.1 — Registrar abono
 
@@ -482,7 +491,12 @@ Como cajero, quiero registrar los abonos que el cliente va dejando, para saber e
 
 ### Reglas de negocio
 
-**RN-2.0** Para liquidar el 70 % restante del apartado, el sistema deberá permitir únicamente la forma de pago Efectivo. La cuenta bancaria que se afectará se determinará automáticamente de acuerdo con dicha forma de pago.
+**RN-2.0** Cada pedido apartado podrá tener únicamente un abono marcado como Inicial y opcionalmente un solo abono marcado como Liquidado.
+
+**RN-2.0.1** Los abonos marcados como Liquidado deberán calcular automáticamente su importe con base en el saldo pendiente del apartado.
+
+**RN-2.1** Los abonos deberán realizarse en efectivo, excepto los marcados como Liquidado, que permitirán cualquier forma de pago, excepto Crédito. La cuenta bancaria se asignará automáticamente según la forma de pago.
+
 
 **RN-2.1** Los abonos deberán registrarse exclusivamente desde la pestaña Abonos de la interfaz de usuario de Pedidos (Largo). Unicamente con los estatus Activo y Cancelado.
 
@@ -644,7 +658,7 @@ Entonces el sistema lo impide.
 ---
 
 <a id="rf-03"></a>
-# RF-03 — Gestionar cobros de pedidos de apartado
+# RF-03 — Cobros de pedidos de apartado
 
 | Campo        | Valor |
 |--------------|-------|
@@ -799,17 +813,18 @@ El sistema deberá manejar un **almacén virtual de Apartados por sucursal**. Al
 | Entrada por traspaso de apartado | Entrada | Suma al almacén de Apartados, en la ubicación predeterminada del producto. |
 | Entrega de apartado | Salida | Resta del almacén de Apartados, en la ubicación predeterminada, al entregar. |
 
+
 ## HU-4.1 — Relacionar movimientos de almacén con el apartado
 
 Como almacenista, quiero que los movimientos de un apartado queden ligados a su pedido, para rastrear dónde está el producto apartado.
 
 ### Reglas de negocio
 
-**RN-4.1** Los movimientos de almacén tienen un campo **Pedido** que solo se llena cuando un apartado genera el movimiento. En los demás movimientos queda vacío.
+**RN-4.1** Los movimientos de almacén tienen un campo **Pedido** que solo se llena cuando un **apartado** genera el movimiento. **Para el resto de los movimientos queda vacío**.
 
 **RN-4.2** Al guardar el apartado se generan, por cada producto, una Salida por traspaso de apartado y una Entrada por traspaso de apartado por la misma cantidad.
 
-**RN-4.3** Si el almacén de venta no tiene existencia suficiente, el apartado no se guarda, salvo que la sucursal permita stock negativo.
+**RN-4.3** Si el almacén de venta no tiene existencia suficiente, el apartado no se guarda.
 
 **RN-4.4** Cada sucursal que use apartados debe tener configurado su almacén de Apartados.
 
@@ -847,7 +862,7 @@ Como almacenista, quiero crear la entrega del apartado cuando el cliente viene p
 
 **RN-4.7** Solo se puede crear la entrega cuando el apartado está liquidado.
 
-**RN-4.8** Al finalizar la entrega se genera una Entrega de apartado desde el almacén de Apartados, ubicación predeterminada, ligada al pedido.
+**RN-4.8** Al concluir la entrega, el sistema generará automáticamente el movimiento de almacén correspondiente, afectando el inventario de apartados desde la ubicación predeterminada del almacén de Apartados, vinculado al pedido.
 
 **RN-4.9** Si la entrega se cancela o se desembarca, el producto regresa al almacén de Apartados.
 
@@ -1205,7 +1220,7 @@ El sistema deberá permitir que un usuario autorizado marque un pedido de aparta
 
 - En el listado de Pedidos (Largo) y en el listado de Pedido PV se agrega el botón **Olvidado**, habilitado solo para pedidos apartados y visible solo para usuarios con permiso. Al presionarlo se abre una ventana para capturar el motivo.
 
-- Agregar una bitácora de cambios en el módulo Pedido, donde se registren las acciones de Olvidado.
+- Las acciones de Olvidado se registran en la bitácora de auditoría del pedido definida en [RF-08](#rf-08) (HU-8.2).
 
 ## HU-7.1 — Marcar pedido como olvidado
 
@@ -1480,6 +1495,233 @@ El estatus Olvidado es definitivo. Libera el producto para la venta, pero conser
 [⬆ Volver al índice de requerimientos](#indice)
 
 ---
+
+<a id="rf-08"></a>
+# RF-08 — Ampliar fecha de vigencia del apartado y bitácora de auditoría
+
+| Campo | Valor |
+|---|---|
+| Prioridad | Should |
+| Estado | Definición |
+| Dependencias | RF-01, RF-07 |
+
+## Objetivo
+
+Dar más tiempo al cliente para liquidar su apartado sin cancelarlo ni volver a capturarlo. Queda registro de quién amplió, cuándo y por qué.
+
+## Descripción
+
+En **Pedidos (Largo)**, un usuario con permiso especial puede ampliar la vigencia de un apartado, esté vigente o vencido. El motivo es obligatorio. Cada ampliación se registra en automático en la bitácora del pedido (`AuditHelper`, tabla `au_tr_bitacoras`). La bitácora es de solo lectura y solo el sistema escribe en ella.
+
+### Campos
+
+| Campo | Obligatorio | Descripción |
+|---|---|---|
+| Motivo de ampliación | Sí, al ampliar | Hasta 500 caracteres. Guarda solo el último motivo y es de solo lectura en el formulario. |
+
+### Registro en bitácora
+
+| Campo | Valor |
+|---|---|
+| Fecha / Generada por | Fecha del servidor y empleado del usuario (automático) |
+| Actividad | `AMPLIACIÓN DE VIGENCIA` |
+| Información | `VIGENCIA ANTERIOR: dd/MM/yyyy. NUEVA VIGENCIA: dd/MM/yyyy. MOTIVO: <motivo>` |
+
+### Diseño UX/UI
+
+- **Ampliar vigencia** (Pedidos Largo): la ven solo los usuarios con permiso. Abre una ventana con la vigencia actual (solo lectura), la nueva fecha (se sugiere una) y el motivo.
+- El campo **Motivo de ampliación** se muestra junto a la vigencia, en solo lectura.
+- **Pestaña Bitácora**: solo en Pedidos (Largo) y para cualquier pedido. Muestra Fecha, Actividad, Información y Generada por, de lo más reciente a lo más antiguo. No aparece en Pedido PV.
+
+## HU-8.1 — Ampliar la fecha de vigencia de un apartado
+
+Como supervisor con permiso, quiero ampliar la vigencia de un apartado indicando el motivo, para darle más tiempo al cliente sin cancelar el pedido.
+
+### Reglas de negocio
+
+- **RN-8.1** La acción solo está en Pedidos (Largo), en pedidos apartados y para usuarios con el permiso.
+- **RN-8.2** No se puede ampliar un apartado Cancelado, Olvidado (RN-7.13), Cobrado, Entregado ni Facturado.
+- **RN-8.3** La nueva fecha debe ser posterior a hoy y a la vigencia actual. No hay límite de fecha ni de ampliaciones.
+- **RN-8.4** El motivo es obligatorio, de hasta 500 caracteres, y no puede ir vacío ni con solo espacios.
+- **RN-8.5** En una sola transacción se actualiza la vigencia, se reemplaza el motivo y se crea el registro en la bitácora. La columna `informacion` se amplía a 1,000 caracteres.
+- **RN-8.6** Si el apartado estaba vencido, se quita la alerta "Apartado vencido" (RN-1.15).
+- **RN-8.7** No cambia el saldo, los abonos ni los movimientos bancarios o de almacén.
+- **RN-8.8** Las reglas RN-8.1 a RN-8.4 también se validan en el servidor.
+
+### Criterios de Aceptación
+
+- **CA-8.1.1 — Ampliar vencido:** Dado un apartado vencido con saldo de $400, cuando se amplía al 30/11/2026 con motivo, entonces se actualiza la vigencia, se muestra el motivo, se quita la alerta de vencido y el saldo sigue en $400.
+- **CA-8.1.2 — Ampliar vigente:** Dado un apartado con vigencia del 20/11/2026, cuando se amplía al 15/12/2026, entonces la vigencia queda en 15/12/2026.
+- **CA-8.1.3 — Motivo obligatorio:** Cuando se confirma sin motivo o con solo espacios, entonces no se amplía y se avisa que el motivo es obligatorio.
+- **CA-8.1.4 — Fecha no válida:** Dada una vigencia del 20/11/2026 y hoy 13/11/2026, cuando se captura el 13/11 o el 18/11, entonces no se amplía y se avisa la causa.
+- **CA-8.1.5 — Estatus no permitido:** Dado un apartado Cancelado, Olvidado, Cobrado, Entregado o Facturado, entonces Ampliar vigencia aparece deshabilitada.
+- **CA-8.1.6 — Sin permiso:** Dado un usuario sin permiso, entonces no ve Ampliar vigencia.
+- **CA-8.1.7 — Pedido normal / PV:** En un pedido normal o en Pedido PV, la acción no está disponible.
+- **CA-8.1.8 — Bitácora:** Al ampliar se crea un registro con la Actividad, la Información, la fecha y el empleado del formato definido.
+- **CA-8.1.9 — Varias ampliaciones:** Si se amplía de nuevo, el campo muestra el último motivo y la bitácora conserva todos los registros.
+
+## HU-8.2 — Consultar la bitácora de auditoría del pedido
+
+Como supervisor, quiero consultar la bitácora del pedido en Pedidos (Largo), para saber quién hizo cada acción, cuándo y por qué.
+
+### Reglas de negocio
+
+- **RN-8.9** La pestaña Bitácora solo se muestra en Pedidos (Largo), no en Pedido PV.
+- **RN-8.10** Es de solo lectura para todos los usuarios, incluidos los administradores.
+- **RN-8.11** Solo el sistema escribe en ella. Como mínimo registra la ampliación de vigencia, el marcado como Olvidado (RN-7.3) y los eventos que ya se registran hoy.
+- **RN-8.12** Se ordena de lo más reciente a lo más antiguo.
+
+### Criterios de Aceptación
+
+- **CA-8.2.1 — Visible en Largo:** Al abrir el pedido en Pedidos (Largo) se ve la pestaña con sus 4 columnas, ordenada de lo más reciente a lo más antiguo.
+- **CA-8.2.2 — Oculta en PV:** Al abrir el mismo pedido en Pedido PV, la pestaña no aparece.
+- **CA-8.2.3 — Solo lectura:** Ningún rol puede agregar, editar ni eliminar registros.
+
+### Casos de prueba
+
+| CP | Verifica | Escenario | Resultado esperado |
+|---|---|---|---|
+| CP-8.1.1 | CA-8.1.1 · RN-8.5/8.6/8.7 | Ampliar un apartado vencido con saldo de $400 | Cambian la vigencia y el motivo, se quita la alerta y no cambia el saldo ni los movimientos |
+| CP-8.1.2 | CA-8.1.2 · RN-8.2/8.3 | Ampliar un apartado vigente, y uno liquidado sin cobrar | Se permite en ambos |
+| CP-8.1.3 | CA-8.1.3 · RN-8.4 | Motivo vacío, solo espacios o de 501 caracteres | Se rechaza y la vigencia no cambia |
+| CP-8.1.4 | CA-8.1.8 · RN-8.4/8.5 | Motivo de exactamente 500 caracteres | Se guarda completo en el pedido y en la bitácora |
+| CP-8.1.5 | CA-8.1.4 · RN-8.3 | Nueva fecha igual a hoy o anterior a la vigencia actual | Se rechaza |
+| CP-8.1.6 | CA-8.1.5 · RN-8.2 | Apartado cobrado, olvidado, cancelado, entregado o facturado | La acción aparece deshabilitada |
+| CP-8.1.7 | CA-8.1.6/8.1.7 · RN-8.1 | Usuario sin permiso; pedido normal; Pedido PV | La acción no está disponible |
+| CP-8.1.8 | CA-8.1.8 · RN-8.5 | Ampliar del 01/11 al 30/11 | Se crea un registro en `au_tr_bitacoras` con el formato definido |
+| CP-8.1.9 | RN-8.5 | Falla al guardar la bitácora | No cambian la vigencia ni el motivo |
+| CP-8.1.10 | CA-8.1.9 | Segunda ampliación | Se muestra el último motivo y hay 2 registros en la bitácora |
+| CP-8.1.11 | RN-8.8 | Intentar ampliar fuera de la pantalla, sin permiso o con estatus no permitido | El servidor lo rechaza |
+| CP-8.2.1 | CA-8.2.1/8.2.2 · RN-8.9/8.12 | Pedido con 3 registros, abierto en Largo y en PV | Se ve ordenado en Largo y no aparece en PV |
+| CP-8.2.2 | CA-8.2.3 · RN-8.10 | Usuario administrador en la pestaña Bitácora | No puede agregar, editar ni eliminar |
+| CP-8.2.3 | RN-8.11 · RN-7.3 | Marcar un apartado como Olvidado | Aparece el registro del cambio de estatus |
+
+### Matriz de trazabilidad
+
+| CA | CP | Escenario |
+|---|---|---|
+| CA-8.1.1 | CP-8.1.1 | Camino feliz |
+| CA-8.1.2 | CP-8.1.2 | Alternativo |
+| CA-8.1.3 | CP-8.1.3 | Validación |
+| CA-8.1.4 | CP-8.1.5 | Límites |
+| CA-8.1.5 | CP-8.1.6 | Estado no permitido |
+| CA-8.1.6 / 8.1.7 | CP-8.1.7 | Permisos / sin regresión |
+| CA-8.1.8 | CP-8.1.4, CP-8.1.8, CP-8.1.9 | Auditoría e integridad |
+| CA-8.1.9 | CP-8.1.10 | Alternativo |
+| — (RN-8.8) | CP-8.1.11 | Seguridad |
+| CA-8.2.1 / 8.2.2 | CP-8.2.1 | Visibilidad |
+| CA-8.2.3 | CP-8.2.2 | Permisos |
+| — (RN-8.11) | CP-8.2.3 | Auditoría |
+
+**Regla transversal:** Ampliar la vigencia solo cambia la fecha y el motivo; no afecta saldo, abonos, cobros, bancos ni inventario. Cada ampliación queda en la bitácora, que solo el sistema escribe y que solo se consulta en Pedidos (Largo).
+
+[⬆ Volver al índice de requerimientos](#indice)
+
+---
+---
+
+<a id="rf-09"></a>
+# RF-09 — Imprimir ticket del apartado con abonos y saldo
+
+| Campo | Valor |
+|---|---|
+| Prioridad | Should |
+| Estado | Definición |
+| Dependencias | RF-01, RF-02 |
+
+## Objetivo
+
+Que el cliente se lleve un comprobante impreso de su apartado, en el que vea cuánto ha abonado y cuánto le falta por pagar.
+
+## Descripción
+
+En **Pedido PV**, cuando se imprime el ticket de un pedido marcado como Apartado, el ticket muestra lo mismo que hoy y, además, una **sección de Apartado** en la parte inferior. Ahí aparecen los abonos del cliente (fecha e importe), el **total abonado** y el **saldo pendiente**. El ticket de los pedidos que no son apartados no cambia.
+
+### Contenido de la sección de Apartado
+
+| Dato | Descripción |
+|---|---|
+| Abonos | Una línea por cada abono activo, con su fecha (dd/MM/yyyy) y su importe. |
+| Total abonado | Suma de los abonos activos. |
+| Saldo pendiente | Total del pedido menos el total abonado. |
+
+### Diseño UX/UI
+
+- No se agregan botones nuevos: se usa la impresión de ticket que ya existe en Pedido PV.
+- La sección va al final del ticket, después de los datos actuales del pedido. Ejemplo:
+
+```text
+---------- APARTADO ----------
+Fecha          Importe
+07/11/2026     $300.00
+15/11/2026     $200.00
+------------------------------
+Total abonado:      $500.00
+Saldo pendiente:    $500.00
+```
+
+## HU-9.1 — Imprimir el ticket del apartado
+
+Como vendedor de punto de venta, quiero que el ticket del apartado muestre los abonos y el saldo pendiente, para entregarle al cliente un comprobante de lo que ha pagado y lo que le falta.
+
+### Reglas de negocio
+
+- **RN-9.1** El ticket del apartado solo se imprime desde Pedido PV. En Pedidos (Largo) no se agrega la impresión.
+- **RN-9.2** La sección de Apartado solo aparece si el pedido es Apartado. Los demás pedidos imprimen el ticket como hoy.
+- **RN-9.3** Solo se listan los abonos **activos**, del más antiguo al más reciente. Los abonos cancelados no aparecen.
+- **RN-9.4** El total abonado es la suma de los abonos activos, y el saldo pendiente es el total del pedido menos el total abonado. Si el apartado está liquidado, el saldo pendiente es $0.00.
+
+### Criterios de Aceptación
+
+- **CA-9.1.1 — Ticket al guardar el apartado:** Dado un apartado de $1,000 con un abono inicial de $300, cuando se imprime el ticket en Pedido PV, entonces la sección de Apartado muestra un abono de $300 con su fecha, total abonado de $300 y saldo pendiente de $700.
+- **CA-9.1.2 — Pedido que no es apartado:** Dado un pedido normal, cuando se imprime su ticket, entonces no aparece la sección de Apartado y el ticket sale igual que hoy.
+- **CA-9.1.3 — Solo en Pedido PV:** Dado un apartado abierto en Pedidos (Largo), entonces no hay opción para imprimir el ticket del apartado.
+
+## HU-9.2 — Reimprimir el ticket con la información al día
+
+Como vendedor de punto de venta, quiero reimprimir el ticket de un apartado con sus abonos más recientes, para que el cliente vea su saldo actualizado cada vez que lo pida.
+
+### Reglas de negocio
+
+- **RN-9.5** El ticket muestra los abonos y el saldo que tiene el apartado en el momento de imprimir, incluidos los abonos registrados en Pedidos (Largo).
+- **RN-9.6** Imprimir o reimprimir el ticket no cambia nada del pedido, los abonos, el saldo ni los movimientos.
+
+### Criterios de Aceptación
+
+- **CA-9.2.1 — Reimpresión con varios abonos:** Dado un apartado de $1,000 con abonos de $300, $200 y $100, cuando se reimprime el ticket, entonces se listan los tres abonos con sus fechas, el total abonado es $600 y el saldo pendiente es $400.
+- **CA-9.2.2 — Abono cancelado:** Dado un apartado de $1,000 con un abono de $300 y otro de $200 que se canceló, cuando se reimprime el ticket, entonces solo aparece el abono de $300, el total abonado es $300 y el saldo pendiente es $700.
+- **CA-9.2.3 — Apartado liquidado:** Dado un apartado cuyos abonos cubren el total, cuando se reimprime el ticket, entonces el saldo pendiente es $0.00.
+- **CA-9.2.4 — Sin cambios al imprimir:** Dado un apartado con saldo, cuando se imprime el ticket varias veces, entonces el saldo, los abonos y el estatus del pedido no cambian.
+
+### Casos de prueba
+
+| CP | Verifica | Escenario | Resultado esperado |
+|---|---|---|---|
+| CP-9.1.1 | CA-9.1.1 · RN-9.2/9.4 | Guardar un apartado de $1,000 con abono inicial de $300 e imprimir el ticket | Aparece la sección con 1 abono de $300, total abonado $300 y saldo $700 |
+| CP-9.1.2 | CA-9.1.2 · RN-9.2 | Imprimir el ticket de un pedido normal | El ticket sale igual que hoy, sin sección de Apartado |
+| CP-9.1.3 | CA-9.1.3 · RN-9.1 | Abrir un apartado en Pedidos (Largo) | No hay opción para imprimir el ticket |
+| CP-9.2.1 | CA-9.2.1 · RN-9.3/9.5 | Registrar abonos de $200 y $100 en Pedidos (Largo) y reimprimir en Pedido PV | Se listan 3 abonos, del más antiguo al más reciente; total $600 y saldo $400 |
+| CP-9.2.2 | CA-9.2.2 · RN-9.3/9.4 | Cancelar un abono y reimprimir | El abono cancelado no aparece y el saldo sube por su importe |
+| CP-9.2.3 | CA-9.2.3 · RN-9.4 | Reimprimir un apartado liquidado | Saldo pendiente $0.00 |
+| CP-9.2.4 | CA-9.2.4 · RN-9.6 | Imprimir el ticket tres veces | No cambian el saldo, los abonos, el estatus ni los movimientos |
+
+### Matriz de trazabilidad
+
+| CA | CP | Escenario |
+|---|---|---|
+| CA-9.1.1 | CP-9.1.1 | Camino feliz |
+| CA-9.1.2 | CP-9.1.2 | Sin regresión |
+| CA-9.1.3 | CP-9.1.3 | Alcance de pantalla |
+| CA-9.2.1 | CP-9.2.1 | Alternativo |
+| CA-9.2.2 | CP-9.2.2 | Abono cancelado |
+| CA-9.2.3 | CP-9.2.3 | Límite (saldo cero) |
+| CA-9.2.4 | CP-9.2.4 | Integridad |
+
+**Regla transversal:** El ticket solo informa; imprimirlo no modifica el apartado. La sección de Apartado siempre muestra los abonos activos y el saldo del momento en que se imprime.
+
+[⬆ Volver al índice de requerimientos](#indice)
+
+---
 ---
 
 ## Requerimientos no funcionales
@@ -1488,10 +1730,12 @@ El estatus Olvidado es definitivo. Libera el producto para la venta, pero conser
 |----|-----------|---------------|---------|
 | RNF-001 | Integridad | El apartado, su abono inicial y sus movimientos de traspaso se guardan juntos: o se guarda todo o nada. | 0 apartados sin abono inicial o sin traspaso. |
 | RNF-002 | Concurrencia | Dos usuarios no pueden apartar la misma existencia al mismo tiempo. | 0 existencias negativas por apartados simultáneos en pruebas con 2 usuarios. |
-| RNF-003 | Auditoría | Cada abono, cancelación, cobro y traspaso registra quién lo hizo y cuándo. | 100% de los registros con usuario y fecha. |
+| RNF-003 | Auditoría | Cada abono, cancelación, cobro, traspaso y ampliación de vigencia registra quién lo hizo y cuándo. | 100% de los registros con usuario y fecha. |
 | RNF-004 | Rendimiento | Guardar un apartado de hasta 20 productos, con su abono inicial, tarda poco. | ≤ 3 segundos. |
-| RNF-005 | Seguridad | Registrar o cancelar abonos, cancelar apartados, marcar pedidos olvidados y timbrar requieren permisos que se configuran por rol. | 100% de las acciones protegidas. |
+| RNF-005 | Seguridad | Registrar o cancelar abonos, cancelar apartados, marcar pedidos olvidados, ampliar la vigencia y timbrar requieren permisos que se configuran por rol. | 100% de las acciones protegidas. |
 | RNF-006 | Integridad | El bloqueo de un pedido olvidado se valida en el servidor, no solo en la pantalla, para que no se pueda cobrar, entregar ni facturar por otra vía. | 0 cobros, entregas o facturas de pedidos olvidados. |
+| RNF-007 | Auditoría | La bitácora de auditoría es inalterable: ningún usuario puede crear, editar ni eliminar registros; solo el sistema los crea con `AuditHelper`. | 0 registros de bitácora modificados o eliminados desde la aplicación. |
+| RNF-008 | Integridad | La ampliación de vigencia, su motivo y su registro en bitácora se guardan en una sola transacción. | 0 ampliaciones sin registro en bitácora. |
 
 ## Matriz de trazabilidad
 
@@ -1504,6 +1748,8 @@ El estatus Olvidado es definitivo. Libera el producto para la venta, pero conser
 | OBJ-5 Reducir errores en el timbrado | RF-05 | HU-5.1, HU-5.2 | CA-5.1.1 a CA-5.2.3 | Should | Propuesto |
 | OBJ-6 Dar seguimiento a los apartados | RF-06 | HU-6.1, HU-6.2 | CA-6.1.1 a CA-6.2.2 | Should | Propuesto |
 | OBJ-7 Detener los apartados que el cliente dejó de atender | RF-07 | HU-7.1, HU-7.2, HU-7.3 | CA-7.1.1 a CA-7.3.2 | Should | Propuesto |
+| OBJ-8 Dar más plazo al cliente con trazabilidad de cada cambio | RF-08 | HU-8.1, HU-8.2 | CA-8.1.1 a CA-8.2.3 | Should | Propuesto |
+| OBJ-9 Dar al cliente un comprobante de sus abonos y saldo | RF-09 | HU-9.1, HU-9.2 | CA-9.1.1 a CA-9.2.4 | Should | Propuesto |
 
 ## Supuestos
 
@@ -1516,7 +1762,11 @@ El estatus Olvidado es definitivo. Libera el producto para la venta, pero conser
 | SUP-05 | Los abonos se registran en la misma moneda del pedido. | Habría que manejar tipo de cambio por abono. |
 | SUP-06 | El estatus Olvidado aplica solo a pedidos de apartado y es definitivo (no se reactiva). | Si aplica a pedidos normales, hay que extender RN-7.1 al flujo largo y al de punto de venta. Si debe poder reactivarse, hay que agregar una HU de reactivación y definir cómo se vuelve a apartar el producto ya liberado. |
 | SUP-07 | Marcar un pedido como olvidado libera el producto, pero conserva los abonos, el cobro y los movimientos bancarios. La devolución del dinero al cliente se resuelve fuera de este proceso. | Si los abonos deben cancelarse o generar saldo a favor, hay que agregarlo a RF-07. |
-| SUP-08 | "Ampliar un apartado" (RN-1.7.1) significa extender su fecha de vigencia, no agregar productos ni cantidades. | Si se deben poder agregar productos, hay que definir el abono inicial adicional, los traspasos al almacén de Apartados y el recálculo del saldo. |
+| SUP-08 | "Ampliar un apartado" (RN-1.7.1, RF-08) significa extender su fecha de vigencia, no agregar productos ni cantidades. | Si se deben poder agregar productos, hay que definir el abono inicial adicional, los traspasos al almacén de Apartados y el recálculo del saldo. |
+| SUP-09 | 500 caracteres son suficientes para el motivo de ampliación, y ampliar la columna `informacion` de `au_tr_bitacoras` a 1,000 caracteres no afecta a las demás entidades que ya la usan. | Si el motivo debe ser más largo, hay que ampliar más la columna o guardar el motivo en una tabla aparte. |
+| SUP-10 | El campo Motivo de ampliación del pedido guarda solo el último motivo; el historial de ampliaciones se consulta en la bitácora. | Si se requiere el historial dentro del pedido, hay que crear un detalle "Ampliaciones de vigencia". |
+| SUP-11 | El ticket del apartado (RF-09) usa el mismo formato e impresora del ticket actual de Pedido PV; solo se agrega la sección de Apartado al final. | Si se requiere un formato distinto o imprimir desde Pedidos (Largo), hay que ampliar RF-09. |
+| SUP-12 | El ticket de un apartado cancelado u olvidado se imprime con las mismas reglas de RF-09, sin leyenda de estatus. | Si se debe indicar en el ticket que el apartado está cancelado u olvidado, hay que agregar esa regla. |
 
 ## Dependencias
 
@@ -1525,7 +1775,8 @@ El estatus Olvidado es definitivo. Libera el producto para la venta, pero conser
 | DEP-01 | Dar de alta el almacén de Apartados en cada sucursal, con sus ubicaciones predeterminadas. | Administración / Inventarios |
 | DEP-02 | Dar de alta las tres operaciones de almacén nuevas. | TI |
 | DEP-03 | Configurar la cuenta interna de efectivo en cada sucursal. | Tesorería |
-| DEP-04 | Definir los permisos nuevos y asignarlos por rol. | Seguridad / TI |
+| DEP-04 | Definir los permisos nuevos (incluido el de ampliación de vigencia) y asignarlos por rol. | Seguridad / TI |
+| DEP-05 | Ampliar la columna `informacion` de `au_tr_bitacoras` a 1,000 caracteres y agregar al pedido la columna Motivo de ampliación. | TI / Base de datos |
 
 ## Riesgos
 
@@ -1537,3 +1788,5 @@ El estatus Olvidado es definitivo. Libera el producto para la venta, pero conser
 | RGO-04 | Dejar editable la factura generada desde entregas puede descuadrar las formas de pago contra el cobro. | Media | Medio | Mantener la validación de que la suma de las formas de pago sea igual al total (RN-5.2). |
 | RGO-05 | Apartados vencidos que nadie cancela dejan producto inmovilizado. | Media | Medio | Alerta de vencimiento, consulta filtrable por vigencia y estatus Olvidado para detenerlos y liberar el producto. |
 | RGO-06 | El bloqueo de Olvidado se valida solo en Pedidos y alguien cobra, entrega o factura desde otra pantalla. | Media | Alto | Validar el estatus en Pedido PV, Pedidos (Largo), Entregas y Facturación (RN-7.11, RNF-006). |
+| RGO-07 | Ampliar la columna `informacion` de `au_tr_bitacoras` afecta a todas las entidades que usan la bitácora (Cliente, Usuario, Pedido, etc.) y la tabla puede ser grande. | Baja | Medio | Ejecutar la migración en ventana de mantenimiento y probar la bitácora de Cliente y Usuario (no regresión). |
+| RGO-08 | Ampliaciones repetidas sin control mantienen producto inmovilizado en el almacén de Apartados. | Media | Medio | Permiso especial, motivo obligatorio y registro en bitácora (RN-8.1, RN-8.4, RN-8.5); el estatus Olvidado sigue disponible para liberarlo. |
